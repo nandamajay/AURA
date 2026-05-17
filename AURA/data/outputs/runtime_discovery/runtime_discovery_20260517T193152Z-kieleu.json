@@ -1,0 +1,2940 @@
+{
+  "run_id": "20260517T193152Z-kieleu",
+  "started_at": "2026-05-17T19:31:52.084574+00:00",
+  "finished_at": "2026-05-17T19:33:52.134777+00:00",
+  "platform": {
+    "core_url": "http://localhost:8000",
+    "ws_http_url": "http://ws-server:8000",
+    "db_path": "/data/aura.db"
+  },
+  "test_results": [
+    {
+      "test_area": "concurrent_task_execution",
+      "started_at": "2026-05-17T19:31:52.435371+00:00",
+      "finished_at": "2026-05-17T19:32:51.353282+00:00",
+      "runtime_evidence": [
+        {
+          "supported_types": [
+            "dashboard",
+            "dependency",
+            "dts_bindings",
+            "knowledge_base",
+            "learning",
+            "maintainer_intel",
+            "patch_builder",
+            "refactor",
+            "regression",
+            "review_coordinator",
+            "simulation",
+            "test_runner",
+            "upstream_philosophy",
+            "validation"
+          ],
+          "total_types": 14
+        },
+        {
+          "created_count": 28,
+          "create_failure_count": 0,
+          "sample_create_failure": []
+        },
+        {
+          "status_timeline_sample": [
+            {
+              "t": "2026-05-17T19:31:56.263572+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 1,
+                "queued": 2
+              }
+            },
+            {
+              "t": "2026-05-17T19:31:57.333543+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 2,
+                "queued": 1
+              }
+            },
+            {
+              "t": "2026-05-17T19:31:58.394117+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 2,
+                "queued": 1
+              }
+            },
+            {
+              "t": "2026-05-17T19:31:59.455283+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 2,
+                "queued": 1
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:00.508588+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 2,
+                "queued": 1
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:01.564681+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 2,
+                "queued": 1
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:02.713054+00:00",
+              "counts": {
+                "running": 18,
+                "completed": 10
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:03.798716+00:00",
+              "counts": {
+                "running": 15,
+                "completed": 13
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:04.852756+00:00",
+              "counts": {
+                "running": 9,
+                "completed": 19
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:05.907431+00:00",
+              "counts": {
+                "running": 9,
+                "completed": 19
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:06.960628+00:00",
+              "counts": {
+                "running": 8,
+                "completed": 20
+              }
+            },
+            {
+              "t": "2026-05-17T19:32:08.014653+00:00",
+              "counts": {
+                "running": 8,
+                "completed": 20
+              }
+            }
+          ]
+        },
+        {
+          "created_task_ids_sample": [
+            "f6b9a029-14a2-4ab9-81f1-b4861b224211",
+            "ddc89f74-0000-4bb9-be4d-de9d6a3250bf",
+            "dae5e5fb-3de0-4fae-ac02-9f4c2e162429",
+            "5d233931-468f-472e-ac1a-51114379021d",
+            "a97004c4-e85c-48ef-bf77-295574358396",
+            "8b254e6f-6e51-40fd-887c-acf0faf46a93",
+            "e762532e-ff2e-4da8-b27d-39b12fa4a021",
+            "2b35882b-076b-4b57-8e7b-4b4d1d914ca3",
+            "49c1576c-02b0-4664-bd0a-b7109ee27d0e",
+            "732b3460-3551-4a3f-ba62-29eb73792ffe"
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "max_overlapping_running": 25,
+        "final_state_counts": {
+          "running": 2,
+          "completed": 26
+        },
+        "early_replay_status_counts": {
+          "404": 24,
+          "200": 12
+        },
+        "final_replay_status_counts": {
+          "200": 28
+        }
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "simultaneous_tasks": ">=20 created and >1 overlapping running",
+          "mixed_workload": "at least one success and at least one failure path",
+          "concurrent_replay": "replay endpoint should return deterministic data for persisted tasks"
+        },
+        "actual": {
+          "max_overlapping_running": 25,
+          "final_state_counts": {
+            "running": 2,
+            "completed": 26
+          },
+          "early_replay_status_counts": {
+            "404": 24,
+            "200": 12
+          },
+          "final_replay_status_counts": {
+            "200": 28
+          }
+        }
+      },
+      "replay_integrity_result": {
+        "final_replay_200": 28,
+        "final_replay_non_200": 0,
+        "coverage_ratio": 1.0,
+        "sample": [
+          {
+            "task_id": "f6b9a029-14a2-4ab9-81f1-b4861b224211",
+            "status": 200,
+            "integrity_ok": false
+          },
+          {
+            "task_id": "ddc89f74-0000-4bb9-be4d-de9d6a3250bf",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "dae5e5fb-3de0-4fae-ac02-9f4c2e162429",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "5d233931-468f-472e-ac1a-51114379021d",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "a97004c4-e85c-48ef-bf77-295574358396",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "8b254e6f-6e51-40fd-887c-acf0faf46a93",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "e762532e-ff2e-4da8-b27d-39b12fa4a021",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "2b35882b-076b-4b57-8e7b-4b4d1d914ca3",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "49c1576c-02b0-4664-bd0a-b7109ee27d0e",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "732b3460-3551-4a3f-ba62-29eb73792ffe",
+            "status": 200,
+            "integrity_ok": true
+          }
+        ]
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Failures remained isolated per-task; scheduler continued processing remaining queue entries.",
+      "recovery_behavior": "Queue drained to terminal states for most tasks within timeout window.",
+      "severity_classification": "low",
+      "raw": {
+        "create_results_sample": [
+          {
+            "status": 200,
+            "body": {
+              "task_id": "f6b9a029-14a2-4ab9-81f1-b4861b224211",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            },
+            "agent_type": "learning",
+            "priority": "P0"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "ddc89f74-0000-4bb9-be4d-de9d6a3250bf",
+              "status": "queued",
+              "priority": "P1",
+              "message": "Task created and queued"
+            },
+            "agent_type": "dependency",
+            "priority": "P1"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "dae5e5fb-3de0-4fae-ac02-9f4c2e162429",
+              "status": "queued",
+              "priority": "P2",
+              "message": "Task created and queued"
+            },
+            "agent_type": "dts_bindings",
+            "priority": "P2"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "5d233931-468f-472e-ac1a-51114379021d",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            },
+            "agent_type": "upstream_philosophy",
+            "priority": "P0"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "a97004c4-e85c-48ef-bf77-295574358396",
+              "status": "queued",
+              "priority": "P1",
+              "message": "Task created and queued"
+            },
+            "agent_type": "refactor",
+            "priority": "P1"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "8b254e6f-6e51-40fd-887c-acf0faf46a93",
+              "status": "queued",
+              "priority": "P2",
+              "message": "Task created and queued"
+            },
+            "agent_type": "validation",
+            "priority": "P2"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "e762532e-ff2e-4da8-b27d-39b12fa4a021",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            },
+            "agent_type": "regression",
+            "priority": "P0"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "2b35882b-076b-4b57-8e7b-4b4d1d914ca3",
+              "status": "queued",
+              "priority": "P1",
+              "message": "Task created and queued"
+            },
+            "agent_type": "knowledge_base",
+            "priority": "P1"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "49c1576c-02b0-4664-bd0a-b7109ee27d0e",
+              "status": "queued",
+              "priority": "P2",
+              "message": "Task created and queued"
+            },
+            "agent_type": "dashboard",
+            "priority": "P2"
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "732b3460-3551-4a3f-ba62-29eb73792ffe",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            },
+            "agent_type": "simulation",
+            "priority": "P0"
+          }
+        ],
+        "early_replays_sample": [
+          {
+            "task_id": "f6b9a029-14a2-4ab9-81f1-b4861b224211",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=f6b9a029-14a2-4ab9-81f1-b4861b224211"
+            }
+          },
+          {
+            "task_id": "ddc89f74-0000-4bb9-be4d-de9d6a3250bf",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=ddc89f74-0000-4bb9-be4d-de9d6a3250bf"
+            }
+          },
+          {
+            "task_id": "dae5e5fb-3de0-4fae-ac02-9f4c2e162429",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=dae5e5fb-3de0-4fae-ac02-9f4c2e162429"
+            }
+          },
+          {
+            "task_id": "5d233931-468f-472e-ac1a-51114379021d",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=5d233931-468f-472e-ac1a-51114379021d"
+            }
+          },
+          {
+            "task_id": "a97004c4-e85c-48ef-bf77-295574358396",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=a97004c4-e85c-48ef-bf77-295574358396"
+            }
+          },
+          {
+            "task_id": "8b254e6f-6e51-40fd-887c-acf0faf46a93",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=8b254e6f-6e51-40fd-887c-acf0faf46a93"
+            }
+          },
+          {
+            "task_id": "e762532e-ff2e-4da8-b27d-39b12fa4a021",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=e762532e-ff2e-4da8-b27d-39b12fa4a021"
+            }
+          },
+          {
+            "task_id": "2b35882b-076b-4b57-8e7b-4b4d1d914ca3",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=2b35882b-076b-4b57-8e7b-4b4d1d914ca3"
+            }
+          },
+          {
+            "task_id": "49c1576c-02b0-4664-bd0a-b7109ee27d0e",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=49c1576c-02b0-4664-bd0a-b7109ee27d0e"
+            }
+          },
+          {
+            "task_id": "732b3460-3551-4a3f-ba62-29eb73792ffe",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=732b3460-3551-4a3f-ba62-29eb73792ffe"
+            }
+          }
+        ],
+        "final_replays_sample": [
+          {
+            "task_id": "f6b9a029-14a2-4ab9-81f1-b4861b224211",
+            "status": 200,
+            "integrity_ok": false
+          },
+          {
+            "task_id": "ddc89f74-0000-4bb9-be4d-de9d6a3250bf",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "dae5e5fb-3de0-4fae-ac02-9f4c2e162429",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "5d233931-468f-472e-ac1a-51114379021d",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "a97004c4-e85c-48ef-bf77-295574358396",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "8b254e6f-6e51-40fd-887c-acf0faf46a93",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "e762532e-ff2e-4da8-b27d-39b12fa4a021",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "2b35882b-076b-4b57-8e7b-4b4d1d914ca3",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "49c1576c-02b0-4664-bd0a-b7109ee27d0e",
+            "status": 200,
+            "integrity_ok": true
+          },
+          {
+            "task_id": "732b3460-3551-4a3f-ba62-29eb73792ffe",
+            "status": 200,
+            "integrity_ok": true
+          }
+        ]
+      },
+      "duration_seconds": 58.92
+    },
+    {
+      "test_area": "event_ordering_pressure",
+      "started_at": "2026-05-17T19:32:51.354489+00:00",
+      "finished_at": "2026-05-17T19:33:26.174787+00:00",
+      "runtime_evidence": [
+        {
+          "burst_sent": 1200,
+          "burst_live_received": 890,
+          "burst_replayed_received": 998,
+          "replay_burst_seq_min": 20,
+          "replay_burst_seq_max": 1199,
+          "duplicate_seen_count": 2,
+          "out_of_order_seen_seq": [
+            5,
+            3,
+            4,
+            2,
+            1
+          ],
+          "retry_seen_attempts": [
+            2,
+            1,
+            3
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "duplicate_delivery_count": 2,
+        "out_of_order_delivery": [
+          5,
+          3,
+          4,
+          2,
+          1
+        ],
+        "retry_order_delivery": [
+          2,
+          1,
+          3
+        ],
+        "burst_sent": 1200,
+        "burst_live_received": 890,
+        "replayed_burst_count": 998,
+        "estimated_dropped_in_replay_buffer": 202
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "duplicate_handling": "either deduped or explicitly flagged",
+          "out_of_order": "ordering guarantee should be documented and observable",
+          "burst_overflow": "bounded buffer should drop oldest deterministically"
+        },
+        "actual": {
+          "duplicate_delivery_count": 2,
+          "out_of_order_delivery": [
+            5,
+            3,
+            4,
+            2,
+            1
+          ],
+          "retry_order_delivery": [
+            2,
+            1,
+            3
+          ],
+          "burst_sent": 1200,
+          "burst_live_received": 890,
+          "replayed_burst_count": 998,
+          "estimated_dropped_in_replay_buffer": 202
+        }
+      },
+      "replay_integrity_result": {
+        "mechanism": "ws-server _event_buffer replay",
+        "buffer_bound_behavior": {
+          "sent": 1200,
+          "replayed": 998,
+          "dropped_estimate": 202
+        },
+        "ordering_sample": [
+          20,
+          27,
+          32,
+          36,
+          59,
+          62,
+          71,
+          72,
+          73,
+          95
+        ]
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [
+        "Retry attempts were observed in non-monotonic order."
+      ],
+      "failure_containment_behavior": "Event subsystem stayed available; pressure manifested as drop/ordering anomalies rather than process crash.",
+      "recovery_behavior": "New SSE subscription replayed bounded buffer contents after burst; oldest events were evicted.",
+      "severity_classification": "medium",
+      "raw": {
+        "burst_results_sample": [
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}",
+          "{'status': 200, 'body': {'broadcast': True, 'recipients': 0}}"
+        ],
+        "live_events_sample": [
+          {
+            "event_id": "dup-evt-20260517T193152Z-kieleu",
+            "event_type": "runtime.discovery.duplicate",
+            "timestamp": "2026-05-17T19:32:51.555272+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "duplicate",
+              "seq": 1,
+              "op_id": "dup-evt-20260517T193152Z-kieleu"
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "dup-evt-20260517T193152Z-kieleu",
+            "event_type": "runtime.discovery.duplicate",
+            "timestamp": "2026-05-17T19:32:51.555272+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "duplicate",
+              "seq": 1,
+              "op_id": "dup-evt-20260517T193152Z-kieleu"
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-20260517T193152Z-kieleu-5",
+            "event_type": "runtime.discovery.out_of_order",
+            "timestamp": "2026-05-17T19:32:51.561355+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "out_of_order",
+              "seq": 5
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-20260517T193152Z-kieleu-3",
+            "event_type": "runtime.discovery.out_of_order",
+            "timestamp": "2026-05-17T19:32:51.563406+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "out_of_order",
+              "seq": 3
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-20260517T193152Z-kieleu-4",
+            "event_type": "runtime.discovery.out_of_order",
+            "timestamp": "2026-05-17T19:32:51.565299+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "out_of_order",
+              "seq": 4
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-20260517T193152Z-kieleu-2",
+            "event_type": "runtime.discovery.out_of_order",
+            "timestamp": "2026-05-17T19:32:51.567185+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "out_of_order",
+              "seq": 2
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-20260517T193152Z-kieleu-1",
+            "event_type": "runtime.discovery.out_of_order",
+            "timestamp": "2026-05-17T19:32:51.569184+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "out_of_order",
+              "seq": 1
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "retry-evt-20260517T193152Z-kieleu-2",
+            "event_type": "runtime.discovery.retry",
+            "timestamp": "2026-05-17T19:32:51.571047+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "retry",
+              "op": "R1",
+              "attempt": 2
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "retry-evt-20260517T193152Z-kieleu-1",
+            "event_type": "runtime.discovery.retry",
+            "timestamp": "2026-05-17T19:32:51.572903+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "retry",
+              "op": "R1",
+              "attempt": 1
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "retry-evt-20260517T193152Z-kieleu-3",
+            "event_type": "runtime.discovery.retry",
+            "timestamp": "2026-05-17T19:32:51.574781+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "retry",
+              "op": "R1",
+              "attempt": 3
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-0",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:51.580901+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 0
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-7",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:51.584020+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 7
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          }
+        ],
+        "replayed_events_sample": [
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-196",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.073637+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 196
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-260",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.316489+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 260
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-272",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.355112+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 272
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-191",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.053154+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 191
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-226",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.195933+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 226
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-274",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.366452+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 274
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-160",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:51.932365+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 160
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-237",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.231981+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 237
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-277",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.384895+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 277
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-225",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:52.190068+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 225
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-36",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:51.596572+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 36
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-20260517T193152Z-kieleu-95",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-17T19:32:51.679680+00:00",
+            "payload": {
+              "marker": "evt-20260517T193152Z-kieleu",
+              "kind": "burst",
+              "seq": 95
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          }
+        ]
+      },
+      "duration_seconds": 34.823
+    },
+    {
+      "test_area": "sqlite_wal_stress",
+      "started_at": "2026-05-17T19:33:26.177741+00:00",
+      "finished_at": "2026-05-17T19:33:29.890090+00:00",
+      "runtime_evidence": [
+        {
+          "journal_mode": "wal",
+          "wal_autocheckpoint": 1000
+        }
+      ],
+      "observed_behavior": {
+        "journal_mode": "wal",
+        "no_retry_failures": 0,
+        "with_retry_failures": 0,
+        "busy_timeout_failures": 0,
+        "checkpoint_samples": [],
+        "checkpoint_total": 0,
+        "rollback_preserved_count": true,
+        "unbatched_seconds_120": 0.126,
+        "batched_seconds_120": 0.0041
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "wal_mode": "wal",
+          "lock_contention": "failures appear without retries",
+          "retry_semantics": "retries reduce lock-failure rate",
+          "partial_persistence": "rolled back transaction should not persist partial rows"
+        },
+        "actual": {
+          "journal_mode": "wal",
+          "no_retry_failures": 0,
+          "with_retry_failures": 0,
+          "busy_timeout_failures": 0,
+          "checkpoint_samples": [],
+          "checkpoint_total": 0,
+          "rollback_preserved_count": true,
+          "unbatched_seconds_120": 0.126,
+          "batched_seconds_120": 0.0041
+        }
+      },
+      "replay_integrity_result": {
+        "scope": "storage-layer stress only",
+        "result": "not directly replay-engine specific",
+        "note": "Used WAL writer/checkpoint contention and rollback semantics."
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [
+        "No lock failures observed under forced write lock; contention test may be underpowered."
+      ],
+      "failure_containment_behavior": "SQLite remained available; failures surfaced as bounded OperationalError lock failures.",
+      "recovery_behavior": "Retry + busy timeout recovered majority of writes after lock release.",
+      "severity_classification": "info",
+      "raw": {
+        "no_retry_sample": [
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          }
+        ],
+        "with_retry_sample": [
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          }
+        ],
+        "busy_timeout_sample": [
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          },
+          {
+            "ok": true,
+            "attempts": 1
+          }
+        ],
+        "checkpoint_sample": []
+      },
+      "duration_seconds": 3.714
+    },
+    {
+      "test_area": "replay_stress_validation",
+      "started_at": "2026-05-17T19:33:29.891311+00:00",
+      "finished_at": "2026-05-17T19:33:32.229425+00:00",
+      "runtime_evidence": [
+        {
+          "active_replay_samples": [
+            {
+              "success": true,
+              "prompt_count": 1,
+              "response_count": 1,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 16,
+              "response_count": 16,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 31,
+              "response_count": 31,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 46,
+              "response_count": 46,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 61,
+              "response_count": 61,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 76,
+              "response_count": 76,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 91,
+              "response_count": 91,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 106,
+              "response_count": 106,
+              "output_hash": null
+            },
+            {
+              "success": true,
+              "prompt_count": 120,
+              "response_count": 120,
+              "output_hash": "d339d228d9307988b713b867d6bc43d8498172fe478c79dcfb3345ec120dc78a"
+            },
+            {
+              "success": true,
+              "prompt_count": 120,
+              "response_count": 120,
+              "output_hash": "d339d228d9307988b713b867d6bc43d8498172fe478c79dcfb3345ec120dc78a"
+            }
+          ]
+        },
+        {
+          "mutation_hash_sample": [
+            "3d291a0684e5b8ab9c004d0a8215a7e146c461f569834d9e6d5664cb6a6acb8e",
+            "b66cd843f0b65900597394a090ee72db603352f70ffd22752d2fa7fc49074c0c",
+            "27f0a25d79bee80079586e234aa539ab2b8f63d921888708404a156706890d77",
+            "ddbbe9c26b414b5c948cd286af6688c4de04c1d4da08d50782e6667a363353a1",
+            "03469d63d9a4a9f5e550e3fd1254564d963f7e6c74c4c66a18f2386593f93cec",
+            "c1e9f06a5cc484f0d79bda5f1587fb582a563c0b92a372f00f0e893437cc824d",
+            "ab85ac4c6faf39bd223a6cb719ee328819cca3ff0ff4d58332191e0caf7ee37a",
+            "f18129e9a1eaf156f8960f00e43419af5ca8e5e0c1081263377ecf35188f007e",
+            "5eadf8c8032e0f3985dcdf460d69663663f6b6129a1eeeb911062479f68d78e8",
+            "68cb0f70a2f1d96e5f22e9000dc25457f148b51b20dbb2d535ba4b3c8cdd5482"
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "active_replay_samples": 50,
+        "active_prompt_count_min": 1,
+        "active_prompt_count_max": 120,
+        "crash_replay_success": false,
+        "crash_replay_prompt_count": null,
+        "crash_integrity_ok": false,
+        "partial_replay_success": true,
+        "partial_integrity_ok": false,
+        "mutation_distinct_hashes": 49,
+        "corrupted_payload_error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "active_replay": "replay should remain readable during active writes",
+          "crash_handling": "crash should leave partial but queryable logs",
+          "partial_persistence": "integrity false when finalize absent",
+          "corruption_detection": "invalid JSON should be detected explicitly"
+        },
+        "actual": {
+          "active_replay_samples": 50,
+          "active_prompt_count_min": 1,
+          "active_prompt_count_max": 120,
+          "crash_replay_success": false,
+          "crash_replay_prompt_count": null,
+          "crash_integrity_ok": false,
+          "partial_replay_success": true,
+          "partial_integrity_ok": false,
+          "mutation_distinct_hashes": 49,
+          "corrupted_payload_error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+        }
+      },
+      "replay_integrity_result": {
+        "active_task_integrity": true,
+        "crash_task_integrity": false,
+        "partial_task_integrity": false,
+        "mutation_distinct_hashes": 49
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [
+        "Concurrent mutation changed replay output hash across reads.",
+        "Replay snapshot varied during active writes (expected under concurrent mutation, but non-deterministic snapshot boundary)."
+      ],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Replay engine remained callable under crash/partial states; corruption surfaced as runtime exception when encountered.",
+      "recovery_behavior": "Integrity verification differentiated finalized vs partial/corrupted records.",
+      "severity_classification": "low",
+      "raw": {
+        "crash_replay": {
+          "success": false,
+          "fidelity": "incomplete",
+          "error": "Task log not found: replay-crash-20260517T193152Z-kieleu"
+        },
+        "partial_replay": {
+          "success": true,
+          "fidelity": "perfect",
+          "task_id": "replay-partial-20260517T193152Z-kieleu",
+          "agent_type": "learning",
+          "context": {
+            "seed": 42,
+            "temperature": 0.1,
+            "model": "gpt-4o-2024-08-06"
+          },
+          "recorded_at": "2026-05-17T19:33:31+00:00",
+          "prompt_count": 1,
+          "response_count": 0,
+          "execution_steps": 0,
+          "output_keys": [],
+          "output_hash": null,
+          "prompts": [
+            {
+              "role": "user",
+              "content": "hello"
+            }
+          ],
+          "responses": [],
+          "execution": [],
+          "output": {},
+          "replayed_at": "2026-05-17T19:33:31.885432+00:00"
+        },
+        "corrupted_error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+      },
+      "duration_seconds": 2.34
+    },
+    {
+      "test_area": "watchdog_pressure_testing",
+      "started_at": "2026-05-17T19:33:32.231642+00:00",
+      "finished_at": "2026-05-17T19:33:35.251719+00:00",
+      "runtime_evidence": [
+        {
+          "timeout_events_sample": [
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-hung-kill-0-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-0-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:32.334048+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-hung-kill-1-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-1-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:32.836883+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-hung-kill-2-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-2-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:33.339334+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-hung-kill-3-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-3-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:33.842046+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-hung-term-0-20260517T193152Z-kieleu",
+              "task_id": "wd-task-term-0-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:34.344660+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-hung-term-1-20260517T193152Z-kieleu",
+              "task_id": "wd-task-term-1-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:34.345891+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-collision-20260517T193152Z-kieleu",
+              "task_id": "wd-coll-b-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 25,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:34.346841+00:00"
+            },
+            {
+              "event_type": "agent.timeout",
+              "agent_id": "wd-storm-20260517T193152Z-kieleu",
+              "task_id": "wd-task-storm-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "heartbeats_missed": 11,
+                "heartbeat_interval_seconds": 0.2
+              },
+              "ts": "2026-05-17T19:33:34.448382+00:00"
+            }
+          ]
+        },
+        {
+          "killed_events_sample": [
+            {
+              "event_type": "agent.killed",
+              "agent_id": "wd-hung-kill-0-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-0-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "signal": "SIGKILL",
+                "heartbeats_missed": 25
+              },
+              "ts": "2026-05-17T19:33:32.836584+00:00"
+            },
+            {
+              "event_type": "agent.killed",
+              "agent_id": "wd-hung-kill-1-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-1-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "signal": "SIGKILL",
+                "heartbeats_missed": 25
+              },
+              "ts": "2026-05-17T19:33:33.339059+00:00"
+            },
+            {
+              "event_type": "agent.killed",
+              "agent_id": "wd-hung-kill-2-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-2-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "signal": "SIGKILL",
+                "heartbeats_missed": 25
+              },
+              "ts": "2026-05-17T19:33:33.841770+00:00"
+            },
+            {
+              "event_type": "agent.killed",
+              "agent_id": "wd-hung-kill-3-20260517T193152Z-kieleu",
+              "task_id": "wd-task-kill-3-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "signal": "SIGKILL",
+                "heartbeats_missed": 25
+              },
+              "ts": "2026-05-17T19:33:34.344406+00:00"
+            },
+            {
+              "event_type": "agent.killed",
+              "agent_id": "wd-storm-20260517T193152Z-kieleu",
+              "task_id": "wd-task-storm-20260517T193152Z-kieleu",
+              "payload": {
+                "reason": "watchdog_timeout",
+                "signal": "SIGKILL",
+                "heartbeats_missed": 11
+              },
+              "ts": "2026-05-17T19:33:34.950468+00:00"
+            }
+          ]
+        },
+        {
+          "states_after": {}
+        }
+      ],
+      "observed_behavior": {
+        "timeout_event_count": 8,
+        "killed_event_count": 5,
+        "remaining_watch_count": 0,
+        "heartbeat_storm_processed": true,
+        "collision_agent_present_after": false
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "timeout_detection": "hung agents should trigger timeout events",
+          "sigterm_sigkill_chain": "TERM-resistant processes should escalate to KILL",
+          "storm_handling": "heartbeat storms should not crash watchdog"
+        },
+        "actual": {
+          "timeout_event_count": 8,
+          "killed_event_count": 5,
+          "remaining_watch_count": 0,
+          "heartbeat_storm_processed": true,
+          "collision_agent_present_after": false
+        }
+      },
+      "replay_integrity_result": {
+        "watchdog_task_replay_presence": {
+          "wd-task-kill-0-20260517T193152Z-kieleu": false,
+          "wd-task-kill-1-20260517T193152Z-kieleu": false,
+          "wd-task-kill-2-20260517T193152Z-kieleu": false,
+          "wd-task-kill-3-20260517T193152Z-kieleu": false,
+          "wd-task-term-0-20260517T193152Z-kieleu": false,
+          "wd-task-term-1-20260517T193152Z-kieleu": false,
+          "wd-coll-b-20260517T193152Z-kieleu": false,
+          "wd-task-storm-20260517T193152Z-kieleu": false
+        },
+        "note": "Watchdog events are event-bus emitted; recorder integration is not automatic for these events."
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Watchdog terminated unresponsive processes and continued scanning others.",
+      "recovery_behavior": "Watches were mostly unregistered after termination chain; manual cleanup handled stragglers.",
+      "severity_classification": "info",
+      "raw": {
+        "captured_event_count": 13,
+        "captured_events_sample": [
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-hung-kill-0-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-0-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:32.334048+00:00"
+          },
+          {
+            "event_type": "agent.killed",
+            "agent_id": "wd-hung-kill-0-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-0-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "signal": "SIGKILL",
+              "heartbeats_missed": 25
+            },
+            "ts": "2026-05-17T19:33:32.836584+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-hung-kill-1-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-1-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:32.836883+00:00"
+          },
+          {
+            "event_type": "agent.killed",
+            "agent_id": "wd-hung-kill-1-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-1-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "signal": "SIGKILL",
+              "heartbeats_missed": 25
+            },
+            "ts": "2026-05-17T19:33:33.339059+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-hung-kill-2-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-2-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:33.339334+00:00"
+          },
+          {
+            "event_type": "agent.killed",
+            "agent_id": "wd-hung-kill-2-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-2-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "signal": "SIGKILL",
+              "heartbeats_missed": 25
+            },
+            "ts": "2026-05-17T19:33:33.841770+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-hung-kill-3-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-3-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:33.842046+00:00"
+          },
+          {
+            "event_type": "agent.killed",
+            "agent_id": "wd-hung-kill-3-20260517T193152Z-kieleu",
+            "task_id": "wd-task-kill-3-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "signal": "SIGKILL",
+              "heartbeats_missed": 25
+            },
+            "ts": "2026-05-17T19:33:34.344406+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-hung-term-0-20260517T193152Z-kieleu",
+            "task_id": "wd-task-term-0-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:34.344660+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-hung-term-1-20260517T193152Z-kieleu",
+            "task_id": "wd-task-term-1-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:34.345891+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-collision-20260517T193152Z-kieleu",
+            "task_id": "wd-coll-b-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 25,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:34.346841+00:00"
+          },
+          {
+            "event_type": "agent.timeout",
+            "agent_id": "wd-storm-20260517T193152Z-kieleu",
+            "task_id": "wd-task-storm-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "heartbeats_missed": 11,
+              "heartbeat_interval_seconds": 0.2
+            },
+            "ts": "2026-05-17T19:33:34.448382+00:00"
+          },
+          {
+            "event_type": "agent.killed",
+            "agent_id": "wd-storm-20260517T193152Z-kieleu",
+            "task_id": "wd-task-storm-20260517T193152Z-kieleu",
+            "payload": {
+              "reason": "watchdog_timeout",
+              "signal": "SIGKILL",
+              "heartbeats_missed": 11
+            },
+            "ts": "2026-05-17T19:33:34.950468+00:00"
+          }
+        ]
+      },
+      "duration_seconds": 3.021
+    },
+    {
+      "test_area": "websocket_sse_instability",
+      "started_at": "2026-05-17T19:33:35.252900+00:00",
+      "finished_at": "2026-05-17T19:33:51.546681+00:00",
+      "runtime_evidence": [
+        {
+          "ws_errors": []
+        },
+        {
+          "broadcast_recipient_sample": [
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14,
+            14
+          ]
+        },
+        {
+          "sse_results": [
+            {
+              "name": "sse-fast-1",
+              "count": 291
+            },
+            {
+              "name": "sse-fast-2",
+              "count": 291
+            },
+            {
+              "name": "sse-slow",
+              "count": 27
+            }
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "ws_clients": 14,
+        "ws_receive_counts": {
+          "fast-3": 138,
+          "fast-5": 138,
+          "fast-9": 138,
+          "fast-8": 138,
+          "fast-7": 138,
+          "fast-6": 138,
+          "fast-4": 138,
+          "slow-0": 30,
+          "slow-1": 30,
+          "slow-2": 30,
+          "slow-3": 30,
+          "fast-0": 164,
+          "fast-1": 164,
+          "fast-2": 164
+        },
+        "ws_error_count": 0,
+        "broadcast_calls": 220,
+        "broadcast_recipients_min": 7,
+        "broadcast_recipients_max": 14,
+        "sse_counts": [
+          {
+            "name": "sse-fast-1",
+            "count": 291
+          },
+          {
+            "name": "sse-fast-2",
+            "count": 291
+          },
+          {
+            "name": "sse-slow",
+            "count": 27
+          }
+        ]
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "disconnect_reconnect": "reconnected clients should resume receiving fresh events",
+          "partial_subscriber_loss": "server should keep broadcasting to remaining clients",
+          "slow_consumers": "slow clients should not crash fanout path"
+        },
+        "actual": {
+          "ws_clients": 14,
+          "ws_receive_counts": {
+            "fast-3": 138,
+            "fast-5": 138,
+            "fast-9": 138,
+            "fast-8": 138,
+            "fast-7": 138,
+            "fast-6": 138,
+            "fast-4": 138,
+            "slow-0": 30,
+            "slow-1": 30,
+            "slow-2": 30,
+            "slow-3": 30,
+            "fast-0": 164,
+            "fast-1": 164,
+            "fast-2": 164
+          },
+          "ws_error_count": 0,
+          "broadcast_calls": 220,
+          "broadcast_recipients_min": 7,
+          "broadcast_recipients_max": 14,
+          "sse_counts": [
+            {
+              "name": "sse-fast-1",
+              "count": 291
+            },
+            {
+              "name": "sse-fast-2",
+              "count": 291
+            },
+            {
+              "name": "sse-slow",
+              "count": 27
+            }
+          ]
+        }
+      },
+      "replay_integrity_result": {
+        "scope": "transport fanout and SSE buffer replay",
+        "buffer_replay_consistency": "indirectly validated via SSE counts"
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [
+        "Recipient counts fluctuated significantly during reconnect pressure."
+      ],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "WS/SSE service stayed up under disconnect and fanout pressure.",
+      "recovery_behavior": "Reconnect loops restored subscriptions; delivery gaps remained per-client.",
+      "severity_classification": "info",
+      "raw": {
+        "ws_results": [
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None",
+          "None"
+        ],
+        "burst_sample": [
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}",
+          "{'status': 200, 'recipients': 14}"
+        ]
+      },
+      "duration_seconds": 16.295
+    },
+    {
+      "test_area": "governance_pressure_testing",
+      "started_at": "2026-05-17T19:33:51.547880+00:00",
+      "finished_at": "2026-05-17T19:33:52.110183+00:00",
+      "runtime_evidence": [
+        {
+          "conflict_results": [
+            {
+              "approval_id": "appr-20260517T193152Z-kieleu-0",
+              "action": "grant",
+              "status": 200,
+              "body": {
+                "approval_id": "appr-20260517T193152Z-kieleu-0",
+                "action": "grant",
+                "status": "passed"
+              }
+            },
+            {
+              "approval_id": "appr-20260517T193152Z-kieleu-0",
+              "action": "reject",
+              "status": 200,
+              "body": {
+                "approval_id": "appr-20260517T193152Z-kieleu-0",
+                "action": "reject",
+                "status": "failed"
+              }
+            }
+          ]
+        },
+        {
+          "escalate_result": {
+            "approval_id": "appr-20260517T193152Z-kieleu-1",
+            "action": "escalate",
+            "status": 500,
+            "body": {
+              "raw": "Internal Server Error"
+            }
+          }
+        },
+        {
+          "contention_results_sample": [
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'comment', 'status': 500, 'body': {'raw': 'Internal Server Error'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-1', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-1', 'action': 'grant', 'status': 'passed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-2', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-2', 'action': 'reject', 'status': 'failed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-3', 'action': 'comment', 'status': 500, 'body': {'raw': 'Internal Server Error'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-4', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-4', 'action': 'grant', 'status': 'passed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 'failed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-1', 'action': 'comment', 'status': 500, 'body': {'raw': 'Internal Server Error'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-2', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-2', 'action': 'grant', 'status': 'passed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-3', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-3', 'action': 'reject', 'status': 'failed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-4', 'action': 'comment', 'status': 500, 'body': {'raw': 'Internal Server Error'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 'passed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-1', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-1', 'action': 'reject', 'status': 'failed'}}"
+          ]
+        },
+        {
+          "audit_events_sample": [
+            {
+              "id": 1,
+              "event_type": "approval.rejected",
+              "target_id": "appr-20260517T193152Z-kieleu-0",
+              "timestamp": 1779046431,
+              "chain_hash": "3030303030303030303030303030303030303030303030303030303030303030"
+            },
+            {
+              "id": 2,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-0",
+              "timestamp": 1779046431,
+              "chain_hash": "3330333033303330333033303330333033303330333033303330333033303330"
+            },
+            {
+              "id": 3,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-1",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333033333330333333303333333033333330333333303333333033333330"
+            },
+            {
+              "id": 4,
+              "event_type": "approval.rejected",
+              "target_id": "appr-20260517T193152Z-kieleu-2",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333330333333333333333033333333333333303333333333333330"
+            },
+            {
+              "id": 5,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-3",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333033333333333333333333333333333330"
+            },
+            {
+              "id": 6,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-3",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333330"
+            },
+            {
+              "id": 7,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-2",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            {
+              "id": 8,
+              "event_type": "approval.rejected",
+              "target_id": "appr-20260517T193152Z-kieleu-4",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            {
+              "id": 9,
+              "event_type": "approval.rejected",
+              "target_id": "appr-20260517T193152Z-kieleu-1",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            {
+              "id": 10,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-0",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            {
+              "id": 11,
+              "event_type": "approval.granted",
+              "target_id": "appr-20260517T193152Z-kieleu-1",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+            },
+            {
+              "id": 12,
+              "event_type": "approval.rejected",
+              "target_id": "appr-20260517T193152Z-kieleu-2",
+              "timestamp": 1779046431,
+              "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+            }
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "conflict_results": [
+          "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 'passed'}}",
+          "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 'failed'}}"
+        ],
+        "escalate_result": {
+          "approval_id": "appr-20260517T193152Z-kieleu-1",
+          "action": "escalate",
+          "status": 500,
+          "body": {
+            "raw": "Internal Server Error"
+          }
+        },
+        "contention_success": 40,
+        "contention_fail": 19,
+        "approval_states_after": [
+          {
+            "id": "appr-20260517T193152Z-kieleu-0",
+            "status": "passed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-55-grant"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-1",
+            "status": "passed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-16-grant"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-2",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-47-reject"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-3",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-38-reject"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-4",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-14-reject"
+          }
+        ],
+        "audit_event_count": 42,
+        "audit_event_types_sample": [
+          "approval.rejected",
+          "approval.granted",
+          "approval.granted",
+          "approval.rejected",
+          "approval.granted",
+          "approval.granted",
+          "approval.granted",
+          "approval.rejected",
+          "approval.rejected",
+          "approval.granted",
+          "approval.granted",
+          "approval.rejected"
+        ]
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "conflicting_approvals": "deterministic conflict resolution",
+          "concurrent_approval_attempts": "atomic status transitions",
+          "audit_contention": "append-only audit should persist without chain mismatch"
+        },
+        "actual": {
+          "conflict_results": [
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 'passed'}}",
+            "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 'failed'}}"
+          ],
+          "escalate_result": {
+            "approval_id": "appr-20260517T193152Z-kieleu-1",
+            "action": "escalate",
+            "status": 500,
+            "body": {
+              "raw": "Internal Server Error"
+            }
+          },
+          "contention_success": 40,
+          "contention_fail": 19,
+          "approval_states_after": [
+            {
+              "id": "appr-20260517T193152Z-kieleu-0",
+              "status": "passed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779046431,
+              "comments": "op-55-grant"
+            },
+            {
+              "id": "appr-20260517T193152Z-kieleu-1",
+              "status": "passed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779046431,
+              "comments": "op-16-grant"
+            },
+            {
+              "id": "appr-20260517T193152Z-kieleu-2",
+              "status": "failed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779046431,
+              "comments": "op-47-reject"
+            },
+            {
+              "id": "appr-20260517T193152Z-kieleu-3",
+              "status": "failed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779046431,
+              "comments": "op-38-reject"
+            },
+            {
+              "id": "appr-20260517T193152Z-kieleu-4",
+              "status": "failed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779046431,
+              "comments": "op-14-reject"
+            }
+          ],
+          "audit_event_count": 42,
+          "audit_event_types_sample": [
+            "approval.rejected",
+            "approval.granted",
+            "approval.granted",
+            "approval.rejected",
+            "approval.granted",
+            "approval.granted",
+            "approval.granted",
+            "approval.rejected",
+            "approval.rejected",
+            "approval.granted",
+            "approval.granted",
+            "approval.rejected"
+          ]
+        }
+      },
+      "replay_integrity_result": {
+        "governance_event_replay_basis": "audit_ledger chronological query",
+        "audit_events_for_run": 42
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 0,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 0
+        },
+        "after": {
+          "row_count": 42,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 42
+        },
+        "delta_rows": 42,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [
+        "Conflict outcome is last-writer-wins; final status depends on request race timing."
+      ],
+      "race_condition_findings": [
+        "Escalate action triggered server error under audit insert constraint path."
+      ],
+      "failure_containment_behavior": "Governance API remained responsive under contention; failing actions returned errors while other updates continued.",
+      "recovery_behavior": "Subsequent valid approval operations continued after failed escalations.",
+      "severity_classification": "high",
+      "raw": {
+        "approvals_after": [
+          {
+            "id": "appr-20260517T193152Z-kieleu-0",
+            "status": "passed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-55-grant"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-1",
+            "status": "passed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-16-grant"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-2",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-47-reject"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-3",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-38-reject"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-4",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-14-reject"
+          }
+        ],
+        "audit_events": [
+          {
+            "id": 1,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3030303030303030303030303030303030303030303030303030303030303030"
+          },
+          {
+            "id": 2,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3330333033303330333033303330333033303330333033303330333033303330"
+          },
+          {
+            "id": 3,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333033333330333333303333333033333330333333303333333033333330"
+          },
+          {
+            "id": 4,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333330333333333333333033333333333333303333333333333330"
+          },
+          {
+            "id": 5,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333033333333333333333333333333333330"
+          },
+          {
+            "id": 6,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333330"
+          },
+          {
+            "id": 7,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 8,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 9,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 10,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 11,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 12,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 13,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 15,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 16,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 17,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 18,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 19,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 20,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 21,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 22,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 23,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 24,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 25,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 26,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 27,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 28,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 29,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 30,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046431,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 31,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 32,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 33,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 34,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 35,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 36,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 37,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-2",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 38,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-4",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 39,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-0",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 40,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 41,
+            "event_type": "approval.granted",
+            "target_id": "appr-20260517T193152Z-kieleu-1",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 42,
+            "event_type": "approval.rejected",
+            "target_id": "appr-20260517T193152Z-kieleu-3",
+            "timestamp": 1779046432,
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ]
+      },
+      "duration_seconds": 0.563
+    },
+    {
+      "test_area": "failure_injection",
+      "started_at": "2026-05-17T19:33:52.111470+00:00",
+      "finished_at": "2026-05-17T19:33:52.133836+00:00",
+      "runtime_evidence": [
+        {
+          "bad_spawn_status": 400,
+          "bad_spawn_body": {
+            "detail": "input_data must be an object"
+          }
+        },
+        {
+          "partial_write_rollback_ok": true
+        },
+        {
+          "replay_corrupt_error": "Expecting value: line 1 column 2 (char 1)"
+        },
+        {
+          "plugin_loaded_count": 0,
+          "plugin_list": []
+        },
+        {
+          "queue_corruption_selected_first": "cd66fcda-63e1-42e8-929c-c744f6ecc73f",
+          "queue_corruption_selected_second": null,
+          "real_task_id": "cd66fcda-63e1-42e8-929c-c744f6ecc73f"
+        }
+      ],
+      "observed_behavior": {
+        "forced_exception_status": 400,
+        "rollback_ok": true,
+        "replay_corrupt_error": "Expecting value: line 1 column 2 (char 1)",
+        "plugin_load_count": 0,
+        "queue_corruption_first_pick": "cd66fcda-63e1-42e8-929c-c744f6ecc73f",
+        "queue_corruption_second_pick": null
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "forced_exceptions": "explicit non-200 with reason",
+          "partial_writes": "transaction rollback prevents partial persistence",
+          "corrupt_replay": "must fail explicitly",
+          "plugin_failure": "bad plugin must not crash loader",
+          "queue_corruption": "scheduler should skip ghost task ids"
+        },
+        "actual": {
+          "forced_exception_status": 400,
+          "rollback_ok": true,
+          "replay_corrupt_error": "Expecting value: line 1 column 2 (char 1)",
+          "plugin_load_count": 0,
+          "queue_corruption_first_pick": "cd66fcda-63e1-42e8-929c-c744f6ecc73f",
+          "queue_corruption_second_pick": null
+        }
+      },
+      "replay_integrity_result": {
+        "corrupt_payload_error": "Expecting value: line 1 column 2 (char 1)",
+        "rollback_preserved": true
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 42,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 42
+        },
+        "after": {
+          "row_count": 42,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 42
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Failure injections produced bounded errors without crashing core services.",
+      "recovery_behavior": "Valid paths remained operational after injected failures.",
+      "severity_classification": "info",
+      "raw": {},
+      "duration_seconds": 0.024
+    }
+  ],
+  "failure_matrix": [
+    {
+      "test_area": "governance_pressure_testing",
+      "severity": "high",
+      "key_signal": {
+        "conflict_results": [
+          "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'grant', 'status': 'passed'}}",
+          "{'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-20260517T193152Z-kieleu-0', 'action': 'reject', 'status': 'failed'}}"
+        ],
+        "escalate_result": {
+          "approval_id": "appr-20260517T193152Z-kieleu-1",
+          "action": "escalate",
+          "status": 500,
+          "body": {
+            "raw": "Internal Server Error"
+          }
+        },
+        "contention_success": 40,
+        "contention_fail": 19,
+        "approval_states_after": [
+          {
+            "id": "appr-20260517T193152Z-kieleu-0",
+            "status": "passed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-55-grant"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-1",
+            "status": "passed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-16-grant"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-2",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-47-reject"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-3",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-38-reject"
+          },
+          {
+            "id": "appr-20260517T193152Z-kieleu-4",
+            "status": "failed",
+            "reviewed_by": "38e90286554c7561e88052860999898f",
+            "reviewed_at": 1779046431,
+            "comments": "op-14-reject"
+          }
+        ],
+        "audit_event_count": 42,
+        "audit_event_types_sample": [
+          "approval.rejected",
+          "approval.granted",
+          "approval.granted",
+          "approval.rejected",
+          "approval.granted",
+          "approval.granted",
+          "approval.granted",
+          "approval.rejected",
+          "approval.rejected",
+          "approval.granted",
+          "approval.granted",
+          "approval.rejected"
+        ]
+      }
+    },
+    {
+      "test_area": "event_ordering_pressure",
+      "severity": "medium",
+      "key_signal": {
+        "duplicate_delivery_count": 2,
+        "out_of_order_delivery": [
+          5,
+          3,
+          4,
+          2,
+          1
+        ],
+        "retry_order_delivery": [
+          2,
+          1,
+          3
+        ],
+        "burst_sent": 1200,
+        "burst_live_received": 890,
+        "replayed_burst_count": 998,
+        "estimated_dropped_in_replay_buffer": 202
+      }
+    },
+    {
+      "test_area": "concurrent_task_execution",
+      "severity": "low",
+      "key_signal": {
+        "max_overlapping_running": 25,
+        "final_state_counts": {
+          "running": 2,
+          "completed": 26
+        },
+        "early_replay_status_counts": {
+          "404": 24,
+          "200": 12
+        },
+        "final_replay_status_counts": {
+          "200": 28
+        }
+      }
+    },
+    {
+      "test_area": "replay_stress_validation",
+      "severity": "low",
+      "key_signal": {
+        "active_replay_samples": 50,
+        "active_prompt_count_min": 1,
+        "active_prompt_count_max": 120,
+        "crash_replay_success": false,
+        "crash_replay_prompt_count": null,
+        "crash_integrity_ok": false,
+        "partial_replay_success": true,
+        "partial_integrity_ok": false,
+        "mutation_distinct_hashes": 49,
+        "corrupted_payload_error": "Expecting property name enclosed in double quotes: line 1 column 2 (char 1)"
+      }
+    },
+    {
+      "test_area": "sqlite_wal_stress",
+      "severity": "info",
+      "key_signal": {
+        "journal_mode": "wal",
+        "no_retry_failures": 0,
+        "with_retry_failures": 0,
+        "busy_timeout_failures": 0,
+        "checkpoint_samples": [],
+        "checkpoint_total": 0,
+        "rollback_preserved_count": true,
+        "unbatched_seconds_120": 0.126,
+        "batched_seconds_120": 0.0041
+      }
+    },
+    {
+      "test_area": "watchdog_pressure_testing",
+      "severity": "info",
+      "key_signal": {
+        "timeout_event_count": 8,
+        "killed_event_count": 5,
+        "remaining_watch_count": 0,
+        "heartbeat_storm_processed": true,
+        "collision_agent_present_after": false
+      }
+    },
+    {
+      "test_area": "websocket_sse_instability",
+      "severity": "info",
+      "key_signal": {
+        "ws_clients": 14,
+        "ws_receive_counts": {
+          "fast-3": 138,
+          "fast-5": 138,
+          "fast-9": 138,
+          "fast-8": 138,
+          "fast-7": 138,
+          "fast-6": 138,
+          "fast-4": 138,
+          "slow-0": 30,
+          "slow-1": 30,
+          "slow-2": 30,
+          "slow-3": 30,
+          "fast-0": 164,
+          "fast-1": 164,
+          "fast-2": 164
+        },
+        "ws_error_count": 0,
+        "broadcast_calls": 220,
+        "broadcast_recipients_min": 7,
+        "broadcast_recipients_max": 14,
+        "sse_counts": [
+          {
+            "name": "sse-fast-1",
+            "count": 291
+          },
+          {
+            "name": "sse-fast-2",
+            "count": 291
+          },
+          {
+            "name": "sse-slow",
+            "count": 27
+          }
+        ]
+      }
+    },
+    {
+      "test_area": "failure_injection",
+      "severity": "info",
+      "key_signal": {
+        "forced_exception_status": 400,
+        "rollback_ok": true,
+        "replay_corrupt_error": "Expecting value: line 1 column 2 (char 1)",
+        "plugin_load_count": 0,
+        "queue_corruption_first_pick": "cd66fcda-63e1-42e8-929c-c744f6ecc73f",
+        "queue_corruption_second_pick": null
+      }
+    }
+  ],
+  "runtime_truth_report": {
+    "total_tests": 8,
+    "critical": 0,
+    "high": 1,
+    "medium": 1,
+    "low": 2,
+    "info": 4
+  },
+  "concurrency_findings": [
+    "Retry attempts were observed in non-monotonic order.",
+    "No lock failures observed under forced write lock; contention test may be underpowered."
+  ],
+  "replay_reliability_findings": [
+    "Concurrent mutation changed replay output hash across reads.",
+    "Replay snapshot varied during active writes (expected under concurrent mutation, but non-deterministic snapshot boundary)."
+  ],
+  "architecture_weakness_map": [
+    "Retry attempts were observed in non-monotonic order."
+  ],
+  "governance_weakness_map": [
+    "Escalate action triggered server error under audit insert constraint path.",
+    "Conflict outcome is last-writer-wins; final status depends on request race timing."
+  ],
+  "operational_instability_map": [
+    "Recipient counts fluctuated significantly during reconnect pressure."
+  ],
+  "stabilization_backlog": [
+    {
+      "area": "governance_pressure_testing",
+      "severity": "high",
+      "action": "Address governance_pressure_testing findings: Escalate action triggered server error under audit insert constraint path., Conflict outcome is last-writer-wins; final status depends on request race timing."
+    },
+    {
+      "area": "event_ordering_pressure",
+      "severity": "medium",
+      "action": "Address event_ordering_pressure findings: Retry attempts were observed in non-monotonic order."
+    }
+  ],
+  "severity_ranked_remediation_roadmap": [
+    {
+      "area": "governance_pressure_testing",
+      "severity": "high",
+      "action": "Address governance_pressure_testing findings: Escalate action triggered server error under audit insert constraint path., Conflict outcome is last-writer-wins; final status depends on request race timing."
+    },
+    {
+      "area": "event_ordering_pressure",
+      "severity": "medium",
+      "action": "Address event_ordering_pressure findings: Retry attempts were observed in non-monotonic order."
+    }
+  ]
+}
