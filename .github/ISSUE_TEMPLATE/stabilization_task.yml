@@ -1,0 +1,40 @@
+name: Stabilization Task
+description: Finding-driven stabilization task with deterministic evidence requirements.
+title: "[Stabilization]: "
+labels: ["stabilization", "p0"]
+body:
+  - type: textarea
+    id: finding
+    attributes:
+      label: Runtime Finding
+      description: Link to discovery artifact and exact finding being fixed.
+    validations:
+      required: true
+  - type: textarea
+    id: scope
+    attributes:
+      label: Scope
+      description: Minimal code-path scope for the fix.
+    validations:
+      required: true
+  - type: textarea
+    id: replay_audit
+    attributes:
+      label: Replay/Audit Impact
+      description: Explain replay and audit implications.
+    validations:
+      required: true
+  - type: textarea
+    id: validation
+    attributes:
+      label: Validation Plan
+      description: Adversarial test plan and before/after metrics.
+    validations:
+      required: true
+  - type: textarea
+    id: rollback
+    attributes:
+      label: Rollback Plan
+      description: Safe rollback strategy.
+    validations:
+      required: true

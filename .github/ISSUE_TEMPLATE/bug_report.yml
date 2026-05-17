@@ -1,0 +1,40 @@
+name: Runtime Bug Report
+description: Report a reproducible runtime defect with evidence.
+title: "[Bug]: "
+labels: ["bug", "runtime"]
+body:
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: Clear description of the defect.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Reproduction Steps
+      description: Exact steps to reproduce.
+    validations:
+      required: true
+  - type: textarea
+    id: expected_actual
+    attributes:
+      label: Expected vs Actual
+      description: Describe expected behavior and observed behavior.
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Runtime Evidence
+      description: Logs, artifact paths, replay/audit references.
+    validations:
+      required: true
+  - type: input
+    id: subsystem
+    attributes:
+      label: Affected Subsystem(s)
+      placeholder: "e.g., S6 Governance, S3 Knowledge"
+    validations:
+      required: true
