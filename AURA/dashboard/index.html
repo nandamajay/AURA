@@ -1,0 +1,23 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AURA — Audio Upstream Refactor Agent</title>
+    <script>
+      window.__AURA_CONFIG__ = {
+        API_URL: (window.location.hostname === 'localhost')
+          ? 'http://localhost:8000'
+          : '/api',
+        WS_URL: (window.location.hostname === 'localhost')
+          ? 'ws://localhost:8001/ws'
+          : '/ws',
+      };
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
