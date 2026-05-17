@@ -1,0 +1,66 @@
+# AURA — Git Ignore
+
+# Environment
+.env
+!.env.example
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Virtual environments
+venv/
+.venv/
+env/
+
+# Node
+node_modules/
+npm-debug.log*
+
+# Database
+data/aura.db
+data/aura.db-wal
+data/aura.db-shm
+
+# Runtime data
+data/tmp/
+data/agents/
+data/exports/
+data/logs/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Backup files
+data/backups/*.db
+data/backups/*.db.gz
+
+# Local overrides
+docker-compose.local.yml
+docker-compose.override.yml
+
+# Secrets
+secrets/
+
+# Runtime outputs (preserve discovery evidence only)
+data/outputs/**
+!data/outputs/runtime_discovery/
+!data/outputs/runtime_discovery/*.json

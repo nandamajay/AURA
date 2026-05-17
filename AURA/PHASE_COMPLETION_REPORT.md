@@ -1,0 +1,640 @@
+# AURA Phase Completion Report
+
+Date: 2026-05-16
+Workspace: `<workspace>/AURA`
+
+## Scope
+This report covers the implementation backlog listed in the handoff for:
+- Priority 1 (must complete first)
+- Priority 2 (core hardening)
+- Priority 3 (integration)
+
+## Completion Matrix
+
+### Priority 1
+- [x] Wire agent entry points (`AGENT_TYPES` in `agents/src/aura_agents/cli.py`)
+- [x] Validation test function coverage in `aura-sdk` (`_TEST_REGISTRY` now populated across categories)
+- [x] Event flow wired from core EventBus -> ws-server broadcast -> dashboard subscription path
+
+### Priority 2
+- [x] CircuitBreakerManager integrated with spawn path and control endpoints
+- [x] WatchdogManager implemented and lifecycle-wired
+- [x] LLM gateway mock/test mode implemented (opt-in), with default runtime still QGenie-backed
+- [x] Dashboard non-command pages implemented (all 12 routes available)
+
+### Priority 3
+- [x] Docker Compose full-stack validation (4 services healthy)
+- [x] End-to-end login -> task creation -> agent spawn flow validation
+- [x] Backup/restore scripts implemented and verified end-to-end
+
+## Evidence Summary
+
+- Core services healthy:
+  - `aura-core` (`/health/live`, `/health/ready`)
+  - `aura-ws-server` (`/health`)
+  - `aura-llm-gateway` (`/health`, provider `qgenie`, `mock_mode=false`)
+  - `aura-dashboard` (HTTP 200 on `/`)
+  - Direct Phase C gateway validation passed:
+    - `GET /health` -> `200`
+    - `GET /budget` -> `200`
+    - `POST /cache/clear` -> `200`
+    - `POST /v1/completions` -> `200` with `provider=qgenie`, `mock_mode=false`, and response content `AURA_QGENIE_OK`
+
+- Event pipeline validation:
+  - Observed websocket events including `task.created` and `agent.spawned` after API actions.
+  - Phase D WS/SSE checks passed:
+    - `GET /health` -> `200`
+    - `GET /events` returns `text/event-stream`
+    - WebSocket `/ws` supports connect, subscribe, and ping/pong
+    - `POST /broadcast` delivered events to subscribed WS clients (`recipients=1`)
+
+- Runtime validation:
+  - Real subprocess spawn active for agent CLI (`python -m aura_agents <type> ...`).
+  - Watchdog registration/heartbeat state accessible via API.
+  - Manual kill path validated.
+  - Watchdog escalation chain validated with deterministic test doubles:
+    - Hung process path: `SIGTERM` sent, grace period elapsed, then `SIGKILL` enforced.
+    - Graceful process path: `SIGTERM` sent and process exits without `SIGKILL`.
+    - Timed-out watches are unregistered after termination handling.
+  - All 14 agent types registered and executable (`python -m aura_agents --list`).
+  - Phase G CLI plumbing checks passed:
+    - `from aura_agents.base import BaseAgent` succeeds
+    - `from aura_agents.learning import LearningAgent` succeeds
+    - `python -m aura_agents.learning --help` renders expected CLI options
+  - Remaining formerly-placeholder agents (`knowledge_base`, `dashboard`, `simulation`, `maintainer_intel`, `patch_builder`, `test_runner`, `review_coordinator`) now emit deterministic artifacts and exit with code `0` under real spawn.
+  - Circuit breaker FSM validation passed with deterministic clock injection:
+    - `CLOSED -> OPEN` after 3 failures within 60s
+    - `OPEN` rejects requests until cooldown elapses
+    - `OPEN -> HALF_OPEN` allows exactly one probe (`half_open_probe_in_flight`)
+    - probe success transitions `HALF_OPEN -> CLOSED`
+    - probe failure transitions `HALF_OPEN -> OPEN`
+
+- S1 task scheduling validation:
+  - Replaced task API stubs with live queue manager integration (create/list/get/cancel/stats).
+  - Implemented 3-tier queue policy: `P0` FIFO, `P1` round-robin by agent type, `P2` best-effort under 50% running-capacity threshold.
+  - Automatic dispatcher now launches queued tasks via real `AgentRuntimeManager` and updates task state from runtime events.
+  - Verified end-to-end flow: task creation transitions to queued/running/completed with artifacts emitted by real agents.
+  - Verified cancellation path for queued tasks (`PATCH /api/v1/tasks/{task_id}/cancel`) returns stable cancelled state.
+  - Queue persistence/recovery validated with migration-backed `tasks` table:
+    - Fixed dev mount so migrations at `/workspace/knowledge/schema` are visible in container (`docker-compose.override.yml` now mounts `./knowledge:/workspace/knowledge:ro`).
+    - Confirmed migration application: `Applied migration: 016_tasks_queue.sql` and `_migrations` contains `016_tasks_queue.sql`.
+    - Restart recovery evidence captured:
+      - Pre-restart batch state: `70` tasks (`47 running`, `23 queued`).
+      - Post-restart startup log: `task_queue_state_loaded` with `loaded_tasks=70`, `recovered_requeued=37`.
+      - Recovered tasks resumed and completed (`70` total tasks in batch, final statuses converged without loss).
+
+- Simulation API hardening:
+  - Replaced simulation placeholder response path with persisted lifecycle using `simulation_results`.
+  - `POST /api/v1/simulation/` now validates inputs, persists a new simulation record, and runs deterministic async execution.
+  - `GET /api/v1/simulation/{simulation_id}` now returns real status/findings/failure predictions/confidence impact/duration from SQLite.
+  - Verified lifecycle transitions: `pending -> running -> passed/failed/inconclusive`.
+  - Verified guardrails: invalid `patch_id` returns `404`, unsupported/disabled QEMU requests return `400`.
+
+- Validation framework verification:
+  - `TestCategory` coverage: 29/29 categories have concrete registered test functions (`_TEST_REGISTRY` complete, no missing categories).
+  - Edge-case generation validated: `generate_edge_case_matrix("aura-core")` returned 46 cases (exceeds Phase H expectation of 40+).
+  - Failure probability analysis path validated: `generate_failure_probability_analysis("aura-core")` executed successfully.
+  - Phase H rerun confirms adversarial outputs remain active (`edge_cases=46`, `overall_risk=LOW`, `max_failure_probability=0.17`).
+  - `ValidationOrchestrator.run_plan(...)` smoke execution validated with multi-attempt runs.
+  - SDK test suite validated in container: `10 passed` (`workspace/aura-sdk/tests`).
+
+- Human-control endpoint compliance:
+  - Added and validated `GET /api/v1/tasks/{task_id}/replay` (returns replay payload + integrity status from `task_logs`).
+  - Added and validated `POST /api/v1/charter/enforce` (blocks disallowed/high-risk actions with `403`, allows safe actions with audit metadata).
+  - Added compatibility aliases for approval paths required by charter docs:
+    - `POST /api/v1/charter/approvals/request/{request_id}/approve`
+    - `POST /api/v1/charter/approvals/request/{request_id}/reject`
+  - Charter high-risk block behavior verified with `security_policy_change` action (explicit approval required).
+  - Replay payload normalization hardened: `replayed_at` now returns a real ISO timestamp even when legacy recorder output returns placeholder `{}`.
+
+- Engineering memory validation:
+  - `POST /api/v1/memory/decisions` successfully records new entries (count increment verified).
+  - `GET /api/v1/memory/summary` and ledger counts verified after write.
+  - `POST /api/v1/memory/validation/run` executed successfully (`tests_run=46`, `edge_cases=46`).
+  - Phase I CRUD validation passed for all 10 ledgers in one batch (`delta_total_entries=10`).
+  - Hardening fix applied: memory write integrity failures are now surfaced as `422` (invalid payload) instead of `500`.
+
+- Charter enforcement validation:
+  - Phase J checks passed:
+    - RBAC denial: viewer attempting `user.manage` is blocked (`403`).
+    - High-risk action without approval (`security_policy_change`) is blocked (`403`).
+    - Self-modification attempt (`validation_rule_update`) is blocked (`403`).
+    - Fail-safe blocks low-confidence destructive action (`proceed=false`).
+    - Approval flow validated end-to-end: request -> viewer deny (`403`) -> admin approve (`200`) -> enforce allowed (`200`, `allowed=true`).
+  - Hardening fix applied: charter enforcement metadata is JSON-encoded to prevent blocked-action responses from surfacing as `500`.
+
+- Core and Compose validation (Phase E/F cadence):
+  - `GET /health/live`, `GET /health/ready`, and `GET /metrics` all return `200`.
+  - Auth flow and protected routes validated (`/auth/me`, `/tasks`, `/memory/summary`, `/charter/summary`).
+  - `docker compose ps` confirms all 4 services running and healthy; dashboard root responds `200`.
+  - Post-fix regression sweep passed:
+    - `login -> task create -> queued/running -> completed` successful on fresh run
+    - replay endpoint returns `integrity_ok=true` with normalized timestamp
+    - memory invalid payload path still returns `422`
+    - charter self-modification block still returns `403`
+  - Dev-runtime SDK source wiring hardened:
+    - Added `PYTHONPATH=/workspace/aura-sdk/src` to `aura-core`, `llm-gateway`, and `ws-server` override environments so mounted SDK source is used at runtime.
+    - Verified direct `ReplayEngine.replay(...)` inside `aura-core` now returns ISO `replayed_at` from SDK code path (not placeholder `{}`).
+  - Compose noise cleanup:
+    - Removed obsolete `version` attribute from compose files; warnings no longer emitted on `docker compose` operations.
+  - Test pipeline hardening:
+    - Updated `make test` / `make test-sdk` to execute in runtime containers (not host Python), matching actual service environment.
+    - Added on-demand `pytest` bootstrap only when tests exist, preventing false negatives from missing dev-only packages.
+    - Verified current result: `aura-sdk` suite runs and passes (`10 passed`), while service suites correctly report "not yet implemented" when absent.
+
+- P2 Dashboard UX sequence progress (Document: `p2/01_dashboard_ux.md`):
+  - Artifact 2 route contract alignment completed:
+    - Canonical page route set to `/approvals` (matching spec route table).
+    - Backward compatibility alias retained for `/approval`.
+    - Sidebar and quick navigation links updated to use `/approvals`.
+  - Persistent navigation elements added in shared layout:
+    - Header now includes global search input and notification indicator.
+    - Breadcrumb trail added (`AURA / <Current Page>`).
+    - Footer added with connection status, active agent count, and last refresh timestamp.
+  - Artifact 3.1 engineering workflow UX implemented in Driver Migration Center:
+    - Added explicit 6-step tracker: `submit -> schedule -> execute -> simulation(optional) -> review -> approve`.
+    - Workflow tracker now binds to real task state (`pending/running/completed/failed`) for early pipeline steps.
+    - Added action links for step transitions to relevant pages (`/agents`, `/simulation`, `/patches`, `/approvals`).
+    - Added downstream driver path input to task submission payload (`input_data.downstream_driver_path`).
+    - Added session-persisted workflow task context (`aura.workflow.task_id`) to preserve current item across navigation.
+  - Artifact 3.2 persistent chat panel implemented in shared layout:
+    - Added fixed bottom-right collapsible quick panel shell-wide (48px collapsed, 400px expanded).
+    - Implemented quick-command-only surface (`/status`, `/agents`, `/queue`) to avoid general-chat complexity.
+    - Added context-aware system hints based on current route/page label.
+    - Integrated with live backend endpoints for status/agent/queue responses and inline error handling.
+  - Artifact 4 live agent visualization implemented on `/agents`:
+    - Added agent-card grid with status color coding (`running`, `queued`, `completed`, `failed`, `timeout`) and progress bars.
+    - Added live resource signals on each card (`CPU`, `MEM`, runtime) with warning state highlighting for high-resource running agents.
+    - Wired lifecycle updates from WebSocket events (`agent.*`, `task.*`) into per-agent card state without polling loops for live progression.
+    - Added operator actions on cards (`Kill`, `Log/Output`) and focused-agent detail/event views for rapid triage.
+  - Artifact 5 dependency graph visualization implemented on `/architecture`:
+    - Replaced static endpoint grid with D3 SVG force-directed dependency graph (driver/header/api/macro node types).
+    - Implemented required interactions: click highlight of connected paths, drag reposition, zoom/pan, and double-click navigation to Debugging Center with source path context.
+    - Implemented relationship styles per spec (`#include` solid, API dashed, macro dotted) with node detail and connection legend panels.
+    - Added dual driver datasets (`wcd934x`, `wsa883x`) for immediate operator validation without backend contract changes.
+  - Artifact 6 replay visualization implemented on `/debug`:
+    - Added task replay loader (`/api/v1/tasks/{task_id}/replay`) with fidelity/integrity summary and context metadata.
+    - Added replay timeline renderer covering recorded/replayed timestamps, LLM prompt-response sequence, execution steps, and integrity result.
+    - Added replay payload and output inspectors for detailed debugging evidence.
+    - Extended replay engine output to include `recorded_at`, `prompts`, `responses`, `execution`, and `output` for timeline-level visibility.
+    - Runtime validation confirmed enriched replay payload fields after `aura-core` restart.
+  - Artifact 7 timeline + audit visualization implemented on `/governance`:
+    - Added filterable audit timeline with event/user/date controls and continuously refreshed ledger view.
+    - Added explicit chain-hash summary (`verified`, `mismatched`, `unverifiable`, `missing`) computed from append-only ledger windows.
+    - Added operator-facing timeline rows with event metadata (`timestamp`, `user`, `target`, `session`, `chain_hash`) for replayable audit inspection.
+  - Artifact 8 simulation visualization engine implemented on `/simulation`:
+    - Added Canvas 2D DAPM playback visualization with active/inactive widget states and path highlighting.
+    - Added playback controls per spec (`Prev`, `Play/Pause`, `Next`, `Reset`) plus speed selection (`0.5x`, `1x`, `2x`, `4x`).
+    - Bound simulation status polling to launched simulation ids and surfaced confidence impact/findings alongside visualization.
+    - Upgraded simulation controls to scenario-aware selectors (from `/simulation/scenarios`) with fidelity mode constraints.
+  - Artifact 11 knowledge graph visualization implemented on `/knowledge`:
+    - Added D3 SVG graph renderer for rule/category/subsystem/evidence entities with relationship edges.
+    - Added force and radial layout modes with zoom/pan and drag support for interactive graph inspection.
+    - Added node and edge inspection panels (click/right-click node, click edge) with contextual metadata/evidence display.
+    - Kept knowledge search/export workflows wired to live API and bound graph dataset to active rule/search results.
+  - Artifact 9 voice + narration architecture interface added (P2 interface-only):
+    - Added `dashboard/src/voice/VoiceEngine.ts` with `VoiceEngine` contract and stub implementation (`StubVoiceEngine`).
+    - Added narration trigger mapping for the documented event set (`task.completed`, approval required, escalation, circuit breaker state).
+    - Kept runtime speech disabled in P2 to preserve interface-only scope and avoid P3 implementation drift.
+  - Artifact 10 interactive teaching engine implemented (basic P2 client-side):
+    - Added `dashboard/src/teaching/TeachingEngine.ts` with `TeachingStep`, `TeachingFlow`, triggers, and default onboarding flows.
+    - Added lightweight guided overlay component (`dashboard/src/components/TeachingOverlay.tsx`) with target highlighting, step navigation, and required-action gating for click/input steps.
+    - Integrated teaching overlay into shared layout with first-visit auto-trigger and manual `Guide` launch action.
+    - Added required flow anchors via `data-testid` attributes:
+      - `dashboard-title`, `sidebar` in layout shell
+      - `submit-driver` in Driver Migration Center
+      - `approval-matrix` in Approval Operations Center
+  - Artifact 20 Tier-2 maintainer intelligence interface added (P2 baseline):
+    - Added `governance/src/governance/maintainer_intel.py` with `MaintainerIntelligenceEngine` interface methods:
+      - `get_profile(email)` backed by `maintainer_profiles`
+      - `predict_acceptance(patch, maintainer_email)` heuristic score using historical acceptance + review volume
+      - `analyze_lkml_thread(thread_url)` interface placeholder (P3+ full mining deferred)
+    - Added `NAKReason` model for structured LKML feedback reasons.
+    - Exported interface via `governance/src/governance/__init__.py`.
+    - Runtime validation executed in `aura-core` Python 3.12 container (`MAINTAINER_INTEL_INTERFACE_OK`).
+  - Artifact 12 plugin marketplace architecture interface added (P2 interface-only):
+    - Added `workspace/aura-sdk/src/aura_sdk/plugins/marketplace.py` with `PluginPackage` dataclass and `PluginMarketplace` async interface stubs (`search/install/verify`).
+    - Kept all methods as explicit `NotImplementedError` for P3+ activation only (no P2 runtime marketplace behavior).
+    - Runtime import validation executed in `aura-core` container (`MARKETPLACE_STUB_OK`).
+  - Artifact 13 subsystem extension framework hardening:
+    - Added `workspace/aura-sdk/src/aura_sdk/plugins/transfer.py` (`CrossSubsystemTransfer`) to support deterministic cross-subsystem common-pattern transfer.
+    - Implemented duplicate-safe insertion into `migration_rules` with subsystem resolution from `subsystems` table and confidence-boosted baseline patterns.
+    - Runtime dry-run validation executed in `aura-core` container (`TRANSFER_DRYRUN_OK 0` for nonexistent subsystem).
+  - Artifact 14 multi-subsystem scaling blueprint:
+    - No code changes required by design; validated that current plugin + SQLite architecture supports documented P2/P3 scaling path without infra escalation.
+  - Artifacts 15-19 long-term evolution strategy set:
+    - Confirmed as strategy-only by document contract (`p2/05_evolution_strategy.md`): no P2 implementation, no infra changes, no dependency changes.
+    - Maintained architecture governors by explicitly deferring PostgreSQL/Kubernetes/distributed execution/federation/multi-provider routing to future trigger-based phases.
+  - TypeScript/Vite build validation passed after changes.
+
+- Backup/restore validation:
+  - Backup created from live container DB.
+  - Data mutation introduced.
+  - Restore reverted mutation and returned service to healthy state.
+
+- Latest regression revalidation (post-fix, 2026-05-16):
+  - Agent spawn/task tracking integration fix validated:
+    - `POST /api/v1/agents/learning/spawn` now registers spawned task IDs in queue persistence/state.
+    - Immediate follow-up `GET /api/v1/tasks/{spawned_task_id}` now returns `200` with `status=running` (previously observed `404` for router-spawned task IDs).
+    - Queue-created task flow remains intact (`POST /api/v1/tasks/` -> `running` observed in polling).
+    - Terminal task-id reuse is now blocked before spawn:
+      - `POST /api/v1/agents/learning/spawn` with completed `task_id` now returns `409` (`task_id_conflict_terminal_status:completed`).
+      - Verified no orphan process side effect (`/api/v1/agents/running` count unchanged before/after conflict request).
+  - Core regression tests added for spawn tracking:
+    - New test suite: `services/core/tests/test_task_queue_external_spawn.py`.
+    - Coverage includes:
+      - creating running task entries for external spawn,
+      - promoting queued tasks to running,
+      - rejecting terminal task-id conflicts.
+    - `make test` now executes `aura-sdk`, `core`, `llm-gateway`, and `ws-server` suites successfully:
+      - `aura-sdk`: `11 passed`
+      - `core`: `3 passed`
+      - `llm-gateway`: `3 passed`
+      - `ws-server`: `3 passed`
+  - Replay `NULL output_json` handling validated against real `task_logs` rows:
+    - `GET /api/v1/tasks/29994b40-4de0-4295-8763-a44d04652446/replay` -> `200`, `success=true`, `output_keys=[]`.
+    - `GET /api/v1/tasks/79c46cea-a6f4-472b-995c-e936acd1a49a/replay` -> `200`, `success=true`, `output_keys=[]`.
+    - Confirms prior replay `500` regression is resolved in live stack.
+  - Charter payload contract revalidated:
+    - `POST /api/v1/charter/enforce` with `{"action":"security_policy_change", ...}` -> `403` (explicit high-risk approval required).
+    - Confirms the corrected request key is `action` (not `action_type`) for enforce path.
+  - Memory invalid payload path revalidated after hardening:
+    - `POST /api/v1/memory/decisions` with invalid `constraints` type -> `422` with pydantic detail.
+    - Confirms invalid writes no longer leak as `500`.
+  - QGenie fallback and successful completion behavior revalidated:
+    - `llm-gateway` logs include `qgenie_model_fallback` (`gpt-4o-2024-08-06` -> `azure::gpt-5.3-codex`).
+    - Corresponding `POST /v1/completions` requests return `200 OK`.
+    - Replay prompt/response payloads for learning tasks no longer contain prior `502`/`Bad Gateway` fallback text.
+  - Added SDK regression coverage for replay null-output rows:
+    - New test: `workspace/aura-sdk/tests/test_replay.py::test_replay_handles_null_output_json`.
+    - `make test-sdk` result after image rebuild: `11 passed`.
+  - Runtime timeout-resolution hardening for real QGenie learning runs:
+    - Fixed `AgentRuntimeManager` timeout selection to honor per-agent `DEFAULT_TIMEOUT` when no explicit timeout override is provided.
+    - Learning agent spawn command now uses `--timeout 600` (agent default) instead of forced `300`.
+    - Real single-agent validation (`login -> create learning task -> poll`) now reaches `completed` with `patterns_found=20` under QGenie mode (`mock_mode=false`), where prior concurrent validation run hit the old `300s` timeout path.
+    - Added regression tests: `services/core/tests/test_agent_runtime_timeout.py`.
+    - `make test` revalidated after fix:
+      - `aura-sdk`: `11 passed`
+      - `core`: `6 passed`
+      - `llm-gateway`: `3 passed`
+      - `ws-server`: `3 passed`
+  - WS/SSE fallback hardening completed:
+    - Replaced SSE live-stream TODO path with in-memory subscriber queues in `ws-server` (`/events` now receives live `broadcast` events, not only replay + heartbeat).
+    - `POST /broadcast` now enriches buffered SSE records with channel metadata (`channel`, `channels`) and fans out to matching SSE subscribers.
+    - Added ws-server regression coverage for SSE buffer/fanout semantics:
+      - `tests/test_main.py::test_broadcast_buffers_channel_metadata_for_sse_replay`
+      - `tests/test_main.py::test_broadcast_queues_live_events_for_matching_sse_subscribers`
+    - Live runtime validation:
+      - `curl -N /events?channels=task.orchestration` captured broadcasted `task.created` event (`task_id=sse-live-verify`) after `POST /broadcast`.
+    - `make test` revalidated after SSE fix:
+      - `aura-sdk`: `11 passed`
+      - `core`: `6 passed`
+      - `llm-gateway`: `3 passed`
+      - `ws-server`: `5 passed`
+  - P1 operations script coverage added:
+    - Added `scripts/hardening-check.sh` and Make target `hardening-check`.
+    - Added `scripts/compliance-export.sh` and Make target `compliance-export`.
+    - `compliance-export` validation passed:
+      - Generated export directory and archive under `data/exports/`.
+      - Exported `audit_ledger`, `users`, `approvals`, `patches`, `tasks` CSVs plus `summary.json` and `report.txt`.
+    - `hardening-check` executed and correctly surfaced current enforcement gaps:
+      - container running as root (`uid=0`)
+      - `no-new-privileges` not enabled
+      - capabilities not fully dropped
+      - `data/` permissions are `750` (expected `700`)
+  - Hardening remediation phase completed:
+    - Updated `aura-core` runtime security in compose:
+      - non-root process user via `AURA_RUN_UID` / `AURA_RUN_GID`
+      - `security_opt: [no-new-privileges:true]`
+      - `cap_drop: [ALL]`
+    - Switched `aura-core` database mount to bind-backed `./data:/data` and preserved active DB state by copying `aura.db` from running container before cutover.
+    - Enforced local data directory permissions to `700` (`chmod 700 ./data`).
+    - Added runtime UID/GID guidance to `.env.example`.
+    - Updated test commands to execute `aura-core` test bootstrap as root (`docker compose exec -u 0`) so non-root runtime does not block dynamic pytest install.
+    - Validation after remediation:
+      - `./scripts/hardening-check.sh` -> `Failures: 0` (remaining expected warning: no `secrets/` directory in env-based config)
+      - `make test` full stack still passes:
+        - `aura-sdk`: `11 passed`
+        - `core`: `6 passed`
+        - `llm-gateway`: `3 passed`
+        - `ws-server`: `5 passed`
+      - `GET /health/ready` remained healthy and auth login flow remained valid.
+      - `./scripts/compliance-export.sh` still succeeded after runtime hardening.
+  - H-23 closure completed (secrets directory warning removed):
+    - Updated bootstrap provisioning to create `./secrets` and enforce `chmod 700` on both `./data` and `./secrets`.
+    - Added `secrets/` to `.gitignore` to prevent accidental secret file commits.
+    - Created secured `./secrets` directory in runtime workspace (`700`).
+    - Validation after closure:
+      - `./scripts/hardening-check.sh` -> `Failures: 0`, `Warnings: 0`.
+      - `make test` remained fully green:
+        - `aura-sdk`: `11 passed`
+        - `core`: `6 passed`
+        - `llm-gateway`: `3 passed`
+        - `ws-server`: `5 passed`
+  - WS broadcast adversarial input hardening completed:
+    - Added strict request schema validation for `POST /broadcast` using a typed body (`channel` required, `event` dict).
+    - Invalid payload classes that previously returned `500` now return `422`:
+      - missing `channel`
+      - non-object JSON body (e.g., list)
+      - malformed JSON payload
+    - Added ws-server regression tests for these negative paths:
+      - `test_broadcast_rejects_missing_channel`
+      - `test_broadcast_rejects_non_object_json_body`
+      - `test_broadcast_rejects_malformed_json`
+    - Live API validation confirms behavior:
+      - valid broadcast: `200`
+      - invalid broadcast payloads: `422` (no internal error leak)
+    - `make test` revalidated after hardening:
+      - `aura-sdk`: `11 passed`
+      - `core`: `6 passed`
+      - `llm-gateway`: `3 passed`
+      - `ws-server`: `8 passed`
+  - Core auth + LLM gateway adversarial JSON-body hardening completed (2026-05-17):
+    - Replaced raw JSON parsing in request handlers with typed Pydantic request bodies:
+      - `POST /api/v1/auth/login` now uses `LoginRequest`.
+      - `POST /v1/completions` now uses `CompletionRequest`.
+    - Invalid body classes now consistently fail as `422` (instead of parser/runtime leakage):
+      - non-object JSON body (e.g., list)
+      - malformed JSON payload
+    - Preserved existing auth semantics for structurally valid requests:
+      - missing/empty credentials still return `400` with `Email and password required`.
+      - invalid credentials still return `401`.
+    - Added/updated regression tests:
+      - `services/core/tests/test_auth_input_validation.py`
+      - `services/llm-gateway/tests/test_main.py` (non-object + malformed JSON cases)
+    - Live API validation performed:
+      - `POST /api/v1/auth/login` on `:8000` -> `422` for non-object/malformed payloads.
+      - `POST /v1/completions` on `:8002` (llm-gateway host mapping) -> `422` for non-object/malformed payloads.
+    - Full regression + hardening validation after changes:
+      - `make test`:
+        - `aura-sdk`: `11 passed`
+        - `core`: `9 passed`
+        - `llm-gateway`: `5 passed`
+        - `ws-server`: `8 passed`
+      - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Circuit breaker + watchdog policy validation phase completed (2026-05-17):
+    - Added dedicated core regression coverage for the required protection policies:
+      - `CircuitBreakerManager` FSM (`CLOSED -> OPEN -> HALF_OPEN -> CLOSED`)
+      - threshold behavior (`3 failures / 60s` window)
+      - cooldown gating and half-open single-probe behavior
+      - `WatchdogManager` heartbeat state updates and timeout enforcement path
+      - process termination chain (`SIGTERM -> wait 10s-configured timeout -> SIGKILL fallback`)
+    - New test suites:
+      - `services/core/tests/test_circuit_breaker.py`
+      - `services/core/tests/test_watchdog.py`
+    - Validation evidence:
+      - targeted run: `7 passed` (`test_circuit_breaker.py` + `test_watchdog.py`)
+      - full regression `make test` after additions:
+        - `aura-sdk`: `11 passed`
+        - `core`: `16 passed`
+        - `llm-gateway`: `5 passed`
+        - `ws-server`: `8 passed`
+      - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Priority-3 integration validation phase completed (2026-05-17):
+    - Docker Compose full-stack validation:
+      - `docker compose ps` confirms all 4 services running and healthy where healthchecks are defined:
+        - `aura-core` healthy (`:8000`)
+        - `llm-gateway` healthy (`:8002`)
+        - `ws-server` healthy, localhost-bound (`127.0.0.1:8001`)
+        - `aura-dashboard` running (`:3000`)
+      - Endpoint checks succeeded:
+        - `GET /health/ready` (`aura-core`) -> healthy
+        - `GET /health` (`llm-gateway`) -> healthy, `provider=qgenie`, `mock_mode=false`
+        - `GET /health` (`ws-server`) -> healthy
+    - End-to-end auth/task/spawn flow validated against live stack:
+      - `POST /api/v1/auth/login` -> `200`
+      - `POST /api/v1/tasks/` (`agent_type=learning`, `priority=P1`) -> `200`
+      - `POST /api/v1/agents/learning/spawn` with created `task_id` -> `200`
+      - Follow-up `GET /api/v1/tasks/{task_id}` observed `status=running` (spawn/task registration path intact).
+      - Validation task was cancelled via `PATCH /api/v1/tasks/{task_id}/cancel` to avoid long-running side effects during restore validation.
+    - Backup/restore script verification:
+      - `./scripts/backup.sh` generated compressed snapshot:
+        - `data/backups/aura_backup_20260517_193338.db.gz`
+      - `./scripts/restore.sh aura_backup_20260517_193338.db.gz` completed successfully and produced pre-restore safety snapshot:
+        - `data/backups/aura_pre_restore_20260517_193347.db.gz`
+      - Post-restore health check succeeded (`/health/ready` healthy).
+    - Regression revalidation after restore:
+      - `make test`:
+        - `aura-sdk`: `11 passed`
+        - `core`: `16 passed`
+        - `llm-gateway`: `5 passed`
+        - `ws-server`: `8 passed`
+      - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Dashboard completeness validation phase completed (2026-05-17):
+    - Verified all dashboard route targets are wired in router (`12` primary pages plus backward-compatible aliases):
+      - `GlobalCommandCenter`, `DriverMigrationCenter`, `KnowledgeGraphCenter`, `MaintainerIntelligenceCenter`,
+        `LearningCenter`, `LiveAgentObservability`, `ArchitectureLab`, `PatchReviewWarRoom`,
+        `DebuggingCenter`, `SimulationControlCenter`, `ApprovalOperationsCenter`, `GovernanceCommandCenter`.
+    - Build validation succeeded:
+      - `cd dashboard && npm run build` -> success (`tsc` + `vite build`).
+      - Production bundle generated under `dashboard/dist` without TypeScript compile errors.
+  - Knowledge export completion phase completed (2026-05-17):
+    - Closed remaining `TBD` in `POST /api/v1/knowledge/export`:
+      - Added real CSV export serialization (header + row output).
+      - Kept JSON export behavior.
+    - Hardened export request contract:
+      - typed payload model (`format`, `subsystem`)
+      - explicit format validation (`json|csv`) with `400` on unsupported values
+      - unknown subsystem now returns `404` instead of opaque error payload.
+    - Added regression coverage:
+      - `services/core/tests/test_knowledge_export.py`
+      - cases: JSON export, CSV export, invalid format, unknown subsystem.
+    - Validation evidence:
+      - targeted test run: `4 passed` (`test_knowledge_export.py`)
+      - live API checks:
+        - login `200`
+        - knowledge export `json` `200`
+        - knowledge export `csv` `200` with CSV header in response data
+        - unsupported format (`xml`) `400`
+      - full regression and hardening revalidation:
+        - `aura-sdk`: `11 passed`
+        - `core`: `20 passed`
+        - `llm-gateway`: `5 passed`
+        - `ws-server`: `8 passed`
+        - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Agents spawn payload contract hardening phase completed (2026-05-17):
+    - Replaced raw JSON parsing in `POST /api/v1/agents/{agent_type}/spawn` with typed Pydantic request body.
+    - Preserved spawn flow semantics while hardening malformed/invalid body handling:
+      - non-object JSON body now returns `422`
+      - malformed JSON body now returns `422`
+      - valid payload continues to spawn agent successfully.
+    - Added regression tests:
+      - `services/core/tests/test_agents_spawn_input_validation.py`
+      - cases: non-object JSON, malformed JSON, valid spawn body success path.
+    - Validation evidence:
+      - targeted tests (`test_agents_spawn_input_validation.py` + `test_knowledge_export.py`): `7 passed`
+      - live API checks:
+        - `POST /api/v1/agents/learning/spawn` with `[]` -> `422`
+        - `POST /api/v1/agents/learning/spawn` with malformed JSON -> `422`
+      - full regression + hardening:
+        - `aura-sdk`: `11 passed`
+        - `core`: `23 passed`
+        - `llm-gateway`: `5 passed`
+        - `ws-server`: `8 passed`
+        - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Memory router payload contract hardening phase completed (2026-05-17):
+    - Replaced raw JSON parsing across `memory` write/validation endpoints with typed request bodies.
+    - Covered all prior `await request.json()` paths in `memory.py`, including:
+      - decision/failure/replay-incident/drift/ops-incident/stabilization/debt/scalability/risk/migration writes
+      - adversarial validation run endpoint
+      - nondeterminism check endpoint
+    - Resulting behavior hardening:
+      - non-object JSON payloads return `422` (instead of potential runtime type errors)
+      - malformed JSON payloads return `422`
+      - valid payload behavior preserved.
+    - Added regression coverage:
+      - `services/core/tests/test_memory_input_validation.py`
+      - cases: non-object/malformed decisions payloads, valid decision create path, validation-run non-object rejection, nondeterminism-check success path.
+    - Live API validation:
+      - `POST /api/v1/memory/decisions` with list payload -> `422`
+      - `POST /api/v1/memory/decisions` with malformed JSON -> `422`
+      - `POST /api/v1/memory/decisions` with valid payload -> `200` and `decision_id` returned.
+    - Full regression + hardening:
+      - `aura-sdk`: `11 passed`
+      - `core`: `28 passed`
+      - `llm-gateway`: `5 passed`
+      - `ws-server`: `8 passed`
+      - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Charter router payload contract hardening phase completed (2026-05-17):
+    - Replaced raw JSON parsing across charter mutation endpoints with typed request models.
+    - Covered prior `await request.json()` paths in `charter.py`, including:
+      - manual intervention / override / rollback
+      - approval request / approval reject
+      - fail-safe evaluation / integrity check
+      - action dry-run and blocking policy enforcement
+    - Resulting behavior hardening:
+      - non-object JSON payloads return `422`
+      - malformed JSON payloads return `422`
+      - valid payload behavior is preserved
+      - `POST /api/v1/charter/enforce` still requires `action` and returns `400` when missing.
+    - Added regression coverage:
+      - `services/core/tests/test_charter_input_validation.py`
+      - cases: non-object/malformed intervene payload rejection, valid intervene success path, reject-approval non-object rejection, enforce missing-action guard.
+    - Live API validation:
+      - `POST /api/v1/charter/intervene` with list payload -> `422`
+      - `POST /api/v1/charter/intervene` with malformed JSON -> `422`
+      - `POST /api/v1/charter/intervene` with valid payload -> `200`
+      - `POST /api/v1/charter/enforce` with `{}` -> `400` (`Field 'action' is required`).
+    - Full regression + hardening:
+      - `aura-sdk`: `11 passed`
+      - `core`: `33 passed`
+      - `llm-gateway`: `5 passed`
+      - `ws-server`: `8 passed`
+      - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+  - Core task endpoint negative-path coverage phase completed (2026-05-17):
+    - Expanded router-level regression coverage for task API guardrails:
+      - queue manager unavailable path returns `503`
+      - create-task rejects non-object and malformed JSON (`422`)
+      - get-task missing-id path returns `404`
+      - cancel-task missing-id path returns `404`
+      - replay missing-log path returns `404`
+      - list endpoint success path with available queue state remains intact
+    - Added regression coverage:
+      - `services/core/tests/test_tasks_input_validation.py`
+      - note: replay missing-log test uses mocked recorder/replay engine objects to keep the check deterministic and filesystem-independent.
+    - Validation evidence:
+      - full regression `make test`:
+        - `aura-sdk`: `11 passed`
+        - `core`: `40 passed`
+        - `llm-gateway`: `5 passed`
+        - `ws-server`: `8 passed`
+      - `make hardening-check`: `Failures: 0`, `Warnings: 0`.
+
+## Known Limitations (Explicit)
+
+1. Several agents currently use deterministic baseline heuristics with optional LLM enrichment, not deep subsystem-specific intelligence from full production rulebooks.
+2. In this dataset, `maintainer_profiles`, `patches`, and `approvals` are sparse/empty, so those agent reports are structurally valid but content-light.
+3. Service test coverage is still partial and focused on regressions/smoke behavior:
+   - `core`: targeted queue/spawn/timeout + router input/negative-path regressions (auth/agents/knowledge/memory/charter/tasks)
+   - `llm-gateway`: health/completions/cache/budget tests
+   - `ws-server`: health/ws subscribe+broadcast/ping plus SSE buffer/fanout tests
+   Additional broad negative-path and load/perf coverage is still pending.
+4. Secrets are currently directory-scaffolded (`./secrets`) but runtime injection remains env-based by deployment choice.
+
+## Architecture/Governor Compliance Notes
+
+- No infrastructure escalation beyond Docker Compose + SQLite + in-memory bus.
+- No bypass of charter/governance/audit protections introduced.
+- QGenie-backed LLM mode remains default; mock mode remains explicit opt-in.
+
+## Files Added/Updated (during latest phases)
+
+- `services/core/src/core/services/agent_runtime.py`
+- `services/core/src/core/services/task_queue.py`
+- `services/core/src/core/lifespan.py`
+- `services/core/src/core/routers/agents.py`
+- `services/core/src/core/routers/auth.py`
+- `services/core/src/core/routers/tasks.py`
+- `services/core/src/core/routers/knowledge.py`
+- `services/core/src/core/routers/memory.py`
+- `services/core/src/core/routers/charter.py`
+- `services/core/src/core/routers/simulation.py`
+- `services/core/Dockerfile`
+- `services/core/tests/test_agent_runtime_timeout.py`
+- `services/core/tests/test_agents_spawn_input_validation.py`
+- `services/core/tests/test_auth_input_validation.py`
+- `services/core/tests/test_circuit_breaker.py`
+- `services/core/tests/test_knowledge_export.py`
+- `services/core/tests/test_memory_input_validation.py`
+- `services/core/tests/test_task_queue_external_spawn.py`
+- `services/core/tests/test_tasks_input_validation.py`
+- `services/core/tests/test_watchdog.py`
+- `services/llm-gateway/Dockerfile`
+- `services/llm-gateway/src/llm_gateway/main.py`
+- `services/llm-gateway/tests/test_main.py`
+- `services/ws-server/pyproject.toml`
+- `services/ws-server/Dockerfile`
+- `services/ws-server/src/ws_server/main.py`
+- `services/ws-server/tests/test_main.py`
+- `docker-compose.override.yml`
+- `docker-compose.yml`
+- `.env.example`
+- `Makefile`
+- `knowledge/schema/016_tasks_queue.sql`
+- `scripts/backup.sh`
+- `scripts/bootstrap.sh`
+- `scripts/compliance-export.sh`
+- `scripts/hardening-check.sh`
+- `scripts/restore.sh`
+- `agents/src/aura_agents/cli.py`
+- `agents/src/aura_agents/_placeholder.py`
+- `agents/src/aura_agents/dependency.py`
+- `agents/src/aura_agents/dts_bindings.py`
+- `agents/src/aura_agents/upstream_philosophy.py`
+- `agents/src/aura_agents/refactor.py`
+- `agents/src/aura_agents/validation.py`
+- `agents/src/aura_agents/regression.py`
+- `agents/src/aura_agents/knowledge_base.py`
+- `agents/src/aura_agents/dashboard.py`
+- `agents/src/aura_agents/simulation.py`
+- `agents/src/aura_agents/maintainer_intel.py`
+- `agents/src/aura_agents/patch_builder.py`
+- `agents/src/aura_agents/test_runner.py`
+- `agents/src/aura_agents/review_coordinator.py`
+- `workspace/aura-sdk/src/aura_sdk/governance/guard.py`
+- `workspace/aura-sdk/src/aura_sdk/replay/replayer.py`
+- `workspace/aura-sdk/tests/test_replay.py`
+- `workspace/aura-sdk/src/aura_sdk/plugins/marketplace.py`
+- `workspace/aura-sdk/src/aura_sdk/plugins/transfer.py`
+- `workspace/aura-sdk/src/aura_sdk/plugins/__init__.py`
+- `governance/src/governance/maintainer_intel.py`
+- `governance/src/governance/__init__.py`
+- `dashboard/src/App.tsx`
+- `dashboard/src/components/Layout.tsx`
+- `dashboard/src/components/ChatPanel.tsx`
+- `dashboard/src/pages/GlobalCommandCenter.tsx`
+- `dashboard/src/pages/DriverMigrationCenter.tsx`
+- `dashboard/src/pages/LiveAgentObservability.tsx`
+- `dashboard/src/pages/ArchitectureLab.tsx`
+- `dashboard/src/pages/DebuggingCenter.tsx`
+- `dashboard/src/pages/GovernanceCommandCenter.tsx`
+- `dashboard/src/pages/SimulationControlCenter.tsx`
+- `dashboard/src/pages/KnowledgeGraphCenter.tsx`
+- `dashboard/src/pages/ApprovalOperationsCenter.tsx`
+- `dashboard/src/voice/VoiceEngine.ts`
+- `dashboard/src/teaching/TeachingEngine.ts`
+- `dashboard/src/components/TeachingOverlay.tsx`
+- `dashboard/src/components/Layout.tsx`
+- `dashboard/package.json`
+- `dashboard/package-lock.json`
+- `workspace/aura-sdk/src/aura_sdk/replay/replayer.py`

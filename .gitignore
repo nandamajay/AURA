@@ -1,0 +1,128 @@
+# AURA monorepo - production-grade ignore policy
+
+# -----------------------------
+# Secrets / credentials
+# -----------------------------
+.env
+.env.*
+!.env.example
+!.env.sample
+!.env.template
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+!**/.env.template
+**/secrets/**
+!**/secrets/.gitkeep
+*.pem
+*.key
+*.p12
+*.crt
+id_rsa
+id_rsa.pub
+id_ed25519
+id_ed25519.pub
+
+# -----------------------------
+# Python
+# -----------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+.venv/
+venv/
+env/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+.coverage
+.coverage.*
+coverage.xml
+htmlcov/
+pip-wheel-metadata/
+*.egg
+*.egg-info/
+build/
+dist/
+
+# -----------------------------
+# Node / React / Vite
+# -----------------------------
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.npm/
+.yarn/
+.pnpm-store/
+.parcel-cache/
+.vite/
+.next/
+coverage/
+
+# -----------------------------
+# Docker / local overrides
+# -----------------------------
+docker-compose.override.yml
+docker-compose.local.yml
+docker-compose.*.local.yml
+
+# -----------------------------
+# SQLite / WAL / runtime DB
+# -----------------------------
+*.db
+*.db-wal
+*.db-shm
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+*-wal
+*-shm
+
+# -----------------------------
+# Runtime artifacts / outputs
+# -----------------------------
+AURA/data/backups/**
+AURA/data/exports/**
+AURA/data/logs/**
+AURA/data/tmp/**
+AURA/data/agents/**
+AURA/data/outputs/**
+!AURA/data/outputs/runtime_discovery/
+!AURA/data/outputs/runtime_discovery/*.json
+
+# -----------------------------
+# Caches / temporary files
+# -----------------------------
+.cache/
+tmp/
+temp/
+*.tmp
+*.swp
+*.swo
+*~
+
+# -----------------------------
+# IDE / OS
+# -----------------------------
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# Compiled / vendor binaries
+# -----------------------------
+*.o
+*.a
+*.dll
+*.dylib
+*.exe
+
