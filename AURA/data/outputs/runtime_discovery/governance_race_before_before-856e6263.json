@@ -1,0 +1,63 @@
+{
+  "run_id": "before-856e6263",
+  "started_at": 1779050563.1946676,
+  "conflict_calls": [
+    {
+      "approval_id": "appr-conflict-before-856e6263",
+      "action": "grant",
+      "status": 200,
+      "body": {
+        "approval_id": "appr-conflict-before-856e6263",
+        "action": "grant",
+        "status": "passed"
+      }
+    },
+    {
+      "approval_id": "appr-conflict-before-856e6263",
+      "action": "reject",
+      "status": 200,
+      "body": {
+        "approval_id": "appr-conflict-before-856e6263",
+        "action": "reject",
+        "status": "failed"
+      }
+    }
+  ],
+  "escalate_call": {
+    "approval_id": "appr-escalate-before-856e6263",
+    "action": "escalate",
+    "status": 500,
+    "body": {
+      "raw": "Internal Server Error"
+    }
+  },
+  "approval_state_conflict": {
+    "id": "appr-conflict-before-856e6263",
+    "status": "failed",
+    "reviewed_by": "38e90286554c7561e88052860999898f",
+    "reviewed_at": 1779050563,
+    "comments": "before-reject"
+  },
+  "approval_state_escalate": {
+    "id": "appr-escalate-before-856e6263",
+    "status": "pending",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "comments": null
+  },
+  "audit_events": [
+    {
+      "id": 43,
+      "event_type": "approval.rejected",
+      "target_id": "appr-conflict-before-856e6263",
+      "timestamp": 1779050563
+    },
+    {
+      "id": 44,
+      "event_type": "approval.granted",
+      "target_id": "appr-conflict-before-856e6263",
+      "timestamp": 1779050563
+    }
+  ],
+  "finished_at": 1779050563.589071
+}

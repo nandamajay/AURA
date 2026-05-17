@@ -1,0 +1,65 @@
+{
+  "run_id": "afterfix-509eb2f3",
+  "started_at": 1779051213.9830935,
+  "conflict_calls": [
+    {
+      "approval_id": "appr-conflict-afterfix-509eb2f3",
+      "action": "grant",
+      "status": 200,
+      "body": {
+        "approval_id": "appr-conflict-afterfix-509eb2f3",
+        "action": "grant",
+        "status": "passed",
+        "outcome": "applied"
+      }
+    },
+    {
+      "approval_id": "appr-conflict-afterfix-509eb2f3",
+      "action": "reject",
+      "status": 409,
+      "body": {
+        "detail": "approval_conflict_terminal:passed"
+      }
+    }
+  ],
+  "escalate_call": {
+    "approval_id": "appr-escalate-afterfix-509eb2f3",
+    "action": "escalate",
+    "status": 200,
+    "body": {
+      "approval_id": "appr-escalate-afterfix-509eb2f3",
+      "action": "escalate",
+      "status": "in_progress",
+      "outcome": "applied"
+    }
+  },
+  "approval_state_conflict": {
+    "id": "appr-conflict-afterfix-509eb2f3",
+    "status": "passed",
+    "reviewed_by": "38e90286554c7561e88052860999898f",
+    "reviewed_at": 1779051214,
+    "comments": "afterfix-grant"
+  },
+  "approval_state_escalate": {
+    "id": "appr-escalate-afterfix-509eb2f3",
+    "status": "in_progress",
+    "reviewed_by": "38e90286554c7561e88052860999898f",
+    "reviewed_at": 1779051214,
+    "comments": "afterfix-escalate"
+  },
+  "audit_events": [
+    {
+      "id": 46,
+      "event_type": "approval.granted",
+      "target_id": "appr-conflict-afterfix-509eb2f3",
+      "timestamp": 1779051214
+    },
+    {
+      "id": 47,
+      "event_type": "approval.escalated",
+      "target_id": "appr-escalate-afterfix-509eb2f3",
+      "timestamp": 1779051214
+    }
+  ],
+  "finished_at": 1779051214.3584092
+}

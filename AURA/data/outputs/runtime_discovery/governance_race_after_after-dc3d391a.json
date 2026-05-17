@@ -1,0 +1,56 @@
+{
+  "run_id": "after-dc3d391a",
+  "started_at": 1779050911.0395722,
+  "conflict_calls": [
+    {
+      "approval_id": "appr-conflict-after-dc3d391a",
+      "action": "grant",
+      "status": 409,
+      "body": {
+        "detail": "approval_conflict_terminal:failed"
+      }
+    },
+    {
+      "approval_id": "appr-conflict-after-dc3d391a",
+      "action": "reject",
+      "status": 200,
+      "body": {
+        "approval_id": "appr-conflict-after-dc3d391a",
+        "action": "reject",
+        "status": "failed",
+        "outcome": "applied"
+      }
+    }
+  ],
+  "escalate_call": {
+    "approval_id": "appr-escalate-after-dc3d391a",
+    "action": "escalate",
+    "status": 500,
+    "body": {
+      "detail": "Approval processing failed"
+    }
+  },
+  "approval_state_conflict": {
+    "id": "appr-conflict-after-dc3d391a",
+    "status": "failed",
+    "reviewed_by": "38e90286554c7561e88052860999898f",
+    "reviewed_at": 1779050911,
+    "comments": "after-reject"
+  },
+  "approval_state_escalate": {
+    "id": "appr-escalate-after-dc3d391a",
+    "status": "pending",
+    "reviewed_by": null,
+    "reviewed_at": null,
+    "comments": null
+  },
+  "audit_events": [
+    {
+      "id": 45,
+      "event_type": "approval.rejected",
+      "target_id": "appr-conflict-after-dc3d391a",
+      "timestamp": 1779050911
+    }
+  ],
+  "finished_at": 1779050911.454507
+}
