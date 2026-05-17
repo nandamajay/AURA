@@ -1,0 +1,143 @@
+networks:
+  aura-internal:
+    driver: bridge
+    internal: false
+
+volumes:
+  aura-data:
+    driver: local
+  aura-logs:
+    driver: local
+
+services:
+  # ── Service 1: LLM Gateway (starts first) ──
+  llm-gateway:
+    build:
+      context: .
+      dockerfile: services/llm-gateway/Dockerfile
+    container_name: aura-llm-gateway
+    networks:
+      - aura-internal
+    ports:
+      - "8002:8000"
+    environment:
+      - LLM_PROVIDER=${LLM_PROVIDER:-qgenie}
+      - LLM_MOCK_MODE=${LLM_MOCK_MODE:-false}
+      - OPENAI_API_KEY=${OPENAI_API_KEY:-}
+      - QGENIE_API_KEY=${QGENIE_API_KEY:-}
+      - QGENIE_COMMAND=${QGENIE_COMMAND:-qgenie}
+      - QGENIE_CLI_HOME=${QGENIE_CLI_HOME:-/root/.config/qgenie-cli}
+      - TOKEN_BUDGET_DAILY=${TOKEN_BUDGET_DAILY:-1000000}
+      - CACHE_SIZE=${CACHE_SIZE:-10000}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 10s
+    restart: unless-stopped
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # ── Service 2: WebSocket Server ──
+  ws-server:
+    build:
+      context: .
+      dockerfile: services/ws-server/Dockerfile
+    container_name: aura-ws-server
+    networks:
+      - aura-internal
+    ports:
+      - "127.0.0.1:8001:8000"
+    environment:
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - MAX_CONNECTIONS=100
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health')"]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+      start_period: 5s
+    restart: unless-stopped
+    depends_on:
+      llm-gateway:
+        condition: service_healthy
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "5"
+
+  # ── Service 3: Core Orchestrator ──
+  aura-core:
+    build:
+      context: .
+      dockerfile: services/core/Dockerfile
+    container_name: aura-core
+    user: "${AURA_RUN_UID:-1000}:${AURA_RUN_GID:-1000}"
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    networks:
+      - aura-internal
+    ports:
+      - "8000:8000"
+    environment:
+      - SQLITE_PATH=/data/aura.db
+      - AURA_MIGRATIONS_DIR=/workspace/knowledge/schema
+      - RULES_PATH=/rules
+      - PLUGINS_PATH=/plugins
+      - LLM_GATEWAY_URL=http://llm-gateway:8000
+      - WS_SERVER_URL=http://ws-server:8000
+      - MAX_CONCURRENT_AGENTS=${MAX_CONCURRENT_AGENTS:-50}
+      - AGENT_TIMEOUT_SECONDS=${AGENT_TIMEOUT_SECONDS:-300}
+      - LOG_LEVEL=${LOG_LEVEL:-INFO}
+      - "JWT_SECRET=${JWT_SECRET:?Error: JWT_SECRET not set}"
+      - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@aura.local}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin123}
+    volumes:
+      - ./data:/data
+      - ./rules:/rules:ro
+      - ./plugins:/plugins:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/health/ready')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+    restart: unless-stopped
+    depends_on:
+      llm-gateway:
+        condition: service_healthy
+      ws-server:
+        condition: service_started
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "100m"
+        max-file: "10"
+
+  # ── Service 4: Dashboard ──
+  aura-dashboard:
+    build:
+      context: .
+      dockerfile: dashboard/Dockerfile
+    container_name: aura-dashboard
+    networks:
+      - aura-internal
+    ports:
+      - "3000:80"
+    environment:
+      - API_URL=http://aura-core:8000
+      - WS_URL=ws://ws-server:8000
+    depends_on:
+      aura-core:
+        condition: service_healthy
+      ws-server:
+        condition: service_started
+    restart: unless-stopped
