@@ -1,0 +1,73 @@
+{
+  "run_id": "retry-before-66dc8cd7",
+  "observed_at": "2026-05-18T04:35:58.396994+00:00",
+  "runtime_spawn_calls": 1,
+  "task_id": "8aa3aaa8-a35c-4d72-bed0-3d5312af0d0d",
+  "after_first_dispatch": {
+    "id": "8aa3aaa8-a35c-4d72-bed0-3d5312af0d0d",
+    "agent_type": "learning",
+    "status": "running",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-before-66dc8cd7"
+    },
+    "result_data": {},
+    "description": "retry-before-retry-before-66dc8cd7",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 1,
+    "max_retries": 3,
+    "agent_pid": 1001,
+    "started_at": "2026-05-18T04:35:58.346665Z",
+    "completed_at": null,
+    "created_at": "2026-05-18T04:35:58.346484Z"
+  },
+  "after_failed_event": {
+    "id": "8aa3aaa8-a35c-4d72-bed0-3d5312af0d0d",
+    "agent_type": "learning",
+    "status": "failed",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-before-66dc8cd7"
+    },
+    "result_data": {
+      "error": "simulated-timeout"
+    },
+    "description": "retry-before-retry-before-66dc8cd7",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 1,
+    "max_retries": 3,
+    "agent_pid": 1001,
+    "started_at": "2026-05-18T04:35:58.346665Z",
+    "completed_at": "2026-05-18T04:35:58.346785Z",
+    "created_at": "2026-05-18T04:35:58.346484Z"
+  },
+  "after_second_dispatch": {
+    "id": "8aa3aaa8-a35c-4d72-bed0-3d5312af0d0d",
+    "agent_type": "learning",
+    "status": "failed",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-before-66dc8cd7"
+    },
+    "result_data": {
+      "error": "simulated-timeout"
+    },
+    "description": "retry-before-retry-before-66dc8cd7",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 1,
+    "max_retries": 3,
+    "agent_pid": 1001,
+    "started_at": "2026-05-18T04:35:58.346665Z",
+    "completed_at": "2026-05-18T04:35:58.346785Z",
+    "created_at": "2026-05-18T04:35:58.346484Z"
+  },
+  "captured_retry_events": [],
+  "summary": {
+    "retry_event_count": 0,
+    "final_status": "failed",
+    "current_attempt": 1
+  }
+}

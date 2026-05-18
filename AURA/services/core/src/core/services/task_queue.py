@@ -16,11 +16,17 @@ from datetime import date, datetime, timezone
 from aura_sdk.bus.event_bus import EventBus
 from aura_sdk.db.connection import get_db
 from aura_sdk.logging.logger import get_logger
-from aura_sdk.models.event import EventEnvelope, EventType
+from aura_sdk.models.event import EventEnvelope, EventSource, EventType
 from aura_sdk.models.task import Task, TaskCreate, TaskPriority, TaskStatus
+from aura_sdk.protocol.constants import ExitCode
 from core.services.agent_runtime import AgentRuntimeManager
 
 logger = get_logger("core.task_queue")
+RETRYABLE_EXIT_CODES = {
+    int(ExitCode.TIMEOUT),
+    int(ExitCode.RESOURCE_EXHAUSTED),
+    int(ExitCode.LLM_UNAVAILABLE),
+}
 
 
 class TaskQueueManager:
@@ -336,6 +342,10 @@ class TaskQueueManager:
                 task.status = TaskStatus.STARTED
                 task.started_at = datetime.now(timezone.utc)
                 task.current_attempt += 1
+                result_data = self._normalize_result_data(task.result_data)
+                result_data["attempt_started"] = task.current_attempt
+                result_data["retry_pending"] = False
+                task.result_data = result_data
 
             if task is None:
                 continue
@@ -461,6 +471,35 @@ class TaskQueueManager:
         self._completed_today = 0
         self._failed_today = 0
 
+    def _normalize_result_data(self, value: dict | None) -> dict[str, object]:
+        if isinstance(value, dict):
+            return dict(value)
+        return {}
+
+    def _extract_exit_code(self, payload: dict[str, object]) -> int:
+        raw = payload.get("exit_code")
+        try:
+            return int(raw)
+        except Exception:
+            return -1
+
+    async def _publish_retry_event(self, task: Task | None, payload: dict[str, object]) -> None:
+        if self._event_bus is None or task is None:
+            return
+        event = EventEnvelope(
+            event_type=EventType.TASK_QUEUED,
+            source=EventSource(
+                subsystem="S1",
+                service="core",
+                task_id=task.id,
+                agent_type=task.agent_type.value,
+                agent_id="",
+            ),
+            payload=payload,
+            trace_id=task.id,
+        )
+        await self._event_bus.publish(event)
+
     async def _on_task_completed(self, event: EventEnvelope) -> None:
         task_id = str(event.payload.get("task_id") or event.source.task_id or "")
         if not task_id:
@@ -474,7 +513,15 @@ class TaskQueueManager:
             if task.status not in {TaskStatus.CANCELLED, TaskStatus.COMPLETED}:
                 task.status = TaskStatus.COMPLETED
                 task.completed_at = datetime.now(timezone.utc)
-                task.result_data = event.payload.get("results", {})
+                result_data = self._normalize_result_data(task.result_data)
+                results = event.payload.get("results", {})
+                if isinstance(results, dict):
+                    result_data["results"] = results
+                else:
+                    result_data["results_raw"] = results
+                result_data["retry_pending"] = False
+                result_data["final_status"] = TaskStatus.COMPLETED.value
+                task.result_data = result_data
                 self._completed_today += 1
             self._detach_running_locked(task_id)
             task_to_persist = task
@@ -486,20 +533,80 @@ class TaskQueueManager:
         if not task_id:
             return
 
+        now = datetime.now(timezone.utc)
+        exit_code = self._extract_exit_code(event.payload)
+        error_message = str(event.payload.get("error", "") or "")
+        retry_payload: dict[str, object] | None = None
         task_to_persist: Task | None = None
         async with self._lock:
             task = self._tasks.get(task_id)
             if task is None:
                 return
-            if task.status != TaskStatus.CANCELLED:
+            if task.status == TaskStatus.CANCELLED:
+                return
+            # Guard against duplicate AGENT_FAILED fanout for the same attempt.
+            if task.status not in {TaskStatus.STARTED, TaskStatus.RUNNING}:
+                return
+
+            result_data = self._normalize_result_data(task.result_data)
+            retry_lineage = result_data.get("retry_lineage", [])
+            if not isinstance(retry_lineage, list):
+                retry_lineage = []
+
+            can_retry = (
+                exit_code in RETRYABLE_EXIT_CODES
+                and task.current_attempt < max(1, int(task.max_retries))
+            )
+            result_data["last_failure"] = {
+                "attempt": task.current_attempt,
+                "exit_code": exit_code,
+                "error": error_message,
+                "failed_at": now.isoformat(),
+            }
+
+            if can_retry:
+                retry_sequence = len(retry_lineage) + 1
+                entry = {
+                    "retry_sequence": retry_sequence,
+                    "failed_attempt": task.current_attempt,
+                    "next_attempt": task.current_attempt + 1,
+                    "failed_exit_code": exit_code,
+                    "reason": error_message or "agent_failed",
+                    "scheduled_at": now.isoformat(),
+                }
+                retry_lineage.append(entry)
+                result_data["retry_lineage"] = retry_lineage
+                result_data["retry_pending"] = True
+                result_data["final_status"] = TaskStatus.QUEUED.value
+                task.result_data = result_data
+
+                task.status = TaskStatus.QUEUED
+                task.completed_at = None
+                self._enqueue_locked(task.id, task.priority, task.agent_type.value)
+                retry_payload = {
+                    "task_id": task.id,
+                    "agent_type": task.agent_type.value,
+                    "status": TaskStatus.QUEUED.value,
+                    "reason": "retry_scheduled",
+                    "retry": entry,
+                }
+            else:
                 task.status = TaskStatus.FAILED
-                task.completed_at = datetime.now(timezone.utc)
-                task.result_data = {"error": event.payload.get("error", "")}
+                task.completed_at = now
+                result_data["retry_pending"] = False
+                result_data["final_status"] = TaskStatus.FAILED.value
+                result_data["error"] = error_message
+                if exit_code in RETRYABLE_EXIT_CODES:
+                    result_data["retry_exhausted"] = True
+                task.result_data = result_data
                 self._failed_today += 1
             self._detach_running_locked(task_id)
             task_to_persist = task
+
         if task_to_persist is not None:
             await self._upsert_task(task_to_persist)
+        if retry_payload is not None:
+            await self._publish_retry_event(task_to_persist, retry_payload)
 
     async def _on_task_cancelled(self, event: EventEnvelope) -> None:
         task_id = str(event.payload.get("task_id") or event.source.task_id or "")
@@ -514,6 +621,10 @@ class TaskQueueManager:
             task.status = TaskStatus.CANCELLED
             if task.completed_at is None:
                 task.completed_at = datetime.now(timezone.utc)
+            result_data = self._normalize_result_data(task.result_data)
+            result_data["retry_pending"] = False
+            result_data["final_status"] = TaskStatus.CANCELLED.value
+            task.result_data = result_data
             self._detach_running_locked(task_id)
             task_to_persist = task
         if task_to_persist is not None:

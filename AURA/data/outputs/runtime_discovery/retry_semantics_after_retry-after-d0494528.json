@@ -1,0 +1,290 @@
+{
+  "run_id": "retry-after-d0494528",
+  "observed_at": "2026-05-18T04:42:22.718728+00:00",
+  "runtime_spawn_calls": 3,
+  "task_id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+  "after_first_dispatch": {
+    "id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+    "agent_type": "learning",
+    "status": "running",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-after-d0494528"
+    },
+    "result_data": {
+      "attempt_started": 1,
+      "retry_pending": false
+    },
+    "description": "retry-after-retry-after-d0494528",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 1,
+    "max_retries": 3,
+    "agent_pid": 1001,
+    "started_at": "2026-05-18T04:42:22.567554Z",
+    "completed_at": null,
+    "created_at": "2026-05-18T04:42:22.567372Z"
+  },
+  "after_first_failure": {
+    "id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+    "agent_type": "learning",
+    "status": "queued",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-after-d0494528"
+    },
+    "result_data": {
+      "attempt_started": 1,
+      "retry_pending": true,
+      "last_failure": {
+        "attempt": 1,
+        "exit_code": 3,
+        "error": "simulated-timeout",
+        "failed_at": "2026-05-18T04:42:22.567671+00:00"
+      },
+      "retry_lineage": [
+        {
+          "retry_sequence": 1,
+          "failed_attempt": 1,
+          "next_attempt": 2,
+          "failed_exit_code": 3,
+          "reason": "simulated-timeout",
+          "scheduled_at": "2026-05-18T04:42:22.567671+00:00"
+        }
+      ],
+      "final_status": "queued"
+    },
+    "description": "retry-after-retry-after-d0494528",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 1,
+    "max_retries": 3,
+    "agent_pid": 1001,
+    "started_at": "2026-05-18T04:42:22.567554Z",
+    "completed_at": null,
+    "created_at": "2026-05-18T04:42:22.567372Z"
+  },
+  "after_second_dispatch": {
+    "id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+    "agent_type": "learning",
+    "status": "running",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-after-d0494528"
+    },
+    "result_data": {
+      "attempt_started": 2,
+      "retry_pending": false,
+      "last_failure": {
+        "attempt": 1,
+        "exit_code": 3,
+        "error": "simulated-timeout",
+        "failed_at": "2026-05-18T04:42:22.567671+00:00"
+      },
+      "retry_lineage": [
+        {
+          "retry_sequence": 1,
+          "failed_attempt": 1,
+          "next_attempt": 2,
+          "failed_exit_code": 3,
+          "reason": "simulated-timeout",
+          "scheduled_at": "2026-05-18T04:42:22.567671+00:00"
+        }
+      ],
+      "final_status": "queued"
+    },
+    "description": "retry-after-retry-after-d0494528",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 2,
+    "max_retries": 3,
+    "agent_pid": 1002,
+    "started_at": "2026-05-18T04:42:22.618069Z",
+    "completed_at": null,
+    "created_at": "2026-05-18T04:42:22.567372Z"
+  },
+  "after_second_failure": {
+    "id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+    "agent_type": "learning",
+    "status": "queued",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-after-d0494528"
+    },
+    "result_data": {
+      "attempt_started": 2,
+      "retry_pending": true,
+      "last_failure": {
+        "attempt": 2,
+        "exit_code": 5,
+        "error": "simulated-llm-unavailable",
+        "failed_at": "2026-05-18T04:42:22.618142+00:00"
+      },
+      "retry_lineage": [
+        {
+          "retry_sequence": 1,
+          "failed_attempt": 1,
+          "next_attempt": 2,
+          "failed_exit_code": 3,
+          "reason": "simulated-timeout",
+          "scheduled_at": "2026-05-18T04:42:22.567671+00:00"
+        },
+        {
+          "retry_sequence": 2,
+          "failed_attempt": 2,
+          "next_attempt": 3,
+          "failed_exit_code": 5,
+          "reason": "simulated-llm-unavailable",
+          "scheduled_at": "2026-05-18T04:42:22.618142+00:00"
+        }
+      ],
+      "final_status": "queued"
+    },
+    "description": "retry-after-retry-after-d0494528",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 2,
+    "max_retries": 3,
+    "agent_pid": 1002,
+    "started_at": "2026-05-18T04:42:22.618069Z",
+    "completed_at": null,
+    "created_at": "2026-05-18T04:42:22.567372Z"
+  },
+  "after_third_dispatch": {
+    "id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+    "agent_type": "learning",
+    "status": "running",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-after-d0494528"
+    },
+    "result_data": {
+      "attempt_started": 3,
+      "retry_pending": false,
+      "last_failure": {
+        "attempt": 2,
+        "exit_code": 5,
+        "error": "simulated-llm-unavailable",
+        "failed_at": "2026-05-18T04:42:22.618142+00:00"
+      },
+      "retry_lineage": [
+        {
+          "retry_sequence": 1,
+          "failed_attempt": 1,
+          "next_attempt": 2,
+          "failed_exit_code": 3,
+          "reason": "simulated-timeout",
+          "scheduled_at": "2026-05-18T04:42:22.567671+00:00"
+        },
+        {
+          "retry_sequence": 2,
+          "failed_attempt": 2,
+          "next_attempt": 3,
+          "failed_exit_code": 5,
+          "reason": "simulated-llm-unavailable",
+          "scheduled_at": "2026-05-18T04:42:22.618142+00:00"
+        }
+      ],
+      "final_status": "queued"
+    },
+    "description": "retry-after-retry-after-d0494528",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 3,
+    "max_retries": 3,
+    "agent_pid": 1003,
+    "started_at": "2026-05-18T04:42:22.668486Z",
+    "completed_at": null,
+    "created_at": "2026-05-18T04:42:22.567372Z"
+  },
+  "final_task": {
+    "id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+    "agent_type": "learning",
+    "status": "completed",
+    "priority": "P1",
+    "input_data": {
+      "run_id": "retry-after-d0494528"
+    },
+    "result_data": {
+      "attempt_started": 3,
+      "retry_pending": false,
+      "last_failure": {
+        "attempt": 2,
+        "exit_code": 5,
+        "error": "simulated-llm-unavailable",
+        "failed_at": "2026-05-18T04:42:22.618142+00:00"
+      },
+      "retry_lineage": [
+        {
+          "retry_sequence": 1,
+          "failed_attempt": 1,
+          "next_attempt": 2,
+          "failed_exit_code": 3,
+          "reason": "simulated-timeout",
+          "scheduled_at": "2026-05-18T04:42:22.567671+00:00"
+        },
+        {
+          "retry_sequence": 2,
+          "failed_attempt": 2,
+          "next_attempt": 3,
+          "failed_exit_code": 5,
+          "reason": "simulated-llm-unavailable",
+          "scheduled_at": "2026-05-18T04:42:22.618142+00:00"
+        }
+      ],
+      "final_status": "completed",
+      "results": {
+        "status": "ok"
+      }
+    },
+    "description": "retry-after-retry-after-d0494528",
+    "requested_by": "runtime-discovery",
+    "parent_task_id": "",
+    "current_attempt": 3,
+    "max_retries": 3,
+    "agent_pid": 1003,
+    "started_at": "2026-05-18T04:42:22.668486Z",
+    "completed_at": "2026-05-18T04:42:22.668558Z",
+    "created_at": "2026-05-18T04:42:22.567372Z"
+  },
+  "captured_retry_events": [
+    {
+      "task_id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+      "agent_type": "learning",
+      "status": "queued",
+      "reason": "retry_scheduled",
+      "retry": {
+        "retry_sequence": 1,
+        "failed_attempt": 1,
+        "next_attempt": 2,
+        "failed_exit_code": 3,
+        "reason": "simulated-timeout",
+        "scheduled_at": "2026-05-18T04:42:22.567671+00:00"
+      }
+    },
+    {
+      "task_id": "15f00b62-8263-4353-b0c4-46d835b4cd0e",
+      "agent_type": "learning",
+      "status": "queued",
+      "reason": "retry_scheduled",
+      "retry": {
+        "retry_sequence": 2,
+        "failed_attempt": 2,
+        "next_attempt": 3,
+        "failed_exit_code": 5,
+        "reason": "simulated-llm-unavailable",
+        "scheduled_at": "2026-05-18T04:42:22.618142+00:00"
+      }
+    }
+  ],
+  "summary": {
+    "retry_event_count": 2,
+    "retry_sequences": [
+      1,
+      2
+    ],
+    "retry_sequence_monotonic": true,
+    "final_status": "completed",
+    "current_attempt": 3
+  }
+}
