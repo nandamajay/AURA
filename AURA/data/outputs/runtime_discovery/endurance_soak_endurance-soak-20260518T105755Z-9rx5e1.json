@@ -1,0 +1,1082 @@
+{
+  "run_id": "endurance-soak-20260518T105755Z-9rx5e1",
+  "started_at": "2026-05-18T10:57:55.124298+00:00",
+  "platform": {
+    "core_base": "http://127.0.0.1:8000",
+    "ws_base": "http://127.0.0.1:8001",
+    "db_path_host": "/local/mnt/workspace/AURA_V1/AURA/data/aura.db",
+    "rounds": 3
+  },
+  "artifacts": {
+    "round_artifacts": [
+      "/local/mnt/workspace/AURA_V1/AURA/data/outputs/runtime_discovery/runtime_discovery_endurance-soak-20260518T105755Z-9rx5e1-r1.json",
+      "/local/mnt/workspace/AURA_V1/AURA/data/outputs/runtime_discovery/runtime_discovery_endurance-soak-20260518T105755Z-9rx5e1-r2.json",
+      "/local/mnt/workspace/AURA_V1/AURA/data/outputs/runtime_discovery/runtime_discovery_endurance-soak-20260518T105755Z-9rx5e1-r3.json"
+    ]
+  },
+  "campaigns": {
+    "round_soak": {
+      "rounds": [
+        {
+          "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r1",
+          "severity": {
+            "high": 0,
+            "medium": 0,
+            "low": 3,
+            "info": 5
+          },
+          "replay_coverage_ratio": 1.0,
+          "final_replay_non_200": 0,
+          "max_overlapping_running": 25,
+          "event_retry_order": [
+            1,
+            2,
+            3
+          ],
+          "event_drop_estimate": 200,
+          "ws_error_count": 0,
+          "ws_recipients_min": 14,
+          "ws_recipients_max": 14,
+          "wal_with_retry_failures": 40,
+          "governance_conflict_statuses": [
+            200,
+            409
+          ],
+          "governance_contention_success": 31,
+          "governance_contention_fail": 29,
+          "watchdog_missing_replay_count": 0,
+          "stable_replay_hash_count": 1
+        },
+        {
+          "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r2",
+          "severity": {
+            "high": 0,
+            "medium": 0,
+            "low": 3,
+            "info": 5
+          },
+          "replay_coverage_ratio": 1.0,
+          "final_replay_non_200": 0,
+          "max_overlapping_running": 25,
+          "event_retry_order": [
+            1,
+            2,
+            3
+          ],
+          "event_drop_estimate": 200,
+          "ws_error_count": 0,
+          "ws_recipients_min": 14,
+          "ws_recipients_max": 14,
+          "wal_with_retry_failures": 40,
+          "governance_conflict_statuses": [
+            200,
+            409
+          ],
+          "governance_contention_success": 33,
+          "governance_contention_fail": 27,
+          "watchdog_missing_replay_count": 0,
+          "stable_replay_hash_count": 1
+        },
+        {
+          "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r3",
+          "severity": {
+            "high": 0,
+            "medium": 0,
+            "low": 3,
+            "info": 5
+          },
+          "replay_coverage_ratio": 0.964,
+          "final_replay_non_200": 1,
+          "max_overlapping_running": 25,
+          "event_retry_order": [
+            1,
+            2,
+            3
+          ],
+          "event_drop_estimate": 204,
+          "ws_error_count": 0,
+          "ws_recipients_min": 14,
+          "ws_recipients_max": 14,
+          "wal_with_retry_failures": 40,
+          "governance_conflict_statuses": [
+            200,
+            409
+          ],
+          "governance_contention_success": 34,
+          "governance_contention_fail": 26,
+          "watchdog_missing_replay_count": 0,
+          "stable_replay_hash_count": 1
+        }
+      ],
+      "severity_trajectory": [
+        {
+          "high": 0,
+          "medium": 0,
+          "low": 3,
+          "info": 5
+        },
+        {
+          "high": 0,
+          "medium": 0,
+          "low": 3,
+          "info": 5
+        },
+        {
+          "high": 0,
+          "medium": 0,
+          "low": 3,
+          "info": 5
+        }
+      ],
+      "event_drop_estimate_range": {
+        "min": 200,
+        "max": 204
+      },
+      "replay_coverage_range": {
+        "min": 0.964,
+        "max": 1.0
+      }
+    },
+    "ws_reconnect_storm": {
+      "marker": "soak-ws-20260518T110424Z-gedf8",
+      "duration_seconds": 120,
+      "broadcast": {
+        "sent": 3398,
+        "duplicate_injected": 68
+      },
+      "client_stats": {
+        "fast-0": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-1": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-2": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-3": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-4": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-5": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-6": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-7": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-8": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-9": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-10": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "fast-11": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        },
+        "slow-0": {
+          "reconnects": 4,
+          "received": 2869,
+          "errors": 0
+        },
+        "slow-1": {
+          "reconnects": 4,
+          "received": 2869,
+          "errors": 0
+        },
+        "slow-2": {
+          "reconnects": 4,
+          "received": 2869,
+          "errors": 0
+        },
+        "slow-3": {
+          "reconnects": 4,
+          "received": 2869,
+          "errors": 0
+        },
+        "slow-4": {
+          "reconnects": 4,
+          "received": 2869,
+          "errors": 0
+        },
+        "slow-5": {
+          "reconnects": 4,
+          "received": 2869,
+          "errors": 0
+        },
+        "monitor": {
+          "reconnects": 4,
+          "received": 3397,
+          "errors": 0
+        }
+      },
+      "total_received": 61375,
+      "total_errors": 0,
+      "total_reconnects": 76,
+      "replayed_count": 1000,
+      "dropped_estimate": 2398,
+      "ordering_anomalies": {
+        "ingest_non_monotonic": 0
+      }
+    },
+    "governance_latency": {
+      "run_id": "20260518T110640Z-30f5k",
+      "duration_seconds": 90,
+      "requests_total": 200,
+      "status_counts": {
+        "200": 200
+      },
+      "action_counts": {
+        "grant": 50,
+        "reject": 50,
+        "comment": 50,
+        "escalate": 50
+      },
+      "latency_ms": {
+        "p50": 24.535,
+        "p95": 944.022,
+        "p99": 1492.482,
+        "max": 1725.186
+      },
+      "audit_before": {
+        "row_count": 12643,
+        "mismatch_count": 0,
+        "id_gap_count": 0,
+        "sample_mismatches": [],
+        "sample_id_gaps": [],
+        "last_id": 12643
+      },
+      "audit_after": {
+        "row_count": 12843,
+        "mismatch_count": 0,
+        "id_gap_count": 0,
+        "sample_mismatches": [],
+        "sample_id_gaps": [],
+        "last_id": 12843
+      },
+      "audit_delta_rows": 200,
+      "audit_delta_mismatch": 0
+    },
+    "plugin_pressure": {
+      "rounds": 15,
+      "good_packages": 14,
+      "bad_packages": 8,
+      "load_count_min": 14,
+      "load_count_max": 14,
+      "duration_ms_p95": 3.86617099866271,
+      "duration_ms_max": 12.75740098208189,
+      "overwrite_detected": true,
+      "failure_containment_ok": true
+    },
+    "replay_burst": {
+      "duration_seconds": 60,
+      "requests_total": 1612,
+      "status_counts": {
+        "200": 1612
+      },
+      "latency_ms": {
+        "p50": 6.312,
+        "p95": 14.637,
+        "max": 21.029
+      },
+      "first_success_lag_stats": {
+        "count": 30,
+        "p50": 0.524,
+        "p95": 0.998,
+        "max": 1.072
+      }
+    },
+    "wal_pressure": {
+      "loops": 8,
+      "results": [
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        },
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "no_retry_failures_total": 160,
+      "with_retry_failures_total": 160,
+      "busy_timeout_failures_total": 80
+    }
+  },
+  "observability": {
+    "replay_lag": {
+      "count": 30,
+      "p50": 0.524,
+      "p95": 0.998,
+      "max": 1.072
+    },
+    "queue_depth_proxy": [
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r1",
+        "max_overlapping_running": 25
+      },
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r2",
+        "max_overlapping_running": 25
+      },
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r3",
+        "max_overlapping_running": 25
+      }
+    ],
+    "retry_drift": [
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r1",
+        "retry_order": [
+          1,
+          2,
+          3
+        ],
+        "is_monotonic": true
+      },
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r2",
+        "retry_order": [
+          1,
+          2,
+          3
+        ],
+        "is_monotonic": true
+      },
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r3",
+        "retry_order": [
+          1,
+          2,
+          3
+        ],
+        "is_monotonic": true
+      }
+    ],
+    "websocket_reconnect_pressure": {
+      "total_reconnects": 76,
+      "total_errors": 0,
+      "dropped_estimate": 2398,
+      "ordering_anomalies": {
+        "ingest_non_monotonic": 0
+      }
+    },
+    "wal_retry_pressure": {
+      "with_retry_failures_total": 160,
+      "busy_timeout_failures_total": 80
+    },
+    "governance_latency": {
+      "p50": 24.535,
+      "p95": 944.022,
+      "p99": 1492.482,
+      "max": 1725.186
+    },
+    "event_ordering_anomalies": {
+      "min": 200,
+      "max": 204
+    },
+    "replay_completeness": {
+      "min": 0.964,
+      "max": 1.0
+    },
+    "plugin_execution_metrics": {
+      "rounds": 15,
+      "good_packages": 14,
+      "bad_packages": 8,
+      "load_count_min": 14,
+      "load_count_max": 14,
+      "duration_ms_p95": 3.86617099866271,
+      "duration_ms_max": 12.75740098208189,
+      "overwrite_detected": true,
+      "failure_containment_ok": true
+    }
+  },
+  "integrity": {
+    "audit_before": {
+      "row_count": 11345,
+      "mismatch_count": 0,
+      "id_gap_count": 0,
+      "sample_mismatches": [],
+      "sample_id_gaps": [],
+      "last_id": 11345
+    },
+    "audit_after": {
+      "row_count": 12843,
+      "mismatch_count": 0,
+      "id_gap_count": 0,
+      "sample_mismatches": [],
+      "sample_id_gaps": [],
+      "last_id": 12843
+    },
+    "audit_delta_rows": 1498,
+    "audit_delta_mismatch": 0,
+    "memory_before": {
+      "aura-core": {
+        "cpu": "0.15%",
+        "mem": "131.3MiB / 62.79GiB",
+        "mem_pct": "0.20%",
+        "net_io": "3.07MB / 17.1MB",
+        "block_io": "49.2kB / 471MB",
+        "pids": "8"
+      },
+      "aura-ws-server": {
+        "cpu": "0.11%",
+        "mem": "78.29MiB / 62.79GiB",
+        "mem_pct": "0.12%",
+        "net_io": "1.84MB / 1.66MB",
+        "block_io": "0B / 0B",
+        "pids": "4"
+      },
+      "aura-llm-gateway": {
+        "cpu": "10.06%",
+        "mem": "99.35MiB / 62.79GiB",
+        "mem_pct": "0.15%",
+        "net_io": "39.5MB / 17.7MB",
+        "block_io": "13.4MB / 37.9MB",
+        "pids": "4"
+      },
+      "aura-dashboard": {
+        "cpu": "0.00%",
+        "mem": "13.12MiB / 62.79GiB",
+        "mem_pct": "0.02%",
+        "net_io": "5.68MB / 9.5MB",
+        "block_io": "1.92MB / 4.07MB",
+        "pids": "17"
+      }
+    },
+    "memory_after": {
+      "aura-core": {
+        "cpu": "0.24%",
+        "mem": "165.3MiB / 62.79GiB",
+        "mem_pct": "0.26%",
+        "net_io": "21.5MB / 39.4MB",
+        "block_io": "73.7kB / 846MB",
+        "pids": "8"
+      },
+      "aura-ws-server": {
+        "cpu": "0.14%",
+        "mem": "99.78MiB / 62.79GiB",
+        "mem_pct": "0.16%",
+        "net_io": "12.4MB / 26.3MB",
+        "block_io": "0B / 0B",
+        "pids": "4"
+      },
+      "aura-llm-gateway": {
+        "cpu": "0.17%",
+        "mem": "99.27MiB / 62.79GiB",
+        "mem_pct": "0.15%",
+        "net_io": "41.6MB / 18.9MB",
+        "block_io": "13.4MB / 38.5MB",
+        "pids": "4"
+      },
+      "aura-dashboard": {
+        "cpu": "0.00%",
+        "mem": "13.12MiB / 62.79GiB",
+        "mem_pct": "0.02%",
+        "net_io": "5.68MB / 9.5MB",
+        "block_io": "1.92MB / 4.07MB",
+        "pids": "17"
+      }
+    },
+    "memory_samples_per_round": [
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r1",
+        "memory": {
+          "aura-core": {
+            "cpu": "0.19%",
+            "mem": "162.9MiB / 62.79GiB",
+            "mem_pct": "0.25%",
+            "net_io": "8.75MB / 19MB",
+            "block_io": "49.2kB / 591MB",
+            "pids": "8"
+          },
+          "aura-ws-server": {
+            "cpu": "0.18%",
+            "mem": "83.05MiB / 62.79GiB",
+            "mem_pct": "0.13%",
+            "net_io": "3.63MB / 7.17MB",
+            "block_io": "0B / 0B",
+            "pids": "4"
+          },
+          "aura-llm-gateway": {
+            "cpu": "9.96%",
+            "mem": "99.37MiB / 62.79GiB",
+            "mem_pct": "0.15%",
+            "net_io": "40.3MB / 18.1MB",
+            "block_io": "13.4MB / 38.1MB",
+            "pids": "4"
+          },
+          "aura-dashboard": {
+            "cpu": "0.00%",
+            "mem": "13.12MiB / 62.79GiB",
+            "mem_pct": "0.02%",
+            "net_io": "5.68MB / 9.5MB",
+            "block_io": "1.92MB / 4.07MB",
+            "pids": "17"
+          }
+        }
+      },
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r2",
+        "memory": {
+          "aura-core": {
+            "cpu": "0.15%",
+            "mem": "165.2MiB / 62.79GiB",
+            "mem_pct": "0.26%",
+            "net_io": "14.3MB / 20.9MB",
+            "block_io": "65.5kB / 710MB",
+            "pids": "8"
+          },
+          "aura-ws-server": {
+            "cpu": "0.13%",
+            "mem": "86.14MiB / 62.79GiB",
+            "mem_pct": "0.13%",
+            "net_io": "5.43MB / 12.5MB",
+            "block_io": "0B / 0B",
+            "pids": "4"
+          },
+          "aura-llm-gateway": {
+            "cpu": "0.15%",
+            "mem": "99.26MiB / 62.79GiB",
+            "mem_pct": "0.15%",
+            "net_io": "40.9MB / 18.5MB",
+            "block_io": "13.4MB / 38.3MB",
+            "pids": "4"
+          },
+          "aura-dashboard": {
+            "cpu": "0.00%",
+            "mem": "13.12MiB / 62.79GiB",
+            "mem_pct": "0.02%",
+            "net_io": "5.68MB / 9.5MB",
+            "block_io": "1.92MB / 4.07MB",
+            "pids": "17"
+          }
+        }
+      },
+      {
+        "run_id": "endurance-soak-20260518T105755Z-9rx5e1-r3",
+        "memory": {
+          "aura-core": {
+            "cpu": "0.20%",
+            "mem": "164.7MiB / 62.79GiB",
+            "mem_pct": "0.26%",
+            "net_io": "19.8MB / 22.8MB",
+            "block_io": "73.7kB / 829MB",
+            "pids": "8"
+          },
+          "aura-ws-server": {
+            "cpu": "0.15%",
+            "mem": "88.54MiB / 62.79GiB",
+            "mem_pct": "0.14%",
+            "net_io": "7.24MB / 17.9MB",
+            "block_io": "0B / 0B",
+            "pids": "4"
+          },
+          "aura-llm-gateway": {
+            "cpu": "0.17%",
+            "mem": "99.27MiB / 62.79GiB",
+            "mem_pct": "0.15%",
+            "net_io": "41.6MB / 18.9MB",
+            "block_io": "13.4MB / 38.5MB",
+            "pids": "4"
+          },
+          "aura-dashboard": {
+            "cpu": "0.00%",
+            "mem": "13.12MiB / 62.79GiB",
+            "mem_pct": "0.02%",
+            "net_io": "5.68MB / 9.5MB",
+            "block_io": "1.92MB / 4.07MB",
+            "pids": "17"
+          }
+        }
+      }
+    ],
+    "ci_checks": {
+      "passed": true,
+      "exit_code": 0,
+      "duration_seconds": 27.807,
+      "stdout_tail": "checked_files=97 violations=0 passed=True\n......................                                                   [100%]\n=============================== warnings summary ===============================\nAURA/workspace/aura-sdk/src/aura_sdk/models/config.py:7\n  /repo/AURA/workspace/aura-sdk/src/aura_sdk/models/config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/\n    class Settings(BaseSettings):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n22 passed, 1 warning in 1.39s\n2026-05-18 11:09:10 [warning  ] nondeterminism_detected        function=_nondeterministic_sample trials=12 unique=12\ndeterministic_check {'is_deterministic': True, 'unique_outputs': 1}\nnondeterminism_check {'is_deterministic': False, 'unique_outputs': 12}",
+      "stderr_tail": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n\n[notice] A new release of pip is available: 25.0.1 -> 26.1.1\n[notice] To update, run: pip install --upgrade pip"
+    }
+  },
+  "finished_at": "2026-05-18T11:09:14.026112+00:00"
+}

@@ -1,0 +1,38 @@
+{
+  "baseline_coexistence_artifact": "AURA/data/outputs/runtime_discovery/plugin_coexistence_plugin-coexist-20260518T102218Z-yuhxd7.json",
+  "final_coexistence_artifact": "AURA/data/outputs/runtime_discovery/plugin_coexistence_plugin-coexist-20260518T111458Z-zj26wp.json",
+  "final_soak_artifact": "AURA/data/outputs/runtime_discovery/endurance_soak_endurance-soak-20260518T105755Z-9rx5e1.json",
+  "operational_confidence": "medium",
+  "determinism_confidence": "medium_high",
+  "queue_fairness_confidence": "medium",
+  "websocket_isolation_confidence": "medium",
+  "retry_scope_confidence": "medium_high",
+  "replay_buffer_confidence": "medium",
+  "latest_classification": {
+    "safe": [
+      "replay_namespace_bleed",
+      "governance_cross_contamination",
+      "retry_order_interaction"
+    ],
+    "bounded": [
+      "audit_chronology_mixing",
+      "queue_starvation_between_plugins",
+      "websocket_event_interference",
+      "shared_replay_buffer_pressure",
+      "watchdog_cross_domain_effects",
+      "plugin_failure_containment",
+      "plugin_induced_operational_drift"
+    ],
+    "unsafe": []
+  },
+  "improvement_delta": {
+    "websocket_event_interference": "unsafe_to_bounded",
+    "retry_order_interaction": "unsafe_to_safe",
+    "queue_starvation_between_plugins": "unsafe_to_bounded"
+  },
+  "remaining_limits": [
+    "bounded queue lag under mixed-priority bursts",
+    "bounded replay/event loss under sustained pressure",
+    "no hard plugin trust sandbox"
+  ]
+}
