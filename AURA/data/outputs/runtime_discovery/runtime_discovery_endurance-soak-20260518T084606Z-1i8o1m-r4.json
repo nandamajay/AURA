@@ -1,0 +1,2720 @@
+{
+  "run_id": "endurance-soak-20260518T084606Z-1i8o1m-r4",
+  "started_at": "2026-05-18T08:52:42.092428+00:00",
+  "finished_at": "2026-05-18T08:54:41.001874+00:00",
+  "platform": {
+    "core_base": "http://127.0.0.1:8000",
+    "ws_base": "http://ws-server:8000",
+    "db_path": "/data/aura.db"
+  },
+  "test_results": [
+    {
+      "test_area": "concurrent_task_execution",
+      "started_at": "2026-05-18T08:52:42.092463+00:00",
+      "finished_at": "2026-05-18T08:52:56.964888+00:00",
+      "runtime_evidence": [
+        {
+          "supported_types": [
+            "learning",
+            "dependency",
+            "dts_bindings",
+            "upstream_philosophy",
+            "refactor",
+            "validation",
+            "regression",
+            "knowledge_base",
+            "dashboard",
+            "simulation",
+            "maintainer_intel",
+            "patch_builder",
+            "test_runner",
+            "review_coordinator"
+          ],
+          "total_types": 14
+        },
+        {
+          "created_count": 28,
+          "create_failure_count": 0,
+          "sample_create_failure": []
+        },
+        {
+          "status_timeline_sample": [
+            {
+              "t": "2026-05-18T08:52:44.645334+00:00",
+              "counts": {
+                "running": 22,
+                "started": 1,
+                "queued": 5
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:45.752487+00:00",
+              "counts": {
+                "running": 25,
+                "queued": 3
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:46.880340+00:00",
+              "counts": {
+                "running": 23,
+                "completed": 2,
+                "started": 1,
+                "queued": 2
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:47.977763+00:00",
+              "counts": {
+                "running": 25,
+                "completed": 3
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:49.083254+00:00",
+              "counts": {
+                "running": 22,
+                "completed": 6
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:50.161768+00:00",
+              "counts": {
+                "running": 19,
+                "completed": 9
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:51.240734+00:00",
+              "counts": {
+                "running": 15,
+                "completed": 13
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:52.342596+00:00",
+              "counts": {
+                "completed": 20,
+                "running": 8
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:53.436252+00:00",
+              "counts": {
+                "completed": 24,
+                "running": 4
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:54.519664+00:00",
+              "counts": {
+                "completed": 24,
+                "running": 4
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:55.597333+00:00",
+              "counts": {
+                "completed": 25,
+                "running": 3
+              }
+            },
+            {
+              "t": "2026-05-18T08:52:56.701614+00:00",
+              "counts": {
+                "completed": 26,
+                "running": 2
+              }
+            }
+          ]
+        },
+        {
+          "created_task_ids_sample": [
+            "44b104a6-ec6d-4a21-a2ef-1bda1cc1fded",
+            "df02cbc4-49d3-41e1-ba8f-e713f7512321",
+            "28b47338-95e1-403b-8674-10cebba778f9",
+            "76ac96f8-b982-4e7b-ad3b-f76c3b9ec05b",
+            "05441667-62c3-420b-b252-e8340b71397a",
+            "7359d5e8-bf4d-4b2b-826f-26e3510df0dd",
+            "4798abb0-80d4-442f-a285-a1909d13a95a",
+            "4a48f2b9-0975-4f58-8cae-4d1f1aa1e263",
+            "3d868381-95dc-4ff1-8490-a11123caca31",
+            "a7a73305-7ef6-46fe-b349-bcab1d0a1e8d"
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "max_overlapping_running": 25,
+        "final_state_counts": {
+          "completed": 27,
+          "running": 1
+        },
+        "early_replay_status_counts": {
+          "404": 24,
+          "200": 4
+        },
+        "final_replay_status_counts": {
+          "200": 28
+        }
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "simultaneous_tasks": ">=20 created and >1 overlapping running",
+          "mixed_workload": "at least one success and at least one failure/cancel path",
+          "concurrent_replay": "replay endpoint should eventually provide deterministic data for persisted tasks"
+        },
+        "actual": {
+          "max_overlapping_running": 25,
+          "final_state_counts": {
+            "completed": 27,
+            "running": 1
+          },
+          "early_replay_status_counts": {
+            "404": 24,
+            "200": 4
+          },
+          "final_replay_status_counts": {
+            "200": 28
+          }
+        }
+      },
+      "replay_integrity_result": {
+        "final_replay_200": 28,
+        "final_replay_non_200": 0,
+        "coverage_ratio": 1.0,
+        "integrity_ok_count": 28,
+        "sample": [
+          {
+            "task_id": "44b104a6-ec6d-4a21-a2ef-1bda1cc1fded",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "df02cbc4-49d3-41e1-ba8f-e713f7512321",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "28b47338-95e1-403b-8674-10cebba778f9",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "76ac96f8-b982-4e7b-ad3b-f76c3b9ec05b",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "05441667-62c3-420b-b252-e8340b71397a",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "7359d5e8-bf4d-4b2b-826f-26e3510df0dd",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "4798abb0-80d4-442f-a285-a1909d13a95a",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "4a48f2b9-0975-4f58-8cae-4d1f1aa1e263",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "3d868381-95dc-4ff1-8490-a11123caca31",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "a7a73305-7ef6-46fe-b349-bcab1d0a1e8d",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          }
+        ]
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5471,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5471
+        },
+        "after": {
+          "row_count": 5839,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5839
+        },
+        "delta_rows": 368,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Per-task failures/cancellations remained contained while queue continued draining.",
+      "recovery_behavior": "Most created tasks reached terminal or replay-visible states within the polling window.",
+      "severity_classification": "low",
+      "raw": {
+        "create_results_sample": [
+          {
+            "status": 200,
+            "body": {
+              "task_id": "44b104a6-ec6d-4a21-a2ef-1bda1cc1fded",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "df02cbc4-49d3-41e1-ba8f-e713f7512321",
+              "status": "queued",
+              "priority": "P1",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "28b47338-95e1-403b-8674-10cebba778f9",
+              "status": "queued",
+              "priority": "P2",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "76ac96f8-b982-4e7b-ad3b-f76c3b9ec05b",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "05441667-62c3-420b-b252-e8340b71397a",
+              "status": "queued",
+              "priority": "P1",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "7359d5e8-bf4d-4b2b-826f-26e3510df0dd",
+              "status": "queued",
+              "priority": "P2",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "4798abb0-80d4-442f-a285-a1909d13a95a",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "4a48f2b9-0975-4f58-8cae-4d1f1aa1e263",
+              "status": "queued",
+              "priority": "P1",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "3d868381-95dc-4ff1-8490-a11123caca31",
+              "status": "queued",
+              "priority": "P2",
+              "message": "Task created and queued"
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "task_id": "a7a73305-7ef6-46fe-b349-bcab1d0a1e8d",
+              "status": "queued",
+              "priority": "P0",
+              "message": "Task created and queued"
+            }
+          }
+        ],
+        "early_replays_sample": [
+          {
+            "task_id": "44b104a6-ec6d-4a21-a2ef-1bda1cc1fded",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=44b104a6-ec6d-4a21-a2ef-1bda1cc1fded"
+            }
+          },
+          {
+            "task_id": "df02cbc4-49d3-41e1-ba8f-e713f7512321",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=df02cbc4-49d3-41e1-ba8f-e713f7512321"
+            }
+          },
+          {
+            "task_id": "28b47338-95e1-403b-8674-10cebba778f9",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=28b47338-95e1-403b-8674-10cebba778f9"
+            }
+          },
+          {
+            "task_id": "76ac96f8-b982-4e7b-ad3b-f76c3b9ec05b",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "05441667-62c3-420b-b252-e8340b71397a",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=05441667-62c3-420b-b252-e8340b71397a"
+            }
+          },
+          {
+            "task_id": "7359d5e8-bf4d-4b2b-826f-26e3510df0dd",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=7359d5e8-bf4d-4b2b-826f-26e3510df0dd"
+            }
+          },
+          {
+            "task_id": "4798abb0-80d4-442f-a285-a1909d13a95a",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "4a48f2b9-0975-4f58-8cae-4d1f1aa1e263",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=4a48f2b9-0975-4f58-8cae-4d1f1aa1e263"
+            }
+          },
+          {
+            "task_id": "3d868381-95dc-4ff1-8490-a11123caca31",
+            "status": 404,
+            "payload": {
+              "detail": "Replay log not found for task_id=3d868381-95dc-4ff1-8490-a11123caca31"
+            }
+          },
+          {
+            "task_id": "a7a73305-7ef6-46fe-b349-bcab1d0a1e8d",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          }
+        ],
+        "final_replays_sample": [
+          {
+            "task_id": "44b104a6-ec6d-4a21-a2ef-1bda1cc1fded",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "df02cbc4-49d3-41e1-ba8f-e713f7512321",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "28b47338-95e1-403b-8674-10cebba778f9",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "76ac96f8-b982-4e7b-ad3b-f76c3b9ec05b",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "05441667-62c3-420b-b252-e8340b71397a",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "7359d5e8-bf4d-4b2b-826f-26e3510df0dd",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "4798abb0-80d4-442f-a285-a1909d13a95a",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "4a48f2b9-0975-4f58-8cae-4d1f1aa1e263",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "3d868381-95dc-4ff1-8490-a11123caca31",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          },
+          {
+            "task_id": "a7a73305-7ef6-46fe-b349-bcab1d0a1e8d",
+            "status": 200,
+            "integrity_ok": true,
+            "fidelity": "perfect",
+            "recording_state": "finalized"
+          }
+        ]
+      }
+    },
+    {
+      "test_area": "event_ordering_pressure",
+      "started_at": "2026-05-18T08:52:56.964959+00:00",
+      "finished_at": "2026-05-18T08:53:59.853321+00:00",
+      "runtime_evidence": [
+        {
+          "burst_sent": 1200,
+          "burst_live_received": 1564,
+          "burst_replayed_received": 1000,
+          "replay_burst_seq_min": 200,
+          "replay_burst_seq_max": 1199,
+          "duplicate_seen_count": 373,
+          "out_of_order_seen_seq": [
+            5,
+            3,
+            4,
+            2,
+            1
+          ],
+          "retry_seen_attempts": [
+            1,
+            2,
+            3
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "duplicate_delivery_count": 373,
+        "out_of_order_delivery": [
+          5,
+          3,
+          4,
+          2,
+          1
+        ],
+        "retry_order_delivery": [
+          1,
+          2,
+          3
+        ],
+        "burst_sent": 1200,
+        "burst_live_received": 1564,
+        "replayed_burst_count": 1000,
+        "estimated_dropped_in_replay_buffer": 200
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "duplicate_handling": "either deduped or explicitly flagged",
+          "out_of_order": "ordering guarantee should be documented and observable",
+          "burst_overflow": "bounded buffer should drop oldest deterministically"
+        },
+        "actual": {
+          "duplicate_delivery_count": 373,
+          "out_of_order_delivery": [
+            5,
+            3,
+            4,
+            2,
+            1
+          ],
+          "retry_order_delivery": [
+            1,
+            2,
+            3
+          ],
+          "burst_sent": 1200,
+          "burst_live_received": 1564,
+          "replayed_burst_count": 1000,
+          "estimated_dropped_in_replay_buffer": 200
+        }
+      },
+      "replay_integrity_result": {
+        "mechanism": "ws-server _event_buffer replay",
+        "buffer_bound_behavior": {
+          "sent": 1200,
+          "replayed": 1000,
+          "dropped_estimate": 200
+        },
+        "ordering_sample": [
+          200,
+          201,
+          202,
+          203,
+          204,
+          205,
+          206,
+          207,
+          208,
+          209,
+          210,
+          211
+        ]
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5840,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5840
+        },
+        "after": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "delta_rows": 1,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Event service remained available under burst pressure; failures showed as ordering/drop anomalies.",
+      "recovery_behavior": "Reconnect replay returned bounded buffer contents after burst completion.",
+      "severity_classification": "low",
+      "raw": {
+        "broadcast_results_sample": [
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24640
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": true,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24641,
+                "duplicate_event": true,
+                "first_seen_sequence": 24640
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24642
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24643,
+                "sequence_violation": true,
+                "expected_seq": 6,
+                "received_seq": 3
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24644
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24645,
+                "sequence_violation": true,
+                "expected_seq": 5,
+                "received_seq": 2
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24646,
+                "sequence_violation": true,
+                "expected_seq": 3,
+                "received_seq": 1
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24647,
+                "retry_order_normalized": true,
+                "retry_expected_attempt": 1,
+                "retry_original_attempt": 2
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24648,
+                "retry_order_normalized": true,
+                "retry_expected_attempt": 2,
+                "retry_original_attempt": 1
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24649
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24650
+              }
+            }
+          },
+          {
+            "status": 200,
+            "body": {
+              "broadcast": true,
+              "recipients": 0,
+              "dropped_duplicate": false,
+              "ordering": {
+                "policy_version": "p1.2",
+                "ingest_sequence": 24651
+              }
+            }
+          }
+        ],
+        "live_events_sample": [
+          {
+            "event_id": "dup-evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+            "event_type": "runtime.discovery.duplicate",
+            "timestamp": "2026-05-18T08:52:57.389349+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "duplicate",
+              "seq": 1
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24640
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-5",
+            "event_type": "runtime.discovery.order",
+            "timestamp": "2026-05-18T08:52:57.395329+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "out_of_order",
+              "seq": 5
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24642
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-3",
+            "event_type": "runtime.discovery.order",
+            "timestamp": "2026-05-18T08:52:57.397271+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "out_of_order",
+              "seq": 3
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24643,
+              "sequence_violation": true,
+              "expected_seq": 6,
+              "received_seq": 3
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-4",
+            "event_type": "runtime.discovery.order",
+            "timestamp": "2026-05-18T08:52:57.399181+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "out_of_order",
+              "seq": 4
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24644
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-2",
+            "event_type": "runtime.discovery.order",
+            "timestamp": "2026-05-18T08:52:57.401113+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "out_of_order",
+              "seq": 2
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24645,
+              "sequence_violation": true,
+              "expected_seq": 5,
+              "received_seq": 2
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "ooo-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+            "event_type": "runtime.discovery.order",
+            "timestamp": "2026-05-18T08:52:57.402985+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "out_of_order",
+              "seq": 1
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24646,
+              "sequence_violation": true,
+              "expected_seq": 3,
+              "received_seq": 1
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "retry-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-2",
+            "event_type": "runtime.discovery.retry",
+            "timestamp": "2026-05-18T08:52:57.404941+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "retry",
+              "op": "R1",
+              "attempt": 1,
+              "attempt_original": 2
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24647,
+              "retry_order_normalized": true,
+              "retry_expected_attempt": 1,
+              "retry_original_attempt": 2
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "retry-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+            "event_type": "runtime.discovery.retry",
+            "timestamp": "2026-05-18T08:52:57.406820+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "retry",
+              "op": "R1",
+              "attempt": 2,
+              "attempt_original": 1
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24648,
+              "retry_order_normalized": true,
+              "retry_expected_attempt": 2,
+              "retry_original_attempt": 1
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "retry-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-3",
+            "event_type": "runtime.discovery.retry",
+            "timestamp": "2026-05-18T08:52:57.408722+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "retry",
+              "op": "R1",
+              "attempt": 3
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24649
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-0",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.410919+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 0
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24650
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.412827+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 1
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24651
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-2",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.414804+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 2
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24652
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          }
+        ],
+        "replayed_events_sample": [
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-200",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.801936+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 200
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24850
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-201",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.803858+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 201
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24851
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-202",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.805803+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 202
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24852
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-203",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.807689+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 203
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24853
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-204",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.809621+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 204
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24854
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-205",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.811907+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 205
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24855
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-206",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.813885+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 206
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24856
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-207",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.815753+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 207
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24857
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-208",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.817665+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 208
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24858
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-209",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.819549+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 209
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24859
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-210",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.821452+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 210
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24860
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          },
+          {
+            "event_id": "burst-evt-endurance-soak-20260518T084606Z-1i8o1m-r4-211",
+            "event_type": "runtime.discovery.burst",
+            "timestamp": "2026-05-18T08:52:57.823344+00:00",
+            "payload": {
+              "marker": "evt-endurance-soak-20260518T084606Z-1i8o1m-r4",
+              "kind": "burst",
+              "seq": 211
+            },
+            "_ordering": {
+              "policy_version": "p1.2",
+              "ingest_sequence": 24861
+            },
+            "channel": "system",
+            "channels": [
+              "system"
+            ]
+          }
+        ],
+        "broadcast_recipients_min": 0,
+        "broadcast_recipients_max": 0
+      }
+    },
+    {
+      "test_area": "sqlite_wal_stress",
+      "started_at": "2026-05-18T08:53:59.857199+00:00",
+      "finished_at": "2026-05-18T08:54:07.243513+00:00",
+      "runtime_evidence": [
+        {
+          "journal_mode": "wal",
+          "wal_autocheckpoint": 1000
+        }
+      ],
+      "observed_behavior": {
+        "journal_mode": "wal",
+        "no_retry_failures": 40,
+        "with_retry_failures": 40,
+        "busy_timeout_failures": 20,
+        "checkpoint_samples": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checkpoint_total": 50,
+        "rollback_preserved_count": true,
+        "unbatched_seconds_120": 0.3159,
+        "batched_seconds_120": 0.0033
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "wal_mode": "wal",
+          "lock_contention": "failures appear without retries",
+          "retry_semantics": "retries reduce lock-failure rate",
+          "partial_persistence": "rolled back transaction should not persist partial rows"
+        },
+        "actual": {
+          "journal_mode": "wal",
+          "no_retry_failures": 40,
+          "with_retry_failures": 40,
+          "busy_timeout_failures": 20,
+          "checkpoint_samples": [
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              2,
+              2
+            ]
+          ],
+          "checkpoint_total": 50,
+          "rollback_preserved_count": true,
+          "unbatched_seconds_120": 0.3159,
+          "batched_seconds_120": 0.0033
+        }
+      },
+      "replay_integrity_result": {
+        "scope": "storage-layer stress only",
+        "result": "not directly replay-engine specific",
+        "note": "Used WAL writer/checkpoint contention and rollback semantics."
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "after": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "SQLite remained available; contention surfaced as bounded lock errors.",
+      "recovery_behavior": "Retry and busy-timeout behavior characterized under explicit lock pressure.",
+      "severity_classification": "info",
+      "raw": {
+        "no_retry_sample": [
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          }
+        ],
+        "with_retry_sample": [
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 8,
+            "error": "database is locked"
+          }
+        ],
+        "busy_timeout_sample": [
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          },
+          {
+            "ok": false,
+            "attempts": 1,
+            "error": "database is locked"
+          }
+        ],
+        "checkpoint_sample": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ]
+      }
+    },
+    {
+      "test_area": "replay_stress_validation",
+      "started_at": "2026-05-18T08:54:07.243572+00:00",
+      "finished_at": "2026-05-18T08:54:07.711315+00:00",
+      "runtime_evidence": [],
+      "observed_behavior": {
+        "active_replay_samples": 50,
+        "active_prompt_count_min": 0,
+        "active_prompt_count_max": 0,
+        "crash_replay_success": false,
+        "crash_replay_prompt_count": null,
+        "crash_integrity_ok": false,
+        "partial_replay_success": false,
+        "partial_integrity_ok": false,
+        "mutation_distinct_hashes": 1,
+        "corrupted_payload_error": "",
+        "mutable_replay_success_count": 0,
+        "stable_replay_hash_count": 1
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "active_replay": "mutable logs should not replay as success",
+          "crash_handling": "unfinalized crash logs should fail replay",
+          "partial_persistence": "integrity false when finalize absent",
+          "corruption_detection": "invalid payload should be detected explicitly"
+        },
+        "actual": {
+          "active_replay_samples": 50,
+          "active_prompt_count_min": 0,
+          "active_prompt_count_max": 0,
+          "crash_replay_success": false,
+          "crash_replay_prompt_count": null,
+          "crash_integrity_ok": false,
+          "partial_replay_success": false,
+          "partial_integrity_ok": false,
+          "mutation_distinct_hashes": 1,
+          "corrupted_payload_error": "",
+          "mutable_replay_success_count": 0,
+          "stable_replay_hash_count": 1
+        }
+      },
+      "replay_integrity_result": {
+        "active_task_integrity": true,
+        "crash_task_integrity": false,
+        "partial_task_integrity": false,
+        "mutation_distinct_hashes": 1
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "after": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Replay API remained callable under mutable, crash, and corruption scenarios.",
+      "recovery_behavior": "Integrity checks distinguished finalized vs mutable/corrupted task logs.",
+      "severity_classification": "low",
+      "raw": {}
+    },
+    {
+      "test_area": "watchdog_pressure_testing",
+      "started_at": "2026-05-18T08:54:07.712147+00:00",
+      "finished_at": "2026-05-18T08:54:09.027161+00:00",
+      "runtime_evidence": [],
+      "observed_behavior": {
+        "timeout_event_count": 9,
+        "killed_event_count": 5,
+        "remaining_watch_count": 0,
+        "heartbeat_storm_processed": true,
+        "collision_agent_present_after": false
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "timeout_detection": "hung agents should trigger timeout events",
+          "sigterm_sigkill_chain": "TERM-resistant processes should escalate to KILL",
+          "storm_handling": "heartbeat storms should not crash watchdog"
+        },
+        "actual": {
+          "timeout_event_count": 9,
+          "killed_event_count": 5,
+          "remaining_watch_count": 0,
+          "heartbeat_storm_processed": true,
+          "collision_agent_present_after": false
+        }
+      },
+      "replay_integrity_result": {
+        "watchdog_task_replay_presence": {
+          "wd-task-kill-0-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-kill-1-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-kill-2-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-kill-3-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-kill-4-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-term-0-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-term-1-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-term-2-endurance-soak-20260518T084606Z-1i8o1m-r4": true,
+          "wd-task-storm-endurance-soak-20260518T084606Z-1i8o1m-r4": true
+        },
+        "missing_replay_count": 0,
+        "note": "Watchdog lifecycle now records/finalizes replay entries for watchdog-managed tasks."
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "after": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Watchdog terminated unresponsive processes and continued scanning.",
+      "recovery_behavior": "Watches were unregistered after termination chains.",
+      "severity_classification": "info",
+      "raw": {}
+    },
+    {
+      "test_area": "websocket_sse_instability",
+      "started_at": "2026-05-18T08:54:09.027894+00:00",
+      "finished_at": "2026-05-18T08:54:40.174624+00:00",
+      "runtime_evidence": [],
+      "observed_behavior": {
+        "ws_clients": 14,
+        "ws_receive_counts": {
+          "fast-0": 220,
+          "fast-1": 220,
+          "fast-2": 220,
+          "fast-3": 220,
+          "fast-4": 220,
+          "fast-5": 220,
+          "fast-6": 220,
+          "fast-7": 220,
+          "fast-8": 220,
+          "fast-9": 220,
+          "slow-0": 87,
+          "slow-1": 88,
+          "slow-2": 88,
+          "slow-3": 88
+        },
+        "ws_error_count": 0,
+        "broadcast_calls": 220,
+        "broadcast_recipients_min": 14,
+        "broadcast_recipients_max": 14,
+        "sse_counts": [
+          {
+            "name": "sse-fast-1",
+            "count": 220
+          },
+          {
+            "name": "sse-fast-2",
+            "count": 220
+          },
+          {
+            "name": "sse-slow",
+            "count": 220
+          }
+        ]
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "disconnect_reconnect": "reconnected clients should resume receiving fresh events",
+          "partial_subscriber_loss": "server should keep broadcasting to remaining clients",
+          "slow_consumers": "slow clients should not crash fanout path"
+        },
+        "actual": {
+          "ws_clients": 14,
+          "ws_receive_counts": {
+            "fast-0": 220,
+            "fast-1": 220,
+            "fast-2": 220,
+            "fast-3": 220,
+            "fast-4": 220,
+            "fast-5": 220,
+            "fast-6": 220,
+            "fast-7": 220,
+            "fast-8": 220,
+            "fast-9": 220,
+            "slow-0": 87,
+            "slow-1": 88,
+            "slow-2": 88,
+            "slow-3": 88
+          },
+          "ws_error_count": 0,
+          "broadcast_calls": 220,
+          "broadcast_recipients_min": 14,
+          "broadcast_recipients_max": 14,
+          "sse_counts": [
+            {
+              "name": "sse-fast-1",
+              "count": 220
+            },
+            {
+              "name": "sse-fast-2",
+              "count": 220
+            },
+            {
+              "name": "sse-slow",
+              "count": 220
+            }
+          ]
+        }
+      },
+      "replay_integrity_result": {
+        "scope": "transport fanout and SSE buffer replay",
+        "buffer_replay_consistency": "indirectly validated via SSE counts"
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "after": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "WS/SSE service stayed available under reconnect and fanout pressure.",
+      "recovery_behavior": "Reconnect loops restored subscriptions; per-client delivery gaps remained measurable.",
+      "severity_classification": "info",
+      "raw": {}
+    },
+    {
+      "test_area": "governance_pressure_testing",
+      "started_at": "2026-05-18T08:54:40.175525+00:00",
+      "finished_at": "2026-05-18T08:54:40.928602+00:00",
+      "runtime_evidence": [
+        {
+          "conflict_results": [
+            "{'approval_id': 'appr-endurance-soak-20260518T084606Z-1i8o1m-r4-0', 'action': 'grant', 'status': 409, 'body': {'detail': 'approval_conflict_terminal:failed'}}",
+            "{'approval_id': 'appr-endurance-soak-20260518T084606Z-1i8o1m-r4-0', 'action': 'reject', 'status': 200, 'body': {'approval_id': 'appr-endurance-soak-20260518T084606Z-1i8o1m-r4-0', 'action': 'reject', 'status': 'failed', 'outcome': 'applied'}}"
+          ],
+          "escalate_result": {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+            "action": "escalate",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+              "action": "escalate",
+              "status": "in_progress",
+              "outcome": "applied"
+            }
+          },
+          "contention_success": 30,
+          "contention_fail": 30,
+          "approval_states_after": [
+            {
+              "id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-0",
+              "status": "failed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779094480,
+              "comments": "p1-reject"
+            },
+            {
+              "id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+              "status": "in_progress",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779094480,
+              "comments": "p1-escalate"
+            },
+            {
+              "id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-10",
+              "status": "passed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779094480,
+              "comments": "op-54-grant\nop-8-grant"
+            },
+            {
+              "id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-11",
+              "status": "passed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779094480,
+              "comments": "op-32-grant"
+            },
+            {
+              "id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-12",
+              "status": "failed",
+              "reviewed_by": "38e90286554c7561e88052860999898f",
+              "reviewed_at": 1779094480,
+              "comments": "op-33-reject"
+            }
+          ],
+          "audit_event_count": 200,
+          "audit_event_types_sample": [
+            "approval.granted",
+            "approval.rejected",
+            "approval.rejected",
+            "approval.rejected",
+            "approval.rejected",
+            "approval.rejected",
+            "approval.granted",
+            "approval.rejected",
+            "approval.rejected",
+            "approval.granted",
+            "approval.granted",
+            "approval.rejected"
+          ]
+        }
+      ],
+      "observed_behavior": {
+        "conflict_statuses": [
+          200,
+          409
+        ],
+        "escalate_http_status": 200,
+        "contention_success": 30,
+        "contention_fail": 30
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "conflict": "one success + one deterministic conflict",
+          "escalate": "no server error",
+          "contention": "bounded conflict behavior under concurrent approvals"
+        },
+        "actual": {
+          "conflict_statuses": [
+            200,
+            409
+          ],
+          "escalate_http_status": 200,
+          "contention_success": 30,
+          "contention_fail": 30
+        }
+      },
+      "replay_integrity_result": {
+        "scope": "governance state transitions are replay-visible through audit chronology",
+        "approval_ids": [
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-0",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-1",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-2",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-3",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-4",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-5",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-6",
+          "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-7"
+        ]
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5841,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5841
+        },
+        "after": {
+          "row_count": 5873,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5873
+        },
+        "delta_rows": 32,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Conflicting approval transitions remained bounded to affected approval IDs.",
+      "recovery_behavior": "Audit and approval state remained queryable after contention burst.",
+      "severity_classification": "info",
+      "raw": {
+        "contention_results_sample": [
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-2",
+            "action": "grant",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-2",
+              "action": "grant",
+              "status": "passed",
+              "outcome": "applied"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-3",
+            "action": "reject",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-3",
+              "action": "reject",
+              "status": "failed",
+              "outcome": "applied"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-4",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-5",
+            "action": "reject",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-5",
+              "action": "reject",
+              "status": "failed",
+              "outcome": "idempotent"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-6",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-7",
+            "action": "reject",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:passed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-8",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-9",
+            "action": "reject",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-9",
+              "action": "reject",
+              "status": "failed",
+              "outcome": "applied"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-10",
+            "action": "grant",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-10",
+              "action": "grant",
+              "status": "passed",
+              "outcome": "idempotent"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-11",
+            "action": "reject",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:passed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-12",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-13",
+            "action": "reject",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-13",
+              "action": "reject",
+              "status": "failed",
+              "outcome": "applied"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-14",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-15",
+            "action": "reject",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-15",
+              "action": "reject",
+              "status": "failed",
+              "outcome": "idempotent"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-16",
+            "action": "grant",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-16",
+              "action": "grant",
+              "status": "passed",
+              "outcome": "applied"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-17",
+            "action": "reject",
+            "status": 200,
+            "body": {
+              "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-17",
+              "action": "reject",
+              "status": "failed",
+              "outcome": "applied"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-18",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-19",
+            "action": "reject",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:passed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-20",
+            "action": "grant",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:failed"
+            }
+          },
+          {
+            "approval_id": "appr-endurance-soak-20260518T084606Z-1i8o1m-r4-21",
+            "action": "reject",
+            "status": 409,
+            "body": {
+              "detail": "approval_conflict_terminal:passed"
+            }
+          }
+        ]
+      }
+    },
+    {
+      "test_area": "failure_injection",
+      "started_at": "2026-05-18T08:54:40.928755+00:00",
+      "finished_at": "2026-05-18T08:54:41.001835+00:00",
+      "runtime_evidence": [],
+      "observed_behavior": {
+        "forced_exception_status": 422,
+        "rollback_ok": true,
+        "replay_corrupt_error": "",
+        "plugin_load_count": 0,
+        "queue_corruption_first_pick": "ghost-task-id",
+        "queue_corruption_second_pick": null
+      },
+      "expected_vs_actual": {
+        "expected": {
+          "forced_exceptions": "explicit non-200 with reason",
+          "partial_writes": "transaction rollback prevents partial persistence",
+          "corrupt_replay": "must fail explicitly",
+          "plugin_failure": "bad plugin must not crash loader",
+          "queue_corruption": "scheduler should skip ghost task ids"
+        },
+        "actual": {
+          "forced_exception_status": 422,
+          "rollback_ok": true,
+          "replay_corrupt_error": "",
+          "plugin_load_count": 0,
+          "queue_corruption_first_pick": "ghost-task-id",
+          "queue_corruption_second_pick": null
+        }
+      },
+      "replay_integrity_result": {
+        "corrupt_payload_error": "",
+        "rollback_preserved": true
+      },
+      "audit_integrity_result": {
+        "before": {
+          "row_count": 5873,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5873
+        },
+        "after": {
+          "row_count": 5873,
+          "mismatch_count": 0,
+          "id_gap_count": 0,
+          "sample_mismatches": [],
+          "sample_id_gaps": [],
+          "last_id": 5873
+        },
+        "delta_rows": 0,
+        "delta_mismatches": 0
+      },
+      "nondeterminism_findings": [],
+      "race_condition_findings": [],
+      "failure_containment_behavior": "Injected failures returned bounded errors without core process crash.",
+      "recovery_behavior": "Valid paths remained callable after injections.",
+      "severity_classification": "info",
+      "raw": {}
+    }
+  ],
+  "failure_matrix": [
+    {
+      "test_area": "concurrent_task_execution",
+      "severity": "low",
+      "key_signal": {
+        "max_overlapping_running": 25,
+        "final_state_counts": {
+          "completed": 27,
+          "running": 1
+        },
+        "early_replay_status_counts": {
+          "404": 24,
+          "200": 4
+        },
+        "final_replay_status_counts": {
+          "200": 28
+        }
+      }
+    },
+    {
+      "test_area": "event_ordering_pressure",
+      "severity": "low",
+      "key_signal": {
+        "duplicate_delivery_count": 373,
+        "out_of_order_delivery": [
+          5,
+          3,
+          4,
+          2,
+          1
+        ],
+        "retry_order_delivery": [
+          1,
+          2,
+          3
+        ],
+        "burst_sent": 1200,
+        "burst_live_received": 1564,
+        "replayed_burst_count": 1000,
+        "estimated_dropped_in_replay_buffer": 200
+      }
+    },
+    {
+      "test_area": "replay_stress_validation",
+      "severity": "low",
+      "key_signal": {
+        "active_replay_samples": 50,
+        "active_prompt_count_min": 0,
+        "active_prompt_count_max": 0,
+        "crash_replay_success": false,
+        "crash_replay_prompt_count": null,
+        "crash_integrity_ok": false,
+        "partial_replay_success": false,
+        "partial_integrity_ok": false,
+        "mutation_distinct_hashes": 1,
+        "corrupted_payload_error": "",
+        "mutable_replay_success_count": 0,
+        "stable_replay_hash_count": 1
+      }
+    },
+    {
+      "test_area": "sqlite_wal_stress",
+      "severity": "info",
+      "key_signal": {
+        "journal_mode": "wal",
+        "no_retry_failures": 40,
+        "with_retry_failures": 40,
+        "busy_timeout_failures": 20,
+        "checkpoint_samples": [
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ],
+          [
+            0,
+            2,
+            2
+          ]
+        ],
+        "checkpoint_total": 50,
+        "rollback_preserved_count": true,
+        "unbatched_seconds_120": 0.3159,
+        "batched_seconds_120": 0.0033
+      }
+    },
+    {
+      "test_area": "watchdog_pressure_testing",
+      "severity": "info",
+      "key_signal": {
+        "timeout_event_count": 9,
+        "killed_event_count": 5,
+        "remaining_watch_count": 0,
+        "heartbeat_storm_processed": true,
+        "collision_agent_present_after": false
+      }
+    },
+    {
+      "test_area": "websocket_sse_instability",
+      "severity": "info",
+      "key_signal": {
+        "ws_clients": 14,
+        "ws_receive_counts": {
+          "fast-0": 220,
+          "fast-1": 220,
+          "fast-2": 220,
+          "fast-3": 220,
+          "fast-4": 220,
+          "fast-5": 220,
+          "fast-6": 220,
+          "fast-7": 220,
+          "fast-8": 220,
+          "fast-9": 220,
+          "slow-0": 87,
+          "slow-1": 88,
+          "slow-2": 88,
+          "slow-3": 88
+        },
+        "ws_error_count": 0,
+        "broadcast_calls": 220,
+        "broadcast_recipients_min": 14,
+        "broadcast_recipients_max": 14,
+        "sse_counts": [
+          {
+            "name": "sse-fast-1",
+            "count": 220
+          },
+          {
+            "name": "sse-fast-2",
+            "count": 220
+          },
+          {
+            "name": "sse-slow",
+            "count": 220
+          }
+        ]
+      }
+    },
+    {
+      "test_area": "governance_pressure_testing",
+      "severity": "info",
+      "key_signal": {
+        "conflict_statuses": [
+          200,
+          409
+        ],
+        "escalate_http_status": 200,
+        "contention_success": 30,
+        "contention_fail": 30
+      }
+    },
+    {
+      "test_area": "failure_injection",
+      "severity": "info",
+      "key_signal": {
+        "forced_exception_status": 422,
+        "rollback_ok": true,
+        "replay_corrupt_error": "",
+        "plugin_load_count": 0,
+        "queue_corruption_first_pick": "ghost-task-id",
+        "queue_corruption_second_pick": null
+      }
+    }
+  ],
+  "runtime_truth_report": {
+    "total_tests": 8,
+    "critical": 0,
+    "high": 0,
+    "medium": 0,
+    "low": 3,
+    "info": 5
+  },
+  "concurrency_findings": [],
+  "replay_reliability_findings": [],
+  "architecture_weakness_map": [],
+  "governance_weakness_map": [],
+  "operational_instability_map": [],
+  "stabilization_backlog": [],
+  "severity_ranked_remediation_roadmap": []
+}

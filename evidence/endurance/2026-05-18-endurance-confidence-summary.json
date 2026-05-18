@@ -1,0 +1,56 @@
+{
+  "artifact": "AURA/data/outputs/runtime_discovery/endurance_soak_endurance-soak-20260518T090153Z-bwon0r.json",
+  "baseline_artifact": "AURA/data/outputs/runtime_discovery/runtime_discovery_p1-4-after-20260518T093500Z.json",
+  "operational_confidence": "medium",
+  "determinism_confidence": "medium_high",
+  "plugin_boundary_maturity": "low_medium",
+  "replay_completeness_confidence": "medium",
+  "guarantees": {
+    "proven": [
+      "governance_audit_chronology_integrity_under_tested_load",
+      "retry_sequence_monotonic_ordering_1_2_3",
+      "watchdog_replay_lineage_capture_in_tested_paths",
+      "ci_hard_fail_governance_replay_architecture_enforcement"
+    ],
+    "bounded": [
+      "replay_completeness_under_pressure_floor_0_929",
+      "websocket_sse_delivery_non_zero_drop_estimate_under_storm",
+      "sqlite_wal_write_success_under_forced_exclusive_lock"
+    ],
+    "unproven": [
+      "plugin_runtime_cell_isolation_with_independent_governance_and_replay",
+      "zero_loss_event_delivery_during_reconnect_storms",
+      "multi_day_soak_stability"
+    ]
+  },
+  "safety_labels": {
+    "safe_for_internal_controlled_workloads": "conditional_yes",
+    "safe_for_plugin_coexistence": "no",
+    "safe_for_prolonged_runtime": "conditional_bounded"
+  },
+  "key_metrics": {
+    "round_replay_coverage_min": 0.929,
+    "round_replay_coverage_max": 1.0,
+    "replay_non_200_by_round": [2, 1, 0, 0],
+    "websocket_sent": 4284,
+    "websocket_replayed_count": 1000,
+    "websocket_drop_estimate": 3284,
+    "governance_requests_total": 200,
+    "governance_status_200": 200,
+    "governance_latency_ms": {
+      "p50": 32.791,
+      "p95": 824.217,
+      "p99": 1414.303,
+      "max": 1530.648
+    },
+    "wal_no_retry_failures_total": 200,
+    "wal_with_retry_failures_total": 200,
+    "wal_busy_timeout_failures_total": 100,
+    "audit_delta_rows": 1818,
+    "audit_delta_mismatch": 0,
+    "audit_id_gap_count_after": 0,
+    "plugin_overwrite_detected": true,
+    "plugin_failure_containment_ok": true,
+    "ci_checks_passed": true
+  }
+}

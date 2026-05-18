@@ -1,0 +1,509 @@
+{
+  "run_id": "endurance-soak-20260518T091914Z-38j7j0",
+  "started_at": "2026-05-18T09:19:14.906244+00:00",
+  "platform": {
+    "core_base": "http://127.0.0.1:8000",
+    "ws_base": "http://127.0.0.1:8001",
+    "db_path_host": "/local/mnt/workspace/AURA_V1/AURA/data/aura.db",
+    "rounds": 1
+  },
+  "artifacts": {
+    "round_artifacts": [
+      "/local/mnt/workspace/AURA_V1/AURA/data/outputs/runtime_discovery/runtime_discovery_endurance-soak-20260518T091914Z-38j7j0-r1.json"
+    ]
+  },
+  "campaigns": {
+    "round_soak": {
+      "rounds": [
+        {
+          "run_id": "endurance-soak-20260518T091914Z-38j7j0-r1",
+          "severity": {
+            "high": 0,
+            "medium": 0,
+            "low": 3,
+            "info": 5
+          },
+          "replay_coverage_ratio": 0.964,
+          "final_replay_non_200": 1,
+          "max_overlapping_running": 25,
+          "event_retry_order": [
+            1,
+            2,
+            3
+          ],
+          "event_drop_estimate": 200,
+          "ws_error_count": 0,
+          "ws_recipients_min": 14,
+          "ws_recipients_max": 14,
+          "wal_with_retry_failures": 40,
+          "governance_conflict_statuses": [
+            200,
+            409
+          ],
+          "governance_contention_success": 35,
+          "governance_contention_fail": 25,
+          "watchdog_missing_replay_count": 0,
+          "stable_replay_hash_count": 1
+        }
+      ],
+      "severity_trajectory": [
+        {
+          "high": 0,
+          "medium": 0,
+          "low": 3,
+          "info": 5
+        }
+      ],
+      "event_drop_estimate_range": {
+        "min": 200,
+        "max": 200
+      },
+      "replay_coverage_range": {
+        "min": 0.964,
+        "max": 0.964
+      }
+    },
+    "ws_reconnect_storm": {
+      "marker": "soak-ws-20260518T092118Z-mmr0g",
+      "duration_seconds": 2,
+      "broadcast": {
+        "sent": 59,
+        "duplicate_injected": 2
+      },
+      "client_stats": {
+        "fast-0": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-1": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-2": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-3": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-4": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-5": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-6": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-7": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-8": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-9": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-10": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "fast-11": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        },
+        "slow-0": {
+          "reconnects": 4,
+          "received": 47,
+          "errors": 0
+        },
+        "slow-1": {
+          "reconnects": 4,
+          "received": 47,
+          "errors": 0
+        },
+        "slow-2": {
+          "reconnects": 4,
+          "received": 47,
+          "errors": 0
+        },
+        "slow-3": {
+          "reconnects": 4,
+          "received": 47,
+          "errors": 0
+        },
+        "slow-4": {
+          "reconnects": 4,
+          "received": 47,
+          "errors": 0
+        },
+        "slow-5": {
+          "reconnects": 4,
+          "received": 47,
+          "errors": 0
+        },
+        "monitor": {
+          "reconnects": 4,
+          "received": 58,
+          "errors": 0
+        }
+      },
+      "total_received": 1036,
+      "total_errors": 0,
+      "total_reconnects": 76,
+      "replayed_count": 59,
+      "dropped_estimate": 0,
+      "ordering_anomalies": {
+        "ingest_non_monotonic": 0
+      }
+    },
+    "governance_latency": {
+      "run_id": "20260518T092132Z-got0h",
+      "duration_seconds": 2,
+      "requests_total": 200,
+      "status_counts": {
+        "200": 200
+      },
+      "action_counts": {
+        "grant": 50,
+        "reject": 50,
+        "comment": 50,
+        "escalate": 50
+      },
+      "latency_ms": {
+        "p50": 24.572,
+        "p95": 1056.719,
+        "p99": 1486.967,
+        "max": 1684.447
+      },
+      "audit_before": {
+        "row_count": 8702,
+        "mismatch_count": 0,
+        "id_gap_count": 0,
+        "sample_mismatches": [],
+        "sample_id_gaps": [],
+        "last_id": 8702
+      },
+      "audit_after": {
+        "row_count": 8902,
+        "mismatch_count": 0,
+        "id_gap_count": 0,
+        "sample_mismatches": [],
+        "sample_id_gaps": [],
+        "last_id": 8902
+      },
+      "audit_delta_rows": 200,
+      "audit_delta_mismatch": 0
+    },
+    "plugin_pressure": {
+      "rounds": 15,
+      "good_packages": 14,
+      "bad_packages": 8,
+      "load_count_min": 14,
+      "load_count_max": 14,
+      "duration_ms_p95": 3.9184940978884697,
+      "duration_ms_max": 12.616308871656656,
+      "overwrite_detected": true,
+      "failure_containment_ok": true
+    },
+    "replay_burst": {
+      "duration_seconds": 2,
+      "requests_total": 55,
+      "status_counts": {
+        "200": 55
+      },
+      "latency_ms": {
+        "p50": 5.729,
+        "p95": 7.467,
+        "max": 14.907
+      },
+      "first_success_lag_stats": {
+        "count": 10,
+        "p50": 0.152,
+        "p95": 0.296,
+        "max": 0.332
+      }
+    },
+    "wal_pressure": {
+      "loops": 1,
+      "results": [
+        {
+          "no_retry_failures": 20,
+          "with_retry_failures": 20,
+          "busy_timeout_failures": 10,
+          "checkpoint_samples": [
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0
+            ]
+          ]
+        }
+      ],
+      "no_retry_failures_total": 20,
+      "with_retry_failures_total": 20,
+      "busy_timeout_failures_total": 10
+    }
+  },
+  "observability": {
+    "replay_lag": {
+      "count": 10,
+      "p50": 0.152,
+      "p95": 0.296,
+      "max": 0.332
+    },
+    "queue_depth_proxy": [
+      {
+        "run_id": "endurance-soak-20260518T091914Z-38j7j0-r1",
+        "max_overlapping_running": 25
+      }
+    ],
+    "retry_drift": [
+      {
+        "run_id": "endurance-soak-20260518T091914Z-38j7j0-r1",
+        "retry_order": [
+          1,
+          2,
+          3
+        ],
+        "is_monotonic": true
+      }
+    ],
+    "websocket_reconnect_pressure": {
+      "total_reconnects": 76,
+      "total_errors": 0,
+      "dropped_estimate": 0,
+      "ordering_anomalies": {
+        "ingest_non_monotonic": 0
+      }
+    },
+    "wal_retry_pressure": {
+      "with_retry_failures_total": 20,
+      "busy_timeout_failures_total": 10
+    },
+    "governance_latency": {
+      "p50": 24.572,
+      "p95": 1056.719,
+      "p99": 1486.967,
+      "max": 1684.447
+    },
+    "event_ordering_anomalies": {
+      "min": 200,
+      "max": 200
+    },
+    "replay_completeness": {
+      "min": 0.964,
+      "max": 0.964
+    },
+    "plugin_execution_metrics": {
+      "rounds": 15,
+      "good_packages": 14,
+      "bad_packages": 8,
+      "load_count_min": 14,
+      "load_count_max": 14,
+      "duration_ms_p95": 3.9184940978884697,
+      "duration_ms_max": 12.616308871656656,
+      "overwrite_detected": true,
+      "failure_containment_ok": true
+    }
+  },
+  "integrity": {
+    "audit_before": {
+      "row_count": 8295,
+      "mismatch_count": 0,
+      "id_gap_count": 0,
+      "sample_mismatches": [],
+      "sample_id_gaps": [],
+      "last_id": 8295
+    },
+    "audit_after": {
+      "row_count": 8902,
+      "mismatch_count": 0,
+      "id_gap_count": 0,
+      "sample_mismatches": [],
+      "sample_id_gaps": [],
+      "last_id": 8902
+    },
+    "audit_delta_rows": 607,
+    "audit_delta_mismatch": 0,
+    "memory_before": {
+      "aura-core": {
+        "cpu": "0.23%",
+        "mem": "203.1MiB / 62.79GiB",
+        "mem_pct": "0.32%",
+        "net_io": "69.8MB / 52.1MB",
+        "block_io": "13.2MB / 1.58GB",
+        "pids": "8"
+      },
+      "aura-ws-server": {
+        "cpu": "0.15%",
+        "mem": "136.7MiB / 62.79GiB",
+        "mem_pct": "0.21%",
+        "net_io": "49.4MB / 106MB",
+        "block_io": "8.82MB / 0B",
+        "pids": "4"
+      },
+      "aura-llm-gateway": {
+        "cpu": "0.21%",
+        "mem": "99.23MiB / 62.79GiB",
+        "mem_pct": "0.15%",
+        "net_io": "37.7MB / 14.3MB",
+        "block_io": "13.4MB / 37.7MB",
+        "pids": "4"
+      },
+      "aura-dashboard": {
+        "cpu": "0.00%",
+        "mem": "13.12MiB / 62.79GiB",
+        "mem_pct": "0.02%",
+        "net_io": "5.68MB / 9.5MB",
+        "block_io": "1.92MB / 4.07MB",
+        "pids": "17"
+      }
+    },
+    "memory_after": {
+      "aura-core": {
+        "cpu": "0.13%",
+        "mem": "205.3MiB / 62.79GiB",
+        "mem_pct": "0.32%",
+        "net_io": "74.6MB / 54.6MB",
+        "block_io": "13.2MB / 1.7GB",
+        "pids": "8"
+      },
+      "aura-ws-server": {
+        "cpu": "9.82%",
+        "mem": "139.3MiB / 62.79GiB",
+        "mem_pct": "0.22%",
+        "net_io": "51.3MB / 111MB",
+        "block_io": "8.82MB / 0B",
+        "pids": "4"
+      },
+      "aura-llm-gateway": {
+        "cpu": "0.11%",
+        "mem": "99.23MiB / 62.79GiB",
+        "mem_pct": "0.15%",
+        "net_io": "38.4MB / 14.7MB",
+        "block_io": "13.4MB / 37.9MB",
+        "pids": "4"
+      },
+      "aura-dashboard": {
+        "cpu": "0.00%",
+        "mem": "13.12MiB / 62.79GiB",
+        "mem_pct": "0.02%",
+        "net_io": "5.68MB / 9.5MB",
+        "block_io": "1.92MB / 4.07MB",
+        "pids": "17"
+      }
+    },
+    "memory_samples_per_round": [
+      {
+        "run_id": "endurance-soak-20260518T091914Z-38j7j0-r1",
+        "memory": {
+          "aura-core": {
+            "cpu": "0.15%",
+            "mem": "205.1MiB / 62.79GiB",
+            "mem_pct": "0.32%",
+            "net_io": "74.4MB / 53.9MB",
+            "block_io": "13.2MB / 1.68GB",
+            "pids": "8"
+          },
+          "aura-ws-server": {
+            "cpu": "0.10%",
+            "mem": "137.1MiB / 62.79GiB",
+            "mem_pct": "0.21%",
+            "net_io": "51.2MB / 111MB",
+            "block_io": "8.82MB / 0B",
+            "pids": "4"
+          },
+          "aura-llm-gateway": {
+            "cpu": "0.10%",
+            "mem": "99.23MiB / 62.79GiB",
+            "mem_pct": "0.15%",
+            "net_io": "38.4MB / 14.7MB",
+            "block_io": "13.4MB / 37.9MB",
+            "pids": "4"
+          },
+          "aura-dashboard": {
+            "cpu": "0.00%",
+            "mem": "13.12MiB / 62.79GiB",
+            "mem_pct": "0.02%",
+            "net_io": "5.68MB / 9.5MB",
+            "block_io": "1.92MB / 4.07MB",
+            "pids": "17"
+          }
+        }
+      }
+    ],
+    "ci_checks": {
+      "passed": true,
+      "exit_code": 0,
+      "duration_seconds": 27.377,
+      "stdout_tail": "checked_files=97 violations=0 passed=True\n......................                                                   [100%]\n=============================== warnings summary ===============================\nAURA/workspace/aura-sdk/src/aura_sdk/models/config.py:7\n  /repo/AURA/workspace/aura-sdk/src/aura_sdk/models/config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/\n    class Settings(BaseSettings):\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n22 passed, 1 warning in 1.50s\n2026-05-18 09:22:11 [warning  ] nondeterminism_detected        function=_nondeterministic_sample trials=12 unique=12\ndeterministic_check {'is_deterministic': True, 'unique_outputs': 1}\nnondeterminism_check {'is_deterministic': False, 'unique_outputs': 12}",
+      "stderr_tail": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n\n[notice] A new release of pip is available: 25.0.1 -> 26.1.1\n[notice] To update, run: pip install --upgrade pip"
+    }
+  },
+  "finished_at": "2026-05-18T09:22:14.179537+00:00"
+}
