@@ -1,0 +1,19 @@
+{
+  "run_id": "arch-before-ffd5ce55",
+  "observed_at": "2026-05-18T04:46:33.552588+00:00",
+  "injected_violation": {
+    "file": "/local/mnt/workspace/AURA_V1/AURA/services/core/src/core/_arch_violation_probe.py",
+    "content": "import redis",
+    "type": "forbidden_import"
+  },
+  "architecture_checker_present": false,
+  "validation_command": "python -m pytest -q /app/services/core/tests/test_tasks_input_validation.py",
+  "validation_exit_code": 0,
+  "validation_stdout_tail": ".......                                                                  [100%]\n=============================== warnings summary ===============================\nworkspace/aura-sdk/src/aura_sdk/models/config.py:7\n  /app/workspace/aura-sdk/src/aura_sdk/models/config.py:7: PydanticDeprecatedSince20: Support for class-based `config` is deprecated, use ConfigDict instead. Deprecated in Pydantic V2.0 to be removed in V3.0. See Pydantic V2 Migration Guide at https://errors.pydantic.dev/2.13/migration/\n    class Settings(BaseSettings):\n\ntests/test_tasks_input_validation.py::test_tasks_create_rejects_malformed_json\n  /usr/local/lib/python3.12/site-packages/httpx/_models.py:408: DeprecationWarning: Use 'content=<...>' to upload raw bytes/text content.\n    headers, stream = encode_request(\n\n-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html\n7 passed, 2 warnings in 0.60s",
+  "validation_stderr_tail": "WARNING: Running pip as the 'root' user can result in broken permissions and conflicting behaviour with the system package manager, possibly rendering your system unusable. It is recommended to use a virtual environment instead: https://pip.pypa.io/warnings/venv. Use the --root-user-action option if you know what you are doing and want to suppress this warning.\n\n[notice] A new release of pip is available: 25.0.1 -> 26.1.1\n[notice] To update, run: pip install --upgrade pip",
+  "summary": {
+    "violation_detected": false,
+    "reason": "No executable architecture gate in current validation path",
+    "tests_passed_despite_violation": true
+  }
+}

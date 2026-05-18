@@ -15,6 +15,7 @@ from aura_sdk.validation.models import (
 )
 from aura_sdk.validation.runners import ValidationOrchestrator
 from aura_sdk.validation.detectors import NondeterminismDetector, FlakyTestDetector
+from aura_sdk.validation.architecture import ArchitectureEnforcer, run_enforcement
 
 __all__ = [
     "TestCategory",
@@ -27,4 +28,6 @@ __all__ = [
     "ValidationOrchestrator",
     "NondeterminismDetector",
     "FlakyTestDetector",
+    "ArchitectureEnforcer",
+    "run_enforcement",
 ]

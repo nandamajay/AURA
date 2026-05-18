@@ -1,0 +1,17 @@
+{
+  "run_id": "arch-after-e3089324",
+  "observed_at": "2026-05-18T04:50:10.006843+00:00",
+  "injected_violation": {
+    "file": "/local/mnt/workspace/AURA_V1/AURA/services/core/src/core/_arch_violation_probe.py",
+    "content": "import redis",
+    "type": "forbidden_import"
+  },
+  "enforcement_command": "python /app/scripts/architecture-enforce.py",
+  "enforcement_exit_code": 1,
+  "enforcement_stdout_tail": "checked_files=98 violations=2 passed=False\nARCH_FORBIDDEN_IMPORT high services/core/src/core/_arch_violation_probe.py:1 forbidden import root 'redis'\nARCH_OBSERVABILITY medium services/core/src/core/_arch_violation_probe.py:1 core module missing module-level logger via get_logger",
+  "enforcement_stderr_tail": "",
+  "summary": {
+    "violation_detected": true,
+    "hard_fail_enforced": true
+  }
+}
