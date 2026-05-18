@@ -13,6 +13,10 @@ def _reset_ws_state() -> None:
     ws_main.manager._subscriptions.clear()
     ws_main._event_buffer.clear()
     ws_main._sse_clients.clear()
+    ws_main._event_ingest_sequence = 0
+    ws_main._seen_event_ids.clear()
+    ws_main._retry_attempt_state.clear()
+    ws_main._stream_sequence_state.clear()
 
 
 def test_health_endpoint_reports_connections():
@@ -144,3 +148,81 @@ def test_broadcast_rejects_malformed_json():
         headers={"Content-Type": "application/json"},
     )
     assert response.status_code == 422
+
+
+def test_broadcast_deduplicates_event_id_and_keeps_single_buffer_entry():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    event = {
+        "event_id": "dup-1",
+        "event_type": "task.progress",
+        "payload": {"task_id": "task-dup-1"},
+        "timestamp": "2026-05-16T00:00:00Z",
+    }
+
+    first = client.post("/broadcast", json={"channel": "task.orchestration", "event": event})
+    second = client.post("/broadcast", json={"channel": "task.orchestration", "event": event})
+    assert first.status_code == 200
+    assert second.status_code == 200
+
+    assert first.json()["dropped_duplicate"] is False
+    assert second.json()["dropped_duplicate"] is True
+    assert second.json()["ordering"]["duplicate_event"] is True
+    assert len(ws_main._event_buffer) == 1
+
+
+def test_broadcast_normalizes_retry_attempts_to_monotonic_order():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    attempts_seen: list[int] = []
+    originals: list[int | None] = []
+    for attempt in [2, 1, 3]:
+        event = {
+            "event_id": f"retry-evt-{attempt}",
+            "event_type": "runtime.discovery.retry",
+            "payload": {"marker": "m1", "kind": "retry", "op": "R1", "attempt": attempt},
+            "timestamp": "2026-05-16T00:00:00Z",
+        }
+        response = client.post("/broadcast", json={"channel": "system", "event": event})
+        assert response.status_code == 200
+        body = response.json()
+        assert body["dropped_duplicate"] is False
+
+    for buffered in ws_main._event_buffer:
+        payload = buffered.get("payload", {})
+        if payload.get("kind") == "retry":
+            attempts_seen.append(int(payload["attempt"]))
+            original = payload.get("attempt_original")
+            originals.append(int(original) if original is not None else None)
+
+    assert attempts_seen == [1, 2, 3]
+    # First two retries were normalized; third was already the expected attempt.
+    assert originals == [2, 1, None]
+
+
+def test_broadcast_marks_sequence_violation_for_out_of_order_stream():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    event_1 = {
+        "event_id": "ooo-1",
+        "event_type": "runtime.discovery.order",
+        "payload": {"marker": "stream-a", "kind": "out_of_order", "seq": 5},
+        "timestamp": "2026-05-16T00:00:00Z",
+    }
+    event_2 = {
+        "event_id": "ooo-2",
+        "event_type": "runtime.discovery.order",
+        "payload": {"marker": "stream-a", "kind": "out_of_order", "seq": 3},
+        "timestamp": "2026-05-16T00:00:00Z",
+    }
+
+    first = client.post("/broadcast", json={"channel": "system", "event": event_1})
+    second = client.post("/broadcast", json={"channel": "system", "event": event_2})
+    assert first.status_code == 200
+    assert second.status_code == 200
+    assert second.json()["ordering"]["sequence_violation"] is True
+    assert second.json()["ordering"]["expected_seq"] == 6
+    assert second.json()["ordering"]["received_seq"] == 3
