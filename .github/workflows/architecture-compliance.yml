@@ -1,4 +1,4 @@
-name: architecture-compliance
+name: stabilization-gates
 
 on:
   pull_request:
@@ -14,7 +14,7 @@ on:
       - ".github/workflows/architecture-compliance.yml"
 
 jobs:
-  architecture-compliance:
+  stabilization-gates:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -25,8 +25,27 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install aura-sdk validation dependencies
-        run: python -m pip install -e AURA/workspace/aura-sdk[dev]
+      - name: Install validation dependencies
+        run: |
+          python -m pip install -e AURA/workspace/aura-sdk[dev]
+          python -m pip install pytest pytest-asyncio
 
       - name: Enforce architecture boundaries
         run: python AURA/scripts/architecture-enforce.py
+
+      - name: Governance and replay hard-fail suite
+        env:
+          PYTHONPATH: AURA/agents/src:AURA/services/core/src:AURA/workspace/aura-sdk/src
+        run: |
+          python -m pytest -q \
+            AURA/services/core/tests/test_governance_stabilization.py \
+            AURA/services/core/tests/test_event_audit_persistence.py \
+            AURA/services/core/tests/test_task_queue_retry_ordering.py \
+            AURA/workspace/aura-sdk/tests/test_replay.py \
+            AURA/workspace/aura-sdk/tests/test_architecture_enforcer.py \
+            AURA/agents/tests/test_base_agent_replay_hooks.py
+
+      - name: Deterministic execution gate
+        env:
+          PYTHONPATH: AURA/workspace/aura-sdk/src
+        run: python AURA/scripts/determinism-gate.py
