@@ -316,6 +316,24 @@ def _get_queue_stats(core_base: str, token: str) -> dict[str, Any]:
     return {"error": r.status_code, "body": r.text[:200]}
 
 
+def _get_queue_isolation_stats(core_base: str, token: str) -> dict[str, Any]:
+    r = requests.get(
+        f"{core_base}/api/v1/tasks/queue/isolation",
+        headers=auth_headers(token),
+        timeout=10,
+    )
+    if r.status_code == 200:
+        return r.json()
+    return {"error": r.status_code, "body": r.text[:200]}
+
+
+def _get_ws_coexistence_metrics(ws_base: str) -> dict[str, Any]:
+    r = requests.get(f"{ws_base}/metrics/coexistence", timeout=10)
+    if r.status_code == 200:
+        return r.json()
+    return {"error": r.status_code, "body": r.text[:200]}
+
+
 def _get_task(task_url: str, headers: dict[str, str]) -> tuple[int, dict[str, Any]]:
     r = requests.get(task_url, headers=headers, timeout=10)
     body: dict[str, Any]
@@ -416,6 +434,7 @@ def multi_domain_task_campaign(
                 "ts": utc_iso(),
                 "domain_status_counts": domain_counts,
                 "queue_stats": queue_stats,
+                "queue_isolation": _get_queue_isolation_stats(core_base, token),
             }
         )
 
@@ -791,11 +810,17 @@ def governance_scope_campaign(
 
 
 async def _collect_sse_for_domains(
-    *, ws_base: str, run_id: str, watch_domain: str, duration_seconds: float, slow: bool
+    *,
+    ws_base: str,
+    run_id: str,
+    watch_domain: str,
+    duration_seconds: float,
+    slow: bool,
+    channel_filter: str,
 ) -> dict[str, Any]:
     import httpx
 
-    url = f"{ws_base}/events?channels=system"
+    url = f"{ws_base}/events?channels={channel_filter}"
     own = 0
     foreign = 0
     total = 0
@@ -862,6 +887,7 @@ async def event_stream_interference_campaign(
                     watch_domain=domain,
                     duration_seconds=float(duration_seconds),
                     slow=(i % 2 == 1),
+                    channel_filter=f"system:{domain}",
                 )
             )
         )
@@ -907,6 +933,7 @@ async def event_stream_interference_campaign(
                         "kind": "retry",
                         "op": f"{domain}-op",
                         "attempt": attempt,
+                        "retry_scope": f"domain:{domain}:run:{run_id}:op:{domain}-op",
                     },
                 }
                 rr = await client.post(f"{ws_base}/broadcast", json={"channel": "system", "event": ev})
@@ -1268,8 +1295,8 @@ def runtime_cell_feasibility_assessment(
             },
         },
         "event_bus_partition_feasibility": {
-            "status": "weak",
-            "reason": "shared system channel fanout causes cross-domain event visibility under coexistence pressure",
+            "status": "partial",
+            "reason": "domain-scoped channels reduce cross-domain visibility, but base shared channel still exists",
             "evidence": {
                 "max_foreign_ratio": round(max_foreign_ratio, 3),
                 "collector_samples": events.get("collectors", []),
@@ -1389,6 +1416,8 @@ async def amain() -> int:
     before_audit = audit_summary(ctx.db_path)
     before_mem = docker_memory_snapshot()
     before_queue = _get_queue_stats(ctx.core_base, token)
+    before_queue_isolation = _get_queue_isolation_stats(ctx.core_base, token)
+    before_ws_metrics = _get_ws_coexistence_metrics(ctx.ws_base)
 
     plugin_scan = plugin_synthetic_domain_scan()
 
@@ -1437,6 +1466,8 @@ async def amain() -> int:
     after_queue = _get_queue_stats(ctx.core_base, token)
     after_audit = audit_summary(ctx.db_path)
     after_mem = docker_memory_snapshot()
+    after_queue_isolation = _get_queue_isolation_stats(ctx.core_base, token)
+    after_ws_metrics = _get_ws_coexistence_metrics(ctx.ws_base)
 
     matrix = compute_interference_matrix(
         task_campaign=task_campaign,
@@ -1461,7 +1492,9 @@ async def amain() -> int:
         "baseline": {
             "audit_before": before_audit,
             "queue_before": before_queue,
+            "queue_isolation_before": before_queue_isolation,
             "memory_before": before_mem,
+            "ws_metrics_before": before_ws_metrics,
         },
         "campaigns": {
             "plugin_synthetic_domain_scan": plugin_scan,
@@ -1476,7 +1509,9 @@ async def amain() -> int:
         "post_state": {
             "audit_after": after_audit,
             "queue_after": after_queue,
+            "queue_isolation_after": after_queue_isolation,
             "memory_after": after_mem,
+            "ws_metrics_after": after_ws_metrics,
             "audit_delta_rows": after_audit["row_count"] - before_audit["row_count"],
             "audit_delta_mismatch": after_audit["mismatch_count"] - before_audit["mismatch_count"],
         },

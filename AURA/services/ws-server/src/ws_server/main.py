@@ -3,7 +3,7 @@
 import asyncio
 import json
 import os
-from collections import OrderedDict
+from collections import Counter, OrderedDict
 from datetime import datetime, timezone
 from uuid import uuid4
 
@@ -28,9 +28,10 @@ app = FastAPI(title="AURA WebSocket Server", version="0.1.0")
 # Event buffer for SSE replay
 _event_buffer: list[dict] = []
 _BUFFER_SIZE = 1000
+_BUFFER_PER_DOMAIN_MAX = max(50, int(os.environ.get("BUFFER_PER_DOMAIN_MAX", "250")))
 _sse_clients: dict[str, dict[str, object]] = {}
 _BROADCAST_LOCK = asyncio.Lock()
-_ORDERING_POLICY_VERSION = "p1.2"
+_ORDERING_POLICY_VERSION = "p2.1"
 _SEEN_EVENT_ID_MAX = 20000
 _RETRY_STREAM_MAX = 5000
 _SEQ_STREAM_MAX = 10000
@@ -38,6 +39,14 @@ _event_ingest_sequence = 0
 _seen_event_ids: OrderedDict[str, int] = OrderedDict()
 _retry_attempt_state: OrderedDict[str, int] = OrderedDict()
 _stream_sequence_state: OrderedDict[str, int] = OrderedDict()
+_buffer_evictions_total = 0
+_buffer_evictions_by_domain: Counter[str] = Counter()
+_sse_drop_total = 0
+_sse_drop_by_domain: Counter[str] = Counter()
+_domain_ingest_count: Counter[str] = Counter()
+_domain_ws_delivery_count: Counter[str] = Counter()
+_domain_sse_delivery_count: Counter[str] = Counter()
+_channel_broadcast_count: Counter[str] = Counter()
 
 
 class BroadcastRequest(BaseModel):
@@ -67,13 +76,36 @@ def _event_payload(event: dict[str, object]) -> dict[str, object]:
     return {}
 
 
+def _event_domain(payload: dict[str, object]) -> str:
+    domain = payload.get("plugin_domain")
+    if isinstance(domain, str) and domain.strip():
+        return domain.strip().lower()
+    scope = payload.get("runtime_cell_scope")
+    if isinstance(scope, str) and scope.startswith("domain:"):
+        parsed = scope.split(":", 1)[1].strip().lower()
+        if parsed:
+            return parsed
+    return ""
+
+
+def _routed_channels(base_channel: str, payload: dict[str, object]) -> list[str]:
+    domain = _event_domain(payload)
+    channels = [base_channel]
+    if domain:
+        channels.append(f"{base_channel}:{domain}")
+    return channels
+
+
 def _stream_key(channel: str, payload: dict[str, object]) -> str:
     marker = str(payload.get("marker") or "")
     kind = str(payload.get("kind") or "")
     op = str(payload.get("op") or "")
+    domain = _event_domain(payload)
+    run_id = str(payload.get("run_id") or "")
+    retry_scope = str(payload.get("retry_scope") or "")
     if op:
-        return f"{channel}:{kind}:{marker}:{op}"
-    return f"{channel}:{kind}:{marker}"
+        return f"{channel}:{kind}:{domain}:{run_id}:{marker}:{op}:{retry_scope}"
+    return f"{channel}:{kind}:{domain}:{run_id}:{marker}:{retry_scope}"
 
 
 def _to_int(value: object) -> int | None:
@@ -108,6 +140,10 @@ def _apply_event_policy(channel: str, event: dict[str, object]) -> tuple[dict[st
         _ordered_put(_seen_event_ids, event_id, ingest_sequence, _SEEN_EVENT_ID_MAX)
 
     if payload:
+        domain = _event_domain(payload)
+        if domain:
+            payload.setdefault("plugin_domain", domain)
+            payload.setdefault("runtime_cell_scope", f"domain:{domain}")
         stream_key = _stream_key(channel, payload)
 
         seq_value = _to_int(payload.get("seq"))
@@ -131,7 +167,9 @@ def _apply_event_policy(channel: str, event: dict[str, object]) -> tuple[dict[st
                 metadata["retry_original_attempt"] = original_attempt
                 payload["attempt_original"] = original_attempt
             payload["attempt"] = expected_attempt
+            payload["retry_scope"] = retry_key
             _ordered_put(_retry_attempt_state, retry_key, expected_attempt, _RETRY_STREAM_MAX)
+            metadata["retry_scope"] = retry_key
 
         processed["payload"] = payload
 
@@ -139,16 +177,55 @@ def _apply_event_policy(channel: str, event: dict[str, object]) -> tuple[dict[st
     return processed, False
 
 
-def _queue_sse_event(channel: str, event: dict) -> None:
+def _buffer_domain(event: dict[str, object]) -> str:
+    payload = event.get("payload")
+    if isinstance(payload, dict):
+        return _event_domain(payload)
+    return ""
+
+
+def _append_buffer_event(event: dict) -> None:
+    global _buffer_evictions_total
+    event_domain = _buffer_domain(event)
+    if len(_event_buffer) >= _BUFFER_SIZE:
+        evict_index = 0
+        if event_domain:
+            domain_count = sum(1 for existing in _event_buffer if _buffer_domain(existing) == event_domain)
+            if domain_count >= _BUFFER_PER_DOMAIN_MAX:
+                for idx, existing in enumerate(_event_buffer):
+                    if _buffer_domain(existing) == event_domain:
+                        evict_index = idx
+                        break
+        evicted = _event_buffer.pop(evict_index)
+        evicted_domain = _buffer_domain(evicted)
+        _buffer_evictions_total += 1
+        _buffer_evictions_by_domain[evicted_domain or "default"] += 1
+    _event_buffer.append(event)
+
+
+def _queue_sse_event(event: dict) -> None:
     """Fan-out a broadcast event to subscribed SSE clients."""
+    global _sse_drop_total
+    event_channels = event.get("channels", [])
+    if isinstance(event_channels, list):
+        channel_set = {str(x) for x in event_channels if isinstance(x, str) and x}
+    else:
+        channel_set = set()
+    if not channel_set:
+        channel = event.get("channel")
+        if isinstance(channel, str) and channel:
+            channel_set = {channel}
+    event_domain = _buffer_domain(event) or "default"
+
     for client in list(_sse_clients.values()):
         channels = client["channels"]
-        if channels and channel not in channels:
+        if channels and not set(channels).intersection(channel_set):
             continue
         queue = client["queue"]
         assert isinstance(queue, asyncio.Queue)
         try:
             queue.put_nowait(event)
+            _domain_sse_delivery_count[event_domain] += 1
         except asyncio.QueueFull:
             try:
                 _ = queue.get_nowait()
@@ -156,9 +233,11 @@ def _queue_sse_event(channel: str, event: dict) -> None:
                 pass
             try:
                 queue.put_nowait(event)
+                _domain_sse_delivery_count[event_domain] += 1
             except asyncio.QueueFull:
                 # Drop event if queue remains full.
-                pass
+                _sse_drop_total += 1
+                _sse_drop_by_domain[event_domain] += 1
 
 
 @app.on_event("startup")
@@ -173,6 +252,31 @@ async def health():
         "service": "ws-server",
         "version": "0.1.0",
         "connections": manager.connection_count,
+    }
+
+
+@app.get("/metrics/coexistence")
+async def coexistence_metrics():
+    domain_buffer_counts: Counter[str] = Counter()
+    for event in _event_buffer:
+        domain_buffer_counts[_buffer_domain(event) or "default"] += 1
+    return {
+        "policy_version": _ORDERING_POLICY_VERSION,
+        "event_ingest_sequence": _event_ingest_sequence,
+        "event_buffer_size": len(_event_buffer),
+        "event_buffer_capacity": _BUFFER_SIZE,
+        "event_buffer_per_domain_max": _BUFFER_PER_DOMAIN_MAX,
+        "buffer_evictions_total": _buffer_evictions_total,
+        "buffer_evictions_by_domain": dict(_buffer_evictions_by_domain),
+        "buffer_counts_by_domain": dict(domain_buffer_counts),
+        "sse_drop_total": _sse_drop_total,
+        "sse_drop_by_domain": dict(_sse_drop_by_domain),
+        "domain_ingest_count": dict(_domain_ingest_count),
+        "domain_ws_delivery_count": dict(_domain_ws_delivery_count),
+        "domain_sse_delivery_count": dict(_domain_sse_delivery_count),
+        "channel_broadcast_count": dict(_channel_broadcast_count),
+        "retry_scope_tracked": len(_retry_attempt_state),
+        "retry_scope_sample": list(_retry_attempt_state.items())[:20],
     }
 
 
@@ -271,7 +375,15 @@ async def events(request: Request):
         # Replay buffered events matching channels
         for event in _event_buffer:
             event_channel = event.get("channel", "")
-            if not channels or event_channel in channels:
+            event_channels_raw = event.get("channels", [])
+            event_channels = (
+                {str(x) for x in event_channels_raw if isinstance(x, str)}
+                if isinstance(event_channels_raw, list)
+                else set()
+            )
+            if not event_channels and isinstance(event_channel, str):
+                event_channels = {event_channel}
+            if not channels or channels.intersection(event_channels):
                 yield f"data: {json.dumps(event)}\n\n"
 
         # Send keepalive
@@ -330,19 +442,35 @@ async def broadcast_event(body: BroadcastRequest):
                 "ordering": ordering,
             }
 
+        payload = _event_payload(processed_event)
+        routed_channels = _routed_channels(channel, payload)
+        event_domain = _event_domain(payload) or "default"
+        _domain_ingest_count[event_domain] += 1
+        for routed in routed_channels:
+            _channel_broadcast_count[routed] += 1
+
+        routing = processed_event.get("_routing")
+        if not isinstance(routing, dict):
+            routing = {}
+        routing["base_channel"] = channel
+        routing["channels"] = routed_channels
+        routing["plugin_domain"] = event_domain
+        processed_event["_routing"] = routing
+
         # Buffer for SSE replay
-        buffered_event = {**processed_event, "channel": channel, "channels": [channel]}
-        _event_buffer.append(buffered_event)
-        if len(_event_buffer) > _BUFFER_SIZE:
-            _event_buffer.pop(0)
-        _queue_sse_event(channel, buffered_event)
+        buffered_event = {**processed_event, "channel": channel, "channels": routed_channels}
+        _append_buffer_event(buffered_event)
+        _queue_sse_event(buffered_event)
 
         # Broadcast to WebSocket clients
-        sent = await manager.broadcast(processed_event, channel=channel)
+        sent = await manager.broadcast(processed_event, channels=set(routed_channels))
+        _domain_ws_delivery_count[event_domain] += int(sent)
 
         return {
             "broadcast": True,
             "recipients": sent,
             "dropped_duplicate": False,
+            "routed_channels": routed_channels,
+            "plugin_domain": event_domain,
             "ordering": processed_event.get("_ordering", {}),
         }

@@ -81,7 +81,12 @@ async def test_retryable_failures_requeue_with_monotonic_lineage_and_events():
 
     try:
         task = await queue.create_task(
-            TaskCreate(agent_type=AgentType.LEARNING, max_retries=3, description="retry-ordering"),
+            TaskCreate(
+                agent_type=AgentType.LEARNING,
+                max_retries=3,
+                description="retry-ordering",
+                input_data={"plugin_domain": "automation"},
+            ),
             requested_by="tester",
         )
 
@@ -125,10 +130,14 @@ async def test_retryable_failures_requeue_with_monotonic_lineage_and_events():
         assert [entry["retry_sequence"] for entry in lineage] == [1, 2]
         assert [entry["failed_attempt"] for entry in lineage] == [1, 2]
         assert [entry["next_attempt"] for entry in lineage] == [2, 3]
+        assert [entry["plugin_domain"] for entry in lineage] == ["automation", "automation"]
+        assert all(isinstance(entry.get("retry_scope"), str) and "domain:automation" in entry["retry_scope"] for entry in lineage)
         assert final.result_data.get("retry_pending") is False
 
         assert len(retry_events) == 2
         assert [evt["retry"]["retry_sequence"] for evt in retry_events] == [1, 2]
+        assert [evt["plugin_domain"] for evt in retry_events] == ["automation", "automation"]
+        assert all(isinstance(evt.get("retry_scope"), str) and "domain:automation" in evt["retry_scope"] for evt in retry_events)
     finally:
         await bus.stop()
 

@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import asyncio
 import json
+import os
 from collections import deque
 from datetime import date, datetime, timezone
 
@@ -61,6 +62,19 @@ class TaskQueueManager:
         self._stats_day: date = datetime.now(timezone.utc).date()
         self._completed_today = 0
         self._failed_today = 0
+        self._dispatch_sequence = 0
+        self._p2_wait_override_seconds = max(
+            0.0, float(os.environ.get("AURA_QUEUE_P2_WAIT_OVERRIDE_SECONDS", "3"))
+        )
+        self._p2_fairness_window = max(
+            1, int(os.environ.get("AURA_QUEUE_P2_FAIRNESS_WINDOW", "3"))
+        )
+        self._p2_last_fair_dispatch_sequence = 0
+        self._domain_dispatch_counts: dict[str, int] = {}
+        self._domain_starvation_events: dict[str, int] = {}
+        self._domain_fairness_overrides: dict[str, int] = {}
+        self._domain_last_queue_wait_ms: dict[str, int] = {}
+        self._queue_policy_version = "p2-isolation-v1"
 
         self._persistence_enabled = False
 
@@ -273,6 +287,39 @@ class TaskQueueManager:
                 "running": len(self._running_task_to_agent),
                 "completed_today": self._completed_today,
                 "failed_today": self._failed_today,
+                "fairness_overrides_total": sum(self._domain_fairness_overrides.values()),
+                "starvation_events_total": sum(self._domain_starvation_events.values()),
+                "domains_tracked": len(self._domain_dispatch_counts),
+            }
+
+    async def get_isolation_stats(self) -> dict[str, object]:
+        async with self._lock:
+            domains = sorted(
+                set(self._domain_dispatch_counts)
+                | set(self._domain_starvation_events)
+                | set(self._domain_fairness_overrides)
+            )
+            per_domain: dict[str, dict[str, int]] = {}
+            for domain in domains:
+                per_domain[domain] = {
+                    "dispatches": int(self._domain_dispatch_counts.get(domain, 0)),
+                    "starvation_events": int(self._domain_starvation_events.get(domain, 0)),
+                    "fairness_overrides": int(self._domain_fairness_overrides.get(domain, 0)),
+                    "last_queue_wait_ms": int(self._domain_last_queue_wait_ms.get(domain, 0)),
+                }
+            return {
+                "policy_version": self._queue_policy_version,
+                "dispatch_sequence": int(self._dispatch_sequence),
+                "p2_wait_override_seconds": float(self._p2_wait_override_seconds),
+                "p2_fairness_window": int(self._p2_fairness_window),
+                "p2_last_fair_dispatch_sequence": int(self._p2_last_fair_dispatch_sequence),
+                "per_domain": per_domain,
+                "queue_depth": {
+                    "P0_critical": len(self._p0_queue),
+                    "P1_normal": sum(len(queue) for queue in self._p1_by_agent.values()),
+                    "P2_background": len(self._p2_queue),
+                    "running": len(self._running_task_to_agent),
+                },
             }
 
     async def _dispatch_loop(self) -> None:
@@ -326,30 +373,69 @@ class TaskQueueManager:
 
         while True:
             task: Task | None = None
+            dispatch_metadata: dict[str, object] = {}
             async with self._lock:
                 self._rollover_daily_stats_if_needed()
                 running_count = len(self._running_task_to_agent)
                 if running_count >= self._max_concurrent_agents:
                     return
 
-                task_id = self._select_next_task_locked(running_count=running_count)
+                task_id, dispatch_metadata = self._select_next_task_locked(
+                    running_count=running_count
+                )
                 if task_id is None:
                     return
 
                 task = self._tasks.get(task_id)
                 if task is None or task.status != TaskStatus.QUEUED:
                     continue
+                self._dispatch_sequence += 1
+                dispatch_sequence = self._dispatch_sequence
+                domain = self._task_domain(task)
+                queue_wait_ms = self._queue_wait_ms(task)
+                fairness_override = bool(dispatch_metadata.get("fairness_override", False))
+                if queue_wait_ms >= int(self._p2_wait_override_seconds * 1000):
+                    self._domain_starvation_events[domain] = (
+                        self._domain_starvation_events.get(domain, 0) + 1
+                    )
+                if fairness_override:
+                    self._domain_fairness_overrides[domain] = (
+                        self._domain_fairness_overrides.get(domain, 0) + 1
+                    )
+                self._domain_dispatch_counts[domain] = (
+                    self._domain_dispatch_counts.get(domain, 0) + 1
+                )
+                self._domain_last_queue_wait_ms[domain] = queue_wait_ms
+
                 task.status = TaskStatus.STARTED
                 task.started_at = datetime.now(timezone.utc)
                 task.current_attempt += 1
                 result_data = self._normalize_result_data(task.result_data)
                 result_data["attempt_started"] = task.current_attempt
                 result_data["retry_pending"] = False
+                queue_lineage = result_data.get("queue_lineage", [])
+                if not isinstance(queue_lineage, list):
+                    queue_lineage = []
+                queue_entry = {
+                    "dispatch_sequence": dispatch_sequence,
+                    "priority": task.priority.value,
+                    "plugin_domain": domain,
+                    "queue_wait_ms": queue_wait_ms,
+                    "fairness_override": fairness_override,
+                    "policy_version": self._queue_policy_version,
+                }
+                queue_lineage.append(queue_entry)
+                result_data["queue_lineage"] = queue_lineage[-20:]
+                result_data["queue_ordering"] = queue_entry
                 task.result_data = result_data
 
             if task is None:
                 continue
             await self._upsert_task(task)
+            await self._publish_task_started_event(
+                task=task,
+                dispatch_metadata=dispatch_metadata,
+            )
 
             try:
                 spawned = await self._runtime.spawn(
@@ -388,9 +474,25 @@ class TaskQueueManager:
                 task = current
             await self._upsert_task(task)
 
-    def _select_next_task_locked(self, *, running_count: int) -> str | None:
+    def _select_next_task_locked(self, *, running_count: int) -> tuple[str | None, dict[str, object]]:
         if self._p0_queue:
-            return self._p0_queue.popleft()
+            return self._p0_queue.popleft(), {"fairness_override": False}
+
+        if self._p2_queue and running_count < self._max_concurrent_agents:
+            oldest_wait_ms = self._peek_p2_wait_ms_locked()
+            fair_due = (
+                (self._dispatch_sequence + 1) - self._p2_last_fair_dispatch_sequence
+            ) >= self._p2_fairness_window
+            if (
+                fair_due
+                and oldest_wait_ms is not None
+                and oldest_wait_ms >= int(self._p2_wait_override_seconds * 1000)
+            ):
+                self._p2_last_fair_dispatch_sequence = self._dispatch_sequence
+                return self._p2_queue.popleft(), {
+                    "fairness_override": True,
+                    "oldest_wait_ms": oldest_wait_ms,
+                }
 
         if self._p1_rr:
             iterations = len(self._p1_rr)
@@ -406,14 +508,14 @@ class TaskQueueManager:
                     if task is not None and task.status == TaskStatus.QUEUED:
                         if not queue:
                             self._drop_empty_p1_bucket_locked(agent_type)
-                        return task_id
+                        return task_id, {"fairness_override": False}
                 self._drop_empty_p1_bucket_locked(agent_type)
 
         p2_running_limit = max(1, self._max_concurrent_agents // 2)
         if self._p2_queue and running_count < p2_running_limit:
-            return self._p2_queue.popleft()
+            return self._p2_queue.popleft(), {"fairness_override": False}
 
-        return None
+        return None, {}
 
     def _enqueue_locked(self, task_id: str, priority: TaskPriority, agent_type: str) -> None:
         if priority == TaskPriority.CRITICAL:
@@ -454,6 +556,27 @@ class TaskQueueManager:
         if agent_id is not None:
             self._running_agent_to_task.pop(agent_id, None)
 
+    def _task_domain(self, task: Task) -> str:
+        input_data = task.input_data if isinstance(task.input_data, dict) else {}
+        domain = input_data.get("plugin_domain")
+        if isinstance(domain, str) and domain.strip():
+            return domain.strip().lower()
+        return "default"
+
+    def _queue_wait_ms(self, task: Task) -> int:
+        if task.created_at is None:
+            return 0
+        now = datetime.now(timezone.utc)
+        return max(0, int((now - task.created_at).total_seconds() * 1000))
+
+    def _peek_p2_wait_ms_locked(self) -> int | None:
+        for task_id in self._p2_queue:
+            task = self._tasks.get(task_id)
+            if task is None or task.status != TaskStatus.QUEUED:
+                continue
+            return self._queue_wait_ms(task)
+        return None
+
     def _parse_status(self, status: str | None) -> TaskStatus | None:
         if not status:
             return None
@@ -488,6 +611,58 @@ class TaskQueueManager:
             return
         event = EventEnvelope(
             event_type=EventType.TASK_QUEUED,
+            source=EventSource(
+                subsystem="S1",
+                service="core",
+                task_id=task.id,
+                agent_type=task.agent_type.value,
+                agent_id="",
+            ),
+            payload=payload,
+            trace_id=task.id,
+        )
+        await self._event_bus.publish(event)
+
+    async def _publish_task_started_event(
+        self,
+        *,
+        task: Task,
+        dispatch_metadata: dict[str, object],
+    ) -> None:
+        if self._event_bus is None:
+            return
+        input_data = task.input_data if isinstance(task.input_data, dict) else {}
+        domain = input_data.get("plugin_domain")
+        plugin_domain = str(domain).strip().lower() if isinstance(domain, str) and domain.strip() else "default"
+        queue_ordering = {}
+        if isinstance(task.result_data, dict):
+            maybe_ordering = task.result_data.get("queue_ordering")
+            if isinstance(maybe_ordering, dict):
+                queue_ordering = dict(maybe_ordering)
+        payload = {
+            "task_id": task.id,
+            "agent_type": task.agent_type.value,
+            "priority": task.priority.value,
+            "status": TaskStatus.STARTED.value,
+            "plugin_domain": plugin_domain,
+            "runtime_cell_scope": f"domain:{plugin_domain}",
+            "queue_policy_version": self._queue_policy_version,
+            "fairness_override": bool(dispatch_metadata.get("fairness_override", False)),
+            "queue_ordering": queue_ordering,
+            "queue_depth": {
+                "P0_critical": len(self._p0_queue),
+                "P1_normal": sum(len(queue) for queue in self._p1_by_agent.values()),
+                "P2_background": len(self._p2_queue),
+                "running": len(self._running_task_to_agent),
+            },
+            "domain_metrics": {
+                "dispatches": int(self._domain_dispatch_counts.get(plugin_domain, 0)),
+                "starvation_events": int(self._domain_starvation_events.get(plugin_domain, 0)),
+                "fairness_overrides": int(self._domain_fairness_overrides.get(plugin_domain, 0)),
+            },
+        }
+        event = EventEnvelope(
+            event_type=EventType.TASK_STARTED,
             source=EventSource(
                 subsystem="S1",
                 service="core",
@@ -565,6 +740,10 @@ class TaskQueueManager:
             }
 
             if can_retry:
+                plugin_domain = self._task_domain(task)
+                retry_scope = (
+                    f"task:{task.id}:domain:{plugin_domain}:agent:{task.agent_type.value}"
+                )
                 retry_sequence = len(retry_lineage) + 1
                 entry = {
                     "retry_sequence": retry_sequence,
@@ -573,6 +752,8 @@ class TaskQueueManager:
                     "failed_exit_code": exit_code,
                     "reason": error_message or "agent_failed",
                     "scheduled_at": now.isoformat(),
+                    "plugin_domain": plugin_domain,
+                    "retry_scope": retry_scope,
                 }
                 retry_lineage.append(entry)
                 result_data["retry_lineage"] = retry_lineage
@@ -588,6 +769,9 @@ class TaskQueueManager:
                     "agent_type": task.agent_type.value,
                     "status": TaskStatus.QUEUED.value,
                     "reason": "retry_scheduled",
+                    "plugin_domain": plugin_domain,
+                    "runtime_cell_scope": f"domain:{plugin_domain}",
+                    "retry_scope": retry_scope,
                     "retry": entry,
                 }
             else:

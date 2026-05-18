@@ -32,6 +32,28 @@ _persist_success_count = 0
 _checkpoint_lock = asyncio.Lock()
 
 
+def _payload_domain(payload: dict[str, Any]) -> str:
+    domain = payload.get("plugin_domain")
+    if isinstance(domain, str) and domain.strip():
+        return domain.strip().lower()
+    scope = payload.get("runtime_cell_scope")
+    if isinstance(scope, str) and scope.startswith("domain:"):
+        parsed = scope.split(":", 1)[1].strip().lower()
+        if parsed:
+            return parsed
+    return ""
+
+
+def _resolve_ws_channels(event: EventEnvelope) -> tuple[str, list[str], str]:
+    payload = event.payload if isinstance(event.payload, dict) else {}
+    base_channel = _EVENT_CHANNEL_MAP.get(event.event_type, "system")
+    domain = _payload_domain(payload)
+    channels = [base_channel]
+    if domain:
+        channels.append(f"{base_channel}:{domain}")
+    return base_channel, channels, domain
+
+
 def _resolve_audit_target(event: EventEnvelope) -> tuple[str, str]:
     event_value = event.event_type.value
     payload = event.payload if isinstance(event.payload, dict) else {}
@@ -186,7 +208,11 @@ async def _maybe_checkpoint_audit_wal() -> None:
 
 
 async def _forward_to_ws(event: EventEnvelope, ws_server_url: str) -> bool:
-    channel = _EVENT_CHANNEL_MAP.get(event.event_type, "system")
+    channel, routed_channels, domain = _resolve_ws_channels(event)
+    event_payload = dict(event.payload) if isinstance(event.payload, dict) else {}
+    if domain:
+        event_payload.setdefault("plugin_domain", domain)
+        event_payload.setdefault("runtime_cell_scope", f"domain:{domain}")
     payload = {
         "channel": channel,
         "event": {
@@ -194,9 +220,14 @@ async def _forward_to_ws(event: EventEnvelope, ws_server_url: str) -> bool:
             "event_type": event.event_type.value,
             "timestamp": event.timestamp.isoformat(),
             "source": event.source.model_dump(),
-            "payload": event.payload,
+            "payload": event_payload,
             "trace_id": event.trace_id,
             "version": event.version,
+            "_routing": {
+                "base_channel": channel,
+                "channels": routed_channels,
+                "plugin_domain": domain,
+            },
         },
     }
     try:
@@ -208,6 +239,8 @@ async def _forward_to_ws(event: EventEnvelope, ws_server_url: str) -> bool:
                     status=resp.status_code,
                     event_type=event.event_type.value,
                     channel=channel,
+                    routed_channels=routed_channels,
+                    plugin_domain=domain,
                 )
                 return False
     except Exception as exc:
@@ -216,6 +249,8 @@ async def _forward_to_ws(event: EventEnvelope, ws_server_url: str) -> bool:
             error=str(exc),
             event_type=event.event_type.value,
             channel=channel,
+            routed_channels=routed_channels,
+            plugin_domain=domain,
         )
         return False
     return True
@@ -271,6 +306,12 @@ async def publish_event(
     if event_bus is None:
         return False
 
+    payload_data = dict(payload) if isinstance(payload, dict) else {}
+    domain = _payload_domain(payload_data)
+    if domain:
+        payload_data.setdefault("plugin_domain", domain)
+        payload_data.setdefault("runtime_cell_scope", f"domain:{domain}")
+
     envelope = EventEnvelope(
         event_type=event_type,
         source=EventSource(
@@ -280,7 +321,7 @@ async def publish_event(
             agent_type=agent_type,
             agent_id=agent_id,
         ),
-        payload=payload or {},
+        payload=payload_data,
         trace_id=trace_id,
     )
     await event_bus.publish(envelope)

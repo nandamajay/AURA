@@ -64,23 +64,32 @@ class ConnectionManager:
         if conn_id in self._subscriptions:
             self._subscriptions[conn_id].difference_update(channels)
 
-    async def broadcast(self, message: dict, channel: str | None = None) -> int:
+    async def broadcast(
+        self,
+        message: dict,
+        channel: str | None = None,
+        channels: set[str] | list[str] | None = None,
+    ) -> int:
         """Broadcast a message to connections.
 
         Args:
             message: JSON-serializable dict.
             channel: If set, only send to subscribers of this channel.
+            channels: Optional channel-set match; any intersection receives message.
 
         Returns:
             Number of connections that received the message.
         """
         sent = 0
         dead = []
+        requested_channels = set(channels or [])
+        if channel:
+            requested_channels.add(channel)
 
         for conn_id, ws in self._connections.items():
             # Check channel subscription
-            if channel and conn_id in self._subscriptions:
-                if channel not in self._subscriptions[conn_id]:
+            if requested_channels and conn_id in self._subscriptions:
+                if not self._subscriptions[conn_id].intersection(requested_channels):
                     continue
 
             try:

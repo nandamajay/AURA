@@ -73,6 +73,11 @@ async def create_task(
     queue = _get_task_queue(request)
     created = await queue.create_task(task, requested_by=current_user.get("email", "unknown"))
     task_id = created.id
+    plugin_domain = "default"
+    if isinstance(task.input_data, dict):
+        domain_value = task.input_data.get("plugin_domain")
+        if isinstance(domain_value, str) and domain_value.strip():
+            plugin_domain = domain_value.strip().lower()
     logger.info(
         "task_created",
         task_id=task_id,
@@ -89,6 +94,8 @@ async def create_task(
             "priority": task.priority.value,
             "requested_by": current_user.get("email"),
             "description": task.description,
+            "plugin_domain": plugin_domain,
+            "runtime_cell_scope": f"domain:{plugin_domain}",
         },
         task_id=task_id,
         agent_type=task.agent_type.value,
@@ -102,6 +109,8 @@ async def create_task(
             "agent_type": task.agent_type.value,
             "priority": task.priority.value,
             "status": TaskStatus.QUEUED.value,
+            "plugin_domain": plugin_domain,
+            "runtime_cell_scope": f"domain:{plugin_domain}",
         },
         task_id=task_id,
         agent_type=task.agent_type.value,
@@ -183,3 +192,13 @@ async def queue_stats(
     """Get queue statistics."""
     queue = _get_task_queue(request)
     return await queue.get_queue_stats()
+
+
+@router.get("/queue/isolation")
+async def queue_isolation_stats(
+    request: Request,
+    current_user: dict = Depends(get_current_user),
+):
+    """Get queue fairness/isolation statistics."""
+    queue = _get_task_queue(request)
+    return await queue.get_isolation_stats()

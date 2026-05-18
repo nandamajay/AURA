@@ -17,6 +17,14 @@ def _reset_ws_state() -> None:
     ws_main._seen_event_ids.clear()
     ws_main._retry_attempt_state.clear()
     ws_main._stream_sequence_state.clear()
+    ws_main._buffer_evictions_total = 0
+    ws_main._buffer_evictions_by_domain.clear()
+    ws_main._sse_drop_total = 0
+    ws_main._sse_drop_by_domain.clear()
+    ws_main._domain_ingest_count.clear()
+    ws_main._domain_ws_delivery_count.clear()
+    ws_main._domain_sse_delivery_count.clear()
+    ws_main._channel_broadcast_count.clear()
 
 
 def test_health_endpoint_reports_connections():
@@ -200,6 +208,123 @@ def test_broadcast_normalizes_retry_attempts_to_monotonic_order():
     assert attempts_seen == [1, 2, 3]
     # First two retries were normalized; third was already the expected attempt.
     assert originals == [2, 1, None]
+
+
+def test_retry_normalization_is_scoped_by_plugin_domain():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    for domain in ["driver", "media"]:
+        for attempt in [2, 1, 3]:
+            event = {
+                "event_id": f"retry-{domain}-{attempt}",
+                "event_type": "runtime.discovery.retry",
+                "payload": {
+                    "run_id": "r1",
+                    "plugin_domain": domain,
+                    "kind": "retry",
+                    "op": "shared-op",
+                    "attempt": attempt,
+                },
+                "timestamp": "2026-05-16T00:00:00Z",
+            }
+            response = client.post("/broadcast", json={"channel": "system", "event": event})
+            assert response.status_code == 200
+
+    attempts_by_domain: dict[str, list[int]] = {"driver": [], "media": []}
+    for buffered in ws_main._event_buffer:
+        payload = buffered.get("payload", {})
+        if not isinstance(payload, dict):
+            continue
+        if payload.get("kind") != "retry":
+            continue
+        domain = str(payload.get("plugin_domain") or "")
+        if domain in attempts_by_domain:
+            attempts_by_domain[domain].append(int(payload["attempt"]))
+
+    assert attempts_by_domain["driver"] == [1, 2, 3]
+    assert attempts_by_domain["media"] == [1, 2, 3]
+
+
+def test_broadcast_routes_to_domain_scoped_channels():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    with client.websocket_connect("/ws") as ws_driver:
+        _ = ws_driver.receive_json()
+        ws_driver.send_json({"action": "subscribe", "channels": ["system:driver"]})
+        _ = ws_driver.receive_json()
+
+        driver_event = {
+            "event_type": "runtime.discovery.driver",
+            "payload": {"plugin_domain": "driver", "marker": "m1"},
+            "timestamp": "2026-05-16T00:00:00Z",
+        }
+        media_event = {
+            "event_type": "runtime.discovery.media",
+            "payload": {"plugin_domain": "media", "marker": "m2"},
+            "timestamp": "2026-05-16T00:00:00Z",
+        }
+
+        driver_resp = client.post("/broadcast", json={"channel": "system", "event": driver_event})
+        media_resp = client.post("/broadcast", json={"channel": "system", "event": media_event})
+        assert driver_resp.status_code == 200
+        assert media_resp.status_code == 200
+        assert driver_resp.json()["recipients"] == 1
+        assert media_resp.json()["recipients"] == 0
+
+        received = ws_driver.receive_json()
+        assert received["payload"]["plugin_domain"] == "driver"
+        assert received["_routing"]["channels"] == ["system", "system:driver"]
+
+
+def test_sse_live_fanout_matches_scoped_channels():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    queue_driver: asyncio.Queue[dict] = asyncio.Queue()
+    queue_media: asyncio.Queue[dict] = asyncio.Queue()
+    ws_main._sse_clients["driver"] = {"queue": queue_driver, "channels": {"system:driver"}}
+    ws_main._sse_clients["media"] = {"queue": queue_media, "channels": {"system:media"}}
+
+    driver_event = {
+        "event_type": "runtime.discovery.driver",
+        "payload": {"plugin_domain": "driver", "marker": "m1"},
+        "timestamp": "2026-05-16T00:00:00Z",
+    }
+    media_event = {
+        "event_type": "runtime.discovery.media",
+        "payload": {"plugin_domain": "media", "marker": "m2"},
+        "timestamp": "2026-05-16T00:00:00Z",
+    }
+
+    assert client.post("/broadcast", json={"channel": "system", "event": driver_event}).status_code == 200
+    assert client.post("/broadcast", json={"channel": "system", "event": media_event}).status_code == 200
+
+    assert queue_driver.qsize() == 1
+    assert queue_media.qsize() == 1
+    assert queue_driver.get_nowait()["payload"]["plugin_domain"] == "driver"
+    assert queue_media.get_nowait()["payload"]["plugin_domain"] == "media"
+
+
+def test_coexistence_metrics_endpoint_exposes_pressure_counters():
+    _reset_ws_state()
+    client = TestClient(app)
+
+    event = {
+        "event_type": "runtime.discovery.driver",
+        "payload": {"plugin_domain": "driver", "marker": "m1", "kind": "retry", "op": "r", "attempt": 2},
+        "timestamp": "2026-05-16T00:00:00Z",
+    }
+    assert client.post("/broadcast", json={"channel": "system", "event": event}).status_code == 200
+
+    metrics = client.get("/metrics/coexistence")
+    assert metrics.status_code == 200
+    body = metrics.json()
+    assert body["event_buffer_size"] >= 1
+    assert "domain_ingest_count" in body
+    assert body["domain_ingest_count"].get("driver", 0) >= 1
+    assert "retry_scope_tracked" in body
 
 
 def test_broadcast_marks_sequence_violation_for_out_of_order_stream():
