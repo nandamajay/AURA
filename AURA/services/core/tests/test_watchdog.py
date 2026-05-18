@@ -4,10 +4,14 @@ from __future__ import annotations
 
 import asyncio
 import signal
+from pathlib import Path
+from tempfile import TemporaryDirectory
 
 import pytest
 
 from aura_sdk.protocol.envelope import AgentHeartbeat
+from aura_sdk.replay.recorder import TaskRecorder
+from aura_sdk.replay.replayer import ReplayEngine
 from core.services.watchdog import AgentWatch, WatchdogConfig, WatchdogManager
 
 
@@ -155,3 +159,45 @@ async def test_watchdog_loop_terminates_agent_after_missed_heartbeats():
     assert process.sent_signals == [signal.SIGTERM]
     assert process.kill_calls == 0
     assert manager.watch_count == 0
+
+
+@pytest.mark.asyncio
+async def test_watchdog_timeout_flow_finalizes_replay_and_preserves_existing_row():
+    with TemporaryDirectory() as tmpdir:
+        db_path = Path(tmpdir) / "watchdog-replay.db"
+        recorder = TaskRecorder(str(db_path))
+        task_id = "task-watchdog-replay-1"
+        recorder.start_task(
+            task_id=task_id,
+            agent_type="learning",
+            seed=42,
+            model_version="gpt-4o-2024-08-06",
+            rules_path="/rules",
+            input_data={"source": "test"},
+        )
+        recorder.record_prompt(task_id, "user", "hello")
+
+        manager = WatchdogManager(
+            config=WatchdogConfig(sigterm_wait_seconds=0.01),
+            replay_recorder=recorder,
+        )
+        process = FakeProcess(graceful_exit=False)
+        watch = AgentWatch(
+            agent_id="learning-replay-a1",
+            task_id=task_id,
+            agent_type="learning",
+            process=process,
+            heartbeats_missed=3,
+        )
+        manager.register(watch)
+
+        await manager._handle_timeout(watch)
+
+        replay = await ReplayEngine(recorder).replay(task_id)
+        assert replay["success"] is True
+        assert replay["recording_state"] == "finalized"
+        assert replay["prompt_count"] == 1
+        assert replay["output"]["status"] == "killed"
+        execution_steps = replay["execution"]
+        assert any(step.get("step") == "watchdog_timeout_detected" for step in execution_steps)
+        assert any(step.get("step") == "watchdog_sigkill_issued" for step in execution_steps)

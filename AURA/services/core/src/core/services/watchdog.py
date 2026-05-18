@@ -19,6 +19,7 @@ from aura_sdk.bus.event_bus import EventBus
 from aura_sdk.logging.logger import get_logger
 from aura_sdk.models.event import EventEnvelope, EventSource, EventType
 from aura_sdk.protocol.envelope import AgentHeartbeat
+from aura_sdk.replay.recorder import TaskRecorder
 
 logger = get_logger("core.watchdog")
 
@@ -64,10 +65,12 @@ class WatchdogManager:
         event_bus: EventBus | None = None,
         config: WatchdogConfig | None = None,
         now_fn: Callable[[], float] | None = None,
+        replay_recorder: TaskRecorder | None = None,
     ):
         self._event_bus = event_bus
         self._config = config or WatchdogConfig()
         self._now = now_fn or time.time
+        self._replay_recorder = replay_recorder
         self._watches: dict[str, AgentWatch] = {}
         self._task: asyncio.Task[None] | None = None
         self._running = False
@@ -185,6 +188,12 @@ class WatchdogManager:
                 logger.exception("watchdog_loop_error", error=str(exc))
 
     async def _handle_timeout(self, watch: AgentWatch) -> None:
+        self._record_replay_step(
+            watch,
+            "watchdog_timeout_detected",
+            heartbeats_missed=watch.heartbeats_missed,
+            heartbeat_interval_seconds=self._config.heartbeat_interval_seconds,
+        )
         logger.warning(
             "watchdog_timeout_detected",
             agent_id=watch.agent_id,
@@ -206,6 +215,7 @@ class WatchdogManager:
 
     async def _terminate_watch(self, watch: AgentWatch, reason: str) -> None:
         watch.status = "stopping"
+        self._record_replay_step(watch, "watchdog_sigterm_issued", reason=reason)
         try:
             watch.process.send_signal(signal.SIGTERM)
         except ProcessLookupError:
@@ -236,6 +246,7 @@ class WatchdogManager:
 
         if not graceful:
             watch.status = "killing"
+            self._record_replay_step(watch, "watchdog_sigkill_issued", reason=reason)
             try:
                 watch.process.kill()
                 await watch.process.wait()
@@ -260,9 +271,34 @@ class WatchdogManager:
                 trace_id=watch.task_id,
             )
             watch.status = "killed"
+            self._record_replay_step(
+                watch,
+                "watchdog_terminated",
+                reason=reason,
+                termination_signal="SIGKILL",
+                graceful=False,
+            )
+            final_status = "killed"
+            final_graceful = False
         else:
             watch.status = "completed"
+            self._record_replay_step(
+                watch,
+                "watchdog_terminated",
+                reason=reason,
+                termination_signal="SIGTERM",
+                graceful=True,
+            )
+            final_status = "completed"
+            final_graceful = True
 
+        self._record_replay_step(watch, "watchdog_unregistered", reason=reason, final_status=watch.status)
+        self._finalize_replay(
+            watch,
+            status=final_status,
+            reason=reason,
+            graceful=final_graceful,
+        )
         self.unregister(watch.agent_id)
 
     async def _publish_event(
@@ -288,3 +324,93 @@ class WatchdogManager:
             trace_id=trace_id,
         )
         await self._event_bus.publish(event)
+
+    def _ensure_replay_row(self, watch: AgentWatch) -> bool:
+        recorder = self._replay_recorder
+        if recorder is None:
+            return False
+        try:
+            existing = recorder.get_log(watch.task_id)
+            if existing is None:
+                recorder.start_task(
+                    task_id=watch.task_id,
+                    agent_type=watch.agent_type or "watchdog",
+                    seed=0,
+                    model_version="watchdog-v1",
+                    rules_path="/watchdog",
+                    input_data={
+                        "watchdog_managed": True,
+                        "agent_id": watch.agent_id,
+                        "task_id": watch.task_id,
+                    },
+                )
+            return True
+        except Exception as exc:
+            logger.warning(
+                "watchdog_replay_row_ensure_failed",
+                task_id=watch.task_id,
+                agent_id=watch.agent_id,
+                error=str(exc),
+            )
+            return False
+
+    def _record_replay_step(self, watch: AgentWatch, step: str, **details: object) -> None:
+        recorder = self._replay_recorder
+        if recorder is None:
+            return
+        if not self._ensure_replay_row(watch):
+            return
+        payload = {
+            "step": step,
+            "timestamp": self._now(),
+            "details": details,
+        }
+        try:
+            recorded = recorder.record_execution_step(watch.task_id, payload)
+            if not recorded:
+                logger.warning(
+                    "watchdog_replay_step_not_recorded",
+                    task_id=watch.task_id,
+                    agent_id=watch.agent_id,
+                    step=step,
+                )
+        except Exception as exc:
+            logger.warning(
+                "watchdog_replay_step_record_failed",
+                task_id=watch.task_id,
+                agent_id=watch.agent_id,
+                step=step,
+                error=str(exc),
+            )
+
+    def _finalize_replay(self, watch: AgentWatch, *, status: str, reason: str, graceful: bool) -> None:
+        recorder = self._replay_recorder
+        if recorder is None:
+            return
+        if not self._ensure_replay_row(watch):
+            return
+        output = {
+            "status": status,
+            "reason": reason,
+            "watchdog": {
+                "agent_id": watch.agent_id,
+                "agent_type": watch.agent_type,
+                "heartbeats_missed": watch.heartbeats_missed,
+                "graceful": graceful,
+            },
+        }
+        try:
+            ok = recorder.finalize(watch.task_id, output)
+            if not ok:
+                logger.warning(
+                    "watchdog_replay_finalize_not_recorded",
+                    task_id=watch.task_id,
+                    agent_id=watch.agent_id,
+                )
+        except Exception as exc:
+            logger.warning(
+                "watchdog_replay_finalize_failed",
+                task_id=watch.task_id,
+                agent_id=watch.agent_id,
+                error=str(exc),
+            )

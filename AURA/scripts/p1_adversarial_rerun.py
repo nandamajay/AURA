@@ -819,6 +819,7 @@ class FakeProcess:
 async def test_watchdog_pressure_testing(ctx: Context) -> dict[str, Any]:
     started = utc_iso()
     before_audit = audit_summary(ctx.db_path)
+    recorder = TaskRecorder(str(ctx.db_path))
 
     bus = EventBus()
     await bus.start()
@@ -843,6 +844,7 @@ async def test_watchdog_pressure_testing(ctx: Context) -> dict[str, Any]:
             sigterm_wait_seconds=0.05,
             max_watches=64,
         ),
+        replay_recorder=recorder,
     )
 
     await watchdog.start()
@@ -916,6 +918,7 @@ async def test_watchdog_pressure_testing(ctx: Context) -> dict[str, Any]:
             replay_presence[tid] = replay.get("status") == 200
 
     after_audit = audit_summary(ctx.db_path)
+    missing_replays = [task_id for task_id, present in replay_presence.items() if not present]
 
     observed = {
         "timeout_event_count": len(timeout_events),
@@ -941,7 +944,8 @@ async def test_watchdog_pressure_testing(ctx: Context) -> dict[str, Any]:
         },
         "replay_integrity_result": {
             "watchdog_task_replay_presence": replay_presence,
-            "note": "Watchdog events are event-bus emitted; recorder integration may be incomplete.",
+            "missing_replay_count": len(missing_replays),
+            "note": "Watchdog lifecycle now records/finalizes replay entries for watchdog-managed tasks.",
         },
         "audit_integrity_result": {
             "before": before_audit,
@@ -950,10 +954,14 @@ async def test_watchdog_pressure_testing(ctx: Context) -> dict[str, Any]:
             "delta_mismatches": after_audit["mismatch_count"] - before_audit["mismatch_count"],
         },
         "nondeterminism_findings": [],
-        "race_condition_findings": [],
+        "race_condition_findings": (
+            []
+            if not missing_replays
+            else [f"Missing replay entries for watchdog tasks: {missing_replays[:5]}"]
+        ),
         "failure_containment_behavior": "Watchdog terminated unresponsive processes and continued scanning.",
         "recovery_behavior": "Watches were unregistered after termination chains.",
-        "severity_classification": "info",
+        "severity_classification": "info" if not missing_replays else "low",
         "raw": {},
     }
 

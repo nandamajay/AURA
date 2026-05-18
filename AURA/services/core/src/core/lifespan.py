@@ -9,6 +9,7 @@ from fastapi import FastAPI
 from aura_sdk.db.connection import init_db
 from aura_sdk.logging.logger import configure_logging, get_logger
 from aura_sdk.models.event import EventType
+from aura_sdk.replay import TaskRecorder
 from core.config import Config
 from core.events import publish_event, start_event_bus, stop_event_bus
 from core.services.agent_runtime import AgentRuntimeManager
@@ -58,6 +59,7 @@ async def lifespan(app: FastAPI):
     app.state.watchdog = WatchdogManager(
         event_bus=app.state.event_bus,
         config=WatchdogConfig(max_watches=Config.MAX_CONCURRENT_AGENTS),
+        replay_recorder=TaskRecorder(Config.SQLITE_PATH),
     )
     await app.state.watchdog.start()
     app.state.agent_runtime = AgentRuntimeManager(
