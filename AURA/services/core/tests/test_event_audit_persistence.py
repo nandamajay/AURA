@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import asyncio
 import sqlite3
 from contextlib import asynccontextmanager
 from pathlib import Path
@@ -141,3 +142,105 @@ async def test_persist_and_forward_forwards_after_persist(monkeypatch) -> None:
     ok = await core_events._persist_and_forward(event, "http://ws-server:8000")
     assert ok is True
     assert called == {"persist": 1, "forward": 1}
+
+
+@pytest.mark.asyncio
+async def test_persist_event_to_audit_retries_locked_then_succeeds(monkeypatch) -> None:
+    with TemporaryDirectory() as tmpdir:
+        db_path = Path(tmpdir) / "events.db"
+        _create_audit_schema(db_path)
+
+        attempts = {"count": 0}
+
+        @asynccontextmanager
+        async def _flaky_get_db():
+            attempts["count"] += 1
+            if attempts["count"] < 3:
+                raise RuntimeError("database is locked")
+            async with aiosqlite.connect(db_path) as db:
+                db.row_factory = aiosqlite.Row
+                yield db
+
+        monkeypatch.setattr(core_events, "get_db", _flaky_get_db)
+        monkeypatch.setattr(core_events, "_WAL_CHECKPOINT_EVERY", 0)
+        monkeypatch.setattr(core_events, "_persist_success_count", 0)
+
+        event = EventEnvelope(
+            event_type=EventType.TASK_CREATED,
+            source=EventSource(subsystem="S1", service="core", task_id="task-retry"),
+            payload={"task_id": "task-retry", "requested_by": "user@aura.local"},
+            trace_id="task-retry",
+        )
+        persisted = await core_events._persist_event_to_audit(event)
+        assert persisted is True
+        assert attempts["count"] == 3
+
+        rows = _fetch_rows(db_path)
+        assert rows == [("task.created", "task", "task-retry", "user@aura.local")]
+
+
+@pytest.mark.asyncio
+async def test_persist_event_to_audit_uses_deterministic_retry_backoff(monkeypatch) -> None:
+    attempts = {"count": 0}
+    sleeps: list[float] = []
+
+    @asynccontextmanager
+    async def _always_locked_db():
+        attempts["count"] += 1
+        raise RuntimeError("database is locked")
+        yield  # pragma: no cover
+
+    async def _fake_sleep(delay: float) -> None:
+        sleeps.append(delay)
+
+    monkeypatch.setattr(core_events, "get_db", _always_locked_db)
+    monkeypatch.setattr(core_events.asyncio, "sleep", _fake_sleep)
+    monkeypatch.setattr(core_events, "_WAL_CHECKPOINT_EVERY", 0)
+    monkeypatch.setattr(core_events, "_persist_success_count", 0)
+
+    event = EventEnvelope(
+        event_type=EventType.TASK_CREATED,
+        source=EventSource(subsystem="S1", service="core", task_id="task-backoff"),
+        payload={"task_id": "task-backoff"},
+        trace_id="task-backoff",
+    )
+    persisted = await core_events._persist_event_to_audit(event)
+    assert persisted is False
+    assert attempts["count"] == core_events._PERSIST_RETRY_ATTEMPTS
+    assert sleeps == list(core_events._PERSIST_RETRY_BACKOFF_SECONDS)
+
+
+@pytest.mark.asyncio
+async def test_persist_event_to_audit_triggers_wal_checkpoint_at_threshold(monkeypatch) -> None:
+    with TemporaryDirectory() as tmpdir:
+        db_path = Path(tmpdir) / "events.db"
+        _create_audit_schema(db_path)
+
+        @asynccontextmanager
+        async def _test_get_db():
+            async with aiosqlite.connect(db_path) as db:
+                db.row_factory = aiosqlite.Row
+                yield db
+
+        checkpoint_calls = {"count": 0}
+
+        async def _fake_checkpoint() -> None:
+            checkpoint_calls["count"] += 1
+
+        monkeypatch.setattr(core_events, "get_db", _test_get_db)
+        monkeypatch.setattr(core_events, "_run_audit_wal_checkpoint", _fake_checkpoint)
+        monkeypatch.setattr(core_events, "_WAL_CHECKPOINT_EVERY", 1)
+        monkeypatch.setattr(core_events, "_persist_success_count", 0)
+
+        event = EventEnvelope(
+            event_type=EventType.TASK_CREATED,
+            source=EventSource(subsystem="S1", service="core", task_id="task-checkpoint"),
+            payload={"task_id": "task-checkpoint", "requested_by": "user@aura.local"},
+            trace_id="task-checkpoint",
+        )
+        persisted = await core_events._persist_event_to_audit(event)
+        assert persisted is True
+        assert checkpoint_calls["count"] == 1
+
+        rows = _fetch_rows(db_path)
+        assert rows == [("task.created", "task", "task-checkpoint", "user@aura.local")]

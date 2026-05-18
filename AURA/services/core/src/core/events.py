@@ -5,6 +5,7 @@ from __future__ import annotations
 import asyncio
 import hashlib
 import json
+import os
 from typing import Any
 
 import httpx
@@ -24,8 +25,11 @@ for channel_name, event_types in ALL_CHANNELS.items():
     for event_type in event_types:
         _EVENT_CHANNEL_MAP[event_type] = channel_name
 
-_PERSIST_RETRY_ATTEMPTS = 3
-_PERSIST_RETRY_BASE_DELAY_SECONDS = 0.05
+_PERSIST_RETRY_BACKOFF_SECONDS: tuple[float, ...] = (0.05, 0.1, 0.2, 0.4, 0.8)
+_PERSIST_RETRY_ATTEMPTS = len(_PERSIST_RETRY_BACKOFF_SECONDS) + 1
+_WAL_CHECKPOINT_EVERY = max(0, int(os.environ.get("AURA_AUDIT_WAL_CHECKPOINT_EVERY", "200")))
+_persist_success_count = 0
+_checkpoint_lock = asyncio.Lock()
 
 
 def _resolve_audit_target(event: EventEnvelope) -> tuple[str, str]:
@@ -68,6 +72,8 @@ def _is_retryable_sqlite_error(exc: Exception) -> bool:
 
 
 async def _persist_event_to_audit(event: EventEnvelope) -> bool:
+    global _persist_success_count
+
     target_type, target_id = _resolve_audit_target(event)
     source_data = event.source.model_dump(mode="json")
     before_state = json.dumps(
@@ -126,10 +132,13 @@ async def _persist_event_to_audit(event: EventEnvelope) -> bool:
                 except Exception:
                     await db.rollback()
                     raise
+            _persist_success_count += 1
+            await _maybe_checkpoint_audit_wal()
             return True
         except Exception as exc:
             if attempt < _PERSIST_RETRY_ATTEMPTS and _is_retryable_sqlite_error(exc):
-                await asyncio.sleep(_PERSIST_RETRY_BASE_DELAY_SECONDS * attempt)
+                retry_delay = _PERSIST_RETRY_BACKOFF_SECONDS[attempt - 1]
+                await asyncio.sleep(retry_delay)
                 continue
             logger.error(
                 "event_audit_persist_failed",
@@ -143,6 +152,37 @@ async def _persist_event_to_audit(event: EventEnvelope) -> bool:
             return False
 
     return False
+
+
+async def _run_audit_wal_checkpoint() -> None:
+    async with get_db() as db:
+        cursor = await db.execute("PRAGMA wal_checkpoint(PASSIVE)")
+        row = await cursor.fetchone()
+        await cursor.close()
+    if row is None:
+        logger.warning("audit_wal_checkpoint_missing_row")
+        return
+    logger.info(
+        "audit_wal_checkpoint",
+        checkpoint_status=int(row[0]),
+        wal_pages=int(row[1]),
+        checkpointed_pages=int(row[2]),
+    )
+
+
+async def _maybe_checkpoint_audit_wal() -> None:
+    if _WAL_CHECKPOINT_EVERY <= 0:
+        return
+    if _persist_success_count % _WAL_CHECKPOINT_EVERY != 0:
+        return
+
+    async with _checkpoint_lock:
+        if _persist_success_count % _WAL_CHECKPOINT_EVERY != 0:
+            return
+        try:
+            await _run_audit_wal_checkpoint()
+        except Exception as exc:
+            logger.warning("audit_wal_checkpoint_failed", error=str(exc))
 
 
 async def _forward_to_ws(event: EventEnvelope, ws_server_url: str) -> bool:
