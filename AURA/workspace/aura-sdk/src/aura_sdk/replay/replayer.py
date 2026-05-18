@@ -1,9 +1,9 @@
 """ReplayEngine — deterministic replay of recorded tasks."""
 
+import hashlib
 import json
 from datetime import datetime, timezone
 from enum import StrEnum
-from pathlib import Path
 from typing import Any
 
 from aura_sdk.replay.context import DeterministicContext
@@ -19,25 +19,34 @@ class ReplayFidelity(StrEnum):
     MISMATCH = "mismatch"  # Output differs significantly
 
 
-class ReplayEngine:
-    """Replay engine for deterministic task reproduction.
+def _safe_list(raw: str | None) -> list[Any]:
+    if not raw:
+        return []
+    try:
+        parsed = json.loads(raw)
+    except Exception:
+        return []
+    return parsed if isinstance(parsed, list) else []
 
-    Loads a task log and replays the LLM interactions with a mock client.
-    Uses DeterministicContext to ensure same execution path.
-    """
+
+def _safe_dict(raw: str | None) -> dict[str, Any]:
+    if not raw:
+        return {}
+    try:
+        parsed = json.loads(raw)
+    except Exception:
+        return {}
+    return parsed if isinstance(parsed, dict) else {}
+
+
+class ReplayEngine:
+    """Replay engine for deterministic task reproduction."""
 
     def __init__(self, recorder: TaskRecorder):
         self.recorder = recorder
 
     async def replay(self, task_id: str) -> dict[str, Any]:
-        """Replay a recorded task.
-
-        Args:
-            task_id: The task ID to replay.
-
-        Returns:
-            Replay result with fidelity assessment.
-        """
+        """Replay a recorded task from immutable finalized snapshot."""
         log = self.recorder.get_log(task_id)
         if log is None:
             return {
@@ -46,33 +55,54 @@ class ReplayEngine:
                 "error": f"Task log not found: {task_id}",
             }
 
-        # Reconstruct deterministic context
-        context = DeterministicContext(
-            seed=log["seed"],
-            model_version=log["model_version"],
-        )
+        state = str(log.get("recording_state") or "mutable")
+        if state != "finalized":
+            return {
+                "success": False,
+                "fidelity": ReplayFidelity.INCOMPLETE,
+                "error": f"Task log not finalized: {task_id}",
+                "recording_state": state,
+                "revision": int(log.get("revision") or 0),
+            }
 
-        # Parse recorded data
-        prompts = json.loads(log.get("llm_prompts_json") or "[]")
+        snapshot = _safe_dict(log.get("snapshot_json"))
+        if snapshot:
+            prompts = snapshot.get("prompts", [])
+            responses = snapshot.get("responses", [])
+            execution = snapshot.get("execution", [])
+            output = snapshot.get("output", {})
+            output_hash = str(snapshot.get("output_hash") or log.get("output_hash") or "")
+        else:
+            prompts = _safe_list(log.get("llm_prompts_json"))
+            responses = _safe_list(log.get("llm_responses_json"))
+            execution = _safe_list(log.get("execution_order_json"))
+            output = _safe_dict(log.get("output_json"))
+            output_hash = str(log.get("output_hash") or "")
+
         if not isinstance(prompts, list):
             prompts = []
-
-        responses = json.loads(log.get("llm_responses_json") or "[]")
         if not isinstance(responses, list):
             responses = []
-
-        execution = json.loads(log.get("execution_order_json") or "[]")
         if not isinstance(execution, list):
             execution = []
-
-        output = json.loads(log.get("output_json") or "{}")
         if not isinstance(output, dict):
             output = {}
+
+        context = DeterministicContext(
+            seed=int(log["seed"]),
+            model_version=str(log["model_version"]),
+        )
 
         created_at = int(log.get("created_at", 0) or 0)
         created_at_iso = (
             datetime.fromtimestamp(created_at, timezone.utc).isoformat()
             if created_at > 0
+            else ""
+        )
+        finalized_at = int(log.get("finalized_at", 0) or 0)
+        finalized_at_iso = (
+            datetime.fromtimestamp(finalized_at, timezone.utc).isoformat()
+            if finalized_at > 0
             else ""
         )
 
@@ -82,12 +112,16 @@ class ReplayEngine:
             "task_id": task_id,
             "agent_type": log["agent_type"],
             "context": context.llm_params(),
+            "recording_state": state,
+            "revision": int(log.get("revision") or 0),
             "recorded_at": created_at_iso,
+            "finalized_at": finalized_at_iso,
             "prompt_count": len(prompts),
             "response_count": len(responses),
             "execution_steps": len(execution),
             "output_keys": list(output.keys()),
-            "output_hash": log.get("output_hash", ""),
+            "output_hash": output_hash,
+            "snapshot_hash": str(log.get("snapshot_hash") or ""),
             "prompts": prompts,
             "responses": responses,
             "execution": execution,
@@ -96,21 +130,27 @@ class ReplayEngine:
         }
 
     def verify_integrity(self, task_id: str) -> bool:
-        """Verify the integrity of a task log.
-
-        Checks that the output hash matches the recorded output.
-        """
+        """Verify finalized snapshot and output hashes."""
         log = self.recorder.get_log(task_id)
         if log is None:
             return False
 
-        output_json = log.get("output_json", "")
-        stored_hash = log.get("output_hash", "")
-
-        if not output_json or not stored_hash:
+        state = str(log.get("recording_state") or "mutable")
+        if state != "finalized":
             return False
 
-        import hashlib
+        output_json = str(log.get("output_json") or "")
+        stored_output_hash = str(log.get("output_hash") or "")
+        if not output_json or not stored_output_hash:
+            return False
+        computed_output_hash = hashlib.sha256(output_json.encode()).hexdigest()
+        if computed_output_hash != stored_output_hash:
+            return False
 
-        computed_hash = hashlib.sha256(output_json.encode()).hexdigest()
-        return computed_hash == stored_hash
+        snapshot_json = str(log.get("snapshot_json") or "")
+        stored_snapshot_hash = str(log.get("snapshot_hash") or "")
+        if snapshot_json and stored_snapshot_hash:
+            computed_snapshot_hash = hashlib.sha256(snapshot_json.encode()).hexdigest()
+            return computed_snapshot_hash == stored_snapshot_hash
+
+        return True

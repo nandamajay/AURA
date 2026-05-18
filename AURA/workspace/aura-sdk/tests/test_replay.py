@@ -1,17 +1,15 @@
 """Replay regression tests."""
 
 import asyncio
-import sqlite3
 
 from aura_sdk.replay.recorder import TaskRecorder
 from aura_sdk.replay.replayer import ReplayEngine, ReplayFidelity
 
 
-def test_replay_handles_null_output_json(tmp_path):
-    """Replay must not fail when a task log exists but output_json is NULL."""
+def test_replay_rejects_mutable_log_until_finalized(tmp_path):
     db_path = tmp_path / "replay.db"
     recorder = TaskRecorder(str(db_path))
-    task_id = "task-null-output"
+    task_id = "task-mutable"
 
     recorder.start_task(
         task_id=task_id,
@@ -19,22 +17,70 @@ def test_replay_handles_null_output_json(tmp_path):
         seed=42,
         model_version="gpt-4o-2024-08-06",
         rules_path="/rules/learning.yaml",
-        input_data={"goal": "validate null output handling"},
+        input_data={"goal": "boundary-check"},
     )
     recorder.record_prompt(task_id, "user", "hello")
     recorder.record_response(task_id, "world")
 
-    # Ensure explicit NULL to cover migration/legacy rows.
-    with sqlite3.connect(str(db_path)) as db:
-        db.execute("UPDATE task_logs SET output_json = NULL WHERE task_id = ?", (task_id,))
-        db.commit()
-
     engine = ReplayEngine(recorder)
     result = asyncio.run(engine.replay(task_id))
 
-    assert result["success"] is True
-    assert result["fidelity"] == ReplayFidelity.PERFECT
-    assert result["output"] == {}
-    assert result["output_keys"] == []
-    assert result["prompt_count"] == 1
-    assert result["response_count"] == 1
+    assert result["success"] is False
+    assert result["fidelity"] == ReplayFidelity.INCOMPLETE
+    assert "not finalized" in result["error"]
+    assert result["recording_state"] == "mutable"
+
+
+def test_replay_uses_immutable_snapshot_after_finalize(tmp_path):
+    db_path = tmp_path / "replay.db"
+    recorder = TaskRecorder(str(db_path))
+    task_id = "task-finalized"
+
+    recorder.start_task(
+        task_id=task_id,
+        agent_type="learning",
+        seed=99,
+        model_version="gpt-4o-2024-08-06",
+        rules_path="/rules/learning.yaml",
+        input_data={"goal": "snapshot-check"},
+    )
+    recorder.record_prompt(task_id, "user", "p0")
+    recorder.record_response(task_id, "r0")
+    assert recorder.finalize(task_id, {"status": "ok"}) is True
+
+    # Late writes must be rejected for finalized logs.
+    assert recorder.record_prompt(task_id, "user", "late") is False
+    assert recorder.record_response(task_id, "late") is False
+
+    engine = ReplayEngine(recorder)
+    first = asyncio.run(engine.replay(task_id))
+    second = asyncio.run(engine.replay(task_id))
+
+    assert first["success"] is True
+    assert first["fidelity"] == ReplayFidelity.PERFECT
+    assert first["recording_state"] == "finalized"
+    assert first["prompt_count"] == 1
+    assert first["response_count"] == 1
+    assert first["snapshot_hash"]
+    assert second["snapshot_hash"] == first["snapshot_hash"]
+    assert second["output_hash"] == first["output_hash"]
+    assert engine.verify_integrity(task_id) is True
+
+
+def test_replay_integrity_fails_for_mutable_log(tmp_path):
+    db_path = tmp_path / "replay.db"
+    recorder = TaskRecorder(str(db_path))
+    task_id = "task-integrity-mutable"
+
+    recorder.start_task(
+        task_id=task_id,
+        agent_type="learning",
+        seed=7,
+        model_version="gpt-4o-2024-08-06",
+        rules_path="/rules/learning.yaml",
+        input_data={"goal": "integrity-check"},
+    )
+    recorder.record_prompt(task_id, "user", "hello")
+
+    engine = ReplayEngine(recorder)
+    assert engine.verify_integrity(task_id) is False
