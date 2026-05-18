@@ -32,6 +32,8 @@ from aura_sdk.protocol.envelope import (
 from aura_sdk.replay.context import DeterministicContext
 from aura_sdk.replay.recorder import TaskRecorder
 
+logger = get_logger("agents.base")
+
 
 class BaseAgent(ABC):
     """Base class for all AURA CLI agents.
@@ -54,6 +56,8 @@ class BaseAgent(ABC):
         self.recorder: TaskRecorder | None = None
         self._heartbeat_task: asyncio.Task | None = None
         self._start_time: float = 0.0
+        self._step_seq: int = 0
+        self._replay_finalized: bool = False
 
     @classmethod
     def main(cls):
@@ -116,25 +120,40 @@ class BaseAgent(ABC):
             rules_path=args.rules,
             input_data=input_data,
         )
+        self._record_execution_step(
+            "task_started",
+            agent_type=self.AGENT_TYPE,
+            seed=args.seed,
+            model_version=args.model_version,
+        )
 
         # Start heartbeat
         self._heartbeat_task = asyncio.create_task(self._heartbeat_loop())
 
         try:
+            self._record_execution_step("execute_begin")
             result = await asyncio.wait_for(self.execute(), timeout=args.timeout)
+            self._record_execution_step("execute_success")
             await self._send_progress(100, "complete", "Task completed successfully")
             await self._send_result(ExitCode.SUCCESS, result)
-            self.recorder.finalize(args.task_id, result)
+            self._record_execution_step("task_finished")
+            self._finalize_replay(ExitCode.SUCCESS, result)
             return ExitCode.SUCCESS
 
         except asyncio.TimeoutError:
-            await self._send_result(
-                ExitCode.TIMEOUT, {"error": f"Timed out after {args.timeout}s"}
-            )
+            timeout_result = {"error": f"Timed out after {args.timeout}s"}
+            self._record_execution_step("execute_timeout", timeout_seconds=args.timeout)
+            await self._send_result(ExitCode.TIMEOUT, timeout_result)
+            self._record_execution_step("task_finished")
+            self._finalize_replay(ExitCode.TIMEOUT, timeout_result)
             return ExitCode.TIMEOUT
 
         except Exception as e:
-            await self._send_result(ExitCode.UNRECOVERABLE, {"error": str(e)})
+            error_result = {"error": str(e)}
+            self._record_execution_step("execute_exception", error_type=type(e).__name__)
+            await self._send_result(ExitCode.UNRECOVERABLE, error_result)
+            self._record_execution_step("task_finished")
+            self._finalize_replay(ExitCode.UNRECOVERABLE, error_result)
             return ExitCode.UNRECOVERABLE
 
         finally:
@@ -158,6 +177,11 @@ class BaseAgent(ABC):
         """Call LLM via gateway. Records for replay."""
         import httpx
 
+        self._record_execution_step(
+            "llm_request",
+            message_count=len(messages),
+            max_tokens=max_tokens,
+        )
         if self.recorder and self.task_id:
             for msg in messages:
                 self.recorder.record_prompt(self.task_id, msg.get("role", "user"), msg.get("content", ""))
@@ -179,6 +203,10 @@ class BaseAgent(ABC):
 
             if self.recorder and self.task_id:
                 self.recorder.record_response(self.task_id, content)
+            self._record_execution_step(
+                "llm_response",
+                response_chars=len(content),
+            )
 
             return content
 
@@ -199,6 +227,11 @@ class BaseAgent(ABC):
             await asyncio.sleep(HEARTBEAT_INTERVAL_SECONDS)
 
     async def _send_progress(self, pct: int, status: str, message: str) -> None:
+        self._record_execution_step(
+            "task_progress",
+            progress_percent=pct,
+            status=status,
+        )
         prog = AgentProgress(
             task_id=self.task_id,
             progress_percent=pct,
@@ -208,6 +241,10 @@ class BaseAgent(ABC):
         print(prog.model_dump_json(), flush=True)
 
     async def _send_result(self, exit_code: ExitCode, results: dict[str, Any]) -> None:
+        self._record_execution_step(
+            "task_result",
+            exit_code=int(exit_code),
+        )
         result = AgentResult(
             task_id=self.task_id,
             exit_code=exit_code,
@@ -219,6 +256,44 @@ class BaseAgent(ABC):
             },
         )
         print(result.model_dump_json(), flush=True)
+
+    def _record_execution_step(self, step: str, **details: Any) -> None:
+        if not self.recorder or not self.task_id:
+            return
+        self._step_seq += 1
+        payload = {
+            "seq": self._step_seq,
+            "step": step,
+            "details": details,
+        }
+        try:
+            self.recorder.record_execution_step(self.task_id, payload)
+        except Exception as exc:
+            logger.warning(
+                "execution_step_record_failed",
+                task_id=self.task_id,
+                step=step,
+                error=str(exc),
+            )
+
+    def _finalize_replay(self, exit_code: ExitCode, result: dict[str, Any]) -> None:
+        if not self.recorder or not self.task_id or self._replay_finalized:
+            return
+        payload = {
+            "status": exit_code.name.lower(),
+            "exit_code": int(exit_code),
+            "results": result if isinstance(result, dict) else {"result": result},
+        }
+        ok = False
+        try:
+            ok = self.recorder.finalize(self.task_id, payload)
+        except Exception as exc:
+            logger.warning(
+                "replay_finalize_failed",
+                task_id=self.task_id,
+                error=str(exc),
+            )
+        self._replay_finalized = bool(ok)
 
     def _get_memory(self) -> int:
         """Get current memory usage in MB."""

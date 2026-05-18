@@ -1,0 +1,97 @@
+{
+  "run_id": "replay-hooks-after-b109baef",
+  "observed_at": "2026-05-18T04:55:27.039436+00:00",
+  "task_id": "task-replay-hooks-after-b109baef",
+  "exit_code": 2,
+  "exit_code_name": "UNRECOVERABLE",
+  "db_row": {
+    "task_id": "task-replay-hooks-after-b109baef",
+    "recording_state": "finalized",
+    "finalized_at": 1779080127,
+    "output_json": "{\"exit_code\":2,\"results\":{\"error\":\"intentional-failure\"},\"status\":\"unrecoverable\"}",
+    "execution_order_json": "[{\"seq\":1,\"step\":\"task_started\",\"details\":{\"agent_type\":\"failing-probe\",\"seed\":42,\"model_version\":\"gpt-4o-2024-08-06\"}},{\"seq\":2,\"step\":\"execute_begin\",\"details\":{}},{\"seq\":3,\"step\":\"execute_exception\",\"details\":{\"error_type\":\"RuntimeError\"}},{\"seq\":4,\"step\":\"task_result\",\"details\":{\"exit_code\":2}},{\"seq\":5,\"step\":\"task_finished\",\"details\":{}}]"
+  },
+  "execution_step_count": 5,
+  "execution_step_names": [
+    "task_started",
+    "execute_begin",
+    "execute_exception",
+    "task_result",
+    "task_finished"
+  ],
+  "replay_result": {
+    "success": true,
+    "fidelity": "perfect",
+    "task_id": "task-replay-hooks-after-b109baef",
+    "agent_type": "failing-probe",
+    "context": {
+      "seed": 42,
+      "temperature": 0.1,
+      "model": "gpt-4o-2024-08-06"
+    },
+    "recording_state": "finalized",
+    "revision": 6,
+    "recorded_at": "2026-05-18T04:55:26+00:00",
+    "finalized_at": "2026-05-18T04:55:27+00:00",
+    "prompt_count": 0,
+    "response_count": 0,
+    "execution_steps": 5,
+    "output_keys": [
+      "exit_code",
+      "results",
+      "status"
+    ],
+    "output_hash": "b81f2255ca2481035fb7ed76f7116959882564fde21253fd47e3b7027594f719",
+    "snapshot_hash": "6bd490fcdccce8c498653c24f63ee273ecfc94e124ac08ddf825b02c27a079ec",
+    "prompts": [],
+    "responses": [],
+    "execution": [
+      {
+        "details": {
+          "agent_type": "failing-probe",
+          "model_version": "gpt-4o-2024-08-06",
+          "seed": 42
+        },
+        "seq": 1,
+        "step": "task_started"
+      },
+      {
+        "details": {},
+        "seq": 2,
+        "step": "execute_begin"
+      },
+      {
+        "details": {
+          "error_type": "RuntimeError"
+        },
+        "seq": 3,
+        "step": "execute_exception"
+      },
+      {
+        "details": {
+          "exit_code": 2
+        },
+        "seq": 4,
+        "step": "task_result"
+      },
+      {
+        "details": {},
+        "seq": 5,
+        "step": "task_finished"
+      }
+    ],
+    "output": {
+      "exit_code": 2,
+      "results": {
+        "error": "intentional-failure"
+      },
+      "status": "unrecoverable"
+    },
+    "replayed_at": "2026-05-18T04:55:27.039282+00:00"
+  },
+  "summary": {
+    "finalized": true,
+    "replay_success": true,
+    "not_finalized_error": false
+  }
+}
