@@ -1,0 +1,95 @@
+{
+  "advisory_only_behavior": true,
+  "checkpoints": [
+    {
+      "checkpoint_id": "checkpoint:1",
+      "compile_validation": {
+        "command": "cc -x c -std=gnu11 -fsyntax-only <source>",
+        "compile_validation_executed": true,
+        "compile_validation_passed": true,
+        "compiler": "cc",
+        "failed_files": [],
+        "files_checked": 3,
+        "stderr": "",
+        "stdout": ""
+      },
+      "deterministic_fingerprint": "6fe805fd433e370f2f6facfee1479b196542d47483e6df13a654e08787ab2cd7",
+      "patch_id": "asoc_patch_01_logging_wrapper_conversion",
+      "patch_replacements": 2,
+      "risk": "LOW",
+      "runtime_equivalent": true,
+      "runtime_validation_confidence": 0.887,
+      "sequence": 1,
+      "source_fingerprint": "90ce8f71e9c88466822cdbf4759e4b51586eeeb5bd1812ac573a6bd2199e6909",
+      "subsystem": "asoc"
+    },
+    {
+      "checkpoint_id": "checkpoint:2",
+      "compile_validation": {
+        "command": "cc -x c -std=gnu11 -fsyntax-only <source>",
+        "compile_validation_executed": true,
+        "compile_validation_passed": true,
+        "compiler": "cc",
+        "failed_files": [],
+        "files_checked": 3,
+        "stderr": "",
+        "stdout": ""
+      },
+      "deterministic_fingerprint": "b46412c8c4537b4ab6e9cc1db6db5182c2c5f24adf6591215d052f5475376024",
+      "patch_id": "runtime_patch_02_capability_wrapper_normalization",
+      "patch_replacements": 2,
+      "risk": "MEDIUM",
+      "runtime_equivalent": true,
+      "runtime_validation_confidence": 0.879,
+      "sequence": 2,
+      "source_fingerprint": "7dae9156a822ee45821a2dc3655651c3518434c960536ad54119524b1f7a8718",
+      "subsystem": "runtime"
+    },
+    {
+      "checkpoint_id": "checkpoint:3",
+      "compile_validation": {
+        "command": "cc -x c -std=gnu11 -fsyntax-only <source>",
+        "compile_validation_executed": true,
+        "compile_validation_passed": true,
+        "compiler": "cc",
+        "failed_files": [],
+        "files_checked": 3,
+        "stderr": "",
+        "stdout": ""
+      },
+      "deterministic_fingerprint": "f7dfa0dbb34bfc00192b28cf38c4e2c4cef748ddb85fcd9957cd5b7825f3033f",
+      "patch_id": "asoc_patch_03_helper_alias_cleanup",
+      "patch_replacements": 2,
+      "risk": "MEDIUM",
+      "runtime_equivalent": true,
+      "runtime_validation_confidence": 0.868,
+      "sequence": 3,
+      "source_fingerprint": "0b98e30eb5eae5d44524ac33c2ca0a73cda93f1a6aacbb5b6bf024b32400e142",
+      "subsystem": "asoc"
+    }
+  ],
+  "classification": "PASS",
+  "deterministic_fingerprint": "2b66c511af0fbacb9a66483a120116460129f82ab84d5b675ffd6496fb90170d",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://governed_patchset_orchestration",
+    "artifact://runtime_truth_graph",
+    "artifact://runtime_equivalence_fingerprint",
+    "artifact://runtime_equivalence_validation",
+    "artifact://acceptance_confidence_score",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "report_name": "rollback_checkpoint_registry",
+  "rollback_order": [
+    "checkpoint:3",
+    "checkpoint:2",
+    "checkpoint:1"
+  ],
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "checkpoint_count": 3,
+    "rollback_safe": true
+  },
+  "target_id": "RB3Gen2"
+}

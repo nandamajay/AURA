@@ -1,0 +1,79 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "0cb932ca40bcf14184d011cc452ce0d7dd1e977e970fe466816f4d9a1f36dd47",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://governed_patchset_orchestration",
+    "artifact://runtime_truth_graph",
+    "artifact://runtime_equivalence_fingerprint",
+    "artifact://runtime_equivalence_validation",
+    "artifact://acceptance_confidence_score",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "ordered_patch_ids": [
+    "asoc_patch_01_logging_wrapper_conversion",
+    "runtime_patch_02_capability_wrapper_normalization",
+    "asoc_patch_03_helper_alias_cleanup"
+  ],
+  "patch_count": 3,
+  "patches": [
+    {
+      "construct": "qcom_dbg_log",
+      "depends_on": [],
+      "files": [
+        "sound/soc/qcom/q6apm-log-wrapper.c"
+      ],
+      "group": "wrappers",
+      "patch_id": "asoc_patch_01_logging_wrapper_conversion",
+      "replacement": "dev_dbg",
+      "risk": "LOW",
+      "subsystem": "asoc",
+      "title": "Normalize vendor logging wrapper"
+    },
+    {
+      "construct": "qcom_cap_bool",
+      "depends_on": [
+        "asoc_patch_01_logging_wrapper_conversion"
+      ],
+      "files": [
+        "sound/soc/qcom/q6apm-cap-wrapper.c"
+      ],
+      "group": "capabilities",
+      "patch_id": "runtime_patch_02_capability_wrapper_normalization",
+      "replacement": "device_is_registered",
+      "risk": "MEDIUM",
+      "subsystem": "runtime",
+      "title": "Normalize vendor capability wrapper"
+    },
+    {
+      "construct": "qcom_helper_alias",
+      "depends_on": [
+        "asoc_patch_01_logging_wrapper_conversion",
+        "runtime_patch_02_capability_wrapper_normalization"
+      ],
+      "files": [
+        "sound/soc/qcom/q6apm-helper-wrapper.c"
+      ],
+      "group": "helpers",
+      "patch_id": "asoc_patch_03_helper_alias_cleanup",
+      "replacement": "snd_soc_component_enable",
+      "risk": "MEDIUM",
+      "subsystem": "asoc",
+      "title": "Replace tiny helper alias with upstream helper"
+    }
+  ],
+  "report_name": "governed_patchset_plan",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "subsystem_groups": [
+    "asoc:helpers",
+    "asoc:wrappers",
+    "runtime:capabilities"
+  ],
+  "summary": {
+    "changed_file_count": 3,
+    "total_replacements": 6
+  },
+  "target_id": "RB3Gen2"
+}

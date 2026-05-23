@@ -1,0 +1,41 @@
+# Governed Tiny Multi Patchset
+# mode=proposal
+
+--- a/sound/soc/qcom/q6apm-cap-wrapper.c
++++ b/sound/soc/qcom/q6apm-cap-wrapper.c
+@@ -1,7 +1,7 @@
+ struct device;
+ int device_is_registered(struct device *dev);
+-int qcom_cap_bool(struct device *dev);
+-#define QCOM_AUD_CAP(dev) qcom_cap_bool(dev)
++int device_is_registered(struct device *dev);
++#define QCOM_AUD_CAP(dev) device_is_registered(dev)
+ int cap_wrap_state(struct device *dev)
+ {
+     return QCOM_AUD_CAP(dev) ? 1 : 0;
+
+--- a/sound/soc/qcom/q6apm-helper-wrapper.c
++++ b/sound/soc/qcom/q6apm-helper-wrapper.c
+@@ -1,7 +1,7 @@
+ struct snd_soc_component;
+ int snd_soc_component_enable(struct snd_soc_component *component);
+-int qcom_helper_alias(struct snd_soc_component *component);
++int snd_soc_component_enable(struct snd_soc_component *component);
+ int helper_wrap_apply(struct snd_soc_component *component)
+ {
+-    return qcom_helper_alias(component);
++    return snd_soc_component_enable(component);
+ }
+
+--- a/sound/soc/qcom/q6apm-log-wrapper.c
++++ b/sound/soc/qcom/q6apm-log-wrapper.c
+@@ -1,7 +1,7 @@
+ struct device;
+ void dev_dbg(struct device *dev, const char *fmt, ...);
+-void qcom_dbg_log(struct device *dev, const char *fmt, ...);
+-#define QCOM_AUD_DBG(dev, fmt, ...) qcom_dbg_log(dev, fmt, ##__VA_ARGS__)
++void dev_dbg(struct device *dev, const char *fmt, ...);
++#define QCOM_AUD_DBG(dev, fmt, ...) dev_dbg(dev, fmt, ##__VA_ARGS__)
+ int log_wrap_probe(struct device *dev)
+ {
+     QCOM_AUD_DBG(dev, "probe start");

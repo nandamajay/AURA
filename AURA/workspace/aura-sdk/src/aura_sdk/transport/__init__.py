@@ -442,6 +442,11 @@ from aura_sdk.transport.real_micro_conversion_pilot import (
     RealMicroConversionPilotResult,
     build_real_micro_source_input_model,
 )
+from aura_sdk.transport.governed_patchset_orchestration import (
+    GovernedPatchsetOrchestrationEngine,
+    GovernedPatchsetOrchestrationRegistry,
+    GovernedPatchsetOrchestrationResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -716,4 +721,7 @@ __all__ = [
     "RealMicroConversionPilotRegistry",
     "RealMicroConversionPilotResult",
     "build_real_micro_source_input_model",
+    "GovernedPatchsetOrchestrationEngine",
+    "GovernedPatchsetOrchestrationRegistry",
+    "GovernedPatchsetOrchestrationResult",
 ]

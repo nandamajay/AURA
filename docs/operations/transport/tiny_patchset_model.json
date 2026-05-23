@@ -1,0 +1,396 @@
+{
+  "downstream_upstream_mapping_graph": {
+    "entries": [
+      {
+        "downstream_construct": "qcom_dbg_log",
+        "equivalence_confidence": 0.94,
+        "upstream_equivalent": "dev_dbg"
+      },
+      {
+        "downstream_construct": "qcom_cap_bool",
+        "equivalence_confidence": 0.92,
+        "upstream_equivalent": "device_is_registered"
+      },
+      {
+        "downstream_construct": "qcom_helper_alias",
+        "equivalence_confidence": 0.89,
+        "upstream_equivalent": "snd_soc_component_enable"
+      }
+    ]
+  },
+  "ipcat_hardware_metadata": {
+    "audio_subsystem": "qcom_audio",
+    "board": "rb3gen2",
+    "ip_blocks": [
+      "asoc",
+      "soundwire",
+      "q6dsp"
+    ],
+    "ipc_nodes": [
+      "apr",
+      "glink",
+      "rpmsg"
+    ],
+    "platform": "RB3Gen2",
+    "soc": "qcom-rb3"
+  },
+  "model_name": "tiny_qcom_patchset_model_v1",
+  "patch_units": [
+    {
+      "construct": "qcom_dbg_log",
+      "depends_on": [],
+      "files": [
+        "sound/soc/qcom/q6apm-log-wrapper.c"
+      ],
+      "group": "wrappers",
+      "patch_id": "asoc_patch_01_logging_wrapper_conversion",
+      "replacement": "dev_dbg",
+      "risk": "LOW",
+      "subsystem": "asoc",
+      "title": "Normalize vendor logging wrapper"
+    },
+    {
+      "construct": "qcom_cap_bool",
+      "depends_on": [
+        "asoc_patch_01_logging_wrapper_conversion"
+      ],
+      "files": [
+        "sound/soc/qcom/q6apm-cap-wrapper.c"
+      ],
+      "group": "capabilities",
+      "patch_id": "runtime_patch_02_capability_wrapper_normalization",
+      "replacement": "device_is_registered",
+      "risk": "MEDIUM",
+      "subsystem": "runtime",
+      "title": "Normalize vendor capability wrapper"
+    },
+    {
+      "construct": "qcom_helper_alias",
+      "depends_on": [
+        "asoc_patch_01_logging_wrapper_conversion",
+        "runtime_patch_02_capability_wrapper_normalization"
+      ],
+      "files": [
+        "sound/soc/qcom/q6apm-helper-wrapper.c"
+      ],
+      "group": "helpers",
+      "patch_id": "asoc_patch_03_helper_alias_cleanup",
+      "replacement": "snd_soc_component_enable",
+      "risk": "MEDIUM",
+      "subsystem": "asoc",
+      "title": "Replace tiny helper alias with upstream helper"
+    }
+  ],
+  "runtime_acquisition_input": {
+    "clocks": {
+      "lines": [
+        "clock lpass enabled"
+      ]
+    },
+    "debugfs_runtime": {
+      "lines": [
+        "asoc clock status enabled"
+      ]
+    },
+    "dmesg": {
+      "lines": [
+        "1000.0 qcom_dbg_log dev_dbg qcom_cap_bool device_is_registered qcom_helper_alias snd_soc_component_enable"
+      ]
+    },
+    "dsp_mailbox": {
+      "lines": [
+        "mailbox dsp sync ok"
+      ]
+    },
+    "ftrace": {
+      "lines": [
+        "1000.0 dapm route enable"
+      ]
+    },
+    "ipc_path": {
+      "lines": [
+        "ipc glink path online"
+      ]
+    },
+    "irq_runtime": {
+      "lines": [
+        "1000.0 irq complete"
+      ]
+    },
+    "procfs_runtime": {
+      "lines": [
+        "00-00: pcm state running"
+      ]
+    },
+    "regulators": {
+      "lines": [
+        "regulator vdd_audio enabled"
+      ]
+    },
+    "soundwire_runtime": {
+      "lines": [
+        "soundwire swr0 stream active"
+      ]
+    },
+    "tinymix_state": {
+      "lines": [
+        "RX_PATH: soundwire runtime active"
+      ]
+    },
+    "trace_cmd": {
+      "lines": [
+        "1000.0 pcm fe0 be0 runtime"
+      ]
+    }
+  },
+  "runtime_truth_input": {
+    "runtime_evidence": {
+      "playback_completion": true,
+      "playback_runtime_seconds": 3.0,
+      "process_success": true,
+      "route_fingerprint": "qcom_patchset_route_fp"
+    },
+    "source_payloads": {
+      "alsa_topology_runtime": {
+        "events": [
+          {
+            "category": "dapm_transition",
+            "detail": "route enable",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "dmesg": {
+        "events": [
+          {
+            "category": "dsp_sync",
+            "detail": "qcom_dbg_log dev_dbg",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "dsp_response_log": {
+        "events": [
+          {
+            "category": "dsp_sync",
+            "detail": "dsp ack",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "ftrace": {
+        "events": [
+          {
+            "category": "dapm_transition",
+            "detail": "route enable",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "mailbox_trace": {
+        "events": [
+          {
+            "category": "dsp_sync",
+            "detail": "mailbox",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "procfs_sysfs": {
+        "events": [
+          {
+            "category": "irq",
+            "detail": "irq done",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "soundwire_debugfs": {
+        "events": [
+          {
+            "category": "soundwire",
+            "detail": "soundwire active",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "tinyalsa_dump": {
+        "events": [
+          {
+            "category": "power_transition",
+            "detail": "power up",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      },
+      "trace_cmd": {
+        "events": [
+          {
+            "category": "pcm_lifecycle",
+            "detail": "qcom_cap_bool device_is_registered",
+            "timestamp_ms": 1000.0
+          }
+        ]
+      }
+    }
+  },
+  "schema_version": "1.0",
+  "semantic_entity_graph": {
+    "nodes": [
+      {
+        "id": "n1",
+        "label": "qcom_dbg_log"
+      },
+      {
+        "id": "n2",
+        "label": "qcom_cap_bool"
+      },
+      {
+        "id": "n3",
+        "label": "qcom_helper_alias"
+      },
+      {
+        "id": "n4",
+        "label": "dev_dbg"
+      },
+      {
+        "id": "n5",
+        "label": "device_is_registered"
+      },
+      {
+        "id": "n6",
+        "label": "snd_soc_component_enable"
+      }
+    ]
+  },
+  "source_snapshots": {
+    "sound/soc/qcom/q6apm-cap-wrapper.c": "struct device;\nint device_is_registered(struct device *dev);\nint qcom_cap_bool(struct device *dev);\n#define QCOM_AUD_CAP(dev) qcom_cap_bool(dev)\nint cap_wrap_state(struct device *dev)\n{\n    return QCOM_AUD_CAP(dev) ? 1 : 0;\n}\n",
+    "sound/soc/qcom/q6apm-helper-wrapper.c": "struct snd_soc_component;\nint snd_soc_component_enable(struct snd_soc_component *component);\nint qcom_helper_alias(struct snd_soc_component *component);\nint helper_wrap_apply(struct snd_soc_component *component)\n{\n    return qcom_helper_alias(component);\n}\n",
+    "sound/soc/qcom/q6apm-log-wrapper.c": "struct device;\nvoid dev_dbg(struct device *dev, const char *fmt, ...);\nvoid qcom_dbg_log(struct device *dev, const char *fmt, ...);\n#define QCOM_AUD_DBG(dev, fmt, ...) qcom_dbg_log(dev, fmt, ##__VA_ARGS__)\nint log_wrap_probe(struct device *dev)\n{\n    QCOM_AUD_DBG(dev, \"probe start\");\n    return 0;\n}\n"
+  },
+  "structural_artifacts": {
+    "downstream_driver_graph": {
+      "downstream_root": "sound/soc/qcom",
+      "extracted": {
+        "dai_links": {
+          "all": [
+            "qcom-fe-be-link0"
+          ]
+        },
+        "dependencies": {
+          "soundwire": [
+            "soundwire_link_0"
+          ]
+        },
+        "ops_structures": [
+          "log_wrap_probe",
+          "cap_wrap_state",
+          "helper_wrap_apply"
+        ],
+        "pcm_dpcm_paths": [
+          "pcm-playback-0"
+        ],
+        "proprietary_runtime_hooks": [
+          "qcom_dbg_log"
+        ],
+        "routing_structures": [
+          "qcom_audio_route"
+        ],
+        "vendor_extensions": [
+          "qcom_dbg_log",
+          "qcom_cap_bool",
+          "qcom_helper_alias"
+        ]
+      }
+    },
+    "topology_runtime_graph": {
+      "classification": "PASS",
+      "edges": [
+        {
+          "from": "fe0",
+          "to": "be0"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "fe0"
+        },
+        {
+          "id": "be0"
+        }
+      ]
+    }
+  },
+  "topology_artifacts": {
+    "dts_topology_graph": {
+      "classification": "PASS",
+      "edges": [],
+      "nodes": [
+        {
+          "id": "dts:qcom-audio"
+        }
+      ]
+    },
+    "topology_runtime_graph": {
+      "classification": "PASS",
+      "edges": [
+        {
+          "from": "fe0",
+          "to": "be0"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "fe0"
+        },
+        {
+          "id": "be0"
+        }
+      ]
+    },
+    "topology_translation_report": {
+      "classification": "PASS",
+      "fe_be_route_equivalence": [
+        {
+          "be": "be0",
+          "fe": "fe0"
+        }
+      ],
+      "translation_confidence": 0.91
+    }
+  },
+  "translation_runtime_artifacts": {
+    "pcm_lifecycle_trace": {
+      "transitions": [
+        {
+          "stage": "qcom_dbg_log"
+        },
+        {
+          "stage": "qcom_cap_bool"
+        },
+        {
+          "stage": "qcom_helper_alias"
+        }
+      ]
+    }
+  },
+  "upstream_equivalence_map": {
+    "entries": [
+      {
+        "downstream_construct": "qcom_dbg_log",
+        "equivalence_confidence": 0.94,
+        "upstream_equivalent": "dev_dbg"
+      },
+      {
+        "downstream_construct": "qcom_cap_bool",
+        "equivalence_confidence": 0.92,
+        "upstream_equivalent": "device_is_registered"
+      },
+      {
+        "downstream_construct": "qcom_helper_alias",
+        "equivalence_confidence": 0.89,
+        "upstream_equivalent": "snd_soc_component_enable"
+      }
+    ]
+  }
+}

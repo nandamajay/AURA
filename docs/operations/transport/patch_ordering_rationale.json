@@ -1,0 +1,56 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "00eae293213cfcfe14c321eccb362d79c3566e30e11faf7f92c37101c03333d4",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://governed_patchset_orchestration",
+    "artifact://runtime_truth_graph",
+    "artifact://runtime_equivalence_fingerprint",
+    "artifact://runtime_equivalence_validation",
+    "artifact://acceptance_confidence_score",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "ordered_patch_ids": [
+    "asoc_patch_01_logging_wrapper_conversion",
+    "runtime_patch_02_capability_wrapper_normalization",
+    "asoc_patch_03_helper_alias_cleanup"
+  ],
+  "rationale": [
+    {
+      "dependencies": [],
+      "group": "wrappers",
+      "patch_id": "asoc_patch_01_logging_wrapper_conversion",
+      "subsystem": "asoc",
+      "why_ordered_here": "all prerequisites satisfied before application"
+    },
+    {
+      "dependencies": [
+        "asoc_patch_01_logging_wrapper_conversion"
+      ],
+      "group": "capabilities",
+      "patch_id": "runtime_patch_02_capability_wrapper_normalization",
+      "subsystem": "runtime",
+      "why_ordered_here": "all prerequisites satisfied before application"
+    },
+    {
+      "dependencies": [
+        "asoc_patch_01_logging_wrapper_conversion",
+        "runtime_patch_02_capability_wrapper_normalization"
+      ],
+      "group": "helpers",
+      "patch_id": "asoc_patch_03_helper_alias_cleanup",
+      "subsystem": "asoc",
+      "why_ordered_here": "all prerequisites satisfied before application"
+    }
+  ],
+  "report_name": "patch_ordering_rationale",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "cycle_detected": false,
+    "unsafe_ordering_detected": false,
+    "warning_count": 0
+  },
+  "target_id": "RB3Gen2"
+}

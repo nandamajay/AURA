@@ -123,6 +123,7 @@ Primary scripts:
 - `scripts/aura-runtime-evidence-ingestion.py`
 - `scripts/aura-engineering-investigation.py`
 - `scripts/aura-governed-translation-intelligence.py`
+- `scripts/aura-governed-patchset-orchestration.py`
 
 Key output directory:
 
@@ -1971,6 +1972,84 @@ python3 -m pytest \
 - runtime-backed equivalence required
 - unsupported vendor constructs must block conversion
 - deterministic replay + lineage persistence required
+
+## Governed Patchset Orchestration Engine
+
+This phase extends AURA from single micro-conversion execution to
+dependency-aware multi-patch orchestration while preserving:
+
+- fail-closed governance
+- runtime-truth precedence
+- deterministic replay and lineage
+- plugin-safe isolation boundaries
+- advisory-only transformation posture
+
+### Focus Coverage
+
+- dependency-aware patch ordering and prerequisite reasoning
+- subsystem grouping + runtime dependency validation
+- cumulative runtime equivalence validation across sequential patches
+- bisect-safe sequencing with intermediate compile safety checks
+- rollback-safe checkpoint persistence
+- upstream review risk prediction and governance escalation
+- explainable patchset ordering and decision traceability
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/governed_patchset_orchestration.py`
+- Runner:
+  - `scripts/aura-governed-patchset-orchestration.py`
+
+### Required Artifacts (Generated)
+
+- `governed_patchset_plan.json`
+- `patch_dependency_graph.json`
+- `runtime_patchset_equivalence.json`
+- `patch_ordering_rationale.json`
+- `bisectability_report.json`
+- `patchset_review_risk_report.json`
+- `rollback_checkpoint_registry.json`
+- `deterministic_patchset_replay.json`
+- `cumulative_runtime_validation.json`
+- `upstream_patchset_prediction.json`
+- `governed_patchset_summary.json`
+- `tiny_multi_patchset.patch`
+
+Additional generated outputs:
+
+- `tiny_patchset_model.json`
+- `governed_patchset_orchestration_runner_summary.json`
+
+### Run Governed Patchset Orchestration
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-governed-patchset-orchestration.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id governed_patchset_session_v1 \
+  --lineage-id governed_patchset_orchestration_v1
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_governed_patchset_orchestration_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed if dependency cycles or unsafe ordering are detected
+- fail-closed if any intermediate compile/syntax safety check fails
+- fail-closed if cumulative runtime confidence drops below threshold
+- fail-closed if topology consistency fails after sequential application
+- fail-closed if upstream prediction is below threshold
+- deterministic replay + rollback checkpoint lineage required
+- no autonomous patch application/submission
 
 ## Runtime Loop Automation (Three-Screen Validation)
 
