@@ -227,6 +227,49 @@ python3 scripts/aura-phase3-plugin-hardening.py \
 
 - `phase3_plugin_migration_notes.md`
 - `plugin_lifecycle.md`
+- `replay_portability.md`
+- `governance_portability_boundaries.md`
+
+## Portable Runtime Stabilization Phase
+
+This phase stress-tests plugin-isolated portability boundaries before any
+upstream semantic reasoning is introduced.
+
+### Stabilization Scope
+
+- plugin isolation validation for core runtime
+- cross-target simulation without hardware (`fake_target_alpha`, `fake_target_beta`, `degraded_target_gamma`)
+- capability negotiation stress paths
+- replay portability verification
+- lifecycle + quarantine + recovery orchestration
+- plugin drift detection
+
+### Stabilization Generator
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-portable-runtime-stabilization.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --repo-root /local/mnt/workspace/AURA_V1
+```
+
+### Stabilization Artifacts
+
+- `portable_runtime_stability_report.json`
+- `plugin_isolation_report.json`
+- `replay_portability_matrix.json`
+- `capability_negotiation_trace.json`
+- `plugin_lifecycle_graph.json`
+- `quarantine_recovery_trace.json`
+
+### Stabilization Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_target_plugin_runtime_static.py \
+  workspace/aura-sdk/tests/test_portable_runtime_stabilization_static.py -q
+```
 
 ### Artifact Intent
 

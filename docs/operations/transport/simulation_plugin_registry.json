@@ -1,0 +1,74 @@
+{
+  "plugins": [
+    {
+      "detection": {
+        "audio_discovery_flags": [],
+        "required_capabilities": [
+          "supports_amixer"
+        ],
+        "text_markers": [
+          "alpha"
+        ]
+      },
+      "entrypoint": "aura_sdk.transport.plugins.simulation_plugins:get_fake_target_alpha_plugin",
+      "priority": 100,
+      "target_id": "fake_target_alpha"
+    },
+    {
+      "detection": {
+        "audio_discovery_flags": [],
+        "required_capabilities": [
+          "supports_tinymix"
+        ],
+        "text_markers": [
+          "beta"
+        ]
+      },
+      "entrypoint": "aura_sdk.transport.plugins.simulation_plugins:get_fake_target_beta_plugin",
+      "priority": 90,
+      "target_id": "fake_target_beta"
+    },
+    {
+      "detection": {
+        "audio_discovery_flags": [],
+        "required_capabilities": [
+          "supports_amixer"
+        ],
+        "text_markers": [
+          "gamma"
+        ]
+      },
+      "entrypoint": "aura_sdk.transport.plugins.simulation_plugins:get_degraded_target_gamma_plugin",
+      "priority": 80,
+      "target_id": "degraded_target_gamma"
+    },
+    {
+      "detection": {
+        "audio_discovery_flags": [],
+        "required_capabilities": [
+          "supports_amixer"
+        ],
+        "text_markers": [
+          "delta"
+        ]
+      },
+      "entrypoint": "aura_sdk.transport.plugins.simulation_plugins:get_topology_error_plugin",
+      "priority": 70,
+      "target_id": "unsupported_topology_delta"
+    },
+    {
+      "detection": {
+        "audio_discovery_flags": [],
+        "required_capabilities": [],
+        "text_markers": [
+          "invalid"
+        ]
+      },
+      "entrypoint": "aura_sdk.transport.plugins.simulation_plugins:get_invalid_quarantined_plugin",
+      "priority": 60,
+      "target_id": "invalid_target_quarantined"
+    }
+  ],
+  "registry_name": "aura_simulation_plugin_registry",
+  "schema_version": "1.0"
+}

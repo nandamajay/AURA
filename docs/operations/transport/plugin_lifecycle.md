@@ -1,16 +1,30 @@
 # Plugin Lifecycle Documentation
 
-## Lifecycle
-1. **Register**: Add plugin metadata to registry with detection + governance constraints.
-2. **Load**: Runtime loader resolves module entrypoint and validates contract.
-3. **Negotiate**: Evidence-based scoring selects plugin with fail-closed thresholds.
-4. **Execute Providers**: Topology/mixer/PCM/route/evidence providers run through plugin API.
-5. **Validate**: Replay compatibility + governance boundary checks execute deterministically.
-6. **Persist**: Negotiation, workflow metadata, and evidence lineage are persisted.
-7. **Replay**: Replay compatibility is re-evaluated before deterministic reconstruction.
+## Scope
+Portable runtime stabilization lifecycle for target plugins under fail-closed governance.
 
-## Safety Rules
-- No target-specific branching in generic runtime layer.
-- No autonomous mutation, patching, or topology rewrite.
-- Missing/ambiguous evidence lowers confidence deterministically.
-- Unsupported/unknown target selection fails closed.
+## Lifecycle States
+1. `load`
+2. `negotiate`
+3. `validate`
+4. `activate`
+5. `quarantine`
+6. `unload`
+7. `replay_restore`
+
+## Deterministic Behavior Rules
+- Lifecycle execution is ordered and append-only.
+- Any plugin contract failure transitions to `quarantine` and then `unload`.
+- `replay_restore` is allowed only when replay compatibility is not `INCOMPATIBLE`.
+- Quarantined plugins cannot be loaded until quarantine is explicitly cleared.
+
+## Fail-Closed Semantics
+- Invalid plugin contract -> `FAIL_CLOSED`.
+- Unsupported topology provider -> quarantine + `FAIL_CLOSED`.
+- Replay incompatibility -> quarantine + `FAIL_CLOSED`.
+- Missing target selection -> `FAIL_CLOSED`.
+
+## Core/Plugin Boundary
+- Core runtime controls lifecycle orchestration only.
+- Target-specific route/topology/mixer/evidence logic is plugin-owned only.
+- Core runtime does not branch on `if target == ...`.

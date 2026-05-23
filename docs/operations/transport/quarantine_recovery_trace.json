@@ -1,0 +1,156 @@
+{
+  "trace": [
+    {
+      "phase": "before_recovery",
+      "quarantine": [
+        {
+          "reason": "plugin_load_failed:TypeError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "topology_provider_error:RuntimeError",
+          "target_id": "unsupported_topology_delta"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "unsupported_topology_delta"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "unsupported_topology_delta"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "unsupported_topology_delta"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "unsupported_topology_delta"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "invalid_target_quarantined"
+        },
+        {
+          "reason": "validation_failed_or_negotiation_incompatible",
+          "target_id": "fake_target_alpha"
+        }
+      ]
+    },
+    {
+      "phase": "after_recovery",
+      "quarantine": [
+        {
+          "reason": "validation_failed_or_negotiation_incompatible",
+          "target_id": "fake_target_alpha"
+        },
+        {
+          "reason": "plugin_load_failed:PermissionError",
+          "target_id": "fake_target_alpha"
+        },
+        {
+          "reason": "plugin_load_failed:TypeError",
+          "target_id": "invalid_target_quarantined"
+        }
+      ],
+      "recovery_negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [
+              "supports_tinymix"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 90,
+            "score": 0.277,
+            "target_id": "fake_target_beta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 70,
+            "score": 0.277,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.045,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:fake_target_alpha",
+            "plugin_supported": false,
+            "priority": 100,
+            "score": 0.0,
+            "target_id": "fake_target_alpha",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "TypeError:plugin_contract_missing_fields:capability_provider,evidence_provider,mixer_provider,pcm_provider,route_provider,topology_provider,validation_provider",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "FAIL_CLOSED_LOW_CONFIDENCE",
+        "confidence": 0.277,
+        "governance_posture": "FAIL_CLOSED",
+        "reasons": [
+          "confidence_below_threshold:0.55"
+        ],
+        "selected_target_id": "fake_target_beta"
+      }
+    }
+  ]
+}

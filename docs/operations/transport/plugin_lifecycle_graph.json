@@ -1,0 +1,208 @@
+{
+  "deterministic": true,
+  "edges": [
+    {
+      "from": "0:load",
+      "relation": "lifecycle_step",
+      "to": "1:load_complete"
+    },
+    {
+      "from": "1:load_complete",
+      "relation": "lifecycle_step",
+      "to": "2:negotiate"
+    },
+    {
+      "from": "2:negotiate",
+      "relation": "lifecycle_step",
+      "to": "3:negotiate_complete"
+    },
+    {
+      "from": "3:negotiate_complete",
+      "relation": "lifecycle_step",
+      "to": "4:validate"
+    },
+    {
+      "from": "4:validate",
+      "relation": "lifecycle_step",
+      "to": "5:validate_complete"
+    },
+    {
+      "from": "5:validate_complete",
+      "relation": "lifecycle_step",
+      "to": "6:activate"
+    },
+    {
+      "from": "6:activate",
+      "relation": "lifecycle_step",
+      "to": "7:replay_restore"
+    },
+    {
+      "from": "7:replay_restore",
+      "relation": "lifecycle_step",
+      "to": "8:load"
+    },
+    {
+      "from": "8:load",
+      "relation": "lifecycle_step",
+      "to": "9:load_complete"
+    },
+    {
+      "from": "9:load_complete",
+      "relation": "lifecycle_step",
+      "to": "10:negotiate"
+    },
+    {
+      "from": "10:negotiate",
+      "relation": "lifecycle_step",
+      "to": "11:negotiate_complete"
+    },
+    {
+      "from": "11:negotiate_complete",
+      "relation": "lifecycle_step",
+      "to": "12:validate"
+    },
+    {
+      "from": "12:validate",
+      "relation": "lifecycle_step",
+      "to": "13:validate_complete"
+    },
+    {
+      "from": "13:validate_complete",
+      "relation": "lifecycle_step",
+      "to": "14:quarantine"
+    },
+    {
+      "from": "14:quarantine",
+      "relation": "lifecycle_step",
+      "to": "15:unload"
+    },
+    {
+      "from": "15:unload",
+      "relation": "lifecycle_step",
+      "to": "16:replay_restore"
+    }
+  ],
+  "graph_name": "plugin_lifecycle_graph",
+  "nodes": [
+    {
+      "details": {
+        "requested_target": "fake_target_alpha"
+      },
+      "id": "0:load",
+      "state": "load"
+    },
+    {
+      "details": {
+        "target_id": "fake_target_alpha"
+      },
+      "id": "1:load_complete",
+      "state": "load_complete"
+    },
+    {
+      "details": {},
+      "id": "2:negotiate",
+      "state": "negotiate"
+    },
+    {
+      "details": {
+        "classification": "COMPATIBLE",
+        "confidence": 0.828,
+        "selected_target_id": "fake_target_alpha"
+      },
+      "id": "3:negotiate_complete",
+      "state": "negotiate_complete"
+    },
+    {
+      "details": {},
+      "id": "4:validate",
+      "state": "validate"
+    },
+    {
+      "details": {
+        "replay_compatibility": "FULL"
+      },
+      "id": "5:validate_complete",
+      "state": "validate_complete"
+    },
+    {
+      "details": {
+        "target_id": "fake_target_alpha"
+      },
+      "id": "6:activate",
+      "state": "activate"
+    },
+    {
+      "details": {
+        "replay_compatibility": "FULL",
+        "status": "RESTORED",
+        "target_id": "fake_target_alpha"
+      },
+      "id": "7:replay_restore",
+      "state": "replay_restore"
+    },
+    {
+      "details": {
+        "requested_target": "degraded_target_gamma"
+      },
+      "id": "8:load",
+      "state": "load"
+    },
+    {
+      "details": {
+        "target_id": "degraded_target_gamma"
+      },
+      "id": "9:load_complete",
+      "state": "load_complete"
+    },
+    {
+      "details": {},
+      "id": "10:negotiate",
+      "state": "negotiate"
+    },
+    {
+      "details": {
+        "classification": "FAIL_CLOSED_LOW_CONFIDENCE",
+        "confidence": 0.225,
+        "selected_target_id": "fake_target_alpha"
+      },
+      "id": "11:negotiate_complete",
+      "state": "negotiate_complete"
+    },
+    {
+      "details": {},
+      "id": "12:validate",
+      "state": "validate"
+    },
+    {
+      "details": {
+        "replay_compatibility": "PARTIAL"
+      },
+      "id": "13:validate_complete",
+      "state": "validate_complete"
+    },
+    {
+      "details": {
+        "reason": "validation_failed",
+        "target_id": "fake_target_alpha"
+      },
+      "id": "14:quarantine",
+      "state": "quarantine"
+    },
+    {
+      "details": {
+        "target_id": "fake_target_alpha"
+      },
+      "id": "15:unload",
+      "state": "unload"
+    },
+    {
+      "details": {
+        "reason": "incompatible_for_replay_restore",
+        "status": "FAIL_CLOSED"
+      },
+      "id": "16:replay_restore",
+      "state": "replay_restore"
+    }
+  ],
+  "schema_version": "1.0"
+}

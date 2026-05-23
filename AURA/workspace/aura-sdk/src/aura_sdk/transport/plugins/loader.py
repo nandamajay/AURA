@@ -64,10 +64,23 @@ class TargetPluginLoader:
         self._registry_path = Path(registry_path)
         self._registry = _load_registry(self._registry_path)
         self._cache: dict[str, TargetPluginContract] = {}
+        self._quarantine: list[dict[str, Any]] = []
 
     @property
     def registry(self) -> dict[str, Any]:
         return dict(self._registry)
+
+    @property
+    def quarantine(self) -> list[dict[str, Any]]:
+        return list(self._quarantine)
+
+    def _quarantine_plugin(self, *, target_id: str, reason: str) -> None:
+        entry = {
+            "target_id": str(target_id).strip(),
+            "reason": str(reason).strip() or "unknown",
+        }
+        self._quarantine.append(entry)
+        self._quarantine = self._quarantine[-1000:]
 
     def available_targets(self) -> list[str]:
         plugins = _as_list(self._registry.get("plugins"))
@@ -91,6 +104,9 @@ class TargetPluginLoader:
         key = str(target_id).strip()
         if not key:
             raise ValueError("plugin_target_id_invalid")
+        for entry in self._quarantine:
+            if str(entry.get("target_id", "")).strip() == key:
+                raise PermissionError(f"plugin_quarantined:{key}")
         if key in self._cache:
             return self._cache[key]
 
@@ -106,13 +122,41 @@ class TargetPluginLoader:
         self._cache[key] = plugin
         return plugin
 
+    def unload_plugin(self, target_id: str) -> None:
+        key = str(target_id).strip()
+        if not key:
+            return
+        self._cache.pop(key, None)
+
+    def clear_quarantine(self, target_id: str | None = None) -> None:
+        if target_id is None:
+            self._quarantine.clear()
+            return
+        key = str(target_id).strip()
+        self._quarantine = [entry for entry in self._quarantine if str(entry.get("target_id", "")).strip() != key]
+
     def _score_entry(
         self,
         entry: Mapping[str, Any],
         request: PluginNegotiationRequest,
     ) -> dict[str, Any]:
         target_id = str(entry.get("target_id", "")).strip()
-        plugin = self.load_plugin(target_id)
+        try:
+            plugin = self.load_plugin(target_id)
+        except Exception as exc:
+            self._quarantine_plugin(target_id=target_id, reason=f"plugin_load_failed:{type(exc).__name__}")
+            return {
+                "target_id": target_id,
+                "score": 0.0,
+                "priority": int(entry.get("priority", 0)),
+                "target_id_match": False,
+                "plugin_supported": False,
+                "marker_hits": [],
+                "flag_hits": [],
+                "capability_hits": [],
+                "plugin_confidence": 0.0,
+                "plugin_error": f"{type(exc).__name__}:{exc}",
+            }
 
         fingerprint = _as_dict(request.fingerprint)
         target_profile = _as_dict(request.target_profile)

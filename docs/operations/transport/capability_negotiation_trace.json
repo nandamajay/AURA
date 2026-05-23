@@ -1,0 +1,560 @@
+{
+  "scenarios": [
+    {
+      "negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [
+              "alpha"
+            ],
+            "plugin_confidence": 0.3,
+            "plugin_supported": false,
+            "priority": 100,
+            "score": 0.149,
+            "target_id": "fake_target_alpha",
+            "target_id_match": true
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.3,
+            "plugin_supported": false,
+            "priority": 90,
+            "score": 0.011,
+            "target_id": "fake_target_beta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.3,
+            "plugin_supported": false,
+            "priority": 70,
+            "score": 0.011,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.007,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "TypeError:plugin_contract_missing_fields:capability_provider,evidence_provider,mixer_provider,pcm_provider,route_provider,topology_provider,validation_provider",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "FAIL_CLOSED_UNSUPPORTED_TARGET",
+        "confidence": 0.149,
+        "governance_posture": "FAIL_CLOSED",
+        "reasons": [
+          "selected_plugin_not_supported_by_evidence"
+        ],
+        "selected_target_id": "fake_target_alpha"
+      },
+      "quarantine_size": 1,
+      "replay_validation": {
+        "compatibility_level": "FULL",
+        "deterministic": true,
+        "missing_contract_elements": [],
+        "mode": "replay_compatibility",
+        "provider": "fake_target_alpha.validation_provider",
+        "target_id": "fake_target_alpha",
+        "validation_type": "deterministic_plugin_replay_compatibility"
+      },
+      "scenario": "missing_capabilities",
+      "target_profile": {
+        "target_id": "fake_target_alpha"
+      },
+      "topology_status": "SUPPORTED"
+    },
+    {
+      "negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [
+              "alpha"
+            ],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 100,
+            "score": 0.183,
+            "target_id": "fake_target_alpha",
+            "target_id_match": true
+          },
+          {
+            "capability_hits": [
+              "supports_tinymix"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 90,
+            "score": 0.045,
+            "target_id": "fake_target_beta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.045,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 70,
+            "score": 0.045,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:invalid_target_quarantined",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "FAIL_CLOSED_UNSUPPORTED_TARGET",
+        "confidence": 0.183,
+        "governance_posture": "FAIL_CLOSED",
+        "reasons": [
+          "selected_plugin_not_supported_by_evidence"
+        ],
+        "selected_target_id": "fake_target_alpha"
+      },
+      "quarantine_size": 2,
+      "replay_validation": {
+        "compatibility_level": "FULL",
+        "deterministic": true,
+        "missing_contract_elements": [],
+        "mode": "replay_compatibility",
+        "provider": "fake_target_alpha.validation_provider",
+        "target_id": "fake_target_alpha",
+        "validation_type": "deterministic_plugin_replay_compatibility"
+      },
+      "scenario": "conflicting_capabilities",
+      "target_profile": {
+        "target_id": "fake_target_alpha"
+      },
+      "topology_status": "SUPPORTED"
+    },
+    {
+      "negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.5,
+            "plugin_supported": true,
+            "priority": 100,
+            "score": 0.225,
+            "target_id": "fake_target_alpha",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_tinymix"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.5,
+            "plugin_supported": true,
+            "priority": 90,
+            "score": 0.225,
+            "target_id": "fake_target_beta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.5,
+            "plugin_supported": true,
+            "priority": 70,
+            "score": 0.225,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [
+              "gamma"
+            ],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.183,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": true
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:invalid_target_quarantined",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "FAIL_CLOSED_LOW_CONFIDENCE",
+        "confidence": 0.225,
+        "governance_posture": "FAIL_CLOSED",
+        "reasons": [
+          "confidence_below_threshold:0.55"
+        ],
+        "selected_target_id": "fake_target_alpha"
+      },
+      "quarantine_size": 3,
+      "replay_validation": {
+        "compatibility_level": "FULL",
+        "deterministic": true,
+        "missing_contract_elements": [],
+        "mode": "replay_compatibility",
+        "provider": "fake_target_alpha.validation_provider",
+        "target_id": "fake_target_alpha",
+        "validation_type": "deterministic_plugin_replay_compatibility"
+      },
+      "scenario": "degraded_runtime_capabilities",
+      "target_profile": {
+        "target_id": "degraded_target_gamma"
+      },
+      "topology_status": "SUPPORTED"
+    },
+    {
+      "negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [
+              "delta"
+            ],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 70,
+            "score": 0.828,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": true
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 100,
+            "score": 0.277,
+            "target_id": "fake_target_alpha",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_tinymix"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 90,
+            "score": 0.277,
+            "target_id": "fake_target_beta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.045,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:invalid_target_quarantined",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "COMPATIBLE",
+        "confidence": 0.828,
+        "governance_posture": "ADVISORY_ONLY_OR_GOVERNED_ONLY",
+        "reasons": [
+          "evidence_backed_plugin_selection"
+        ],
+        "selected_target_id": "unsupported_topology_delta"
+      },
+      "quarantine_size": 5,
+      "replay_validation": {
+        "compatibility_level": "FULL",
+        "deterministic": true,
+        "missing_contract_elements": [],
+        "mode": "replay_compatibility",
+        "provider": "unsupported_topology_delta.validation_provider",
+        "target_id": "unsupported_topology_delta",
+        "validation_type": "deterministic_plugin_replay_compatibility"
+      },
+      "scenario": "unsupported_topology_provider",
+      "target_profile": {
+        "target_id": "unsupported_topology_delta"
+      },
+      "topology_status": "ERROR:RuntimeError"
+    },
+    {
+      "negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [
+              "supports_tinymix"
+            ],
+            "flag_hits": [],
+            "marker_hits": [
+              "beta"
+            ],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 90,
+            "score": 0.828,
+            "target_id": "fake_target_beta",
+            "target_id_match": true
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 100,
+            "score": 0.277,
+            "target_id": "fake_target_alpha",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.045,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:unsupported_topology_delta",
+            "plugin_supported": false,
+            "priority": 70,
+            "score": 0.0,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:invalid_target_quarantined",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "COMPATIBLE",
+        "confidence": 0.828,
+        "governance_posture": "ADVISORY_ONLY_OR_GOVERNED_ONLY",
+        "reasons": [
+          "evidence_backed_plugin_selection"
+        ],
+        "selected_target_id": "fake_target_beta"
+      },
+      "quarantine_size": 7,
+      "replay_validation": {
+        "compatibility_level": "PARTIAL",
+        "deterministic": true,
+        "missing_contract_elements": [
+          "cleanup_sequence",
+          "evidence_sequence",
+          "timing_windows"
+        ],
+        "mode": "replay_compatibility",
+        "provider": "fake_target_beta.validation_provider",
+        "target_id": "fake_target_beta",
+        "validation_type": "deterministic_plugin_replay_compatibility"
+      },
+      "scenario": "partial_replay_support",
+      "target_profile": {
+        "target_id": "fake_target_beta"
+      },
+      "topology_status": "SUPPORTED"
+    },
+    {
+      "negotiation": {
+        "candidate_scores": [
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 100,
+            "score": 0.277,
+            "target_id": "fake_target_alpha",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_tinymix"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.85,
+            "plugin_supported": true,
+            "priority": 90,
+            "score": 0.277,
+            "target_id": "fake_target_beta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [
+              "supports_amixer"
+            ],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.2,
+            "plugin_supported": false,
+            "priority": 80,
+            "score": 0.045,
+            "target_id": "degraded_target_gamma",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:unsupported_topology_delta",
+            "plugin_supported": false,
+            "priority": 70,
+            "score": 0.0,
+            "target_id": "unsupported_topology_delta",
+            "target_id_match": false
+          },
+          {
+            "capability_hits": [],
+            "flag_hits": [],
+            "marker_hits": [],
+            "plugin_confidence": 0.0,
+            "plugin_error": "PermissionError:plugin_quarantined:invalid_target_quarantined",
+            "plugin_supported": false,
+            "priority": 60,
+            "score": 0.0,
+            "target_id": "invalid_target_quarantined",
+            "target_id_match": false
+          }
+        ],
+        "classification": "FAIL_CLOSED_LOW_CONFIDENCE",
+        "confidence": 0.277,
+        "governance_posture": "FAIL_CLOSED",
+        "reasons": [
+          "confidence_below_threshold:0.55"
+        ],
+        "selected_target_id": "fake_target_alpha"
+      },
+      "quarantine_size": 9,
+      "replay_validation": {
+        "compatibility_level": "FULL",
+        "deterministic": true,
+        "missing_contract_elements": [],
+        "mode": "replay_compatibility",
+        "provider": "fake_target_alpha.validation_provider",
+        "target_id": "fake_target_alpha",
+        "validation_type": "deterministic_plugin_replay_compatibility"
+      },
+      "scenario": "invalid_plugin_quarantine",
+      "target_profile": {
+        "target_id": "invalid_target_quarantined"
+      },
+      "topology_status": "SUPPORTED"
+    }
+  ]
+}
