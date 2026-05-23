@@ -1,0 +1,83 @@
+{
+  "advisory_only_behavior": true,
+  "answers": [
+    {
+      "answer": "Patch causality currently has mapping_count=30 and regression_cause_count=5.",
+      "causality_chain": [
+        {
+          "node": "runtime_patch_correlation",
+          "relation": "provides_correlation",
+          "weight": 0.73
+        },
+        {
+          "node": "regression_causality_report",
+          "relation": "provides_cause_candidates",
+          "weight": 0.77
+        }
+      ],
+      "classification": "PASS",
+      "confidence_score": 1.0,
+      "deterministic_fingerprint": "1361719be6e1910e5d46c1917f76b199e84d92a99615f577ef39884ee331bd6d",
+      "evidence_sources": [
+        "artifact://deterministic_fusion_replay",
+        "artifact://deterministic_incident_replay",
+        "artifact://deterministic_runtime_session_replay",
+        "artifact://patch_series_plan",
+        "artifact://portability_blockers",
+        "artifact://regression_causality_report",
+        "artifact://root_cause_candidates",
+        "artifact://runtime_incident_graph",
+        "artifact://runtime_patch_correlation",
+        "artifact://runtime_sequence_drift",
+        "artifact://topology_runtime_causality",
+        "artifact://upstream_readiness_report",
+        "registry://engineering_investigation",
+        "registry://governance_state"
+      ],
+      "fail_closed_justification": "",
+      "governance_state": {
+        "execution_approval_mode": "linux_authoritative_windows_execute_only",
+        "fail_closed_posture": true,
+        "patching_restrictions": {
+          "autonomous_patching_allowed": false,
+          "autonomous_upstream_generation_allowed": false
+        },
+        "topology_mutation_restrictions": {
+          "autonomous_mixer_mutation_allowed": false,
+          "autonomous_topology_rewrite_allowed": false
+        },
+        "transport_restrictions": {
+          "allowed_modes": [
+            "adb_shell"
+          ],
+          "blocked_modes": [
+            "serial_raw",
+            "ssh_unapproved"
+          ]
+        },
+        "updated_at": "2026-05-22T14:31:45.397414+00:00",
+        "write_policy": "governed_write_approved_only"
+      },
+      "question": "What caused this runtime failure?",
+      "question_id": "engineering_investigation_v1:bb1f44e9",
+      "replay_lineage": {
+        "lineage_id": "engineering_investigation_v1",
+        "replay_fingerprint": ""
+      },
+      "selected_resolver": "patch_reasoning_resolver"
+    }
+  ],
+  "classification": "PASS",
+  "deterministic_fingerprint": "227018680825de20f578d013423a5de6aba0603f145e76047cb89327d39033d5",
+  "lineage_id": "engineering_investigation_v1",
+  "report_name": "engineering_answer_trace",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "engineering_investigation_session_v1",
+  "summary": {
+    "fail_closed": false,
+    "question_count": 1,
+    "selected_resolver": "patch_reasoning_resolver"
+  },
+  "target_id": "RB3Gen2"
+}

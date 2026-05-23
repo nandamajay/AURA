@@ -1,0 +1,171 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "f5f46f3338b415361e1f472567177867f174cedff032ba47cc59e2d0891f6be8",
+  "fail_closed_justification": "",
+  "lineage_id": "engineering_investigation_v1",
+  "report_name": "causality_resolution_report",
+  "resolver_candidates": [
+    {
+      "answer": "Patch causality currently has mapping_count=30 and regression_cause_count=5.",
+      "causality_chain": [
+        {
+          "node": "runtime_patch_correlation",
+          "relation": "provides_correlation",
+          "weight": 0.73
+        },
+        {
+          "node": "regression_causality_report",
+          "relation": "provides_cause_candidates",
+          "weight": 0.77
+        }
+      ],
+      "classification": "PASS",
+      "confidence_score": 1.0,
+      "deterministic_fingerprint": "1361719be6e1910e5d46c1917f76b199e84d92a99615f577ef39884ee331bd6d",
+      "evidence_sources": [
+        "artifact://deterministic_fusion_replay",
+        "artifact://deterministic_incident_replay",
+        "artifact://deterministic_runtime_session_replay",
+        "artifact://patch_series_plan",
+        "artifact://portability_blockers",
+        "artifact://regression_causality_report",
+        "artifact://root_cause_candidates",
+        "artifact://runtime_incident_graph",
+        "artifact://runtime_patch_correlation",
+        "artifact://runtime_sequence_drift",
+        "artifact://topology_runtime_causality",
+        "artifact://upstream_readiness_report",
+        "registry://engineering_investigation",
+        "registry://governance_state"
+      ],
+      "fail_closed_justification": "",
+      "resolver": "patch_reasoning_resolver"
+    },
+    {
+      "answer": "Replay lineage quality: artifact_count=4, replay_signal=False, mean_replay_score=0.0.",
+      "causality_chain": [
+        {
+          "node": "replay_signal",
+          "relation": "supports_determinism",
+          "weight": 0.3
+        }
+      ],
+      "classification": "FAIL_CLOSED",
+      "confidence_score": 0.535,
+      "deterministic_fingerprint": "a870e43a39fe8596f5a48b5158c2f6d09458f8d26bfa9e9a41f442384d964688",
+      "evidence_sources": [
+        "artifact://deterministic_fusion_replay",
+        "artifact://deterministic_incident_replay",
+        "artifact://deterministic_runtime_replay",
+        "artifact://deterministic_runtime_session_replay",
+        "artifact://engineering_confidence_report",
+        "artifact://engineering_confidence_score",
+        "artifact://portability_blockers",
+        "artifact://root_cause_candidates",
+        "artifact://runtime_confidence_score",
+        "artifact://runtime_incident_graph",
+        "artifact://runtime_patch_correlation",
+        "artifact://runtime_sequence_drift",
+        "artifact://topology_runtime_causality",
+        "registry://engineering_investigation",
+        "registry://governance_state"
+      ],
+      "fail_closed_justification": "replay_evidence_confidence_below_threshold",
+      "resolver": "replay_evidence_resolver"
+    },
+    {
+      "answer": "Primary runtime failure candidate is 'migration_induced_incompatibility' from patch_runtime_causality_engine.",
+      "causality_chain": [
+        {
+          "node": "runtime_sequence_drift",
+          "relation": "feeds",
+          "weight": 0.77
+        },
+        {
+          "node": "root_cause_candidates",
+          "relation": "selects",
+          "weight": 0.85
+        },
+        {
+          "node": "runtime_failure",
+          "relation": "explains",
+          "weight": 0.85
+        }
+      ],
+      "classification": "PASS",
+      "confidence_score": 1.0,
+      "deterministic_fingerprint": "2df1e18a6d902494b371cdb9bf2c74cdd47edba9adbd077697e109a6667ff18a",
+      "evidence_sources": [
+        "artifact://deterministic_fusion_replay",
+        "artifact://deterministic_incident_replay",
+        "artifact://deterministic_runtime_session_replay",
+        "artifact://dsp_sync_report",
+        "artifact://lifecycle_violation_report",
+        "artifact://portability_blockers",
+        "artifact://root_cause_candidates",
+        "artifact://runtime_incident_graph",
+        "artifact://runtime_patch_correlation",
+        "artifact://runtime_sequence_drift",
+        "artifact://topology_runtime_causality",
+        "registry://engineering_investigation",
+        "registry://governance_state"
+      ],
+      "fail_closed_justification": "",
+      "resolver": "runtime_question_resolver"
+    },
+    {
+      "answer": "Topology remains partially constrained with fe_be_routes=4, runtime_mismatch=0, inconsistency=1.",
+      "causality_chain": [
+        {
+          "node": "topology_runtime_graph",
+          "relation": "provides_route_context",
+          "weight": 0.72
+        },
+        {
+          "node": "runtime_topology_correlation",
+          "relation": "validates_routes",
+          "weight": 0.78
+        }
+      ],
+      "classification": "PASS",
+      "confidence_score": 0.817,
+      "deterministic_fingerprint": "80ee0681817685f2dccc02517cdf76df900b6961df7cf9cb01e15e7d579fefc2",
+      "evidence_sources": [
+        "artifact://deterministic_fusion_replay",
+        "artifact://deterministic_incident_replay",
+        "artifact://deterministic_runtime_session_replay",
+        "artifact://dts_topology_graph",
+        "artifact://portability_blockers",
+        "artifact://root_cause_candidates",
+        "artifact://runtime_incident_graph",
+        "artifact://runtime_patch_correlation",
+        "artifact://runtime_sequence_drift",
+        "artifact://runtime_topology_correlation",
+        "artifact://topology_runtime_causality",
+        "artifact://topology_runtime_graph",
+        "registry://engineering_investigation",
+        "registry://governance_state"
+      ],
+      "fail_closed_justification": "",
+      "resolver": "topology_question_resolver"
+    }
+  ],
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "selected_causality_chain": [
+    {
+      "node": "runtime_patch_correlation",
+      "relation": "provides_correlation",
+      "weight": 0.73
+    },
+    {
+      "node": "regression_causality_report",
+      "relation": "provides_cause_candidates",
+      "weight": 0.77
+    }
+  ],
+  "selected_resolver": "patch_reasoning_resolver",
+  "session_id": "engineering_investigation_session_v1",
+  "target_id": "RB3Gen2"
+}

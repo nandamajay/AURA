@@ -325,6 +325,47 @@ from aura_sdk.transport.runtime_incident_reconstructor import (
     RuntimeIncidentReconstructionResult,
     RuntimeIncidentReconstructor,
 )
+from aura_sdk.transport.causality_query_planner import (
+    CausalityQueryPlanResult,
+    plan_causality_query,
+)
+from aura_sdk.transport.runtime_question_resolver import (
+    RuntimeQuestionResolutionResult,
+    resolve_runtime_question,
+)
+from aura_sdk.transport.migration_question_resolver import (
+    MigrationQuestionResolutionResult,
+    resolve_migration_question,
+)
+from aura_sdk.transport.topology_question_resolver import (
+    TopologyQuestionResolutionResult,
+    resolve_topology_question,
+)
+from aura_sdk.transport.patch_reasoning_resolver import (
+    PatchReasoningResolutionResult,
+    resolve_patch_reasoning_question,
+)
+from aura_sdk.transport.replay_evidence_resolver import (
+    ReplayEvidenceResolutionResult,
+    resolve_replay_evidence_question,
+)
+from aura_sdk.transport.investigation_reasoner import (
+    InvestigationReasoningResult,
+    synthesize_investigation_reasoning,
+)
+from aura_sdk.transport.engineering_query_history import (
+    EngineeringQueryHistoryResult,
+    update_engineering_query_history,
+)
+from aura_sdk.transport.reasoning_lineage_tracker import (
+    ReasoningLineageResult,
+    build_reasoning_lineage,
+)
+from aura_sdk.transport.investigation_session_registry import InvestigationSessionRegistry
+from aura_sdk.transport.engineering_query_engine import (
+    EngineeringQueryEngine,
+    EngineeringQueryEngineResult,
+)
 from aura_sdk.transport.dmesg_ingestor import DmesgIngestionResult, ingest_dmesg
 from aura_sdk.transport.ftrace_ingestor import FtraceIngestionResult, ingest_ftrace
 from aura_sdk.transport.tracecmd_ingestor import TracecmdIngestionResult, ingest_tracecmd
@@ -571,6 +612,27 @@ __all__ = [
     "RuntimeIncidentReconstructionResult",
     "RuntimeIncidentReconstructor",
     "RuntimeIncidentReconstructionRegistry",
+    "CausalityQueryPlanResult",
+    "plan_causality_query",
+    "RuntimeQuestionResolutionResult",
+    "resolve_runtime_question",
+    "MigrationQuestionResolutionResult",
+    "resolve_migration_question",
+    "TopologyQuestionResolutionResult",
+    "resolve_topology_question",
+    "PatchReasoningResolutionResult",
+    "resolve_patch_reasoning_question",
+    "ReplayEvidenceResolutionResult",
+    "resolve_replay_evidence_question",
+    "InvestigationReasoningResult",
+    "synthesize_investigation_reasoning",
+    "EngineeringQueryHistoryResult",
+    "update_engineering_query_history",
+    "ReasoningLineageResult",
+    "build_reasoning_lineage",
+    "InvestigationSessionRegistry",
+    "EngineeringQueryEngine",
+    "EngineeringQueryEngineResult",
     "DmesgIngestionResult",
     "ingest_dmesg",
     "FtraceIngestionResult",

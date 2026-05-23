@@ -121,6 +121,7 @@ Primary scripts:
 - `scripts/aura-runtime-evidence-fusion.py`
 - `scripts/aura-runtime-incident-reconstruction.py`
 - `scripts/aura-runtime-evidence-ingestion.py`
+- `scripts/aura-engineering-investigation.py`
 
 Key output directory:
 
@@ -1381,6 +1382,94 @@ python3 -m pytest \
 - plugin/runtime isolation via adapter contracts
 - advisory-only behavior (no autonomous source/runtime mutation)
 - migration governance and semantic/runtime separation boundaries
+
+## Engineering Investigation and Query Reasoning Layer
+
+This phase transitions AURA from runtime observability to interactive,
+deterministic engineering reasoning.
+
+### Scope
+
+- interactive engineering query handling for:
+  - runtime failures
+  - topology inconsistencies
+  - migration blockers
+  - upstream readiness and patch causality
+  - DSP/runtime synchronization
+  - lifecycle drift and regression lineage
+- deterministic evidence-backed answers with explicit:
+  - evidence sources
+  - causality chains
+  - confidence scores
+  - replay lineage
+  - governance state
+  - fail-closed justification
+
+### Core Modules
+
+- orchestration:
+  - `workspace/aura-sdk/src/aura_sdk/transport/engineering_query_engine.py`
+- planning + reasoning:
+  - `causality_query_planner.py`
+  - `investigation_reasoner.py`
+- resolvers:
+  - `runtime_question_resolver.py`
+  - `migration_question_resolver.py`
+  - `topology_question_resolver.py`
+  - `patch_reasoning_resolver.py`
+  - `replay_evidence_resolver.py`
+- session and lineage:
+  - `investigation_session_registry.py`
+  - `engineering_query_history.py`
+  - `reasoning_lineage_tracker.py`
+- runner:
+  - `scripts/aura-engineering-investigation.py`
+
+### Generated Artifacts
+
+- `investigation_reasoning_graph.json`
+- `engineering_answer_trace.json`
+- `causality_resolution_report.json`
+- `migration_blocker_reasoning.json`
+- `runtime_question_lineage.json`
+- `deterministic_investigation_replay.json`
+- `engineering_investigation_summary.json`
+
+### Run Engineering Investigation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-engineering-investigation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id engineering_investigation_session_v1 \
+  --lineage-id engineering_investigation_v1 \
+  --question "What caused this runtime failure?"
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_engineering_investigation_static.py \
+  workspace/aura-sdk/tests/test_runtime_incident_reconstruction_static.py \
+  workspace/aura-sdk/tests/test_runtime_evidence_ingestion_static.py -q
+```
+
+### Investigation Constraints (Preserved)
+
+- no hallucinated explanations
+- fail-closed behavior on insufficient evidence
+- runtime-truth precedence over static assumptions
+- deterministic replay and lineage persistence
+- plugin/runtime isolation via adapters
+- advisory-only behavior (no autonomous mutation or patch generation)
+
+### Architecture Document
+
+- `docs/operations/transport/engineering_investigation_architecture.md`
 
 ## Runtime Loop Automation (Three-Screen Validation)
 

@@ -1,0 +1,97 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "1518681ca66e6194dadf9fd17e6da71dd50783905a991e92bfc00de6493fbd6f",
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "investigates",
+      "to": "session:engineering_investigation_session_v1"
+    },
+    {
+      "from": "session:engineering_investigation_session_v1",
+      "relation": "asks",
+      "to": "question:engineering_investigation_v1:bb1f44e9"
+    },
+    {
+      "confidence": 1.0,
+      "from": "question:engineering_investigation_v1:bb1f44e9",
+      "relation": "resolved_by",
+      "to": "resolver:patch_reasoning_resolver"
+    },
+    {
+      "confidence": 0.535,
+      "from": "question:engineering_investigation_v1:bb1f44e9",
+      "relation": "resolved_by",
+      "to": "resolver:replay_evidence_resolver"
+    },
+    {
+      "confidence": 1.0,
+      "from": "question:engineering_investigation_v1:bb1f44e9",
+      "relation": "resolved_by",
+      "to": "resolver:runtime_question_resolver"
+    },
+    {
+      "confidence": 0.817,
+      "from": "question:engineering_investigation_v1:bb1f44e9",
+      "relation": "resolved_by",
+      "to": "resolver:topology_question_resolver"
+    }
+  ],
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://engineering_investigation",
+    "artifact://runtime_incident_graph",
+    "artifact://root_cause_candidates",
+    "artifact://runtime_sequence_drift",
+    "artifact://topology_runtime_causality",
+    "artifact://portability_blockers",
+    "artifact://runtime_patch_correlation",
+    "artifact://deterministic_incident_replay",
+    "artifact://deterministic_fusion_replay",
+    "artifact://deterministic_runtime_session_replay"
+  ],
+  "graph_name": "investigation_reasoning_graph",
+  "lineage_id": "engineering_investigation_v1",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "session:engineering_investigation_session_v1",
+      "kind": "session"
+    },
+    {
+      "id": "question:engineering_investigation_v1:bb1f44e9",
+      "kind": "question"
+    },
+    {
+      "id": "resolver:patch_reasoning_resolver",
+      "kind": "resolver"
+    },
+    {
+      "id": "resolver:replay_evidence_resolver",
+      "kind": "resolver"
+    },
+    {
+      "id": "resolver:runtime_question_resolver",
+      "kind": "resolver"
+    },
+    {
+      "id": "resolver:topology_question_resolver",
+      "kind": "resolver"
+    }
+  ],
+  "query_plan_fingerprint": "6698d133f5ad128b1e98c222e5ff8b5cf6b0f4e178a759abc46787e9f5940da4",
+  "resolver_fingerprints": {
+    "patch_reasoning_resolver": "1361719be6e1910e5d46c1917f76b199e84d92a99615f577ef39884ee331bd6d",
+    "replay_evidence_resolver": "a870e43a39fe8596f5a48b5158c2f6d09458f8d26bfa9e9a41f442384d964688",
+    "runtime_question_resolver": "2df1e18a6d902494b371cdb9bf2c74cdd47edba9adbd077697e109a6667ff18a",
+    "topology_question_resolver": "80ee0681817685f2dccc02517cdf76df900b6961df7cf9cb01e15e7d579fefc2"
+  },
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "engineering_investigation_session_v1",
+  "target_id": "RB3Gen2"
+}
