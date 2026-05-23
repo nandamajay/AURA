@@ -1839,6 +1839,77 @@ python3 -m pytest \
 
 - `docs/operations/transport/upstream_acceptance_simulation_architecture.md`
 
+## Controlled Downstream-to-Upstream Pilot Conversion Framework
+
+This layer executes small, runtime-backed, governance-approved pilot
+transformations and produces human-reviewable upstream patch proposals.
+
+### Pilot Scope (Allowed)
+
+- logging wrapper replacement
+- vendor macro normalization
+- simple helper abstraction removal
+- PCM capability mapping cleanup
+- small topology normalization
+- static downstream wrapper elimination
+- trivial API replacement equivalence
+- isolated subsystem utility conversion
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/controlled_pilot_conversion.py`
+- Runner:
+  - `scripts/aura-controlled-pilot-conversion.py`
+
+### Required Artifacts (Generated)
+
+- `pilot_conversion_patch.diff`
+- `transformation_explainability_report.json`
+- `runtime_equivalence_validation.json`
+- `upstream_review_package.json`
+- `pilot_risk_assessment.json`
+- `transformation_lineage.json`
+- `rollback_validation_report.json`
+- `deterministic_pilot_replay.json`
+- `governance_decision_report.json`
+- `controlled_pilot_conversion_summary.json`
+
+### Run Controlled Pilot Conversion
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-controlled-pilot-conversion.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id controlled_pilot_conversion_session_v1 \
+  --lineage-id controlled_pilot_conversion_v1 \
+  --source-manifest /local/mnt/workspace/AURA_V1/docs/operations/transport/pilot_source_manifest.json
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_controlled_pilot_conversion_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed by default
+- no autonomous patch application to production branches
+- human review required before final upstream export
+- runtime-backed equivalence confidence is mandatory
+- unsupported vendor abstractions block execution
+- cross-subsystem transformations are prohibited in pilot mode
+- deterministic replay and lineage persistence are mandatory
+
+### Architecture Document
+
+- `docs/operations/transport/controlled_pilot_conversion_architecture.md`
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

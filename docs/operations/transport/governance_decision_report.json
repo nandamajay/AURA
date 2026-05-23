@@ -1,0 +1,73 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "decision": {
+    "delivery_authorization": false,
+    "escalation_level": "L2_ENGINEERING_REVIEW",
+    "escalation_reasons": [
+      "runtime_equivalence_validation_failed",
+      "unsupported_vendor_abstractions_unresolved",
+      "upstream_acceptance_threshold_not_met"
+    ],
+    "escalation_required": true,
+    "pilot_transformation_authorized": false
+  },
+  "deterministic_fingerprint": "e93d7d230e0fcc99defa5044a6f610328938358f121b3256ec4388e03dcc81b4",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://controlled_pilot_conversion",
+    "artifact://api_replacement_map",
+    "artifact://unsupported_vendor_constructs",
+    "artifact://runtime_equivalence_validation",
+    "artifact://runtime_validated_patch_segments",
+    "artifact://translation_execution_report",
+    "artifact://upstream_acceptance_report",
+    "artifact://acceptance_confidence_score",
+    "artifact://regression_risk_assessment",
+    "artifact://runtime_equivalence_fingerprint",
+    "artifact://topology_runtime_graph",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "governance_policy": {
+    "autonomous_patch_application_allowed": false,
+    "cross_subsystem_pilot_forbidden": true,
+    "default_mode": "FAIL_CLOSED",
+    "human_review_required": true,
+    "runtime_backed_equivalence_required": true,
+    "unsupported_vendor_blocks_execution": true
+  },
+  "governance_state": {
+    "execution_approval_mode": "linux_authoritative_windows_execute_only",
+    "fail_closed_posture": true,
+    "patching_restrictions": {
+      "autonomous_patching_allowed": false,
+      "autonomous_upstream_generation_allowed": false
+    },
+    "topology_mutation_restrictions": {
+      "autonomous_mixer_mutation_allowed": false,
+      "autonomous_topology_rewrite_allowed": false
+    },
+    "transport_restrictions": {
+      "allowed_modes": [
+        "adb_shell"
+      ],
+      "blocked_modes": [
+        "serial_raw",
+        "ssh_unapproved"
+      ]
+    },
+    "updated_at": "2026-05-22T14:31:45.397414+00:00",
+    "write_policy": "governed_write_approved_only"
+  },
+  "lineage_id": "controlled_pilot_conversion_v1",
+  "report_name": "governance_decision_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "controlled_pilot_conversion_session_v1",
+  "summary": {
+    "blocked_candidate_count": 0,
+    "cross_subsystem_violation": false,
+    "unsupported_vendor_count": 2834
+  },
+  "target_id": "RB3Gen2"
+}

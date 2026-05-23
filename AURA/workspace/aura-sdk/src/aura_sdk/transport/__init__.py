@@ -431,6 +431,11 @@ from aura_sdk.transport.upstream_acceptance_simulation import (
     UpstreamAcceptanceSimulationRegistry,
     UpstreamAcceptanceSimulationResult,
 )
+from aura_sdk.transport.controlled_pilot_conversion import (
+    ControlledPilotConversionEngine,
+    ControlledPilotConversionRegistry,
+    ControlledPilotConversionResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -698,4 +703,7 @@ __all__ = [
     "UpstreamAcceptanceSimulationEngine",
     "UpstreamAcceptanceSimulationRegistry",
     "UpstreamAcceptanceSimulationResult",
+    "ControlledPilotConversionEngine",
+    "ControlledPilotConversionRegistry",
+    "ControlledPilotConversionResult",
 ]
