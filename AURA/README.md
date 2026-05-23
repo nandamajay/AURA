@@ -927,6 +927,97 @@ python3 -m pytest \
 - deterministic replay compatibility
 - semantic/structural separation
 
+## Patch Cognition and Upstream Readiness Engine
+
+This phase evolves migration orchestration into governed upstream patch
+intelligence. It reasons about patch lineage, subsystem boundaries,
+maintainership-safe sequencing, runtime impact, and bisect-safe evolution.
+
+### Mission Alignment
+
+This phase directly improves:
+
+- upstream patch preparation:
+  - generates readiness scoring, patch dependency ordering, and upstream-safe series planning
+- subsystem-safe migration:
+  - maps subsystem ownership boundaries and cross-subsystem risk before series formation
+- regression containment:
+  - correlates runtime evidence and source impact to estimate blast radius by patch group
+- maintainership alignment:
+  - generates maintainership-aware sequencing and review group recommendations per patch step
+- runtime-aware patch sequencing:
+  - ties patch grouping and order to runtime-source correlation and topology/runtime evidence
+- bisect-safe evolution:
+  - validates bisectability per patch group with guardrail requirements
+- deterministic patch replay:
+  - persists lineage and deterministic replay fingerprint for reproducible patch cognition state
+
+### Implemented Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/patch_cognition_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/upstream_readiness_classifier.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/patch_dependency_graph.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/subsystem_boundary_reasoner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/vendor_contamination_detector.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_patch_correlation.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/bisectability_validator.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/api_evolution_tracker.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/patch_series_orchestrator.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/upstream_governance_gate.py`
+
+Runner:
+
+- `scripts/aura-patch-cognition-readiness.py`
+
+### Required Artifacts
+
+- `upstream_readiness_report.json`
+- `patch_dependency_graph.json`
+- `subsystem_boundary_map.json`
+- `vendor_contamination_report.json`
+- `runtime_patch_correlation.json`
+- `bisectability_report.json`
+- `api_evolution_trace.json`
+- `patch_series_plan.json`
+- `deterministic_patch_replay.json`
+
+Additional outputs:
+
+- `patch_cognition_summary.json`
+- `docs/operations/transport/patch_cognition_upstream_readiness_architecture.md`
+
+### Run Patch Cognition Phase
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-patch-cognition-readiness.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id patch_cognition_upstream_readiness_v1
+```
+
+### Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_patch_cognition_static.py \
+  workspace/aura-sdk/tests/test_incremental_migration_orchestration_static.py \
+  workspace/aura-sdk/tests/test_governed_conversion_reasoning_static.py \
+  workspace/aura-sdk/tests/test_real_downstream_ingestion_static.py -q
+```
+
+### Governance Boundaries (Preserved)
+
+- advisory-only behavior
+- no autonomous patch submission
+- fail-closed governance enforcement
+- deterministic replay preservation
+- plugin isolation preservation
+- runtime-truth precedence
+- semantic/structural/runtime separation
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

@@ -1,0 +1,276 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "4275c45f2f33fbe8161a08ad07fef927ce3bb79c2d1c741125addff90de1e4db",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "registry://semantic_cognition",
+    "artifact://downstream_driver_graph",
+    "artifact://upstream_equivalence_map",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "artifact://portability_blockers",
+    "artifact://runtime_portability_analysis"
+  ],
+  "orchestration_score": 0.548,
+  "policy": {
+    "advisory_only": true,
+    "autonomous_patch_submission": false,
+    "maintainership_review_required": true
+  },
+  "report_name": "patch_series_plan",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "series": [
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_01_subsystem_boundary_prep",
+      "risk": "MEDIUM",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "subsystem_boundary"
+      ],
+      "sequence": 1,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_01_subsystem_boundary_prep"
+      ],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "dpcm_links",
+        "fe_be_topology"
+      ],
+      "sequence": 2,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_01_subsystem_boundary_prep"
+      ],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_03_api_evolution_alignment",
+      "risk": "HIGH",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "api_evolution",
+        "registration_lifecycle"
+      ],
+      "sequence": 3,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_03_api_evolution_alignment"
+      ],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers",
+        "vendor-audio-maintainers"
+      ],
+      "patch_group_id": "patch_04_vendor_contamination_isolation",
+      "risk": "HIGH",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "downstream_only_apis",
+        "vendor_hooks"
+      ],
+      "sequence": 4,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_04_vendor_contamination_isolation"
+      ],
+      "maintainer_review_groups": [
+        "soundwire-maintainers",
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_05_soundwire_and_dsp_decoupling",
+      "risk": "HIGH",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "dsp_coupling",
+        "soundwire"
+      ],
+      "sequence": 5,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_03_api_evolution_alignment"
+      ],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "regression_guardrails",
+        "runtime_correlation"
+      ],
+      "sequence": 6,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_04_vendor_contamination_isolation",
+        "patch_05_soundwire_and_dsp_decoupling"
+      ],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_07_upstream_equivalence_refinement",
+      "risk": "HIGH",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "upstream_equivalence"
+      ],
+      "sequence": 7,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    },
+    {
+      "bisect_gate": {
+        "current_score": 0.5,
+        "minimum_score": 0.7,
+        "required": true
+      },
+      "depends_on": [
+        "patch_06_runtime_correlation_guardrails",
+        "patch_07_upstream_equivalence_refinement"
+      ],
+      "maintainer_review_groups": [
+        "soc-audio-maintainers"
+      ],
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "runtime_validation_gate": {
+        "blast_radius": "LOW",
+        "required": true
+      },
+      "scope": [
+        "bisectability",
+        "maintainership_series"
+      ],
+      "sequence": 8,
+      "subsystem_owners": [
+        "asoc_core",
+        "asoc_topology",
+        "audio_runtime",
+        "soundwire"
+      ]
+    }
+  ],
+  "summary": {
+    "bisectability_score": 0.5,
+    "governance_classification": "PASS",
+    "readiness_score": 0.588,
+    "series_count": 8
+  },
+  "target_id": "RB3Gen2"
+}

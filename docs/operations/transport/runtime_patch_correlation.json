@@ -1,0 +1,446 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "command_patch_mappings": [
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [],
+      "matched_source_files": [],
+      "runtime_command": "cat /proc/asound/cards"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_06_runtime_correlation_guardrails",
+        "patch_08_bisectability_and_series_finalize"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "cat /proc/asound/pcm"
+    },
+    {
+      "correlation_confidence": 0.99,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/audio_machine.c",
+        "asoc/bengal.c",
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/audio-ext-clk-up.c",
+        "asoc/codecs/audio-ext-clk.c",
+        "asoc/codecs/bolero/bolero-cdc.c",
+        "asoc/codecs/bolero/bolero-clk-rsc.c"
+      ],
+      "runtime_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "impacted_patch_nodes": [
+        "patch_04_vendor_contamination_isolation",
+        "patch_05_soundwire_and_dsp_decoupling",
+        "patch_06_runtime_correlation_guardrails",
+        "patch_08_bisectability_and_series_finalize"
+      ],
+      "matched_source_files": [
+        "asoc/audio_machine.c",
+        "asoc/codecs/audio-ext-clk-up.c",
+        "asoc/codecs/audio-ext-clk.c",
+        "audio_kernel_modules.mk",
+        "audio_kernel_product_board.mk",
+        "dsp/audio_notifier.c",
+        "dsp/audio_prm.c",
+        "dsp/msm_audio_ion.c"
+      ],
+      "runtime_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/csra66x0/csra66x0.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/rouleur/pm2250_spmi.c",
+        "asoc/qcs405.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/csra66x0/csra66x0.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/rouleur/pm2250_spmi.c",
+        "asoc/qcs405.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0"
+    },
+    {
+      "correlation_confidence": 0.78,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/wsa885x-i2c.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/csra66x0/csra66x0.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/rouleur/pm2250_spmi.c",
+        "asoc/qcs405.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/csra66x0/csra66x0.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/rouleur/pm2250_spmi.c",
+        "asoc/qcs405.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0"
+    },
+    {
+      "correlation_confidence": 0.78,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/wsa885x-i2c.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/sm8150.c"
+      ],
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "impacted_patch_nodes": [
+        "patch_06_runtime_correlation_guardrails",
+        "patch_08_bisectability_and_series_finalize"
+      ],
+      "matched_source_files": [
+        "asoc/audio_machine.c",
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/audio-ext-clk-up.c",
+        "asoc/codecs/audio-ext-clk.c",
+        "asoc/codecs/csra66x0/csra66x0.c",
+        "asoc/codecs/msm_stub.c",
+        "asoc/codecs/qmp1000/qmp-dmic.c"
+      ],
+      "runtime_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [],
+      "matched_source_files": [],
+      "runtime_command": "cat /proc/asound/cards"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "impacted_patch_nodes": [
+        "patch_06_runtime_correlation_guardrails",
+        "patch_08_bisectability_and_series_finalize"
+      ],
+      "matched_source_files": [],
+      "runtime_command": "cat /proc/asound/pcm"
+    },
+    {
+      "correlation_confidence": 0.99,
+      "impacted_patch_nodes": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_06_runtime_correlation_guardrails"
+      ],
+      "matched_source_files": [
+        "asoc/audio_machine.c",
+        "asoc/bengal.c",
+        "asoc/codecs/aqt1000/aqt1000-mbhc.c",
+        "asoc/codecs/aqt1000/aqt1000.c",
+        "asoc/codecs/audio-ext-clk-up.c",
+        "asoc/codecs/audio-ext-clk.c",
+        "asoc/codecs/bolero/bolero-cdc.c",
+        "asoc/codecs/bolero/bolero-clk-rsc.c"
+      ],
+      "runtime_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "impacted_patch_nodes": [
+        "patch_04_vendor_contamination_isolation",
+        "patch_05_soundwire_and_dsp_decoupling"
+      ],
+      "matched_source_files": [
+        "asoc/audio_machine.c",
+        "asoc/codecs/audio-ext-clk-up.c",
+        "asoc/codecs/audio-ext-clk.c",
+        "asoc/qaif-platform.c",
+        "audio_kernel_modules.mk",
+        "audio_kernel_product_board.mk",
+        "dsp/audio_notifier.c",
+        "dsp/audio_prm.c"
+      ],
+      "runtime_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "deterministic_fingerprint": "4d27012f4d1eecf355de425b17b0176fa150aa80257f8526100b42b9f88c6607",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "registry://semantic_cognition",
+    "artifact://downstream_driver_graph",
+    "artifact://upstream_equivalence_map",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "artifact://portability_blockers",
+    "artifact://runtime_portability_analysis"
+  ],
+  "regression_blast_radius": "LOW",
+  "report_name": "runtime_patch_correlation",
+  "runtime_alignment_score": 0.66,
+  "runtime_state": {
+    "playback_completion": true,
+    "process_success": true,
+    "route_fingerprint": ""
+  },
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "average_runtime_source_correlation": 0.625,
+    "coverage": 0.625,
+    "declared_patch_count": 8,
+    "impacted_patch_count": 5,
+    "mapped_command_count": 30
+  },
+  "target_id": "RB3Gen2"
+}

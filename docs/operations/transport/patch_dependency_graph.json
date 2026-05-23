@@ -1,0 +1,174 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "ADVISORY_ONLY",
+  "dependency_stability_score": 0.61,
+  "deterministic_fingerprint": "dda1bafc7b376dad206342308d008754c7385916e786fbd98dc05c31db9ab8e7",
+  "edges": [
+    {
+      "from": "patch_01_subsystem_boundary_prep",
+      "relation": "depends_on",
+      "to": "patch_02_topology_fe_be_normalization"
+    },
+    {
+      "from": "patch_01_subsystem_boundary_prep",
+      "relation": "depends_on",
+      "to": "patch_03_api_evolution_alignment"
+    },
+    {
+      "from": "patch_02_topology_fe_be_normalization",
+      "relation": "depends_on",
+      "to": "patch_05_soundwire_and_dsp_decoupling"
+    },
+    {
+      "from": "patch_02_topology_fe_be_normalization",
+      "relation": "depends_on",
+      "to": "patch_06_runtime_correlation_guardrails"
+    },
+    {
+      "from": "patch_03_api_evolution_alignment",
+      "relation": "depends_on",
+      "to": "patch_04_vendor_contamination_isolation"
+    },
+    {
+      "from": "patch_03_api_evolution_alignment",
+      "relation": "depends_on",
+      "to": "patch_06_runtime_correlation_guardrails"
+    },
+    {
+      "from": "patch_04_vendor_contamination_isolation",
+      "relation": "depends_on",
+      "to": "patch_05_soundwire_and_dsp_decoupling"
+    },
+    {
+      "from": "patch_04_vendor_contamination_isolation",
+      "relation": "depends_on",
+      "to": "patch_07_upstream_equivalence_refinement"
+    },
+    {
+      "from": "patch_05_soundwire_and_dsp_decoupling",
+      "relation": "depends_on",
+      "to": "patch_07_upstream_equivalence_refinement"
+    },
+    {
+      "from": "patch_06_runtime_correlation_guardrails",
+      "relation": "depends_on",
+      "to": "patch_08_bisectability_and_series_finalize"
+    },
+    {
+      "from": "patch_07_upstream_equivalence_refinement",
+      "relation": "depends_on",
+      "to": "patch_08_bisectability_and_series_finalize"
+    }
+  ],
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "registry://semantic_cognition",
+    "artifact://downstream_driver_graph",
+    "artifact://upstream_equivalence_map",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "artifact://portability_blockers",
+    "artifact://runtime_portability_analysis"
+  ],
+  "graph_name": "patch_dependency_graph",
+  "nodes": [
+    {
+      "depends_on": [],
+      "patch_id": "patch_01_subsystem_boundary_prep",
+      "risk": "MEDIUM",
+      "scope": [
+        "subsystem_boundary"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_01_subsystem_boundary_prep"
+      ],
+      "patch_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "scope": [
+        "dpcm_links",
+        "fe_be_topology"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_01_subsystem_boundary_prep"
+      ],
+      "patch_id": "patch_03_api_evolution_alignment",
+      "risk": "HIGH",
+      "scope": [
+        "api_evolution",
+        "registration_lifecycle"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_03_api_evolution_alignment"
+      ],
+      "patch_id": "patch_04_vendor_contamination_isolation",
+      "risk": "HIGH",
+      "scope": [
+        "downstream_only_apis",
+        "vendor_hooks"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_04_vendor_contamination_isolation"
+      ],
+      "patch_id": "patch_05_soundwire_and_dsp_decoupling",
+      "risk": "HIGH",
+      "scope": [
+        "dsp_coupling",
+        "soundwire"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_03_api_evolution_alignment"
+      ],
+      "patch_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "scope": [
+        "regression_guardrails",
+        "runtime_correlation"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_04_vendor_contamination_isolation",
+        "patch_05_soundwire_and_dsp_decoupling"
+      ],
+      "patch_id": "patch_07_upstream_equivalence_refinement",
+      "risk": "HIGH",
+      "scope": [
+        "upstream_equivalence"
+      ]
+    },
+    {
+      "depends_on": [
+        "patch_06_runtime_correlation_guardrails",
+        "patch_07_upstream_equivalence_refinement"
+      ],
+      "patch_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "scope": [
+        "bisectability",
+        "maintainership_series"
+      ]
+    }
+  ],
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "edge_count": 11,
+    "high_risk_count": 4,
+    "node_count": 8,
+    "unresolved_upstream_equivalence": 660
+  },
+  "target_id": "RB3Gen2"
+}

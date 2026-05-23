@@ -1,0 +1,135 @@
+{
+  "advisory_only_behavior": true,
+  "bisectability_score": 0.5,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "a88f74ca03f7275013fb99bed162e1b590df5262ffae7ffce0d9b74093f1d0b6",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "registry://semantic_cognition",
+    "artifact://downstream_driver_graph",
+    "artifact://upstream_equivalence_map",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "artifact://portability_blockers",
+    "artifact://runtime_portability_analysis"
+  ],
+  "report_name": "bisectability_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "bisect_safe_units": 4,
+    "blocked_units": 4,
+    "runtime_blast_radius": "LOW",
+    "total_units": 8
+  },
+  "target_id": "RB3Gen2",
+  "units": [
+    {
+      "bisect_safe": true,
+      "depends_on": [],
+      "patch_id": "patch_01_subsystem_boundary_prep",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "MEDIUM"
+    },
+    {
+      "bisect_safe": true,
+      "depends_on": [
+        "patch_01_subsystem_boundary_prep"
+      ],
+      "patch_id": "patch_02_topology_fe_be_normalization",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "LOW"
+    },
+    {
+      "bisect_safe": false,
+      "depends_on": [
+        "patch_01_subsystem_boundary_prep"
+      ],
+      "patch_id": "patch_03_api_evolution_alignment",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "HIGH"
+    },
+    {
+      "bisect_safe": false,
+      "depends_on": [
+        "patch_03_api_evolution_alignment"
+      ],
+      "patch_id": "patch_04_vendor_contamination_isolation",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "HIGH"
+    },
+    {
+      "bisect_safe": false,
+      "depends_on": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_04_vendor_contamination_isolation"
+      ],
+      "patch_id": "patch_05_soundwire_and_dsp_decoupling",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "HIGH"
+    },
+    {
+      "bisect_safe": true,
+      "depends_on": [
+        "patch_02_topology_fe_be_normalization",
+        "patch_03_api_evolution_alignment"
+      ],
+      "patch_id": "patch_06_runtime_correlation_guardrails",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "MEDIUM"
+    },
+    {
+      "bisect_safe": false,
+      "depends_on": [
+        "patch_04_vendor_contamination_isolation",
+        "patch_05_soundwire_and_dsp_decoupling"
+      ],
+      "patch_id": "patch_07_upstream_equivalence_refinement",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "HIGH"
+    },
+    {
+      "bisect_safe": true,
+      "depends_on": [
+        "patch_06_runtime_correlation_guardrails",
+        "patch_07_upstream_equivalence_refinement"
+      ],
+      "patch_id": "patch_08_bisectability_and_series_finalize",
+      "required_guardrails": [
+        "compile_check",
+        "runtime_smoke_validation",
+        "artifact_lineage_snapshot"
+      ],
+      "risk": "MEDIUM"
+    }
+  ]
+}
