@@ -122,6 +122,7 @@ Primary scripts:
 - `scripts/aura-runtime-incident-reconstruction.py`
 - `scripts/aura-runtime-evidence-ingestion.py`
 - `scripts/aura-engineering-investigation.py`
+- `scripts/aura-governed-translation-intelligence.py`
 
 Key output directory:
 
@@ -1470,6 +1471,71 @@ python3 -m pytest \
 ### Architecture Document
 
 - `docs/operations/transport/engineering_investigation_architecture.md`
+
+## Governed Downstream-To-Upstream Translation Intelligence Layer
+
+This layer converts downstream translation cognition into a governed,
+evidence-backed translation plan with deterministic replay lineage.
+
+### Focus Coverage
+
+- PCM lifecycle translation
+- DAPM route equivalence
+- FE/BE topology conversion
+- SoundWire upstream mapping
+- vendor callback abstraction replacement
+- runtime-safe API substitution reasoning
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/governed_translation_intelligence.py`
+- Runner:
+  - `scripts/aura-governed-translation-intelligence.py`
+
+### Required Artifacts (Generated)
+
+- `upstream_translation_plan.json`
+- `api_replacement_map.json`
+- `unsupported_vendor_constructs.json`
+- `lifecycle_translation_graph.json`
+- `runtime_equivalence_validation.json`
+- `translation_confidence_report.json`
+- `deterministic_translation_replay.json`
+- `governed_translation_intelligence_summary.json`
+
+### Run Governed Translation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-governed-translation-intelligence.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id governed_translation_session_v1 \
+  --lineage-id governed_translation_v1
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_governed_translation_intelligence_static.py \
+  workspace/aura-sdk/tests/test_translation_intelligence_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- no fake or unsupported mappings accepted as PASS
+- fail-closed on ambiguity/insufficient evidence/unsupported constructs
+- runtime-truth precedence for equivalence validation
+- deterministic translation replay lineage persistence
+- plugin/runtime isolation preserved (no core target branching)
+
+### Architecture Document
+
+- `docs/operations/transport/governed_translation_intelligence_architecture.md`
 
 ## Runtime Loop Automation (Three-Screen Validation)
 

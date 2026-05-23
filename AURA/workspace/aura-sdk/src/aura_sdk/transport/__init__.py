@@ -366,6 +366,11 @@ from aura_sdk.transport.engineering_query_engine import (
     EngineeringQueryEngine,
     EngineeringQueryEngineResult,
 )
+from aura_sdk.transport.governed_translation_intelligence import (
+    GovernedTranslationIntelligenceEngine,
+    GovernedTranslationIntelligenceRegistry,
+    GovernedTranslationIntelligenceResult,
+)
 from aura_sdk.transport.dmesg_ingestor import DmesgIngestionResult, ingest_dmesg
 from aura_sdk.transport.ftrace_ingestor import FtraceIngestionResult, ingest_ftrace
 from aura_sdk.transport.tracecmd_ingestor import TracecmdIngestionResult, ingest_tracecmd
@@ -633,6 +638,9 @@ __all__ = [
     "InvestigationSessionRegistry",
     "EngineeringQueryEngine",
     "EngineeringQueryEngineResult",
+    "GovernedTranslationIntelligenceEngine",
+    "GovernedTranslationIntelligenceRegistry",
+    "GovernedTranslationIntelligenceResult",
     "DmesgIngestionResult",
     "ingest_dmesg",
     "FtraceIngestionResult",
