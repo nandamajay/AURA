@@ -1,0 +1,239 @@
+{
+  "anomaly_count": 2,
+  "causal_strength": 1.0,
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "observed_by",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "runtime_evidence",
+      "relation": "correlates_with",
+      "to": "pcm_activity"
+    },
+    {
+      "from": "runtime_evidence",
+      "relation": "correlates_with",
+      "to": "mixer_state"
+    },
+    {
+      "from": "dts_cognition",
+      "relation": "informs",
+      "to": "topology_cognition"
+    },
+    {
+      "from": "semantic_cognition",
+      "relation": "interprets",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "replay_traces",
+      "relation": "validates",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "regression_history",
+      "relation": "scores",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "plugin_capability_state",
+      "relation": "bounds",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "governance_decisions",
+      "relation": "enforces",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "dts:overlay:unknown",
+      "relation": "defines_route_graph",
+      "to": "route:18a08e2a6a64fe8f"
+    },
+    {
+      "from": "route:18a08e2a6a64fe8f",
+      "relation": "activates_backend_chain",
+      "to": "backend:428b8e730577628b"
+    },
+    {
+      "from": "backend:428b8e730577628b",
+      "relation": "drives_pcm_behavior",
+      "to": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+    },
+    {
+      "from": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+      "relation": "produces_runtime_evidence",
+      "to": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82"
+    },
+    {
+      "from": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+      "relation": "updates_regression_confidence",
+      "to": "regression:212ccdc9915120bd"
+    },
+    {
+      "from": "semantic:vendor_coupled",
+      "relation": "constrains_route_interpretation",
+      "to": "route:18a08e2a6a64fe8f"
+    },
+    {
+      "from": "replay:58b61c7478d08cfe",
+      "relation": "stabilizes_confidence",
+      "to": "regression:212ccdc9915120bd"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "owns",
+      "to": "dts:overlay:unknown"
+    },
+    {
+      "from": "runtime_evidence",
+      "relation": "propagates",
+      "to": "confidence_evolution"
+    },
+    {
+      "from": "semantic_cognition",
+      "relation": "propagates",
+      "to": "confidence_evolution"
+    },
+    {
+      "from": "replay_traces",
+      "relation": "propagates",
+      "to": "confidence_evolution"
+    },
+    {
+      "from": "regression_history",
+      "relation": "propagates",
+      "to": "confidence_evolution"
+    },
+    {
+      "from": "confidence_evolution",
+      "relation": "checks",
+      "to": "anomaly_correlation"
+    },
+    {
+      "from": "plugin_runtime_adapter",
+      "relation": "normalizes",
+      "to": "runtime_evidence"
+    },
+    {
+      "from": "plugin_topology_adapter",
+      "relation": "normalizes",
+      "to": "topology_cognition"
+    },
+    {
+      "from": "plugin_semantic_adapter",
+      "relation": "normalizes",
+      "to": "semantic_cognition"
+    }
+  ],
+  "evidence_completeness": 1.0,
+  "graph_name": "unified_cognition_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "runtime_evidence",
+      "kind": "runtime_evidence"
+    },
+    {
+      "id": "pcm_activity",
+      "kind": "pcm_activity"
+    },
+    {
+      "id": "mixer_state",
+      "kind": "mixer_state"
+    },
+    {
+      "id": "topology_cognition",
+      "kind": "topology_cognition"
+    },
+    {
+      "id": "dts_cognition",
+      "kind": "dts_cognition"
+    },
+    {
+      "id": "semantic_cognition",
+      "kind": "semantic_cognition"
+    },
+    {
+      "id": "replay_traces",
+      "kind": "replay_traces"
+    },
+    {
+      "id": "regression_history",
+      "kind": "regression_history"
+    },
+    {
+      "id": "plugin_capability_state",
+      "kind": "plugin_capability_state"
+    },
+    {
+      "id": "governance_decisions",
+      "kind": "governance_decisions"
+    },
+    {
+      "id": "dts:overlay:unknown",
+      "kind": "dts_node"
+    },
+    {
+      "id": "route:18a08e2a6a64fe8f",
+      "kind": "route_graph"
+    },
+    {
+      "id": "backend:428b8e730577628b",
+      "kind": "backend_activation"
+    },
+    {
+      "id": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+      "kind": "pcm_behavior"
+    },
+    {
+      "id": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+      "kind": "runtime_evidence"
+    },
+    {
+      "id": "regression:212ccdc9915120bd",
+      "kind": "regression_confidence"
+    },
+    {
+      "id": "semantic:vendor_coupled",
+      "kind": "semantic_classification"
+    },
+    {
+      "id": "replay:58b61c7478d08cfe",
+      "kind": "replay_trace"
+    },
+    {
+      "id": "confidence_evolution",
+      "kind": "confidence_state"
+    },
+    {
+      "id": "anomaly_correlation",
+      "kind": "anomaly_state"
+    },
+    {
+      "id": "plugin_runtime_adapter",
+      "kind": "plugin_adapter"
+    },
+    {
+      "id": "plugin_topology_adapter",
+      "kind": "plugin_adapter"
+    },
+    {
+      "id": "plugin_semantic_adapter",
+      "kind": "plugin_adapter"
+    }
+  ],
+  "overall_confidence": 0.309,
+  "plugin_adapter_fingerprints": {
+    "runtime": "95c86563fb66025e99e8fbac9b74d48a80d0ace350f54b12fe881301b94d772f",
+    "semantic": "a692b6dd5191e042571dadc871f07cef80dbbb0a0a14aff8257e0f08bd88f387",
+    "topology": "dc74ed50488d8e8bc534db28b225f8e1273e1646f1cea2bde018c08ea572ee0b"
+  },
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

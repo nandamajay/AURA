@@ -151,6 +151,23 @@ from aura_sdk.transport.semantic_fingerprint import (
     stable_fingerprint,
 )
 from aura_sdk.transport.semantic_registry import SemanticCognitionRegistry
+from aura_sdk.transport.evidence_correlation import (
+    EvidenceCorrelationResult,
+    correlate_evidence,
+)
+from aura_sdk.transport.causal_lineage import (
+    CausalLineageResult,
+    build_causal_lineage,
+)
+from aura_sdk.transport.confidence_evolution import (
+    ConfidenceEvolutionResult,
+    evolve_confidence,
+)
+from aura_sdk.transport.cognition_correlation import (
+    CognitionCorrelationRegistry,
+    CognitionCorrelationResult,
+    UnifiedCognitionCorrelationEngine,
+)
 
 __all__ = [
     "CommandClassification",
@@ -267,4 +284,13 @@ __all__ = [
     "SemanticFingerprintResult",
     "build_vendor_dependency_fingerprint",
     "stable_fingerprint",
+    "EvidenceCorrelationResult",
+    "correlate_evidence",
+    "CausalLineageResult",
+    "build_causal_lineage",
+    "ConfidenceEvolutionResult",
+    "evolve_confidence",
+    "CognitionCorrelationResult",
+    "UnifiedCognitionCorrelationEngine",
+    "CognitionCorrelationRegistry",
 ]

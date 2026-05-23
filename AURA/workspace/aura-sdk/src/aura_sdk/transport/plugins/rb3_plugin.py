@@ -464,6 +464,127 @@ class RB3TargetPlugin:
             "fingerprint": _stable_hash(descriptors),
         }
 
+    def runtime_evidence_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        runtime = _as_dict(payload.get("runtime_evidence"))
+        pcm = _as_dict(payload.get("pcm_activity"))
+        mixer = _as_dict(payload.get("mixer_state"))
+        replay = _as_dict(payload.get("replay_traces"))
+        governance = _as_dict(payload.get("governance_decisions"))
+
+        playback_success = bool(runtime.get("playback_completion", False) or runtime.get("process_success", False))
+        if not playback_success and runtime.get("playback_exit_code") == 0:
+            playback_success = True
+
+        normalized_runtime = {
+            "run_id": str(runtime.get("run_id", runtime.get("trace_id", ""))),
+            "process_success": bool(runtime.get("process_success", playback_success)),
+            "evidence_success": bool(runtime.get("evidence_success", False)),
+            "playback_completion": playback_success,
+            "classification": str(runtime.get("classification", "UNKNOWN")),
+            "runtime_fingerprint": _stable_hash(runtime),
+            "evidence_references": [str(item) for item in _as_list(runtime.get("evidence_references")) if str(item).strip()],
+        }
+
+        normalized_pcm = {
+            "pcm_signature": str(pcm.get("pcm_signature", pcm.get("signature_sha256", ""))),
+            "active_paths": _as_list(pcm.get("active_paths")),
+            "pcm_entries": _as_list(pcm.get("pcm_entries")),
+            "pcm_fingerprint": _stable_hash(pcm),
+        }
+
+        normalized_mixer = {
+            "mixer_controls": _as_list(mixer.get("controls")),
+            "active_switches": _as_list(mixer.get("active_switches")),
+            "mixer_fingerprint": _stable_hash(mixer),
+        }
+
+        normalized_replay = {
+            "deterministic_event_ordering": bool(
+                replay.get("deterministic_event_ordering", bool(replay.get("deterministic_replay_fingerprint", "")))
+            ),
+            "deterministic_replay_fingerprint": str(replay.get("deterministic_replay_fingerprint", "")),
+        }
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.runtime_evidence_adapter",
+            "runtime_evidence": normalized_runtime,
+            "pcm_activity": normalized_pcm,
+            "mixer_state": normalized_mixer,
+            "replay_traces": normalized_replay,
+            "governance_decisions": governance,
+            "fingerprint": _stable_hash(
+                {
+                    "runtime": normalized_runtime,
+                    "pcm": normalized_pcm,
+                    "mixer": normalized_mixer,
+                    "replay": normalized_replay,
+                    "governance": governance,
+                }
+            ),
+        }
+
+    def topology_evidence_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        topology = _as_dict(payload.get("topology_cognition"))
+        dts = _as_dict(payload.get("dts_cognition"))
+        capabilities = _as_dict(payload.get("plugin_capability_state"))
+
+        normalized_topology = {
+            "confidence": _as_dict(topology.get("confidence")),
+            "runtime_route_graph": _as_dict(topology.get("runtime_route_graph")),
+            "procedural_route_memory": _as_dict(topology.get("procedural_route_memory")),
+            "topology_fingerprint": _stable_hash(topology),
+        }
+        normalized_dts = {
+            "overlay_inheritance": _as_dict(dts.get("overlay_inheritance", dts)),
+            "backend_frontend_mappings": _as_list(dts.get("backend_frontend_mappings")),
+            "qcom_audio_routing": _as_list(dts.get("qcom_audio_routing")),
+            "soundwire_topology_markers": _as_list(dts.get("soundwire_topology_markers")),
+            "dts_fingerprint": _stable_hash(dts),
+        }
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.topology_evidence_adapter",
+            "topology_cognition": normalized_topology,
+            "dts_cognition": normalized_dts,
+            "plugin_capability_state": capabilities,
+            "fingerprint": _stable_hash(
+                {
+                    "topology": normalized_topology,
+                    "dts": normalized_dts,
+                    "capabilities": capabilities,
+                }
+            ),
+        }
+
+    def semantic_evidence_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        semantic = _as_dict(payload.get("semantic_cognition"))
+        regressions = [item for item in _as_list(payload.get("regression_history")) if isinstance(item, dict)]
+        capabilities = _as_dict(payload.get("plugin_capability_state"))
+
+        normalized_semantic = {
+            "classification": _as_dict(semantic.get("classification")),
+            "semantic_fingerprint": str(semantic.get("semantic_fingerprint", "")),
+            "artifacts": _as_dict(semantic.get("artifacts")),
+            "evidence_references": [str(item) for item in _as_list(semantic.get("evidence_references")) if str(item).strip()],
+        }
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.semantic_evidence_adapter",
+            "semantic_cognition": normalized_semantic,
+            "regression_history": regressions,
+            "plugin_capability_state": capabilities,
+            "fingerprint": _stable_hash(
+                {
+                    "semantic": normalized_semantic,
+                    "regressions": regressions,
+                    "capabilities": capabilities,
+                }
+            ),
+        }
+
 
 def get_plugin() -> RB3TargetPlugin:
     return RB3TargetPlugin()

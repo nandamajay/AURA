@@ -13277,6 +13277,2004 @@
     "schema_version": "1.0",
     "updated_at": "2026-05-23T05:31:34.633594+00:00"
   },
+  "cognition_correlation": {
+    "history": [
+      {
+        "anomaly_classification": "FAIL_CLOSED",
+        "artifact_paths": {
+          "anomaly_correlation_report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/anomaly_correlation_report.json",
+          "causal_reasoning_graph": "/local/mnt/workspace/AURA_V1/docs/operations/transport/causal_reasoning_graph.json",
+          "cognition_fusion_trace": "/local/mnt/workspace/AURA_V1/docs/operations/transport/cognition_fusion_trace.json",
+          "confidence_evolution_report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/confidence_evolution_report.json",
+          "evidence_lineage_graph": "/local/mnt/workspace/AURA_V1/docs/operations/transport/evidence_lineage_graph.json",
+          "unified_cognition_graph": "/local/mnt/workspace/AURA_V1/docs/operations/transport/unified_cognition_graph.json"
+        },
+        "correlation_fingerprint": "703b4f40ef0c894fc01e63bc8831a8465b0329906e099cccc7abc3688b449600",
+        "evidence_completeness": 1.0,
+        "evidence_references": [
+          "registry://runtime_cognition",
+          "registry://topology_cognition",
+          "registry://semantic_cognition",
+          "registry://regression_lineage",
+          "registry://governance_state",
+          "artifact://semantic_replay_trace",
+          "artifact://aura_replay_determinism_report"
+        ],
+        "lineage_id": "multi_domain_correlation_v1",
+        "overall_confidence": 0.309,
+        "recorded_at": "2026-05-23T07:54:39.223676+00:00",
+        "target_id": "RB3Gen2"
+      }
+    ],
+    "latest": {
+      "artifacts": {
+        "anomaly_correlation_report": {
+          "anomalies": [
+            {
+              "code": "semantic_runtime_mismatch",
+              "details": "Runtime success observed while semantic risk is high and replay is unstable.",
+              "severity": "MEDIUM"
+            },
+            {
+              "code": "replay_instability",
+              "details": "Replay traces do not show deterministic ordering guarantee.",
+              "severity": "HIGH"
+            }
+          ],
+          "classification": "FAIL_CLOSED",
+          "deterministic_fingerprint": "50396a439156e1983e96d4c33b3f82b74f448ef9a3a46b5a5e73c77c5b2b816a",
+          "report_name": "anomaly_correlation_report",
+          "schema_version": "1.0"
+        },
+        "causal_reasoning_graph": {
+          "causal_chain": [
+            "dts_node",
+            "route_graph",
+            "backend_activation",
+            "pcm_behavior",
+            "runtime_evidence",
+            "regression_confidence"
+          ],
+          "causal_strength": 1.0,
+          "edges": [
+            {
+              "from": "dts:overlay:unknown",
+              "relation": "defines_route_graph",
+              "to": "route:18a08e2a6a64fe8f"
+            },
+            {
+              "from": "route:18a08e2a6a64fe8f",
+              "relation": "activates_backend_chain",
+              "to": "backend:428b8e730577628b"
+            },
+            {
+              "from": "backend:428b8e730577628b",
+              "relation": "drives_pcm_behavior",
+              "to": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+            },
+            {
+              "from": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+              "relation": "produces_runtime_evidence",
+              "to": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82"
+            },
+            {
+              "from": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "relation": "updates_regression_confidence",
+              "to": "regression:212ccdc9915120bd"
+            },
+            {
+              "from": "semantic:vendor_coupled",
+              "relation": "constrains_route_interpretation",
+              "to": "route:18a08e2a6a64fe8f"
+            },
+            {
+              "from": "replay:58b61c7478d08cfe",
+              "relation": "stabilizes_confidence",
+              "to": "regression:212ccdc9915120bd"
+            },
+            {
+              "from": "target:RB3Gen2",
+              "relation": "owns",
+              "to": "dts:overlay:unknown"
+            }
+          ],
+          "graph_name": "causal_reasoning_graph",
+          "nodes": [
+            {
+              "id": "target:RB3Gen2",
+              "kind": "target"
+            },
+            {
+              "id": "dts:overlay:unknown",
+              "kind": "dts_node"
+            },
+            {
+              "id": "route:18a08e2a6a64fe8f",
+              "kind": "route_graph"
+            },
+            {
+              "id": "backend:428b8e730577628b",
+              "kind": "backend_activation"
+            },
+            {
+              "id": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+              "kind": "pcm_behavior"
+            },
+            {
+              "id": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "kind": "runtime_evidence"
+            },
+            {
+              "id": "regression:212ccdc9915120bd",
+              "kind": "regression_confidence"
+            },
+            {
+              "id": "semantic:vendor_coupled",
+              "kind": "semantic_classification"
+            },
+            {
+              "id": "replay:58b61c7478d08cfe",
+              "kind": "replay_trace"
+            }
+          ],
+          "schema_version": "1.0",
+          "semantic_primary_classification": "vendor_coupled",
+          "target_id": "RB3Gen2",
+          "topology_confidence": 0.565
+        },
+        "cognition_fusion_trace": {
+          "anomaly_fingerprint": "50396a439156e1983e96d4c33b3f82b74f448ef9a3a46b5a5e73c77c5b2b816a",
+          "causal_lineage_fingerprint": "aabf1c4259a005ad21eb3c4e737315c2b26a210ef7bfe2c4c5c1c674296d88f6",
+          "confidence_fingerprint": "0ea8421fb9c83588f4b630885a4b69956b282287774bf44ef3f052ed9edfd34d",
+          "deterministic_fusion_fingerprint": "703b4f40ef0c894fc01e63bc8831a8465b0329906e099cccc7abc3688b449600",
+          "domain_fingerprints": {
+            "dts_fingerprint": "887db2c2186da29edb51477e0763eafbacbfa92f1e7023128048f7b12f1d4b5c",
+            "governance_fingerprint": "2924dccc885bd7fe1c26e56d9d35f3b0509b3f86ef50f80b4463bd5ade985ea1",
+            "mixer_fingerprint": "44b3ee209ea340262816fd5e5fd6cd28da67625616c101ed1603ecb99d4f5595",
+            "pcm_fingerprint": "ab5f50e8a7fa6a9f661fc9df9c97c8dbea65b1cdc49a068b420201a22355201a",
+            "plugin_capability_fingerprint": "086fa7527f5af5a032a542f66cc73fa188869f7e205d8e4eb50ade0ed706bec3",
+            "regression_fingerprint": "212ccdc9915120bd55d837613e81e99c20843f8a8ebad87cd7bb932796b4fde4",
+            "replay_fingerprint": "58b61c7478d08cfe9df0d3b28b9ae7aabbca91de805f8df7f00698e7d2a73821",
+            "runtime_fingerprint": "b1ade13523d8150d8f9e59fcbbe688aa0e9676a16552d38a810b70121d74ec25",
+            "semantic_fingerprint": "9c99bfe512dbf221dc99fa0c6d253c63862f3957a1703e6083e3e2f2d4bfe71d",
+            "topology_fingerprint": "cce83de3fbd6a71627208f0284cde84755a9fcf8a36b2f0a95471c52849c55ba"
+          },
+          "event_order_preserved": true,
+          "evidence_correlation_fingerprint": "fbeab29c831c9e7fcebed3993ddd93530a80369e74e57367cd504fcfb1db930f",
+          "lineage_id": "multi_domain_correlation_v1",
+          "plugin_isolation_preserved": true,
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2",
+          "trace_name": "cognition_fusion_trace"
+        },
+        "confidence_evolution_report": {
+          "current": {
+            "evidence_completeness": 1.0,
+            "overall_confidence": 0.309
+          },
+          "deterministic_fingerprint": "0ea8421fb9c83588f4b630885a4b69956b282287774bf44ef3f052ed9edfd34d",
+          "factors": {
+            "evidence_completeness": 1.0,
+            "regression_drift_history": 0.76,
+            "repeated_runtime_validation": 0.25,
+            "replay_consistency": 0.3,
+            "semantic_stability": 0.45,
+            "topology_consistency": 0.565
+          },
+          "integrity_guards": {
+            "agent_self_reinforcement_blocked": true,
+            "evidence_backed_only": true,
+            "missing_evidence_never_increases_confidence": true,
+            "no_confidence_amplification_loops": true
+          },
+          "penalties": {
+            "governance_penalty": 0.0,
+            "mismatch_penalty": 0.18
+          },
+          "previous": {
+            "evidence_completeness": 0.0,
+            "overall_confidence": 0.0
+          },
+          "report_name": "confidence_evolution_report",
+          "schema_version": "1.0",
+          "trend": {
+            "delta": 0.309,
+            "direction": "UP"
+          },
+          "weights": {
+            "evidence_completeness": 0.1,
+            "regression_drift_history": 0.15,
+            "repeated_runtime_validation": 0.25,
+            "replay_consistency": 0.2,
+            "semantic_stability": 0.15,
+            "topology_consistency": 0.15
+          }
+        },
+        "evidence_lineage_graph": {
+          "adapter_fingerprints": {
+            "runtime": "95c86563fb66025e99e8fbac9b74d48a80d0ace350f54b12fe881301b94d772f",
+            "semantic": "a692b6dd5191e042571dadc871f07cef80dbbb0a0a14aff8257e0f08bd88f387",
+            "topology": "dc74ed50488d8e8bc534db28b225f8e1273e1646f1cea2bde018c08ea572ee0b"
+          },
+          "domain_presence": {
+            "dts_cognition": true,
+            "governance_decisions": true,
+            "mixer_state": true,
+            "pcm_activity": true,
+            "plugin_capability_state": true,
+            "regression_history": true,
+            "replay_traces": true,
+            "runtime_evidence": true,
+            "semantic_cognition": true,
+            "topology_cognition": true
+          },
+          "edges": [
+            {
+              "from": "target:RB3Gen2",
+              "relation": "observed_by",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "runtime_evidence",
+              "relation": "correlates_with",
+              "to": "pcm_activity"
+            },
+            {
+              "from": "runtime_evidence",
+              "relation": "correlates_with",
+              "to": "mixer_state"
+            },
+            {
+              "from": "dts_cognition",
+              "relation": "informs",
+              "to": "topology_cognition"
+            },
+            {
+              "from": "semantic_cognition",
+              "relation": "interprets",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "replay_traces",
+              "relation": "validates",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "regression_history",
+              "relation": "scores",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "plugin_capability_state",
+              "relation": "bounds",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "governance_decisions",
+              "relation": "enforces",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "dts:overlay:unknown",
+              "relation": "defines_route_graph",
+              "to": "route:18a08e2a6a64fe8f"
+            },
+            {
+              "from": "route:18a08e2a6a64fe8f",
+              "relation": "activates_backend_chain",
+              "to": "backend:428b8e730577628b"
+            },
+            {
+              "from": "backend:428b8e730577628b",
+              "relation": "drives_pcm_behavior",
+              "to": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+            },
+            {
+              "from": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+              "relation": "produces_runtime_evidence",
+              "to": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82"
+            },
+            {
+              "from": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "relation": "updates_regression_confidence",
+              "to": "regression:212ccdc9915120bd"
+            },
+            {
+              "from": "semantic:vendor_coupled",
+              "relation": "constrains_route_interpretation",
+              "to": "route:18a08e2a6a64fe8f"
+            },
+            {
+              "from": "replay:58b61c7478d08cfe",
+              "relation": "stabilizes_confidence",
+              "to": "regression:212ccdc9915120bd"
+            },
+            {
+              "from": "target:RB3Gen2",
+              "relation": "owns",
+              "to": "dts:overlay:unknown"
+            },
+            {
+              "from": "runtime_evidence",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "semantic_cognition",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "replay_traces",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "regression_history",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "confidence_evolution",
+              "relation": "checks",
+              "to": "anomaly_correlation"
+            },
+            {
+              "from": "plugin_runtime_adapter",
+              "relation": "normalizes",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "plugin_topology_adapter",
+              "relation": "normalizes",
+              "to": "topology_cognition"
+            },
+            {
+              "from": "plugin_semantic_adapter",
+              "relation": "normalizes",
+              "to": "semantic_cognition"
+            }
+          ],
+          "evidence_completeness": 1.0,
+          "evidence_gaps": [],
+          "evidence_references": [],
+          "graph_name": "evidence_lineage_graph",
+          "mismatches": [
+            {
+              "code": "semantic_runtime_mismatch",
+              "details": "Semantic risk classification paired with replay instability.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "nodes": [
+            {
+              "id": "target:RB3Gen2",
+              "kind": "target"
+            },
+            {
+              "id": "runtime_evidence",
+              "kind": "runtime_evidence"
+            },
+            {
+              "id": "pcm_activity",
+              "kind": "pcm_activity"
+            },
+            {
+              "id": "mixer_state",
+              "kind": "mixer_state"
+            },
+            {
+              "id": "topology_cognition",
+              "kind": "topology_cognition"
+            },
+            {
+              "id": "dts_cognition",
+              "kind": "dts_cognition"
+            },
+            {
+              "id": "semantic_cognition",
+              "kind": "semantic_cognition"
+            },
+            {
+              "id": "replay_traces",
+              "kind": "replay_traces"
+            },
+            {
+              "id": "regression_history",
+              "kind": "regression_history"
+            },
+            {
+              "id": "plugin_capability_state",
+              "kind": "plugin_capability_state"
+            },
+            {
+              "id": "governance_decisions",
+              "kind": "governance_decisions"
+            },
+            {
+              "id": "dts:overlay:unknown",
+              "kind": "dts_node"
+            },
+            {
+              "id": "route:18a08e2a6a64fe8f",
+              "kind": "route_graph"
+            },
+            {
+              "id": "backend:428b8e730577628b",
+              "kind": "backend_activation"
+            },
+            {
+              "id": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+              "kind": "pcm_behavior"
+            },
+            {
+              "id": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "kind": "runtime_evidence"
+            },
+            {
+              "id": "regression:212ccdc9915120bd",
+              "kind": "regression_confidence"
+            },
+            {
+              "id": "semantic:vendor_coupled",
+              "kind": "semantic_classification"
+            },
+            {
+              "id": "replay:58b61c7478d08cfe",
+              "kind": "replay_trace"
+            },
+            {
+              "id": "confidence_evolution",
+              "kind": "confidence_state"
+            },
+            {
+              "id": "anomaly_correlation",
+              "kind": "anomaly_state"
+            },
+            {
+              "id": "plugin_runtime_adapter",
+              "kind": "plugin_adapter"
+            },
+            {
+              "id": "plugin_topology_adapter",
+              "kind": "plugin_adapter"
+            },
+            {
+              "id": "plugin_semantic_adapter",
+              "kind": "plugin_adapter"
+            }
+          ],
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2"
+        },
+        "unified_cognition_graph": {
+          "anomaly_count": 2,
+          "causal_strength": 1.0,
+          "edges": [
+            {
+              "from": "target:RB3Gen2",
+              "relation": "observed_by",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "runtime_evidence",
+              "relation": "correlates_with",
+              "to": "pcm_activity"
+            },
+            {
+              "from": "runtime_evidence",
+              "relation": "correlates_with",
+              "to": "mixer_state"
+            },
+            {
+              "from": "dts_cognition",
+              "relation": "informs",
+              "to": "topology_cognition"
+            },
+            {
+              "from": "semantic_cognition",
+              "relation": "interprets",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "replay_traces",
+              "relation": "validates",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "regression_history",
+              "relation": "scores",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "plugin_capability_state",
+              "relation": "bounds",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "governance_decisions",
+              "relation": "enforces",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "dts:overlay:unknown",
+              "relation": "defines_route_graph",
+              "to": "route:18a08e2a6a64fe8f"
+            },
+            {
+              "from": "route:18a08e2a6a64fe8f",
+              "relation": "activates_backend_chain",
+              "to": "backend:428b8e730577628b"
+            },
+            {
+              "from": "backend:428b8e730577628b",
+              "relation": "drives_pcm_behavior",
+              "to": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+            },
+            {
+              "from": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+              "relation": "produces_runtime_evidence",
+              "to": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82"
+            },
+            {
+              "from": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "relation": "updates_regression_confidence",
+              "to": "regression:212ccdc9915120bd"
+            },
+            {
+              "from": "semantic:vendor_coupled",
+              "relation": "constrains_route_interpretation",
+              "to": "route:18a08e2a6a64fe8f"
+            },
+            {
+              "from": "replay:58b61c7478d08cfe",
+              "relation": "stabilizes_confidence",
+              "to": "regression:212ccdc9915120bd"
+            },
+            {
+              "from": "target:RB3Gen2",
+              "relation": "owns",
+              "to": "dts:overlay:unknown"
+            },
+            {
+              "from": "runtime_evidence",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "semantic_cognition",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "replay_traces",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "regression_history",
+              "relation": "propagates",
+              "to": "confidence_evolution"
+            },
+            {
+              "from": "confidence_evolution",
+              "relation": "checks",
+              "to": "anomaly_correlation"
+            },
+            {
+              "from": "plugin_runtime_adapter",
+              "relation": "normalizes",
+              "to": "runtime_evidence"
+            },
+            {
+              "from": "plugin_topology_adapter",
+              "relation": "normalizes",
+              "to": "topology_cognition"
+            },
+            {
+              "from": "plugin_semantic_adapter",
+              "relation": "normalizes",
+              "to": "semantic_cognition"
+            }
+          ],
+          "evidence_completeness": 1.0,
+          "graph_name": "unified_cognition_graph",
+          "nodes": [
+            {
+              "id": "target:RB3Gen2",
+              "kind": "target"
+            },
+            {
+              "id": "runtime_evidence",
+              "kind": "runtime_evidence"
+            },
+            {
+              "id": "pcm_activity",
+              "kind": "pcm_activity"
+            },
+            {
+              "id": "mixer_state",
+              "kind": "mixer_state"
+            },
+            {
+              "id": "topology_cognition",
+              "kind": "topology_cognition"
+            },
+            {
+              "id": "dts_cognition",
+              "kind": "dts_cognition"
+            },
+            {
+              "id": "semantic_cognition",
+              "kind": "semantic_cognition"
+            },
+            {
+              "id": "replay_traces",
+              "kind": "replay_traces"
+            },
+            {
+              "id": "regression_history",
+              "kind": "regression_history"
+            },
+            {
+              "id": "plugin_capability_state",
+              "kind": "plugin_capability_state"
+            },
+            {
+              "id": "governance_decisions",
+              "kind": "governance_decisions"
+            },
+            {
+              "id": "dts:overlay:unknown",
+              "kind": "dts_node"
+            },
+            {
+              "id": "route:18a08e2a6a64fe8f",
+              "kind": "route_graph"
+            },
+            {
+              "id": "backend:428b8e730577628b",
+              "kind": "backend_activation"
+            },
+            {
+              "id": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+              "kind": "pcm_behavior"
+            },
+            {
+              "id": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "kind": "runtime_evidence"
+            },
+            {
+              "id": "regression:212ccdc9915120bd",
+              "kind": "regression_confidence"
+            },
+            {
+              "id": "semantic:vendor_coupled",
+              "kind": "semantic_classification"
+            },
+            {
+              "id": "replay:58b61c7478d08cfe",
+              "kind": "replay_trace"
+            },
+            {
+              "id": "confidence_evolution",
+              "kind": "confidence_state"
+            },
+            {
+              "id": "anomaly_correlation",
+              "kind": "anomaly_state"
+            },
+            {
+              "id": "plugin_runtime_adapter",
+              "kind": "plugin_adapter"
+            },
+            {
+              "id": "plugin_topology_adapter",
+              "kind": "plugin_adapter"
+            },
+            {
+              "id": "plugin_semantic_adapter",
+              "kind": "plugin_adapter"
+            }
+          ],
+          "overall_confidence": 0.309,
+          "plugin_adapter_fingerprints": {
+            "runtime": "95c86563fb66025e99e8fbac9b74d48a80d0ace350f54b12fe881301b94d772f",
+            "semantic": "a692b6dd5191e042571dadc871f07cef80dbbb0a0a14aff8257e0f08bd88f387",
+            "topology": "dc74ed50488d8e8bc534db28b225f8e1273e1646f1cea2bde018c08ea572ee0b"
+          },
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2"
+        }
+      },
+      "correlation_fingerprint": "703b4f40ef0c894fc01e63bc8831a8465b0329906e099cccc7abc3688b449600",
+      "created_at": "2026-05-23T07:54:39.093787+00:00",
+      "evidence_references": [
+        "registry://runtime_cognition",
+        "registry://topology_cognition",
+        "registry://semantic_cognition",
+        "registry://regression_lineage",
+        "registry://governance_state",
+        "artifact://semantic_replay_trace",
+        "artifact://aura_replay_determinism_report"
+      ],
+      "governance_boundaries": {
+        "allowed_actions": [
+          "correlate",
+          "classify",
+          "infer",
+          "recommend",
+          "replay",
+          "quarantine"
+        ],
+        "fail_closed": true,
+        "forbidden_actions": [
+          "fabricate_evidence",
+          "fabricate_causality",
+          "auto_patch",
+          "auto_modify_runtime",
+          "override_governance"
+        ]
+      },
+      "governance_decisions": {
+        "execution_approval_mode": "linux_authoritative_windows_execute_only",
+        "fail_closed_posture": true,
+        "patching_restrictions": {
+          "autonomous_patching_allowed": false,
+          "autonomous_upstream_generation_allowed": false
+        },
+        "topology_mutation_restrictions": {
+          "autonomous_mixer_mutation_allowed": false,
+          "autonomous_topology_rewrite_allowed": false
+        },
+        "transport_restrictions": {
+          "allowed_modes": [
+            "adb_shell"
+          ],
+          "blocked_modes": [
+            "serial_raw",
+            "ssh_unapproved"
+          ]
+        },
+        "updated_at": "2026-05-22T14:31:45.397414+00:00",
+        "write_policy": "governed_write_approved_only"
+      },
+      "lineage_id": "multi_domain_correlation_v1",
+      "phase": "MULTI_DOMAIN_COGNITION_CORRELATION",
+      "plugin_adapters": {
+        "runtime": {
+          "fingerprint": "e99b995e3b1266b445029eabd3225ce07e307ab5ff4d0b931d2ac9e77a677d95",
+          "governance_decisions": {
+            "execution_approval_mode": "linux_authoritative_windows_execute_only",
+            "fail_closed_posture": true,
+            "patching_restrictions": {
+              "autonomous_patching_allowed": false,
+              "autonomous_upstream_generation_allowed": false
+            },
+            "topology_mutation_restrictions": {
+              "autonomous_mixer_mutation_allowed": false,
+              "autonomous_topology_rewrite_allowed": false
+            },
+            "transport_restrictions": {
+              "allowed_modes": [
+                "adb_shell"
+              ],
+              "blocked_modes": [
+                "serial_raw",
+                "ssh_unapproved"
+              ]
+            },
+            "updated_at": "2026-05-22T14:31:45.397414+00:00",
+            "write_policy": "governed_write_approved_only"
+          },
+          "mixer_state": {
+            "active_switches": [
+              "snapshot_skipped:tinymix:capability_supports_tinymix:unknown",
+              "snapshot_skipped:amixer:capability_supports_amixer:unknown",
+              "missing_evidence_detected"
+            ],
+            "mixer_controls": [
+              "cat /proc/asound/cards",
+              "cat /proc/asound/pcm",
+              "cat /sys/kernel/debug/asoc/*/dapm",
+              "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+              "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+              "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+              "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+              "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+              "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+              "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+              "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+              "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+              "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+              "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+              "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+              "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+              "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+              "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+              "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+              "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+              "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+              "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+              "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+              "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+              "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+              "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+              "cat /proc/asound/cards",
+              "cat /proc/asound/pcm",
+              "cat /sys/kernel/debug/asoc/*/dapm",
+              "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+            ],
+            "mixer_fingerprint": "02c8bb2eaf3faaeded05b05eba0cdfd4388fb7c387c2a38183758e7694e0e3ac"
+          },
+          "pcm_activity": {
+            "active_paths": [
+              "Embedded Linux"
+            ],
+            "pcm_entries": [
+              {
+                "card_id": "QCS6490RB3Gen2",
+                "card_index": 0,
+                "descriptor": "qcs6490 - QCS6490-RB3Gen2"
+              }
+            ],
+            "pcm_fingerprint": "e47d26a426eca0255ad18ca05988a24b84adb4f21c1e816f2be25ae7ea858614",
+            "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+          },
+          "provider": "rb3.runtime_evidence_adapter",
+          "replay_traces": {
+            "deterministic_event_ordering": false,
+            "deterministic_replay_fingerprint": ""
+          },
+          "runtime_evidence": {
+            "classification": "ADVISORY_ONLY",
+            "evidence_references": [
+              "registry://runtime_cognition/last_trace_summary",
+              "registry://runtime_cognition/confidence"
+            ],
+            "evidence_success": true,
+            "playback_completion": true,
+            "process_success": true,
+            "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+            "runtime_fingerprint": "af49b95c9cf85f08a1c2b7dc62e3fbb27a9f83c7851596980dc7fd782e3c281d"
+          },
+          "target_id": "RB3Gen2"
+        },
+        "semantic": {
+          "fingerprint": "19cc6b74395e7ff66dedb94725db843df643c5294ee3d448e921a5f5e60a907f",
+          "plugin_capability_state": {
+            "capabilities": {
+              "supports_debugfs": "UNKNOWN",
+              "supports_dmesg": "UNKNOWN",
+              "supports_dumpsys": "UNKNOWN",
+              "supports_getprop": "UNSUPPORTED",
+              "supports_logcat": "UNKNOWN",
+              "supports_lsmod": "UNKNOWN",
+              "supports_procfs": "SUPPORTED",
+              "supports_systemd": "UNKNOWN",
+              "supports_tinymix": "UNKNOWN",
+              "supports_uname": "UNKNOWN"
+            },
+            "known_pcm_signatures": [
+              "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+            ],
+            "known_route_fingerprints": [
+              "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+            ],
+            "supported": true
+          },
+          "provider": "rb3.semantic_evidence_adapter",
+          "regression_history": [
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            },
+            {
+              "deviations": [
+                {
+                  "code": "runtime_latency_drift",
+                  "details": "Total runtime drift 39.703s exceeds threshold.",
+                  "severity": "MEDIUM"
+                }
+              ],
+              "profile_id": "audible_25s_speaker_v1",
+              "regression_detected": true,
+              "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+              "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+              "severity": "MEDIUM"
+            }
+          ],
+          "semantic_cognition": {
+            "artifacts": {
+              "downstream_semantic_graph": {
+                "classification": {
+                  "ordered": [
+                    {
+                      "category": "vendor_coupled",
+                      "score": 0.82
+                    },
+                    {
+                      "category": "governance_risky",
+                      "score": 0.75
+                    },
+                    {
+                      "category": "upstream_friendly",
+                      "score": 0.45
+                    },
+                    {
+                      "category": "topology_sensitive",
+                      "score": 0.35
+                    },
+                    {
+                      "category": "partially_portable",
+                      "score": 0.33
+                    },
+                    {
+                      "category": "replay_sensitive",
+                      "score": 0.15
+                    }
+                  ],
+                  "primary_classification": "vendor_coupled",
+                  "scores": {
+                    "governance_risky": 0.75,
+                    "partially_portable": 0.33,
+                    "replay_sensitive": 0.15,
+                    "topology_sensitive": 0.35,
+                    "upstream_friendly": 0.45,
+                    "vendor_coupled": 0.82
+                  }
+                },
+                "driver_semantic": {
+                  "codec_coupling": true,
+                  "downstream_only_apis": [
+                    "msm_",
+                    "qcom_",
+                    "snd_soc_qcom_"
+                  ],
+                  "duplicated_vendor_abstractions": false,
+                  "platform_assumptions": [
+                    "msm"
+                  ],
+                  "subsystem_ownership": "audio",
+                  "vendor_hooks": [
+                    "msm_pcm",
+                    "vendor_hook"
+                  ],
+                  "wrapper_layers": [
+                    "wrapper"
+                  ]
+                },
+                "dts_semantic": {
+                  "codec_bindings": [],
+                  "dependencies": {
+                    "clocks": [],
+                    "gpios": [],
+                    "regulators": []
+                  },
+                  "fe_be_route_topology": [],
+                  "overlay_candidates": [],
+                  "overlay_hierarchy": [],
+                  "reusable_upstream_nodes": [],
+                  "source_files": [],
+                  "vendor_only_nodes": []
+                },
+                "edges": [
+                  {
+                    "from": "target:RB3Gen2",
+                    "relation": "described_by",
+                    "to": "dts"
+                  },
+                  {
+                    "from": "target:RB3Gen2",
+                    "relation": "implemented_by",
+                    "to": "driver"
+                  },
+                  {
+                    "from": "dts",
+                    "relation": "influences",
+                    "to": "classification"
+                  },
+                  {
+                    "from": "driver",
+                    "relation": "influences",
+                    "to": "classification"
+                  }
+                ],
+                "graph_name": "downstream_semantic_graph",
+                "nodes": [
+                  {
+                    "id": "target:RB3Gen2",
+                    "kind": "target"
+                  },
+                  {
+                    "id": "dts",
+                    "kind": "dts_semantics"
+                  },
+                  {
+                    "id": "driver",
+                    "kind": "driver_semantics"
+                  },
+                  {
+                    "id": "classification",
+                    "kind": "semantic_classification"
+                  }
+                ],
+                "schema_version": "1.0",
+                "target_id": "RB3Gen2"
+              },
+              "dts_topology_graph": {
+                "adapter_topology": {
+                  "frontend_backend": [],
+                  "routes": [],
+                  "soundwire_markers": []
+                },
+                "codec_bindings": [],
+                "dependencies": {
+                  "clocks": [],
+                  "gpios": [],
+                  "regulators": []
+                },
+                "fe_be_route_topology": [],
+                "graph_name": "dts_topology_graph",
+                "overlay_hierarchy": [],
+                "schema_version": "1.0",
+                "target_id": "RB3Gen2"
+              },
+              "semantic_confidence_report": {
+                "classification": {
+                  "ordered": [
+                    {
+                      "category": "vendor_coupled",
+                      "score": 0.82
+                    },
+                    {
+                      "category": "governance_risky",
+                      "score": 0.75
+                    },
+                    {
+                      "category": "upstream_friendly",
+                      "score": 0.45
+                    },
+                    {
+                      "category": "topology_sensitive",
+                      "score": 0.35
+                    },
+                    {
+                      "category": "partially_portable",
+                      "score": 0.33
+                    },
+                    {
+                      "category": "replay_sensitive",
+                      "score": 0.15
+                    }
+                  ],
+                  "primary_classification": "vendor_coupled",
+                  "scores": {
+                    "governance_risky": 0.75,
+                    "partially_portable": 0.33,
+                    "replay_sensitive": 0.15,
+                    "topology_sensitive": 0.35,
+                    "upstream_friendly": 0.45,
+                    "vendor_coupled": 0.82
+                  }
+                },
+                "governance": {
+                  "allowed_actions": [
+                    "analyze",
+                    "classify",
+                    "correlate",
+                    "fingerprint",
+                    "replay",
+                    "recommend"
+                  ],
+                  "fail_closed": true,
+                  "forbidden_actions": [
+                    "generate_final_patches",
+                    "rewrite_dts",
+                    "mutate_drivers",
+                    "fabricate_compatibility"
+                  ]
+                },
+                "schema_version": "1.0",
+                "semantic_confidence": 0.35,
+                "target_id": "RB3Gen2",
+                "vendor_dependency_fingerprint": "46c322455006edced9014caa6739f6d74ba078dc537f53a9e26ac1d63fd251bb"
+              },
+              "subsystem_mapping_graph": {
+                "dependencies": {
+                  "codec_bindings": [],
+                  "fe_be_route_topology": []
+                },
+                "graph_name": "subsystem_mapping_graph",
+                "schema_version": "1.0",
+                "subsystems": {
+                  "audio": {
+                    "codec_nodes": [],
+                    "owner": "alsa_asoc",
+                    "topology_markers": []
+                  },
+                  "device_tree": {
+                    "overlay_candidates": [],
+                    "owner": "dts_overlay",
+                    "source_count": 0
+                  }
+                },
+                "target_id": "RB3Gen2"
+              },
+              "vendor_dependency_fingerprint": {
+                "fingerprint": "46c322455006edced9014caa6739f6d74ba078dc537f53a9e26ac1d63fd251bb",
+                "payload": {
+                  "codec_coupling": true,
+                  "downstream_only_apis": [
+                    "msm_",
+                    "qcom_",
+                    "snd_soc_qcom_"
+                  ],
+                  "platform_assumptions": [
+                    "msm"
+                  ],
+                  "target_id": "RB3Gen2",
+                  "vendor_hooks": [
+                    "msm_pcm",
+                    "vendor_hook"
+                  ],
+                  "vendor_only_nodes": [],
+                  "wrapper_layers": [
+                    "wrapper"
+                  ]
+                },
+                "schema_version": "1.0",
+                "target_id": "RB3Gen2"
+              }
+            },
+            "classification": {
+              "ordered": [
+                {
+                  "category": "vendor_coupled",
+                  "score": 0.82
+                },
+                {
+                  "category": "governance_risky",
+                  "score": 0.75
+                },
+                {
+                  "category": "upstream_friendly",
+                  "score": 0.45
+                },
+                {
+                  "category": "topology_sensitive",
+                  "score": 0.35
+                },
+                {
+                  "category": "partially_portable",
+                  "score": 0.33
+                },
+                {
+                  "category": "replay_sensitive",
+                  "score": 0.15
+                }
+              ],
+              "primary_classification": "vendor_coupled",
+              "scores": {
+                "governance_risky": 0.75,
+                "partially_portable": 0.33,
+                "replay_sensitive": 0.15,
+                "topology_sensitive": 0.35,
+                "upstream_friendly": 0.45,
+                "vendor_coupled": 0.82
+              }
+            },
+            "evidence_references": [
+              "semantic://driver_context",
+              "semantic://dts_adapter"
+            ],
+            "semantic_fingerprint": "66bc82a3ed57ff2bf7b21631008f6b53352b9b81ff838283efe2c833874137da"
+          },
+          "target_id": "RB3Gen2"
+        },
+        "topology": {
+          "dts_cognition": {
+            "backend_frontend_mappings": [],
+            "dts_fingerprint": "7941fe8dab8dd5bbf8a34eab2fd952842df943ad5e467727b810acf26807cae5",
+            "overlay_inheritance": {
+              "codec_bindings": [],
+              "dependencies": {
+                "clocks": [],
+                "gpios": [],
+                "regulators": []
+              },
+              "fe_be_route_topology": [],
+              "overlay_candidates": [],
+              "overlay_hierarchy": [],
+              "reusable_upstream_nodes": [],
+              "source_files": [],
+              "vendor_only_nodes": []
+            },
+            "qcom_audio_routing": [],
+            "soundwire_topology_markers": []
+          },
+          "fingerprint": "4572d1d80723bdffc8180d2a9d9b8aa1dbe5b9b0d58d555bd8cffe20c8c874c0",
+          "plugin_capability_state": {
+            "capabilities": {
+              "supports_debugfs": "UNKNOWN",
+              "supports_dmesg": "UNKNOWN",
+              "supports_dumpsys": "UNKNOWN",
+              "supports_getprop": "UNSUPPORTED",
+              "supports_logcat": "UNKNOWN",
+              "supports_lsmod": "UNKNOWN",
+              "supports_procfs": "SUPPORTED",
+              "supports_systemd": "UNKNOWN",
+              "supports_tinymix": "UNKNOWN",
+              "supports_uname": "UNKNOWN"
+            },
+            "known_pcm_signatures": [
+              "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+            ],
+            "known_route_fingerprints": [
+              "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+            ],
+            "supported": true
+          },
+          "provider": "rb3.topology_evidence_adapter",
+          "target_id": "RB3Gen2",
+          "topology_cognition": {
+            "confidence": {
+              "ambiguous_backend_links": [],
+              "confidence_fingerprint": "eyJkZXRlcm1pbmlzdGljX2FsaWdubWVudCI6IHsiYmFzZWxpbmVfcGNtX21hdGNoIjogdHJ1ZSwgImJhc2VsaW5lX3JvdXRlX21hdGNoIjogdHJ1ZSwgImNvbW1hbmRfb3JkZXJpbmdfbWF0Y2hfbG9ja2VkX3NlcXVlbmNlIjogdHJ1ZSwgImV2aWRlbmNlX29yZGVyaW5nX21hdGNoX2xvY2tlZF9zZXF1ZW5jZSI6IHRydWUsICJwbGF5YmFja19ydW50aW1lX2RyaWZ0X3NlY29uZHMiOiAwLjAwNTQxLCAicGxheWJhY2tfcnVudGltZV93aXRoaW5fYmFzZWxpbmVfd2luZG93IjogdHJ1ZX0sICJnZW5lcmF0ZWRfYXQiOiAiMjAyNi0wNS0yMlQxNTo0ODoyOS4zMjE5MjcrMDA6MDAiLCAidG9wb2xvZ3lfY29uZmlkZW5jZSI6IDAuNTY1LCAidG9wb2xvZ3lfc3RhdGUiOiAiSU5GRVJSRUQifQ==",
+              "confirmed_topology": [
+                "Stable PCM fingerprint aligned with deterministic baseline.",
+                "Stable route fingerprint aligned with deterministic baseline."
+              ],
+              "conflicting_overlays": false,
+              "deterministic_alignment": {
+                "baseline_pcm_match": true,
+                "baseline_route_match": true,
+                "command_ordering_match_locked_sequence": true,
+                "evidence_ordering_match_locked_sequence": true,
+                "playback_runtime_drift_seconds": 0.00541,
+                "playback_runtime_within_baseline_window": true
+              },
+              "deterministic_alignment_confidence": 1.0,
+              "fail_closed": true,
+              "governance_posture": "ADVISORY_ONLY",
+              "inferred_mappings": [
+                "Some runtime paths exist without static FE/BE confirmation."
+              ],
+              "overlay_confidence": 0.8,
+              "runtime_correlation_confidence": 0.7,
+              "runtime_only_inferred_paths": [
+                "MultiMedia1->PRIMARY_MI2S_RX",
+                "PRIMARY_MI2S_RX->WSA_SPKR"
+              ],
+              "static_topology_confidence": 0.1,
+              "targeted_interrogation_mode": true,
+              "targeted_questions": [
+                {
+                  "id": "codec_identity",
+                  "question": "Codec endpoint could not be confirmed from evidence. Provide codec identity from target."
+                },
+                {
+                  "id": "intended_route",
+                  "question": "Confirm intended FE->BE route chain for playback validation."
+                }
+              ],
+              "topology_confidence": 0.565,
+              "topology_state": "INFERRED",
+              "unresolved_routes": [
+                "MultiMedia1->PRIMARY_MI2S_RX",
+                "PRIMARY_MI2S_RX->WSA_SPKR"
+              ],
+              "unsupported_mixer_evidence": [
+                "tinymix",
+                "amixer"
+              ]
+            },
+            "procedural_route_memory": {
+              "backend_activation_orderings": [
+                {
+                  "ordering": [
+                    "MultiMedia1->PRIMARY_MI2S_RX",
+                    "PRIMARY_MI2S_RX->WSA_SPKR"
+                  ],
+                  "overlay": "qcs6490-audioreach.dtsi"
+                }
+              ],
+              "board": "RB3Gen2",
+              "confidence_history": [
+                {
+                  "recorded_at": "2026-05-22T13:41:01.009682+00:00",
+                  "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+                  "topology_confidence": 0.515,
+                  "topology_state": "LOW_CONFIDENCE"
+                },
+                {
+                  "recorded_at": "2026-05-22T13:44:05.877729+00:00",
+                  "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "recorded_at": "2026-05-22T13:46:41.344329+00:00",
+                  "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "recorded_at": "2026-05-22T14:33:40.338037+00:00",
+                  "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "recorded_at": "2026-05-22T14:37:49.653748+00:00",
+                  "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "recorded_at": "2026-05-22T15:45:23.071484+00:00",
+                  "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "recorded_at": "2026-05-22T15:46:37.628125+00:00",
+                  "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+                  "topology_confidence": 0.235,
+                  "topology_state": "LOW_CONFIDENCE"
+                },
+                {
+                  "recorded_at": "2026-05-22T15:48:29.322309+00:00",
+                  "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                }
+              ],
+              "created_at": "2026-05-22T13:41:01.009664+00:00",
+              "mixer_dependency_chains": [
+                {
+                  "chain": [
+                    "SpkrLeft BOOST Switch",
+                    "SpkrLeft COMP Switch",
+                    "SpkrLeft DAC Switch",
+                    "SpkrLeft PA Volume",
+                    "SpkrLeft VISENSE Switch",
+                    "SpkrLeft WSA MODE",
+                    "SpkrRight BOOST Switch",
+                    "SpkrRight COMP Switch",
+                    "SpkrRight DAC Switch",
+                    "SpkrRight PA Volume",
+                    "SpkrRight VISENSE Switch",
+                    "SpkrRight WSA MODE",
+                    "WSA RX0 MUX",
+                    "WSA RX1 MUX",
+                    "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+                    "WSA_COMP1 Switch",
+                    "WSA_COMP2 Switch",
+                    "WSA_RX0 Digital Volume",
+                    "WSA_RX0 INP0",
+                    "WSA_RX1 Digital Volume",
+                    "WSA_RX1 INP0"
+                  ],
+                  "overlay": "qcs6490-audioreach.dtsi"
+                }
+              ],
+              "overlay_specific_procedural_flows": [
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": false,
+                    "evidence_ordering_match_locked_sequence": false,
+                    "playback_runtime_drift_seconds": 0.014176,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": true,
+                    "evidence_ordering_match_locked_sequence": true,
+                    "playback_runtime_drift_seconds": 0.004192,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": true,
+                    "evidence_ordering_match_locked_sequence": true,
+                    "playback_runtime_drift_seconds": 0.013098,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": true,
+                    "evidence_ordering_match_locked_sequence": true,
+                    "playback_runtime_drift_seconds": 0.025321,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": true,
+                    "evidence_ordering_match_locked_sequence": true,
+                    "playback_runtime_drift_seconds": 0.009546,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": true,
+                    "evidence_ordering_match_locked_sequence": true,
+                    "playback_runtime_drift_seconds": 0.011634,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": false,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": false,
+                    "evidence_ordering_match_locked_sequence": false,
+                    "playback_runtime_drift_seconds": 25.896805,
+                    "playback_runtime_within_baseline_window": false
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                },
+                {
+                  "deterministic_alignment": {
+                    "baseline_pcm_match": true,
+                    "baseline_route_match": true,
+                    "command_ordering_match_locked_sequence": true,
+                    "evidence_ordering_match_locked_sequence": true,
+                    "playback_runtime_drift_seconds": 0.00541,
+                    "playback_runtime_within_baseline_window": true
+                  },
+                  "mutation_delta": {
+                    "added_codecs": [],
+                    "added_dai_links": [],
+                    "added_routes": [],
+                    "added_soundwire_markers": [],
+                    "added_widgets": [],
+                    "removed_dai_links": [
+                      "link-name = \"VA Capture\";",
+                      "link-name = \"WSA Playback\";",
+                      "va-dai-link {",
+                      "wsa-dai-link {"
+                    ],
+                    "removed_routes": [],
+                    "removed_widgets": []
+                  },
+                  "overlay": "qcs6490-audioreach.dtsi"
+                }
+              ],
+              "runs": [
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T13:41:01.009673+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+                  "topology_confidence": 0.515,
+                  "topology_state": "LOW_CONFIDENCE"
+                },
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T13:44:05.877716+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T13:46:41.344317+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T14:33:40.338024+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T14:37:49.653735+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T15:45:23.071470+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                },
+                {
+                  "evidence_success": false,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "316deeb28892b1cdebfe5c12c2cd620b5b8f29289c1ffe3d4f5fc1b2e6a4ea7d",
+                  "process_success": false,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T15:46:37.628113+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+                  "topology_confidence": 0.235,
+                  "topology_state": "LOW_CONFIDENCE"
+                },
+                {
+                  "evidence_success": true,
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                  "process_success": true,
+                  "profile_id": "audible_25s_speaker_v1",
+                  "recorded_at": "2026-05-22T15:48:29.322295+00:00",
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+                  "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+                  "topology_confidence": 0.565,
+                  "topology_state": "INFERRED"
+                }
+              ],
+              "runtime_evidence_patterns": [
+                {
+                  "backend_activity": false,
+                  "evidence_collection_sequence": [
+                    "cat /proc/asound/cards",
+                    "cat /proc/asound/pcm",
+                    "cat /proc/asound/cards",
+                    "cat /proc/asound/pcm"
+                  ],
+                  "pcm_activation": false,
+                  "playback_completion": true,
+                  "route_activation_confidence": "MEDIUM",
+                  "runtime_state_transitions": [
+                    "playback_started",
+                    "playback_completed",
+                    "cleanup_completed"
+                  ],
+                  "soundwire_activity": false
+                },
+                {
+                  "backend_activity": false,
+                  "evidence_collection_sequence": [],
+                  "pcm_activation": false,
+                  "playback_completion": false,
+                  "route_activation_confidence": "LOW",
+                  "runtime_state_transitions": [],
+                  "soundwire_activity": false
+                }
+              ],
+              "schema_version": "1.0",
+              "stable_pcm_fingerprints": [
+                "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+                "316deeb28892b1cdebfe5c12c2cd620b5b8f29289c1ffe3d4f5fc1b2e6a4ea7d"
+              ],
+              "stable_route_fingerprints": [
+                "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+              ],
+              "successful_playback_routes": [
+                {
+                  "overlay": "qcs6490-audioreach.dtsi",
+                  "route_chain": [
+                    "MultiMedia1->PRIMARY_MI2S_RX",
+                    "PRIMARY_MI2S_RX->WSA_SPKR"
+                  ],
+                  "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+                }
+              ],
+              "updated_at": "2026-05-22T15:48:29.322289+00:00"
+            },
+            "runtime_route_graph": {},
+            "topology_fingerprint": "7a17629866ed68b16f4a1b24c81ed5f0351da6099e39b55ceb5a4924d867722d"
+          }
+        }
+      },
+      "schema_version": "1.0",
+      "target_id": "RB3Gen2"
+    },
+    "schema_version": "1.0",
+    "updated_at": "2026-05-23T07:54:39.224247+00:00"
+  },
   "cognition_graph": {
     "edges": [
       {
@@ -13398,6 +15396,21 @@
       "recorded_at": "2026-05-23T07:37:28.962685+00:00",
       "semantic_fingerprint": "66bc82a3ed57ff2bf7b21631008f6b53352b9b81ff838283efe2c833874137da",
       "type": "semantic_cognition"
+    },
+    {
+      "correlation_fingerprint": "703b4f40ef0c894fc01e63bc8831a8465b0329906e099cccc7abc3688b449600",
+      "evidence_references": [
+        "registry://runtime_cognition",
+        "registry://topology_cognition",
+        "registry://semantic_cognition",
+        "registry://regression_lineage",
+        "registry://governance_state",
+        "artifact://semantic_replay_trace",
+        "artifact://aura_replay_determinism_report"
+      ],
+      "lineage_id": "multi_domain_correlation_v1",
+      "recorded_at": "2026-05-23T07:54:39.224259+00:00",
+      "type": "multi_domain_correlation"
     }
   ],
   "cognition_versioning": {
@@ -13428,7 +15441,17 @@
     "schema_version": "1.0",
     "updated_at": "2026-05-23T05:31:34.633384+00:00"
   },
-  "confidence_evolution": [],
+  "confidence_evolution": [
+    {
+      "correlation_confidence": 0.309,
+      "evidence_completeness": 1.0,
+      "recorded_at": "2026-05-23T07:54:39.224254+00:00",
+      "run_id": "multi_domain_correlation_v1",
+      "runtime_confidence": 0.25,
+      "semantic_confidence": 0.45,
+      "topology_confidence": 0.565
+    }
+  ],
   "confidence_propagation_model": {
     "agent_confidence": {
       "governance_agent": {
@@ -415051,5 +417074,5 @@
       "updated_at": "2026-05-22T15:48:29.322289+00:00"
     }
   },
-  "updated_at": "2026-05-23T05:31:40.628046+00:00"
+  "updated_at": "2026-05-23T07:54:39.224263+00:00"
 }

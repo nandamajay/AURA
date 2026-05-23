@@ -316,7 +316,68 @@ python3 scripts/aura-semantic-kernel-foundation.py \
 PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
 python3 -m pytest \
   workspace/aura-sdk/tests/test_target_plugin_runtime_static.py \
-  workspace/aura-sdk/tests/test_portable_runtime_stabilization_static.py -q
+  workspace/aura-sdk/tests/test_portable_runtime_stabilization_static.py \
+  workspace/aura-sdk/tests/test_semantic_cognition_static.py -q
+```
+
+## Multi-Domain Cognition Correlation Phase
+
+This phase fuses runtime evidence, topology cognition, semantic cognition,
+replay history, regression lineage, and governance state into one deterministic,
+lineage-backed correlation model.
+
+### Correlation Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/cognition_correlation.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/evidence_correlation.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/causal_lineage.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/confidence_evolution.py`
+
+### Plugin-Safe Correlation Adapters
+
+Each target plugin provides:
+
+- `runtime_evidence_adapter`
+- `topology_evidence_adapter`
+- `semantic_evidence_adapter`
+
+Core correlation runtime stays target-agnostic and does not branch on target IDs.
+
+### Correlation Generator
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-multi-domain-cognition-correlation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id multi_domain_correlation_v1
+```
+
+### Correlation Artifacts
+
+- `unified_cognition_graph.json`
+- `causal_reasoning_graph.json`
+- `evidence_lineage_graph.json`
+- `confidence_evolution_report.json`
+- `anomaly_correlation_report.json`
+- `cognition_fusion_trace.json`
+- `multi_domain_cognition_correlation_summary.json`
+
+### Correlation Governance Boundaries
+
+- Allowed: correlate, classify, infer, recommend, replay, quarantine
+- Forbidden: fabricate evidence, fabricate causality, auto patch, auto modify runtime, override governance
+
+### Correlation Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_target_plugin_runtime_static.py \
+  workspace/aura-sdk/tests/test_portable_runtime_stabilization_static.py \
+  workspace/aura-sdk/tests/test_semantic_cognition_static.py \
+  workspace/aura-sdk/tests/test_cognition_correlation_static.py -q
 ```
 
 ### Artifact Intent

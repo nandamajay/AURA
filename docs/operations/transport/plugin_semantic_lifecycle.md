@@ -16,9 +16,13 @@ Each target plugin must provide:
 - `topology_adapter`
 - `vendor_api_adapter`
 - `subsystem_descriptor_provider`
+- `runtime_evidence_adapter`
+- `topology_evidence_adapter`
+- `semantic_evidence_adapter`
 
 ## Safety Constraints
 - Core runtime remains target-agnostic.
 - Semantic parsing is plugin-driven only.
 - Replay semantics are deterministic and evidence-backed.
 - Any semantic adapter failure is fail-closed and quarantine-safe.
+- Correlation fusion consumes adapter outputs and never bypasses plugin isolation.

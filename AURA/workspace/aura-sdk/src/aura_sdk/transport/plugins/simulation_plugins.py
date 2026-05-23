@@ -269,6 +269,114 @@ class _BaseSimulationPlugin:
             "fingerprint": _hash(descriptors),
         }
 
+    def runtime_evidence_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        runtime = _as_dict(payload.get("runtime_evidence"))
+        pcm = _as_dict(payload.get("pcm_activity"))
+        mixer = _as_dict(payload.get("mixer_state"))
+        replay = _as_dict(payload.get("replay_traces"))
+        governance = _as_dict(payload.get("governance_decisions"))
+
+        normalized_runtime = {
+            "run_id": str(runtime.get("run_id", f"{self.target_id}-sim-run")),
+            "process_success": bool(runtime.get("process_success", self.health != "DEGRADED")),
+            "playback_completion": bool(runtime.get("playback_completion", self.health != "DEGRADED")),
+            "classification": str(runtime.get("classification", "ADVISORY_ONLY")),
+            "runtime_fingerprint": _hash(runtime),
+        }
+        normalized_pcm = {
+            "pcm_signature": str(pcm.get("pcm_signature", _hash(pcm))),
+            "active_paths": _as_list(pcm.get("active_paths")),
+            "pcm_entries": _as_list(pcm.get("pcm_entries")),
+            "pcm_fingerprint": _hash(pcm),
+        }
+        normalized_mixer = {
+            "controls": _as_list(mixer.get("controls")),
+            "active_switches": _as_list(mixer.get("active_switches")),
+            "mixer_fingerprint": _hash(mixer),
+        }
+        normalized_replay = {
+            "deterministic_event_ordering": bool(
+                replay.get("deterministic_event_ordering", bool(replay.get("deterministic_replay_fingerprint", "")))
+            ),
+            "deterministic_replay_fingerprint": str(replay.get("deterministic_replay_fingerprint", "")),
+        }
+
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.runtime_evidence_adapter",
+            "runtime_evidence": normalized_runtime,
+            "pcm_activity": normalized_pcm,
+            "mixer_state": normalized_mixer,
+            "replay_traces": normalized_replay,
+            "governance_decisions": governance,
+            "fingerprint": _hash(
+                {
+                    "runtime": normalized_runtime,
+                    "pcm": normalized_pcm,
+                    "mixer": normalized_mixer,
+                    "replay": normalized_replay,
+                    "governance": governance,
+                }
+            ),
+        }
+
+    def topology_evidence_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        topology = _as_dict(payload.get("topology_cognition"))
+        dts = _as_dict(payload.get("dts_cognition"))
+        capabilities = _as_dict(payload.get("plugin_capability_state"))
+        normalized_topology = {
+            "confidence": _as_dict(topology.get("confidence")),
+            "runtime_route_graph": _as_dict(topology.get("runtime_route_graph")),
+            "procedural_route_memory": _as_dict(topology.get("procedural_route_memory")),
+            "topology_fingerprint": _hash(topology),
+        }
+        normalized_dts = {
+            "overlay_inheritance": _as_dict(dts.get("overlay_inheritance")),
+            "backend_frontend_mappings": _as_list(dts.get("backend_frontend_mappings")),
+            "qcom_audio_routing": _as_list(dts.get("qcom_audio_routing")),
+            "soundwire_topology_markers": _as_list(dts.get("soundwire_topology_markers")),
+            "dts_fingerprint": _hash(dts),
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.topology_evidence_adapter",
+            "topology_cognition": normalized_topology,
+            "dts_cognition": normalized_dts,
+            "plugin_capability_state": capabilities,
+            "fingerprint": _hash(
+                {
+                    "topology": normalized_topology,
+                    "dts": normalized_dts,
+                    "capabilities": capabilities,
+                }
+            ),
+        }
+
+    def semantic_evidence_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        semantic = _as_dict(payload.get("semantic_cognition"))
+        regressions = [item for item in _as_list(payload.get("regression_history")) if isinstance(item, dict)]
+        capabilities = _as_dict(payload.get("plugin_capability_state"))
+        normalized_semantic = {
+            "classification": _as_dict(semantic.get("classification")),
+            "semantic_fingerprint": str(semantic.get("semantic_fingerprint", "")),
+            "artifacts": _as_dict(semantic.get("artifacts")),
+            "evidence_references": [str(item) for item in _as_list(semantic.get("evidence_references")) if str(item).strip()],
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.semantic_evidence_adapter",
+            "semantic_cognition": normalized_semantic,
+            "regression_history": regressions,
+            "plugin_capability_state": capabilities,
+            "fingerprint": _hash(
+                {
+                    "semantic": normalized_semantic,
+                    "regressions": regressions,
+                    "capabilities": capabilities,
+                }
+            ),
+        }
+
 
 class FakeTargetAlphaPlugin(_BaseSimulationPlugin):
     target_id = "fake_target_alpha"

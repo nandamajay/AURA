@@ -1,0 +1,96 @@
+{
+  "causal_chain": [
+    "dts_node",
+    "route_graph",
+    "backend_activation",
+    "pcm_behavior",
+    "runtime_evidence",
+    "regression_confidence"
+  ],
+  "causal_strength": 1.0,
+  "edges": [
+    {
+      "from": "dts:overlay:unknown",
+      "relation": "defines_route_graph",
+      "to": "route:18a08e2a6a64fe8f"
+    },
+    {
+      "from": "route:18a08e2a6a64fe8f",
+      "relation": "activates_backend_chain",
+      "to": "backend:428b8e730577628b"
+    },
+    {
+      "from": "backend:428b8e730577628b",
+      "relation": "drives_pcm_behavior",
+      "to": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+    },
+    {
+      "from": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+      "relation": "produces_runtime_evidence",
+      "to": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82"
+    },
+    {
+      "from": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+      "relation": "updates_regression_confidence",
+      "to": "regression:212ccdc9915120bd"
+    },
+    {
+      "from": "semantic:vendor_coupled",
+      "relation": "constrains_route_interpretation",
+      "to": "route:18a08e2a6a64fe8f"
+    },
+    {
+      "from": "replay:58b61c7478d08cfe",
+      "relation": "stabilizes_confidence",
+      "to": "regression:212ccdc9915120bd"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "owns",
+      "to": "dts:overlay:unknown"
+    }
+  ],
+  "graph_name": "causal_reasoning_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "dts:overlay:unknown",
+      "kind": "dts_node"
+    },
+    {
+      "id": "route:18a08e2a6a64fe8f",
+      "kind": "route_graph"
+    },
+    {
+      "id": "backend:428b8e730577628b",
+      "kind": "backend_activation"
+    },
+    {
+      "id": "pcm:9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+      "kind": "pcm_behavior"
+    },
+    {
+      "id": "runtime:207873ea-49b5-4a59-a1d1-638802bb1d82",
+      "kind": "runtime_evidence"
+    },
+    {
+      "id": "regression:212ccdc9915120bd",
+      "kind": "regression_confidence"
+    },
+    {
+      "id": "semantic:vendor_coupled",
+      "kind": "semantic_classification"
+    },
+    {
+      "id": "replay:58b61c7478d08cfe",
+      "kind": "replay_trace"
+    }
+  ],
+  "schema_version": "1.0",
+  "semantic_primary_classification": "vendor_coupled",
+  "target_id": "RB3Gen2",
+  "topology_confidence": 0.565
+}

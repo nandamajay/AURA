@@ -25,6 +25,7 @@ class PluginIsolationValidator:
         return [
             base / "portable_runtime_layer.py",
             base / "semantic_cognition.py",
+            base / "cognition_correlation.py",
             base / "plugins/loader.py",
             base / "plugins/contracts.py",
         ]
@@ -59,8 +60,9 @@ class PluginIsolationValidator:
         files = self._core_files()
         portable_runtime_file = files[0]
         semantic_core_file = files[1]
-        loader_file = files[2]
-        contract_file = files[3]
+        correlation_core_file = files[2]
+        loader_file = files[3]
+        contract_file = files[4]
         branch_findings: dict[str, list[str]] = {}
         assumption_findings: dict[str, list[str]] = {}
 
@@ -92,6 +94,15 @@ class PluginIsolationValidator:
                     ".subsystem_descriptor_provider(",
                 )
             ),
+            "correlation_core_uses_plugin_loader": "TargetPluginLoader" in _read(correlation_core_file),
+            "correlation_core_invokes_plugin_evidence_adapters": all(
+                token in _read(correlation_core_file)
+                for token in (
+                    ".runtime_evidence_adapter(",
+                    ".topology_evidence_adapter(",
+                    ".semantic_evidence_adapter(",
+                )
+            ),
             "loader_uses_contract_validation": "assert_plugin_contract" in _read(loader_file),
             "contract_has_required_providers": all(
                 token in _read(contract_file)
@@ -107,6 +118,9 @@ class PluginIsolationValidator:
                     "topology_adapter",
                     "vendor_api_adapter",
                     "subsystem_descriptor_provider",
+                    "runtime_evidence_adapter",
+                    "topology_evidence_adapter",
+                    "semantic_evidence_adapter",
                 )
             ),
         }

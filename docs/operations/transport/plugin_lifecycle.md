@@ -38,3 +38,12 @@ Portable runtime stabilization lifecycle for target plugins under fail-closed go
   - `subsystem_descriptor_provider`
 - Semantic outputs are advisory/governed cognition artifacts only.
 - Semantic adapter failures trigger `quarantine` and preserve fail-closed posture.
+
+## Correlation Adapter Lifecycle
+- Correlation adapters are plugin-owned and invoked inside unified cognition fusion.
+- Required correlation adapters:
+  - `runtime_evidence_adapter`
+  - `topology_evidence_adapter`
+  - `semantic_evidence_adapter`
+- Correlation outputs must remain deterministic, replay-safe, and lineage-backed.
+- Correlation adapter failures trigger `quarantine` and preserve fail-closed posture.
