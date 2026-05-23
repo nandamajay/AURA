@@ -325,6 +325,46 @@ from aura_sdk.transport.runtime_incident_reconstructor import (
     RuntimeIncidentReconstructionResult,
     RuntimeIncidentReconstructor,
 )
+from aura_sdk.transport.dmesg_ingestor import DmesgIngestionResult, ingest_dmesg
+from aura_sdk.transport.ftrace_ingestor import FtraceIngestionResult, ingest_ftrace
+from aura_sdk.transport.tracecmd_ingestor import TracecmdIngestionResult, ingest_tracecmd
+from aura_sdk.transport.tinymix_state_ingestor import (
+    TinymixStateIngestionResult,
+    ingest_tinymix_state,
+)
+from aura_sdk.transport.procfs_runtime_ingestor import (
+    ProcfsRuntimeIngestionResult,
+    ingest_procfs_runtime,
+)
+from aura_sdk.transport.debugfs_runtime_ingestor import (
+    DebugfsRuntimeIngestionResult,
+    ingest_debugfs_runtime,
+)
+from aura_sdk.transport.soundwire_runtime_ingestor import (
+    SoundwireRuntimeIngestionResult,
+    ingest_soundwire_runtime,
+)
+from aura_sdk.transport.dsp_mailbox_ingestor import (
+    DspMailboxIngestionResult,
+    ingest_dsp_mailbox,
+)
+from aura_sdk.transport.irq_runtime_ingestor import (
+    IrqRuntimeIngestionResult,
+    ingest_irq_runtime,
+)
+from aura_sdk.transport.runtime_capture_fingerprint import (
+    RuntimeCaptureFingerprintResult,
+    build_runtime_capture_fingerprint,
+)
+from aura_sdk.transport.engineering_session_replay import (
+    EngineeringSessionReplayResult,
+    build_engineering_session_replay,
+)
+from aura_sdk.transport.runtime_session_registry import RuntimeSessionRegistry
+from aura_sdk.transport.runtime_evidence_ingestor import (
+    RuntimeEvidenceIngestionResult,
+    RuntimeEvidenceIngestor,
+)
 
 __all__ = [
     "CommandClassification",
@@ -531,4 +571,29 @@ __all__ = [
     "RuntimeIncidentReconstructionResult",
     "RuntimeIncidentReconstructor",
     "RuntimeIncidentReconstructionRegistry",
+    "DmesgIngestionResult",
+    "ingest_dmesg",
+    "FtraceIngestionResult",
+    "ingest_ftrace",
+    "TracecmdIngestionResult",
+    "ingest_tracecmd",
+    "TinymixStateIngestionResult",
+    "ingest_tinymix_state",
+    "ProcfsRuntimeIngestionResult",
+    "ingest_procfs_runtime",
+    "DebugfsRuntimeIngestionResult",
+    "ingest_debugfs_runtime",
+    "SoundwireRuntimeIngestionResult",
+    "ingest_soundwire_runtime",
+    "DspMailboxIngestionResult",
+    "ingest_dsp_mailbox",
+    "IrqRuntimeIngestionResult",
+    "ingest_irq_runtime",
+    "RuntimeCaptureFingerprintResult",
+    "build_runtime_capture_fingerprint",
+    "EngineeringSessionReplayResult",
+    "build_engineering_session_replay",
+    "RuntimeSessionRegistry",
+    "RuntimeEvidenceIngestionResult",
+    "RuntimeEvidenceIngestor",
 ]

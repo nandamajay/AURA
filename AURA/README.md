@@ -120,6 +120,7 @@ Primary scripts:
 - `scripts/aura-incremental-migration-orchestration.py`
 - `scripts/aura-runtime-evidence-fusion.py`
 - `scripts/aura-runtime-incident-reconstruction.py`
+- `scripts/aura-runtime-evidence-ingestion.py`
 
 Key output directory:
 
@@ -138,6 +139,88 @@ Representative artifacts include:
 - `aura_recovery_validation_report.json`
 - `aura_event_quarantine_report.json`
 - `aura_stability_fingerprint.json`
+
+## Real Runtime Evidence Ingestion Layer
+
+This phase introduces governed, read-only runtime evidence observability while
+preserving deterministic replay, plugin isolation, and fail-closed governance.
+
+### Ingestion Components
+
+- Orchestrator:
+  - `workspace/aura-sdk/src/aura_sdk/transport/runtime_evidence_ingestor.py`
+- Source ingestors:
+  - `dmesg_ingestor.py`
+  - `ftrace_ingestor.py`
+  - `tracecmd_ingestor.py`
+  - `tinymix_state_ingestor.py`
+  - `procfs_runtime_ingestor.py`
+  - `debugfs_runtime_ingestor.py`
+  - `soundwire_runtime_ingestor.py`
+  - `dsp_mailbox_ingestor.py`
+  - `irq_runtime_ingestor.py`
+- Session + replay persistence:
+  - `runtime_session_registry.py`
+  - `runtime_capture_fingerprint.py`
+  - `engineering_session_replay.py`
+- Runner:
+  - `scripts/aura-runtime-evidence-ingestion.py`
+
+### Runtime Ingestion Inputs
+
+- dmesg/kernel log streams
+- ftrace and trace-cmd/perf traces
+- tinyalsa/tinymix snapshots
+- ALSA procfs runtime state
+- debugfs runtime state
+- SoundWire runtime dumps
+- DSP mailbox logs
+- IRQ timing traces
+
+### Generated Artifacts
+
+- `normalized_runtime_evidence.json`
+- `runtime_session_graph.json`
+- `evidence_capture_lineage.json`
+- `subsystem_runtime_state.json`
+- `dsp_runtime_trace.json`
+- `soundwire_runtime_trace.json`
+- `pcm_runtime_state.json`
+- `runtime_capture_fingerprint.json`
+- `deterministic_runtime_session_replay.json`
+- `runtime_evidence_ingestion_summary.json`
+
+### Run Runtime Evidence Ingestion
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-runtime-evidence-ingestion.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id runtime_session_v1 \
+  --lineage-id runtime_evidence_ingestion_v1
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_runtime_evidence_ingestion_static.py -q
+```
+
+### Architecture Document
+
+- `docs/operations/transport/runtime_evidence_ingestion_architecture.md`
+
+### Governance and Determinism Properties
+
+- read-only ingestion only (no runtime mutation paths)
+- fail-closed on missing required evidence or governance violations
+- deterministic timestamp/event ordering normalization
+- immutable capture lineage chain and replay-safe session persistence
+- plugin adapter boundary preserved (`runtime/topology/semantic` adapters only)
 
 ## Portable Multi-Target Cognition Phase
 
