@@ -452,6 +452,11 @@ from aura_sdk.transport.real_source_tree_governed_conversion import (
     RealSourceTreeGovernedConversionRegistry,
     RealSourceTreeGovernedConversionResult,
 )
+from aura_sdk.transport.real_patch_application_governed_build import (
+    RealPatchApplicationGovernedBuildEngine,
+    RealPatchApplicationGovernedBuildRegistry,
+    RealPatchApplicationGovernedBuildResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -732,4 +737,7 @@ __all__ = [
     "RealSourceTreeGovernedConversionEngine",
     "RealSourceTreeGovernedConversionRegistry",
     "RealSourceTreeGovernedConversionResult",
+    "RealPatchApplicationGovernedBuildEngine",
+    "RealPatchApplicationGovernedBuildRegistry",
+    "RealPatchApplicationGovernedBuildResult",
 ]

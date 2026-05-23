@@ -2118,6 +2118,74 @@ python3 -m pytest \
 - advisory-only behavior; no autonomous patch application/submission
 - deterministic replay lineage persisted for every artifact
 
+## Real Patch Application + Governed Build Validation Layer
+
+This phase upgrades AURA from static patch planning into real sandboxed patch
+application with compile-oriented validation and deterministic rollback
+lineage.
+
+### Focus Coverage
+
+- apply generated patch against real source-tree context in sandbox mode
+- detect patch dry-run failures, apply failures, fuzz, and reject files
+- compile touched objects only (`.c` touched by patch)
+- validate include closure and symbol replacement consistency
+- classify runtime-sensitive compile impacts (safe vs unsafe touches)
+- trigger deterministic rollback on fail-closed conditions
+- persist replay-safe build/governance lineage and confidence state
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/real_patch_application_governed_build.py`
+- Runner:
+  - `scripts/aura-real-patch-build-validation.py`
+
+### Required Artifacts (Generated)
+
+- `applied_patch.diff`
+- `patch_apply_report.json`
+- `incremental_build_report.json`
+- `touched_object_graph.json`
+- `symbol_resolution_report.json`
+- `include_closure_report.json`
+- `runtime_sensitive_compile_report.json`
+- `build_confidence_report.json`
+- `rollback_lineage.json`
+- `deterministic_build_replay.json`
+- `compile_warning_clusters.json`
+- `governance_build_escalation.json`
+- `real_patch_validation_summary.json`
+
+### Run Real Patch Build Validation
+
+```bash
+python3 scripts/aura-real-patch-build-validation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --source-root /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar \
+  --patch-path /local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch \
+  --session-id real_patch_build_validation_session_v1 \
+  --lineage-id real_patch_application_governed_build_v1
+```
+
+### Validation
+
+```bash
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_real_patch_application_governed_build_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed if patch apply fails/conflicts/rejects
+- fail-closed if touched-object compile fails
+- fail-closed if include or symbol closure is incomplete
+- fail-closed if runtime-sensitive regions are unsafely impacted
+- deterministic rollback lineage required for any fail-closed outcome
+- advisory-only behavior; no autonomous patch application/submission
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

@@ -1,0 +1,407 @@
+# APPLIED PATCH FROM GOVERNED BUILD VALIDATION
+# mode=sandbox_apply
+--- a/asoc/audio_machine.c
++++ b/asoc/audio_machine.c
+@@ -179,7 +179,7 @@
+ 	ret = of_property_read_string(pdev->dev.of_node,
+ 		"qcom,upd_backends_used", &pdata->upd_config.backend_used);
+ 	if (ret) {
+-		pr_debug("%s:could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s:could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_backends_used");
+ 		return;
+ 	}
+@@ -187,7 +187,7 @@
+ 	ret = of_property_read_u32_array(pdev->dev.of_node,
+ 			"qcom,upd_lpass_reg_addr", dt_values, MAX_EARPA_REG);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 				__func__, "qcom,upd_lpass_reg_addr");
+ 		return;
+ 	} else {
+@@ -200,7 +200,7 @@
+ 	ret = of_property_read_u32(pdev->dev.of_node,
+ 			"qcom,upd_ear_pa_reg_addr", &pdata->upd_config.ear_pa_pkd_reg_addr);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_ear_pa_reg_addr");
+ 	}
+ }
+
+--- a/asoc/codecs/aqt1000/aqt1000-clsh.c
++++ b/asoc/codecs/aqt1000/aqt1000-clsh.c
+@@ -197,11 +197,11 @@
+ 	}
+ 	index = get_impedance_index(imped);
+ 	if (index >= (ARRAY_SIZE(imped_index) - 1)) {
+-		pr_debug("%s, impedance not in range = %d\n", __func__, imped);
++dev_dbg(component->dev, "%s, impedance not in range = %d\n", __func__, imped);
+ 		return;
+ 	}
+ 	if (index >= table_size) {
+-		pr_debug("%s, impedance index not in range = %d\n", __func__,
++dev_dbg(component->dev, "%s, impedance index not in range = %d\n", __func__,
+ 			index);
+ 		return;
+ 	}
+
+--- a/asoc/codecs/aqt1000/aqt1000-core.c
++++ b/asoc/codecs/aqt1000/aqt1000-core.c
+@@ -578,13 +578,13 @@
+ #ifdef CONFIG_PM_SLEEP
+ static int aqt1000_i2c_resume(struct device *dev)
+ {
+-	pr_debug("%s system resume\n", __func__);
++dev_dbg(dev, "%s system resume\n", __func__);
+ 	return 0;
+ }
+ 
+ static int aqt1000_i2c_suspend(struct device *dev)
+ {
+-	pr_debug("%s system suspend\n", __func__);
++dev_dbg(dev, "%s system suspend\n", __func__);
+ 	return 0;
+ }
+ #endif
+
+--- a/asoc/codecs/bolero/rx-macro.c
++++ b/asoc/codecs/bolero/rx-macro.c
+@@ -819,11 +819,11 @@
+ 	}
+ 	index = get_impedance_index(imped);
+ 	if (index >= (ARRAY_SIZE(imped_index) - 1)) {
+-		pr_debug("%s, impedance not in range = %d\n", __func__, imped);
++dev_dbg(component->dev, "%s, impedance not in range = %d\n", __func__, imped);
+ 		return;
+ 	}
+ 	if (index >= table_size) {
+-		pr_debug("%s, impedance index not in range = %d\n", __func__,
++dev_dbg(component->dev, "%s, impedance index not in range = %d\n", __func__,
+ 			index);
+ 		return;
+ 	}
+
+--- a/asoc/codecs/csra66x0/csra66x0.c
++++ b/asoc/codecs/csra66x0/csra66x0.c
+@@ -1149,7 +1149,7 @@
+ 
+ 	ret = snprintf(buf, CSRA66X0_SYSFS_ENTRY_MAX_LEN,
+ 		"0x%04X\n", reg_addr);
+-	pr_debug("%s: 0x%04X\n", __func__, reg_addr);
++dev_dbg(dev, "%s: 0x%04X\n", __func__, reg_addr);
+ 
+ 	return ret;
+ }
+@@ -1172,7 +1172,7 @@
+ 		CSRA66X0_BASE, CSRA66X0_MAX_REGISTER_ADDR)
+ 		|| csra66x0_addr_is_in_range(reg_addr,
+ 		CSRA66X0_COEFF_BASE, CSRA66X0_MAX_COEFF_ADDR))) {
+-		pr_debug("%s: 0x%04X: register address out of range\n",
++dev_dbg(dev, "%s: 0x%04X: register address out of range\n",
+ 			__func__, reg_addr);
+ 		ret = snprintf(buf, CSRA66X0_SYSFS_ENTRY_MAX_LEN,
+ 			"0x%04X: register address out of range\n", reg_addr);
+@@ -1182,7 +1182,7 @@
+ 	reg_val = snd_soc_component_read32(component, csra66x0->sysfs_reg_addr);
+ 	ret = snprintf(buf, CSRA66X0_SYSFS_ENTRY_MAX_LEN,
+ 		"0x%04X:	0x%02X\n", csra66x0->sysfs_reg_addr, reg_val);
+-	pr_debug("%s: 0x%04X: 0x%02X\n", __func__,
++dev_dbg(dev, "%s: 0x%04X: 0x%02X\n", __func__,
+ 		csra66x0->sysfs_reg_addr, reg_val);
+ 
+ end:
+@@ -1212,7 +1212,7 @@
+ 		goto end;
+ 	}
+ 
+-	pr_debug("%s: reset device\n", __func__);
++dev_dbg(dev, "%s: reset device\n", __func__);
+ 	if (csra66x0->in_cluster) {
+ 		/* reset all slave components */
+ 		for (i = 0; i < component->card->num_aux_devs; i++) {
+
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -904,11 +904,11 @@
+ 	}
+ 	index = get_impedance_index(imped);
+ 	if (index >= (ARRAY_SIZE(imped_index) - 1)) {
+-		pr_debug("%s, impedance not in range = %d\n", __func__, imped);
++dev_dbg(component->dev, "%s, impedance not in range = %d\n", __func__, imped);
+ 		return;
+ 	}
+ 	if (index >= table_size) {
+-		pr_debug("%s, impedance index not in range = %d\n", __func__,
++dev_dbg(component->dev, "%s, impedance index not in range = %d\n", __func__,
+ 			index);
+ 		return;
+ 	}
+
+--- a/asoc/codecs/wcd9378/wcd9378.c
++++ b/asoc/codecs/wcd9378/wcd9378.c
+@@ -4092,7 +4092,7 @@
+ 	mb->micb3_usage_val = wcd9378_micb_usage_value_convert(component,
+ 						mb->micb3_mv, MIC_BIAS_3);
+ 
+-	pr_debug("%s: micb1_usage: 0x%x, micb2_usage: 0x%x, micb3_usage: 0x%x\n", __func__,
++dev_dbg(component->dev, "%s: micb1_usage: 0x%x, micb2_usage: 0x%x, micb3_usage: 0x%x\n", __func__,
+ 			mb->micb1_usage_val, mb->micb2_usage_val, mb->micb3_usage_val);
+ }
+ 
+
+--- a/asoc/codecs/wcd9xxx-common-v2.c
++++ b/asoc/codecs/wcd9xxx-common-v2.c
+@@ -278,11 +278,11 @@
+ 	}
+ 	index = get_impedance_index(imped);
+ 	if (index >= (ARRAY_SIZE(imped_index) - 1)) {
+-		pr_debug("%s, impedance not in range = %d\n", __func__, imped);
++dev_dbg(component->dev, "%s, impedance not in range = %d\n", __func__, imped);
+ 		return;
+ 	}
+ 	if (index >= table_size) {
+-		pr_debug("%s, impedance index not in range = %d\n", __func__,
++dev_dbg(component->dev, "%s, impedance index not in range = %d\n", __func__,
+ 			index);
+ 		return;
+ 	}
+
+--- a/asoc/codecs/wsa881x-analog.c
++++ b/asoc/codecs/wsa881x-analog.c
+@@ -457,7 +457,7 @@
+ 	struct wsa881x_pdata *wsa881x =
+ 				snd_soc_component_get_drvdata(component);
+ 
+-	pr_debug("%s: enable:%d\n", __func__, enable);
++dev_dbg(component->dev, "%s: enable:%d\n", __func__, enable);
+ 
+ 	if (enable) {
+ 		if (WSA881X_IS_2_0(wsa881x->version)) {
+@@ -520,7 +520,7 @@
+ 	struct wsa881x_pdata *wsa881x =
+ 				snd_soc_component_get_drvdata(component);
+ 
+-	pr_debug("%s: enable:%d\n", __func__, enable);
++dev_dbg(component->dev, "%s: enable:%d\n", __func__, enable);
+ 	if (enable) {
+ 		if (!WSA881X_IS_2_0(wsa881x->version))
+ 			snd_soc_component_update_bits(component,
+@@ -621,7 +621,7 @@
+ 	struct wsa881x_pdata *wsa881x =
+ 				snd_soc_component_get_drvdata(component);
+ 
+-	pr_debug("%s: enable:%d\n", __func__, enable);
++dev_dbg(component->dev, "%s: enable:%d\n", __func__, enable);
+ 	if (enable) {
+ 		snd_soc_component_update_bits(component,
+ 					WSA881X_ANA_CTL, 0x08, 0x00);
+@@ -662,7 +662,7 @@
+ 	struct wsa881x_pdata *wsa881x =
+ 				snd_soc_component_get_drvdata(component);
+ 
+-	pr_debug("%s: enable:%d\n", __func__, enable);
++dev_dbg(component->dev, "%s: enable:%d\n", __func__, enable);
+ 	if (enable) {
+ 		/*
+ 		 * Ensure: Boost is enabled and stable, Analog input is up
+@@ -1606,13 +1606,13 @@
+ #ifdef CONFIG_PM_SLEEP
+ static int wsa881x_i2c_suspend(struct device *dev)
+ {
+-	pr_debug("%s: system suspend\n", __func__);
++dev_dbg(dev, "%s: system suspend\n", __func__);
+ 	return 0;
+ }
+ 
+ static int wsa881x_i2c_resume(struct device *dev)
+ {
+-	pr_debug("%s: system resume\n", __func__);
++dev_dbg(dev, "%s: system resume\n", __func__);
+ 	return 0;
+ }
+ 
+
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -1413,7 +1413,7 @@
+ 
+ 		if (temp_val <= LOW_TEMP_THRESHOLD ||
+ 			temp_val >= HIGH_TEMP_THRESHOLD) {
+-			pr_debug("%s: T0: %d is out of range[%d, %d]\n", __func__,
++dev_dbg(component->dev, "%s: T0: %d is out of range[%d, %d]\n", __func__,
+ 				 temp_val, LOW_TEMP_THRESHOLD, HIGH_TEMP_THRESHOLD);
+ 			if (retry--)
+ 				msleep(10);
+@@ -1425,7 +1425,7 @@
+ 	wsa883x->curr_temp = temp_val;
+ 	if (temp)
+ 		*temp = temp_val;
+-	pr_debug("%s: t0 measured: %d dmeas = %d, d1 = %d, d2 = %d\n",
++dev_dbg(component->dev, "%s: t0 measured: %d dmeas = %d, d1 = %d, d2 = %d\n",
+ 		  __func__, temp_val, dmeas, d1, d2);
+ 
+ 	return ret;
+
+--- a/asoc/codecs/wsa884x/wsa884x.c
++++ b/asoc/codecs/wsa884x/wsa884x.c
+@@ -1681,7 +1681,7 @@
+ 
+ 		if (temp_val <= LOW_TEMP_THRESHOLD ||
+ 			temp_val >= HIGH_TEMP_THRESHOLD) {
+-			pr_debug("%s: T0: %d is out of range[%d, %d]\n", __func__,
++dev_dbg(component->dev, "%s: T0: %d is out of range[%d, %d]\n", __func__,
+ 				 temp_val, LOW_TEMP_THRESHOLD, HIGH_TEMP_THRESHOLD);
+ 			if (retry--)
+ 				msleep(10);
+@@ -1693,7 +1693,7 @@
+ 	wsa884x->curr_temp = temp_val;
+ 	if (temp)
+ 		*temp = temp_val;
+-	pr_debug("%s: t0 measured: %d dmeas = %d, d1 = %d, d2 = %d\n",
++dev_dbg(component->dev, "%s: t0 measured: %d dmeas = %d, d1 = %d, d2 = %d\n",
+ 		  __func__, temp_val, dmeas, d1, d2);
+ 
+ 	return ret;
+
+--- a/asoc/gvm_auto_spf_dummy.c
++++ b/asoc/gvm_auto_spf_dummy.c
+@@ -698,7 +698,7 @@
+ 	struct msm_asoc_mach_data *pdata;
+ 	int ret;
+ 
+-	pr_debug("%s: DRIVER Audio Init\n",  __func__);
++dev_dbg(&pdev->dev, "%s: DRIVER Audio Init\n",  __func__);
+ 
+ 	if (!pdev->dev.of_node) {
+ 		dev_err(&pdev->dev, "No platform supplied from device tree\n");
+@@ -749,7 +749,7 @@
+ 	dev_info(&pdev->dev, "Sound card %s registered\n", card->name);
+ 	pr_err("Sound card %s registered\n", card->name);
+ 
+-	pr_debug("%s: DRIVER Audio Ready\n", __func__);
++dev_dbg(&pdev->dev, "%s: DRIVER Audio Ready\n", __func__);
+ 
+ 	spdev = pdev;
+ 
+
+--- a/asoc/kalama.c
++++ b/asoc/kalama.c
+@@ -147,7 +147,7 @@
+ 	ret = of_property_read_string(pdev->dev.of_node,
+ 		"qcom,upd_backends_used", &pdata->upd_config.backend_used);
+ 	if (ret) {
+-		pr_debug("%s:could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s:could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_backends_used");
+ 		return;
+ 	}
+@@ -155,7 +155,7 @@
+ 	ret = of_property_read_u32_array(pdev->dev.of_node,
+ 			"qcom,upd_lpass_reg_addr", dt_values, MAX_EARPA_REG);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 				__func__, "qcom,upd_lpass_reg_addr");
+ 		return;
+ 	} else {
+@@ -168,7 +168,7 @@
+ 	ret = of_property_read_u32(pdev->dev.of_node,
+ 			"qcom,upd_ear_pa_reg_addr", &pdata->upd_config.ear_pa_pkd_reg_addr);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_ear_pa_reg_addr");
+ 	}
+ }
+
+--- a/asoc/pineapple.c
++++ b/asoc/pineapple.c
+@@ -163,7 +163,7 @@
+ 	ret = of_property_read_string(pdev->dev.of_node,
+ 		"qcom,upd_backends_used", &pdata->upd_config.backend_used);
+ 	if (ret) {
+-		pr_debug("%s:could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s:could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_backends_used");
+ 		return;
+ 	}
+@@ -171,7 +171,7 @@
+ 	ret = of_property_read_u32_array(pdev->dev.of_node,
+ 			"qcom,upd_lpass_reg_addr", dt_values, MAX_EARPA_REG);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 				__func__, "qcom,upd_lpass_reg_addr");
+ 		return;
+ 	} else {
+@@ -184,7 +184,7 @@
+ 	ret = of_property_read_u32(pdev->dev.of_node,
+ 			"qcom,upd_ear_pa_reg_addr", &pdata->upd_config.ear_pa_pkd_reg_addr);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_ear_pa_reg_addr");
+ 	}
+ }
+
+--- a/asoc/sun.c
++++ b/asoc/sun.c
+@@ -175,7 +175,7 @@
+ 	ret = of_property_read_string(pdev->dev.of_node,
+ 		"qcom,upd_backends_used", &pdata->upd_config.backend_used);
+ 	if (ret) {
+-		pr_debug("%s:could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s:could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_backends_used");
+ 		return;
+ 	}
+@@ -183,7 +183,7 @@
+ 	ret = of_property_read_u32_array(pdev->dev.of_node,
+ 			"qcom,upd_lpass_reg_addr", dt_values, MAX_EARPA_REG);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 				__func__, "qcom,upd_lpass_reg_addr");
+ 		return;
+ 	} else {
+@@ -196,7 +196,7 @@
+ 	ret = of_property_read_u32(pdev->dev.of_node,
+ 			"qcom,upd_ear_pa_reg_addr", &pdata->upd_config.ear_pa_pkd_reg_addr);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_ear_pa_reg_addr");
+ 	}
+ }
+
+--- a/asoc/waipio.c
++++ b/asoc/waipio.c
+@@ -164,7 +164,7 @@
+ 	ret = of_property_read_string(pdev->dev.of_node,
+ 		"qcom,upd_backends_used", &pdata->upd_config.backend_used);
+ 	if (ret) {
+-		pr_debug("%s:could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s:could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_backends_used");
+ 		return;
+ 	}
+@@ -172,7 +172,7 @@
+ 	ret = of_property_read_u32_array(pdev->dev.of_node,
+ 			"qcom,upd_lpass_reg_addr", dt_values, MAX_EARPA_REG);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 				__func__, "qcom,upd_lpass_reg_addr");
+ 		return;
+ 	} else {
+@@ -185,7 +185,7 @@
+ 	ret = of_property_read_u32(pdev->dev.of_node,
+ 			"qcom,upd_ear_pa_reg_addr", &pdata->upd_config.ear_pa_pkd_reg_addr);
+ 	if (ret) {
+-		pr_debug("%s: could not find %s entry in dt\n",
++dev_dbg(&pdev->dev, "%s: could not find %s entry in dt\n",
+ 			__func__, "qcom,upd_ear_pa_reg_addr");
+ 	}
+ }
