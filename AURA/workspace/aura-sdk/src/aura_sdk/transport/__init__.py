@@ -371,6 +371,16 @@ from aura_sdk.transport.governed_translation_intelligence import (
     GovernedTranslationIntelligenceRegistry,
     GovernedTranslationIntelligenceResult,
 )
+from aura_sdk.transport.governed_translation_execution import (
+    GovernedTranslationExecutionEngine,
+    GovernedTranslationExecutionRegistry,
+    GovernedTranslationExecutionResult,
+)
+from aura_sdk.transport.governed_adaptive_remediation import (
+    GovernedAdaptiveRemediationEngine,
+    GovernedAdaptiveRemediationRegistry,
+    GovernedAdaptiveRemediationResult,
+)
 from aura_sdk.transport.dmesg_ingestor import DmesgIngestionResult, ingest_dmesg
 from aura_sdk.transport.ftrace_ingestor import FtraceIngestionResult, ingest_ftrace
 from aura_sdk.transport.tracecmd_ingestor import TracecmdIngestionResult, ingest_tracecmd
@@ -410,6 +420,11 @@ from aura_sdk.transport.runtime_session_registry import RuntimeSessionRegistry
 from aura_sdk.transport.runtime_evidence_ingestor import (
     RuntimeEvidenceIngestionResult,
     RuntimeEvidenceIngestor,
+)
+from aura_sdk.transport.runtime_evidence_acquisition import (
+    RuntimeEvidenceAcquisitionEngine,
+    RuntimeEvidenceAcquisitionRegistry,
+    RuntimeEvidenceAcquisitionResult,
 )
 
 __all__ = [
@@ -641,6 +656,12 @@ __all__ = [
     "GovernedTranslationIntelligenceEngine",
     "GovernedTranslationIntelligenceRegistry",
     "GovernedTranslationIntelligenceResult",
+    "GovernedTranslationExecutionEngine",
+    "GovernedTranslationExecutionRegistry",
+    "GovernedTranslationExecutionResult",
+    "GovernedAdaptiveRemediationEngine",
+    "GovernedAdaptiveRemediationRegistry",
+    "GovernedAdaptiveRemediationResult",
     "DmesgIngestionResult",
     "ingest_dmesg",
     "FtraceIngestionResult",
@@ -666,4 +687,7 @@ __all__ = [
     "RuntimeSessionRegistry",
     "RuntimeEvidenceIngestionResult",
     "RuntimeEvidenceIngestor",
+    "RuntimeEvidenceAcquisitionEngine",
+    "RuntimeEvidenceAcquisitionRegistry",
+    "RuntimeEvidenceAcquisitionResult",
 ]

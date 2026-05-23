@@ -1,0 +1,223 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "2ca598a82fcd8c1bad5984560661fd2660cb1ec26a6e804e9955032bce4f6a47",
+  "edges": [
+    {
+      "from": "event:clock_state:1",
+      "relation": "runtime_order",
+      "to": "event:clock_state:2"
+    },
+    {
+      "from": "event:clock_state:2",
+      "relation": "runtime_order",
+      "to": "event:clock_state:3"
+    },
+    {
+      "from": "event:clock_state:3",
+      "relation": "runtime_order",
+      "to": "event:clock_state:4"
+    },
+    {
+      "from": "event:clock_state:4",
+      "relation": "runtime_order",
+      "to": "event:clock_state:5"
+    },
+    {
+      "from": "event:clock_state:5",
+      "relation": "runtime_order",
+      "to": "event:clock_state:6"
+    },
+    {
+      "from": "event:clock_state:6",
+      "relation": "runtime_order",
+      "to": "event:clock_state:7"
+    },
+    {
+      "from": "event:clock_state:7",
+      "relation": "runtime_order",
+      "to": "event:clock_state:8"
+    },
+    {
+      "from": "event:clock_state:8",
+      "relation": "runtime_order",
+      "to": "event:regulator_state:1"
+    },
+    {
+      "from": "event:regulator_state:1",
+      "relation": "runtime_order",
+      "to": "event:regulator_state:2"
+    },
+    {
+      "from": "event:regulator_state:2",
+      "relation": "runtime_order",
+      "to": "event:ipc_path:1"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:CLOCK"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:CLOCK"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:CLOCK"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:DAPM"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:DSP"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:IRQ"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:PCM"
+    },
+    {
+      "from": "source:clocks",
+      "relation": "emits",
+      "to": "domain:SOUNDWIRE"
+    },
+    {
+      "from": "source:ipc_path",
+      "relation": "emits",
+      "to": "domain:DSP"
+    },
+    {
+      "from": "source:regulators",
+      "relation": "emits",
+      "to": "domain:REGULATOR"
+    },
+    {
+      "from": "source:regulators",
+      "relation": "emits",
+      "to": "domain:REGULATOR"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "ipc_path_available",
+      "to": "ipc:apr"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "ipc_path_available",
+      "to": "ipc:glink"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "ipc_path_available",
+      "to": "ipc:rpmsg"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "domain:CLOCK"
+    },
+    {
+      "id": "domain:DAPM"
+    },
+    {
+      "id": "domain:DSP"
+    },
+    {
+      "id": "domain:IRQ"
+    },
+    {
+      "id": "domain:PCM"
+    },
+    {
+      "id": "domain:REGULATOR"
+    },
+    {
+      "id": "domain:SOUNDWIRE"
+    },
+    {
+      "id": "event:clock_state:1"
+    },
+    {
+      "id": "event:clock_state:2"
+    },
+    {
+      "id": "event:clock_state:3"
+    },
+    {
+      "id": "event:clock_state:4"
+    },
+    {
+      "id": "event:clock_state:5"
+    },
+    {
+      "id": "event:clock_state:6"
+    },
+    {
+      "id": "event:clock_state:7"
+    },
+    {
+      "id": "event:clock_state:8"
+    },
+    {
+      "id": "event:ipc_path:1"
+    },
+    {
+      "id": "event:regulator_state:1"
+    },
+    {
+      "id": "event:regulator_state:2"
+    },
+    {
+      "id": "ipc:apr"
+    },
+    {
+      "id": "ipc:glink"
+    },
+    {
+      "id": "ipc:rpmsg"
+    },
+    {
+      "id": "source:clocks"
+    },
+    {
+      "id": "source:ipc_path"
+    },
+    {
+      "id": "source:regulators"
+    },
+    {
+      "id": "target:RB3Gen2"
+    }
+  ],
+  "report_name": "hardware_truth_graph",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "be_count": 0,
+    "domain_counts": {
+      "CLOCK": 3,
+      "DAPM": 1,
+      "DSP": 2,
+      "IRQ": 1,
+      "PCM": 1,
+      "REGULATOR": 2,
+      "SOUNDWIRE": 1
+    },
+    "event_count": 11,
+    "fe_count": 0,
+    "ipc_node_count": 3
+  },
+  "target_id": "RB3Gen2"
+}

@@ -1537,6 +1537,233 @@ python3 -m pytest \
 
 - `docs/operations/transport/governed_translation_intelligence_architecture.md`
 
+## Governed Translation Execution Layer
+
+This layer executes governed AST-aware source transformations from translation
+intelligence artifacts, with deterministic patch lineage and fail-closed
+gating.
+
+### Focus Coverage
+
+- callback replacement transformation
+- vendor macro elimination
+- FE/BE topology rewrite scaffolding
+- DAPM route conversion generation
+- SoundWire upstream adaptation
+- runtime-safe API substitution
+- migration staging boundaries
+- rollback-safe patch chunking
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/governed_translation_execution.py`
+- Runner:
+  - `scripts/aura-governed-translation-execution.py`
+
+### Required Artifacts (Generated)
+
+- `generated_upstream_patch.diff`
+- `transformation_lineage.json`
+- `unsafe_transformation_blocks.json`
+- `runtime_validated_patch_segments.json`
+- `deterministic_patch_generation_replay.json`
+- `translation_execution_report.json`
+- `governed_translation_execution_summary.json`
+
+### Run Governed Translation Execution
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-governed-translation-execution.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id governed_translation_execution_session_v1 \
+  --lineage-id governed_translation_execution_v1 \
+  --dry-run
+```
+
+Optional source inputs:
+
+```bash
+  --source-root /path/to/downstream/kernel \
+  --source-file sound/soc/qcom/qdsp6/q6apm-dai.c \
+  --source-file sound/soc/qcom/qdsp6/q6apm-lpass-dais.c
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_governed_translation_execution_static.py \
+  workspace/aura-sdk/tests/test_governed_translation_intelligence_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed on unresolved blockers or insufficient confidence
+- runtime-equivalence gating before transformations
+- runtime-truth precedence over static assumptions
+- deterministic replay lineage persistence for patch generation
+- plugin/runtime isolation preserved (no core target branching)
+- advisory-only behavior (no autonomous patch submission)
+
+### Architecture Document
+
+- `docs/operations/transport/governed_translation_execution_architecture.md`
+
+## Governed Adaptive Remediation and Translation Learning Layer
+
+This layer learns from governed translation outcomes and manual remediation
+decisions while preserving fail-closed governance.
+
+### Focus Coverage
+
+- translation pattern memory
+- vendor abstraction learning
+- runtime validation feedback correlation
+- reusable remediation template extraction
+- confidence calibration refinement
+- cross-driver equivalence reuse
+- historical blocker similarity detection
+- subsystem-specific migration intelligence
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/governed_adaptive_remediation.py`
+- Runner:
+  - `scripts/aura-governed-adaptive-remediation.py`
+
+### Required Artifacts (Generated)
+
+- `learned_translation_patterns.json`
+- `remediation_template_registry.json`
+- `historical_blocker_similarity_map.json`
+- `confidence_calibration_report.json`
+- `reusable_equivalence_library.json`
+- `subsystem_translation_memory.json`
+- `adaptive_remediation_trace.json`
+- `governed_adaptive_remediation_summary.json`
+
+### Run Governed Adaptive Remediation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-governed-adaptive-remediation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id governed_adaptive_remediation_session_v1 \
+  --lineage-id governed_adaptive_remediation_v1
+```
+
+Optional manual learning input:
+
+```bash
+  --manual-remediation-file /path/to/manual_remediation_outcomes.json
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_governed_adaptive_remediation_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed on insufficient runtime-backed learning evidence
+- learned patterns cannot bypass fail-closed without runtime-backed evidence
+- deterministic lineage and replay-safe persistence
+- plugin/runtime isolation preserved (no target branching in core)
+- advisory-only behavior (no autonomous patching/mutation)
+
+### Architecture Document
+
+- `docs/operations/transport/governed_adaptive_remediation_architecture.md`
+
+## Runtime Evidence Acquisition and Hardware Truth Validation Layer
+
+This layer ingests real runtime traces (or archived target sessions), correlates
+hardware truth against translation expectations, and enforces runtime-backed
+equivalence confidence before governed transformation reuse.
+
+### Focus Coverage
+
+- live trace ingestion adapters
+- IPCAT hardware descriptor ingestion
+- runtime topology reconstruction
+- PCM/DAPM/SoundWire lifecycle capture
+- DSP/mailbox synchronization tracing
+- IRQ ordering capture
+- clock/regulator state correlation
+- runtime equivalence fingerprinting
+- target session persistence + replay
+- cross-platform runtime comparison
+- evidence quality scoring + missing-runtime-coverage detection
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/runtime_evidence_acquisition.py`
+- Runner:
+  - `scripts/aura-runtime-evidence-acquisition.py`
+
+### Required Artifacts (Generated)
+
+- `runtime_equivalence_fingerprint.json`
+- `hardware_truth_graph.json`
+- `target_runtime_capture.json`
+- `downstream_upstream_runtime_diff.json`
+- `ipc_topology_map.json`
+- `evidence_quality_report.json`
+- `runtime_divergence_report.json`
+- `target_session_replay.json`
+- `runtime_evidence_acquisition_summary.json`
+
+### Run Runtime Evidence Acquisition
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-runtime-evidence-acquisition.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id runtime_evidence_acquisition_session_v1 \
+  --lineage-id runtime_evidence_acquisition_v1
+```
+
+Optional IPCAT descriptor:
+
+```bash
+  --ipcat-hardware-metadata /path/to/ipcat_hardware_descriptor.json
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_runtime_evidence_acquisition_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed on low runtime-backed equivalence confidence
+- transformations blocked below runtime-backed confidence threshold
+- runtime-truth precedence over static assumptions
+- deterministic replay-safe session persistence
+- plugin/runtime isolation preserved (no target branching in core)
+- advisory-only behavior (no autonomous runtime/source mutation)
+
+### Architecture Document
+
+- `docs/operations/transport/runtime_evidence_acquisition_architecture.md`
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

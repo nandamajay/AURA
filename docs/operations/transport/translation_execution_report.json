@@ -1,0 +1,55 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "a51b48888e5dc11f87792cfd1e84eb1aa4210b35ef5e69d2623d4707b2508124",
+  "dry_run": true,
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://governed_translation_execution",
+    "artifact://upstream_translation_plan",
+    "artifact://api_replacement_map",
+    "artifact://unsupported_vendor_constructs",
+    "artifact://runtime_equivalence_validation",
+    "artifact://translation_confidence_report",
+    "artifact://runtime_truth_graph",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "fail_closed_justification": "unsupported_vendor_constructs_present",
+  "governance_state": {
+    "execution_approval_mode": "linux_authoritative_windows_execute_only",
+    "fail_closed_posture": true,
+    "patching_restrictions": {
+      "autonomous_patching_allowed": false,
+      "autonomous_upstream_generation_allowed": false
+    },
+    "topology_mutation_restrictions": {
+      "autonomous_mixer_mutation_allowed": false,
+      "autonomous_topology_rewrite_allowed": false
+    },
+    "transport_restrictions": {
+      "allowed_modes": [
+        "adb_shell"
+      ],
+      "blocked_modes": [
+        "serial_raw",
+        "ssh_unapproved"
+      ]
+    },
+    "updated_at": "2026-05-22T14:31:45.397414+00:00",
+    "write_policy": "governed_write_approved_only"
+  },
+  "lineage_id": "governed_translation_execution_v1",
+  "patch_emitted": false,
+  "report_name": "translation_execution_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "governed_translation_execution_session_v1",
+  "summary": {
+    "applied_segment_count": 0,
+    "changed_file_count": 0,
+    "runtime_validated_candidate_count": 0,
+    "translation_confidence": 0.187,
+    "unsafe_block_count": 0
+  },
+  "target_id": "RB3Gen2"
+}

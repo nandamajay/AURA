@@ -1,0 +1,498 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "c74b250bf0d2844f9ad3b190b2e92d6ef5da5f1f2ce2733101beade0ba7771d4",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_evidence_acquisition",
+    "artifact://runtime_truth_graph",
+    "artifact://topology_runtime_graph",
+    "artifact://dts_topology_graph",
+    "artifact://upstream_translation_plan",
+    "artifact://api_replacement_map",
+    "artifact://runtime_equivalence_validation",
+    "artifact://ipcat_hardware_descriptor",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "ingested_sources": {
+    "clocks": {
+      "classification": "PRESENT",
+      "deterministic_fingerprint": "fdaf32d41b47063eb0134bbbe532349b78a9c494e63d3c0c33046c31724fcb2a",
+      "events": [
+        {
+          "event_id": "clock_state:1",
+          "event_type": "clock_state",
+          "message": "clock vote for runtime_event_ingestion",
+          "raw": "clock vote for runtime_event_ingestion",
+          "source": "clock_state",
+          "timestamp_ms": 1804.0
+        },
+        {
+          "event_id": "clock_state:2",
+          "event_type": "clock_state",
+          "message": "clock vote for trace_correlation",
+          "raw": "clock vote for trace_correlation",
+          "source": "clock_state",
+          "timestamp_ms": 1808.0
+        },
+        {
+          "event_id": "clock_state:3",
+          "event_type": "clock_state",
+          "message": "clock vote for dapm_transition_trace",
+          "raw": "clock vote for dapm_transition_trace",
+          "source": "clock_state",
+          "timestamp_ms": 1812.0
+        },
+        {
+          "event_id": "clock_state:4",
+          "event_type": "clock_state",
+          "message": "clock vote for pcm_lifecycle_trace",
+          "raw": "clock vote for pcm_lifecycle_trace",
+          "source": "clock_state",
+          "timestamp_ms": 1816.0
+        },
+        {
+          "event_id": "clock_state:5",
+          "event_type": "clock_state",
+          "message": "clock vote for soundwire_runtime_graph",
+          "raw": "clock vote for soundwire_runtime_graph",
+          "source": "clock_state",
+          "timestamp_ms": 1820.0
+        },
+        {
+          "event_id": "clock_state:6",
+          "event_type": "clock_state",
+          "message": "clock vote for irq_timing_report",
+          "raw": "clock vote for irq_timing_report",
+          "source": "clock_state",
+          "timestamp_ms": 1824.0
+        },
+        {
+          "event_id": "clock_state:7",
+          "event_type": "clock_state",
+          "message": "clock vote for dsp_sync_report",
+          "raw": "clock vote for dsp_sync_report",
+          "source": "clock_state",
+          "timestamp_ms": 1828.0
+        },
+        {
+          "event_id": "clock_state:8",
+          "event_type": "clock_state",
+          "message": "clock vote for runtime_drift_report",
+          "raw": "clock vote for runtime_drift_report",
+          "source": "clock_state",
+          "timestamp_ms": 1832.0
+        }
+      ],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "clock_state",
+      "summary": {
+        "event_count": 8
+      }
+    },
+    "debugfs_runtime": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "de95e91848fea3d81f669316d70f2ee9c4be453e6ac88de40d60ff76029929ac",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "debugfs_state",
+      "summary": {
+        "asoc_related_count": 0,
+        "event_count": 0
+      }
+    },
+    "dmesg": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "441604073a1088af882d47ec207fa4845d55bf7fa43ba6cfc8f2861f6e5f3ca4",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "dmesg",
+      "summary": {
+        "critical_count": 0,
+        "event_count": 0
+      }
+    },
+    "dsp_mailbox": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "b5278374576d1752c0ca7546b427422f138326836681ff5d3c5501326f570ce0",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "dsp_mailbox_logs",
+      "summary": {
+        "event_count": 0,
+        "lineage_count": 0
+      }
+    },
+    "ftrace": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "9e51a4d19170c759c6b19f752c59db74f9f622c392ea17530dab0ff4b9e7d863",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "ftrace",
+      "summary": {
+        "event_count": 0,
+        "pcm_trace_count": 0
+      }
+    },
+    "ipc_path": {
+      "classification": "PRESENT",
+      "deterministic_fingerprint": "7e26faf81cafba62c1e8dd6f78ab6925a0f017fa240e500e91f4c9f7617b36a8",
+      "events": [
+        {
+          "event_id": "ipc_path:1",
+          "event_type": "ipc_path_state",
+          "message": "ipc mailbox latency 5.0",
+          "raw": "ipc mailbox latency 5.0",
+          "source": "ipc_path",
+          "timestamp_ms": 2004.0
+        }
+      ],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "ipc_path",
+      "summary": {
+        "event_count": 1
+      }
+    },
+    "irq_runtime": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "f0197da0fd66199942eca7d2b4e388a4d5484afb72c52401ca0cac164283d88f",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "irq_timing_traces",
+      "summary": {
+        "event_count": 0
+      }
+    },
+    "procfs_runtime": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "e9fed476af819c551c2b98d5bc03027430808c2af40aa2e86ac365352ef80e45",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "alsa_procfs_state",
+      "summary": {
+        "event_count": 0,
+        "pcm_ref_count": 0,
+        "unique_pcm_refs": []
+      }
+    },
+    "regulators": {
+      "classification": "PRESENT",
+      "deterministic_fingerprint": "8d762e12480a2747e77fb20e2cf2a3dfea5c3b6d3ad5e7bb2d3f54de5b697a14",
+      "events": [
+        {
+          "event_id": "regulator_state:1",
+          "event_type": "regulator_state",
+          "message": "regulator vdd_audio enabled",
+          "raw": "regulator vdd_audio enabled",
+          "source": "regulator_state",
+          "timestamp_ms": 1904.0
+        },
+        {
+          "event_id": "regulator_state:2",
+          "event_type": "regulator_state",
+          "message": "regulator vdd_codec enabled",
+          "raw": "regulator vdd_codec enabled",
+          "source": "regulator_state",
+          "timestamp_ms": 1908.0
+        }
+      ],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "regulator_state",
+      "summary": {
+        "event_count": 2
+      }
+    },
+    "soundwire_runtime": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "4e0cba09033f8a5cf5cf7513a04a3c90dd64647a9a1461a5cc502a9eba211bde",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "soundwire_runtime_dumps",
+      "summary": {
+        "entity_count": 0,
+        "event_count": 0,
+        "unique_entities": []
+      }
+    },
+    "tinymix_state": {
+      "classification": "MISSING",
+      "controls": [],
+      "deterministic_fingerprint": "f22726e535f4ce4de181881b08a3eb110d6427dc96349c8f722bc3438378337b",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "tinyalsa_tinymix_snapshots",
+      "summary": {
+        "control_count": 0,
+        "event_count": 0
+      }
+    },
+    "trace_cmd": {
+      "classification": "MISSING",
+      "deterministic_fingerprint": "89cb8a46fd3b8dc254857a5d4c543cfb3a6b4eb1667ea82e5bc44b2468c99478",
+      "events": [],
+      "read_only_ingestion": true,
+      "schema_version": "1.0",
+      "source": "trace_cmd",
+      "summary": {
+        "event_count": 0,
+        "perf_event_count": 0
+      }
+    }
+  },
+  "ipcat_topology_fingerprint": "03fbe17c9a8437c9e6bead68d6a230763bd9753fb5ef6fa59f7786dbb484fc6d",
+  "lineage_id": "runtime_evidence_acquisition_v1",
+  "normalized_events": [
+    {
+      "be_reference": "",
+      "domain": "CLOCK",
+      "event_id": "clock_state:1",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for runtime_event_ingestion",
+      "normalized_index": 1,
+      "raw": {
+        "event_id": "clock_state:1",
+        "event_type": "clock_state",
+        "message": "clock vote for runtime_event_ingestion",
+        "raw": "clock vote for runtime_event_ingestion",
+        "source": "clock_state",
+        "timestamp_ms": 1804.0
+      },
+      "sequence_index": 1,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1804000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "CLOCK",
+      "event_id": "clock_state:2",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for trace_correlation",
+      "normalized_index": 2,
+      "raw": {
+        "event_id": "clock_state:2",
+        "event_type": "clock_state",
+        "message": "clock vote for trace_correlation",
+        "raw": "clock vote for trace_correlation",
+        "source": "clock_state",
+        "timestamp_ms": 1808.0
+      },
+      "sequence_index": 2,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1808000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "DAPM",
+      "event_id": "clock_state:3",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for dapm_transition_trace",
+      "normalized_index": 3,
+      "raw": {
+        "event_id": "clock_state:3",
+        "event_type": "clock_state",
+        "message": "clock vote for dapm_transition_trace",
+        "raw": "clock vote for dapm_transition_trace",
+        "source": "clock_state",
+        "timestamp_ms": 1812.0
+      },
+      "sequence_index": 3,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1812000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "PCM",
+      "event_id": "clock_state:4",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for pcm_lifecycle_trace",
+      "normalized_index": 4,
+      "raw": {
+        "event_id": "clock_state:4",
+        "event_type": "clock_state",
+        "message": "clock vote for pcm_lifecycle_trace",
+        "raw": "clock vote for pcm_lifecycle_trace",
+        "source": "clock_state",
+        "timestamp_ms": 1816.0
+      },
+      "sequence_index": 4,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1816000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "SOUNDWIRE",
+      "event_id": "clock_state:5",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for soundwire_runtime_graph",
+      "normalized_index": 5,
+      "raw": {
+        "event_id": "clock_state:5",
+        "event_type": "clock_state",
+        "message": "clock vote for soundwire_runtime_graph",
+        "raw": "clock vote for soundwire_runtime_graph",
+        "source": "clock_state",
+        "timestamp_ms": 1820.0
+      },
+      "sequence_index": 5,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1820000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "IRQ",
+      "event_id": "clock_state:6",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for irq_timing_report",
+      "normalized_index": 6,
+      "raw": {
+        "event_id": "clock_state:6",
+        "event_type": "clock_state",
+        "message": "clock vote for irq_timing_report",
+        "raw": "clock vote for irq_timing_report",
+        "source": "clock_state",
+        "timestamp_ms": 1824.0
+      },
+      "sequence_index": 6,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1824000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "DSP",
+      "event_id": "clock_state:7",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for dsp_sync_report",
+      "normalized_index": 7,
+      "raw": {
+        "event_id": "clock_state:7",
+        "event_type": "clock_state",
+        "message": "clock vote for dsp_sync_report",
+        "raw": "clock vote for dsp_sync_report",
+        "source": "clock_state",
+        "timestamp_ms": 1828.0
+      },
+      "sequence_index": 7,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1828000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "CLOCK",
+      "event_id": "clock_state:8",
+      "event_type": "clock_state",
+      "fe_reference": "",
+      "message": "clock vote for runtime_drift_report",
+      "normalized_index": 8,
+      "raw": {
+        "event_id": "clock_state:8",
+        "event_type": "clock_state",
+        "message": "clock vote for runtime_drift_report",
+        "raw": "clock vote for runtime_drift_report",
+        "source": "clock_state",
+        "timestamp_ms": 1832.0
+      },
+      "sequence_index": 8,
+      "source": "clock_state",
+      "source_key": "clocks",
+      "timestamp_ms": 1832000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "REGULATOR",
+      "event_id": "regulator_state:1",
+      "event_type": "regulator_state",
+      "fe_reference": "",
+      "message": "regulator vdd_audio enabled",
+      "normalized_index": 9,
+      "raw": {
+        "event_id": "regulator_state:1",
+        "event_type": "regulator_state",
+        "message": "regulator vdd_audio enabled",
+        "raw": "regulator vdd_audio enabled",
+        "source": "regulator_state",
+        "timestamp_ms": 1904.0
+      },
+      "sequence_index": 10,
+      "source": "regulator_state",
+      "source_key": "regulators",
+      "timestamp_ms": 1904000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "REGULATOR",
+      "event_id": "regulator_state:2",
+      "event_type": "regulator_state",
+      "fe_reference": "",
+      "message": "regulator vdd_codec enabled",
+      "normalized_index": 10,
+      "raw": {
+        "event_id": "regulator_state:2",
+        "event_type": "regulator_state",
+        "message": "regulator vdd_codec enabled",
+        "raw": "regulator vdd_codec enabled",
+        "source": "regulator_state",
+        "timestamp_ms": 1908.0
+      },
+      "sequence_index": 11,
+      "source": "regulator_state",
+      "source_key": "regulators",
+      "timestamp_ms": 1908000.0
+    },
+    {
+      "be_reference": "",
+      "domain": "DSP",
+      "event_id": "ipc_path:1",
+      "event_type": "ipc_path_state",
+      "fe_reference": "",
+      "message": "ipc mailbox latency 5.0",
+      "normalized_index": 11,
+      "raw": {
+        "event_id": "ipc_path:1",
+        "event_type": "ipc_path_state",
+        "message": "ipc mailbox latency 5.0",
+        "raw": "ipc mailbox latency 5.0",
+        "source": "ipc_path",
+        "timestamp_ms": 2004.0
+      },
+      "sequence_index": 9,
+      "source": "ipc_path",
+      "source_key": "ipc_path",
+      "timestamp_ms": 2004000.0
+    }
+  ],
+  "report_name": "target_runtime_capture",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_evidence_acquisition_session_v1",
+  "summary": {
+    "domain_count": 7,
+    "event_count": 11,
+    "source_count": 12
+  },
+  "target_id": "RB3Gen2"
+}

@@ -1,0 +1,65 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "coverage": {
+    "coverage_ratio": 0.25,
+    "missing_required_sources": [
+      "dmesg",
+      "ftrace",
+      "trace_cmd",
+      "tinymix_state",
+      "procfs_runtime",
+      "debugfs_runtime",
+      "soundwire_runtime",
+      "dsp_mailbox",
+      "irq_runtime"
+    ],
+    "required_sources": [
+      "dmesg",
+      "ftrace",
+      "trace_cmd",
+      "tinymix_state",
+      "procfs_runtime",
+      "debugfs_runtime",
+      "soundwire_runtime",
+      "dsp_mailbox",
+      "irq_runtime",
+      "clocks",
+      "regulators",
+      "ipc_path"
+    ]
+  },
+  "deterministic_fingerprint": "07c37efc7ae0c5ed11c64458fe0103adf36adb2cd3dd005f9df346735b00fdad",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_evidence_acquisition",
+    "artifact://runtime_truth_graph",
+    "artifact://topology_runtime_graph",
+    "artifact://dts_topology_graph",
+    "artifact://upstream_translation_plan",
+    "artifact://api_replacement_map",
+    "artifact://runtime_equivalence_validation",
+    "artifact://ipcat_hardware_descriptor",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "integrity_validation": {
+    "integrity_pass": true,
+    "issue_count": 0,
+    "issues": []
+  },
+  "ordering_validation": {
+    "normalized_event_count": 11,
+    "ordering_pass": false,
+    "raw_ordering_violations": 1
+  },
+  "quality_score": 0.326,
+  "report_name": "evidence_quality_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "event_count": 11,
+    "governance_ok": true,
+    "source_count": 12
+  },
+  "target_id": "RB3Gen2"
+}
