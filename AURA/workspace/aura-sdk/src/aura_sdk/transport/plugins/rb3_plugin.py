@@ -850,6 +850,85 @@ class RB3TargetPlugin:
             ),
         }
 
+    def semantic_knowledge_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        source_id = str(payload.get("source_id", "")).strip()
+        source_version = str(payload.get("source_version", "")).strip()
+        taxonomy_overrides = {
+            "qcom_downstream_abstractions": [
+                "msm_common_be_ops",
+                "msm_common_be_dai_links",
+                "msm_wsa_cdc_dma_be_dai_links",
+                "wcd937x",
+                "bolero",
+                "lpass",
+                "swr",
+            ],
+            "upstream_equivalence_mappings": [
+                "snd_soc_component",
+                "snd_soc_dai_link",
+                "snd_soc_dapm_route",
+                "snd_pcm_substream",
+                "soundwire",
+            ],
+            "known_portability_blockers": [
+                "vendor hook",
+                "downstream only",
+                "proprietary",
+                "timing dependency",
+            ],
+            "vendor_workaround_patterns": [
+                "quirk",
+                "workaround",
+                "fallback",
+            ],
+        }
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.semantic_knowledge_adapter",
+            "source_id": source_id,
+            "source_version": source_version,
+            "taxonomy_overrides": taxonomy_overrides,
+            "upstream_equivalence_hints": {
+                "msm_": "snd_soc_component",
+                "qcom_": "snd_soc_component",
+                "wcd": "sound/soc/codecs/wcd*",
+                "swr_": "soundwire",
+                "sdw_": "soundwire",
+                "apr_": "mailbox_or_ipc_abstraction",
+                "gpr_": "mailbox_or_ipc_abstraction",
+            },
+            "equivalence_confidence_hints": {
+                "msm_": 0.78,
+                "qcom_": 0.78,
+                "wcd": 0.65,
+                "swr_": 0.82,
+                "sdw_": 0.82,
+            },
+            "portability_blocker_patterns": [
+                "vendor_hook",
+                "downstream_only_api",
+                "proprietary_runtime_hook",
+                "timing_dependency",
+            ],
+            "fingerprint": _stable_hash(
+                {
+                    "source_id": source_id,
+                    "source_version": source_version,
+                    "taxonomy_overrides": taxonomy_overrides,
+                    "upstream_equivalence_hints": {
+                        "msm_": "snd_soc_component",
+                        "qcom_": "snd_soc_component",
+                        "wcd": "sound/soc/codecs/wcd*",
+                        "swr_": "soundwire",
+                        "sdw_": "soundwire",
+                        "apr_": "mailbox_or_ipc_abstraction",
+                        "gpr_": "mailbox_or_ipc_abstraction",
+                    },
+                }
+            ),
+        }
+
 
 def get_plugin() -> RB3TargetPlugin:
     return RB3TargetPlugin()

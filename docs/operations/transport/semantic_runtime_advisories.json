@@ -1,0 +1,54 @@
+{
+  "advisories": [
+    {
+      "advisory": "Portability reasoning failed closed; migration guidance must stop at diagnostic advisory output.",
+      "code": "portability_fail_closed",
+      "severity": "HIGH"
+    },
+    {
+      "advisory": "Detected blocked semantic portability patterns requiring manual engineering review.",
+      "code": "blocked_unsafe_patterns",
+      "evidence": [
+        {
+          "classification": "blocked_unsafe",
+          "code": "unresolved_downstream_equivalence",
+          "evidence": [
+            "bolero",
+            "swr"
+          ],
+          "severity": "HIGH"
+        }
+      ],
+      "severity": "HIGH"
+    },
+    {
+      "advisory": "Runtime lifecycle vocabulary extracted for correlation with evidence transitions.",
+      "code": "runtime_lifecycle_context",
+      "entities": [
+        "bind",
+        "init",
+        "probe",
+        "resume",
+        "shutdown",
+        "start",
+        "stop",
+        "suspend"
+      ],
+      "severity": "INFO"
+    }
+  ],
+  "advisory_only": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "176e07d4d7b77ac2acdac78f024e9109974e0e9f48e26df771fb2eaf2ff1dda2",
+  "report_name": "semantic_runtime_advisories",
+  "runtime_execution_permitted_from_semantics": false,
+  "runtime_state_mutation_allowed": false,
+  "runtime_summary": {
+    "classification": "ADVISORY_ONLY",
+    "playback_completion": true,
+    "process_success": true,
+    "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82"
+  },
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

@@ -41,6 +41,7 @@ class TargetPluginContract(Protocol):
     downstream_ingestion_adapter: ProviderFn
     upstream_match_adapter: ProviderFn
     topology_reconstruction_adapter: ProviderFn
+    semantic_knowledge_adapter: ProviderFn
 
 
 @dataclass(frozen=True)
@@ -86,6 +87,7 @@ def assert_plugin_contract(plugin: Any) -> None:
         "downstream_ingestion_adapter",
         "upstream_match_adapter",
         "topology_reconstruction_adapter",
+        "semantic_knowledge_adapter",
     )
 
     missing: list[str] = []

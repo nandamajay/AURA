@@ -151,6 +151,51 @@ from aura_sdk.transport.semantic_fingerprint import (
     stable_fingerprint,
 )
 from aura_sdk.transport.semantic_registry import SemanticCognitionRegistry
+from aura_sdk.transport.semantic_html_parser import (
+    SemanticHtmlParseResult,
+    parse_semantic_html,
+)
+from aura_sdk.transport.semantic_entity_extractor import (
+    SemanticEntityExtractionResult,
+    extract_semantic_entities,
+)
+from aura_sdk.transport.semantic_relationship_graph import (
+    SemanticRelationshipGraphResult,
+    build_semantic_relationship_map,
+)
+from aura_sdk.transport.semantic_ontology_builder import (
+    SemanticOntologyResult,
+    build_semantic_ontology,
+)
+from aura_sdk.transport.semantic_governance_boundary import (
+    SemanticGovernanceBoundaryResult,
+    evaluate_semantic_governance_boundary,
+)
+from aura_sdk.transport.semantic_equivalence_mapper import (
+    SemanticEquivalenceMapResult,
+    build_semantic_equivalence_map,
+)
+from aura_sdk.transport.semantic_portability_reasoning import (
+    SemanticPortabilityReasoningResult,
+    build_semantic_portability_rules,
+)
+from aura_sdk.transport.semantic_runtime_advisory import (
+    SemanticRuntimeAdvisoryEngine,
+    SemanticRuntimeAdvisoryResult,
+)
+from aura_sdk.transport.semantic_replay_compatibility import (
+    SemanticReplayCompatibilityResult,
+    build_semantic_replay_compatibility,
+)
+from aura_sdk.transport.semantic_confidence_engine import (
+    SemanticConfidenceResult,
+    build_semantic_confidence_report,
+)
+from aura_sdk.transport.semantic_traceability_engine import (
+    KernelSemanticKnowledgeRegistry,
+    SemanticTraceabilityResult,
+    build_semantic_traceability_graph,
+)
 from aura_sdk.transport.evidence_correlation import (
     EvidenceCorrelationResult,
     correlate_evidence,
@@ -323,6 +368,29 @@ __all__ = [
     "SemanticCognitionEngine",
     "SemanticCognitionResult",
     "SemanticCognitionRegistry",
+    "SemanticHtmlParseResult",
+    "parse_semantic_html",
+    "SemanticEntityExtractionResult",
+    "extract_semantic_entities",
+    "SemanticRelationshipGraphResult",
+    "build_semantic_relationship_map",
+    "SemanticOntologyResult",
+    "build_semantic_ontology",
+    "SemanticGovernanceBoundaryResult",
+    "evaluate_semantic_governance_boundary",
+    "SemanticEquivalenceMapResult",
+    "build_semantic_equivalence_map",
+    "SemanticPortabilityReasoningResult",
+    "build_semantic_portability_rules",
+    "SemanticRuntimeAdvisoryEngine",
+    "SemanticRuntimeAdvisoryResult",
+    "SemanticReplayCompatibilityResult",
+    "build_semantic_replay_compatibility",
+    "SemanticConfidenceResult",
+    "build_semantic_confidence_report",
+    "SemanticTraceabilityResult",
+    "build_semantic_traceability_graph",
+    "KernelSemanticKnowledgeRegistry",
     "SemanticFingerprintResult",
     "build_vendor_dependency_fingerprint",
     "stable_fingerprint",

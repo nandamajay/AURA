@@ -25,6 +25,7 @@ class PluginIsolationValidator:
         return [
             base / "portable_runtime_layer.py",
             base / "semantic_cognition.py",
+            base / "semantic_runtime_advisory.py",
             base / "cognition_correlation.py",
             base / "upstream_conversion_planner.py",
             base / "real_downstream_conversion_planner.py",
@@ -62,11 +63,12 @@ class PluginIsolationValidator:
         files = self._core_files()
         portable_runtime_file = files[0]
         semantic_core_file = files[1]
-        correlation_core_file = files[2]
-        translation_core_file = files[3]
-        real_ingestion_core_file = files[4]
-        loader_file = files[5]
-        contract_file = files[6]
+        semantic_runtime_advisory_file = files[2]
+        correlation_core_file = files[3]
+        translation_core_file = files[4]
+        real_ingestion_core_file = files[5]
+        loader_file = files[6]
+        contract_file = files[7]
         branch_findings: dict[str, list[str]] = {}
         assumption_findings: dict[str, list[str]] = {}
 
@@ -97,6 +99,9 @@ class PluginIsolationValidator:
                     ".vendor_api_adapter(",
                     ".subsystem_descriptor_provider(",
                 )
+            ),
+            "semantic_runtime_advisory_invokes_plugin_semantic_adapter": ".semantic_knowledge_adapter(" in _read(
+                semantic_runtime_advisory_file
             ),
             "correlation_core_uses_plugin_loader": "TargetPluginLoader" in _read(correlation_core_file),
             "correlation_core_invokes_plugin_evidence_adapters": all(
@@ -149,6 +154,7 @@ class PluginIsolationValidator:
                     "downstream_ingestion_adapter",
                     "upstream_match_adapter",
                     "topology_reconstruction_adapter",
+                    "semantic_knowledge_adapter",
                 )
             ),
         }

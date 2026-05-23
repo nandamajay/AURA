@@ -573,6 +573,94 @@ python3 -m pytest \
 - `portable_multi_target_cognition_phase_summary.json`
   - artifact index and per-artifact fingerprint map
 
+## Kernel Semantic Knowledge Layer
+
+This subsystem ingests the Qualcomm Audio Knowledge Hub HTML and converts it
+into governed, deterministic semantic cognition artifacts. It is explicitly
+advisory-only and cannot execute runtime changes.
+
+### Scope and Safety
+
+- source:
+  - `/local/mnt/workspace/Audio_knowledge_Hub/qcom_audio_knowledge_hub_v16.html`
+- semantic knowledge is advisory cognition only
+- runtime evidence remains execution truth
+- no raw HTML is injected into runtime execution decisions
+- no direct runtime execution from semantic outputs
+- fail-closed governance remains enforced
+- plugin isolation is preserved via `semantic_knowledge_adapter`
+
+### Implemented Modules
+
+Phase 1:
+
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_html_parser.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_entity_extractor.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_relationship_graph.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_ontology_builder.py`
+
+Phase 2:
+
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_runtime_advisory.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_governance_boundary.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_portability_reasoning.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_equivalence_mapper.py`
+
+Phase 3:
+
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_replay_compatibility.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_confidence_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_traceability_engine.py`
+
+Runner:
+
+- `scripts/aura-kernel-semantic-knowledge-layer.py`
+
+### Generated Artifacts
+
+- `semantic_entity_graph.json`
+- `semantic_relationship_map.json`
+- `semantic_ontology.json`
+- `semantic_portability_rules.json`
+- `semantic_equivalence_map.json`
+- `semantic_runtime_advisories.json`
+- `semantic_traceability_graph.json`
+- `semantic_confidence_report.json`
+
+Additional governance/replay outputs:
+
+- `kernel_semantic_knowledge_layer_summary.json`
+- `semantic_knowledge_replay_trace.json`
+
+### Run
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-kernel-semantic-knowledge-layer.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id kernel_semantic_knowledge_layer_v1 \
+  --knowledge-html /local/mnt/workspace/Audio_knowledge_Hub/qcom_audio_knowledge_hub_v16.html \
+  --source-id qcom_audio_knowledge_hub \
+  --source-version v16
+```
+
+### Mission Alignment
+
+- driver understanding:
+  - extracts Qualcomm/downstream abstractions and kernel subsystem vocabulary
+- topology understanding:
+  - captures FE/BE, DPCM, DAPM, PCM lifecycle concepts and cross-links
+- runtime evidence reasoning:
+  - runtime advisories are contextualized by semantic rules while keeping runtime truth precedence
+- regression detection:
+  - portability blockers and equivalence gaps become traceable migration risk signals
+- deterministic replay:
+  - deterministic fingerprints, artifact lineage, replay trace, and persisted registry state
+- downstream-to-upstream conversion intelligence:
+  - confidence-scored semantic equivalence maps and portability rules support governed migration planning
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

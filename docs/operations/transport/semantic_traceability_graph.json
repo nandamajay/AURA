@@ -1,0 +1,140 @@
+{
+  "classification": "PASS",
+  "deterministic_fingerprint": "920783747fd8696f7fcaa8de9d8eec9ee06ddeebac0b3ed192863b2839751de8",
+  "edges": [
+    {
+      "from": "source:qcom_audio_knowledge_hub",
+      "relation": "materialized_as",
+      "to": "lineage:kernel_semantic_knowledge_layer_v1"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_confidence_report"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_entity_graph"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_equivalence_map"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_governance_boundary"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_ontology"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_portability_rules"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_relationship_map"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_replay_compatibility"
+    },
+    {
+      "from": "lineage:kernel_semantic_knowledge_layer_v1",
+      "relation": "produced",
+      "to": "artifact:semantic_runtime_advisories"
+    }
+  ],
+  "graph_name": "semantic_traceability_graph",
+  "lineage_id": "kernel_semantic_knowledge_layer_v1",
+  "nodes": [
+    {
+      "id": "source:qcom_audio_knowledge_hub",
+      "kind": "semantic_source",
+      "source_id": "qcom_audio_knowledge_hub",
+      "source_path": "/local/mnt/workspace/Audio_knowledge_Hub/qcom_audio_knowledge_hub_v16.html",
+      "source_sha256": "36ec25b3d04e1bfd1b8103a968ced431ebd97db9958da1991301e85ed8c2d5ab",
+      "source_version": "v16"
+    },
+    {
+      "id": "lineage:kernel_semantic_knowledge_layer_v1",
+      "kind": "semantic_lineage",
+      "lineage_id": "kernel_semantic_knowledge_layer_v1",
+      "recorded_at": "2026-05-23T09:09:44.624617+00:00"
+    },
+    {
+      "artifact_name": "semantic_confidence_report",
+      "classification": "PASS",
+      "fingerprint": "ff4f973c8bb2c8d746fedc50b90b8ebfcc3b1912769fdb33e36646cce362ac76",
+      "id": "artifact:semantic_confidence_report",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_entity_graph",
+      "classification": "PASS",
+      "fingerprint": "996b8da9e4c317c7559c2f1fafb2d85366112665579472e4e0e0a5dbe6644373",
+      "id": "artifact:semantic_entity_graph",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_equivalence_map",
+      "classification": "PASS",
+      "fingerprint": "0bc08fcb559432c56b8f072312d9a70cb9ff33ad03fc7bb58ad6fa72d1239eb0",
+      "id": "artifact:semantic_equivalence_map",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_governance_boundary",
+      "classification": "PASS",
+      "fingerprint": "13a5b6f5c0a54aa763acb1e243899d605efab25d7e9061f77a33f3ec996d6d27",
+      "id": "artifact:semantic_governance_boundary",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_ontology",
+      "classification": "PASS",
+      "fingerprint": "b3f8d0dda92cf1a962b962b31ae5c47b005dbcef92b0ad223f30b71905f2604d",
+      "id": "artifact:semantic_ontology",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_portability_rules",
+      "classification": "FAIL_CLOSED",
+      "fingerprint": "c6b01487c39ab4f26228f55e440d8fff86ca9a4f5273fb5bb99d86ce53c6cf31",
+      "id": "artifact:semantic_portability_rules",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_relationship_map",
+      "classification": "PASS",
+      "fingerprint": "9bada60299f92848381dbd16bfb8a51b2387890974caaa12167e8b0c02e3f638",
+      "id": "artifact:semantic_relationship_map",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_replay_compatibility",
+      "classification": "PASS",
+      "fingerprint": "bd08d9ca4334e5611922f5d6567dc4d0b5c814c14bc4ef7271eedb4ab6c9ea3a",
+      "id": "artifact:semantic_replay_compatibility",
+      "kind": "semantic_artifact"
+    },
+    {
+      "artifact_name": "semantic_runtime_advisories",
+      "classification": "ADVISORY_ONLY",
+      "fingerprint": "176e07d4d7b77ac2acdac78f024e9109974e0e9f48e26df771fb2eaf2ff1dda2",
+      "id": "artifact:semantic_runtime_advisories",
+      "kind": "semantic_artifact"
+    }
+  ],
+  "schema_version": "1.0",
+  "source_id": "qcom_audio_knowledge_hub",
+  "source_version": "v16"
+}

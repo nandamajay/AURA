@@ -1,0 +1,121 @@
+{
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "c6b01487c39ab4f26228f55e440d8fff86ca9a4f5273fb5bb99d86ce53c6cf31",
+  "portability_score": 0.62,
+  "relationship_density": 11479,
+  "report_name": "semantic_portability_rules",
+  "rules": {
+    "advisory_only": [
+      {
+        "classification": "advisory_only",
+        "code": "partial_equivalence_requires_manual_review",
+        "evidence": [
+          "apr_",
+          "apr_basic_rsp_result",
+          "apr_cb_func",
+          "apr_deregister",
+          "apr_device",
+          "apr_driver",
+          "apr_get_next_token",
+          "apr_hdr",
+          "apr_pkt",
+          "apr_probe",
+          "apr_register",
+          "apr_register_cb",
+          "apr_send_pkt",
+          "apr_svc",
+          "gpr_",
+          "gpr_hdr",
+          "lpass",
+          "lpass_ahb_clk",
+          "lpass_aon",
+          "lpass_audio_cc",
+          "lpass_audio_core_clk",
+          "lpass_audio_core_noc_clk",
+          "lpass_audio_hm",
+          "lpass_audio_hm_gdsc",
+          "lpass_audiocc",
+          "lpass_base",
+          "lpass_cdc_dma",
+          "lpass_clk_data",
+          "lpass_clocks_disable",
+          "lpass_clocks_enable",
+          "lpass_core",
+          "lpass_core_clk",
+          "lpass_cpu",
+          "lpass_cpu_daiops_hw_params",
+          "lpass_cpu_daiops_set_sysclk",
+          "lpass_cpu_daiops_startup",
+          "lpass_cpu_daiops_trigger",
+          "lpass_data",
+          "lpass_dma",
+          "lpass_dma_ch",
+          "lpass_dma_channel_reset",
+          "lpass_dma_interrupt_handler",
+          "lpass_dma_irq_handler",
+          "lpass_dma_setup_bd",
+          "lpass_dma_setup_channel",
+          "lpass_hdmi",
+          "lpass_hm",
+          "lpass_hm_gdsc",
+          "lpass_lpi_pinctrl",
+          "lpass_mi2s_component_driver"
+        ],
+        "severity": "MEDIUM"
+      },
+      {
+        "classification": "advisory_only",
+        "code": "known_portability_blocker_pattern",
+        "evidence": [
+          "proprietary",
+          "wrapper"
+        ],
+        "severity": "MEDIUM"
+      },
+      {
+        "classification": "advisory_only",
+        "code": "plugin_blocker_pattern",
+        "evidence": [
+          "vendor_hook",
+          "downstream_only_api",
+          "proprietary_runtime_hook",
+          "timing_dependency"
+        ],
+        "severity": "MEDIUM"
+      }
+    ],
+    "advisory_transformations": [
+      "manual_equivalence_validation",
+      "manual_vendor_workaround_refactor",
+      "manual_topology_route_confirmation"
+    ],
+    "blocked_unsafe": [
+      {
+        "classification": "blocked_unsafe",
+        "code": "unresolved_downstream_equivalence",
+        "evidence": [
+          "bolero",
+          "swr"
+        ],
+        "severity": "HIGH"
+      }
+    ],
+    "forbidden_transformations": [
+      "autonomous_patch_generation",
+      "autonomous_runtime_mutation",
+      "autonomous_topology_mutation"
+    ],
+    "replay_safe_transformations": [
+      "normalize_entity_labels",
+      "normalize_route_terms",
+      "preserve_runtime_truth_precedence"
+    ]
+  },
+  "schema_version": "1.0",
+  "source_id": "qcom_audio_knowledge_hub",
+  "source_version": "v16",
+  "workaround_patterns": [
+    "fallback",
+    "workaround"
+  ]
+}

@@ -536,6 +536,51 @@ class _BaseSimulationPlugin:
             ),
         }
 
+    def semantic_knowledge_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        source_id = str(payload.get("source_id", "")).strip()
+        source_version = str(payload.get("source_version", "")).strip()
+
+        if self.target_id == "degraded_target_gamma":
+            blocker_patterns = ["gamma_vendor_api", "unsupported_topology", "timing_dependency"]
+            confidence_hints = {"gamma_": 0.2}
+        elif self.target_id == "fake_target_beta":
+            blocker_patterns = ["vendor_beta_wrap", "beta_shim"]
+            confidence_hints = {"vendor_beta_": 0.62, "beta_": 0.58}
+        else:
+            blocker_patterns = ["simulated_runtime_dependency"]
+            confidence_hints = {"simulated_": 0.8}
+
+        taxonomy_overrides = {
+            "qcom_downstream_abstractions": [self.target_id, "simulated_vendor_path"],
+            "upstream_equivalence_mappings": ["snd_soc_component", "snd_soc_dai_link", "soundwire"],
+            "known_portability_blockers": blocker_patterns,
+            "vendor_workaround_patterns": ["simulated_workaround", "manual_review_gate"],
+        }
+
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.semantic_knowledge_adapter",
+            "source_id": source_id,
+            "source_version": source_version,
+            "taxonomy_overrides": taxonomy_overrides,
+            "upstream_equivalence_hints": {
+                "simulated_": "snd_soc_component",
+                "vendor_beta_": "asoc_generic_wrapper",
+                "gamma_": "UNRESOLVED",
+            },
+            "equivalence_confidence_hints": confidence_hints,
+            "portability_blocker_patterns": blocker_patterns,
+            "fingerprint": _hash(
+                {
+                    "source_id": source_id,
+                    "source_version": source_version,
+                    "taxonomy_overrides": taxonomy_overrides,
+                    "confidence_hints": confidence_hints,
+                    "blocker_patterns": blocker_patterns,
+                }
+            ),
+        }
+
 
 class FakeTargetAlphaPlugin(_BaseSimulationPlugin):
     target_id = "fake_target_alpha"
