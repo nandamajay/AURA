@@ -757,6 +757,89 @@ python3 -m pytest \
   workspace/aura-sdk/tests/test_kernel_structural_cognition_static.py -q
 ```
 
+## Governed Conversion Reasoning Engine
+
+This phase reasons about *why* downstream implementations cannot directly map
+to upstream Linux abstractions while preserving:
+
+- advisory-only reasoning
+- fail-closed governance
+- deterministic replay
+- runtime-truth precedence
+- plugin isolation
+- semantic/structural separation
+
+### Mission Alignment
+
+This phase directly improves:
+
+- upstream migration planning:
+  - phased migration plan gated by blocker/risk/equivalence evidence
+- regression prevention:
+  - deterministic conversion reasoning trace with lineage + replay fingerprints
+- runtime portability analysis:
+  - explicit unsupported runtime dependencies and runtime blocker reasoning
+- topology conversion confidence:
+  - confidence model combines topology gaps, lifecycle mismatch, and upstream coverage
+- governed conversion reasoning:
+  - risk/classification is fail-closed with explicit governance boundary checks
+- deterministic migration replay:
+  - replay-safe persistence for all reasoning artifacts
+
+### Implemented Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/conversion_reasoning_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/portability_blocker_classifier.py` (governed classifier extension)
+- `workspace/aura-sdk/src/aura_sdk/transport/abstraction_gap_reasoner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/migration_phase_planner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/upstream_equivalence_confidence.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/lifecycle_incompatibility_detector.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/vendor_dependency_classifier.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_portability_reasoner.py`
+
+Runner:
+
+- `scripts/aura-governed-conversion-reasoning.py`
+
+### Required Artifacts
+
+- `conversion_reasoning_graph.json`
+- `portability_blocker_report.json`
+- `migration_phase_plan.json`
+- `abstraction_gap_report.json`
+- `upstream_equivalence_confidence.json`
+- `lifecycle_incompatibility_report.json`
+- `vendor_dependency_graph.json`
+- `runtime_portability_analysis.json`
+- `deterministic_conversion_reasoning_trace.json`
+
+Additional outputs:
+
+- `deterministic_conversion_reasoning_replay.json`
+- `governed_conversion_reasoning_summary.json`
+- `docs/operations/transport/governed_conversion_reasoning_architecture.md`
+
+### Run Governed Conversion Reasoning
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-governed-conversion-reasoning.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id governed_conversion_reasoning_v1
+```
+
+### Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_governed_conversion_reasoning_static.py \
+  workspace/aura-sdk/tests/test_translation_intelligence_static.py \
+  workspace/aura-sdk/tests/test_real_downstream_ingestion_static.py -q
+```
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

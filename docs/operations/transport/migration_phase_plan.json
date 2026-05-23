@@ -1,0 +1,84 @@
+{
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "b116e7cdfaeb46c0dded65216dcfd02cdbe040582269a593b2adb89d4105b424",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://semantic_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://downstream_hook_inventory",
+    "artifact://upstream_equivalence_trace",
+    "artifact://callback_chain_graph"
+  ],
+  "governance_rules": {
+    "advisory_only_reasoning": true,
+    "autonomous_rewrite_allowed": false,
+    "autonomous_runtime_mutation_allowed": false
+  },
+  "phases": [
+    {
+      "autonomy": "ADVISORY_ONLY",
+      "entry_criteria": [
+        "runtime_truth_precedence_enabled",
+        "governance_fail_closed_enabled"
+      ],
+      "exit_criteria": [
+        "blocked_unsafe_count_non_increasing",
+        "deterministic_trace_stable"
+      ],
+      "goal": "stabilize vendor/runtime blocker inventory and fail-closed gating",
+      "phase": "phase_1_blocker_isolation"
+    },
+    {
+      "autonomy": "ADVISORY_ONLY",
+      "entry_criteria": [
+        "phase_1_completed"
+      ],
+      "exit_criteria": [
+        "lifecycle_mismatch_reduced",
+        "topology_conversion_confidence_improved"
+      ],
+      "goal": "reduce lifecycle mismatch and DPCM/FE-BE abstraction gaps",
+      "phase": "phase_2_lifecycle_and_topology_alignment"
+    },
+    {
+      "autonomy": "GOVERNED_ONLY",
+      "entry_criteria": [
+        "phase_2_completed"
+      ],
+      "exit_criteria": [
+        "equivalence_confidence_threshold_met",
+        "replay_determinism_preserved"
+      ],
+      "goal": "increase upstream equivalence coverage under replay constraints",
+      "phase": "phase_3_equivalence_hardening"
+    },
+    {
+      "autonomy": "GOVERNED_ONLY",
+      "entry_criteria": [
+        "phase_3_completed"
+      ],
+      "exit_criteria": [
+        "risk_classification_within_threshold",
+        "no_autonomous_mutation_paths"
+      ],
+      "goal": "produce governed migration recommendations with bounded risk",
+      "phase": "phase_4_governed_conversion_readiness"
+    }
+  ],
+  "plan_confidence": 0.508,
+  "report_name": "migration_phase_plan",
+  "risk_inputs": {
+    "abstraction_gap_score": 0.78,
+    "blocked_unsafe_count": 6,
+    "governance_violation": false,
+    "overall_equivalence_confidence": 0.34,
+    "runtime_portability_score": 1.0
+  },
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

@@ -1,0 +1,788 @@
+{
+  "abstraction_gap_score": 0.78,
+  "abstraction_recommendations": [
+    {
+      "mode": "ADVISORY_ONLY",
+      "reason": "Reduce downstream callback dependency before upstream mapping.",
+      "recommendation": "isolate_vendor_specific_callbacks"
+    },
+    {
+      "mode": "ADVISORY_ONLY",
+      "reason": "Stabilize DPCM/FE-BE intent into explicit portable links.",
+      "recommendation": "normalize_fe_be_contracts"
+    },
+    {
+      "mode": "ADVISORY_ONLY",
+      "reason": "Bridge SoundWire portability gaps with upstream-compatible abstractions.",
+      "recommendation": "audit_soundwire_vendor_hooks"
+    },
+    {
+      "mode": "GOVERNED_ONLY",
+      "reason": "Prevent drift amplification during phased migration.",
+      "recommendation": "gate_conversion_on_replay_stability"
+    }
+  ],
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "b48cf4502ef302434f90956d3f731f96a126b5ccd3eaf8ac31dca8cb8291ef0f",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://semantic_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://downstream_hook_inventory",
+    "artifact://upstream_equivalence_trace",
+    "artifact://callback_chain_graph"
+  ],
+  "gaps": [
+    {
+      "details": [
+        "audio_prm_probe",
+        "bolero_clk_rsc_probe",
+        "bolero_copy_dais_from_macro",
+        "bolero_dais",
+        "bolero_probe",
+        "bolero_soc_codec_probe",
+        "gpr_device_probe",
+        "gpr_probe",
+        "lpass_bt_swr_probe",
+        "lpass_cdc_clk_rsc_probe",
+        "lpass_cdc_copy_dais_from_macro",
+        "lpass_cdc_dais",
+        "lpass_cdc_probe",
+        "lpass_cdc_rx_macro_dai",
+        "lpass_cdc_rx_macro_find_playback_dai_id_for_port",
+        "lpass_cdc_rx_macro_probe",
+        "lpass_cdc_soc_codec_probe",
+        "lpass_cdc_tx_macro_dai",
+        "lpass_cdc_tx_macro_probe",
+        "lpass_cdc_va_macro_dai",
+        "lpass_cdc_va_macro_probe",
+        "lpass_cdc_wsa2_macro_cps_feed_mixer_get",
+        "lpass_cdc_wsa2_macro_cps_feed_mixer_put",
+        "lpass_cdc_wsa2_macro_dai",
+        "lpass_cdc_wsa2_macro_probe",
+        "lpass_cdc_wsa2_macro_update_vi_feedback",
+        "lpass_cdc_wsa2_macro_vi_feed_mixer_get",
+        "lpass_cdc_wsa2_macro_vi_feed_mixer_put",
+        "lpass_cdc_wsa_macro_cps_feed_mixer_get",
+        "lpass_cdc_wsa_macro_cps_feed_mixer_put",
+        "lpass_cdc_wsa_macro_dai",
+        "lpass_cdc_wsa_macro_disable_vi_feedback",
+        "lpass_cdc_wsa_macro_probe",
+        "lpass_cdc_wsa_macro_vi_feed_mixer_get",
+        "lpass_cdc_wsa_macro_vi_feed_mixer_put",
+        "spf_core_platform_driver_probe",
+        "spf_core_probe"
+      ],
+      "severity": "HIGH",
+      "type": "dpcm_fe_be_migration_blockers"
+    },
+    {
+      "details": [
+        "frontend_backend_cardinality_mismatch"
+      ],
+      "severity": "MEDIUM",
+      "type": "topology_incompatibilities"
+    },
+    {
+      "details": [
+        "sdw_registers",
+        "swr_add_device",
+        "swr_boardinfo",
+        "swr_bulk_write",
+        "swr_clk_lock",
+        "swr_clk_users",
+        "swr_connect_port",
+        "swr_connect_port_v2",
+        "swr_ctrl_data",
+        "swr_ctrl_dlkm",
+        "swr_ctrl_platform_data",
+        "swr_dac_port",
+        "swr_dev",
+        "swr_dev_frame_config",
+        "swr_dev_loop",
+        "swr_dev_release",
+        "swr_dev_type",
+        "swr_device",
+        "swr_device_attr_gr",
+        "swr_device_callback_interupt",
+        "swr_device_down",
+        "swr_device_handle_interrupt",
+        "swr_device_id",
+        "swr_device_match",
+        "swr_device_uevent",
+        "swr_device_up",
+        "swr_device_wakeup_unvote",
+        "swr_device_wakeup_vote",
+        "swr_devnum",
+        "swr_disconnect_port",
+        "swr_dlkm",
+        "swr_dmic",
+        "swr_dmic_audio_map",
+        "swr_dmic_codec_name_of",
+        "swr_dmic_codec_probe",
+        "swr_dmic_codec_remove",
+        "swr_dmic_dai",
+        "swr_dmic_dapm_widgets",
+        "swr_dmic_dlkm",
+        "swr_dmic_down",
+        "swr_dmic_driver",
+        "swr_dmic_dt_match",
+        "swr_dmic_enable",
+        "swr_dmic_event_notify",
+        "swr_dmic_exit",
+        "swr_dmic_gain_disable",
+        "swr_dmic_get_master_port_val",
+        "swr_dmic_id",
+        "swr_dmic_init",
+        "swr_dmic_parse_port_params",
+        "swr_dmic_parse_supply",
+        "swr_dmic_pm_ops",
+        "swr_dmic_port_enable",
+        "swr_dmic_priv",
+        "swr_dmic_probe",
+        "swr_dmic_remove",
+        "swr_dmic_reset",
+        "swr_dmic_resume",
+        "swr_dmic_snd_controls",
+        "swr_dmic_suspend",
+        "swr_dmic_tx0",
+        "swr_dmic_tx1",
+        "swr_dmic_tx2",
+        "swr_dmic_tx3",
+        "swr_dmic_tx_get_slave_port_type_idx",
+        "swr_dmic_tx_master_port_get",
+        "swr_dmic_tx_master_port_put",
+        "swr_dmic_up",
+        "swr_driver",
+        "swr_driver_register",
+        "swr_driver_unregister",
+        "swr_drv_probe",
+        "swr_drv_remove",
+        "swr_drv_shutdown",
+        "swr_fifo_reg",
+        "swr_get_ctrl_data",
+        "swr_get_dev_data",
+        "swr_get_logical_dev_num",
+        "swr_gpios",
+        "swr_handle",
+        "swr_hap",
+        "swr_hap_comp",
+        "swr_hap_component",
+        "swr_hap_disable_hpwr_vreg",
+        "swr_hap_enable_hpwr_vreg",
+        "swr_hap_readable_register",
+        "swr_hap_reg_defaults",
+        "swr_hap_regmap_config",
+        "swr_hap_volatile_register",
+        "swr_hap_writeable_register",
+        "swr_haptics",
+        "swr_haptics_component",
+        "swr_haptics_dev",
+        "swr_haptics_device_down",
+        "swr_haptics_device_up",
+        "swr_haptics_dlkm",
+        "swr_haptics_driver",
+        "swr_haptics_exit",
+        "swr_haptics_id",
+        "swr_haptics_init",
+        "swr_haptics_match_table",
+        "swr_haptics_parse_port_mapping",
+        "swr_haptics_pm_ops",
+        "swr_haptics_probe",
+        "swr_haptics_remove",
+        "swr_haptics_resume",
+        "swr_haptics_runtime_disable",
+        "swr_haptics_runtime_enable",
+        "swr_haptics_slave_disable",
+        "swr_haptics_slave_enable",
+        "swr_haptics_slave_enumeration",
+        "swr_haptics_suspend",
+        "swr_ida",
+        "swr_init_port_params",
+        "swr_irq",
+        "swr_irq_wakeup_capable",
+        "swr_legacy_resume",
+        "swr_legacy_suspend",
+        "swr_lock",
+        "swr_master",
+        "swr_master_add_boarddevices",
+        "swr_master_attr_gr",
+        "swr_master_bulk_write",
+        "swr_master_ch_map",
+        "swr_master_channel_map",
+        "swr_master_get",
+        "swr_master_id",
+        "swr_master_irq",
+        "swr_master_list",
+        "swr_master_put",
+        "swr_master_read",
+        "swr_master_release",
+        "swr_master_type",
+        "swr_master_write",
+        "swr_match",
+        "swr_match_ctrl_to_boardinfo",
+        "swr_micn",
+        "swr_mstr_ctrl",
+        "swr_mstr_ctrl_proc_entry",
+        "swr_mstr_ctrl_proc_ops",
+        "swr_mstr_ctrl_proc_read",
+        "swr_mstr_ctrl_regdump",
+        "swr_mstr_ctrl_regdump_file",
+        "swr_mstr_driver",
+        "swr_mstr_interrupt",
+        "swr_mstr_port",
+        "swr_mstr_port_map",
+        "swr_new_device",
+        "swr_params",
+        "swr_pdev",
+        "swr_plat_data",
+        "swr_play",
+        "swr_pm_resume",
+        "swr_pm_suspend",
+        "swr_port",
+        "swr_port_info",
+        "swr_port_params",
+        "swr_port_response",
+        "swr_rd_addr_base",
+        "swr_rd_data_base",
+        "swr_read",
+        "swr_read_lock",
+        "swr_reg",
+        "swr_register_master",
+        "swr_remove_device",
+        "swr_remove_from_group",
+        "swr_reset_device",
+        "swr_rw_lock",
+        "swr_set_ctrl_data",
+        "swr_set_dev_data",
+        "swr_set_device_group",
+        "swr_slave",
+        "swr_slave_ch_map",
+        "swr_slave_reg_show",
+        "swr_slv_tx_ch_idx",
+        "swr_slvdev_datapath_control",
+        "swr_startup_devices",
+        "swr_tx_port_params",
+        "swr_unregister_device",
+        "swr_unregister_master",
+        "swr_vmax",
+        "swr_wake_irq",
+        "swr_wr_addr_base",
+        "swr_wr_data_base",
+        "swr_write",
+        "swr_write_lock",
+        "swr_wsa_port_params"
+      ],
+      "severity": "MEDIUM",
+      "type": "soundwire_portability_gaps"
+    },
+    {
+      "details": [
+        "apr_audio",
+        "apr_cb_func",
+        "apr_client",
+        "apr_client_data",
+        "apr_deregister",
+        "apr_end_rx_rt",
+        "apr_fill_hdr",
+        "apr_fn",
+        "apr_get_client",
+        "apr_get_data_src",
+        "apr_get_dest_id",
+        "apr_get_lpass_subsys_name",
+        "apr_get_modem_state",
+        "apr_get_q6_state",
+        "apr_get_reset_domain",
+        "apr_get_subsys_state",
+        "apr_get_svc",
+        "apr_hdr",
+        "apr_hdr_fields",
+        "apr_load_adsp_image",
+        "apr_pkt_cfg",
+        "apr_q6",
+        "apr_register",
+        "apr_register_adsp_state_cb",
+        "apr_reset",
+        "apr_rx_intents",
+        "apr_send_pkt",
+        "apr_set_modem_state",
+        "apr_set_q6_state",
+        "apr_set_subsys_state",
+        "apr_start_rx_rt",
+        "apr_subsys_state",
+        "apr_svc",
+        "apr_svc_ch_dev",
+        "apr_wait_for_device_up",
+        "gpr_add_device",
+        "gpr_adsp",
+        "gpr_adsp_down",
+        "gpr_adsp_up",
+        "gpr_callback",
+        "gpr_dev_release",
+        "gpr_device",
+        "gpr_device_id",
+        "gpr_device_match",
+        "gpr_device_probe",
+        "gpr_device_remove",
+        "gpr_dlkm",
+        "gpr_driver",
+        "gpr_driver_register",
+        "gpr_driver_unregister",
+        "gpr_exit",
+        "gpr_get_modem_state",
+        "gpr_get_q6_state",
+        "gpr_hdr",
+        "gpr_init",
+        "gpr_lock",
+        "gpr_modem",
+        "gpr_modem_down",
+        "gpr_modem_up",
+        "gpr_notifier_register",
+        "gpr_notifier_service_cb",
+        "gpr_of_match",
+        "gpr_pkt",
+        "gpr_priv",
+        "gpr_probe",
+        "gpr_q6",
+        "gpr_remove",
+        "gpr_remove_device",
+        "gpr_send_pkt",
+        "gpr_set_modem_state",
+        "gpr_set_q6_state",
+        "gpr_ssr_disable",
+        "gpr_ssr_ops",
+        "gpr_subsys_notif_deregister",
+        "gpr_subsys_notif_register",
+        "gpr_subsys_state",
+        "gpr_uevent",
+        "q6_dlkm",
+        "q6_init",
+        "q6_notifier_dlkm",
+        "q6_pdr_dlkm",
+        "q6_state"
+      ],
+      "severity": "HIGH",
+      "type": "dsp_coupling"
+    },
+    {
+      "details": [
+        "apr_deregister",
+        "apr_register",
+        "apr_register_adsp_state_cb",
+        "bolero_cdc_register_notifier",
+        "bolero_is_readable_register",
+        "bolero_is_va_macro_registered",
+        "bolero_is_volatile_register",
+        "bolero_is_writeable_register",
+        "bolero_register_event_listener",
+        "bolero_register_macro",
+        "bolero_register_res_clk",
+        "bolero_register_wake_irq",
+        "bolero_unregister_macro",
+        "bolero_unregister_res_clk",
+        "devm_snd_soc_register_card",
+        "gpr_driver_register",
+        "gpr_driver_unregister",
+        "gpr_notifier_register",
+        "gpr_subsys_notif_deregister",
+        "gpr_subsys_notif_register",
+        "lpass_cdc_is_readable_register",
+        "lpass_cdc_is_va_macro_registered",
+        "lpass_cdc_is_volatile_register",
+        "lpass_cdc_is_writeable_register",
+        "lpass_cdc_register_event_listener",
+        "lpass_cdc_register_macro",
+        "lpass_cdc_register_notifier",
+        "lpass_cdc_register_res_clk",
+        "lpass_cdc_register_wake_irq",
+        "lpass_cdc_unregister_macro",
+        "lpass_cdc_unregister_res_clk",
+        "platform_driver_register"
+      ],
+      "severity": "HIGH",
+      "type": "api_drift"
+    },
+    {
+      "details": [
+        {
+          "component_driver": "qaif_component_driver",
+          "missing_callbacks": [
+            "probe",
+            "remove"
+          ],
+          "severity": "MEDIUM",
+          "type": "component_lifecycle_mismatch"
+        },
+        {
+          "component_driver": "qaif_cpu_comp_driver",
+          "missing_callbacks": [
+            "probe",
+            "remove"
+          ],
+          "severity": "MEDIUM",
+          "type": "component_lifecycle_mismatch"
+        },
+        {
+          "component_driver": "soc_msm_stub",
+          "missing_callbacks": [
+            "probe",
+            "remove"
+          ],
+          "severity": "MEDIUM",
+          "type": "component_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "shutdown",
+            "trigger"
+          ],
+          "ops_structure": "msm_auxpcm_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "trigger"
+          ],
+          "ops_structure": "msm_cdc_dma_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "msm_common_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_fe_qos_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_fe_qos_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "trigger"
+          ],
+          "ops_structure": "msm_meta_mi2s_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "trigger"
+          ],
+          "ops_structure": "msm_mi2s_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "trigger"
+          ],
+          "ops_structure": "msm_mi2s_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_slimbus_2_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "hw_params",
+            "trigger"
+          ],
+          "ops_structure": "msm_spdif_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_stub_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_wcn_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "shutdown",
+            "startup",
+            "trigger"
+          ],
+          "ops_structure": "msm_wcn_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "qcs405_tdm_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        },
+        {
+          "missing_callbacks": [
+            "trigger"
+          ],
+          "ops_structure": "sm8150_tdm_be_ops",
+          "severity": "MEDIUM",
+          "type": "ops_lifecycle_mismatch"
+        }
+      ],
+      "severity": "MEDIUM",
+      "type": "lifecycle_mismatches"
+    }
+  ],
+  "report_name": "abstraction_gap_report",
+  "schema_version": "1.0",
+  "summary": {
+    "backend_count": 28,
+    "dpcm_inferred_link_count": 4,
+    "frontend_count": 4,
+    "gap_count": 6,
+    "unresolved_upstream_constructs": 727
+  },
+  "target_id": "RB3Gen2"
+}

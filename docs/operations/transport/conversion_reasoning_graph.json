@@ -1,0 +1,135 @@
+{
+  "advisory_only_reasoning": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "fa1fbb4184b5f1bb86689f7be97c14459995e674c956fd025ccac6392558642c",
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "reasoned_as",
+      "to": "lineage:governed_conversion_reasoning_v1"
+    },
+    {
+      "from": "lineage:governed_conversion_reasoning_v1",
+      "relation": "depends_on",
+      "to": "vendor_dependency_graph"
+    },
+    {
+      "from": "lineage:governed_conversion_reasoning_v1",
+      "relation": "depends_on",
+      "to": "lifecycle_incompatibility_report"
+    },
+    {
+      "from": "lineage:governed_conversion_reasoning_v1",
+      "relation": "depends_on",
+      "to": "abstraction_gap_report"
+    },
+    {
+      "from": "lineage:governed_conversion_reasoning_v1",
+      "relation": "depends_on",
+      "to": "runtime_portability_analysis"
+    },
+    {
+      "from": "vendor_dependency_graph",
+      "relation": "contributes",
+      "to": "portability_blocker_report"
+    },
+    {
+      "from": "lifecycle_incompatibility_report",
+      "relation": "contributes",
+      "to": "portability_blocker_report"
+    },
+    {
+      "from": "abstraction_gap_report",
+      "relation": "contributes",
+      "to": "portability_blocker_report"
+    },
+    {
+      "from": "runtime_portability_analysis",
+      "relation": "contributes",
+      "to": "portability_blocker_report"
+    },
+    {
+      "from": "upstream_equivalence_confidence",
+      "relation": "constrains",
+      "to": "portability_blocker_report"
+    },
+    {
+      "from": "portability_blocker_report",
+      "relation": "gates",
+      "to": "migration_phase_plan"
+    },
+    {
+      "from": "migration_phase_plan",
+      "relation": "materializes",
+      "to": "deterministic_conversion_reasoning_trace"
+    }
+  ],
+  "governance_state": {
+    "autonomous_patching_allowed": false,
+    "autonomous_runtime_mutation_allowed": false,
+    "autonomous_topology_rewrite_allowed": false,
+    "autonomous_upstream_generation_allowed": false,
+    "fail_closed_posture": true
+  },
+  "graph_name": "conversion_reasoning_graph",
+  "lineage_id": "governed_conversion_reasoning_v1",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "lineage:governed_conversion_reasoning_v1",
+      "kind": "lineage"
+    },
+    {
+      "id": "vendor_dependency_graph",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "lifecycle_incompatibility_report",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "abstraction_gap_report",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "runtime_portability_analysis",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "upstream_equivalence_confidence",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "portability_blocker_report",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "migration_phase_plan",
+      "kind": "reasoning_artifact"
+    },
+    {
+      "id": "deterministic_conversion_reasoning_trace",
+      "kind": "reasoning_artifact"
+    }
+  ],
+  "plugin_isolation": true,
+  "replay_state": {
+    "deterministic_event_ordering": true,
+    "deterministic_replay_fingerprint": ""
+  },
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "scores": {
+    "abstraction_gap_score": 0.78,
+    "equivalence_confidence": 0.34,
+    "lifecycle_risk": 1.0,
+    "phase_plan_confidence": 0.508,
+    "portability_risk_score": 0.0,
+    "runtime_portability_score": 1.0,
+    "vendor_dependency_risk": 0.935
+  },
+  "target_id": "RB3Gen2"
+}

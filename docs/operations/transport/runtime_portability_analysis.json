@@ -1,31 +1,35 @@
 {
-  "deterministic_fingerprint": "097d3f9b58c97fe3aa19272c1c2240323d41bf6be52572055e3b761a55c3d34c",
-  "downstream_only_runtime_dependencies": [
+  "classification": "PASS",
+  "deterministic_fingerprint": "1ed9ad8408d640b37172fa5fae06c12f111e0746508c805b94fa917d822bf851",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://semantic_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://downstream_hook_inventory",
+    "artifact://upstream_equivalence_trace",
+    "artifact://callback_chain_graph"
+  ],
+  "report_name": "runtime_portability_analysis",
+  "runtime_portability_blockers": [],
+  "runtime_portability_score": 1.0,
+  "runtime_truth_precedence": true,
+  "scheduler_assumptions": [],
+  "schema_version": "1.0",
+  "summary": {
+    "blocker_count": 0,
+    "dependency_count": 3,
+    "replay_ok": true,
+    "source_correlation_confidence": 0.625
+  },
+  "target_id": "RB3Gen2",
+  "unsupported_runtime_dependencies": [
     "vendor_amixer_sequence",
     "vendor_route_fingerprint",
     "vendor_codec_dependency"
-  ],
-  "governance_classification": "PASS",
-  "portability_blockers": [],
-  "portability_score": 1.0,
-  "report_name": "runtime_portability_analysis",
-  "schema_version": "1.0",
-  "target_id": "RB3Gen2",
-  "transformation_classes": {
-    "advisory_only_transformations": [
-      "manual_codec_binding_review",
-      "manual_dai_link_reconciliation"
-    ],
-    "forbidden_autonomous_transformations": [
-      "autonomous_code_rewrite",
-      "autonomous_driver_mutation",
-      "autonomous_dts_mutation",
-      "unsafe_topology_mutation"
-    ],
-    "replay_safe_transformations": [
-      "normalize_mixer_control_aliases",
-      "normalize_route_chain_labels",
-      "derive_generic_asoc_identifiers"
-    ]
-  }
+  ]
 }
