@@ -1,0 +1,177 @@
+{
+  "deterministic_fingerprint": "86595447a2b78d454c8ff209df1ac0e61bf1d2162e7b41ea4f3229e20775f3e7",
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "uses",
+      "to": "downstream:msm_"
+    },
+    {
+      "from": "downstream:msm_",
+      "relation": "maps_to",
+      "status": "PARTIAL",
+      "to": "upstream:snd_soc_component_*"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "uses",
+      "to": "downstream:msm_pcm"
+    },
+    {
+      "from": "downstream:msm_pcm",
+      "relation": "maps_to",
+      "status": "PARTIAL",
+      "to": "upstream:soc_pcm_runtime_helpers"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "uses",
+      "to": "downstream:qcom_"
+    },
+    {
+      "from": "downstream:qcom_",
+      "relation": "maps_to",
+      "status": "PARTIAL",
+      "to": "upstream:asoc_generic_component_*"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "uses",
+      "to": "downstream:snd_soc_qcom_"
+    },
+    {
+      "from": "downstream:snd_soc_qcom_",
+      "relation": "maps_to",
+      "status": "PARTIAL",
+      "to": "upstream:snd_soc_*"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "uses",
+      "to": "downstream:vendor_hook"
+    },
+    {
+      "from": "downstream:vendor_hook",
+      "relation": "maps_to",
+      "status": "PARTIAL",
+      "to": "upstream:tracepoint_or_standard_callback"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "uses",
+      "to": "downstream:wrapper"
+    },
+    {
+      "from": "downstream:wrapper",
+      "relation": "maps_to",
+      "status": "PARTIAL",
+      "to": "upstream:asoc_helper_layer"
+    }
+  ],
+  "entries": [
+    {
+      "downstream_construct": "msm_",
+      "equivalence_confidence": 0.72,
+      "equivalence_status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_component_*"
+    },
+    {
+      "downstream_construct": "msm_pcm",
+      "equivalence_confidence": 0.72,
+      "equivalence_status": "PARTIAL",
+      "upstream_equivalent": "soc_pcm_runtime_helpers"
+    },
+    {
+      "downstream_construct": "qcom_",
+      "equivalence_confidence": 0.72,
+      "equivalence_status": "PARTIAL",
+      "upstream_equivalent": "asoc_generic_component_*"
+    },
+    {
+      "downstream_construct": "snd_soc_qcom_",
+      "equivalence_confidence": 0.72,
+      "equivalence_status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_*"
+    },
+    {
+      "downstream_construct": "vendor_hook",
+      "equivalence_confidence": 0.72,
+      "equivalence_status": "PARTIAL",
+      "upstream_equivalent": "tracepoint_or_standard_callback"
+    },
+    {
+      "downstream_construct": "wrapper",
+      "equivalence_confidence": 0.72,
+      "equivalence_status": "PARTIAL",
+      "upstream_equivalent": "asoc_helper_layer"
+    }
+  ],
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://semantic_cognition",
+    "registry://regression_lineage",
+    "registry://governance_state",
+    "artifact://aura_replay_determinism_report",
+    "artifact://semantic_replay_trace",
+    "artifact://cognition_fusion_trace"
+  ],
+  "graph_name": "downstream_upstream_mapping_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "downstream:msm_",
+      "kind": "downstream_construct"
+    },
+    {
+      "id": "upstream:snd_soc_component_*",
+      "kind": "upstream_construct"
+    },
+    {
+      "id": "downstream:msm_pcm",
+      "kind": "downstream_construct"
+    },
+    {
+      "id": "upstream:soc_pcm_runtime_helpers",
+      "kind": "upstream_construct"
+    },
+    {
+      "id": "downstream:qcom_",
+      "kind": "downstream_construct"
+    },
+    {
+      "id": "upstream:asoc_generic_component_*",
+      "kind": "upstream_construct"
+    },
+    {
+      "id": "downstream:snd_soc_qcom_",
+      "kind": "downstream_construct"
+    },
+    {
+      "id": "upstream:snd_soc_*",
+      "kind": "upstream_construct"
+    },
+    {
+      "id": "downstream:vendor_hook",
+      "kind": "downstream_construct"
+    },
+    {
+      "id": "upstream:tracepoint_or_standard_callback",
+      "kind": "upstream_construct"
+    },
+    {
+      "id": "downstream:wrapper",
+      "kind": "downstream_construct"
+    },
+    {
+      "id": "upstream:asoc_helper_layer",
+      "kind": "upstream_construct"
+    }
+  ],
+  "schema_version": "1.0",
+  "semantic_equivalence_confidence": 0.72,
+  "target_id": "RB3Gen2"
+}

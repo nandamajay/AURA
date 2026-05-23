@@ -19,6 +19,9 @@ Each target plugin must provide:
 - `runtime_evidence_adapter`
 - `topology_evidence_adapter`
 - `semantic_evidence_adapter`
+- `downstream_upstream_adapter`
+- `topology_translation_adapter`
+- `runtime_conversion_adapter`
 
 ## Safety Constraints
 - Core runtime remains target-agnostic.
@@ -26,3 +29,4 @@ Each target plugin must provide:
 - Replay semantics are deterministic and evidence-backed.
 - Any semantic adapter failure is fail-closed and quarantine-safe.
 - Correlation fusion consumes adapter outputs and never bypasses plugin isolation.
+- Translation planner consumes conversion adapters and never bypasses plugin isolation.

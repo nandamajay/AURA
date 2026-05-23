@@ -381,6 +381,80 @@ python3 -m pytest \
   workspace/aura-sdk/tests/test_cognition_correlation_static.py -q
 ```
 
+## Translation Intelligence Layer
+
+This phase is scoped specifically to downstream-to-upstream kernel conversion
+cognition. It does not perform autonomous code generation or runtime mutation.
+
+### Mission Alignment
+
+Every component in this layer contributes directly to:
+
+- driver understanding via downstream/vendor to upstream semantic mapping
+- topology understanding via FE/BE and PCM/DPCM translation reasoning
+- runtime evidence reasoning via portability blocker classification
+- regression detection via migration drift lineage
+- deterministic replay via lineage-bound replay fingerprints
+- upstream conversion capability via governed advisory planning outputs
+
+### Translation Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/downstream_upstream_mapping.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/topology_translation_cognition.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_conversion_reasoning.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/migration_lineage.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/upstream_conversion_planner.py`
+
+### Plugin-Safe Translation Adapters
+
+Each plugin provides conversion adapters:
+
+- `downstream_upstream_adapter`
+- `topology_translation_adapter`
+- `runtime_conversion_adapter`
+
+Core conversion planner remains target-agnostic and does not branch on target IDs.
+
+### Translation Generator
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-translation-intelligence-layer.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id translation_intelligence_v1
+```
+
+### Translation Artifacts
+
+- `downstream_upstream_mapping_graph.json`
+- `topology_translation_report.json`
+- `runtime_portability_analysis.json`
+- `migration_lineage.json`
+- `upstream_conversion_confidence.json`
+- `deterministic_translation_replay.json`
+- `translation_intelligence_summary.json`
+
+### Runtime Evidence and Replay Linkage
+
+- Runtime evidence is consumed from registry-backed cognition state.
+- Translation confidence is computed from semantic, topology, runtime, migration, replay, and governance factors.
+- Translation replay is deterministic and lineage-indexed (`deterministic_translation_replay.json`).
+- All outputs remain advisory and governance-bounded.
+
+### Translation Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_target_plugin_runtime_static.py \
+  workspace/aura-sdk/tests/test_portable_runtime_stabilization_static.py \
+  workspace/aura-sdk/tests/test_semantic_cognition_static.py \
+  workspace/aura-sdk/tests/test_cognition_correlation_static.py \
+  workspace/aura-sdk/tests/test_translation_intelligence_static.py -q
+```
+
 ### Artifact Intent
 
 - `portable_target_cognition_architecture.json`

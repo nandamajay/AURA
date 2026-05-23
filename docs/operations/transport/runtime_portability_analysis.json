@@ -1,0 +1,31 @@
+{
+  "deterministic_fingerprint": "097d3f9b58c97fe3aa19272c1c2240323d41bf6be52572055e3b761a55c3d34c",
+  "downstream_only_runtime_dependencies": [
+    "vendor_amixer_sequence",
+    "vendor_route_fingerprint",
+    "vendor_codec_dependency"
+  ],
+  "governance_classification": "PASS",
+  "portability_blockers": [],
+  "portability_score": 1.0,
+  "report_name": "runtime_portability_analysis",
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2",
+  "transformation_classes": {
+    "advisory_only_transformations": [
+      "manual_codec_binding_review",
+      "manual_dai_link_reconciliation"
+    ],
+    "forbidden_autonomous_transformations": [
+      "autonomous_code_rewrite",
+      "autonomous_driver_mutation",
+      "autonomous_dts_mutation",
+      "unsafe_topology_mutation"
+    ],
+    "replay_safe_transformations": [
+      "normalize_mixer_control_aliases",
+      "normalize_route_chain_labels",
+      "derive_generic_asoc_identifiers"
+    ]
+  }
+}

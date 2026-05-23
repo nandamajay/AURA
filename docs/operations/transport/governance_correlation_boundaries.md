@@ -19,3 +19,5 @@
 - governance violations are classified as `FAIL_CLOSED`
 - anomaly correlation must preserve governance lineage
 - plugin capability inconsistencies must not bypass governance restrictions
+- translation governance violations must block conversion confidence with `FAIL_CLOSED`
+- conversion planning must remain advisory and non-mutating
