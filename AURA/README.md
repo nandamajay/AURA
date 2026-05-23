@@ -661,6 +661,102 @@ python3 scripts/aura-kernel-semantic-knowledge-layer.py \
 - downstream-to-upstream conversion intelligence:
   - confidence-scored semantic equivalence maps and portability rules support governed migration planning
 
+## Kernel Structural Cognition Layer
+
+This phase adds deterministic source-structure cognition for real Linux kernel
+trees while preserving:
+
+- fail-closed governance
+- runtime evidence as execution truth
+- replay determinism
+- plugin isolation
+- advisory-only cognition behavior
+- portable multi-target architecture
+
+### Mission Alignment
+
+Structural cognition directly improves:
+
+- runtime debugging:
+  - correlates runtime command evidence and route fingerprints to concrete source files and callback chains
+- topology reasoning:
+  - reconstructs DTS/DTSI structure, FE/BE linkage, DAPM graph shape, and SoundWire markers
+- regression tracing:
+  - produces deterministic structural fingerprints and lineage-indexed replay artifacts
+- portability analysis:
+  - inventories downstream hooks/vendor APIs and classifies blockers against upstream equivalence coverage
+- downstream-to-upstream migration:
+  - builds confidence-scored upstream equivalence traces from registration, ops, topology, and hook constructs
+- deterministic replay confidence:
+  - stores artifact fingerprints plus replay trace for exact structural state reconstruction
+
+### Structural Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/kernel_structural_cognition.py`
+  - parser/orchestrator for:
+    - Kconfig parsing
+    - Makefile dependency cognition
+    - DTS/DTSI structure extraction
+    - ALSA registration tracing
+    - `snd_soc_component` lifecycle extraction
+    - DAPM widget/route extraction
+    - FE/BE linkage reconstruction
+    - SoundWire topology extraction
+    - downstream hook inventory
+    - upstream equivalence tracing
+    - callback-chain reconstruction
+    - runtime-to-source correlation
+  - replay-safe registry persistence and lineage replay
+- `scripts/aura-kernel-structural-cognition.py`
+  - deterministic runner for artifact generation and registry persistence
+
+### Plugin Isolation Extension
+
+The plugin contract now includes:
+
+- `structural_cognition_adapter`
+
+Core structural planner remains target-agnostic and invokes only plugin
+adapters, with no target-branching in core runtime.
+
+### Run Structural Cognition
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-kernel-structural-cognition.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id kernel_structural_cognition_v1
+```
+
+### Required Structural Artifacts
+
+- `structural_graph.json`
+- `driver_registration_graph.json`
+- `topology_structure_graph.json`
+- `runtime_source_correlation.json`
+- `downstream_hook_inventory.json`
+- `upstream_equivalence_trace.json`
+- `portability_blocker_graph.json`
+- `callback_chain_graph.json`
+- `deterministic_structural_fingerprint.json`
+
+Additional generated outputs:
+
+- `deterministic_structural_replay.json`
+- `kernel_structural_cognition_summary.json`
+- `docs/operations/transport/kernel_structural_cognition_architecture.md`
+
+### Structural Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_target_plugin_runtime_static.py \
+  workspace/aura-sdk/tests/test_kernel_structural_cognition_static.py -q
+```
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

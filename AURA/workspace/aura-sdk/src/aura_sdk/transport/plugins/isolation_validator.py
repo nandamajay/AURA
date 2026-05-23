@@ -29,6 +29,7 @@ class PluginIsolationValidator:
             base / "cognition_correlation.py",
             base / "upstream_conversion_planner.py",
             base / "real_downstream_conversion_planner.py",
+            base / "kernel_structural_cognition.py",
             base / "plugins/loader.py",
             base / "plugins/contracts.py",
         ]
@@ -67,8 +68,9 @@ class PluginIsolationValidator:
         correlation_core_file = files[3]
         translation_core_file = files[4]
         real_ingestion_core_file = files[5]
-        loader_file = files[6]
-        contract_file = files[7]
+        structural_core_file = files[6]
+        loader_file = files[7]
+        contract_file = files[8]
         branch_findings: dict[str, list[str]] = {}
         assumption_findings: dict[str, list[str]] = {}
 
@@ -130,6 +132,10 @@ class PluginIsolationValidator:
                     ".topology_reconstruction_adapter(",
                 )
             ),
+            "structural_core_uses_plugin_loader": "TargetPluginLoader" in _read(structural_core_file),
+            "structural_core_invokes_plugin_structural_adapter": ".structural_cognition_adapter(" in _read(
+                structural_core_file
+            ),
             "loader_uses_contract_validation": "assert_plugin_contract" in _read(loader_file),
             "contract_has_required_providers": all(
                 token in _read(contract_file)
@@ -155,6 +161,7 @@ class PluginIsolationValidator:
                     "upstream_match_adapter",
                     "topology_reconstruction_adapter",
                     "semantic_knowledge_adapter",
+                    "structural_cognition_adapter",
                 )
             ),
         }

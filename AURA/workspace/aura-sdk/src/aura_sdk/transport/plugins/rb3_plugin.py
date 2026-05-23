@@ -929,6 +929,76 @@ class RB3TargetPlugin:
             ),
         }
 
+    def structural_cognition_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        downstream_root = str(payload.get("downstream_root", "")).strip()
+        upstream_root = str(payload.get("upstream_root", "")).strip()
+        runtime = _as_dict(payload.get("runtime_evidence"))
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.structural_cognition_adapter",
+            "downstream_root": downstream_root,
+            "upstream_root": upstream_root,
+            "max_downstream_scan_files": 12000,
+            "max_upstream_scan_files": 12000,
+            "upstream_focus_paths": [
+                "sound/soc",
+                "include/sound",
+                "drivers/soundwire",
+                "sound/soc/qcom",
+            ],
+            "upstream_equivalent_hints": {
+                "prefix": {
+                    "msm_": "snd_soc_component",
+                    "qcom_": "snd_soc_component",
+                    "wcd": "snd_soc_codec",
+                    "swr_": "soundwire",
+                    "sdw_": "soundwire",
+                }
+            },
+            "equivalence_confidence_hints": {
+                "devm_snd_soc_register_component": 0.92,
+                "snd_soc_register_component": 0.9,
+                "snd_soc_register_card": 0.88,
+                "snd_soc_dai_link": 0.9,
+                "snd_soc_component_driver": 0.9,
+                "snd_soc_ops": 0.88,
+                "soundwire": 0.86,
+            },
+            "portability_blocker_patterns": [
+                "vendor_hook",
+                "trace_android_vh",
+                "downstream_only_api",
+                "proprietary_runtime_hook",
+                "timing_dependency",
+            ],
+            "runtime_snapshot": {
+                "route_fingerprint": str(runtime.get("route_fingerprint", "")),
+                "command_sequence": [str(item) for item in _as_list(runtime.get("command_sequence")) if str(item).strip()],
+            },
+            "fingerprint": _stable_hash(
+                {
+                    "downstream_root": downstream_root,
+                    "upstream_root": upstream_root,
+                    "max_downstream_scan_files": 12000,
+                    "max_upstream_scan_files": 12000,
+                    "upstream_focus_paths": [
+                        "sound/soc",
+                        "include/sound",
+                        "drivers/soundwire",
+                        "sound/soc/qcom",
+                    ],
+                    "portability_blocker_patterns": [
+                        "vendor_hook",
+                        "trace_android_vh",
+                        "downstream_only_api",
+                        "proprietary_runtime_hook",
+                        "timing_dependency",
+                    ],
+                }
+            ),
+        }
+
 
 def get_plugin() -> RB3TargetPlugin:
     return RB3TargetPlugin()

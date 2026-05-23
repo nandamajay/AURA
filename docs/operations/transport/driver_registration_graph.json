@@ -1,0 +1,886 @@
+{
+  "classification": "PASS",
+  "component_lifecycle": [
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "bolero_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "bolero_soc_codec_remove"
+        }
+      ],
+      "component_driver": "bolero",
+      "file": "asoc/codecs/bolero/bolero-cdc.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "lpass_cdc_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "lpass_cdc_soc_codec_remove"
+        }
+      ],
+      "component_driver": "lpass_cdc",
+      "file": "asoc/codecs/lpass-cdc/lpass-cdc.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "msm_ext_disp_audio_codec_rx_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "msm_ext_disp_audio_codec_rx_remove"
+        }
+      ],
+      "component_driver": "msm_ext_disp_codec_rx_driver",
+      "file": "asoc/codecs/msm_hdmi_codec_rx.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "resume",
+          "function": "qaif_platform_pcmops_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "qaif_platform_pcmops_suspend"
+        }
+      ],
+      "component_driver": "qaif_component_driver",
+      "file": "asoc/qaif-platform.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "of_xlate_dai_name",
+          "function": "asoc_qcom_of_xlate_dai_name"
+        }
+      ],
+      "component_driver": "qaif_cpu_comp_driver",
+      "file": "asoc/qaif-cpu.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "aqt_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "aqt_soc_codec_remove"
+        }
+      ],
+      "component_driver": "snd_cdc_dev_aqt",
+      "file": "asoc/codecs/aqt1000/aqt1000.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "qmp_dmic_component_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "qmp_dmic_component_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_qmp_dmic",
+      "file": "asoc/codecs/qmp1000/qmp-dmic.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "rouleur_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "rouleur_soc_codec_remove"
+        },
+        {
+          "callback": "resume",
+          "function": "rouleur_soc_codec_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "rouleur_soc_codec_suspend"
+        }
+      ],
+      "component_driver": "soc_codec_dev_rouleur",
+      "file": "asoc/codecs/rouleur/rouleur.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "simple_amp_component_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "simple_amp_component_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_simple_amp",
+      "file": "asoc/codecs/sdca/simple-amp.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "swr_dmic_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "swr_dmic_codec_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_swr_dmic",
+      "file": "asoc/codecs/swr-dmic.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "tasha_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "tasha_codec_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_tasha",
+      "file": "asoc/codecs/wcd9335.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "tavil_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "tavil_soc_codec_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_tavil",
+      "file": "asoc/codecs/wcd934x/wcd934x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wcd9378_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wcd9378_soc_codec_remove"
+        },
+        {
+          "callback": "resume",
+          "function": "wcd9378_soc_codec_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "wcd9378_soc_codec_suspend"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wcd9378",
+      "file": "asoc/codecs/wcd9378/wcd9378.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wcd937x_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wcd937x_soc_codec_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wcd937x",
+      "file": "asoc/codecs/wcd937x/wcd937x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wcd938x_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wcd938x_soc_codec_remove"
+        },
+        {
+          "callback": "resume",
+          "function": "wcd938x_soc_codec_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "wcd938x_soc_codec_suspend"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wcd938x",
+      "file": "asoc/codecs/wcd938x/wcd938x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wcd939x_soc_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wcd939x_soc_codec_remove"
+        },
+        {
+          "callback": "resume",
+          "function": "wcd939x_soc_codec_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "wcd939x_soc_codec_suspend"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wcd939x",
+      "file": "asoc/codecs/wcd939x/wcd939x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wsa881x_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wsa881x_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wsa881x",
+      "file": "asoc/codecs/wsa881x-analog.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wsa881x_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wsa881x_remove"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wsa881x",
+      "file": "asoc/codecs/wsa881x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wsa883x_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wsa883x_codec_remove"
+        },
+        {
+          "callback": "resume",
+          "function": "wsa883x_soc_codec_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "wsa883x_soc_codec_suspend"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wsa883x_wsa",
+      "file": "asoc/codecs/wsa883x/wsa883x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wsa884x_codec_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wsa884x_codec_remove"
+        },
+        {
+          "callback": "resume",
+          "function": "wsa884x_soc_codec_resume"
+        },
+        {
+          "callback": "suspend",
+          "function": "wsa884x_soc_codec_suspend"
+        }
+      ],
+      "component_driver": "soc_codec_dev_wsa884x_wsa",
+      "file": "asoc/codecs/wsa884x/wsa884x.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "csra66x0_soc_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "csra66x0_soc_remove"
+        }
+      ],
+      "component_driver": "soc_codec_drv_csra66x0",
+      "file": "asoc/codecs/csra66x0/csra66x0.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "ep92_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "ep92_remove"
+        }
+      ],
+      "component_driver": "soc_codec_drv_ep92",
+      "file": "asoc/codecs/ep92/ep92.c"
+    },
+    {
+      "callbacks": [],
+      "component_driver": "soc_msm_stub",
+      "file": "asoc/codecs/msm_stub.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "haptics_comp_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "haptics_comp_remove"
+        }
+      ],
+      "component_driver": "swr_haptics_component",
+      "file": "asoc/codecs/swr-haptics.c"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "probe",
+          "function": "wsa885x_component_probe"
+        },
+        {
+          "callback": "remove",
+          "function": "wsa885x_component_remove"
+        }
+      ],
+      "component_driver": "wsa885x_i2c_component",
+      "file": "asoc/codecs/wsa885x-i2c.c"
+    }
+  ],
+  "deterministic_fingerprint": "d58b8d56177e8b2d72e494dc51679c3e16af804bd9ae36ec0312dde595eaa6f0",
+  "graph_name": "driver_registration_graph",
+  "ops_lifecycle": [
+    {
+      "callbacks": [
+        {
+          "callback": "startup",
+          "function": "msm_snd_auxpcm_startup"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_auxpcm_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_hw_params"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_hw_params"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "msm_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_cdc_dma_hw_params"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_snd_cdc_dma_startup"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_cdc_dma_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/audio_machine.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/bengal.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/holi.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/kalama.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/kona.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/lahaina.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/pineapple.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/sdx-target.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/sun.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_common_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_common_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_common_snd_startup"
+        }
+      ],
+      "file": "asoc/waipio.c",
+      "ops_structure": "msm_common_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "prepare",
+          "function": "msm_fe_qos_prepare"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_fe_qos_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "prepare",
+          "function": "msm_fe_qos_prepare"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "msm_fe_qos_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "shutdown",
+          "function": "msm_meta_mi2s_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_meta_mi2s_snd_startup"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_meta_mi2s_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_free",
+          "function": "msm_mi2s_snd_hw_free"
+        },
+        {
+          "callback": "shutdown",
+          "function": "msm_mi2s_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_mi2s_snd_startup"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_mi2s_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "shutdown",
+          "function": "msm_mi2s_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_mi2s_snd_startup"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "msm_mi2s_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_slimbus_2_hw_params"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "msm_slimbus_2_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "shutdown",
+          "function": "msm_spdif_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "msm_spdif_snd_startup"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_spdif_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/audio_machine.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/bengal.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/holi.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/kalama.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/kona.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/lahaina.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/pineapple.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/sdx-target.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/sun.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_snd_stub_hw_params"
+        }
+      ],
+      "file": "asoc/waipio.c",
+      "ops_structure": "msm_stub_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_wcn_hw_params"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "msm_wcn_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "msm_wcn_hw_params"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "msm_wcn_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "qcs405_tdm_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "qcs405_tdm_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "qcs405_tdm_snd_startup"
+        }
+      ],
+      "file": "asoc/qcs405.c",
+      "ops_structure": "qcs405_tdm_be_ops"
+    },
+    {
+      "callbacks": [
+        {
+          "callback": "hw_params",
+          "function": "sm8150_tdm_snd_hw_params"
+        },
+        {
+          "callback": "shutdown",
+          "function": "sm8150_tdm_snd_shutdown"
+        },
+        {
+          "callback": "startup",
+          "function": "sm8150_tdm_snd_startup"
+        }
+      ],
+      "file": "asoc/sm8150.c",
+      "ops_structure": "sm8150_tdm_be_ops"
+    }
+  ],
+  "registration_api_counts": {
+    "devm_snd_soc_register_card": 13,
+    "devm_snd_soc_register_component": 5,
+    "module_platform_driver": 26,
+    "platform_driver_register": 28,
+    "snd_soc_add_component_controls": 48,
+    "snd_soc_register_component": 22
+  },
+  "schema_version": "1.0",
+  "summary": {
+    "callback_bindings": 124,
+    "component_driver_count": 25,
+    "ops_structure_count": 36,
+    "registration_calls": 142
+  },
+  "target_id": "RB3Gen2"
+}

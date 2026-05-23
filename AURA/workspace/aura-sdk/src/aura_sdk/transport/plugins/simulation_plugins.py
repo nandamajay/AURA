@@ -581,6 +581,58 @@ class _BaseSimulationPlugin:
             ),
         }
 
+    def structural_cognition_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        downstream_root = str(payload.get("downstream_root", "")).strip()
+        upstream_root = str(payload.get("upstream_root", "")).strip()
+
+        if self.target_id == "degraded_target_gamma":
+            max_downstream = 900
+            max_upstream = 800
+            blocker_patterns = ["gamma_vendor_api", "unsupported_topology", "timing_dependency"]
+            focus = ["sound/soc", "drivers/soundwire"]
+            hints = {"prefix": {"gamma_": "UNRESOLVED"}}
+        elif self.target_id == "fake_target_beta":
+            max_downstream = 1800
+            max_upstream = 1600
+            blocker_patterns = ["vendor_beta_wrap", "beta_shim"]
+            focus = ["sound/soc", "include/sound"]
+            hints = {"prefix": {"vendor_beta_": "asoc_generic_wrapper", "beta_": "snd_soc_component"}}
+        else:
+            max_downstream = 2000
+            max_upstream = 2000
+            blocker_patterns = ["simulated_runtime_dependency"]
+            focus = ["sound/soc", "include/sound", "drivers/soundwire"]
+            hints = {"prefix": {"simulated_": "snd_soc_component"}}
+
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.structural_cognition_adapter",
+            "downstream_root": downstream_root,
+            "upstream_root": upstream_root,
+            "max_downstream_scan_files": max_downstream,
+            "max_upstream_scan_files": max_upstream,
+            "upstream_focus_paths": focus,
+            "upstream_equivalent_hints": hints,
+            "equivalence_confidence_hints": {
+                "snd_soc_component_driver": 0.82,
+                "snd_soc_dai_link": 0.8,
+                "snd_soc_ops": 0.8,
+                "soundwire": 0.78,
+            },
+            "portability_blocker_patterns": blocker_patterns,
+            "fingerprint": _hash(
+                {
+                    "downstream_root": downstream_root,
+                    "upstream_root": upstream_root,
+                    "max_downstream_scan_files": max_downstream,
+                    "max_upstream_scan_files": max_upstream,
+                    "upstream_focus_paths": focus,
+                    "portability_blocker_patterns": blocker_patterns,
+                    "upstream_equivalent_hints": hints,
+                }
+            ),
+        }
+
 
 class FakeTargetAlphaPlugin(_BaseSimulationPlugin):
     target_id = "fake_target_alpha"
