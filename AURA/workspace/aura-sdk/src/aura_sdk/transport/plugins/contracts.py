@@ -38,6 +38,9 @@ class TargetPluginContract(Protocol):
     downstream_upstream_adapter: ProviderFn
     topology_translation_adapter: ProviderFn
     runtime_conversion_adapter: ProviderFn
+    downstream_ingestion_adapter: ProviderFn
+    upstream_match_adapter: ProviderFn
+    topology_reconstruction_adapter: ProviderFn
 
 
 @dataclass(frozen=True)
@@ -80,6 +83,9 @@ def assert_plugin_contract(plugin: Any) -> None:
         "downstream_upstream_adapter",
         "topology_translation_adapter",
         "runtime_conversion_adapter",
+        "downstream_ingestion_adapter",
+        "upstream_match_adapter",
+        "topology_reconstruction_adapter",
     )
 
     missing: list[str] = []

@@ -189,6 +189,27 @@ from aura_sdk.transport.upstream_conversion_planner import (
     UpstreamConversionPlanner,
     UpstreamConversionPlannerResult,
 )
+from aura_sdk.transport.downstream_driver_ingestion import (
+    DownstreamDriverIngestionResult,
+    ingest_downstream_driver_tree,
+)
+from aura_sdk.transport.upstream_semantic_matcher import (
+    UpstreamSemanticMatcherResult,
+    match_upstream_semantics,
+)
+from aura_sdk.transport.portability_blocker_classifier import (
+    PortabilityBlockerResult,
+    classify_portability_blockers,
+)
+from aura_sdk.transport.topology_reconstruction_cognition import (
+    TopologyReconstructionResult,
+    reconstruct_topology_runtime_graph,
+)
+from aura_sdk.transport.real_downstream_conversion_planner import (
+    RealDownstreamConversionPlanner,
+    RealDownstreamConversionPlannerResult,
+    RealDownstreamConversionRegistry,
+)
 
 __all__ = [
     "CommandClassification",
@@ -325,4 +346,15 @@ __all__ = [
     "UpstreamConversionPlannerResult",
     "UpstreamConversionPlanner",
     "TranslationIntelligenceRegistry",
+    "DownstreamDriverIngestionResult",
+    "ingest_downstream_driver_tree",
+    "UpstreamSemanticMatcherResult",
+    "match_upstream_semantics",
+    "PortabilityBlockerResult",
+    "classify_portability_blockers",
+    "TopologyReconstructionResult",
+    "reconstruct_topology_runtime_graph",
+    "RealDownstreamConversionPlannerResult",
+    "RealDownstreamConversionPlanner",
+    "RealDownstreamConversionRegistry",
 ]

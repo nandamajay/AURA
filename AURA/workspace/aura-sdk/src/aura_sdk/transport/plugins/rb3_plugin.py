@@ -734,6 +734,122 @@ class RB3TargetPlugin:
             ),
         }
 
+    def downstream_ingestion_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        downstream_root = str(payload.get("downstream_root", "")).strip()
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.downstream_ingestion_adapter",
+            "downstream_root": downstream_root,
+            "max_ingestion_files": 8000,
+            "preferred_driver_paths": [
+                "asoc",
+                "asoc/codecs",
+                "dsp",
+                "include/asoc",
+                "include/soc",
+            ],
+            "fingerprint": _stable_hash(
+                {
+                    "downstream_root": downstream_root,
+                    "max_ingestion_files": 8000,
+                    "preferred_driver_paths": [
+                        "asoc",
+                        "asoc/codecs",
+                        "dsp",
+                        "include/asoc",
+                        "include/soc",
+                    ],
+                }
+            ),
+        }
+
+    def upstream_match_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        mapping_hints = {
+            "prefix": {
+                "msm_": "snd_soc_component",
+                "qcom_": "snd_soc_qcom",
+                "wcd": "wcd93xx",
+                "swr_": "soundwire",
+            }
+        }
+        confidence_hints = {
+            "snd_soc": 0.9,
+            "snd_soc_dai_link": 0.9,
+            "snd_soc_ops": 0.9,
+            "snd_soc_dapm_route": 0.85,
+            "soundwire": 0.82,
+            "swr_": 0.8,
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.upstream_match_adapter",
+            "upstream_equivalent_hints": mapping_hints,
+            "equivalence_confidence_hints": confidence_hints,
+            "max_upstream_scan_files": 9000,
+            "replay_safe_transformations": [
+                "normalize_vendor_identifiers",
+                "normalize_fe_be_labels",
+                "normalize_pcm_route_signatures",
+            ],
+            "advisory_only_transformations": [
+                "manual_driver_ops_refactor_review",
+                "manual_dai_link_portability_review",
+                "manual_runtime_hook_replacement_review",
+            ],
+            "forbidden_autonomous_transformations": [
+                "autonomous_patch_generation",
+                "autonomous_topology_mutation",
+                "unsafe_runtime_rewrite",
+            ],
+            "fingerprint": _stable_hash(
+                {
+                    "upstream_equivalent_hints": mapping_hints,
+                    "equivalence_confidence_hints": confidence_hints,
+                    "max_upstream_scan_files": 9000,
+                }
+            ),
+        }
+
+    def topology_reconstruction_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        runtime = _as_dict(payload.get("runtime_evidence"))
+        sequence = [str(item) for item in _as_list(runtime.get("command_sequence")) if str(item).strip()]
+        if not sequence:
+            sequence = [
+                "collect_runtime_evidence",
+                "apply_route_translation",
+                "validate_pcm_activation",
+                "validate_replay_compatibility",
+                "finalize_governed_plan",
+            ]
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.topology_reconstruction_adapter",
+            "frontend_hints": [
+                "msm_mi2s_fe_dai_links",
+                "msm_mi2s_qaif_cpu_dai_links",
+            ],
+            "backend_hints": [
+                "msm_common_be_dai_links",
+                "msm_wsa_cdc_dma_be_dai_links",
+                "msm_tx_cdc_dma_be_dai_links",
+            ],
+            "expected_activation_order": sequence,
+            "fingerprint": _stable_hash(
+                {
+                    "frontend_hints": [
+                        "msm_mi2s_fe_dai_links",
+                        "msm_mi2s_qaif_cpu_dai_links",
+                    ],
+                    "backend_hints": [
+                        "msm_common_be_dai_links",
+                        "msm_wsa_cdc_dma_be_dai_links",
+                        "msm_tx_cdc_dma_be_dai_links",
+                    ],
+                    "expected_activation_order": sequence,
+                }
+            ),
+        }
+
 
 def get_plugin() -> RB3TargetPlugin:
     return RB3TargetPlugin()

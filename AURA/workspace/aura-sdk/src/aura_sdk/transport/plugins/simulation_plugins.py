@@ -468,6 +468,74 @@ class _BaseSimulationPlugin:
             ),
         }
 
+    def downstream_ingestion_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        downstream_root = str(payload.get("downstream_root", "")).strip()
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.downstream_ingestion_adapter",
+            "downstream_root": downstream_root,
+            "max_ingestion_files": 1200,
+            "preferred_driver_paths": ["asoc", "dsp", "include/asoc", "include/soc"],
+            "fingerprint": _hash(
+                {
+                    "downstream_root": downstream_root,
+                    "max_ingestion_files": 1200,
+                    "preferred_driver_paths": ["asoc", "dsp", "include/asoc", "include/soc"],
+                }
+            ),
+        }
+
+    def upstream_match_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        prefix = {
+            "msm_": "snd_soc_component",
+            "qcom_": "snd_soc_qcom",
+            "swr_": "soundwire",
+        }
+        if self.target_id == "fake_target_beta":
+            prefix["vendor_beta_"] = "asoc_generic_wrapper"
+        if self.target_id == "degraded_target_gamma":
+            prefix["gamma_"] = "UNRESOLVED"
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.upstream_match_adapter",
+            "upstream_equivalent_hints": {"prefix": prefix},
+            "equivalence_confidence_hints": {
+                "snd_soc": 0.8,
+                "snd_soc_dai_link": 0.8,
+                "snd_soc_ops": 0.8,
+                "soundwire": 0.75,
+            },
+            "max_upstream_scan_files": 1200,
+            "replay_safe_transformations": ["normalize_route_labels", "normalize_pcm_identifiers"],
+            "advisory_only_transformations": ["manual_codec_binding_review"],
+            "forbidden_autonomous_transformations": [
+                "autonomous_patch_generation",
+                "autonomous_topology_mutation",
+                "unsafe_runtime_rewrite",
+            ],
+            "fingerprint": _hash({"prefix": prefix, "max_upstream_scan_files": 1200}),
+        }
+
+    def topology_reconstruction_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        runtime = _as_dict(payload.get("runtime_evidence"))
+        sequence = [str(item) for item in _as_list(runtime.get("command_sequence")) if str(item).strip()]
+        if not sequence:
+            sequence = ["resolve_pcm", "resolve_backend", "validate_route"]
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.topology_reconstruction_adapter",
+            "frontend_hints": [f"{self.target_id}_fe_dai_links"],
+            "backend_hints": [f"{self.target_id}_be_dai_links"],
+            "expected_activation_order": sequence,
+            "fingerprint": _hash(
+                {
+                    "frontend_hints": [f"{self.target_id}_fe_dai_links"],
+                    "backend_hints": [f"{self.target_id}_be_dai_links"],
+                    "expected_activation_order": sequence,
+                }
+            ),
+        }
+
 
 class FakeTargetAlphaPlugin(_BaseSimulationPlugin):
     target_id = "fake_target_alpha"

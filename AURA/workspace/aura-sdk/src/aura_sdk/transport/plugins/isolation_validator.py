@@ -27,6 +27,7 @@ class PluginIsolationValidator:
             base / "semantic_cognition.py",
             base / "cognition_correlation.py",
             base / "upstream_conversion_planner.py",
+            base / "real_downstream_conversion_planner.py",
             base / "plugins/loader.py",
             base / "plugins/contracts.py",
         ]
@@ -63,8 +64,9 @@ class PluginIsolationValidator:
         semantic_core_file = files[1]
         correlation_core_file = files[2]
         translation_core_file = files[3]
-        loader_file = files[4]
-        contract_file = files[5]
+        real_ingestion_core_file = files[4]
+        loader_file = files[5]
+        contract_file = files[6]
         branch_findings: dict[str, list[str]] = {}
         assumption_findings: dict[str, list[str]] = {}
 
@@ -114,6 +116,15 @@ class PluginIsolationValidator:
                     ".runtime_conversion_adapter(",
                 )
             ),
+            "real_ingestion_core_uses_plugin_loader": "TargetPluginLoader" in _read(real_ingestion_core_file),
+            "real_ingestion_core_invokes_plugin_ingestion_adapters": all(
+                token in _read(real_ingestion_core_file)
+                for token in (
+                    ".downstream_ingestion_adapter(",
+                    ".upstream_match_adapter(",
+                    ".topology_reconstruction_adapter(",
+                )
+            ),
             "loader_uses_contract_validation": "assert_plugin_contract" in _read(loader_file),
             "contract_has_required_providers": all(
                 token in _read(contract_file)
@@ -135,6 +146,9 @@ class PluginIsolationValidator:
                     "downstream_upstream_adapter",
                     "topology_translation_adapter",
                     "runtime_conversion_adapter",
+                    "downstream_ingestion_adapter",
+                    "upstream_match_adapter",
+                    "topology_reconstruction_adapter",
                 )
             ),
         }
