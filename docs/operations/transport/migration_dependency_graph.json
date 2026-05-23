@@ -1,0 +1,300 @@
+{
+  "adapter_hints": {
+    "runtime_conversion": {
+      "advisory_only_transformations": [
+        "manual_codec_binding_review",
+        "manual_dai_link_reconciliation"
+      ],
+      "downstream_runtime_dependencies": [
+        "vendor_amixer_sequence",
+        "vendor_route_fingerprint",
+        "vendor_codec_dependency"
+      ],
+      "expected_runtime_seconds": 25.0,
+      "expected_sequence": [
+        "collect_runtime_evidence",
+        "apply_route_translation",
+        "validate_pcm_activation",
+        "validate_replay_compatibility",
+        "finalize_governed_plan"
+      ],
+      "fingerprint": "c5e4931d3da229a0ee36ccc2d48529228f4d9b5b9ed2d2bff84c2c5e9cb0b4a5",
+      "forbidden_autonomous_transformations": [
+        "autonomous_code_rewrite",
+        "autonomous_dts_mutation",
+        "autonomous_driver_mutation",
+        "unsafe_topology_mutation"
+      ],
+      "governance": {
+        "execution_approval_mode": "linux_authoritative_windows_execute_only",
+        "fail_closed_posture": true,
+        "patching_restrictions": {
+          "autonomous_patching_allowed": false,
+          "autonomous_upstream_generation_allowed": false
+        },
+        "topology_mutation_restrictions": {
+          "autonomous_mixer_mutation_allowed": false,
+          "autonomous_topology_rewrite_allowed": false
+        },
+        "transport_restrictions": {
+          "allowed_modes": [
+            "adb_shell"
+          ],
+          "blocked_modes": [
+            "serial_raw",
+            "ssh_unapproved"
+          ]
+        },
+        "updated_at": "2026-05-22T14:31:45.397414+00:00",
+        "write_policy": "governed_write_approved_only"
+      },
+      "provider": "rb3.runtime_conversion_adapter",
+      "replay_safe_transformations": [
+        "normalize_mixer_control_aliases",
+        "normalize_route_chain_labels",
+        "derive_generic_asoc_identifiers"
+      ],
+      "required_capabilities": {},
+      "target_id": "RB3Gen2"
+    },
+    "topology_translation": {
+      "dpcm_links": [],
+      "expected_sequence": [
+        "cat /proc/asound/cards",
+        "cat /proc/asound/pcm",
+        "cat /sys/kernel/debug/asoc/*/dapm",
+        "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+        "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+        "cat /proc/asound/cards",
+        "cat /proc/asound/pcm",
+        "cat /sys/kernel/debug/asoc/*/dapm",
+        "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      ],
+      "fe_be_routes": [],
+      "fingerprint": "74237ecb24783282c97361371c1d1bf179ae77f1737b06307756532192b3b1fa",
+      "pcm_nodes": [],
+      "provider": "rb3.topology_translation_adapter",
+      "route_fingerprint": "",
+      "target_id": "RB3Gen2",
+      "vendor_topology_abstractions": []
+    }
+  },
+  "classification": "ADVISORY_ONLY",
+  "dependency_confidence": 0.52,
+  "deterministic_fingerprint": "251f969807bd831673cfd5bc60a624b57646825fb5bdfffda57ed2817c06f82b",
+  "edges": [
+    {
+      "from": "callback_migration_ordering",
+      "relation": "dependency",
+      "to": "component_registration_migration"
+    },
+    {
+      "from": "component_registration_migration",
+      "relation": "dependency",
+      "to": "runtime_capability_parity"
+    },
+    {
+      "from": "component_registration_migration",
+      "relation": "dependency",
+      "to": "upstream_api_compatibility_windows"
+    },
+    {
+      "from": "dpcm_lifecycle_migration",
+      "relation": "dependency",
+      "to": "callback_migration_ordering"
+    },
+    {
+      "from": "dpcm_lifecycle_migration",
+      "relation": "dependency",
+      "to": "topology_portability_sequencing"
+    },
+    {
+      "from": "dpcm_lifecycle_migration",
+      "relation": "dependency",
+      "to": "vendor_hook_elimination"
+    },
+    {
+      "from": "dsp_dependency_reduction",
+      "relation": "dependency",
+      "to": "runtime_capability_parity"
+    },
+    {
+      "from": "fe_be_separation_staging",
+      "relation": "dependency",
+      "to": "dpcm_lifecycle_migration"
+    },
+    {
+      "from": "fe_be_separation_staging",
+      "relation": "dependency",
+      "to": "soundwire_abstraction_replacement"
+    },
+    {
+      "from": "fe_be_separation_staging",
+      "relation": "dependency",
+      "to": "topology_portability_sequencing"
+    },
+    {
+      "from": "soundwire_abstraction_replacement",
+      "relation": "dependency",
+      "to": "vendor_hook_elimination"
+    },
+    {
+      "from": "topology_portability_sequencing",
+      "relation": "dependency",
+      "to": "component_registration_migration"
+    },
+    {
+      "from": "vendor_hook_elimination",
+      "relation": "dependency",
+      "to": "callback_migration_ordering"
+    },
+    {
+      "from": "vendor_hook_elimination",
+      "relation": "dependency",
+      "to": "dsp_dependency_reduction"
+    }
+  ],
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://conversion_reasoning_graph",
+    "artifact://portability_blocker_report",
+    "artifact://runtime_portability_analysis",
+    "artifact://upstream_equivalence_confidence"
+  ],
+  "graph_name": "migration_dependency_graph",
+  "nodes": [
+    {
+      "depends_on": [],
+      "id": "fe_be_separation_staging",
+      "risk": "MEDIUM",
+      "signals": {
+        "backend_count": 28,
+        "frontend_count": 4,
+        "inferred_link_count": 4
+      }
+    },
+    {
+      "depends_on": [
+        "fe_be_separation_staging"
+      ],
+      "id": "dpcm_lifecycle_migration",
+      "risk": "HIGH",
+      "signals": {
+        "lifecycle_mismatch_count": 39
+      }
+    },
+    {
+      "depends_on": [
+        "fe_be_separation_staging"
+      ],
+      "id": "soundwire_abstraction_replacement",
+      "risk": "HIGH",
+      "signals": {
+        "soundwire_gap_count": 187
+      }
+    },
+    {
+      "depends_on": [
+        "dpcm_lifecycle_migration",
+        "soundwire_abstraction_replacement"
+      ],
+      "id": "vendor_hook_elimination",
+      "risk": "HIGH",
+      "signals": {
+        "vendor_hook_count": 67
+      }
+    },
+    {
+      "depends_on": [
+        "vendor_hook_elimination"
+      ],
+      "id": "dsp_dependency_reduction",
+      "risk": "HIGH",
+      "signals": {
+        "dsp_coupling_count": 82
+      }
+    },
+    {
+      "depends_on": [
+        "dpcm_lifecycle_migration",
+        "fe_be_separation_staging"
+      ],
+      "id": "topology_portability_sequencing",
+      "risk": "MEDIUM",
+      "signals": {
+        "topology_classification": "PASS"
+      }
+    },
+    {
+      "depends_on": [
+        "dpcm_lifecycle_migration",
+        "vendor_hook_elimination"
+      ],
+      "id": "callback_migration_ordering",
+      "risk": "HIGH",
+      "signals": {
+        "callback_count": 81
+      }
+    },
+    {
+      "depends_on": [
+        "callback_migration_ordering",
+        "topology_portability_sequencing"
+      ],
+      "id": "component_registration_migration",
+      "risk": "HIGH",
+      "signals": {
+        "api_drift_count": 1
+      }
+    },
+    {
+      "depends_on": [
+        "component_registration_migration",
+        "dsp_dependency_reduction"
+      ],
+      "id": "runtime_capability_parity",
+      "risk": "HIGH",
+      "signals": {
+        "runtime_dependency_count": 3
+      }
+    },
+    {
+      "depends_on": [
+        "component_registration_migration"
+      ],
+      "id": "upstream_api_compatibility_windows",
+      "risk": "HIGH",
+      "signals": {
+        "unresolved_upstream_constructs": 727
+      }
+    }
+  ],
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

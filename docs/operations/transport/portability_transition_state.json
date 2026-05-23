@@ -1,0 +1,148 @@
+{
+  "blocker_classification": "FAIL_CLOSED",
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "c02fc6b22ad753796be55aaf4695b7bc979d63de9ee21ea33ed3dec555fa078a",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://conversion_reasoning_graph",
+    "artifact://portability_blocker_report",
+    "artifact://runtime_portability_analysis",
+    "artifact://upstream_equivalence_confidence"
+  ],
+  "report_name": "portability_transition_state",
+  "risk_classification": "HIGH",
+  "runtime_classification": "ADVISORY_ONLY",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "blocked": 8,
+    "completed": 0,
+    "in_progress": 1,
+    "progress": 0.05,
+    "total": 10
+  },
+  "target_id": "RB3Gen2",
+  "transition_stability_score": 0.155,
+  "transitions": [
+    {
+      "depends_on": [
+        "dpcm_lifecycle_migration",
+        "vendor_hook_elimination"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "callback_count": 81
+      },
+      "state": "BLOCKED",
+      "transition_id": "callback_migration_ordering"
+    },
+    {
+      "depends_on": [
+        "callback_migration_ordering",
+        "topology_portability_sequencing"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "api_drift_count": 1
+      },
+      "state": "BLOCKED",
+      "transition_id": "component_registration_migration"
+    },
+    {
+      "depends_on": [
+        "fe_be_separation_staging"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "lifecycle_mismatch_count": 39
+      },
+      "state": "BLOCKED",
+      "transition_id": "dpcm_lifecycle_migration"
+    },
+    {
+      "depends_on": [
+        "vendor_hook_elimination"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "dsp_coupling_count": 82
+      },
+      "state": "BLOCKED",
+      "transition_id": "dsp_dependency_reduction"
+    },
+    {
+      "depends_on": [],
+      "risk": "MEDIUM",
+      "signals": {
+        "backend_count": 28,
+        "frontend_count": 4,
+        "inferred_link_count": 4
+      },
+      "state": "IN_PROGRESS",
+      "transition_id": "fe_be_separation_staging"
+    },
+    {
+      "depends_on": [
+        "component_registration_migration",
+        "dsp_dependency_reduction"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "runtime_dependency_count": 3
+      },
+      "state": "BLOCKED",
+      "transition_id": "runtime_capability_parity"
+    },
+    {
+      "depends_on": [
+        "fe_be_separation_staging"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "soundwire_gap_count": 187
+      },
+      "state": "BLOCKED",
+      "transition_id": "soundwire_abstraction_replacement"
+    },
+    {
+      "depends_on": [
+        "dpcm_lifecycle_migration",
+        "fe_be_separation_staging"
+      ],
+      "risk": "MEDIUM",
+      "signals": {
+        "topology_classification": "PASS"
+      },
+      "state": "PENDING",
+      "transition_id": "topology_portability_sequencing"
+    },
+    {
+      "depends_on": [
+        "component_registration_migration"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "unresolved_upstream_constructs": 727
+      },
+      "state": "BLOCKED",
+      "transition_id": "upstream_api_compatibility_windows"
+    },
+    {
+      "depends_on": [
+        "dpcm_lifecycle_migration",
+        "soundwire_abstraction_replacement"
+      ],
+      "risk": "HIGH",
+      "signals": {
+        "vendor_hook_count": 67
+      },
+      "state": "BLOCKED",
+      "transition_id": "vendor_hook_elimination"
+    }
+  ]
+}

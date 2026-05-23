@@ -1,0 +1,95 @@
+{
+  "advisory_only_orchestration": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "6a989b173fa188bd9008baea2db22ba300008e7e9b4bc62297b5365cdc5cb6e8",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://conversion_reasoning_graph",
+    "artifact://portability_blocker_report",
+    "artifact://runtime_portability_analysis",
+    "artifact://upstream_equivalence_confidence"
+  ],
+  "recommended_rollback_boundaries": [
+    {
+      "boundary": "pre_vendor_hook_elimination",
+      "checkpoint_required": true,
+      "trigger": "before irreversible vendor hook removal"
+    },
+    {
+      "boundary": "pre_component_registration_cutover",
+      "checkpoint_required": true,
+      "trigger": "before component registration migration"
+    },
+    {
+      "boundary": "pre_runtime_capability_parity",
+      "checkpoint_required": true,
+      "trigger": "before runtime capability parity validation"
+    }
+  ],
+  "report_name": "rollback_boundary_report",
+  "rollback_confidence": 0.756,
+  "schema_version": "1.0",
+  "summary": {
+    "blocked_irreversible_count": 0,
+    "high_risk_transition_count": 6,
+    "irreversible_transition_count": 5,
+    "portability_risk_classification": "HIGH",
+    "runtime_stability_score": 0.92
+  },
+  "target_id": "RB3Gen2",
+  "transition_boundaries": [
+    {
+      "high_risk": true,
+      "irreversible": true,
+      "rollback_allowed": true,
+      "rollback_mode": "SAFE",
+      "state": "BLOCKED",
+      "transition_id": "component_registration_migration"
+    },
+    {
+      "high_risk": true,
+      "irreversible": true,
+      "rollback_allowed": true,
+      "rollback_mode": "SAFE",
+      "state": "BLOCKED",
+      "transition_id": "dsp_dependency_reduction"
+    },
+    {
+      "high_risk": true,
+      "irreversible": false,
+      "rollback_allowed": true,
+      "rollback_mode": "SAFE",
+      "state": "BLOCKED",
+      "transition_id": "runtime_capability_parity"
+    },
+    {
+      "high_risk": true,
+      "irreversible": true,
+      "rollback_allowed": true,
+      "rollback_mode": "SAFE",
+      "state": "BLOCKED",
+      "transition_id": "soundwire_abstraction_replacement"
+    },
+    {
+      "high_risk": true,
+      "irreversible": true,
+      "rollback_allowed": true,
+      "rollback_mode": "SAFE",
+      "state": "BLOCKED",
+      "transition_id": "upstream_api_compatibility_windows"
+    },
+    {
+      "high_risk": true,
+      "irreversible": true,
+      "rollback_allowed": true,
+      "rollback_mode": "SAFE",
+      "state": "BLOCKED",
+      "transition_id": "vendor_hook_elimination"
+    }
+  ]
+}

@@ -1,0 +1,145 @@
+{
+  "advisory_only_orchestration": true,
+  "classification": "FAIL_CLOSED",
+  "dependency_reference": "251f969807bd831673cfd5bc60a624b57646825fb5bdfffda57ed2817c06f82b",
+  "deterministic_fingerprint": "126c09682b6329127cc85f8614a9b27b44fbf3a3baed6c89f9c760f666bb20f4",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://conversion_reasoning_graph",
+    "artifact://portability_blocker_report",
+    "artifact://runtime_portability_analysis",
+    "artifact://upstream_equivalence_confidence"
+  ],
+  "irreversible_high_risk_transitions": {
+    "high_risk": [
+      "component_registration_migration",
+      "dsp_dependency_reduction",
+      "runtime_capability_parity",
+      "soundwire_abstraction_replacement",
+      "upstream_api_compatibility_windows",
+      "vendor_hook_elimination"
+    ],
+    "irreversible": [
+      "component_registration_migration",
+      "dsp_dependency_reduction",
+      "soundwire_abstraction_replacement",
+      "upstream_api_compatibility_windows",
+      "vendor_hook_elimination"
+    ]
+  },
+  "phases": [
+    {
+      "covers": [
+        "fe_be_separation_staging",
+        "topology_portability_sequencing"
+      ],
+      "entry_requirements": [
+        "runtime_stability_gate_pass_or_advisory",
+        "deterministic_replay_signal_present",
+        "governance_fail_closed_enabled"
+      ],
+      "exit_requirements": [
+        "covered_transitions_non_blocked",
+        "no_new_high_severity_regression",
+        "lineage_checkpoint_persisted"
+      ],
+      "goal": "establish FE/BE separation boundaries and portable topology sequencing",
+      "phase_id": "phase_1_fe_be_staging",
+      "status": "IN_PROGRESS"
+    },
+    {
+      "covers": [
+        "dpcm_lifecycle_migration",
+        "callback_migration_ordering"
+      ],
+      "entry_requirements": [
+        "runtime_stability_gate_pass_or_advisory",
+        "deterministic_replay_signal_present",
+        "governance_fail_closed_enabled"
+      ],
+      "exit_requirements": [
+        "covered_transitions_non_blocked",
+        "no_new_high_severity_regression",
+        "lineage_checkpoint_persisted"
+      ],
+      "goal": "migrate DPCM lifecycle and callback ordering with runtime-safe gates",
+      "phase_id": "phase_2_dpcm_and_callback_alignment",
+      "status": "BLOCKED"
+    },
+    {
+      "covers": [
+        "soundwire_abstraction_replacement",
+        "vendor_hook_elimination",
+        "dsp_dependency_reduction"
+      ],
+      "entry_requirements": [
+        "runtime_stability_gate_pass_or_advisory",
+        "deterministic_replay_signal_present",
+        "governance_fail_closed_enabled"
+      ],
+      "exit_requirements": [
+        "covered_transitions_non_blocked",
+        "no_new_high_severity_regression",
+        "lineage_checkpoint_persisted"
+      ],
+      "goal": "replace SoundWire vendor abstraction and reduce DSP/vendor dependencies",
+      "phase_id": "phase_3_soundwire_vendor_unwind",
+      "status": "BLOCKED"
+    },
+    {
+      "covers": [
+        "component_registration_migration",
+        "upstream_api_compatibility_windows"
+      ],
+      "entry_requirements": [
+        "runtime_stability_gate_pass_or_advisory",
+        "deterministic_replay_signal_present",
+        "governance_fail_closed_enabled"
+      ],
+      "exit_requirements": [
+        "covered_transitions_non_blocked",
+        "no_new_high_severity_regression",
+        "lineage_checkpoint_persisted"
+      ],
+      "goal": "align component registration and API compatibility windows",
+      "phase_id": "phase_4_registration_parity",
+      "status": "BLOCKED"
+    },
+    {
+      "covers": [
+        "runtime_capability_parity"
+      ],
+      "entry_requirements": [
+        "runtime_stability_gate_pass_or_advisory",
+        "deterministic_replay_signal_present",
+        "governance_fail_closed_enabled"
+      ],
+      "exit_requirements": [
+        "covered_transitions_non_blocked",
+        "no_new_high_severity_regression",
+        "lineage_checkpoint_persisted"
+      ],
+      "goal": "validate runtime capability parity under deterministic replay",
+      "phase_id": "phase_5_runtime_capability_parity",
+      "status": "BLOCKED"
+    }
+  ],
+  "plan_score": 0.349,
+  "report_name": "staged_migration_plan",
+  "schema_version": "1.0",
+  "summary": {
+    "blocked_phases": 4,
+    "completed_phases": 0,
+    "in_progress_phases": 1,
+    "incremental_equivalence_score": 0.019,
+    "portability_risk_classification": "HIGH",
+    "runtime_gate_classification": "ADVISORY_ONLY",
+    "total_phases": 5
+  },
+  "target_id": "RB3Gen2"
+}

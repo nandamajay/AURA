@@ -1,0 +1,81 @@
+{
+  "advisory_only_orchestration": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "6c45e0d090726ce17ab2f6ea0126b8ca5747d0a7eacb0952f2276a2c25c75e3b",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://conversion_reasoning_graph",
+    "artifact://portability_blocker_report",
+    "artifact://runtime_portability_analysis",
+    "artifact://upstream_equivalence_confidence"
+  ],
+  "gates": [
+    {
+      "details": {
+        "playback_completion": true,
+        "process_success": true
+      },
+      "gate": "runtime_execution_success",
+      "passed": true,
+      "severity": "HIGH"
+    },
+    {
+      "details": {
+        "delta_seconds": 0.0,
+        "expected_seconds": 25.0,
+        "observed_seconds": 25.0
+      },
+      "gate": "runtime_timing_window",
+      "passed": true,
+      "severity": "MEDIUM"
+    },
+    {
+      "details": {
+        "blocked_unsafe_count": 0
+      },
+      "gate": "runtime_portability_blockers",
+      "passed": true,
+      "severity": "HIGH"
+    },
+    {
+      "details": {
+        "deterministic_event_ordering": true,
+        "deterministic_replay_fingerprint": ""
+      },
+      "gate": "replay_determinism",
+      "passed": true,
+      "severity": "HIGH"
+    },
+    {
+      "details": {
+        "governance_violation": false
+      },
+      "gate": "governance_boundary",
+      "passed": true,
+      "severity": "HIGH"
+    },
+    {
+      "details": {
+        "dependency_high_risk_count": 8
+      },
+      "gate": "dependency_risk_containment",
+      "passed": false,
+      "severity": "MEDIUM"
+    }
+  ],
+  "report_name": "runtime_stability_gate_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "stability_score": 0.92,
+  "summary": {
+    "failed_high": 0,
+    "failed_medium": 1,
+    "total_gates": 6
+  },
+  "target_id": "RB3Gen2"
+}

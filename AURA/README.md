@@ -117,6 +117,7 @@ Primary scripts:
 - `scripts/aura_crash_recovery_validator.py`
 - `scripts/aura_confidence_integrity.py`
 - `scripts/aura_event_quarantine_tests.py`
+- `scripts/aura-incremental-migration-orchestration.py`
 
 Key output directory:
 
@@ -839,6 +840,92 @@ python3 -m pytest \
   workspace/aura-sdk/tests/test_translation_intelligence_static.py \
   workspace/aura-sdk/tests/test_real_downstream_ingestion_static.py -q
 ```
+
+## Incremental Migration Orchestration Layer
+
+This phase adds governed staged migration orchestration that decomposes
+downstream-to-upstream conversion into replay-safe, rollback-aware phases
+without mutating runtime state or source code.
+
+### Mission Alignment
+
+This phase directly improves:
+
+- safe incremental upstreaming:
+  - migration is decomposed into explicit staged phases with hard boundaries
+- runtime-safe migration sequencing:
+  - runtime stability gates must pass (or remain advisory) before phase advance
+- regression containment:
+  - dependency-linked transition state isolates blocked/high-risk paths
+- rollback-aware conversion:
+  - irreversible and checkpoint-only boundaries are explicitly modeled
+- topology transition governance:
+  - FE/BE and DPCM-related sequencing is included in dependency + phase plans
+- deterministic migration replay:
+  - every orchestration artifact has deterministic fingerprints and lineage trace
+
+### Implemented Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/migration_orchestrator.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/staged_conversion_planner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/rollback_boundary_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_stability_gate.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/migration_dependency_graph.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/portability_transition_tracker.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/incremental_equivalence_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/migration_checkpoint_registry.py`
+
+Runner:
+
+- `scripts/aura-incremental-migration-orchestration.py`
+
+### Orchestration Outputs
+
+- `staged_migration_plan.json`
+- `migration_dependency_graph.json`
+- `rollback_boundary_report.json`
+- `runtime_stability_gate_report.json`
+- `portability_transition_state.json`
+- `incremental_equivalence_report.json`
+- `migration_checkpoint_registry.json`
+- `deterministic_migration_orchestration_trace.json`
+
+Additional operational outputs:
+
+- `deterministic_migration_orchestration_replay.json`
+- `incremental_migration_orchestration_summary.json`
+- `docs/operations/transport/incremental_migration_orchestration_architecture.md`
+
+### Run Incremental Orchestration
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-incremental-migration-orchestration.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id incremental_migration_orchestration_v1
+```
+
+### Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_incremental_migration_orchestration_static.py \
+  workspace/aura-sdk/tests/test_governed_conversion_reasoning_static.py \
+  workspace/aura-sdk/tests/test_translation_intelligence_static.py \
+  workspace/aura-sdk/tests/test_real_downstream_ingestion_static.py -q
+```
+
+### Governance and Architecture Constraints (Preserved)
+
+- advisory-only orchestration (no autonomous rewriting)
+- fail-closed governance enforcement
+- runtime-truth precedence
+- plugin isolation (core runtime remains target-agnostic)
+- deterministic replay compatibility
+- semantic/structural separation
 
 ## Runtime Loop Automation (Three-Screen Validation)
 

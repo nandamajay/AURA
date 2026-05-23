@@ -1,0 +1,101 @@
+{
+  "advisory_only_orchestration": true,
+  "checkpoint_integrity_score": 0.39,
+  "checkpoints": [
+    {
+      "checkpoint_id": "incremental_migration_orchestration_v1:preflight",
+      "conditions": {
+        "plan_classification": "FAIL_CLOSED",
+        "runtime_stability_classification": "ADVISORY_ONLY"
+      },
+      "status": "CAPTURED",
+      "type": "PRE_FLIGHT"
+    },
+    {
+      "checkpoint_id": "incremental_migration_orchestration_v1:phase_progress",
+      "conditions": {
+        "active_phases": [
+          "phase_1_fe_be_staging"
+        ],
+        "blocked_phases": [
+          "phase_2_dpcm_and_callback_alignment",
+          "phase_3_soundwire_vendor_unwind",
+          "phase_4_registration_parity",
+          "phase_5_runtime_capability_parity"
+        ],
+        "completed_phases": []
+      },
+      "status": "CAPTURED",
+      "type": "PHASE_PROGRESS"
+    },
+    {
+      "checkpoint_id": "incremental_migration_orchestration_v1:rollback_boundary",
+      "conditions": {
+        "irreversible_transition_count": 5,
+        "rollback_classification": "ADVISORY_ONLY"
+      },
+      "status": "CAPTURED",
+      "type": "ROLLBACK_BOUNDARY"
+    },
+    {
+      "checkpoint_id": "incremental_migration_orchestration_v1:equivalence",
+      "conditions": {
+        "classification": "FAIL_CLOSED",
+        "incremental_equivalence_score": 0.019
+      },
+      "status": "CAPTURED",
+      "type": "INCREMENTAL_EQUIVALENCE"
+    }
+  ],
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "58b066426c7f690eb2476f5ae19c790b151abc206ff822bd503cf3ae2a29c2d1",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://structural_graph",
+    "artifact://driver_registration_graph",
+    "artifact://topology_structure_graph",
+    "artifact://runtime_source_correlation",
+    "artifact://conversion_reasoning_graph",
+    "artifact://portability_blocker_report",
+    "artifact://runtime_portability_analysis",
+    "artifact://upstream_equivalence_confidence"
+  ],
+  "history": [
+    {
+      "checkpoint_count": 4,
+      "checkpoint_integrity_score": 0.39,
+      "classification": "FAIL_CLOSED",
+      "history_index": 1,
+      "lineage_id": "incremental_migration_orchestration_v1",
+      "transition_progress": 0.05
+    },
+    {
+      "checkpoint_count": 4,
+      "checkpoint_integrity_score": 0.39,
+      "classification": "FAIL_CLOSED",
+      "history_index": 2,
+      "lineage_id": "incremental_migration_orchestration_v1",
+      "transition_progress": 0.05
+    }
+  ],
+  "lineage_id": "incremental_migration_orchestration_v1",
+  "partial_migration_state": {
+    "active_phases": [
+      "phase_1_fe_be_staging"
+    ],
+    "blocked_phases": [
+      "phase_2_dpcm_and_callback_alignment",
+      "phase_3_soundwire_vendor_unwind",
+      "phase_4_registration_parity",
+      "phase_5_runtime_capability_parity"
+    ],
+    "completed_phases": [],
+    "transition_count": 10,
+    "transition_progress": 0.05
+  },
+  "report_name": "migration_checkpoint_registry",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}
