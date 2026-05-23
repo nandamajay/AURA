@@ -1,0 +1,119 @@
+{
+  "constraints": {
+    "governance_gate_required_for_execution": true,
+    "no_autonomous_mutation": true,
+    "no_prompt_memory_assumptions": true
+  },
+  "contracts": [
+    {
+      "inputs": [
+        "runtime_capability_report",
+        "bootloader_identity",
+        "kernel_identity"
+      ],
+      "interface": "TargetIdentityProvider",
+      "outputs": [
+        "target_identity",
+        "target_identity_confidence"
+      ],
+      "responsibility": "resolve target board/soc identity from runtime evidence"
+    },
+    {
+      "inputs": [
+        "entry_dts",
+        "overlay_chain",
+        "runtime_overlay_evidence"
+      ],
+      "interface": "OverlayIdentityProvider",
+      "outputs": [
+        "overlay_identity",
+        "overlay_mutation_fingerprint"
+      ],
+      "responsibility": "resolve base/overlay lineage and mutations"
+    },
+    {
+      "inputs": [
+        "proc_asound_cards",
+        "proc_asound_pcm",
+        "dai_link_evidence"
+      ],
+      "interface": "PCMTopologyProvider",
+      "outputs": [
+        "pcm_topology_model",
+        "pcm_topology_confidence"
+      ],
+      "responsibility": "normalize ALSA FE/BE/PCM topology across targets"
+    },
+    {
+      "inputs": [
+        "runtime_route_graph",
+        "mixer_state",
+        "dapm_or_equivalent"
+      ],
+      "interface": "BackendRoutingProvider",
+      "outputs": [
+        "backend_route_model",
+        "route_fingerprint"
+      ],
+      "responsibility": "map runtime playback/capture chains to backend routes"
+    },
+    {
+      "inputs": [
+        "trace",
+        "event_lineage",
+        "transport_metrics",
+        "artifact_index"
+      ],
+      "interface": "RuntimeEvidenceProvider",
+      "outputs": [
+        "runtime_evidence_profile",
+        "evidence_quality_score"
+      ],
+      "responsibility": "classify and quality-score evidence availability"
+    },
+    {
+      "inputs": [
+        "supports_amixer",
+        "supports_tinymix",
+        "mixer_outputs"
+      ],
+      "interface": "MixerCapabilityProvider",
+      "outputs": [
+        "mixer_capability_profile",
+        "mixer_capability_confidence"
+      ],
+      "responsibility": "discover and normalize mixer tool/control availability"
+    },
+    {
+      "inputs": [
+        "target_identity_confidence",
+        "pcm_topology_confidence",
+        "route_confidence",
+        "evidence_quality_score",
+        "transport_stability"
+      ],
+      "interface": "TargetCapabilityScorer",
+      "outputs": [
+        "target_capability_confidence",
+        "confidence_breakdown"
+      ],
+      "responsibility": "compute evidence-backed target confidence"
+    },
+    {
+      "inputs": [
+        "portable_target_profile",
+        "procedural_memory",
+        "governance_state"
+      ],
+      "interface": "DeterministicReplayAdapter",
+      "outputs": [
+        "replay_contract",
+        "compatibility_verdict"
+      ],
+      "responsibility": "bind target profile to replay-safe procedural contract"
+    }
+  ],
+  "generated_at_epoch": 1779514728.742834,
+  "layer_name": "AURA_Cognition_Abstraction_Layer",
+  "schema_version": "1.0"
+}

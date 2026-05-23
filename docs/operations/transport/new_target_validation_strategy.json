@@ -1,0 +1,53 @@
+{
+  "entry_gate_for_new_target": [
+    "portable_profile_schema_valid",
+    "governance_state_loaded",
+    "no_autonomous_features_enabled",
+    "advisory_or_governed_execution_only"
+  ],
+  "exit_gate_for_new_target": [
+    "replay_stability_score>=0.95",
+    "topology_consistency_score>=0.90",
+    "confidence_integrity_score>=0.95",
+    "governance_integrity_score==1.0"
+  ],
+  "generated_at_epoch": 1779514728.7428808,
+  "schema_version": "1.0",
+  "strategy_name": "Portable_Target_Validation_Strategy",
+  "validation_tracks": [
+    {
+      "checks": [
+        "identity_resolution_consistency",
+        "overlay_chain_resolution",
+        "capability_discovery_repeatability"
+      ],
+      "track": "target_discovery"
+    },
+    {
+      "checks": [
+        "pcm_topology_normalization",
+        "backend_route_correlation",
+        "route_fingerprint_stability"
+      ],
+      "track": "topology_and_route"
+    },
+    {
+      "checks": [
+        "event_ordering_stability",
+        "replay_state_equivalence",
+        "procedural_memory_consistency",
+        "baseline_equivalence"
+      ],
+      "track": "determinism_and_replay"
+    },
+    {
+      "checks": [
+        "fail_closed_policy_enforcement",
+        "event_quarantine_stability",
+        "confidence_integrity",
+        "cross_target_boundary_enforcement"
+      ],
+      "track": "governance_and_safety"
+    }
+  ]
+}

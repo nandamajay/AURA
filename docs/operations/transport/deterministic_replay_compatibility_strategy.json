@@ -1,0 +1,54 @@
+{
+  "compatibility_levels": [
+    {
+      "level": "FULL",
+      "requirements": [
+        "matching_sequence_contract",
+        "stable_route_fingerprint",
+        "stable_pcm_mapping",
+        "governance_pass"
+      ]
+    },
+    {
+      "level": "PARTIAL",
+      "requirements": [
+        "sequence_contract_adapted",
+        "evidence_quality_above_threshold",
+        "no_policy_violation"
+      ],
+      "restrictions": [
+        "advisory_only_execution"
+      ]
+    },
+    {
+      "level": "INCOMPATIBLE",
+      "requirements": [
+        "policy_violation_or_missing_core_contract"
+      ],
+      "restrictions": [
+        "fail_closed"
+      ]
+    }
+  ],
+  "determinism_guards": [
+    "event_ordering_validation",
+    "replay_state_equivalence",
+    "confidence_integrity_validation",
+    "event_quarantine_enforcement"
+  ],
+  "generated_at_epoch": 1779514728.7428744,
+  "rb3_reference_contract": {
+    "contract_elements": [
+      "execution_ordering",
+      "timing_windows",
+      "route_fingerprint",
+      "pcm_signature",
+      "evidence_sequence",
+      "cleanup_sequence"
+    ],
+    "profile_id": "audible_25s_speaker_v1",
+    "target": "RB3Gen2"
+  },
+  "schema_version": "1.0",
+  "strategy_name": "Cross_Target_Deterministic_Replay_Compatibility"
+}

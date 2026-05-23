@@ -1,0 +1,40 @@
+{
+  "boundary_name": "Cross_Target_Governance_Boundaries",
+  "cross_target_reasoning_rules": [
+    {
+      "description": "Route/procedural assumptions cannot transfer across targets without evidence-backed mapping.",
+      "rule": "no_unverified_target_transfer"
+    },
+    {
+      "description": "Confidence evolution must be tracked per target_id + overlay identity.",
+      "rule": "confidence_is_target_scoped"
+    },
+    {
+      "description": "Any cross-target policy violation causes immediate fail-closed classification.",
+      "rule": "policy_violation_is_terminal"
+    },
+    {
+      "description": "New targets remain advisory until deterministic validation criteria pass.",
+      "rule": "advisory_first_for_new_target"
+    }
+  ],
+  "generated_at_epoch": 1779514728.7433896,
+  "global_constraints": {
+    "autonomous_mixer_mutation_allowed": false,
+    "autonomous_patching_allowed": false,
+    "autonomous_topology_rewrite_allowed": false,
+    "autonomous_upstream_generation_allowed": false,
+    "cognition_without_evidence_forbidden": true,
+    "execution_posture": "ADVISORY_ONLY_OR_GOVERNED_ONLY",
+    "fail_closed_default": true,
+    "runtime_evidence_truth_required": true
+  },
+  "required_artifacts": [
+    "portable_target_profile",
+    "capability_discovery_report",
+    "replay_compatibility_report",
+    "confidence_integrity_report",
+    "governance_validation_report"
+  ],
+  "schema_version": "1.0"
+}

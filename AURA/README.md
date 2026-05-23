@@ -1,23 +1,15 @@
 # AURA — Audio Upstream Refactor Agent
 
-Autonomous multi-agent platform for upstreaming Qualcomm Audio drivers to the Linux kernel.
+AURA is a governed, deterministic audio cognition/runtime platform for Qualcomm
+audio engineering workflows. The current implementation prioritizes:
 
-## Quick Start
+- runtime evidence as truth
+- deterministic replay and reconstruction
+- fail-closed governance enforcement
+- persistent cognition state (no chat-memory dependency)
+- advisory/governed execution only
 
-```bash
-# 1. Configure
-export OPENAI_API_KEY=sk-your-key
-export JWT_SECRET=$(openssl rand -hex 16)
-
-# 2. Launch
-make up
-
-# 3. Access
-curl http://localhost:8000/health/ready
-open http://localhost:3000  # Dashboard
-```
-
-## Architecture
+## Core Architecture Model
 
 ```
 ┌──────────────┐     ┌──────────────┐     ┌──────────────┐
@@ -36,57 +28,249 @@ open http://localhost:3000  # Dashboard
                      └─────────────┘
 ```
 
-## Services
+### Services
 
-| Service | Port | Description |
-|---------|------|-------------|
-| aura-core | 8000 | Orchestrator, REST API, governance |
-| llm-gateway | 8002 | OpenAI proxy with caching |
-| ws-server | 8001 | WebSocket + SSE streaming |
-| dashboard | 3000 | React dashboard |
+| Service | Port | Responsibility |
+|---------|------|----------------|
+| `aura-core` | `8000` | orchestration, governance, APIs |
+| `llm-gateway` | `8002` | LLM boundary/proxy |
+| `ws-server` | `8001` | streaming/event fanout |
+| `dashboard` | `3000` | operational visibility |
 
-## Development
+## Current Capability Baseline
+
+The platform currently includes:
+
+- deterministic RB3Gen2 runtime playback orchestration
+- topology cognition and DTSI/runtime correlation artifacts
+- persistent cognition registry and boot reconstruction
+- governance restoration and fail-closed decision handling
+- cognition bus with event lifecycle, lineage, and replay
+- stability harnesses for replay determinism and quarantine
+- portability architecture artifacts for multi-target cognition
+
+## Quick Start (Deterministic Local Bring-up)
 
 ```bash
-# Dev mode with hot reload
+# 1) Configure environment
+cp .env.example .env
+# Edit .env for JWT + provider credentials
+
+# 2) Validate host/toolchain first (failure-first)
+make env-doctor
+
+# 3) Deterministic bootstrap
+make repro-up
+
+# Optional strict mode
+./scripts/repro-bootstrap.sh --strict-doctor
+
+# 4) Verify services
+curl http://localhost:8000/health/ready
+```
+
+## Development Commands
+
+```bash
+# deterministic Python environment sync
+make env-sync
+
+# development mode
 make dev
 
-# Run tests
+# tests
 make test
 
-# Lint code
+# parity checks (local py3.12 or docker fallback)
+make ci-parity
+
+# lint
 make lint
 
-# View logs
+# logs / db shell
 make logs-core
-
-# Database shell
 make shell-db
 ```
 
-## Project Structure
+## Deterministic Demo Flow
+
+```bash
+make demo-prepare
+make demo-up
+make demo-verify
+make demo-workload
+```
+
+Artifacts are emitted to `evidence/demo/`.
+
+## RB3Gen2 Deterministic Runtime Operations
+
+Primary scripts:
+
+- `scripts/rb3-runtime-procedural-playback.py`
+- `scripts/rb3-deterministic-stability.py`
+- `scripts/rb3-playback-cognition-validation.py`
+- `scripts/aura-cognition-boot.py`
+- `scripts/aura_stability_harness.py`
+- `scripts/aura_determinism_validator.py`
+- `scripts/aura_crash_recovery_validator.py`
+- `scripts/aura_confidence_integrity.py`
+- `scripts/aura_event_quarantine_tests.py`
+
+Key output directory:
+
+- `../docs/operations/transport/`
+
+Representative artifacts include:
+
+- `deterministic_runtime_profile.json`
+- `runtime_confidence_report.json`
+- `playback_drift_report.json`
+- `procedural_signature.json`
+- `stable_route_fingerprint.json`
+- `aura_stability_report.json`
+- `aura_replay_determinism_report.json`
+- `aura_confidence_integrity_report.json`
+- `aura_recovery_validation_report.json`
+- `aura_event_quarantine_report.json`
+- `aura_stability_fingerprint.json`
+
+## Portable Multi-Target Cognition Phase
+
+This phase introduces architecture hardening for cross-target portability while
+keeping RB3Gen2 as the known-good reference target.
+
+### Objectives
+
+- abstract target-specific assumptions behind explicit interfaces
+- separate target identity, overlay identity, topology, routing, evidence, and mixer capabilities
+- preserve deterministic replay and fail-closed governance
+- keep execution advisory/governed only
+- prohibit autonomous patching/upstream generation/topology rewrite
+
+### Generator
+
+```bash
+python3 scripts/aura-portable-target-cognition-architecture.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport
+```
+
+### Generated Architecture Artifacts
+
+- `portable_target_cognition_architecture.json`
+- `cognition_abstraction_layer.json`
+- `target_profile_schema.json`
+- `runtime_capability_negotiation_model.json`
+- `deterministic_replay_compatibility_strategy.json`
+- `rb3_to_portable_migration_plan.json`
+- `new_target_validation_strategy.json`
+- `cross_target_governance_boundaries.json`
+- `portable_multi_target_cognition_phase_summary.json`
+
+### Artifact Intent
+
+- `portable_target_cognition_architecture.json`
+  - reference target, design principles, execution posture, explicit non-goals
+- `cognition_abstraction_layer.json`
+  - interface contracts for identity, overlay, topology, route, evidence, mixer, scoring, replay adaptation
+- `target_profile_schema.json`
+  - portable target profile schema with required confidence/governance/replay fields
+- `runtime_capability_negotiation_model.json`
+  - state machine, deterministic degradation rules, confidence weighting model
+- `deterministic_replay_compatibility_strategy.json`
+  - RB3 reference replay contract and compatibility levels (`FULL`, `PARTIAL`, `INCOMPATIBLE`)
+- `rb3_to_portable_migration_plan.json`
+  - staged migration with explicit exit criteria and non-goals
+- `new_target_validation_strategy.json`
+  - onboarding gates and threshold-based exit criteria for new targets
+- `cross_target_governance_boundaries.json`
+  - cross-target policy boundaries and required validation artifacts
+- `portable_multi_target_cognition_phase_summary.json`
+  - artifact index and per-artifact fingerprint map
+
+## Runtime Loop Automation (Three-Screen Validation)
+
+Loop wrappers:
+
+- `scripts/loop_cognition_boot.sh`
+- `scripts/loop_stability_offline.sh`
+- `scripts/loop_event_quarantine.sh`
+
+Launch all 3 loops in one tmux session:
+
+```bash
+cd /local/mnt/workspace/AURA_V1/AURA
+bash scripts/launch_three_tests_tmux.sh aura_tests
+```
+
+Useful tmux commands:
+
+```bash
+tmux attach -t aura_tests
+tmux list-windows -t aura_tests
+tmux capture-pane -pt aura_tests:0 -S -60
+tmux capture-pane -pt aura_tests:1 -S -60
+tmux capture-pane -pt aura_tests:2 -S -60
+tmux kill-session -t aura_tests
+```
+
+## Governance and Safety Boundaries
+
+All cognition/execution must preserve:
+
+- fail-closed policy default
+- runtime evidence-backed confidence only
+- deterministic replay constraints
+- bounded, governed execution posture
+- no hidden prompt-memory dependency
+
+Forbidden by design:
+
+- autonomous patching
+- autonomous topology rewriting
+- autonomous upstream generation
+- autonomous mixer mutation
+
+## Troubleshooting
+
+### `ModuleNotFoundError: No module named 'pydantic'`
+
+Use deterministic env sync, then re-run:
+
+```bash
+make env-sync
+python3 scripts/aura-cognition-boot.py --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport
+```
+
+### Shell loop syntax errors (`done: command not found`)
+
+Ensure multiline bash format:
+
+```bash
+while true; do
+  python3 scripts/aura-cognition-boot.py --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport
+  sleep 5
+done
+```
+
+## Repository Layout
 
 ```
 AURA/
-├── workspace/aura-sdk/   # Shared library
+├── workspace/aura-sdk/        # shared SDK and cognition transport modules
 ├── services/
-│   ├── core/             # Orchestrator
-│   ├── llm-gateway/      # LLM proxy
-│   └── ws-server/        # WebSocket server
-├── agents/               # CLI agents
-├── dashboard/            # React frontend
-├── plugins/              # Subsystem plugins
-├── knowledge/schema/     # SQLite migrations
-├── scripts/              # Operational scripts
-├── docker-compose.yml    # Service topology
-└── Makefile             # Dev commands
+│   ├── core/                  # orchestrator + APIs + governance gateways
+│   ├── llm-gateway/           # LLM provider boundary
+│   └── ws-server/             # event and stream transport
+├── dashboard/                 # operational UI
+├── agents/                    # agent runtime surfaces
+├── scripts/                   # deterministic operational tooling
+├── knowledge/schema/          # DB schema migrations
+├── governance/                # policy definitions
+├── evidence/                  # generated execution evidence
+└── Makefile                   # primary operator entry points
 ```
-
-## Documentation
-
-- [Architecture Specs](specs/) — Full P0/P1/P2 specifications
-- [Constitution](AURA_IMMUTABLE_ARCHITECTURE_CONSTITUTION.md) — Immutable architecture rules
 
 ## License
 
-Proprietary — All rights reserved.
+Proprietary. All rights reserved.

@@ -1,0 +1,60 @@
+{
+  "confidence_scoring": {
+    "constraints": [
+      "confidence_monotonic_with_evidence_quality",
+      "missing_evidence_never_increases_confidence",
+      "unsupported_features_lower_confidence_deterministically"
+    ],
+    "weights": {
+      "route": 0.2,
+      "runtime_evidence": 0.2,
+      "target_identity": 0.2,
+      "topology": 0.25,
+      "transport_stability": 0.15
+    }
+  },
+  "generated_at_epoch": 1779514728.7428699,
+  "model_name": "Portable_Runtime_Capability_Negotiation",
+  "negotiation_rules": [
+    {
+      "deterministic_effect": "reduce_by_fixed_weights",
+      "effect": "confidence_drop",
+      "rule": "missing_runtime_evidence"
+    },
+    {
+      "deterministic_effect": "mark_feature_unsupported_no_guessing",
+      "effect": "degrade_capability",
+      "rule": "unsupported_tool_detected"
+    },
+    {
+      "deterministic_effect": "classification_invalid",
+      "effect": "fail_closed",
+      "rule": "profile_schema_mismatch"
+    },
+    {
+      "deterministic_effect": "block_execution",
+      "effect": "fail_closed",
+      "rule": "governance_policy_violation"
+    }
+  ],
+  "schema_version": "1.0",
+  "state_machine": {
+    "states": [
+      "target_identified",
+      "capabilities_discovered",
+      "evidence_profiled",
+      "profile_matched",
+      "replay_contract_negotiated",
+      "governance_validated",
+      "execution_advisory_or_governed"
+    ],
+    "transitions": [
+      "target_identified->capabilities_discovered",
+      "capabilities_discovered->evidence_profiled",
+      "evidence_profiled->profile_matched",
+      "profile_matched->replay_contract_negotiated",
+      "replay_contract_negotiated->governance_validated",
+      "governance_validated->execution_advisory_or_governed"
+    ]
+  }
+}

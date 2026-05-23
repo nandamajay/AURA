@@ -1,0 +1,387 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "additionalProperties": false,
+  "properties": {
+    "backend_routing": {
+      "properties": {
+        "active_backend_chain": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "capture_routes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "playback_routes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "route_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "route_fingerprint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "playback_routes",
+        "capture_routes",
+        "route_fingerprint"
+      ],
+      "type": "object"
+    },
+    "capability_discovery": {
+      "properties": {
+        "discovery_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "discovery_method": {
+          "type": "string"
+        },
+        "unsupported_features": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "discovery_method",
+        "discovery_confidence",
+        "unsupported_features"
+      ],
+      "type": "object"
+    },
+    "classification": {
+      "properties": {
+        "audible_human_validation": {
+          "type": "string"
+        },
+        "evidence_success": {
+          "type": "boolean"
+        },
+        "final_classification": {
+          "type": "string"
+        },
+        "process_success": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "process_success",
+        "evidence_success",
+        "audible_human_validation",
+        "final_classification"
+      ],
+      "type": "object"
+    },
+    "confidence": {
+      "properties": {
+        "confidence_lineage_id": {
+          "type": "string"
+        },
+        "evidence_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "replay_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "target_capability_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "topology_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "target_capability_confidence",
+        "topology_confidence",
+        "replay_confidence",
+        "evidence_confidence"
+      ],
+      "type": "object"
+    },
+    "governance": {
+      "properties": {
+        "autonomous_mutation_allowed": {
+          "const": false,
+          "type": "boolean"
+        },
+        "execution_posture": {
+          "enum": [
+            "ADVISORY_ONLY",
+            "GOVERNED_ONLY"
+          ],
+          "type": "string"
+        },
+        "fail_closed": {
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "fail_closed",
+        "execution_posture",
+        "autonomous_mutation_allowed"
+      ],
+      "type": "object"
+    },
+    "mixer_capabilities": {
+      "properties": {
+        "capability_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "controls_snapshot_fingerprint": {
+          "type": "string"
+        },
+        "supports_amixer": {
+          "enum": [
+            "SUPPORTED",
+            "UNSUPPORTED",
+            "UNKNOWN"
+          ],
+          "type": "string"
+        },
+        "supports_tinymix": {
+          "enum": [
+            "SUPPORTED",
+            "UNSUPPORTED",
+            "UNKNOWN"
+          ],
+          "type": "string"
+        }
+      },
+      "required": [
+        "supports_amixer",
+        "supports_tinymix",
+        "capability_confidence"
+      ],
+      "type": "object"
+    },
+    "overlay_identity": {
+      "properties": {
+        "base_dtsi": {
+          "type": "string"
+        },
+        "mutation_fingerprint": {
+          "type": "string"
+        },
+        "overlay_chain": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "overlay_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "base_dtsi",
+        "overlay_chain",
+        "mutation_fingerprint"
+      ],
+      "type": "object"
+    },
+    "pcm_topology": {
+      "properties": {
+        "be_nodes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "cards": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "dai_links": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "fe_nodes": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "pcm_devices": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "topology_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "topology_fingerprint": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "cards",
+        "pcm_devices",
+        "fe_nodes",
+        "be_nodes",
+        "topology_fingerprint"
+      ],
+      "type": "object"
+    },
+    "replay_contract": {
+      "properties": {
+        "compatibility_level": {
+          "enum": [
+            "FULL",
+            "PARTIAL",
+            "INCOMPATIBLE"
+          ],
+          "type": "string"
+        },
+        "deterministic_replay_required": {
+          "type": "boolean"
+        },
+        "sequence_contract": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "required": [
+        "deterministic_replay_required",
+        "sequence_contract",
+        "compatibility_level"
+      ],
+      "type": "object"
+    },
+    "runtime_evidence": {
+      "properties": {
+        "availability": {
+          "properties": {
+            "event_lineage": {
+              "type": "boolean"
+            },
+            "mixer_snapshot": {
+              "type": "boolean"
+            },
+            "proc_asound": {
+              "type": "boolean"
+            },
+            "runtime_trace": {
+              "type": "boolean"
+            },
+            "transport_metrics": {
+              "type": "boolean"
+            }
+          },
+          "type": "object"
+        },
+        "evidence_mode": {
+          "enum": [
+            "governed_runtime",
+            "offline_replay",
+            "partial"
+          ],
+          "type": "string"
+        },
+        "evidence_refs": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "quality_score": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        }
+      },
+      "required": [
+        "evidence_mode",
+        "availability",
+        "quality_score"
+      ],
+      "type": "object"
+    },
+    "schema_version": {
+      "type": "string"
+    },
+    "target_identity": {
+      "properties": {
+        "board_variant": {
+          "type": "string"
+        },
+        "identity_confidence": {
+          "maximum": 1,
+          "minimum": 0,
+          "type": "number"
+        },
+        "identity_evidence": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "kernel_release": {
+          "type": "string"
+        },
+        "soc_family": {
+          "type": "string"
+        },
+        "target_id": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "target_id",
+        "soc_family",
+        "board_variant",
+        "identity_confidence"
+      ],
+      "type": "object"
+    }
+  },
+  "required": [
+    "schema_version",
+    "target_identity",
+    "overlay_identity",
+    "pcm_topology",
+    "backend_routing",
+    "runtime_evidence",
+    "mixer_capabilities",
+    "capability_discovery",
+    "confidence",
+    "governance",
+    "replay_contract",
+    "classification"
+  ],
+  "title": "PortableTargetCognitionProfile",
+  "type": "object"
+}
