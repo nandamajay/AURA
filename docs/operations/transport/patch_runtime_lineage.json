@@ -1,0 +1,97 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "5a44c0e8db158be1dbf01c7b65ddb3210bdde97740482ed3b7b0b0cbf1518ae1",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://semantic_cognition",
+    "registry://patch_cognition",
+    "artifact://runtime_truth_graph",
+    "artifact://topology_runtime_graph",
+    "artifact://semantic_entity_graph",
+    "artifact://migration_dependency_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://subsystem_boundary_map"
+  ],
+  "lineage": [
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 0,
+      "patch_group_id": "patch_01_subsystem_boundary_prep",
+      "risk": "MEDIUM",
+      "runtime_validation_required": true,
+      "sequence": 1
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 23,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_validation_required": true,
+      "sequence": 2
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 0,
+      "patch_group_id": "patch_03_api_evolution_alignment",
+      "risk": "HIGH",
+      "runtime_validation_required": true,
+      "sequence": 3
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 2,
+      "patch_group_id": "patch_04_vendor_contamination_isolation",
+      "risk": "HIGH",
+      "runtime_validation_required": true,
+      "sequence": 4
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 2,
+      "patch_group_id": "patch_05_soundwire_and_dsp_decoupling",
+      "risk": "HIGH",
+      "runtime_validation_required": true,
+      "sequence": 5
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 27,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_validation_required": true,
+      "sequence": 6
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 0,
+      "patch_group_id": "patch_07_upstream_equivalence_refinement",
+      "risk": "HIGH",
+      "runtime_validation_required": true,
+      "sequence": 7
+    },
+    {
+      "bisect_gate_score": 0.5,
+      "impacted_runtime_command_count": 4,
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "runtime_validation_required": true,
+      "sequence": 8
+    }
+  ],
+  "lineage_score": 0.551,
+  "report_name": "patch_runtime_lineage",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "average_runtime_impact": 7.25,
+    "drift_high_count": 0,
+    "drift_medium_count": 2,
+    "patch_group_count": 8,
+    "total_runtime_impacts": 58,
+    "upstream_readiness_score": 0.588
+  },
+  "target_id": "RB3Gen2"
+}

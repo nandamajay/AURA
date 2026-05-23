@@ -1,0 +1,59 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "e7c32fee8e1cb46fc7cbc5548dee43f5e780225338f6cdd34d17e9d14350f1a8",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://semantic_cognition",
+    "registry://patch_cognition",
+    "artifact://runtime_truth_graph",
+    "artifact://topology_runtime_graph",
+    "artifact://semantic_entity_graph",
+    "artifact://migration_dependency_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://subsystem_boundary_map"
+  ],
+  "report_name": "regression_rootcause_report",
+  "root_causes": [
+    {
+      "cause": "blocked_transition_alignment",
+      "confidence": 0.8,
+      "details": "Migration transitions are blocked against current runtime behavior.",
+      "domain": "migration_alignment",
+      "severity": "HIGH"
+    },
+    {
+      "cause": "execution_sequence_drift",
+      "confidence": 0.75,
+      "details": "Missing expected sequence steps: collect_runtime_evidence, apply_route_translation, validate_pcm_activation, validate_replay_compatibility, finalize_governed_plan",
+      "domain": "runtime_drift",
+      "severity": "MEDIUM"
+    },
+    {
+      "cause": "ordering_warning_drift",
+      "confidence": 0.75,
+      "details": "Detected 2 trace ordering warnings.",
+      "domain": "runtime_drift",
+      "severity": "MEDIUM"
+    },
+    {
+      "cause": "weak_lifecycle_causality_edges",
+      "confidence": 0.65,
+      "details": "Detected 1 low-strength lifecycle edges.",
+      "domain": "lifecycle_causality",
+      "severity": "MEDIUM"
+    }
+  ],
+  "rootcause_confidence": 0.54,
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "cross_domain_reasoning_score": 0.572,
+    "high_severity_count": 1,
+    "medium_severity_count": 3,
+    "rootcause_count": 4
+  },
+  "target_id": "RB3Gen2"
+}

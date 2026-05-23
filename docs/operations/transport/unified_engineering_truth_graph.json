@@ -1,0 +1,150 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "2917b4d805dbefc968d7f9753e8475c8ae9c70ac6792a3d77234809ecc1dc2c7",
+  "domain_context": {
+    "migration_lineage_fingerprint": "b99b8a1688aede9fe8f91354e9df913f06b014947a5bb8a6003c08f6218ef46c",
+    "patch_series_plan_fingerprint": "4275c45f2f33fbe8161a08ad07fef927ce3bb79c2d1c741125addff90de1e4db",
+    "semantic_entity_graph_fingerprint": "996b8da9e4c317c7559c2f1fafb2d85366112665579472e4e0e0a5dbe6644373",
+    "subsystem_boundary_map_fingerprint": "ddd655c54a4c3f1c399def7297e4c1dee27a89391cd200f59bdba84f4c7f40aa"
+  },
+  "domain_fingerprints": {
+    "cross_domain_reasoning": "53411c51a76c4ff4bb26f9165e433b7b308ee577dc7d11f0ed70f6c2bb44854b",
+    "dsp_runtime_causality_report": "f98fc9fa9aecb812a0f80c5a1c71dfade4d1f1441c76908b90156553daca2c1b",
+    "lifecycle_causality_map": "ac5ea9a831072ceed3f3b3896c0f75da1b5591380f3d6f002517096fe1652818",
+    "migration_runtime_alignment": "72f80d0cfaa796a2209b39490228599501fe042d581747dbceb13ea42756cbe0",
+    "patch_runtime_lineage": "5a44c0e8db158be1dbf01c7b65ddb3210bdde97740482ed3b7b0b0cbf1518ae1",
+    "regression_rootcause_report": "e7c32fee8e1cb46fc7cbc5548dee43f5e780225338f6cdd34d17e9d14350f1a8",
+    "runtime_topology_correlation": "b6bb5b731c27f0f4f556323ac4c0e607b1ef08f268bc3d6e84bd9f5b1cad9017"
+  },
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "observed",
+      "to": "runtime_topology_correlation"
+    },
+    {
+      "from": "runtime_topology_correlation",
+      "relation": "constrains",
+      "to": "lifecycle_causality_map"
+    },
+    {
+      "from": "lifecycle_causality_map",
+      "relation": "informs",
+      "to": "dsp_runtime_causality_report"
+    },
+    {
+      "from": "runtime_topology_correlation",
+      "relation": "aligns",
+      "to": "migration_runtime_alignment"
+    },
+    {
+      "from": "migration_runtime_alignment",
+      "relation": "contextualizes",
+      "to": "patch_runtime_lineage"
+    },
+    {
+      "from": "patch_runtime_lineage",
+      "relation": "feeds",
+      "to": "cross_domain_reasoning"
+    },
+    {
+      "from": "dsp_runtime_causality_report",
+      "relation": "feeds",
+      "to": "cross_domain_reasoning"
+    },
+    {
+      "from": "cross_domain_reasoning",
+      "relation": "explains",
+      "to": "regression_rootcause_report"
+    },
+    {
+      "from": "semantic_entity_graph",
+      "relation": "contextualizes",
+      "to": "cross_domain_reasoning"
+    },
+    {
+      "from": "subsystem_boundary_map",
+      "relation": "constrains",
+      "to": "patch_runtime_lineage"
+    },
+    {
+      "from": "migration_lineage",
+      "relation": "lineage_context",
+      "to": "migration_runtime_alignment"
+    },
+    {
+      "from": "patch_series_plan",
+      "relation": "sequencing_context",
+      "to": "patch_runtime_lineage"
+    }
+  ],
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://semantic_cognition",
+    "registry://patch_cognition",
+    "artifact://runtime_truth_graph",
+    "artifact://topology_runtime_graph",
+    "artifact://semantic_entity_graph",
+    "artifact://migration_dependency_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://subsystem_boundary_map"
+  ],
+  "graph_confidence": 0.546,
+  "graph_name": "unified_engineering_truth_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "runtime_topology_correlation",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "lifecycle_causality_map",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "migration_runtime_alignment",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "patch_runtime_lineage",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "dsp_runtime_causality_report",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "cross_domain_reasoning",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "regression_rootcause_report",
+      "kind": "fusion_domain"
+    },
+    {
+      "id": "semantic_entity_graph",
+      "kind": "domain_context"
+    },
+    {
+      "id": "subsystem_boundary_map",
+      "kind": "domain_context"
+    },
+    {
+      "id": "migration_lineage",
+      "kind": "domain_context"
+    },
+    {
+      "id": "patch_series_plan",
+      "kind": "domain_context"
+    }
+  ],
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

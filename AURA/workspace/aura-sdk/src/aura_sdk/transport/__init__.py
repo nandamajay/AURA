@@ -255,6 +255,47 @@ from aura_sdk.transport.real_downstream_conversion_planner import (
     RealDownstreamConversionPlannerResult,
     RealDownstreamConversionRegistry,
 )
+from aura_sdk.transport.topology_runtime_correlator import (
+    RuntimeTopologyCorrelationResult,
+    correlate_topology_runtime,
+)
+from aura_sdk.transport.lifecycle_causality_mapper import (
+    LifecycleCausalityMapResult,
+    build_lifecycle_causality_map,
+)
+from aura_sdk.transport.migration_runtime_alignment import (
+    MigrationRuntimeAlignmentResult,
+    build_migration_runtime_alignment,
+)
+from aura_sdk.transport.patch_runtime_lineage import (
+    PatchRuntimeLineageResult,
+    build_patch_runtime_lineage,
+)
+from aura_sdk.transport.dsp_runtime_causality import (
+    DspRuntimeCausalityResult,
+    build_dsp_runtime_causality,
+)
+from aura_sdk.transport.cross_domain_reasoning_engine import (
+    CrossDomainReasoningResult,
+    build_cross_domain_reasoning,
+)
+from aura_sdk.transport.regression_rootcause_reasoner import (
+    RegressionRootcauseResult,
+    reason_regression_rootcause,
+)
+from aura_sdk.transport.unified_engineering_truth_graph import (
+    UnifiedEngineeringTruthGraphResult,
+    build_unified_engineering_truth_graph,
+)
+from aura_sdk.transport.deterministic_fusion_replay import (
+    DeterministicFusionReplayResult,
+    build_deterministic_fusion_replay,
+)
+from aura_sdk.transport.runtime_evidence_fusion_engine import (
+    RuntimeEvidenceFusionEngine,
+    RuntimeEvidenceFusionRegistry,
+    RuntimeEvidenceFusionResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -425,4 +466,25 @@ __all__ = [
     "RealDownstreamConversionPlannerResult",
     "RealDownstreamConversionPlanner",
     "RealDownstreamConversionRegistry",
+    "RuntimeTopologyCorrelationResult",
+    "correlate_topology_runtime",
+    "LifecycleCausalityMapResult",
+    "build_lifecycle_causality_map",
+    "MigrationRuntimeAlignmentResult",
+    "build_migration_runtime_alignment",
+    "PatchRuntimeLineageResult",
+    "build_patch_runtime_lineage",
+    "DspRuntimeCausalityResult",
+    "build_dsp_runtime_causality",
+    "CrossDomainReasoningResult",
+    "build_cross_domain_reasoning",
+    "RegressionRootcauseResult",
+    "reason_regression_rootcause",
+    "UnifiedEngineeringTruthGraphResult",
+    "build_unified_engineering_truth_graph",
+    "DeterministicFusionReplayResult",
+    "build_deterministic_fusion_replay",
+    "RuntimeEvidenceFusionResult",
+    "RuntimeEvidenceFusionEngine",
+    "RuntimeEvidenceFusionRegistry",
 ]

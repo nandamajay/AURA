@@ -1,0 +1,137 @@
+{
+  "advisory_only_behavior": true,
+  "causal_edges": [
+    {
+      "causal_strength": "HIGH",
+      "delta_ms": 2.0,
+      "from": "ftrace:2",
+      "from_domain": "pcm",
+      "to": "dsp_pair:1",
+      "to_domain": "dsp"
+    },
+    {
+      "causal_strength": "HIGH",
+      "delta_ms": 3.0,
+      "from": "dsp_pair:1",
+      "from_domain": "dsp",
+      "to": "ftrace:3",
+      "to_domain": "pcm"
+    },
+    {
+      "causal_strength": "HIGH",
+      "delta_ms": 5.0,
+      "from": "ftrace:3",
+      "from_domain": "pcm",
+      "to": "ftrace:4",
+      "to_domain": "pcm"
+    },
+    {
+      "causal_strength": "HIGH",
+      "delta_ms": 5.0,
+      "from": "ftrace:4",
+      "from_domain": "pcm",
+      "to": "ftrace:5",
+      "to_domain": "pcm"
+    },
+    {
+      "causal_strength": "LOW",
+      "delta_ms": 160.0,
+      "from": "ftrace:5",
+      "from_domain": "pcm",
+      "to": "procfs_sysfs:37",
+      "to_domain": "pcm"
+    },
+    {
+      "causal_strength": "HIGH",
+      "delta_ms": 5.0,
+      "from": "procfs_sysfs:37",
+      "from_domain": "pcm",
+      "to": "procfs_sysfs:38",
+      "to_domain": "dapm"
+    },
+    {
+      "causal_strength": "HIGH",
+      "delta_ms": 20.0,
+      "from": "procfs_sysfs:38",
+      "from_domain": "dapm",
+      "to": "alsa_topology_runtime:42",
+      "to_domain": "pcm"
+    }
+  ],
+  "causality_score": 0.824,
+  "classification": "PASS",
+  "deterministic_fingerprint": "ac5ea9a831072ceed3f3b3896c0f75da1b5591380f3d6f002517096fe1652818",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://semantic_cognition",
+    "registry://patch_cognition",
+    "artifact://runtime_truth_graph",
+    "artifact://topology_runtime_graph",
+    "artifact://semantic_entity_graph",
+    "artifact://migration_dependency_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://subsystem_boundary_map"
+  ],
+  "report_name": "lifecycle_causality_map",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "causal_edge_count": 7,
+    "high_strength_edges": 6,
+    "low_strength_edges": 1,
+    "timeline_event_count": 8
+  },
+  "target_id": "RB3Gen2",
+  "timeline": [
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:2",
+      "label": "PREPARE",
+      "timestamp_ms": 1010.0
+    },
+    {
+      "domain": "dsp",
+      "event_id": "dsp_pair:1",
+      "label": "DSP_SYNC",
+      "timestamp_ms": 1012.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:3",
+      "label": "START",
+      "timestamp_ms": 1015.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:4",
+      "label": "DRAIN_STOP",
+      "timestamp_ms": 1020.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:5",
+      "label": "CLOSE",
+      "timestamp_ms": 1025.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "procfs_sysfs:37",
+      "label": "STATE",
+      "timestamp_ms": 1185.0
+    },
+    {
+      "domain": "dapm",
+      "event_id": "procfs_sysfs:38",
+      "label": "STATE",
+      "timestamp_ms": 1190.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "alsa_topology_runtime:42",
+      "label": "STATE",
+      "timestamp_ms": 1210.0
+    }
+  ]
+}

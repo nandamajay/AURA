@@ -118,6 +118,7 @@ Primary scripts:
 - `scripts/aura_confidence_integrity.py`
 - `scripts/aura_event_quarantine_tests.py`
 - `scripts/aura-incremental-migration-orchestration.py`
+- `scripts/aura-runtime-evidence-fusion.py`
 
 Key output directory:
 
@@ -1110,6 +1111,97 @@ python3 -m pytest \
 - advisory-only behavior
 - semantic/structural/runtime separation
 - offline foundation mode (no live device connection required)
+
+## Runtime Evidence Fusion Layer
+
+This phase fuses semantic, structural, topology, runtime, migration, and patch
+cognition into a unified engineering-truth model with deterministic replay and
+fail-closed governance.
+
+### Mission Alignment
+
+This phase directly improves:
+
+- root-cause debugging:
+  - correlates runtime drift, lifecycle causality, DSP timing, patch lineage, and migration state into one causal view
+- runtime regression localization:
+  - identifies cross-domain causes behind runtime drift and sequencing instability
+- downstream→upstream runtime equivalence:
+  - aligns migration checkpoints and patch readiness against runtime truth evidence
+- DSP synchronization analysis:
+  - correlates DSP sync health with IRQ timing and SoundWire runtime observations
+- topology/runtime causality reasoning:
+  - links FE/BE topology activation to PCM/DAPM runtime transitions and confidence outcomes
+- patch/runtime drift analysis:
+  - traces patch-group runtime impact against observed drift and readiness posture
+- deterministic engineering replay:
+  - emits replay-safe fusion lineage and deterministic fingerprints for every fusion artifact
+- unified kernel cognition:
+  - generates a single graph-backed engineering truth model spanning runtime, topology, semantic, migration, and patch domains
+
+### Implemented Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_evidence_fusion_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/unified_engineering_truth_graph.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/cross_domain_reasoning_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/lifecycle_causality_mapper.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/topology_runtime_correlator.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/patch_runtime_lineage.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/migration_runtime_alignment.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/dsp_runtime_causality.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/regression_rootcause_reasoner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/deterministic_fusion_replay.py`
+
+Runner:
+
+- `scripts/aura-runtime-evidence-fusion.py`
+
+### Required Artifacts
+
+- `unified_engineering_truth_graph.json`
+- `runtime_topology_correlation.json`
+- `lifecycle_causality_map.json`
+- `migration_runtime_alignment.json`
+- `patch_runtime_lineage.json`
+- `dsp_runtime_causality_report.json`
+- `regression_rootcause_report.json`
+- `deterministic_fusion_replay.json`
+- `engineering_confidence_score.json`
+
+Additional outputs:
+
+- `runtime_evidence_fusion_summary.json`
+- `docs/operations/transport/runtime_evidence_fusion_architecture.md`
+
+### Run Runtime Evidence Fusion
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-runtime-evidence-fusion.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id runtime_evidence_fusion_v1
+```
+
+### Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_runtime_evidence_fusion_static.py \
+  workspace/aura-sdk/tests/test_runtime_truth_cognition_static.py \
+  workspace/aura-sdk/tests/test_patch_cognition_static.py -q
+```
+
+### Fusion Constraints (Preserved)
+
+- runtime-truth precedence over static/semantic assumptions
+- fail-closed governance and bounded advisory-only reasoning
+- deterministic replay and lineage persistence
+- plugin isolation with target intelligence only through adapters
+- semantic/runtime separation boundaries
+- migration governance preservation (no autonomous rewriting or mutation)
 
 ## Runtime Loop Automation (Three-Screen Validation)
 
