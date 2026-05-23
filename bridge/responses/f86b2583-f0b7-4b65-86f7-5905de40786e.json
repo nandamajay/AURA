@@ -1,0 +1,62 @@
+{
+  "transport": "shared_folder",
+  "timestamps": {
+    "received_at": "2026-05-22T09:52:01.5566000Z",
+    "finished_at": "2026-05-22T09:52:01.9778058Z",
+    "started_at": "2026-05-22T09:52:01.8159050Z"
+  },
+  "raw_output": "aplay: main:831: audio open error: Invalid argument\r\r\n",
+  "transport_metadata": {
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "command_runtime": "adb_shell",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "execution_status": "executed",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "aplay: main:831: audio open error: Invalid argument\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T09:52:01.8165549Z",
+      "finished_at": "2026-05-22T09:52:01.9777047Z"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "request_id": "f86b2583-f0b7-4b65-86f7-5905de40786e",
+  "timeout_seconds": 30,
+  "approved_commands": [
+    "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "execution_mode": "governed_write_approved",
+  "response_integrity_sha256": "1511b8d5b2074d552665b3d6978ed74b2e7bad8dde8e729c5f0fdbde1313daf9",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker"
+  },
+  "request_integrity_sha256": "c4856e91c446b3a48e41c888ec435f7009faf0f80277df0c7ee7b32cdca2103d",
+  "stderr": "",
+  "command_entries": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "expanded_command": "adb.exe shell aplay -D <hw:x,y> <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "request_sequence": 36
+}

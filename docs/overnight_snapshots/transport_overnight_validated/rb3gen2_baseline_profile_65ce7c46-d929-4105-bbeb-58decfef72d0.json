@@ -1,0 +1,107 @@
+{
+  "baseline_locked": false,
+  "confidence": {
+    "audible_confirmed_runs": 4,
+    "evidence_success_runs": 6,
+    "route_certainty": "MEDIUM",
+    "score": 0.623,
+    "successful_runs": 9,
+    "total_runs": 11
+  },
+  "profile_id": "audible_25s_speaker_v1",
+  "profile_version": 1,
+  "regression": {
+    "deviations": [
+      {
+        "code": "runtime_latency_drift",
+        "details": "Total runtime drift 31.648s exceeds threshold.",
+        "severity": "MEDIUM"
+      }
+    ],
+    "regression_detected": true,
+    "regression_fingerprint": "3f4ccbecc43221e283d517482762e20c311b06ed2b2bcf3b7548673ae3906d18",
+    "severity": "MEDIUM",
+    "status": "COMPARED"
+  },
+  "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0",
+  "runtime_profile": {
+    "board": "RB3Gen2",
+    "evidence": {
+      "evidence_quality": "MEDIUM",
+      "missing_evidence": []
+    },
+    "evidence_mode": "governed_runtime",
+    "execution_profile": "fast_locked_replay",
+    "final_classification": "ADVISORY_ONLY",
+    "human_validation": {
+      "audible_confirmation": false,
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true
+    },
+    "mixer_capability_state": {
+      "supports_amixer": "UNKNOWN",
+      "supports_tinymix": "UNKNOWN"
+    },
+    "overlay": "qcs6490-audioreach.dtsi",
+    "pcm": {
+      "alsa_device": "hw:0,0",
+      "pcm_id": "00-00",
+      "signature_sha256": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+    },
+    "route": {
+      "route_activation_confidence": "MEDIUM",
+      "route_dependencies": [
+        "MultiMedia1->PRIMARY_MI2S_RX",
+        "PRIMARY_MI2S_RX->WSA_SPKR"
+      ],
+      "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+    },
+    "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0",
+    "runtime_timing": {
+      "cleanup_runtime_seconds": 11.425153,
+      "duration_drift_seconds": 0.882395,
+      "evidence_collection_runtime_seconds": 34.643701,
+      "phase_durations_seconds": {
+        "asset_deploy": 12.429919,
+        "cleanup": 11.425153,
+        "mixer_apply": 11.427677,
+        "pcm_playback": 33.526807,
+        "post_runtime_snapshot:amixer": 0.0,
+        "post_runtime_snapshot:cat /proc/asound/cards": 2.382857,
+        "post_runtime_snapshot:cat /proc/asound/pcm": 10.415404,
+        "post_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 0.0,
+        "post_runtime_snapshot:dmesg | tail -200": 0.0,
+        "post_runtime_snapshot:tinymix": 0.0,
+        "pre_runtime_snapshot:amixer": 0.0,
+        "pre_runtime_snapshot:cat /proc/asound/cards": 11.426701,
+        "pre_runtime_snapshot:cat /proc/asound/pcm": 10.418738,
+        "pre_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 0.0,
+        "pre_runtime_snapshot:dmesg | tail -200": 0.0,
+        "pre_runtime_snapshot:tinymix": 0.0
+      },
+      "playback_duration_match": true,
+      "playback_runtime_seconds": 25.882395,
+      "total_runtime_seconds": 103.453344,
+      "wav_duration_seconds": 25.0
+    },
+    "transport": {
+      "capture_ready_count": 8,
+      "disconnected_count": 0,
+      "invalid_count": 0,
+      "timeout_count": 0,
+      "transport_mode": "adb_shell",
+      "unknown_count": 0
+    },
+    "wav_asset": {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "channels": 2,
+      "duration_seconds": 25.0,
+      "format": "S16_LE",
+      "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+      "sample_rate_hz": 48000,
+      "sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122"
+    }
+  },
+  "state": "LOCKED"
+}

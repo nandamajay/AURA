@@ -1,0 +1,112 @@
+{
+  "constraints_preserved": {
+    "bounded_agent_execution": true,
+    "cognition_interpretation": true,
+    "deterministic_replay": true,
+    "fail_closed_behavior": true,
+    "governance_enforcement": true,
+    "no_hidden_prompt_memory": true,
+    "registry_first_architecture": true,
+    "runtime_evidence_truth": true
+  },
+  "generated_at_epoch": 1779514235.156385,
+  "harness": "aura_stability_harness",
+  "injections": {
+    "event_corruption_injection": {
+      "duration_seconds": 0.245001,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"event_quarantine_score\": 1.0,\n  \"quarantine_total\": 5,\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_event_quarantine_report.json\"\n}\n",
+      "timeout": false
+    },
+    "partial_evidence_simulation": {
+      "duration_seconds": 1.146055,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"reconstruction_equivalence_score\": 1.0,\n  \"replay_stability_score\": 1.0,\n  \"report\": \"/local/mnt/workspace/nandam/tmp/aura_partial_evidence_lfo50la6/partial/partial_determinism.json\",\n  \"topology_consistency_score\": 1.0\n}\n",
+      "timeout": false
+    },
+    "timeout_injection": {
+      "duration_seconds": 0.052378,
+      "ok": false,
+      "returncode": -1,
+      "stderr": "",
+      "stdout": "",
+      "timeout": true
+    },
+    "transport_degradation_simulation": {
+      "duration_seconds": 2.113369,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"recovery_validation_score\": 1.0,\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_recovery_validation_report.json\",\n  \"scenarios\": 6\n}\n",
+      "timeout": false
+    }
+  },
+  "loop_results": [
+    {
+      "agentization_state": "topology_validated",
+      "boot_execution_policies_restored": true,
+      "loop": 1,
+      "playback_execution": {
+        "skipped": true
+      },
+      "replay_event_count": 5000,
+      "replay_fingerprint": "99d46f0aee01fecf20325750cc7941da34b1cc9e8318ae473b72bad7dce5b2e1"
+    }
+  ],
+  "loops": 1,
+  "mode": "offline_replay_validation",
+  "replay_divergence_detection": {
+    "deterministic": true,
+    "divergence_count": 0,
+    "replay_fingerprints": [
+      "99d46f0aee01fecf20325750cc7941da34b1cc9e8318ae473b72bad7dce5b2e1"
+    ]
+  },
+  "schema_version": "1.0",
+  "stability_metrics": {
+    "confidence_integrity_score": 1.0,
+    "governance_integrity_score": 1.0,
+    "reconstruction_equivalence_score": 1.0,
+    "replay_stability_score": 1.0,
+    "topology_consistency_score": 1.0,
+    "transport_resilience_score": 1.0
+  },
+  "validator_runs": {
+    "confidence_integrity": {
+      "duration_seconds": 0.360422,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"confidence_integrity_score\": 1.0,\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_confidence_integrity_report.json\",\n  \"violations\": 0\n}\n",
+      "timeout": false
+    },
+    "crash_recovery": {
+      "duration_seconds": 2.113369,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"recovery_validation_score\": 1.0,\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_recovery_validation_report.json\",\n  \"scenarios\": 6\n}\n",
+      "timeout": false
+    },
+    "determinism": {
+      "duration_seconds": 51.73687,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"reconstruction_equivalence_score\": 1.0,\n  \"replay_stability_score\": 1.0,\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_replay_determinism_report.json\",\n  \"topology_consistency_score\": 1.0\n}\n",
+      "timeout": false
+    },
+    "event_quarantine": {
+      "duration_seconds": 0.245001,
+      "ok": true,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "{\n  \"event_quarantine_score\": 1.0,\n  \"quarantine_total\": 5,\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_event_quarantine_report.json\"\n}\n",
+      "timeout": false
+    }
+  }
+}

@@ -1,0 +1,135 @@
+{
+  "execution_mode": "governed_read_only",
+  "response_integrity_sha256": "b928dd55789830dfceac6c54725f930b39bdbdd1fb813f108082e90ad5d5864a",
+  "approved_commands": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "tinymix",
+    "amixer",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "dmesg"
+  ],
+  "timeout_seconds": 180,
+  "request_id": "a06778dc-3c65-4262-8ede-8c15d0454d8d",
+  "request_sequence": 58,
+  "timestamps": {
+    "received_at": "2026-05-22T10:47:32.4525482Z",
+    "started_at": "2026-05-22T10:47:32.6819081Z",
+    "finished_at": "2026-05-22T10:50:33.2102039Z"
+  },
+  "raw_output": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n\n00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n\n/bin/sh: tinymix: not found\r\r\n",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm",
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell tinymix",
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer"
+  ],
+  "transport": "shared_folder",
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "original_command": "cat /proc/asound/cards"
+    },
+    {
+      "normalized_command": "cat /proc/asound/pcm",
+      "original_command": "cat /proc/asound/pcm"
+    },
+    {
+      "normalized_command": "tinymix",
+      "original_command": "tinymix"
+    },
+    {
+      "normalized_command": "amixer",
+      "original_command": "amixer"
+    },
+    {
+      "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "original_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "normalized_command": "dmesg",
+      "original_command": "dmesg"
+    }
+  ],
+  "transport_metadata": {
+    "command_runtime": "adb_shell",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "request_integrity_sha256": "df66f4ea5137bb677c3711d7b4ee336ae02d6b779fa6d86e11765420367f3a0d",
+  "executor_command_trace": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T10:47:32.6827718Z",
+      "finished_at": "2026-05-22T10:47:32.8366995Z"
+    },
+    {
+      "normalized_command": "cat /proc/asound/pcm",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T10:47:32.8391012Z",
+      "finished_at": "2026-05-22T10:47:32.9945963Z"
+    },
+    {
+      "normalized_command": "tinymix",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell tinymix",
+      "exit_code": 127,
+      "execution_status": "failed",
+      "stdout": "/bin/sh: tinymix: not found\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T10:47:32.9979873Z",
+      "finished_at": "2026-05-22T10:47:33.1486386Z"
+    },
+    {
+      "normalized_command": "amixer",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer",
+      "exit_code": -1,
+      "execution_status": "timeout",
+      "stdout": "",
+      "stderr": "command_timeout",
+      "started_at": "2026-05-22T10:47:33.1505420Z",
+      "finished_at": "2026-05-22T10:50:33.2012383Z"
+    }
+  ],
+  "execution_status": "timeout",
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    },
+    {
+      "normalized_command": "cat /proc/asound/pcm",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    },
+    {
+      "normalized_command": "tinymix",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    },
+    {
+      "normalized_command": "amixer",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "stderr": "command_timeout"
+}

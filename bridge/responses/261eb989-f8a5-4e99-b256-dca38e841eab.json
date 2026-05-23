@@ -1,0 +1,62 @@
+{
+  "execution_mode": "governed_read_only",
+  "response_integrity_sha256": "0eaa74cacd8dca32218781739d5323c3b7af33da2b3f5a3e6e18445c40d873a7",
+  "approved_commands": [
+    "cat /proc/asound/cards"
+  ],
+  "timeout_seconds": 30,
+  "request_id": "261eb989-f8a5-4e99-b256-dca38e841eab",
+  "request_sequence": 101,
+  "timestamps": {
+    "received_at": "2026-05-22T12:00:16.3069041Z",
+    "started_at": "2026-05-22T12:00:16.5798821Z",
+    "finished_at": "2026-05-22T12:00:16.7379311Z"
+  },
+  "raw_output": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+  ],
+  "transport": "shared_folder",
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "original_command": "cat /proc/asound/cards"
+    }
+  ],
+  "transport_metadata": {
+    "command_runtime": "adb_shell",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "request_integrity_sha256": "759690ad655560b17aa146df0cfe1e33b983c51ee688badef2ccdc50678d3558",
+  "executor_command_trace": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T12:00:16.5805341Z",
+      "finished_at": "2026-05-22T12:00:16.7366467Z"
+    }
+  ],
+  "execution_status": "executed",
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "stderr": ""
+}

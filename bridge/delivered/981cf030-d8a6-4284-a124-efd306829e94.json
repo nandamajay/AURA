@@ -1,0 +1,28 @@
+{
+  "approved_commands": [
+    "cat /sys/kernel/debug/asoc/*/dapm"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "original_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    }
+  ],
+  "execution_mode": "governed_read_only",
+  "protocol_version": "bridge-v1",
+  "request_id": "981cf030-d8a6-4284-a124-efd306829e94",
+  "request_integrity_sha256": "1318c812f668e7ce16f90ff5d7a1efa32872b8ec9bae43dc0a33bb2b29c83677",
+  "request_sequence": 74,
+  "request_timestamp": "1779448394.8514867",
+  "timeout_seconds": 45,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

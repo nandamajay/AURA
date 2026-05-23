@@ -1,0 +1,62 @@
+{
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "original_command": "cat /proc/asound/cards"
+    }
+  ],
+  "transport_metadata": {
+    "adb_serial": "12345678",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+    "worker_transport": "shared_folder",
+    "command_runtime": "adb_shell"
+  },
+  "executor_identity": {
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY",
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam"
+  },
+  "request_sequence": 193,
+  "approved_commands": [
+    "cat /proc/asound/cards"
+  ],
+  "execution_status": "executed",
+  "protocol_version": "bridge-v1",
+  "response_integrity_sha256": "059feba60c7f36671afc6d23761801a8bb1ce07da9242e39db3aca074102525b",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+  ],
+  "execution_mode": "governed_read_only",
+  "transport": "shared_folder",
+  "request_integrity_sha256": "31bf3ba9368936d084748ea18c4fcd1402399f240fc85b7fa1e310538fb59f46",
+  "executor_command_trace": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T12:57:21.7021447Z",
+      "finished_at": "2026-05-22T12:57:21.8644062Z"
+    }
+  ],
+  "request_id": "9872f606-9d7f-484c-a674-7a59213b56b3",
+  "timestamps": {
+    "started_at": "2026-05-22T12:57:21.7015899Z",
+    "received_at": "2026-05-22T12:57:21.4587191Z",
+    "finished_at": "2026-05-22T12:57:21.8657760Z"
+  },
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "stderr": "",
+  "timeout_seconds": 20,
+  "raw_output": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n"
+}

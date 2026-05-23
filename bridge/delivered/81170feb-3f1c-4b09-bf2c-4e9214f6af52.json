@@ -1,0 +1,28 @@
+{
+  "approved_commands": [
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "execution_mode": "governed_write_approved",
+  "protocol_version": "bridge-v1",
+  "request_id": "81170feb-3f1c-4b09-bf2c-4e9214f6af52",
+  "request_integrity_sha256": "fff773cd679931e1fc137f3b7d8abe0b3e000cd2b908358c3e94361c9640a0e9",
+  "request_sequence": 55,
+  "request_timestamp": "1779445170.0096545",
+  "timeout_seconds": 60,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

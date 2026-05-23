@@ -1,0 +1,46 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AURA Runtime Transport Response",
+  "type": "object",
+  "required": [
+    "transport",
+    "command",
+    "exit_code",
+    "stdout",
+    "stderr",
+    "timestamp",
+    "duration_ms",
+    "runtime_state",
+    "confidence"
+  ],
+  "properties": {
+    "transport": {"type": "string"},
+    "command": {"type": "string"},
+    "exit_code": {"type": "integer"},
+    "stdout": {"type": "string"},
+    "stderr": {"type": "string"},
+    "timestamp": {"type": "string"},
+    "duration_ms": {"type": "integer", "minimum": 0},
+    "runtime_state": {
+      "type": "string",
+      "enum": ["unknown", "blocked", "executed", "failed", "timeout", "disconnected"]
+    },
+    "confidence": {
+      "type": "string",
+      "enum": [
+        "unknown",
+        "connected",
+        "partial_connectivity",
+        "transport_ready",
+        "capture_ready",
+        "advisory_only",
+        "escalation_required"
+      ]
+    },
+    "classification": {
+      "type": "string",
+      "enum": ["safe_read", "requires_operator_approval"]
+    },
+    "notes": {"type": "object"}
+  }
+}

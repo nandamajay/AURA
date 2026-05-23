@@ -1,0 +1,53 @@
+{
+  "approved_commands": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "tinymix",
+    "amixer",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "dmesg"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "original_command": "cat /proc/asound/cards"
+    },
+    {
+      "normalized_command": "cat /proc/asound/pcm",
+      "original_command": "cat /proc/asound/pcm"
+    },
+    {
+      "normalized_command": "tinymix",
+      "original_command": "tinymix"
+    },
+    {
+      "normalized_command": "amixer",
+      "original_command": "amixer"
+    },
+    {
+      "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "original_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "normalized_command": "dmesg",
+      "original_command": "dmesg"
+    }
+  ],
+  "execution_mode": "governed_read_only",
+  "protocol_version": "bridge-v1",
+  "request_id": "758e89e3-d4ab-4755-98fb-362eccc1bb62",
+  "request_integrity_sha256": "8202df18372f138ef93154eaab72a2ab4d1c508cc6a48bb3fedd9a63666742fc",
+  "request_sequence": 26,
+  "request_timestamp": "1779442625.706562",
+  "timeout_seconds": 8,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

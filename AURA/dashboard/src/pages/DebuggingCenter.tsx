@@ -21,12 +21,16 @@ interface ReplayPayload {
   task_id: string
   agent_type: string
   context?: ReplayContext
+  recording_state?: string
+  revision?: number
   recorded_at?: string
+  finalized_at?: string
   prompt_count: number
   response_count: number
   execution_steps: number
   output_keys: string[]
   output_hash: string
+  snapshot_hash?: string
   prompts?: ReplayPrompt[]
   responses?: unknown[]
   execution?: unknown[]
@@ -41,11 +45,59 @@ interface ReplayResponse {
   replay: ReplayPayload
 }
 
+interface ReplayStateResponse {
+  task_id: string
+  exists: boolean
+  recording_state: 'missing' | 'mutable' | 'finalized' | string
+  replayable: boolean
+  integrity_ok: boolean
+  revision?: number
+  created_at?: number
+  finalized_at?: number
+  output_hash?: string
+  snapshot_hash?: string
+}
+
 interface TimelineItem {
   id: string
   title: string
   detail: string
   tone: 'neutral' | 'ok' | 'warn'
+}
+
+interface EvidenceFile {
+  path: string
+  name: string
+  extension: string
+  size_bytes: number
+  modified_at: string
+}
+
+interface EvidenceSection {
+  root: string
+  files: EvidenceFile[]
+}
+
+interface EvidenceIndexResponse {
+  generated_at: string
+  repo_root: string
+  sections: Record<string, EvidenceSection>
+}
+
+interface EvidenceReadResponse {
+  section: string
+  relative_path: string
+  absolute_path: string
+  size_bytes: number
+  returned_bytes: number
+  truncated: boolean
+  content: string
+}
+
+interface NondeterminismResult {
+  findings: Array<Record<string, unknown>>
+  risk_count: number
+  recommendation: string
 }
 
 function toPreview(value: unknown, max = 160): string {
@@ -56,16 +108,42 @@ function toPreview(value: unknown, max = 160): string {
   return raw.length <= max ? raw : `${raw.slice(0, max)}...`
 }
 
+function replayBoundaryLabel(state: ReplayStateResponse | null): string {
+  if (!state || !state.exists) {
+    return 'non-replayable'
+  }
+  if (state.recording_state === 'finalized') {
+    return 'finalized replay'
+  }
+  if (state.recording_state === 'mutable') {
+    return 'mutable replay (not deterministic replayable yet)'
+  }
+  return `non-replayable (${state.recording_state})`
+}
+
 export default function DebuggingCenter() {
   const [searchParams] = useSearchParams()
-  const [metrics, setMetrics] = useState('')
-  const [metricsError, setMetricsError] = useState('')
-  const [replayTaskId, setReplayTaskId] = useState('')
+  const sourceHint = searchParams.get('source') || ''
+  const taskHint = searchParams.get('task') || ''
+
+  const [replayTaskId, setReplayTaskId] = useState(taskHint)
   const [replayBusy, setReplayBusy] = useState(false)
   const [replayError, setReplayError] = useState('')
+  const [replayState, setReplayState] = useState<ReplayStateResponse | null>(null)
   const [replayResult, setReplayResult] = useState<ReplayResponse | null>(null)
 
-  const sourceHint = searchParams.get('source') || ''
+  const [evidenceIndex, setEvidenceIndex] = useState<EvidenceIndexResponse | null>(null)
+  const [evidenceError, setEvidenceError] = useState('')
+  const [evidenceLoading, setEvidenceLoading] = useState(false)
+  const [selectedSection, setSelectedSection] = useState('')
+  const [selectedPath, setSelectedPath] = useState('')
+  const [evidenceRead, setEvidenceRead] = useState<EvidenceReadResponse | null>(null)
+  const [evidenceFilter, setEvidenceFilter] = useState('')
+
+  const [determinismCode, setDeterminismCode] = useState('')
+  const [determinismResult, setDeterminismResult] = useState<NondeterminismResult | null>(null)
+  const [determinismError, setDeterminismError] = useState('')
+  const [determinismBusy, setDeterminismBusy] = useState(false)
 
   const replayTimeline = useMemo<TimelineItem[]>(() => {
     if (!replayResult) {
@@ -87,9 +165,18 @@ export default function DebuggingCenter() {
       })
     }
 
+    if (replay.finalized_at) {
+      steps.push({
+        id: 'finalized',
+        title: 'Replay Finalized',
+        detail: `Finalized at ${new Date(replay.finalized_at).toLocaleString()}`,
+        tone: 'ok',
+      })
+    }
+
     steps.push({
       id: 'replay-start',
-      title: 'Replay Started',
+      title: 'Replay Executed',
       detail: `Replayed at ${new Date(replay.replayed_at).toLocaleString()}`,
       tone: 'neutral',
     })
@@ -137,60 +224,116 @@ export default function DebuggingCenter() {
     return steps
   }, [replayResult])
 
+  const evidenceSections = useMemo(() => {
+    return evidenceIndex?.sections ? Object.keys(evidenceIndex.sections).sort() : []
+  }, [evidenceIndex])
+
+  const evidenceFiles = useMemo(() => {
+    if (!selectedSection || !evidenceIndex?.sections[selectedSection]) {
+      return []
+    }
+    const files = evidenceIndex.sections[selectedSection].files
+    const needle = evidenceFilter.trim().toLowerCase()
+    if (!needle) {
+      return files
+    }
+    return files.filter((file) => file.path.toLowerCase().includes(needle) || file.name.toLowerCase().includes(needle))
+  }, [evidenceFilter, evidenceIndex, selectedSection])
+
   useEffect(() => {
-    let cancelled = false
-
-    async function loadMetrics() {
-      try {
-        const response = await fetch(ENDPOINTS.metrics)
-        if (!response.ok) {
-          throw new Error(`Metrics request failed (${response.status})`)
-        }
-        const text = await response.text()
-        if (!cancelled) {
-          setMetrics(text)
-          setMetricsError('')
-        }
-      } catch (error) {
-        if (!cancelled) {
-          setMetricsError(error instanceof Error ? error.message : 'Metrics fetch failed')
-        }
-      }
+    if (!taskHint) {
+      return
     }
+    void loadReplay(taskHint)
+    // intentionally only on initial hint
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [taskHint])
 
-    void loadMetrics()
-    const timer = setInterval(loadMetrics, 30_000)
-    return () => {
-      cancelled = true
-      clearInterval(timer)
-    }
+  useEffect(() => {
+    void loadEvidenceIndex()
+    // load once for evidence navigation baseline
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  async function loadReplay(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault()
-    const taskId = replayTaskId.trim()
+  async function loadReplay(taskIdOverride?: string) {
+    const taskId = (taskIdOverride || replayTaskId).trim()
     if (!taskId) {
       return
     }
 
     setReplayBusy(true)
     setReplayError('')
+    setReplayResult(null)
+    setReplayState(null)
     try {
-      const result = await apiRequest<ReplayResponse>(`${ENDPOINTS.tasks}/${encodeURIComponent(taskId)}/replay`)
-      setReplayResult(result)
+      const state = await apiRequest<ReplayStateResponse>(`${ENDPOINTS.tasks}/${encodeURIComponent(taskId)}/replay/state`)
+      setReplayState(state)
+      if (state.replayable) {
+        const result = await apiRequest<ReplayResponse>(`${ENDPOINTS.tasks}/${encodeURIComponent(taskId)}/replay`)
+        setReplayResult(result)
+      }
     } catch (error) {
-      setReplayResult(null)
       setReplayError(toErrorMessage(error))
     } finally {
       setReplayBusy(false)
     }
   }
 
+  async function loadEvidenceIndex() {
+    setEvidenceLoading(true)
+    setEvidenceError('')
+    try {
+      const response = await apiRequest<EvidenceIndexResponse>(ENDPOINTS.evidenceIndex)
+      setEvidenceIndex(response)
+      const sections = Object.keys(response.sections || {})
+      if (sections.length && !selectedSection) {
+        setSelectedSection(sections[0])
+      }
+    } catch (error) {
+      setEvidenceError(toErrorMessage(error))
+    } finally {
+      setEvidenceLoading(false)
+    }
+  }
+
+  async function loadEvidenceFile(section: string, path: string) {
+    setEvidenceError('')
+    setEvidenceRead(null)
+    setSelectedPath(path)
+    try {
+      const response = await apiRequest<EvidenceReadResponse>(ENDPOINTS.evidenceRead + `?section=${encodeURIComponent(section)}&relative_path=${encodeURIComponent(path)}&max_bytes=120000`)
+      setEvidenceRead(response)
+    } catch (error) {
+      setEvidenceError(toErrorMessage(error))
+    }
+  }
+
+  async function runDeterminismCheck(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault()
+    if (!determinismCode.trim()) {
+      return
+    }
+    setDeterminismBusy(true)
+    setDeterminismError('')
+    try {
+      const response = await apiRequest<NondeterminismResult>(`${ENDPOINTS.memory}/validation/nondeterminism-check`, {
+        method: 'POST',
+        body: JSON.stringify({ source_code: determinismCode }),
+      })
+      setDeterminismResult(response)
+    } catch (error) {
+      setDeterminismError(toErrorMessage(error))
+      setDeterminismResult(null)
+    } finally {
+      setDeterminismBusy(false)
+    }
+  }
+
   return (
     <PageContainer>
       <PageHeader
-        title="Debugging Center"
-        subtitle="Operational debugging surface: replay timeline, metrics, audits, and incident ledgers."
+        title="Replay & Evidence Explorer"
+        subtitle="Inspect finalized vs mutable replay boundaries, lineage hashes, determinism findings, and runtime evidence artifacts."
       />
 
       {sourceHint ? (
@@ -200,8 +343,14 @@ export default function DebuggingCenter() {
       ) : null}
 
       <Grid>
-        <SectionCard title="Task Replay Viewer">
-          <form onSubmit={loadReplay} style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}>
+        <SectionCard title="Replay Boundary Inspection">
+          <form
+            onSubmit={(event) => {
+              event.preventDefault()
+              void loadReplay()
+            }}
+            style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap', alignItems: 'center' }}
+          >
             <input
               value={replayTaskId}
               onChange={(event) => setReplayTaskId(event.target.value)}
@@ -209,42 +358,41 @@ export default function DebuggingCenter() {
               style={inputStyle}
             />
             <button type="submit" style={buttonStyle} disabled={replayBusy || !replayTaskId.trim()}>
-              {replayBusy ? 'Loading...' : 'Replay'}
+              {replayBusy ? 'Loading…' : 'Inspect Replay'}
             </button>
           </form>
-          <div style={{ marginTop: '0.7rem' }}>
+
+          <div style={{ marginTop: '0.7rem', display: 'grid', gap: '0.3rem' }}>
             {replayError ? <MetaText>{replayError}</MetaText> : null}
-            {replayResult ? (
-              <div style={{ display: 'grid', gap: '0.4rem' }}>
+            <MetaText>Boundary: {replayBoundaryLabel(replayState)}</MetaText>
+            {replayState ? (
+              <>
                 <MetaText>
-                  Fidelity: {replayResult.replay.fidelity} | Integrity: {replayResult.integrity_ok ? 'OK' : 'FAILED'}
+                  replayable={replayState.replayable ? 'yes' : 'no'} | integrity={replayState.integrity_ok ? 'ok' : 'n/a'}
                 </MetaText>
                 <MetaText>
-                  Agent: {replayResult.replay.agent_type} | Seed: {replayResult.replay.context?.seed ?? 'n/a'} | Model:{' '}
-                  {replayResult.replay.context?.model_version ?? 'n/a'}
+                  revision={replayState.revision ?? 0} | output_hash={replayState.output_hash || '(none)'}
                 </MetaText>
-                <MetaText>
-                  Prompts: {replayResult.replay.prompt_count} | Responses: {replayResult.replay.response_count} | Execution steps:{' '}
-                  {replayResult.replay.execution_steps}
-                </MetaText>
-              </div>
+                <MetaText>snapshot_hash={replayState.snapshot_hash || '(none)'}</MetaText>
+              </>
             ) : (
-              <MetaText>Submit a task id to load replay timeline.</MetaText>
+              <MetaText>No replay state loaded yet.</MetaText>
             )}
           </div>
         </SectionCard>
 
-        <SectionCard title="Core Metrics (/metrics)">
-          {metricsError ? <MetaText>{metricsError}</MetaText> : null}
-          <pre style={metricsStyle}>{metrics || 'Loading metrics...'}</pre>
+        <SectionCard title="Replay Failure / Non-Replayable Semantics">
+          <MetaText>- `finalized`: deterministic replay expected, hash verifiable.</MetaText>
+          <MetaText>- `mutable`: execution capture in progress; not deterministic replay artifact yet.</MetaText>
+          <MetaText>- `missing`: no task_log available; replay not possible.</MetaText>
+          <MetaText>- transient stream state (WS/SSE queues) is non-replayable by design.</MetaText>
         </SectionCard>
-        <DataPanel title="Health" endpoint={ENDPOINTS.health} includeAuth={false} intervalMs={10_000} />
       </Grid>
 
       <div style={{ marginTop: '1rem' }}>
-        <SectionCard title="Replay Timeline">
+        <SectionCard title="Replay Lifecycle Timeline">
           {replayTimeline.length === 0 ? (
-            <MetaText>No replay timeline loaded.</MetaText>
+            <MetaText>No finalized replay timeline loaded.</MetaText>
           ) : (
             <div style={{ display: 'grid', gap: '0.45rem' }}>
               {replayTimeline.map((item) => (
@@ -273,8 +421,83 @@ export default function DebuggingCenter() {
 
       <div style={{ marginTop: '1rem' }}>
         <Grid>
+          <SectionCard title="Determinism Inspector">
+            <form onSubmit={runDeterminismCheck} style={{ display: 'grid', gap: '0.5rem' }}>
+              <textarea
+                value={determinismCode}
+                onChange={(event) => setDeterminismCode(event.target.value)}
+                placeholder="Paste Python code snippet to scan for nondeterminism patterns"
+                style={textAreaStyle}
+              />
+              <button type="submit" style={buttonStyle} disabled={determinismBusy || !determinismCode.trim()}>
+                {determinismBusy ? 'Scanning…' : 'Run Determinism Scan'}
+              </button>
+            </form>
+            <div style={{ marginTop: '0.65rem' }}>
+              {determinismError ? <MetaText>{determinismError}</MetaText> : null}
+              {determinismResult ? <JsonBlock data={determinismResult} /> : <MetaText>No determinism scan executed yet.</MetaText>}
+            </div>
+          </SectionCard>
+
+          <SectionCard title="Evidence Browser">
+            <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
+              <button style={buttonStyle} onClick={() => void loadEvidenceIndex()} disabled={evidenceLoading}>
+                {evidenceLoading ? 'Loading…' : 'Load Evidence Index'}
+              </button>
+              <input
+                value={evidenceFilter}
+                onChange={(event) => setEvidenceFilter(event.target.value)}
+                placeholder="Filter evidence files"
+                style={inputStyle}
+              />
+              {evidenceSections.length ? (
+                <select value={selectedSection} onChange={(event) => setSelectedSection(event.target.value)} style={inputStyle}>
+                  {evidenceSections.map((section) => (
+                    <option key={section} value={section}>
+                      {section}
+                    </option>
+                  ))}
+                </select>
+              ) : null}
+            </div>
+            {evidenceError ? <MetaText>{evidenceError}</MetaText> : null}
+            <div style={{ marginTop: '0.6rem', display: 'grid', gap: '0.35rem', maxHeight: '200px', overflowY: 'auto' }}>
+              {evidenceFiles.slice(0, 120).map((file) => (
+                <button
+                  key={file.path}
+                  onClick={() => void loadEvidenceFile(selectedSection, file.path)}
+                  style={{
+                    ...evidenceFileButtonStyle,
+                    borderColor: selectedPath === file.path ? '#1d4ed8' : '#cbd5e1',
+                  }}
+                >
+                  <strong style={{ fontSize: '0.78rem' }}>{file.path}</strong>
+                  <span style={{ color: '#64748b', fontSize: '0.73rem' }}>
+                    {Math.round(file.size_bytes / 1024)}KB · {new Date(file.modified_at).toLocaleString()}
+                  </span>
+                </button>
+              ))}
+              {!evidenceFiles.length ? <MetaText>No evidence files loaded yet.</MetaText> : null}
+            </div>
+          </SectionCard>
+        </Grid>
+      </div>
+
+      {evidenceRead ? (
+        <div style={{ marginTop: '1rem' }}>
+          <SectionCard
+            title={`Evidence File: ${evidenceRead.relative_path}`}
+            action={<MetaText>{evidenceRead.truncated ? 'truncated preview' : 'full preview'}</MetaText>}
+          >
+            <pre style={metricsStyle}>{evidenceRead.content}</pre>
+          </SectionCard>
+        </div>
+      ) : null}
+
+      <div style={{ marginTop: '1rem' }}>
+        <Grid>
           <DataPanel title="Audit Ledger" endpoint={`${ENDPOINTS.audit}?limit=30`} intervalMs={15_000} />
-          <DataPanel title="Failure Ledger" endpoint={`${ENDPOINTS.memory}/failures?limit=30`} intervalMs={15_000} />
+          <DataPanel title="Replay Incidents" endpoint={`${ENDPOINTS.memory}/replay-incidents?limit=30`} intervalMs={15_000} />
           <DataPanel title="Ops Incidents" endpoint={`${ENDPOINTS.memory}/ops-incidents?limit=30`} intervalMs={15_000} />
         </Grid>
       </div>
@@ -290,7 +513,7 @@ const metricsStyle: React.CSSProperties = {
   color: '#e2e8f0',
   borderRadius: '6px',
   padding: '0.75rem',
-  maxHeight: '300px',
+  maxHeight: '340px',
   overflow: 'auto',
 }
 
@@ -298,7 +521,16 @@ const inputStyle: React.CSSProperties = {
   border: '1px solid #cbd5e1',
   borderRadius: '6px',
   padding: '0.42rem 0.6rem',
-  minWidth: '260px',
+  minWidth: '220px',
+}
+
+const textAreaStyle: React.CSSProperties = {
+  border: '1px solid #cbd5e1',
+  borderRadius: '6px',
+  padding: '0.55rem 0.6rem',
+  minHeight: '140px',
+  fontFamily: 'ui-monospace, SFMono-Regular, Menlo, monospace',
+  fontSize: '0.8rem',
 }
 
 const buttonStyle: React.CSSProperties = {
@@ -321,4 +553,15 @@ function timelineRowStyle(tone: TimelineItem['tone']): React.CSSProperties {
     display: 'grid',
     gap: '0.2rem',
   }
+}
+
+const evidenceFileButtonStyle: React.CSSProperties = {
+  textAlign: 'left',
+  border: '1px solid #cbd5e1',
+  borderRadius: '6px',
+  background: '#fff',
+  padding: '0.45rem 0.55rem',
+  display: 'grid',
+  gap: '0.12rem',
+  cursor: 'pointer',
 }

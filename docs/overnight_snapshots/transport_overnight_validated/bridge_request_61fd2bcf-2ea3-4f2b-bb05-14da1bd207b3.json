@@ -1,0 +1,28 @@
+{
+  "approved_commands": [
+    "cat /proc/asound/pcm"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/asound/pcm",
+      "original_command": "cat /proc/asound/pcm"
+    }
+  ],
+  "execution_mode": "governed_read_only",
+  "protocol_version": "bridge-v1",
+  "request_id": "61fd2bcf-2ea3-4f2b-bb05-14da1bd207b3",
+  "request_integrity_sha256": "69245605fa2e3f0359766dfc6ba5745da5e181b4f0d2f74ec09e806037ce4955",
+  "request_sequence": 263,
+  "request_timestamp": "1779464701.3992863",
+  "timeout_seconds": 20,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

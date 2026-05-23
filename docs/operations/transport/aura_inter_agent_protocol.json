@@ -1,0 +1,771 @@
+{
+  "message_schema": {
+    "message_id": "sha256",
+    "message_type": "string",
+    "payload": "object",
+    "source_agent": "string",
+    "target_agent": "string",
+    "timestamp": "iso8601"
+  },
+  "message_types": [
+    "policy_verdict",
+    "runtime_validation_state",
+    "transport_runtime_observed",
+    "topology_validation_state",
+    "regression_summary",
+    "persistence_status"
+  ],
+  "messages": [
+    {
+      "message_id": "7271b9701168a141b901d46833265705bbb271054328d1e997fec87d3dffda96",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "925cbc8669ac13c4650faf05ed56581f49034e40f588224d889556217a788623",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:28:36.227112+00:00"
+    },
+    {
+      "message_id": "b5823a5631babc8c454964f6b0e6018d29c41db716e7dc56e7ed8c2c5028b094",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "48c431a9951ebba834106eec896da77185ef05393bc61f43058556e96c9ef754",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:28:37.787491+00:00"
+    },
+    {
+      "message_id": "f593fc5894625650ff4aba1153d9a6f6c71d964699fab7373f5437c94a1907a2",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "c5694b514a1f0255a92fdf4c00815b595fca34a3ad6409f02bcbc12d7f381ecd",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:28:39.338542+00:00"
+    },
+    {
+      "message_id": "95543d3e0aaa507dffa310757005c19211bfaa08380a69e094af2eab0139db84",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "c4eaf9cfbc37f039c69ba4d59ad3722ff7fb1343f8f7f6c1af5fcbcd066c35b4",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:28:40.874479+00:00"
+    },
+    {
+      "message_id": "5d9242325802a85001aacd0707a91a3b61bf7cef04cf31ef8c031081a0b51e8e",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "f531861683b41bb8d7064dcf45d0a04143962c3c81104cd682f9e8833ed0f79a",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:28:42.404337+00:00"
+    },
+    {
+      "message_id": "915252c24c27de9224ef284301ad30164b80259c7cdc0a703a03b11ffafccb38",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "4bf9f94dd1929e47f1aad7e43fc1407ab6b778fcf7762d040e186639fc5256b0",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:28:44.409163+00:00"
+    },
+    {
+      "message_id": "1996eace360fc1f30842056bc795566a72473d00a1c0781bbe3e55b466df9e66",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "ca8519f494f366b75170943c8161cef65571513676a6b0b05cad87d4d83017af",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:28:52.151056+00:00"
+    },
+    {
+      "message_id": "94b16d802196d7276520fae5b5f310214bece9f2cf80f1698d21b898d45f93bb",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "69a5ad785029f64d727bb5ef9ef8d7e2f0fbf3c9cad60e2ababbcff5897804f3",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:28:53.710145+00:00"
+    },
+    {
+      "message_id": "fe10a3e0139b7c7d71b08f01f8dcd791a3667987859547f4bfef5e1b598d880a",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "3dedd647b51b16d18edb6ae14f7cc1890cc3a304512f3590fc395bd816aac896",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:28:55.270823+00:00"
+    },
+    {
+      "message_id": "97a84bfb311e3dc3918568084440ebf00268bc0bae2c7b85ce8543df7afe52dc",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "bb28c722d4e40dad68e5f3f8abb5a2cc98bc4bc6fa82e9d81d64a3d95046ac08",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:28:56.825847+00:00"
+    },
+    {
+      "message_id": "62093143eeded5908816664a5b90a6e72a52bf8a0b0ff0d473b9709ba3d20d83",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "6723e239e19c5c55e162e359383cf1514f86acfbecbcabdd51ea4c7a8161d33c",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:28:58.421114+00:00"
+    },
+    {
+      "message_id": "64fa16f40a5b19fecdae58c43923a4cf26a496967f22fb004d76bf246f3b1fcd",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "f267cd7a10f6fc0fa7a900d0f09884a76ae826205f22b8b72d35d4448b5df964",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:29:01.754655+00:00"
+    },
+    {
+      "message_id": "ddcb37759435c129a63ed3dc404015ea8d1ac44bbc17cc78e907c5ab6be2f3b3",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "0ffd54de2f1e49fa79544c8ef31ec7f3f8c330c9edfd67af05d002d866d112cd",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:29:23.940452+00:00"
+    },
+    {
+      "message_id": "d3688c6722e5b5d329fc43f4c910694e95e548646e855bb1bdd797d1b1bfe3e4",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "b80e05c2d85848752072ed76bf0dd42fc404a92b5e88c8b409bf802177de76bb",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:29:25.468872+00:00"
+    },
+    {
+      "message_id": "2f35f3505079aeb4500f0b59892ca49db9708f7046999f33743bfb0a348c0948",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "f7f9e856bfa0efee30c1fe8a89406260303112865310374a6395f3e26b151794",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:29:26.996521+00:00"
+    },
+    {
+      "message_id": "0bc9da9b07a9ed9efc48e4ca46ebda626f11d76b46a62092d92406f847620061",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "2a7d4ccbddef1872b2098847618bf98e9da4c7c2e8013cc74e844f121ae03777",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:29:28.512605+00:00"
+    },
+    {
+      "message_id": "a6c9e02eb277afcec3eb01d495ad1e6dbe89980bff4b645ee5095888fc3f8837",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "d6efb487d379f26f7530e311fd327a17e681ae2b801132a3e1b3c69e69cc97fe",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:29:30.047456+00:00"
+    },
+    {
+      "message_id": "d467dcddb006854ddef41f808eb9b1043c0368d349415a8703d5eb53ca396181",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "f29aeee29a534fd19694bcdde5ff2d3becb411d917219f087849399d6f46c5dc",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:29:33.284196+00:00"
+    },
+    {
+      "message_id": "b211f760b6b8ece24b9a7f7343d89632d571da9deb912a8a28283727f11f166b",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "1fe9ff73edf8ba0b25fcb788539ff55209053732c9c9e3adabf9f85c116fc735",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:29:41.702103+00:00"
+    },
+    {
+      "message_id": "de3a40c283ae7cc9724a3922dcd1363c2f99e34afb5beaa7b022b1dec48cfd32",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "087d3d85a1ad2b130d9abf25585632eb4722c34cc6e76aa5b61b7fbffb31d3f3",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:29:43.252487+00:00"
+    },
+    {
+      "message_id": "7830057784a24441463070979e89d9175559a75c473eeb17d8b0cd672852daa6",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "dabe99e692719450f69e83be86430c9db92d57a90d7ac135d4d044f088521e2b",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:29:44.790005+00:00"
+    },
+    {
+      "message_id": "12d34cdf86ee5aac3187ad765389923b1f04789937ae2a08ab8e03d5e1440023",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "4e5d7f472d67579a7a6ca3c4b8d29d08320fd9e8fe60ee5c2f2e6f274df31d48",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:29:46.344195+00:00"
+    },
+    {
+      "message_id": "b9c3621b8fbf8bcd6a53104273538b897834913f71fdec369e16ab08769c72b5",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "e326a840f39ed7ff739f1de621149e61b81e0b684be981929f8ddfd3fee2ee89",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:29:47.889706+00:00"
+    },
+    {
+      "message_id": "3e7b3a1061aa63c2e70a51859865269a951eed877e7530ac4cadcf602a182713",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "2fd01595e3b7f73d12d98461605d71d41f9888bf7cd495944232f4298dcf436f",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:29:51.107446+00:00"
+    },
+    {
+      "message_id": "8d36f2675ad700cdb7a3670f69e49b32d19d54f52ee1271bb0f1a347a5b7b741",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "97fcb904d18e843a2998e9e53eca66fb5aab618384af68aada184855c2fa1c86",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:29:58.695813+00:00"
+    },
+    {
+      "message_id": "50831ff7bfbdfe28e1e498e7aca8d9bf81bde4004a6a03cd06aad8b3aeb90f9c",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "761e98bfd4fc91842962546158b9257424ddf94ee155a718fa6a2751236bdf7d",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:30:00.244836+00:00"
+    },
+    {
+      "message_id": "f323c8bf4a626abdad50be388f05a41487c9970597a8c525d2a9ff9197106f9d",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "dd43279609d3106778c38607044c1826cfe0258cd6d084c570fc396fc9244244",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:30:01.785942+00:00"
+    },
+    {
+      "message_id": "3ffcb5a5de0bf84b7b742350290c588b49bae11a747f3f552ca607c4f584df18",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "560f41bb1622aadb23f9acbba1e4ebe8c37b74468ca960329cb3b01d273fb621",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:30:03.440029+00:00"
+    },
+    {
+      "message_id": "eb1aae4f6fffe87d91e7e45a38c9e99d2529258b25bf69fa5d4ba96817f5b76f",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "af7b0d29f5973a5b3972e28be853debfe09d794913f54dd2b08c184f33b7614c",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:30:04.969475+00:00"
+    },
+    {
+      "message_id": "cf8fb720c7f3e4f3e65fec5f0b1c5c5635aff05d4ab731c8384811207beac25e",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "b1d7629c6fa54a0ae20412a174847b85d3dfb5e360679d74db152421dbadd0d2",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:30:08.171486+00:00"
+    },
+    {
+      "message_id": "46fb7a240ec7824de2b64999cfecb532af24efd12fe9b367590ac0f368955861",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "cbe5b0a5e49f3feb79ad3d944065fe3b5ac4aee18162fedfa049839251e1cde0",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:30:15.948417+00:00"
+    },
+    {
+      "message_id": "03b26cb3c538eba7138a4b4eb80fa8d2270fdc06c219a15d9ec1d862084c9969",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "f53bd8e04b824eca332ada2235c7d689965cdf9b8e0225c56f41ab9d48e7b9aa",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:30:17.514289+00:00"
+    },
+    {
+      "message_id": "bfec0aac64e49f487b1f8e29decf981441166df4c0ee69f11310929600a2d243",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "ad4ce2c19fdfe77132a4986be7c892d8c92a51576c647b7076757d6e196ca102",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:30:19.070600+00:00"
+    },
+    {
+      "message_id": "cc4a3b670bab51967d9efb2b39a27612754c8be8718018480b042357a4998b72",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "c8175b2a447a2e92a388cc57053d559f6656d778aae9a20df0c4bb2ac6d9bdc6",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:30:20.628436+00:00"
+    },
+    {
+      "message_id": "f5b0a72dde4974688e19d4598faafe0ef707355e461b1d99baa92e0f973db935",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "a1efc7a6229d8c670b4f1415b1dcc15895a6aff80600ffbdbf3564f4fd863266",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:30:22.205052+00:00"
+    },
+    {
+      "message_id": "2f104cfae91c82b4f0df5ac48c53f2605dc9043f3611aa127dfcff97ff754320",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "930006b6f9423500199302b8595476fe51f653fa17d39d7aa46b443038c3fc63",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:30:25.436910+00:00"
+    },
+    {
+      "message_id": "0b0aa6fa455b64d4b2de319607bbb9e3a037410396481635e6265e5dafa2e0e9",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "2aadf06707dbb2e4b04a0539bed72982da932432fe53c1df3f49d90ea2b2ff4e",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:30:47.658036+00:00"
+    },
+    {
+      "message_id": "beaddd3862b54133419ef8a54a4eed2d8b8b28a51d27f6b0e22134b49c05e090",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "6d8a33dcab7ea9ba80490bfb97ac5b95f672278dc7b356ff2c494fefc4b4eacf",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:30:49.179144+00:00"
+    },
+    {
+      "message_id": "9419fc01afe06fd96a9c7287d80d3b7aee5e2a017d697bdf81fe3082929a9d05",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "65a5a43688ba0ea8c9b77b2389c7fe9caa3aa3697875c1f66c1c2acf3b25fd79",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:30:50.709894+00:00"
+    },
+    {
+      "message_id": "f38531c66f93ac86f112118eca573f383d980ee9d43a7822c05009deaed07185",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "a0f915f4a62987f8e123dddd1d63f55662eb7586945c1c3e552414f9f72207e7",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:30:52.244666+00:00"
+    },
+    {
+      "message_id": "0b8f5fe85e973e32b37bd6ee25548e53cf977d35d48f6964eb720587beaf241a",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "c7706951675994b0db6d926506be7d9a934d55add8c62a36bbf1a1f6881bb425",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:30:53.780097+00:00"
+    },
+    {
+      "message_id": "250e85c05f816a5223813f0ab8745998f255059eab2c7719b4395f0858949bb7",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "0a2ffa2a160f624f7dd512462b3546819c01fcc1b001b5e533258bf37e67729b",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:30:56.971299+00:00"
+    },
+    {
+      "message_id": "3085ee44201f28b8ca125fefb06b09ced11e6e46d24b513d0bcd8fa73f489805",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "dd9d85e7dc0338f69aecd8cd992ce0d024b606ce776f94fcb5f9959dfa88c301",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:31:05.330489+00:00"
+    },
+    {
+      "message_id": "211d9f424c585ccab2b0edd0bc294d6f977ea9c733c03e59ce16b6d8cb50d492",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "f2f33b40abba40512e5dce2ec4c08d218b03b64dabead151579e699d632587e9",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:31:06.849098+00:00"
+    },
+    {
+      "message_id": "8a752940574831b34dc6ede3c91a71fe76509ae0d3afed98e8f74c6f740082f5",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "24cb355f8203e71938ff1cff4a985045f8fdf8958b5e09156787dc910213d7cd",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:31:08.392794+00:00"
+    },
+    {
+      "message_id": "6f8c198f629f37fe8332398da678779f01b29b9124ac2f5f879d629b5a76f273",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "f01000f52f983b03611e8ac54189b69c744561a9d75dad319457b74839243da6",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:31:09.969497+00:00"
+    },
+    {
+      "message_id": "afcda03dec252eb6211b54d13831a03363b723e811994709a132c9566a6b937f",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "70bd0ac97f9021a5097d6d2892a505c307d138ca34b3d87396bdae7b3d28afaf",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:31:11.535567+00:00"
+    },
+    {
+      "message_id": "7aa40d4d0b1e5c46bafdead87ab245ed40a6153961cc4d3560ad3be2d7c9c56a",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "b604f3e4fcade0303780235c9c8f42d19e837067adcfe939478d917cb2cb72f9",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:31:14.779177+00:00"
+    },
+    {
+      "message_id": "5f2eddcdf88f721c7ff1556cec92f4488bb162ce01b4dfc1571a34a7c3628542",
+      "message_type": "policy_verdict",
+      "payload": {
+        "allowed": true,
+        "event_category": "governance",
+        "event_id": "bf1a4810459100fffcdfff548bb8ef3b0324e849116a04f08416405e67c250b3",
+        "reason_chain": [
+          "fail_closed_enforced"
+        ]
+      },
+      "source_agent": "governance_agent",
+      "target_agent": "runtime_agent",
+      "timestamp": "2026-05-23T05:31:22.349133+00:00"
+    },
+    {
+      "message_id": "4c8237ce21ffcebb6e4c1edb756d755de5326f6670eda8233380ed9309e0837a",
+      "message_type": "runtime_validation_state",
+      "payload": {
+        "event_category": "runtime",
+        "event_id": "42eaa83d08e9816b7fefac1a643ab664df9edc3e372586b0ab97546cba437b13",
+        "evidence_success": true,
+        "process_success": true,
+        "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "topology_agent",
+      "timestamp": "2026-05-23T05:31:23.901320+00:00"
+    },
+    {
+      "message_id": "ccb7c6bc3542c1a22978268030ddc90f0fb6ae86607df855b6658ca6fe069e41",
+      "message_type": "transport_runtime_observed",
+      "payload": {
+        "event_category": "transport",
+        "event_id": "a382e10cc4cabe2a32c1cac68174048727c49dcaa3332ec1202ebd0f1dc9f53b",
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "runtime_state": "cleanup_completed"
+      },
+      "source_agent": "runtime_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:31:25.460676+00:00"
+    },
+    {
+      "message_id": "ff8844eac2c7cb209a67bffb8d27c80be4a0f29bdc1e94b969d75e37d3802854",
+      "message_type": "topology_validation_state",
+      "payload": {
+        "event_category": "topology",
+        "event_id": "66795869d414174afbaee76662687228ea0856eb5a714694b11e01bd8a6589d3",
+        "topology_confidence": 0.565,
+        "topology_confidence_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+        "topology_state": "INFERRED"
+      },
+      "source_agent": "topology_agent",
+      "target_agent": "regression_agent",
+      "timestamp": "2026-05-23T05:31:27.009361+00:00"
+    },
+    {
+      "message_id": "94a3b1218f900e44b4583ccf9082d2fba6715ec8358461da42cb3320e85471dd",
+      "message_type": "regression_summary",
+      "payload": {
+        "deterministic_replay_score": 0.869,
+        "event_category": "regression",
+        "event_id": "22e56913f1301e96b4314a66e45f2ce3d751af6dc6fe1968e61b3ada9a732444",
+        "regression_report_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json"
+      },
+      "source_agent": "regression_agent",
+      "target_agent": "persistence_agent",
+      "timestamp": "2026-05-23T05:31:28.556915+00:00"
+    },
+    {
+      "message_id": "9aba87b2302de1dfba3bb0e1936e2baa9307e81ed076eaa2f5a6299e65931417",
+      "message_type": "persistence_status",
+      "payload": {
+        "artifact_count": 1205,
+        "event_category": "persistence",
+        "event_id": "7a82e60d501bed5a18993031057afb7f76d09c69de9736703f8dce6a87cc7eff",
+        "registry_updated": true
+      },
+      "source_agent": "persistence_agent",
+      "target_agent": "governance_agent",
+      "timestamp": "2026-05-23T05:31:31.802551+00:00"
+    }
+  ],
+  "protocol_version": "1.0.0",
+  "schema_version": "1.0",
+  "transport": "registry_backed_json_messages",
+  "updated_at": "2026-05-23T05:31:34.633377+00:00"
+}

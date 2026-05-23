@@ -1,0 +1,30 @@
+{
+  "planning_mode": "EMBEDDED_LINUX",
+  "proof_getprop_avoidance": {
+    "planner_avoided_getprop": true,
+    "proof": true,
+    "selected_commands": [
+      "cat /proc/version",
+      "cat /proc/asound/cards"
+    ],
+    "supports_getprop": "UNSUPPORTED"
+  },
+  "selected_commands": [
+    "cat /proc/version",
+    "cat /proc/asound/cards"
+  ],
+  "skipped_commands": [
+    {
+      "command": "uname -a",
+      "reason": "supports_uname:unknown"
+    },
+    {
+      "command": "dmesg",
+      "reason": "supports_dmesg:unknown"
+    },
+    {
+      "command": "lsmod",
+      "reason": "supports_lsmod:unknown"
+    }
+  ]
+}

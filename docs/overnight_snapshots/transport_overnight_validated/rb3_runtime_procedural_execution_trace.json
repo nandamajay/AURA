@@ -1,0 +1,4204 @@
+{
+  "audio_route_knowledge_graph": {
+    "edges": [
+      {
+        "from": "board:RB3Gen2",
+        "relation": "inherits",
+        "to": "overlay:qcs6490-audioreach.dtsi"
+      },
+      {
+        "from": "route:MultiMedia1",
+        "relation": "route_dependency",
+        "to": "route:PRIMARY_MI2S_RX"
+      },
+      {
+        "from": "route:PRIMARY_MI2S_RX",
+        "relation": "route_dependency",
+        "to": "route:WSA_SPKR"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_dependency",
+        "to": "soundwire:soundwire"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_dependency",
+        "to": "soundwire:swr0"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_dependency",
+        "to": "soundwire:swr1"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_dependency",
+        "to": "soundwire:swr2"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_dependency",
+        "to": "soundwire:wsa"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "playback_topology",
+        "to": "pcm:hw:0,0"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "board:RB3Gen2",
+        "kind": "board",
+        "label": "RB3Gen2"
+      },
+      {
+        "id": "overlay:qcs6490-audioreach.dtsi",
+        "kind": "overlay",
+        "label": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "id": "route:MultiMedia1",
+        "kind": "route_node",
+        "label": "MultiMedia1"
+      },
+      {
+        "id": "route:PRIMARY_MI2S_RX",
+        "kind": "route_node",
+        "label": "PRIMARY_MI2S_RX"
+      },
+      {
+        "id": "route:WSA_SPKR",
+        "kind": "route_node",
+        "label": "WSA_SPKR"
+      },
+      {
+        "id": "soundwire:soundwire",
+        "kind": "soundwire",
+        "label": "soundwire"
+      },
+      {
+        "id": "soundwire:swr0",
+        "kind": "soundwire",
+        "label": "swr0"
+      },
+      {
+        "id": "soundwire:swr1",
+        "kind": "soundwire",
+        "label": "swr1"
+      },
+      {
+        "id": "soundwire:swr2",
+        "kind": "soundwire",
+        "label": "swr2"
+      },
+      {
+        "id": "soundwire:wsa",
+        "kind": "soundwire",
+        "label": "wsa"
+      },
+      {
+        "id": "pcm:hw:0,0",
+        "kind": "pcm",
+        "label": "hw:0,0"
+      }
+    ]
+  },
+  "baseline_exports": {
+    "aura_agent_architecture_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_agent_architecture.json",
+    "aura_agent_capability_graph_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_agent_capability_graph.json",
+    "aura_agent_state_machine_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_agent_state_machine.json",
+    "aura_cognition_versioning_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_versioning.json",
+    "aura_inter_agent_protocol_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_inter_agent_protocol.json",
+    "baseline_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_baseline_profile_207873ea-49b5-4a59-a1d1-638802bb1d82.json",
+    "cognition_artifact_index_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_artifact_index.json",
+    "cognition_governance_state_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_governance_state.json",
+    "cognition_phase_state_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_phase_state.json",
+    "cognition_portable_snapshot_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_portable_snapshot.json",
+    "cognition_registry_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json",
+    "evidence_lineage_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_baseline_evidence_lineage.json",
+    "overlay_mutation_graph_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/overlay_mutation_graph.json",
+    "pcm_backend_correlation_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/pcm_backend_correlation.json",
+    "playback_route_trace_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/playback_route_trace.json",
+    "procedural_lock_snapshot_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_procedural_memory_lock_snapshot.json",
+    "procedural_route_memory_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/procedural_route_memory.json",
+    "registry": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_audible_baseline_registry.json",
+    "regression_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_regression_fingerprint.json",
+    "runtime_route_graph_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/runtime_route_graph.json",
+    "topology_confidence_report_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_confidence_report.json",
+    "topology_graph_json": "/local/mnt/workspace/AURA_V1/docs/operations/transport/topology_graph.json"
+  },
+  "baseline_profile": {
+    "board": "RB3Gen2",
+    "evidence": {
+      "evidence_quality": "MEDIUM",
+      "missing_evidence": []
+    },
+    "evidence_mode": "governed_runtime",
+    "execution_profile": "fast_locked_replay",
+    "final_classification": "ADVISORY_ONLY",
+    "human_validation": {
+      "audible_confirmation": false,
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true
+    },
+    "mixer_capability_state": {
+      "supports_amixer": "UNKNOWN",
+      "supports_tinymix": "UNKNOWN"
+    },
+    "overlay": "qcs6490-audioreach.dtsi",
+    "pcm": {
+      "alsa_device": "hw:0,0",
+      "pcm_id": "00-00",
+      "signature_sha256": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+    },
+    "route": {
+      "route_activation_confidence": "MEDIUM",
+      "route_dependencies": [
+        "MultiMedia1->PRIMARY_MI2S_RX",
+        "PRIMARY_MI2S_RX->WSA_SPKR"
+      ],
+      "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+    },
+    "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+    "runtime_timing": {
+      "cleanup_runtime_seconds": 9.413336,
+      "duration_drift_seconds": 0.902215,
+      "evidence_collection_runtime_seconds": 28.612016,
+      "phase_durations_seconds": {
+        "asset_deploy": 12.428075,
+        "cleanup": 9.413336,
+        "mixer_apply": 12.43082,
+        "pcm_playback": 32.514549,
+        "post_runtime_snapshot:amixer": 0.0,
+        "post_runtime_snapshot:cat /proc/asound/cards": 1.370934,
+        "post_runtime_snapshot:cat /proc/asound/pcm": 11.423188,
+        "post_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 0.0,
+        "post_runtime_snapshot:dmesg | tail -200": 0.0,
+        "post_runtime_snapshot:tinymix": 0.0,
+        "pre_runtime_snapshot:amixer": 0.0,
+        "pre_runtime_snapshot:cat /proc/asound/cards": 4.389134,
+        "pre_runtime_snapshot:cat /proc/asound/pcm": 11.428758,
+        "pre_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 0.0,
+        "pre_runtime_snapshot:dmesg | tail -200": 0.0,
+        "pre_runtime_snapshot:tinymix": 0.0
+      },
+      "playback_duration_match": true,
+      "playback_runtime_seconds": 25.902215,
+      "total_runtime_seconds": 95.398884,
+      "wav_duration_seconds": 25.0
+    },
+    "transport": {
+      "capture_ready_count": 8,
+      "disconnected_count": 0,
+      "invalid_count": 0,
+      "timeout_count": 0,
+      "transport_mode": "adb_shell",
+      "unknown_count": 0
+    },
+    "wav_asset": {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "channels": 2,
+      "duration_seconds": 25.0,
+      "format": "S16_LE",
+      "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+      "sample_rate_hz": 48000,
+      "sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122"
+    }
+  },
+  "baseline_registry_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_audible_baseline_registry.json",
+  "baseline_regression": {
+    "deviations": [
+      {
+        "code": "runtime_latency_drift",
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM"
+      }
+    ],
+    "regression_detected": true,
+    "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+    "severity": "MEDIUM",
+    "status": "COMPARED"
+  },
+  "board": "RB3Gen2",
+  "claims": {
+    "behavioral_equivalence": "NOT_CLAIMED",
+    "merge_readiness": "NOT_CLAIMED",
+    "runtime_parity": "NOT_CLAIMED"
+  },
+  "classification": "ADVISORY_ONLY",
+  "cognitive_persistence": {
+    "artifact_index_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_artifact_index.json",
+    "artifact_index_updated": true,
+    "boot_summary": {
+      "booted_at": "2026-05-22T15:46:53.799773+00:00",
+      "cognition_graph_nodes": 10,
+      "execution_policies_restored": true,
+      "loaded_baseline_registry": true,
+      "loaded_governance_state": true,
+      "loaded_phase_state": true,
+      "loaded_procedural_memory": true,
+      "loaded_regression_history": true,
+      "loaded_topology_memory": true
+    },
+    "governance_state_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_governance_state.json",
+    "phase_state_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_phase_state.json",
+    "portable_export_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_portable_snapshot.json",
+    "portable_snapshot_exported": true,
+    "registry_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json",
+    "registry_updated": true
+  },
+  "critical_phase_success": {
+    "asset_deploy": true,
+    "cleanup": true,
+    "mixer_apply": true,
+    "pcm_playback": true
+  },
+  "evidence_success": true,
+  "execution_mode": "live_controlled",
+  "execution_profile": "fast_locked_replay",
+  "failure_reasoning": {
+    "classification": "ADVISORY_ONLY",
+    "failure_reasons": [
+      {
+        "code": "missing_mixer",
+        "why": "No runtime mixer state change was observed while playback workflow was attempted."
+      },
+      {
+        "code": "missing_backend",
+        "why": "Runtime telemetry did not show backend activity during playback validation."
+      },
+      {
+        "code": "unsupported_backend",
+        "why": "Runtime telemetry did not show backend activity during playback validation."
+      },
+      {
+        "code": "soundwire_dependency_failure",
+        "why": "SoundWire-related topology markers exist but DAPM route activation was not observed."
+      },
+      {
+        "code": "invalid_pcm",
+        "why": "PCM runtime state did not become active for the planned playback path."
+      },
+      {
+        "code": "route_collapse",
+        "why": "Playback started but route activation confidence did not reach HIGH."
+      }
+    ]
+  },
+  "governance_posture": "ADVISORY_ONLY",
+  "human_validation": {
+    "audible_confirmation": false,
+    "audible_status": "unknown",
+    "evidence_success": true,
+    "process_success": true
+  },
+  "internal_agentization": {
+    "active_agents": [
+      "runtime_agent",
+      "topology_agent",
+      "governance_agent",
+      "regression_agent",
+      "persistence_agent"
+    ],
+    "agent_health": {
+      "governance_agent": {
+        "agent": "governance_agent",
+        "details": {
+          "allowed_execution_scope": [
+            "board:RB3Gen2",
+            "workflow:playback",
+            "transport:adb_shell"
+          ],
+          "blocked_capabilities": [
+            "capture_workflows",
+            "new_targets",
+            "autonomous_patching",
+            "autonomous_topology_rewriting",
+            "autonomous_upstream_generation"
+          ],
+          "execution_approval_mode": "linux_authoritative_windows_execute_only",
+          "fail_closed_posture": true,
+          "write_policy": "governed_write_approved_only"
+        },
+        "ok": true,
+        "reasons": [
+          "fail_closed_enforced"
+        ],
+        "status": "HEALTHY",
+        "updated_at": "2026-05-22T15:48:29.767515+00:00"
+      },
+      "persistence_agent": {
+        "agent": "persistence_agent",
+        "details": {
+          "artifact_count": 1191,
+          "boot_summary": {
+            "booted_at": "2026-05-22T15:48:29.776637+00:00",
+            "cognition_graph_nodes": 10,
+            "execution_policies_restored": true,
+            "loaded_baseline_registry": true,
+            "loaded_governance_state": true,
+            "loaded_phase_state": true,
+            "loaded_procedural_memory": true,
+            "loaded_regression_history": true,
+            "loaded_topology_memory": true
+          },
+          "governance_state_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_governance_state.json",
+          "phase_state_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_phase_state.json",
+          "portable_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_portable_snapshot.json",
+          "registry_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json"
+        },
+        "ok": true,
+        "reasons": [
+          "persistence_synced"
+        ],
+        "status": "HEALTHY",
+        "updated_at": "2026-05-22T15:48:30.198163+00:00"
+      },
+      "regression_agent": {
+        "agent": "regression_agent",
+        "details": {
+          "degraded_evidence_runs": [],
+          "deterministic_replay_score": 0.869,
+          "playback_timing_drift_detected": false,
+          "regression_detected": true,
+          "regression_severity": "MEDIUM",
+          "route_instability_detected": false,
+          "runtime_confidence": 1.0,
+          "topology_confidence": 0.565
+        },
+        "ok": false,
+        "reasons": [
+          "regression_detected"
+        ],
+        "status": "DEGRADED",
+        "updated_at": "2026-05-22T15:48:29.769382+00:00"
+      },
+      "runtime_agent": {
+        "agent": "runtime_agent",
+        "details": {
+          "classification": "ADVISORY_ONLY",
+          "command_ordering_length": 30,
+          "current_state": "cleanup_completed",
+          "evidence_success": true,
+          "execution_sequence_length": 30,
+          "playback_completion": true,
+          "process_success": true,
+          "route_activation_confidence": "MEDIUM"
+        },
+        "ok": true,
+        "reasons": [
+          "runtime_flow_stable"
+        ],
+        "status": "HEALTHY",
+        "updated_at": "2026-05-22T15:48:29.768498+00:00"
+      },
+      "topology_agent": {
+        "agent": "topology_agent",
+        "details": {
+          "graph_edges": 42,
+          "graph_nodes": 43,
+          "runtime_state_transitions": [
+            "playback_started",
+            "playback_completed",
+            "cleanup_completed"
+          ],
+          "targeted_interrogation_mode": true,
+          "targeted_questions": [
+            {
+              "id": "codec_identity",
+              "question": "Codec endpoint could not be confirmed from evidence. Provide codec identity from target."
+            },
+            {
+              "id": "intended_route",
+              "question": "Confirm intended FE->BE route chain for playback validation."
+            }
+          ],
+          "topology_confidence": 0.565,
+          "topology_state": "INFERRED"
+        },
+        "ok": true,
+        "reasons": [
+          "topology_state_inferred"
+        ],
+        "status": "HEALTHY",
+        "updated_at": "2026-05-22T15:48:29.768989+00:00"
+      }
+    },
+    "artifact_paths": {
+      "aura_agent_architecture": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_agent_architecture.json",
+      "aura_agent_capability_graph": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_agent_capability_graph.json",
+      "aura_agent_state_machine": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_agent_state_machine.json",
+      "aura_cognition_versioning": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_versioning.json",
+      "aura_inter_agent_protocol": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_inter_agent_protocol.json"
+    },
+    "state_machine_state": "topology_validated"
+  },
+  "overlay_mutation_graph": {
+    "base_files": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi"
+    ],
+    "entry_dts": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+    "include_chain": [
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi"
+      }
+    ],
+    "merged_runtime_topology_reasoning": {
+      "base_summary": {
+        "backend_nodes": [],
+        "codec_nodes": [],
+        "dai_links": [
+          "link-name = \"VA Capture\";",
+          "link-name = \"WSA Playback\";",
+          "va-dai-link {",
+          "wsa-dai-link {"
+        ],
+        "frontend_nodes": [],
+        "routing_pairs": [],
+        "sound_cards": [
+          {
+            "model": "Qualcomm Technologies, Inc. Robotics RB3gen2",
+            "node": "/"
+          },
+          {
+            "model": "QCS6490-RB3Gen2",
+            "node": "channel@146"
+          }
+        ],
+        "soundwire_markers": [
+          "soundwire",
+          "swr0",
+          "swr1",
+          "swr2",
+          "wsa"
+        ],
+        "widgets": []
+      },
+      "conflicting_overlays": false,
+      "overlay_summary": {
+        "backend_nodes": [],
+        "codec_nodes": [],
+        "dai_links": [],
+        "frontend_nodes": [],
+        "routing_pairs": [],
+        "sound_cards": [],
+        "soundwire_markers": [],
+        "widgets": []
+      }
+    },
+    "overlay_candidates": [
+      "qcs6490-audioreach.dtsi"
+    ],
+    "overlay_files": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi"
+    ],
+    "overlay_mutation_delta": {
+      "added_codecs": [],
+      "added_dai_links": [],
+      "added_routes": [],
+      "added_soundwire_markers": [],
+      "added_widgets": [],
+      "removed_dai_links": [
+        "link-name = \"VA Capture\";",
+        "link-name = \"WSA Playback\";",
+        "va-dai-link {",
+        "wsa-dai-link {"
+      ],
+      "removed_routes": [],
+      "removed_widgets": []
+    }
+  },
+  "pcm_backend_correlation": {
+    "ambiguous_backend_links": [],
+    "correlated_chains": [
+      {
+        "backend_dai": "INFERRED",
+        "codec": "UNKNOWN",
+        "confidence": "INFERRED",
+        "frontend_dai": "INFERRED",
+        "pcm_device": "hw:0,0",
+        "route_chain": [
+          "MultiMedia1->PRIMARY_MI2S_RX",
+          "PRIMARY_MI2S_RX->WSA_SPKR"
+        ]
+      }
+    ],
+    "fe_be_mappings": [],
+    "route_dependencies": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "runtime_only_inferred_paths": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "runtime_pcm_entries": [
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia1 Playback (*)",
+        "pcm_id": "00-00",
+        "streams": 1
+      },
+      {
+        "direction": "capture",
+        "interface": "",
+        "name": "MultiMedia2 Capture (*)",
+        "pcm_id": "00-01",
+        "streams": 1
+      },
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia3 Playback (*)",
+        "pcm_id": "00-02",
+        "streams": 1
+      },
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia4 Playback (*)",
+        "pcm_id": "00-03",
+        "streams": 1
+      }
+    ],
+    "selected_pcm_device": "hw:0,0",
+    "unresolved_routes": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "unsupported_mixer_evidence": [
+      "tinymix",
+      "amixer"
+    ]
+  },
+  "phase_trace": [
+    {
+      "completed_at": 1779464813.8748136,
+      "phase": "pre_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "started_at": 1779464813.874813
+    },
+    {
+      "completed_at": 1779464813.8748145,
+      "phase": "pre_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "dmesg | tail -200",
+      "started_at": 1779464813.8748145
+    },
+    {
+      "completed_at": 1779464813.874815,
+      "phase": "pre_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "tinymix",
+      "started_at": 1779464813.874815
+    },
+    {
+      "completed_at": 1779464813.8748155,
+      "phase": "pre_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "amixer",
+      "started_at": 1779464813.8748152
+    },
+    {
+      "allow_write_ops": false,
+      "commands": [
+        "cat /proc/asound/cards"
+      ],
+      "completed_at": 1779464818.2639518,
+      "execution_mode": "governed_read_only",
+      "phase": "pre_runtime_snapshot",
+      "response": {
+        "approved_commands": [
+          "cat /proc/asound/cards"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "cat /proc/asound/cards",
+            "original_command": "cat /proc/asound/cards"
+          }
+        ],
+        "execution_mode": "governed_read_only",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:46:57.7180972Z",
+            "normalized_command": "cat /proc/asound/cards",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+            "started_at": "2026-05-22T15:46:57.5607783Z",
+            "stderr": "",
+            "stdout": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n"
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+        ],
+        "raw_output": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+        "request_id": "683fa055-4fa1-41a4-ab48-7d9b1ad80dd9",
+        "request_integrity_sha256": "dd30e8670cfd4e0038a0a75b7ae2fc63d05de72d84745589f4c62e0ebd3974ed",
+        "request_sequence": 265,
+        "response_integrity_sha256": "8bd2ed18088877053e8a465bfc82167aaa55d16d201b3c963221bf99b847cac2",
+        "stderr": "",
+        "timeout_seconds": 20,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:46:57.7193861Z",
+          "received_at": "2026-05-22T15:46:57.3197227Z",
+          "started_at": "2026-05-22T15:46:57.5598788Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell <normalized_command>",
+            "normalized_command": "cat /proc/asound/cards"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "snapshot_command": "cat /proc/asound/cards",
+      "snapshot_optional": false,
+      "started_at": 1779464813.8748174,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"683fa055-4fa1-41a4-ab48-7d9b1ad80dd9\",\n  \"request_sequence\": 265,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.json",
+        "request_id": "683fa055-4fa1-41a4-ab48-7d9b1ad80dd9",
+        "request_sequence": 265,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_683fa055-4fa1-41a4-ab48-7d9b1ad80dd9.json"
+      }
+    },
+    {
+      "allow_write_ops": false,
+      "commands": [
+        "cat /proc/asound/pcm"
+      ],
+      "completed_at": 1779464829.6927269,
+      "execution_mode": "governed_read_only",
+      "phase": "pre_runtime_snapshot",
+      "response": {
+        "approved_commands": [
+          "cat /proc/asound/pcm"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "cat /proc/asound/pcm",
+            "original_command": "cat /proc/asound/pcm"
+          }
+        ],
+        "execution_mode": "governed_read_only",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:08.7627061Z",
+            "normalized_command": "cat /proc/asound/pcm",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm",
+            "started_at": "2026-05-22T15:47:08.6063124Z",
+            "stderr": "",
+            "stdout": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n"
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm"
+        ],
+        "raw_output": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+        "request_id": "b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc",
+        "request_integrity_sha256": "6a25e7dabcef8997fb50ca83013491cc992cfde12ae96067153f2d442763ebe6",
+        "request_sequence": 266,
+        "response_integrity_sha256": "d1be95cb7458067ffec86b7d1b852ccf8fe60bc0af3fd92e770d2ea67989f5ac",
+        "stderr": "",
+        "timeout_seconds": 20,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:47:08.7651900Z",
+          "received_at": "2026-05-22T15:47:08.3721732Z",
+          "started_at": "2026-05-22T15:47:08.6054213Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell <normalized_command>",
+            "normalized_command": "cat /proc/asound/pcm"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "snapshot_command": "cat /proc/asound/pcm",
+      "snapshot_optional": false,
+      "started_at": 1779464818.263969,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc\",\n  \"request_sequence\": 266,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.json",
+        "request_id": "b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc",
+        "request_sequence": 266,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc.json"
+      }
+    },
+    {
+      "allow_write_ops": true,
+      "commands": [
+        "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+      ],
+      "completed_at": 1779464842.1208158,
+      "execution_mode": "governed_write_approved",
+      "phase": "asset_deploy",
+      "response": {
+        "approved_commands": [
+          "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+            "original_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+          }
+        ],
+        "execution_mode": "governed_write_approved",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:21.4464165Z",
+            "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 push \\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge\\assets\\rb3gen2\\speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav",
+            "started_at": "2026-05-22T15:47:19.6572849Z",
+            "stderr": "",
+            "stdout": ""
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 push \\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge\\assets\\rb3gen2\\speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav"
+        ],
+        "raw_output": "",
+        "request_id": "00f4103d-eebc-4ddc-8f42-cd8b93ad3abd",
+        "request_integrity_sha256": "edbf7c9f048a74ec2c34c146d77a18bef321af836c0321735b8f91b037894628",
+        "request_sequence": 267,
+        "response_integrity_sha256": "51297fc0121c8c90fc2ffc48dcc9f30bac33810a749371355cb7d60f3ca035d3",
+        "stderr": "",
+        "timeout_seconds": 180,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:47:21.4464854Z",
+          "received_at": "2026-05-22T15:47:19.3971416Z",
+          "started_at": "2026-05-22T15:47:19.6567536Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe push <bridge_asset> <target_path>",
+            "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "started_at": 1779464829.692741,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"00f4103d-eebc-4ddc-8f42-cd8b93ad3abd\",\n  \"request_sequence\": 267,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.json",
+        "request_id": "00f4103d-eebc-4ddc-8f42-cd8b93ad3abd",
+        "request_sequence": 267,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_00f4103d-eebc-4ddc-8f42-cd8b93ad3abd.json"
+      }
+    },
+    {
+      "allow_write_ops": true,
+      "commands": [
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+      ],
+      "completed_at": 1779464854.551639,
+      "execution_mode": "governed_write_approved",
+      "phase": "mixer_apply",
+      "response": {
+        "approved_commands": [
+          "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+          "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+          "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+          "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+          "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+          "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+          "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+          "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+          "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+          "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+          "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+          "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+          "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+          "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+          "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+          "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+          "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+          "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+          "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+          "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+          "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+            "original_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85"
+          },
+          {
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+            "original_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+          }
+        ],
+        "execution_mode": "governed_write_approved",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:30.4096731Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft PA Volume' '20'",
+            "started_at": "2026-05-22T15:47:30.2490286Z",
+            "stderr": "",
+            "stdout": "numid=1,iface=MIXER,name='SpkrLeft PA Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=17,step=0\r\r\n  : values=17\r\r\n  | dBrange-\r\r\n    rangemin=0,,rangemax=14\r\r\n      | dBscale-min=-3.00dB,step=0.00dB,mute=0\r\r\n    rangemin=15,,rangemax=29\r\r\n      | dBscale-min=-3.00dB,step=1.50dB,mute=0\r\r\n    rangemin=30,,rangemax=31\r\r\n      | dBscale-min=18.00dB,step=0.00dB,mute=0\r\r\n\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:30.5973598Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA RX0 MUX' 'AIF1_PB'",
+            "started_at": "2026-05-22T15:47:30.4107832Z",
+            "stderr": "",
+            "stdout": "numid=44,iface=MIXER,name='WSA RX0 MUX'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'AIF1_PB'\r\r\n  ; Item #2 'AIF_MIX1_PB'\r\r\n  : values=1\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:30.7702187Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX0 INP0' 'RX0'",
+            "started_at": "2026-05-22T15:47:30.5985200Z",
+            "stderr": "",
+            "stdout": "numid=49,iface=MIXER,name='WSA_RX0 INP0'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=7\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'RX0'\r\r\n  ; Item #2 'RX1'\r\r\n  ; Item #3 'RX_MIX0'\r\r\n  ; Item #4 'RX_MIX1'\r\r\n  ; Item #5 'DEC0'\r\r\n  ; Item #6 'DEC1'\r\r\n  : values=1\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:30.9292716Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_COMP1 Switch' '1'",
+            "started_at": "2026-05-22T15:47:30.7712007Z",
+            "stderr": "",
+            "stdout": "numid=26,iface=MIXER,name='WSA_COMP1 Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:31.0924813Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft WSA MODE' '0'",
+            "started_at": "2026-05-22T15:47:30.9300371Z",
+            "stderr": "",
+            "stdout": "numid=2,iface=MIXER,name='SpkrLeft WSA MODE'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'Speaker'\r\r\n  ; Item #1 'Receiver'\r\r\n  ; Item #2 'Ultrasound'\r\r\n  : values=0\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:31.2593214Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft COMP Switch' '1'",
+            "started_at": "2026-05-22T15:47:31.0934970Z",
+            "stderr": "",
+            "stdout": "numid=5,iface=MIXER,name='SpkrLeft COMP Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:31.4189780Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft BOOST Switch' '1'",
+            "started_at": "2026-05-22T15:47:31.2608334Z",
+            "stderr": "",
+            "stdout": "numid=6,iface=MIXER,name='SpkrLeft BOOST Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:31.5902013Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft DAC Switch' '1'",
+            "started_at": "2026-05-22T15:47:31.4198830Z",
+            "stderr": "",
+            "stdout": "numid=4,iface=MIXER,name='SpkrLeft DAC Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:31.7791948Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft VISENSE Switch' '0'",
+            "started_at": "2026-05-22T15:47:31.5908856Z",
+            "stderr": "",
+            "stdout": "numid=7,iface=MIXER,name='SpkrLeft VISENSE Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=off\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:31.9432027Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX0 Digital Volume' '85'",
+            "started_at": "2026-05-22T15:47:31.7802210Z",
+            "stderr": "",
+            "stdout": "numid=18,iface=MIXER,name='WSA_RX0 Digital Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=81,step=0\r\r\n  : values=81\r\r\n  | dBscale-min=-84.00dB,step=1.00dB,mute=1\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:32.1005551Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight WSA MODE' '0'",
+            "started_at": "2026-05-22T15:47:31.9438878Z",
+            "stderr": "",
+            "stdout": "numid=9,iface=MIXER,name='SpkrRight WSA MODE'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'Speaker'\r\r\n  ; Item #1 'Receiver'\r\r\n  ; Item #2 'Ultrasound'\r\r\n  : values=0\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:32.2640974Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight PA Volume' '20'",
+            "started_at": "2026-05-22T15:47:32.1017270Z",
+            "stderr": "",
+            "stdout": "numid=8,iface=MIXER,name='SpkrRight PA Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=17,step=0\r\r\n  : values=17\r\r\n  | dBrange-\r\r\n    rangemin=0,,rangemax=14\r\r\n      | dBscale-min=-3.00dB,step=0.00dB,mute=0\r\r\n    rangemin=15,,rangemax=29\r\r\n      | dBscale-min=-3.00dB,step=1.50dB,mute=0\r\r\n    rangemin=30,,rangemax=31\r\r\n      | dBscale-min=18.00dB,step=0.00dB,mute=0\r\r\n\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:32.4219777Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA RX1 MUX' 'AIF1_PB'",
+            "started_at": "2026-05-22T15:47:32.2650252Z",
+            "stderr": "",
+            "stdout": "numid=45,iface=MIXER,name='WSA RX1 MUX'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'AIF1_PB'\r\r\n  ; Item #2 'AIF_MIX1_PB'\r\r\n  : values=1\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:32.5909525Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX1 INP0' 'RX1'",
+            "started_at": "2026-05-22T15:47:32.4227161Z",
+            "stderr": "",
+            "stdout": "numid=53,iface=MIXER,name='WSA_RX1 INP0'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=7\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'RX0'\r\r\n  ; Item #2 'RX1'\r\r\n  ; Item #3 'RX_MIX0'\r\r\n  ; Item #4 'RX_MIX1'\r\r\n  ; Item #5 'DEC0'\r\r\n  ; Item #6 'DEC1'\r\r\n  : values=2\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:32.7544888Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_COMP2 Switch' '1'",
+            "started_at": "2026-05-22T15:47:32.5935373Z",
+            "stderr": "",
+            "stdout": "numid=27,iface=MIXER,name='WSA_COMP2 Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:32.9114188Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight COMP Switch' '1'",
+            "started_at": "2026-05-22T15:47:32.7552885Z",
+            "stderr": "",
+            "stdout": "numid=12,iface=MIXER,name='SpkrRight COMP Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:33.0661425Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight BOOST Switch' '1'",
+            "started_at": "2026-05-22T15:47:32.9122210Z",
+            "stderr": "",
+            "stdout": "numid=13,iface=MIXER,name='SpkrRight BOOST Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:33.2283758Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight DAC Switch' '1'",
+            "started_at": "2026-05-22T15:47:33.0672462Z",
+            "stderr": "",
+            "stdout": "numid=11,iface=MIXER,name='SpkrRight DAC Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:33.3911402Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight VISENSE Switch' '0'",
+            "started_at": "2026-05-22T15:47:33.2293463Z",
+            "stderr": "",
+            "stdout": "numid=14,iface=MIXER,name='SpkrRight VISENSE Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=off\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:33.5503985Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX1 Digital Volume' '85'",
+            "started_at": "2026-05-22T15:47:33.3924275Z",
+            "stderr": "",
+            "stdout": "numid=19,iface=MIXER,name='WSA_RX1 Digital Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=81,step=0\r\r\n  : values=81\r\r\n  | dBscale-min=-84.00dB,step=1.00dB,mute=1\r\r\n"
+          },
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:47:33.7120291Z",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1' '1'",
+            "started_at": "2026-05-22T15:47:33.5515922Z",
+            "stderr": "",
+            "stdout": "numid=63,iface=MIXER,name='WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1'\r\r\n  ; type=BOOLEAN,access=rw------,values=2\r\r\n  : values=on,off\r\r\n"
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft PA Volume' '20'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA RX0 MUX' 'AIF1_PB'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX0 INP0' 'RX0'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_COMP1 Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft WSA MODE' '0'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft COMP Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft BOOST Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft DAC Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrLeft VISENSE Switch' '0'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX0 Digital Volume' '85'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight WSA MODE' '0'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight PA Volume' '20'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA RX1 MUX' 'AIF1_PB'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX1 INP0' 'RX1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_COMP2 Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight COMP Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight BOOST Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight DAC Switch' '1'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='SpkrRight VISENSE Switch' '0'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_RX1 Digital Volume' '85'",
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell amixer -c 0 cset iface=MIXER,name='WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1' '1'"
+        ],
+        "raw_output": "numid=1,iface=MIXER,name='SpkrLeft PA Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=17,step=0\r\r\n  : values=17\r\r\n  | dBrange-\r\r\n    rangemin=0,,rangemax=14\r\r\n      | dBscale-min=-3.00dB,step=0.00dB,mute=0\r\r\n    rangemin=15,,rangemax=29\r\r\n      | dBscale-min=-3.00dB,step=1.50dB,mute=0\r\r\n    rangemin=30,,rangemax=31\r\r\n      | dBscale-min=18.00dB,step=0.00dB,mute=0\r\r\n\r\r\n\nnumid=44,iface=MIXER,name='WSA RX0 MUX'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'AIF1_PB'\r\r\n  ; Item #2 'AIF_MIX1_PB'\r\r\n  : values=1\r\r\n\nnumid=49,iface=MIXER,name='WSA_RX0 INP0'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=7\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'RX0'\r\r\n  ; Item #2 'RX1'\r\r\n  ; Item #3 'RX_MIX0'\r\r\n  ; Item #4 'RX_MIX1'\r\r\n  ; Item #5 'DEC0'\r\r\n  ; Item #6 'DEC1'\r\r\n  : values=1\r\r\n\nnumid=26,iface=MIXER,name='WSA_COMP1 Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=2,iface=MIXER,name='SpkrLeft WSA MODE'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'Speaker'\r\r\n  ; Item #1 'Receiver'\r\r\n  ; Item #2 'Ultrasound'\r\r\n  : values=0\r\r\n\nnumid=5,iface=MIXER,name='SpkrLeft COMP Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=6,iface=MIXER,name='SpkrLeft BOOST Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=4,iface=MIXER,name='SpkrLeft DAC Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=7,iface=MIXER,name='SpkrLeft VISENSE Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=off\r\r\n\nnumid=18,iface=MIXER,name='WSA_RX0 Digital Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=81,step=0\r\r\n  : values=81\r\r\n  | dBscale-min=-84.00dB,step=1.00dB,mute=1\r\r\n\nnumid=9,iface=MIXER,name='SpkrRight WSA MODE'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'Speaker'\r\r\n  ; Item #1 'Receiver'\r\r\n  ; Item #2 'Ultrasound'\r\r\n  : values=0\r\r\n\nnumid=8,iface=MIXER,name='SpkrRight PA Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=17,step=0\r\r\n  : values=17\r\r\n  | dBrange-\r\r\n    rangemin=0,,rangemax=14\r\r\n      | dBscale-min=-3.00dB,step=0.00dB,mute=0\r\r\n    rangemin=15,,rangemax=29\r\r\n      | dBscale-min=-3.00dB,step=1.50dB,mute=0\r\r\n    rangemin=30,,rangemax=31\r\r\n      | dBscale-min=18.00dB,step=0.00dB,mute=0\r\r\n\r\r\n\nnumid=45,iface=MIXER,name='WSA RX1 MUX'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=3\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'AIF1_PB'\r\r\n  ; Item #2 'AIF_MIX1_PB'\r\r\n  : values=1\r\r\n\nnumid=53,iface=MIXER,name='WSA_RX1 INP0'\r\r\n  ; type=ENUMERATED,access=rw------,values=1,items=7\r\r\n  ; Item #0 'ZERO'\r\r\n  ; Item #1 'RX0'\r\r\n  ; Item #2 'RX1'\r\r\n  ; Item #3 'RX_MIX0'\r\r\n  ; Item #4 'RX_MIX1'\r\r\n  ; Item #5 'DEC0'\r\r\n  ; Item #6 'DEC1'\r\r\n  : values=2\r\r\n\nnumid=27,iface=MIXER,name='WSA_COMP2 Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=12,iface=MIXER,name='SpkrRight COMP Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=13,iface=MIXER,name='SpkrRight BOOST Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=11,iface=MIXER,name='SpkrRight DAC Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=on\r\r\n\nnumid=14,iface=MIXER,name='SpkrRight VISENSE Switch'\r\r\n  ; type=BOOLEAN,access=rw------,values=1\r\r\n  : values=off\r\r\n\nnumid=19,iface=MIXER,name='WSA_RX1 Digital Volume'\r\r\n  ; type=INTEGER,access=rw---R--,values=1,min=0,max=81,step=0\r\r\n  : values=81\r\r\n  | dBscale-min=-84.00dB,step=1.00dB,mute=1\r\r\n\nnumid=63,iface=MIXER,name='WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1'\r\r\n  ; type=BOOLEAN,access=rw------,values=2\r\r\n  : values=on,off\r\r\n",
+        "request_id": "ff670ff9-e1d4-4fd8-a249-c5ae048683ee",
+        "request_integrity_sha256": "f6811f956e135fa6ec6df5b1f84a5c5e10fcd3601f0f33ce3fcc0a5c6615e68a",
+        "request_sequence": 268,
+        "response_integrity_sha256": "295b1fea22a1d025e0811fb8373121a19f16ff7a0ba6e61a2b5cf3eca2ffdc07",
+        "stderr": "",
+        "timeout_seconds": 180,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:47:33.7122391Z",
+          "received_at": "2026-05-22T15:47:30.0053309Z",
+          "started_at": "2026-05-22T15:47:30.2480615Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85"
+          },
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell amixer -c 0 cset iface=MIXER,name='<control>' '<value>'",
+            "normalized_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "started_at": 1779464842.1208196,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"ff670ff9-e1d4-4fd8-a249-c5ae048683ee\",\n  \"request_sequence\": 268,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.json",
+        "request_id": "ff670ff9-e1d4-4fd8-a249-c5ae048683ee",
+        "request_sequence": 268,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_ff670ff9-e1d4-4fd8-a249-c5ae048683ee.json"
+      }
+    },
+    {
+      "allow_write_ops": true,
+      "commands": [
+        "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+      ],
+      "completed_at": 1779464887.0661914,
+      "execution_mode": "governed_write_approved",
+      "phase": "pcm_playback",
+      "response": {
+        "approved_commands": [
+          "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+            "original_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+          }
+        ],
+        "execution_mode": "governed_write_approved",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:48:06.2838746Z",
+            "normalized_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+            "started_at": "2026-05-22T15:47:40.3816594Z",
+            "stderr": "",
+            "stdout": "Playing WAVE '/data/local/tmp/aura/audio/speaker_validation.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo\r\r\n"
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+        ],
+        "raw_output": "Playing WAVE '/data/local/tmp/aura/audio/speaker_validation.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo\r\r\n",
+        "request_id": "10459ba0-856e-4331-827f-f62cff15c3f2",
+        "request_integrity_sha256": "ba2a646ce305ff855ccaa2ac939d0336117c514560c06bb3d772f55a5d79b777",
+        "request_sequence": 269,
+        "response_integrity_sha256": "f35a68c55ab46718ecd965c2837234b5849e17931fc9e5ef22aefa4ade455f2f",
+        "stderr": "",
+        "timeout_seconds": 180,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:48:06.2842117Z",
+          "received_at": "2026-05-22T15:47:40.1089805Z",
+          "started_at": "2026-05-22T15:47:40.3806852Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell aplay -D <(plug)hw:x,y> <target_path>",
+            "normalized_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "started_at": 1779464854.5516427,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"10459ba0-856e-4331-827f-f62cff15c3f2\",\n  \"request_sequence\": 269,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_10459ba0-856e-4331-827f-f62cff15c3f2.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_10459ba0-856e-4331-827f-f62cff15c3f2.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_10459ba0-856e-4331-827f-f62cff15c3f2.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_10459ba0-856e-4331-827f-f62cff15c3f2.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_10459ba0-856e-4331-827f-f62cff15c3f2.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_10459ba0-856e-4331-827f-f62cff15c3f2.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_10459ba0-856e-4331-827f-f62cff15c3f2.json",
+        "request_id": "10459ba0-856e-4331-827f-f62cff15c3f2",
+        "request_sequence": 269,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_10459ba0-856e-4331-827f-f62cff15c3f2.json"
+      }
+    },
+    {
+      "completed_at": 1779464887.0661962,
+      "phase": "post_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "started_at": 1779464887.0661962
+    },
+    {
+      "completed_at": 1779464887.066198,
+      "phase": "post_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "dmesg | tail -200",
+      "started_at": 1779464887.066198
+    },
+    {
+      "completed_at": 1779464887.0661995,
+      "phase": "post_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "tinymix",
+      "started_at": 1779464887.066199
+    },
+    {
+      "completed_at": 1779464887.0662005,
+      "phase": "post_runtime_snapshot",
+      "reason": "fast_locked_replay_skip",
+      "skipped": true,
+      "snapshot_command": "amixer",
+      "started_at": 1779464887.0662003
+    },
+    {
+      "allow_write_ops": false,
+      "commands": [
+        "cat /proc/asound/cards"
+      ],
+      "completed_at": 1779464888.4371407,
+      "execution_mode": "governed_read_only",
+      "phase": "post_runtime_snapshot",
+      "response": {
+        "approved_commands": [
+          "cat /proc/asound/cards"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "cat /proc/asound/cards",
+            "original_command": "cat /proc/asound/cards"
+          }
+        ],
+        "execution_mode": "governed_read_only",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:48:07.9377560Z",
+            "normalized_command": "cat /proc/asound/cards",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+            "started_at": "2026-05-22T15:48:07.7819909Z",
+            "stderr": "",
+            "stdout": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n"
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+        ],
+        "raw_output": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+        "request_id": "a59be1c9-03b9-4213-beae-16ad359c2132",
+        "request_integrity_sha256": "934caf22f6353d86e6984a210bbba7dbf1bfe9c350bc1c093a818a2ef2e0bdea",
+        "request_sequence": 270,
+        "response_integrity_sha256": "6f9784a3eb9f2fc4e5fb5749eb05189e7d313b55d20816e68fa393a192ff0134",
+        "stderr": "",
+        "timeout_seconds": 20,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:48:07.9391658Z",
+          "received_at": "2026-05-22T15:48:07.5658056Z",
+          "started_at": "2026-05-22T15:48:07.7810838Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell <normalized_command>",
+            "normalized_command": "cat /proc/asound/cards"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "snapshot_command": "cat /proc/asound/cards",
+      "snapshot_optional": false,
+      "started_at": 1779464887.0662062,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"a59be1c9-03b9-4213-beae-16ad359c2132\",\n  \"request_sequence\": 270,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_a59be1c9-03b9-4213-beae-16ad359c2132.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_a59be1c9-03b9-4213-beae-16ad359c2132.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_a59be1c9-03b9-4213-beae-16ad359c2132.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_a59be1c9-03b9-4213-beae-16ad359c2132.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_a59be1c9-03b9-4213-beae-16ad359c2132.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_a59be1c9-03b9-4213-beae-16ad359c2132.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_a59be1c9-03b9-4213-beae-16ad359c2132.json",
+        "request_id": "a59be1c9-03b9-4213-beae-16ad359c2132",
+        "request_sequence": 270,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_a59be1c9-03b9-4213-beae-16ad359c2132.json"
+      }
+    },
+    {
+      "allow_write_ops": false,
+      "commands": [
+        "cat /proc/asound/pcm"
+      ],
+      "completed_at": 1779464899.8603444,
+      "execution_mode": "governed_read_only",
+      "phase": "post_runtime_snapshot",
+      "response": {
+        "approved_commands": [
+          "cat /proc/asound/pcm"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "cat /proc/asound/pcm",
+            "original_command": "cat /proc/asound/pcm"
+          }
+        ],
+        "execution_mode": "governed_read_only",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:48:19.0417059Z",
+            "normalized_command": "cat /proc/asound/pcm",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm",
+            "started_at": "2026-05-22T15:48:18.8814371Z",
+            "stderr": "",
+            "stdout": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n"
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm"
+        ],
+        "raw_output": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+        "request_id": "6570c176-e1de-4215-a6cb-974e725db0da",
+        "request_integrity_sha256": "cdefefcb3db2e8fd4133957c5236bbe3b5d579ab3af04464993682847b222ccb",
+        "request_sequence": 271,
+        "response_integrity_sha256": "249e4515c7cd550a29de31651b43ac6ca61c6fa0e83f7c0e77504e1102a164d9",
+        "stderr": "",
+        "timeout_seconds": 20,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:48:19.0442799Z",
+          "received_at": "2026-05-22T15:48:18.6183183Z",
+          "started_at": "2026-05-22T15:48:18.8805975Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell <normalized_command>",
+            "normalized_command": "cat /proc/asound/pcm"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "snapshot_command": "cat /proc/asound/pcm",
+      "snapshot_optional": false,
+      "started_at": 1779464888.4371562,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"6570c176-e1de-4215-a6cb-974e725db0da\",\n  \"request_sequence\": 271,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_6570c176-e1de-4215-a6cb-974e725db0da.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_6570c176-e1de-4215-a6cb-974e725db0da.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_6570c176-e1de-4215-a6cb-974e725db0da.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_6570c176-e1de-4215-a6cb-974e725db0da.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_6570c176-e1de-4215-a6cb-974e725db0da.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_6570c176-e1de-4215-a6cb-974e725db0da.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_6570c176-e1de-4215-a6cb-974e725db0da.json",
+        "request_id": "6570c176-e1de-4215-a6cb-974e725db0da",
+        "request_sequence": 271,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_6570c176-e1de-4215-a6cb-974e725db0da.json"
+      }
+    },
+    {
+      "allow_write_ops": true,
+      "commands": [
+        "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      ],
+      "completed_at": 1779464909.2736967,
+      "execution_mode": "governed_write_approved",
+      "phase": "cleanup",
+      "response": {
+        "approved_commands": [
+          "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+        ],
+        "command_entries": [
+          {
+            "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+            "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+          }
+        ],
+        "execution_mode": "governed_write_approved",
+        "execution_status": "executed",
+        "executor_command_trace": [
+          {
+            "execution_status": "executed",
+            "exit_code": 0,
+            "finished_at": "2026-05-22T15:48:29.1419643Z",
+            "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+            "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav",
+            "started_at": "2026-05-22T15:48:28.9902173Z",
+            "stderr": "",
+            "stdout": ""
+          }
+        ],
+        "executor_identity": {
+          "hostname": "QCOM-X1M5XIGBIY",
+          "username": "nandam",
+          "worker_id": "nandam@QCOM-X1M5XIGBIY",
+          "worker_type": "windows_shared_folder_worker"
+        },
+        "protocol_version": "bridge-v1",
+        "raw_executor_invocation": [
+          "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav"
+        ],
+        "raw_output": "",
+        "request_id": "307ac692-13a1-458d-a7e0-dfd45c95e9c9",
+        "request_integrity_sha256": "30c7aa0992327c24784866022fd6f7ef8d0d442153834decbd4ad9aec83840e4",
+        "request_sequence": 272,
+        "response_integrity_sha256": "38b5adc36c5149f2380b1a5f301ae4c4b6b9263b1a89ae7bbf71bf5901f85e7c",
+        "stderr": "",
+        "timeout_seconds": 180,
+        "timestamps": {
+          "finished_at": "2026-05-22T15:48:29.1420678Z",
+          "received_at": "2026-05-22T15:48:28.7617445Z",
+          "started_at": "2026-05-22T15:48:28.9893570Z"
+        },
+        "transport": "shared_folder",
+        "transport_expansion_trace": [
+          {
+            "boundary": "adb_shell_boundary",
+            "expanded_command": "adb.exe shell rm -f <target_path>",
+            "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+          }
+        ],
+        "transport_metadata": {
+          "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+          "adb_serial": "12345678",
+          "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+          "command_runtime": "adb_shell",
+          "worker_transport": "shared_folder"
+        }
+      },
+      "return_code": 0,
+      "started_at": 1779464899.8603604,
+      "stderr": "",
+      "stdout": "{\n  \"request_id\": \"307ac692-13a1-458d-a7e0-dfd45c95e9c9\",\n  \"request_sequence\": 272,\n  \"classification\": \"CAPTURE_READY\",\n  \"reason\": \"response_validated\",\n  \"request\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_307ac692-13a1-458d-a7e0-dfd45c95e9c9.json\",\n  \"response\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_307ac692-13a1-458d-a7e0-dfd45c95e9c9.json\",\n  \"lineage\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_307ac692-13a1-458d-a7e0-dfd45c95e9c9.json\",\n  \"report\": \"/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_307ac692-13a1-458d-a7e0-dfd45c95e9c9.md\"\n}",
+      "summary": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_307ac692-13a1-458d-a7e0-dfd45c95e9c9.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_307ac692-13a1-458d-a7e0-dfd45c95e9c9.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_307ac692-13a1-458d-a7e0-dfd45c95e9c9.json",
+        "request_id": "307ac692-13a1-458d-a7e0-dfd45c95e9c9",
+        "request_sequence": 272,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_307ac692-13a1-458d-a7e0-dfd45c95e9c9.json"
+      }
+    }
+  ],
+  "playback_route_trace": {
+    "backend_activation_ordering": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "deterministic_alignment": {
+      "baseline_pcm_match": true,
+      "baseline_route_match": true,
+      "command_ordering_match_locked_sequence": true,
+      "evidence_ordering_match_locked_sequence": true,
+      "playback_runtime_drift_seconds": 0.00541,
+      "playback_runtime_within_baseline_window": true
+    },
+    "evidence_collection_sequence": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm"
+    ],
+    "execution_ordering": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+      "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "mixer_dependency_chains": [
+      "SpkrLeft BOOST Switch",
+      "SpkrLeft COMP Switch",
+      "SpkrLeft DAC Switch",
+      "SpkrLeft PA Volume",
+      "SpkrLeft VISENSE Switch",
+      "SpkrLeft WSA MODE",
+      "SpkrRight BOOST Switch",
+      "SpkrRight COMP Switch",
+      "SpkrRight DAC Switch",
+      "SpkrRight PA Volume",
+      "SpkrRight VISENSE Switch",
+      "SpkrRight WSA MODE",
+      "WSA RX0 MUX",
+      "WSA RX1 MUX",
+      "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+      "WSA_COMP1 Switch",
+      "WSA_COMP2 Switch",
+      "WSA_RX0 Digital Volume",
+      "WSA_RX0 INP0",
+      "WSA_RX1 Digital Volume",
+      "WSA_RX1 INP0"
+    ],
+    "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+    "runtime_state_transitions": [
+      "playback_started",
+      "playback_completed",
+      "cleanup_completed"
+    ]
+  },
+  "playback_timing_verification": {
+    "duration_drift_seconds": 0.902215,
+    "playback_duration_match": true,
+    "playback_runtime_seconds": 25.902215,
+    "wav_duration_seconds": 25.0
+  },
+  "procedural_lock_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_procedural_memory_lock.json",
+  "procedural_memory": {
+    "board": "RB3Gen2",
+    "board_specific_quirks": [
+      "static_validation_without_live_playback",
+      "dry_run_planning_only",
+      "live_runtime_validation"
+    ],
+    "failure_signatures": [
+      "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+      "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+      "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+      "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse,playback_not_completed"
+    ],
+    "history": [
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "295d5b23-4073-4c50-a177-2f699155e1c0",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "0eb2a876-44ab-49cd-b6ff-4b0ce77f6ba5",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "e0a45dc3-10dd-4f31-aac0-6e2c01783d9a",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "36cad741-1a81-4111-ab44-002054cc02e6",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "39a2ee77-794a-43c0-9534-174508848a4b",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "0d7bd48b-8b27-4c2c-a706-1076aeb49ddb",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "aee84ab5-24b0-4b1c-b8c5-2a11fcf933ca",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "e9fb7b11-4bff-4061-b8c1-c596230f8c3d",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "197092ef-3fde-4a6b-88fb-b6bb5233de95",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "7ebb120e-43b6-415b-9d8a-4b396fef6cd7",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "c81d66b0-d95a-4b2a-b1af-c3c8ee0bf94f",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "c212c677-b9e7-4a25-b4cf-cc514c2467d3",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "fd24f6b2-f6e9-4f64-94c9-d57b0f5d0689",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "b1c15cd2-37a9-45a8-bf79-ad6b01fdea57",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "80ebc09a-8972-448f-a483-16b21eda8232",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "5e7687d9-c9db-40e0-967d-34d8acd52d27",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "ba5e1a7d-ad56-4a76-ad8a-a06e2fbe8869",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "0049951c-be40-4181-af40-d8c46c9025a0",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "2e8d7f32-bdd2-4162-9df0-94d8b7317dbe",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "257698ff-23c8-46c5-bb39-82b2019a00e3",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "90e03551-964c-40e1-8636-91ea1df82de5",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "3c9452fe-9ba4-4109-a5b6-dfde69f76fcb",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "85896c3d-fdc2-4d38-bdc4-ea51657403c3",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "2866e236-c4df-4854-be74-4a84e9d737de",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "6d74f0de-c4e5-4e5c-8eec-3c3b87476852",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "7637cba7-0023-48e3-b5be-fc0eccd8e32d",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "2519150c-02e3-4bd7-b4cb-8f3588147b29",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "a27f4ac3-00bf-41ad-9947-f101905e8906",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "d06b7009-2c17-4c78-b38d-c11f76f2e05d",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "dc2ade03-2d92-4388-9a2b-0d28fe6342e6",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+        "success": false
+      }
+    ],
+    "recovery_patterns": [
+      "re-run with live telemetry and operator-approved playback",
+      "retry_with_verified_mixer_sequence",
+      "re-capture_dmesg_and_dapm_after_mixer_apply"
+    ],
+    "route_specific_constraints": [
+      "speaker_validation_requires_overlay_resolution",
+      "route_activation_requires_backend_and_dapm"
+    ],
+    "runtime_signatures": [
+      {
+        "backend_activity": false,
+        "pcm_activation": false,
+        "playback_completion": false,
+        "route_activation_confidence": "LOW",
+        "soundwire_activity": false
+      },
+      {
+        "backend_activity": false,
+        "pcm_activation": false,
+        "playback_completion": true,
+        "route_activation_confidence": "MEDIUM",
+        "soundwire_activity": false
+      }
+    ],
+    "successful_playback_procedures": [],
+    "successful_wav_assets": [],
+    "unsupported_formats": []
+  },
+  "procedural_memory_lock": {
+    "board": "RB3Gen2",
+    "cleanup_ordering": [
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_ordering": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+      "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "degradation_decisions": [
+      "snapshot_skipped:tinymix:capability_supports_tinymix:unknown",
+      "snapshot_skipped:amixer:capability_supports_amixer:unknown",
+      "missing_evidence_detected"
+    ],
+    "evidence_collection_sequence": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "dmesg | tail -200",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "dmesg | tail -200"
+    ],
+    "history": [
+      {
+        "audible_status": "confirmed",
+        "evidence_success": false,
+        "process_success": false,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T11:54:35.059698+00:00",
+        "run_id": "0049951c-be40-4181-af40-d8c46c9025a0"
+      },
+      {
+        "audible_status": "confirmed",
+        "evidence_success": false,
+        "process_success": false,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T11:57:18.614551+00:00",
+        "run_id": "2e8d7f32-bdd2-4162-9df0-94d8b7317dbe"
+      },
+      {
+        "audible_status": "confirmed",
+        "evidence_success": false,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:02:31.062896+00:00",
+        "run_id": "257698ff-23c8-46c5-bb39-82b2019a00e3"
+      },
+      {
+        "audible_status": "confirmed",
+        "evidence_success": false,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:06:09.133213+00:00",
+        "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": false,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:35:03.129030+00:00",
+        "run_id": "90e03551-964c-40e1-8636-91ea1df82de5"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:46:53.936899+00:00",
+        "run_id": "3c9452fe-9ba4-4109-a5b6-dfde69f76fcb"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:48:36.728532+00:00",
+        "run_id": "85896c3d-fdc2-4d38-bdc4-ea51657403c3"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:50:19.552736+00:00",
+        "run_id": "2866e236-c4df-4854-be74-4a84e9d737de"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:52:02.374309+00:00",
+        "run_id": "6d74f0de-c4e5-4e5c-8eec-3c3b87476852"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:53:45.230327+00:00",
+        "run_id": "7637cba7-0023-48e3-b5be-fc0eccd8e32d"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:55:29.044337+00:00",
+        "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:57:11.885005+00:00",
+        "run_id": "2519150c-02e3-4bd7-b4cb-8f3588147b29"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T12:58:52.731664+00:00",
+        "run_id": "a27f4ac3-00bf-41ad-9947-f101905e8906"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:00:36.598752+00:00",
+        "run_id": "d06b7009-2c17-4c78-b38d-c11f76f2e05d"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:02:20.406498+00:00",
+        "run_id": "dc2ade03-2d92-4388-9a2b-0d28fe6342e6"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:41:00.965906+00:00",
+        "run_id": "474820fe-b832-4db4-b070-bffba7738077"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:44:05.833600+00:00",
+        "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:46:41.300113+00:00",
+        "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T14:33:40.294269+00:00",
+        "run_id": "2784a71e-d137-4c94-b948-867bd05184fd"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T14:37:49.610211+00:00",
+        "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T15:45:23.026859+00:00",
+        "run_id": "8055e822-70cb-4740-95c2-029823eea469"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": false,
+        "process_success": false,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T15:46:37.585022+00:00",
+        "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7"
+      },
+      {
+        "audible_status": "unknown",
+        "evidence_success": true,
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T15:48:29.277703+00:00",
+        "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82"
+      }
+    ],
+    "lock_confidence": 0.2,
+    "lock_revision": 2,
+    "locked_profile_id": "audible_25s_speaker_v1",
+    "schema_version": "1.0",
+    "successful_execution_sequence": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+      "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "timing_windows": {
+      "cleanup_runtime_seconds": {
+        "last_seconds": 9.413336,
+        "max_seconds": 11.455759,
+        "min_seconds": 0.0
+      },
+      "evidence_collection_runtime_seconds": {
+        "last_seconds": 28.612016,
+        "max_seconds": 70.37222,
+        "min_seconds": 3e-06
+      },
+      "playback_runtime_seconds": {
+        "last_seconds": 25.902215,
+        "max_seconds": 25.957985,
+        "min_seconds": 0.0
+      },
+      "total_runtime_seconds": {
+        "last_seconds": 95.398884,
+        "max_seconds": 140.21638,
+        "min_seconds": 2.2e-05
+      }
+    },
+    "updated_at": "2026-05-22T15:48:29.277712+00:00"
+  },
+  "procedural_route_memory": {
+    "backend_activation_orderings": [
+      {
+        "ordering": [
+          "MultiMedia1->PRIMARY_MI2S_RX",
+          "PRIMARY_MI2S_RX->WSA_SPKR"
+        ],
+        "overlay": "qcs6490-audioreach.dtsi"
+      }
+    ],
+    "board": "RB3Gen2",
+    "confidence_history": [
+      {
+        "recorded_at": "2026-05-22T13:41:01.009682+00:00",
+        "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+        "topology_confidence": 0.515,
+        "topology_state": "LOW_CONFIDENCE"
+      },
+      {
+        "recorded_at": "2026-05-22T13:44:05.877729+00:00",
+        "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "recorded_at": "2026-05-22T13:46:41.344329+00:00",
+        "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "recorded_at": "2026-05-22T14:33:40.338037+00:00",
+        "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "recorded_at": "2026-05-22T14:37:49.653748+00:00",
+        "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "recorded_at": "2026-05-22T15:45:23.071484+00:00",
+        "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "recorded_at": "2026-05-22T15:46:37.628125+00:00",
+        "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+        "topology_confidence": 0.235,
+        "topology_state": "LOW_CONFIDENCE"
+      },
+      {
+        "recorded_at": "2026-05-22T15:48:29.322309+00:00",
+        "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      }
+    ],
+    "created_at": "2026-05-22T13:41:01.009664+00:00",
+    "mixer_dependency_chains": [
+      {
+        "chain": [
+          "SpkrLeft BOOST Switch",
+          "SpkrLeft COMP Switch",
+          "SpkrLeft DAC Switch",
+          "SpkrLeft PA Volume",
+          "SpkrLeft VISENSE Switch",
+          "SpkrLeft WSA MODE",
+          "SpkrRight BOOST Switch",
+          "SpkrRight COMP Switch",
+          "SpkrRight DAC Switch",
+          "SpkrRight PA Volume",
+          "SpkrRight VISENSE Switch",
+          "SpkrRight WSA MODE",
+          "WSA RX0 MUX",
+          "WSA RX1 MUX",
+          "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+          "WSA_COMP1 Switch",
+          "WSA_COMP2 Switch",
+          "WSA_RX0 Digital Volume",
+          "WSA_RX0 INP0",
+          "WSA_RX1 Digital Volume",
+          "WSA_RX1 INP0"
+        ],
+        "overlay": "qcs6490-audioreach.dtsi"
+      }
+    ],
+    "overlay_specific_procedural_flows": [
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": false,
+          "evidence_ordering_match_locked_sequence": false,
+          "playback_runtime_drift_seconds": 0.014176,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": true,
+          "evidence_ordering_match_locked_sequence": true,
+          "playback_runtime_drift_seconds": 0.004192,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": true,
+          "evidence_ordering_match_locked_sequence": true,
+          "playback_runtime_drift_seconds": 0.013098,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": true,
+          "evidence_ordering_match_locked_sequence": true,
+          "playback_runtime_drift_seconds": 0.025321,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": true,
+          "evidence_ordering_match_locked_sequence": true,
+          "playback_runtime_drift_seconds": 0.009546,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": true,
+          "evidence_ordering_match_locked_sequence": true,
+          "playback_runtime_drift_seconds": 0.011634,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": false,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": false,
+          "evidence_ordering_match_locked_sequence": false,
+          "playback_runtime_drift_seconds": 25.896805,
+          "playback_runtime_within_baseline_window": false
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      },
+      {
+        "deterministic_alignment": {
+          "baseline_pcm_match": true,
+          "baseline_route_match": true,
+          "command_ordering_match_locked_sequence": true,
+          "evidence_ordering_match_locked_sequence": true,
+          "playback_runtime_drift_seconds": 0.00541,
+          "playback_runtime_within_baseline_window": true
+        },
+        "mutation_delta": {
+          "added_codecs": [],
+          "added_dai_links": [],
+          "added_routes": [],
+          "added_soundwire_markers": [],
+          "added_widgets": [],
+          "removed_dai_links": [
+            "link-name = \"VA Capture\";",
+            "link-name = \"WSA Playback\";",
+            "va-dai-link {",
+            "wsa-dai-link {"
+          ],
+          "removed_routes": [],
+          "removed_widgets": []
+        },
+        "overlay": "qcs6490-audioreach.dtsi"
+      }
+    ],
+    "runs": [
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:41:01.009673+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+        "topology_confidence": 0.515,
+        "topology_state": "LOW_CONFIDENCE"
+      },
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:44:05.877716+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T13:46:41.344317+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T14:33:40.338024+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T14:37:49.653735+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T15:45:23.071470+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      {
+        "evidence_success": false,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "316deeb28892b1cdebfe5c12c2cd620b5b8f29289c1ffe3d4f5fc1b2e6a4ea7d",
+        "process_success": false,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T15:46:37.628113+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+        "topology_confidence": 0.235,
+        "topology_state": "LOW_CONFIDENCE"
+      },
+      {
+        "evidence_success": true,
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm_signature": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+        "process_success": true,
+        "profile_id": "audible_25s_speaker_v1",
+        "recorded_at": "2026-05-22T15:48:29.322295+00:00",
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb",
+        "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      }
+    ],
+    "runtime_evidence_patterns": [
+      {
+        "backend_activity": false,
+        "evidence_collection_sequence": [
+          "cat /proc/asound/cards",
+          "cat /proc/asound/pcm",
+          "cat /proc/asound/cards",
+          "cat /proc/asound/pcm"
+        ],
+        "pcm_activation": false,
+        "playback_completion": true,
+        "route_activation_confidence": "MEDIUM",
+        "runtime_state_transitions": [
+          "playback_started",
+          "playback_completed",
+          "cleanup_completed"
+        ],
+        "soundwire_activity": false
+      },
+      {
+        "backend_activity": false,
+        "evidence_collection_sequence": [],
+        "pcm_activation": false,
+        "playback_completion": false,
+        "route_activation_confidence": "LOW",
+        "runtime_state_transitions": [],
+        "soundwire_activity": false
+      }
+    ],
+    "schema_version": "1.0",
+    "stable_pcm_fingerprints": [
+      "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c",
+      "316deeb28892b1cdebfe5c12c2cd620b5b8f29289c1ffe3d4f5fc1b2e6a4ea7d"
+    ],
+    "stable_route_fingerprints": [
+      "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+    ],
+    "successful_playback_routes": [
+      {
+        "overlay": "qcs6490-audioreach.dtsi",
+        "route_chain": [
+          "MultiMedia1->PRIMARY_MI2S_RX",
+          "PRIMARY_MI2S_RX->WSA_SPKR"
+        ],
+        "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+      }
+    ],
+    "updated_at": "2026-05-22T15:48:29.322289+00:00"
+  },
+  "procedural_route_memory_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3gen2_procedural_route_memory.json",
+  "process_success": true,
+  "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+  "runtime_correlation": {
+    "backend_activity": false,
+    "cleanup_completed": true,
+    "dapm_state_change": false,
+    "evidence_quality": "MEDIUM",
+    "mixer_change": false,
+    "pcm_activation": false,
+    "pcm_runtime_state_after": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "pcm_runtime_state_before": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "pcm_runtime_state_change": false,
+    "playback_attempted": true,
+    "playback_completion": true,
+    "playback_started": true,
+    "route_activation_confidence": "MEDIUM",
+    "soundwire_activity": false
+  },
+  "runtime_evidence": {
+    "cleanup_exit_code": 0,
+    "dapm_after": "",
+    "dapm_before": "",
+    "dmesg_after": "",
+    "dmesg_before": "",
+    "mixer_after": "",
+    "mixer_before": "",
+    "pcm_after": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "pcm_before": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "pcm_runtime_state_after": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "pcm_runtime_state_before": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "playback_exit_code": 0,
+    "playback_stderr": "",
+    "snapshot_post_exit_codes": {
+      "cat /proc/asound/cards": 0,
+      "cat /proc/asound/pcm": 0
+    },
+    "snapshot_post_stderr": {
+      "cat /proc/asound/cards": "",
+      "cat /proc/asound/pcm": ""
+    },
+    "snapshot_pre_exit_codes": {
+      "cat /proc/asound/cards": 0,
+      "cat /proc/asound/pcm": 0
+    },
+    "snapshot_pre_stderr": {
+      "cat /proc/asound/cards": "",
+      "cat /proc/asound/pcm": ""
+    },
+    "snapshot_skipped_commands": [
+      {
+        "command": "cat /sys/kernel/debug/asoc/*/dapm",
+        "reason": "fast_locked_replay_skip"
+      },
+      {
+        "command": "dmesg | tail -200",
+        "reason": "fast_locked_replay_skip"
+      },
+      {
+        "command": "tinymix",
+        "reason": "fast_locked_replay_skip"
+      },
+      {
+        "command": "amixer",
+        "reason": "fast_locked_replay_skip"
+      }
+    ],
+    "soundwire_after": "",
+    "soundwire_before": ""
+  },
+  "runtime_route_graph": {
+    "active_backend_paths": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "amixer_controls_after": [],
+    "amixer_controls_before": [],
+    "cards_after": [],
+    "cards_before": [],
+    "mixer_dependencies": [
+      "SpkrLeft BOOST Switch",
+      "SpkrLeft COMP Switch",
+      "SpkrLeft DAC Switch",
+      "SpkrLeft PA Volume",
+      "SpkrLeft VISENSE Switch",
+      "SpkrLeft WSA MODE",
+      "SpkrRight BOOST Switch",
+      "SpkrRight COMP Switch",
+      "SpkrRight DAC Switch",
+      "SpkrRight PA Volume",
+      "SpkrRight VISENSE Switch",
+      "SpkrRight WSA MODE",
+      "WSA RX0 MUX",
+      "WSA RX1 MUX",
+      "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+      "WSA_COMP1 Switch",
+      "WSA_COMP2 Switch",
+      "WSA_RX0 Digital Volume",
+      "WSA_RX0 INP0",
+      "WSA_RX1 Digital Volume",
+      "WSA_RX1 INP0"
+    ],
+    "pcm_activation_after": [
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia1 Playback (*)",
+        "pcm_id": "00-00",
+        "streams": 1
+      },
+      {
+        "direction": "capture",
+        "interface": "",
+        "name": "MultiMedia2 Capture (*)",
+        "pcm_id": "00-01",
+        "streams": 1
+      },
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia3 Playback (*)",
+        "pcm_id": "00-02",
+        "streams": 1
+      },
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia4 Playback (*)",
+        "pcm_id": "00-03",
+        "streams": 1
+      }
+    ],
+    "pcm_activation_before": [
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia1 Playback (*)",
+        "pcm_id": "00-00",
+        "streams": 1
+      },
+      {
+        "direction": "capture",
+        "interface": "",
+        "name": "MultiMedia2 Capture (*)",
+        "pcm_id": "00-01",
+        "streams": 1
+      },
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia3 Playback (*)",
+        "pcm_id": "00-02",
+        "streams": 1
+      },
+      {
+        "direction": "playback",
+        "interface": "",
+        "name": "MultiMedia4 Playback (*)",
+        "pcm_id": "00-03",
+        "streams": 1
+      }
+    ],
+    "playback_pcm_device": "plughw:0,0",
+    "playback_target": "speaker",
+    "runtime_activation": {
+      "backend_activity": false,
+      "evidence_collection_sequence": [
+        "cat /proc/asound/cards",
+        "cat /proc/asound/pcm",
+        "cat /proc/asound/cards",
+        "cat /proc/asound/pcm"
+      ],
+      "pcm_activation": false,
+      "playback_completion": true,
+      "route_activation_confidence": "MEDIUM",
+      "runtime_state_transitions": [
+        "playback_started",
+        "playback_completed",
+        "cleanup_completed"
+      ],
+      "soundwire_activity": false
+    }
+  },
+  "state_machine": {
+    "current_state": "cleanup_completed",
+    "final_classification": "ADVISORY_ONLY",
+    "states": [
+      "asset_selected",
+      "asset_deployed",
+      "mixers_applied",
+      "backend_enabled",
+      "pcm_active",
+      "playback_running",
+      "playback_completed",
+      "playback_failed",
+      "cleanup_completed"
+    ],
+    "transitions": [
+      {
+        "condition": "deployment_success",
+        "from": "asset_selected",
+        "to": "asset_deployed"
+      },
+      {
+        "condition": "mixer_apply_success",
+        "from": "asset_deployed",
+        "to": "mixers_applied"
+      },
+      {
+        "condition": "backend_activity_true",
+        "from": "mixers_applied",
+        "to": "backend_enabled"
+      },
+      {
+        "condition": "pcm_activation_true",
+        "from": "backend_enabled",
+        "to": "pcm_active"
+      },
+      {
+        "condition": "playback_started",
+        "from": "pcm_active",
+        "to": "playback_running"
+      },
+      {
+        "condition": "playback_exit_zero",
+        "from": "playback_running",
+        "to": "playback_completed"
+      },
+      {
+        "condition": "playback_exit_nonzero",
+        "from": "playback_running",
+        "to": "playback_failed"
+      },
+      {
+        "condition": "cleanup_success",
+        "from": "playback_completed",
+        "to": "cleanup_completed"
+      },
+      {
+        "condition": "cleanup_success_or_skipped",
+        "from": "playback_failed",
+        "to": "cleanup_completed"
+      }
+    ]
+  },
+  "targeted_interrogation": {
+    "enabled": true,
+    "questions": [
+      {
+        "id": "codec_identity",
+        "question": "Codec endpoint could not be confirmed from evidence. Provide codec identity from target."
+      },
+      {
+        "id": "intended_route",
+        "question": "Confirm intended FE->BE route chain for playback validation."
+      }
+    ]
+  },
+  "topology_confidence_report": {
+    "ambiguous_backend_links": [],
+    "confidence_fingerprint": "eyJkZXRlcm1pbmlzdGljX2FsaWdubWVudCI6IHsiYmFzZWxpbmVfcGNtX21hdGNoIjogdHJ1ZSwgImJhc2VsaW5lX3JvdXRlX21hdGNoIjogdHJ1ZSwgImNvbW1hbmRfb3JkZXJpbmdfbWF0Y2hfbG9ja2VkX3NlcXVlbmNlIjogdHJ1ZSwgImV2aWRlbmNlX29yZGVyaW5nX21hdGNoX2xvY2tlZF9zZXF1ZW5jZSI6IHRydWUsICJwbGF5YmFja19ydW50aW1lX2RyaWZ0X3NlY29uZHMiOiAwLjAwNTQxLCAicGxheWJhY2tfcnVudGltZV93aXRoaW5fYmFzZWxpbmVfd2luZG93IjogdHJ1ZX0sICJnZW5lcmF0ZWRfYXQiOiAiMjAyNi0wNS0yMlQxNTo0ODoyOS4zMjE5MjcrMDA6MDAiLCAidG9wb2xvZ3lfY29uZmlkZW5jZSI6IDAuNTY1LCAidG9wb2xvZ3lfc3RhdGUiOiAiSU5GRVJSRUQifQ==",
+    "confirmed_topology": [
+      "Stable PCM fingerprint aligned with deterministic baseline.",
+      "Stable route fingerprint aligned with deterministic baseline."
+    ],
+    "conflicting_overlays": false,
+    "deterministic_alignment": {
+      "baseline_pcm_match": true,
+      "baseline_route_match": true,
+      "command_ordering_match_locked_sequence": true,
+      "evidence_ordering_match_locked_sequence": true,
+      "playback_runtime_drift_seconds": 0.00541,
+      "playback_runtime_within_baseline_window": true
+    },
+    "deterministic_alignment_confidence": 1.0,
+    "fail_closed": true,
+    "governance_posture": "ADVISORY_ONLY",
+    "inferred_mappings": [
+      "Some runtime paths exist without static FE/BE confirmation."
+    ],
+    "overlay_confidence": 0.8,
+    "runtime_correlation_confidence": 0.7,
+    "runtime_only_inferred_paths": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "static_topology_confidence": 0.1,
+    "targeted_interrogation_mode": true,
+    "targeted_questions": [
+      {
+        "id": "codec_identity",
+        "question": "Codec endpoint could not be confirmed from evidence. Provide codec identity from target."
+      },
+      {
+        "id": "intended_route",
+        "question": "Confirm intended FE->BE route chain for playback validation."
+      }
+    ],
+    "topology_confidence": 0.565,
+    "topology_state": "INFERRED",
+    "unresolved_routes": [
+      "MultiMedia1->PRIMARY_MI2S_RX",
+      "PRIMARY_MI2S_RX->WSA_SPKR"
+    ],
+    "unsupported_mixer_evidence": [
+      "tinymix",
+      "amixer"
+    ]
+  },
+  "topology_graph": {
+    "edges": [
+      {
+        "from": "board:RB3Gen2",
+        "relation": "defines",
+        "to": "dts:qcs6490-rb3gen2.dts"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:pm7250b.dtsi"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:pm7325.dtsi"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:pm8350c.dtsi"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:pmk8350.dtsi"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:qcs6490-audioreach.dtsi"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:qcs6490-rb3gen2.dts"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "includes_or_references",
+        "to": "dtsi:sc7280.dtsi"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "has_sound_card",
+        "to": "soundcard:/"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "has_sound_card",
+        "to": "soundcard:channel@146"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_link",
+        "to": "soundwire:soundwire"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_link",
+        "to": "soundwire:swr0"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_link",
+        "to": "soundwire:swr1"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_link",
+        "to": "soundwire:swr2"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "soundwire_link",
+        "to": "soundwire:wsa"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "defines_dai_link",
+        "to": "dai_link:link-name = \"VA Capture\";"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "defines_dai_link",
+        "to": "dai_link:link-name = \"WSA Playback\";"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "defines_dai_link",
+        "to": "dai_link:va-dai-link {"
+      },
+      {
+        "from": "dts:qcs6490-rb3gen2.dts",
+        "relation": "defines_dai_link",
+        "to": "dai_link:wsa-dai-link {"
+      },
+      {
+        "from": "board:RB3Gen2",
+        "relation": "playback_pcm",
+        "to": "pcm:hw:0,0"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrLeft BOOST Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrLeft COMP Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrLeft DAC Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrLeft PA Volume"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrLeft VISENSE Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrLeft WSA MODE"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrRight BOOST Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrRight COMP Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrRight DAC Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrRight PA Volume"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrRight VISENSE Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:SpkrRight WSA MODE"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA RX0 MUX"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA RX1 MUX"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_COMP1 Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_COMP2 Switch"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_RX0 Digital Volume"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_RX0 INP0"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_RX1 Digital Volume"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "depends_on_mixer",
+        "to": "mixer:WSA_RX1 INP0"
+      },
+      {
+        "from": "pcm:hw:0,0",
+        "relation": "runtime_activation",
+        "to": "runtime:playback_activation"
+      }
+    ],
+    "entry_dts": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+    "governance_posture": "ADVISORY_ONLY",
+    "layers": [
+      "dts_dtsi_topology",
+      "sound_card_nodes",
+      "dai_links",
+      "frontend_dais",
+      "backend_dais",
+      "codec_nodes",
+      "soundwire_links",
+      "widgets",
+      "routing_paths",
+      "mixer_controls",
+      "pcm_devices",
+      "runtime_activation",
+      "overlay_mutations"
+    ],
+    "nodes": [
+      {
+        "id": "board:RB3Gen2",
+        "kind": "board",
+        "label": "RB3Gen2",
+        "layer": "board"
+      },
+      {
+        "id": "dts:qcs6490-rb3gen2.dts",
+        "kind": "dts_entry",
+        "label": "qcs6490-rb3gen2.dts",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:pm7250b.dtsi",
+        "kind": "dtsi_file",
+        "label": "pm7250b.dtsi",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:pm7325.dtsi",
+        "kind": "dtsi_file",
+        "label": "pm7325.dtsi",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:pm8350c.dtsi",
+        "kind": "dtsi_file",
+        "label": "pm8350c.dtsi",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:pmk8350.dtsi",
+        "kind": "dtsi_file",
+        "label": "pmk8350.dtsi",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:qcs6490-audioreach.dtsi",
+        "kind": "dtsi_file",
+        "label": "qcs6490-audioreach.dtsi",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:qcs6490-rb3gen2.dts",
+        "kind": "dtsi_file",
+        "label": "qcs6490-rb3gen2.dts",
+        "layer": "dts"
+      },
+      {
+        "id": "dtsi:sc7280.dtsi",
+        "kind": "dtsi_file",
+        "label": "sc7280.dtsi",
+        "layer": "dts"
+      },
+      {
+        "id": "soundcard:/",
+        "kind": "sound_card",
+        "label": "Qualcomm Technologies, Inc. Robotics RB3gen2",
+        "layer": "sound_card"
+      },
+      {
+        "id": "soundcard:channel@146",
+        "kind": "sound_card",
+        "label": "QCS6490-RB3Gen2",
+        "layer": "sound_card"
+      },
+      {
+        "id": "soundwire:soundwire",
+        "kind": "soundwire",
+        "label": "soundwire",
+        "layer": "soundwire"
+      },
+      {
+        "id": "soundwire:swr0",
+        "kind": "soundwire",
+        "label": "swr0",
+        "layer": "soundwire"
+      },
+      {
+        "id": "soundwire:swr1",
+        "kind": "soundwire",
+        "label": "swr1",
+        "layer": "soundwire"
+      },
+      {
+        "id": "soundwire:swr2",
+        "kind": "soundwire",
+        "label": "swr2",
+        "layer": "soundwire"
+      },
+      {
+        "id": "soundwire:wsa",
+        "kind": "soundwire",
+        "label": "wsa",
+        "layer": "soundwire"
+      },
+      {
+        "id": "dai_link:link-name = \"VA Capture\";",
+        "kind": "dai_link",
+        "label": "link-name = \"VA Capture\";",
+        "layer": "dai_link"
+      },
+      {
+        "id": "dai_link:link-name = \"WSA Playback\";",
+        "kind": "dai_link",
+        "label": "link-name = \"WSA Playback\";",
+        "layer": "dai_link"
+      },
+      {
+        "id": "dai_link:va-dai-link {",
+        "kind": "dai_link",
+        "label": "va-dai-link {",
+        "layer": "dai_link"
+      },
+      {
+        "id": "dai_link:wsa-dai-link {",
+        "kind": "dai_link",
+        "label": "wsa-dai-link {",
+        "layer": "dai_link"
+      },
+      {
+        "id": "pcm:hw:0,0",
+        "kind": "pcm_device",
+        "label": "hw:0,0",
+        "layer": "pcm"
+      },
+      {
+        "id": "mixer:SpkrLeft BOOST Switch",
+        "kind": "mixer_control",
+        "label": "SpkrLeft BOOST Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrLeft COMP Switch",
+        "kind": "mixer_control",
+        "label": "SpkrLeft COMP Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrLeft DAC Switch",
+        "kind": "mixer_control",
+        "label": "SpkrLeft DAC Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrLeft PA Volume",
+        "kind": "mixer_control",
+        "label": "SpkrLeft PA Volume",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrLeft VISENSE Switch",
+        "kind": "mixer_control",
+        "label": "SpkrLeft VISENSE Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrLeft WSA MODE",
+        "kind": "mixer_control",
+        "label": "SpkrLeft WSA MODE",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrRight BOOST Switch",
+        "kind": "mixer_control",
+        "label": "SpkrRight BOOST Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrRight COMP Switch",
+        "kind": "mixer_control",
+        "label": "SpkrRight COMP Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrRight DAC Switch",
+        "kind": "mixer_control",
+        "label": "SpkrRight DAC Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrRight PA Volume",
+        "kind": "mixer_control",
+        "label": "SpkrRight PA Volume",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrRight VISENSE Switch",
+        "kind": "mixer_control",
+        "label": "SpkrRight VISENSE Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:SpkrRight WSA MODE",
+        "kind": "mixer_control",
+        "label": "SpkrRight WSA MODE",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA RX0 MUX",
+        "kind": "mixer_control",
+        "label": "WSA RX0 MUX",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA RX1 MUX",
+        "kind": "mixer_control",
+        "label": "WSA RX1 MUX",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+        "kind": "mixer_control",
+        "label": "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_COMP1 Switch",
+        "kind": "mixer_control",
+        "label": "WSA_COMP1 Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_COMP2 Switch",
+        "kind": "mixer_control",
+        "label": "WSA_COMP2 Switch",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_RX0 Digital Volume",
+        "kind": "mixer_control",
+        "label": "WSA_RX0 Digital Volume",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_RX0 INP0",
+        "kind": "mixer_control",
+        "label": "WSA_RX0 INP0",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_RX1 Digital Volume",
+        "kind": "mixer_control",
+        "label": "WSA_RX1 Digital Volume",
+        "layer": "mixer"
+      },
+      {
+        "id": "mixer:WSA_RX1 INP0",
+        "kind": "mixer_control",
+        "label": "WSA_RX1 INP0",
+        "layer": "mixer"
+      },
+      {
+        "id": "runtime:playback_activation",
+        "kind": "runtime_activation",
+        "label": "playback_activation",
+        "layer": "runtime",
+        "route_activation_confidence": "MEDIUM"
+      }
+    ]
+  },
+  "workflow": {
+    "asset_deployment": {
+      "asset_selected": true,
+      "deployment_status": "READY_FOR_OPERATOR_APPROVAL",
+      "overwrite_policy": "allow_overwrite",
+      "push_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+      "requires_operator_approval": true,
+      "selected_asset": {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "bridge_relative_path": "assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "channels": 2,
+        "exists": true,
+        "format": "S16_LE",
+        "intended_playback_path": "speaker_primary",
+        "repository_path": "AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "sample_rate_hz": 48000,
+        "sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122",
+        "validation_purpose": "validate speaker playback"
+      },
+      "staging": {
+        "reason": "ok",
+        "staged": true,
+        "staged_path": "/local/mnt/workspace/AURA_V1/bridge/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "staged_sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122",
+        "status": "STAGED"
+      },
+      "target_path": "/data/local/tmp/aura/audio/speaker_validation.wav"
+    },
+    "audio_route_knowledge_graph": {
+      "edges": [
+        {
+          "from": "board:RB3Gen2",
+          "relation": "inherits",
+          "to": "overlay:qcs6490-audioreach.dtsi"
+        },
+        {
+          "from": "route:MultiMedia1",
+          "relation": "route_dependency",
+          "to": "route:PRIMARY_MI2S_RX"
+        },
+        {
+          "from": "route:PRIMARY_MI2S_RX",
+          "relation": "route_dependency",
+          "to": "route:WSA_SPKR"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:soundwire"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:swr0"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:swr1"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:swr2"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:wsa"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "playback_topology",
+          "to": "pcm:hw:0,0"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "board:RB3Gen2",
+          "kind": "board",
+          "label": "RB3Gen2"
+        },
+        {
+          "id": "overlay:qcs6490-audioreach.dtsi",
+          "kind": "overlay",
+          "label": "qcs6490-audioreach.dtsi"
+        },
+        {
+          "id": "route:MultiMedia1",
+          "kind": "route_node",
+          "label": "MultiMedia1"
+        },
+        {
+          "id": "route:PRIMARY_MI2S_RX",
+          "kind": "route_node",
+          "label": "PRIMARY_MI2S_RX"
+        },
+        {
+          "id": "route:WSA_SPKR",
+          "kind": "route_node",
+          "label": "WSA_SPKR"
+        },
+        {
+          "id": "soundwire:soundwire",
+          "kind": "soundwire",
+          "label": "soundwire"
+        },
+        {
+          "id": "soundwire:swr0",
+          "kind": "soundwire",
+          "label": "swr0"
+        },
+        {
+          "id": "soundwire:swr1",
+          "kind": "soundwire",
+          "label": "swr1"
+        },
+        {
+          "id": "soundwire:swr2",
+          "kind": "soundwire",
+          "label": "swr2"
+        },
+        {
+          "id": "soundwire:wsa",
+          "kind": "soundwire",
+          "label": "wsa"
+        },
+        {
+          "id": "pcm:hw:0,0",
+          "kind": "pcm",
+          "label": "hw:0,0"
+        }
+      ]
+    },
+    "board": "RB3Gen2",
+    "claims": {
+      "behavioral_equivalence": "NOT_CLAIMED",
+      "merge_readiness": "NOT_CLAIMED",
+      "runtime_parity": "NOT_CLAIMED"
+    },
+    "classification": "ADVISORY_ONLY",
+    "governance": {
+      "evidence_backed_planning_only": true,
+      "fail_closed": true,
+      "linux_role": "authoritative_governance_and_cognition",
+      "no_hallucinated_assets": true,
+      "no_unsafe_writes": true,
+      "windows_role": "execution_only_worker"
+    },
+    "intent": "validate speaker playback",
+    "mixer_dependency": {
+      "codec_activation_candidates": [],
+      "mixer_confidence": "MEDIUM",
+      "mixer_sequence": [
+        {
+          "classification": "SAFE_READ",
+          "step": "validate_route_topology"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "snapshot_mixer_state"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "step": "apply_route_mixer_controls"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "verify_dapm_route_activation"
+        }
+      ],
+      "operator_mixer_apply_commands": [
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+      ],
+      "operator_mixer_apply_sequence_source": "operator_proven_seeded_sequence",
+      "route_dependencies": [
+        "MultiMedia1->PRIMARY_MI2S_RX",
+        "PRIMARY_MI2S_RX->WSA_SPKR"
+      ],
+      "route_inferred": true
+    },
+    "overlay": {
+      "overlay": "qcs6490-audioreach.dtsi",
+      "reason": "single_candidate",
+      "status": "RESOLVED"
+    },
+    "pcm_inference": {
+      "alsa_device": "hw:0,0",
+      "confidence": "LOW",
+      "entry": null,
+      "pcm_id": "00-00",
+      "source": "card_fallback"
+    },
+    "playback_workflow": {
+      "cleanup_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "compatible_asset": {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "bridge_relative_path": "assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "channels": 2,
+        "exists": true,
+        "format": "S16_LE",
+        "intended_playback_path": "speaker_primary",
+        "repository_path": "AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "sample_rate_hz": 48000,
+        "sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122",
+        "validation_purpose": "validate speaker playback"
+      },
+      "deployment_path": "/data/local/tmp/aura/audio/speaker_validation.wav",
+      "mixer_apply_commands": [
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+        "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+        "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+        "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+        "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+        "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+      ],
+      "mixer_apply_sequence_source": "operator_proven_seeded_sequence",
+      "mixer_sequence": [
+        {
+          "classification": "SAFE_READ",
+          "step": "validate_route_topology"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "snapshot_mixer_state"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "step": "apply_route_mixer_controls"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "verify_dapm_route_activation"
+        }
+      ],
+      "playback_alsa_device": "plughw:0,0",
+      "playback_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "playback_pcm": {
+        "alsa_device": "hw:0,0",
+        "confidence": "LOW",
+        "entry": null,
+        "pcm_id": "00-00",
+        "source": "card_fallback"
+      },
+      "required_overlay": "qcs6490-audioreach.dtsi",
+      "runtime_telemetry_correlation": [
+        "pcm_activation",
+        "backend_activity",
+        "dapm_state_change",
+        "dmesg_delta",
+        "mixer_state_change",
+        "soundwire_activity",
+        "playback_completion"
+      ],
+      "runtime_validation_steps": [
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/cards"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/pcm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "tinymix"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "amixer"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /sys/kernel/debug/asoc/*/dapm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "dmesg"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/pcm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /sys/kernel/debug/asoc/*/dapm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "tinymix"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "amixer"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "dmesg"
+        }
+      ]
+    },
+    "procedural_memory_hints": {
+      "failure_signatures": [
+        "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse",
+        "missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,route_collapse,playback_not_completed"
+      ],
+      "known_quirks": [
+        "static_validation_without_live_playback",
+        "dry_run_planning_only",
+        "live_runtime_validation"
+      ],
+      "preferred_assets": [],
+      "recovery_patterns": [
+        "re-run with live telemetry and operator-approved playback",
+        "retry_with_verified_mixer_sequence",
+        "re-capture_dmesg_and_dapm_after_mixer_apply"
+      ],
+      "route_constraints": [
+        "speaker_validation_requires_overlay_resolution",
+        "route_activation_requires_backend_and_dapm"
+      ],
+      "runtime_signatures": [
+        {
+          "backend_activity": false,
+          "pcm_activation": false,
+          "playback_completion": false,
+          "route_activation_confidence": "LOW",
+          "soundwire_activity": false
+        },
+        {
+          "backend_activity": false,
+          "pcm_activation": false,
+          "playback_completion": true,
+          "route_activation_confidence": "MEDIUM",
+          "soundwire_activity": false
+        }
+      ]
+    },
+    "state_machine": {
+      "current_state": "asset_deployed",
+      "final_classification": "ADVISORY_ONLY",
+      "states": [
+        "asset_selected",
+        "asset_deployed",
+        "mixers_applied",
+        "backend_enabled",
+        "pcm_active",
+        "playback_running",
+        "playback_completed",
+        "playback_failed",
+        "cleanup_completed"
+      ],
+      "transitions": [
+        {
+          "condition": "deployment_success",
+          "from": "asset_selected",
+          "to": "asset_deployed"
+        },
+        {
+          "condition": "mixer_apply_success",
+          "from": "asset_deployed",
+          "to": "mixers_applied"
+        },
+        {
+          "condition": "backend_activity_true",
+          "from": "mixers_applied",
+          "to": "backend_enabled"
+        },
+        {
+          "condition": "pcm_activation_true",
+          "from": "backend_enabled",
+          "to": "pcm_active"
+        },
+        {
+          "condition": "playback_started",
+          "from": "pcm_active",
+          "to": "playback_running"
+        },
+        {
+          "condition": "playback_exit_zero",
+          "from": "playback_running",
+          "to": "playback_completed"
+        },
+        {
+          "condition": "playback_exit_nonzero",
+          "from": "playback_running",
+          "to": "playback_failed"
+        },
+        {
+          "condition": "cleanup_success",
+          "from": "playback_completed",
+          "to": "cleanup_completed"
+        },
+        {
+          "condition": "cleanup_success_or_skipped",
+          "from": "playback_failed",
+          "to": "cleanup_completed"
+        }
+      ]
+    },
+    "targeted_questions": [
+      {
+        "id": "runtime_profile",
+        "question": "Runtime confidence is not high. Confirm active audio runtime profile for RB3 speaker path validation."
+      },
+      {
+        "id": "route_confirmation",
+        "question": "Route chain was inferred from SoundWire markers. Confirm `MultiMedia1 -> PRIMARY_MI2S_RX -> WSA_SPKR` before mixer activation."
+      }
+    ]
+  }
+}

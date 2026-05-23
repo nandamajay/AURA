@@ -2,6 +2,10 @@
 
 import csv
 import io
+import os
+from datetime import datetime, timezone
+from pathlib import Path
+from typing import Any
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 from pydantic import BaseModel
@@ -29,12 +33,164 @@ _CSV_EXPORT_FIELDS = [
     "failure_count",
 ]
 
+_EVIDENCE_ALLOWED_SUFFIXES = {".md", ".json", ".txt", ".log", ".csv"}
+_EVIDENCE_MAX_BYTES = 400_000
+
+
+def _resolve_repo_root() -> Path:
+    configured = (Path(__file__).resolve().parents[6] / ".").resolve()
+    env_root = Path(os.environ.get("AURA_REPO_ROOT", str(configured))).resolve()
+    if (env_root / "evidence").exists():
+        return env_root
+
+    for parent in Path(__file__).resolve().parents:
+        if (parent / "evidence").exists():
+            return parent
+    return env_root
+
+
+def _evidence_sections(repo_root: Path) -> dict[str, Path]:
+    mapping = {
+        "runtime_evidence": repo_root / "evidence",
+        "architecture_consolidation": repo_root / "docs" / "architecture-consolidation",
+        "p1_docs": repo_root / "p1",
+        "p2_docs": repo_root / "p2",
+        "phase0_docs": repo_root / "phase0",
+    }
+    return {name: path.resolve() for name, path in mapping.items() if path.exists()}
+
+
+def _collect_files(root: Path, *, max_depth: int, limit: int) -> list[dict[str, Any]]:
+    collected: list[dict[str, Any]] = []
+    root_resolved = root.resolve()
+    for file_path in sorted(root.rglob("*")):
+        if len(collected) >= limit:
+            break
+        if not file_path.is_file():
+            continue
+        try:
+            rel = file_path.resolve().relative_to(root_resolved)
+        except Exception:
+            continue
+        if len(rel.parts) > max_depth:
+            continue
+        suffix = file_path.suffix.lower()
+        if suffix and suffix not in _EVIDENCE_ALLOWED_SUFFIXES:
+            continue
+        stat = file_path.stat()
+        collected.append(
+            {
+                "path": str(rel),
+                "name": file_path.name,
+                "extension": suffix or "",
+                "size_bytes": int(stat.st_size),
+                "modified_at": datetime.fromtimestamp(
+                    stat.st_mtime, tz=timezone.utc
+                ).isoformat(),
+            }
+        )
+    return collected
+
+
+def _resolve_section_file(
+    *,
+    sections: dict[str, Path],
+    section: str,
+    relative_path: str,
+) -> Path:
+    if section not in sections:
+        raise HTTPException(status_code=404, detail=f"Unknown evidence section: {section}")
+    if not relative_path or relative_path.strip() in {".", "/"}:
+        raise HTTPException(status_code=400, detail="relative_path is required")
+    root = sections[section]
+    candidate = (root / relative_path).resolve()
+    try:
+        candidate.relative_to(root)
+    except Exception as exc:
+        raise HTTPException(status_code=400, detail="Path escapes evidence section root") from exc
+    if not candidate.is_file():
+        raise HTTPException(status_code=404, detail=f"Evidence file not found: {relative_path}")
+    suffix = candidate.suffix.lower()
+    if suffix and suffix not in _EVIDENCE_ALLOWED_SUFFIXES:
+        raise HTTPException(status_code=415, detail=f"Unsupported evidence file type: {suffix}")
+    return candidate
+
 
 class ExportKnowledgeRequest(BaseModel):
     """Knowledge export request payload."""
 
     format: str = "json"
     subsystem: str | None = None
+
+
+@router.get("/evidence/index")
+async def evidence_index(
+    section: str = "",
+    max_depth: int = 4,
+    limit: int = 500,
+    current_user: dict = Depends(get_current_user),
+):
+    """List evidence files for operator evidence navigation."""
+    _ = current_user
+    if max_depth < 1 or max_depth > 10:
+        raise HTTPException(status_code=400, detail="max_depth must be between 1 and 10")
+    if limit < 1 or limit > 2000:
+        raise HTTPException(status_code=400, detail="limit must be between 1 and 2000")
+
+    repo_root = _resolve_repo_root()
+    sections = _evidence_sections(repo_root)
+    if not sections:
+        return {"repo_root": str(repo_root), "sections": {}}
+
+    selected = section.strip()
+    payload: dict[str, Any] = {}
+    for name, root in sections.items():
+        if selected and selected != name:
+            continue
+        payload[name] = {
+            "root": str(root),
+            "files": _collect_files(root, max_depth=max_depth, limit=limit),
+        }
+    return {
+        "repo_root": str(repo_root),
+        "sections": payload,
+        "generated_at": datetime.now(timezone.utc).isoformat(),
+    }
+
+
+@router.get("/evidence/read")
+async def evidence_read(
+    section: str,
+    relative_path: str,
+    max_bytes: int = 120_000,
+    current_user: dict = Depends(get_current_user),
+):
+    """Read one evidence file from an allowed evidence section."""
+    _ = current_user
+    if max_bytes < 1 or max_bytes > _EVIDENCE_MAX_BYTES:
+        raise HTTPException(
+            status_code=400,
+            detail=f"max_bytes must be between 1 and {_EVIDENCE_MAX_BYTES}",
+        )
+    repo_root = _resolve_repo_root()
+    sections = _evidence_sections(repo_root)
+    file_path = _resolve_section_file(
+        sections=sections, section=section.strip(), relative_path=relative_path.strip()
+    )
+    file_size = int(file_path.stat().st_size)
+    raw = file_path.read_bytes()
+    truncated = len(raw) > max_bytes
+    raw = raw[:max_bytes]
+    content = raw.decode("utf-8", errors="replace")
+    return {
+        "section": section,
+        "relative_path": relative_path,
+        "absolute_path": str(file_path),
+        "size_bytes": file_size,
+        "returned_bytes": len(raw),
+        "truncated": truncated,
+        "content": content,
+    }
 
 
 @router.get("/rules")

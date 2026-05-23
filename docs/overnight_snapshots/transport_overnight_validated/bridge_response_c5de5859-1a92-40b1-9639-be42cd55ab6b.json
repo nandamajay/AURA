@@ -1,0 +1,62 @@
+{
+  "command_entries": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "transport_metadata": {
+    "adb_serial": "12345678",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+    "worker_transport": "shared_folder",
+    "command_runtime": "adb_shell"
+  },
+  "executor_identity": {
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY",
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam"
+  },
+  "request_sequence": 200,
+  "approved_commands": [
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "execution_status": "executed",
+  "protocol_version": "bridge-v1",
+  "response_integrity_sha256": "355978d4dddb7f1dcf67c24654a06efe23ac3978318a9aaa87971e52b183886d",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "execution_mode": "governed_write_approved",
+  "transport": "shared_folder",
+  "request_integrity_sha256": "134de65c27a5f0a9b4ca272001575874cbd0e245dcc64041f10630c3ede5a8f8",
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "",
+      "stderr": "",
+      "started_at": "2026-05-22T12:58:52.3570634Z",
+      "finished_at": "2026-05-22T12:58:52.5078458Z"
+    }
+  ],
+  "request_id": "c5de5859-1a92-40b1-9639-be42cd55ab6b",
+  "timestamps": {
+    "started_at": "2026-05-22T12:58:52.3561404Z",
+    "received_at": "2026-05-22T12:58:52.1654500Z",
+    "finished_at": "2026-05-22T12:58:52.5079452Z"
+  },
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "expanded_command": "adb.exe shell rm -f <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "stderr": "",
+  "timeout_seconds": 180,
+  "raw_output": ""
+}

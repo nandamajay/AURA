@@ -1,0 +1,28 @@
+{
+  "approved_commands": [
+    "dmesg | tail -200"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "dmesg | tail -200",
+      "original_command": "dmesg | tail -200"
+    }
+  ],
+  "execution_mode": "governed_read_only",
+  "protocol_version": "bridge-v1",
+  "request_id": "60116c36-db43-410e-b1ed-988112c8982f",
+  "request_integrity_sha256": "b522a4ea2d7c466da581cf158a0bb0406d89244fa37d2c1132a50f5fe34c1e4a",
+  "request_sequence": 135,
+  "request_timestamp": "1779453282.4950578",
+  "timeout_seconds": 45,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

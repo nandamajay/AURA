@@ -1,0 +1,98 @@
+{
+  "generated_at_epoch": 1779514233.4683464,
+  "scenarios": [
+    {
+      "continuity": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "interruption": {
+        "duration_seconds": 0.054724,
+        "interrupted": true,
+        "returncode": -15,
+        "stderr": "",
+        "stdout": ""
+      },
+      "passed": true,
+      "scenario": "mid_playback_interruption"
+    },
+    {
+      "continuity": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "passed": true,
+      "scenario": "mid_event_stream_interruption"
+    },
+    {
+      "continuity": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "passed": true,
+      "scenario": "partial_persistence_writes"
+    },
+    {
+      "continuity": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "passed": true,
+      "scenario": "transport_disconnect"
+    },
+    {
+      "continuity": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "passed": true,
+      "scenario": "windows_worker_restart",
+      "worker_state": {
+        "pid": 202,
+        "state": "restarted",
+        "worker": "windows"
+      }
+    },
+    {
+      "continuity_a": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "continuity_b": {
+        "artifact_lineage_continuity": true,
+        "boot_execution_policies_restored": true,
+        "fail_closed_preserved": true,
+        "replay_fingerprint": "94847bf22a79301a97dd12fe7ea928271b673b4fbf5f4394b1817116d187940e",
+        "replay_ready": true
+      },
+      "passed": true,
+      "scenario": "linux_process_restart"
+    }
+  ],
+  "schema_version": "1.0",
+  "summary": {
+    "fail_closed_preserved": true,
+    "passed": 6,
+    "recovery_validation_score": 1.0,
+    "total": 6
+  },
+  "validator": "aura_crash_recovery_validator"
+}

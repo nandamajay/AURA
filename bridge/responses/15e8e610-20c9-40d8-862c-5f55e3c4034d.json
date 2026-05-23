@@ -1,0 +1,62 @@
+{
+  "executor_identity": {
+    "username": "nandam",
+    "hostname": "QCOM-X1M5XIGBIY",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "command_entries": [
+    {
+      "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b no_overwrite",
+      "original_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b no_overwrite"
+    }
+  ],
+  "request_integrity_sha256": "5c93e0425666bc0ab2ad903927e9737bc6c2335a5ade0c494d267d8268ec9f74",
+  "timestamps": {
+    "received_at": "2026-05-22T09:59:11.4406384Z",
+    "finished_at": "2026-05-22T09:59:11.8726881Z",
+    "started_at": "2026-05-22T09:59:11.6706242Z"
+  },
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b no_overwrite",
+      "expanded_command": "adb.exe push <bridge_asset> <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "request_id": "15e8e610-20c9-40d8-862c-5f55e3c4034d",
+  "transport_metadata": {
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+    "adb_serial": "12345678",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "command_runtime": "adb_shell",
+    "worker_transport": "shared_folder"
+  },
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell ls  /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b no_overwrite",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell ls  /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 5,
+      "execution_status": "failed",
+      "stdout": "",
+      "stderr": "target_exists_overwrite_blocked",
+      "started_at": "2026-05-22T09:59:11.6756214Z",
+      "finished_at": "2026-05-22T09:59:11.8713468Z"
+    }
+  ],
+  "execution_mode": "governed_write_approved",
+  "raw_output": "",
+  "execution_status": "failed",
+  "response_integrity_sha256": "2bcea3b61fd0abee9ac3e4e0b5c81c47338f4c4c43326addcef44a09410afc12",
+  "stderr": "target_exists_overwrite_blocked",
+  "timeout_seconds": 45,
+  "request_sequence": 40,
+  "approved_commands": [
+    "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b no_overwrite"
+  ],
+  "protocol_version": "bridge-v1",
+  "transport": "shared_folder"
+}

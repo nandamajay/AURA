@@ -1,0 +1,71 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "AURA Runtime Lineage Record",
+  "type": "object",
+  "required": [
+    "request_id",
+    "request_sequence",
+    "request_integrity_sha256",
+    "response_integrity_sha256",
+    "request_timestamp",
+    "response_timestamp",
+    "transport_metadata",
+    "executor_identity",
+    "governance_verdict_chain",
+    "status",
+    "response_mapping"
+  ],
+  "properties": {
+    "request_id": {"type": "string", "minLength": 1},
+    "request_sequence": {"type": "integer", "minimum": 1},
+    "request_integrity_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "response_integrity_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "request_timestamp": {"type": "string"},
+    "response_timestamp": {"type": "string"},
+    "transport_metadata": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "executor_identity": {
+      "type": "object",
+      "additionalProperties": true
+    },
+    "governance_verdict_chain": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "APPROVED",
+          "EXECUTING",
+          "COMPLETED",
+          "PARTIAL",
+          "TIMEOUT",
+          "INVALID",
+          "REJECTED",
+          "UNKNOWN"
+        ]
+      }
+    },
+    "status": {
+      "type": "string"
+    },
+    "response_mapping": {
+      "type": "object",
+      "required": ["mapping_type", "cardinality"],
+      "properties": {
+        "mapping_type": {"type": "string", "enum": ["immutable"]},
+        "cardinality": {"type": "string", "enum": ["one_request_one_response"]}
+      },
+      "additionalProperties": false
+    },
+    "raw_output": {"type": "string"},
+    "stderr": {"type": "string"}
+  },
+  "additionalProperties": true
+}

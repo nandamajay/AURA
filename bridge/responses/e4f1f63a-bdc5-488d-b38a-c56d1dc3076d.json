@@ -1,0 +1,62 @@
+{
+  "execution_mode": "governed_write_approved",
+  "response_integrity_sha256": "930fa19d17da5314cc3c9e46128648a31ee5a816bc2617ff8e581338b99f0571",
+  "approved_commands": [
+    "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "timeout_seconds": 180,
+  "request_id": "e4f1f63a-bdc5-488d-b38a-c56d1dc3076d",
+  "request_sequence": 61,
+  "timestamps": {
+    "received_at": "2026-05-22T10:50:54.7580048Z",
+    "started_at": "2026-05-22T10:50:54.9551905Z",
+    "finished_at": "2026-05-22T10:50:56.0204278Z"
+  },
+  "raw_output": "Playing WAVE '/data/local/tmp/aura/audio/speaker_validation.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo\r\r\n",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "transport": "shared_folder",
+  "command_entries": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "transport_metadata": {
+    "command_runtime": "adb_shell",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "request_integrity_sha256": "09f5f8f1db306ebf881f589f85e7a602fa220690f31c47ac9902b634f6f1d084",
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "Playing WAVE '/data/local/tmp/aura/audio/speaker_validation.wav' : Signed 16 bit Little Endian, Rate 48000 Hz, Stereo\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T10:50:54.9578511Z",
+      "finished_at": "2026-05-22T10:50:56.0201669Z"
+    }
+  ],
+  "execution_status": "executed",
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "expanded_command": "adb.exe shell aplay -D <(plug)hw:x,y> <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "stderr": ""
+}

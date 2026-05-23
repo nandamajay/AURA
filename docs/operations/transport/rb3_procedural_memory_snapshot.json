@@ -1,0 +1,86 @@
+{
+  "board": "RB3Gen2",
+  "board_specific_quirks": [
+    "static_validation_without_live_playback",
+    "dry_run_planning_only",
+    "live_runtime_validation"
+  ],
+  "failure_signatures": [
+    "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed"
+  ],
+  "history": [
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "295d5b23-4073-4c50-a177-2f699155e1c0",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "0eb2a876-44ab-49cd-b6ff-4b0ce77f6ba5",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "e0a45dc3-10dd-4f31-aac0-6e2c01783d9a",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "36cad741-1a81-4111-ab44-002054cc02e6",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "39a2ee77-794a-43c0-9534-174508848a4b",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "0d7bd48b-8b27-4c2c-a706-1076aeb49ddb",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "aee84ab5-24b0-4b1c-b8c5-2a11fcf933ca",
+      "success": false
+    },
+    {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "failure_signature": "",
+      "overlay": "qcs6490-audioreach.dtsi",
+      "run_id": "e9fb7b11-4bff-4061-b8c1-c596230f8c3d",
+      "success": false
+    }
+  ],
+  "recovery_patterns": [
+    "re-run with live telemetry and operator-approved playback",
+    "retry_with_verified_mixer_sequence",
+    "re-capture_dmesg_and_dapm_after_mixer_apply"
+  ],
+  "route_specific_constraints": [
+    "speaker_validation_requires_overlay_resolution",
+    "route_activation_requires_backend_and_dapm"
+  ],
+  "runtime_signatures": [
+    {
+      "backend_activity": false,
+      "pcm_activation": false,
+      "playback_completion": false,
+      "route_activation_confidence": "LOW",
+      "soundwire_activity": false
+    }
+  ],
+  "successful_playback_procedures": [],
+  "successful_wav_assets": [],
+  "unsupported_formats": []
+}

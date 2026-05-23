@@ -1,0 +1,62 @@
+{
+  "execution_mode": "governed_read_only",
+  "response_integrity_sha256": "0771dd58ef4c1e0460c7befc579d687b6c2e237cd4351a93349e4bf0cb84c045",
+  "approved_commands": [
+    "cat /sys/kernel/debug/asoc/*/dapm"
+  ],
+  "timeout_seconds": 45,
+  "request_id": "966af4cb-0b95-4bba-bcfe-3092a4dd5afd",
+  "request_sequence": 127,
+  "timestamps": {
+    "received_at": "2026-05-22T12:33:10.9103036Z",
+    "started_at": "2026-05-22T12:33:11.1509506Z",
+    "finished_at": "2026-05-22T12:33:11.3127445Z"
+  },
+  "raw_output": "cat: read error: Is a directory\r\r\n",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /sys/kernel/debug/asoc/*/dapm"
+  ],
+  "transport": "shared_folder",
+  "command_entries": [
+    {
+      "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "original_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    }
+  ],
+  "transport_metadata": {
+    "command_runtime": "adb_shell",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "request_integrity_sha256": "d8cf68acee213c82755d893f2dbf4b378727515504d3aa9e66812e4915aae86a",
+  "executor_command_trace": [
+    {
+      "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /sys/kernel/debug/asoc/*/dapm",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "cat: read error: Is a directory\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T12:33:11.1518395Z",
+      "finished_at": "2026-05-22T12:33:11.3116629Z"
+    }
+  ],
+  "execution_status": "executed",
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "stderr": ""
+}

@@ -1,0 +1,101 @@
+{
+  "base_files": [
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi",
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi",
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi",
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi"
+  ],
+  "entry_dts": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+  "include_chain": [
+    {
+      "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi"
+    },
+    {
+      "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi"
+    },
+    {
+      "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi"
+    },
+    {
+      "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi"
+    },
+    {
+      "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi"
+    },
+    {
+      "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi"
+    }
+  ],
+  "merged_runtime_topology_reasoning": {
+    "base_summary": {
+      "backend_nodes": [],
+      "codec_nodes": [],
+      "dai_links": [
+        "link-name = \"VA Capture\";",
+        "link-name = \"WSA Playback\";",
+        "va-dai-link {",
+        "wsa-dai-link {"
+      ],
+      "frontend_nodes": [],
+      "routing_pairs": [],
+      "sound_cards": [
+        {
+          "model": "Qualcomm Technologies, Inc. Robotics RB3gen2",
+          "node": "/"
+        },
+        {
+          "model": "QCS6490-RB3Gen2",
+          "node": "channel@146"
+        }
+      ],
+      "soundwire_markers": [
+        "soundwire",
+        "swr0",
+        "swr1",
+        "swr2",
+        "wsa"
+      ],
+      "widgets": []
+    },
+    "conflicting_overlays": false,
+    "overlay_summary": {
+      "backend_nodes": [],
+      "codec_nodes": [],
+      "dai_links": [],
+      "frontend_nodes": [],
+      "routing_pairs": [],
+      "sound_cards": [],
+      "soundwire_markers": [],
+      "widgets": []
+    }
+  },
+  "overlay_candidates": [
+    "qcs6490-audioreach.dtsi"
+  ],
+  "overlay_files": [
+    "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi"
+  ],
+  "overlay_mutation_delta": {
+    "added_codecs": [],
+    "added_dai_links": [],
+    "added_routes": [],
+    "added_soundwire_markers": [],
+    "added_widgets": [],
+    "removed_dai_links": [
+      "link-name = \"VA Capture\";",
+      "link-name = \"WSA Playback\";",
+      "va-dai-link {",
+      "wsa-dai-link {"
+    ],
+    "removed_routes": [],
+    "removed_widgets": []
+  }
+}

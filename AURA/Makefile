@@ -1,7 +1,7 @@
 # AURA Platform — Phase 0 Foundation
 # Makefile for development, testing, and operations
 
-.PHONY: help up down dev logs shell-core test lint bootstrap backup health metrics export-knowledge compliance-export hardening-check clean status
+.PHONY: help up down dev logs shell-core test lint bootstrap backup health metrics export-knowledge compliance-export hardening-check clean status env-doctor env-sync repro-up repro-verify ci-parity demo-prepare demo-up demo-verify demo-workload demo-down
 
 # ── Help ───────────────────────────────────────────
 help: ## Show this help
@@ -40,10 +40,10 @@ shell-db: ## Open SQLite CLI on database
 
 # ── Testing ────────────────────────────────────────
 test: ## Run all tests
-	docker compose exec -u 0 aura-core sh -lc 'if [ -d /workspace/aura-sdk/tests ] && ls /workspace/aura-sdk/tests/test*.py >/dev/null 2>&1; then python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec(\"pytest\") else 1)" || python -m pip install --no-cache-dir pytest pytest-asyncio >/dev/null; cd /workspace/aura-sdk && python -m pytest tests/ -v; else echo "aura-sdk tests: not yet implemented"; fi'
-	docker compose exec -u 0 aura-core sh -lc 'if [ -d /app/tests ] && ls /app/tests/test*.py >/dev/null 2>&1; then python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec(\"pytest\") else 1)" || python -m pip install --no-cache-dir pytest pytest-asyncio >/dev/null; cd /app && python -m pytest tests/ -v; else echo "core tests: not yet implemented"; fi'
-	docker compose exec llm-gateway sh -lc 'if [ -d /app/tests ] && ls /app/tests/test*.py >/dev/null 2>&1; then python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec(\"pytest\") else 1)" || python -m pip install --no-cache-dir pytest pytest-asyncio >/dev/null; cd /app && python -m pytest tests/ -v; else echo "llm-gateway tests: not yet implemented"; fi'
-	docker compose exec ws-server sh -lc 'if [ -d /app/tests ] && ls /app/tests/test*.py >/dev/null 2>&1; then python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec(\"pytest\") else 1)" || python -m pip install --no-cache-dir pytest pytest-asyncio >/dev/null; cd /app && python -m pytest tests/ -v; else echo "ws-server tests: not yet implemented"; fi'
+	docker compose exec -u 0 aura-core sh -lc 'if [ -d /workspace/aura-sdk/tests ] && ls /workspace/aura-sdk/tests/test*.py >/dev/null 2>&1; then python -m pytest /workspace/aura-sdk/tests -v; else echo "aura-sdk tests: not yet implemented"; fi'
+	docker compose exec -u 0 aura-core sh -lc 'if [ -d /app/tests ] && ls /app/tests/test*.py >/dev/null 2>&1; then python -m pytest /app/tests -v; else echo "core tests: not yet implemented"; fi'
+	docker compose exec llm-gateway sh -lc 'if [ -d /app/tests ] && ls /app/tests/test*.py >/dev/null 2>&1; then python -m pytest /app/tests -v; else echo "llm-gateway tests: not yet implemented"; fi'
+	docker compose exec ws-server sh -lc 'if [ -d /app/tests ] && ls /app/tests/test*.py >/dev/null 2>&1; then python -m pytest /app/tests -v; else echo "ws-server tests: not yet implemented"; fi'
 
 test-sdk: ## Run aura-sdk tests
 	docker compose exec -u 0 aura-core sh -lc 'python -c "import importlib.util,sys; sys.exit(0 if importlib.util.find_spec(\"pytest\") else 1)" || python -m pip install --no-cache-dir pytest pytest-asyncio >/dev/null; cd /workspace/aura-sdk && python -m pytest tests/ -v'
@@ -62,6 +62,36 @@ format: ## Format all Python code
 # ── Bootstrap ──────────────────────────────────────
 bootstrap: ## Run first-time setup wizard
 	./scripts/bootstrap.sh
+
+repro-up: ## Deterministic single-command bootstrap with strict diagnostics
+	./scripts/repro-bootstrap.sh
+
+repro-verify: ## Runtime verification with evidence artifact output
+	./scripts/runtime-verify.sh
+
+env-doctor: ## Failure-first environment diagnostics
+	./scripts/env-doctor.sh
+
+env-sync: ## Deterministic local Python dependency sync (.venv)
+	./scripts/env-sync.sh
+
+ci-parity: ## Run shared CI/runtime parity suite locally
+	./scripts/ci-parity.sh
+
+demo-prepare: ## Generate deterministic demo env file (.env.demo)
+	./scripts/demo-mode.sh prepare
+
+demo-up: ## Start deterministic demo runtime
+	./scripts/demo-mode.sh up
+
+demo-verify: ## Verify deterministic demo runtime health
+	./scripts/demo-mode.sh verify
+
+demo-workload: ## Run deterministic seeded demo workload and emit evidence
+	./scripts/demo-mode.sh workload
+
+demo-down: ## Stop deterministic demo runtime
+	./scripts/demo-mode.sh down
 
 # ── Health & Monitoring ────────────────────────────
 health: ## Check system health

@@ -1,0 +1,101 @@
+{
+  "classification": "CAPTURE_READY",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "CAPTURE_READY"
+  ],
+  "reason": "response_validated",
+  "request": {
+    "approved_commands": [
+      "cat /proc/asound/cards"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "cat /proc/asound/cards",
+        "original_command": "cat /proc/asound/cards"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "protocol_version": "bridge-v1",
+    "request_id": "32a27f40-d193-402e-a919-f54a074c2a2b",
+    "request_integrity_sha256": "55074ccb37aa75a1b8807941d799ea02ae350d4efdcf239b3ceee1996113500d",
+    "request_sequence": 161,
+    "request_timestamp": "1779454220.1238394",
+    "timeout_seconds": 20,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "32a27f40-d193-402e-a919-f54a074c2a2b",
+  "request_sequence": 161,
+  "response": {
+    "approved_commands": [
+      "cat /proc/asound/cards"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "cat /proc/asound/cards",
+        "original_command": "cat /proc/asound/cards"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "execution_status": "executed",
+    "executor_command_trace": [
+      {
+        "execution_status": "executed",
+        "exit_code": 0,
+        "finished_at": "2026-05-22T12:50:30.1066564Z",
+        "normalized_command": "cat /proc/asound/cards",
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+        "started_at": "2026-05-22T12:50:29.9440960Z",
+        "stderr": "",
+        "stdout": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n"
+      }
+    ],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [
+      "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+    ],
+    "raw_output": " 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+    "request_id": "32a27f40-d193-402e-a919-f54a074c2a2b",
+    "request_integrity_sha256": "55074ccb37aa75a1b8807941d799ea02ae350d4efdcf239b3ceee1996113500d",
+    "request_sequence": 161,
+    "response_integrity_sha256": "baeff3b036bf9b863259d681139a1475917b20482862997bfb4e1e595f783683",
+    "stderr": "",
+    "timeout_seconds": 20,
+    "timestamps": {
+      "finished_at": "2026-05-22T12:50:30.1082596Z",
+      "received_at": "2026-05-22T12:50:29.6806675Z",
+      "started_at": "2026-05-22T12:50:29.9433578Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [
+      {
+        "boundary": "adb_shell_boundary",
+        "expanded_command": "adb.exe shell <normalized_command>",
+        "normalized_command": "cat /proc/asound/cards"
+      }
+    ],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

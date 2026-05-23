@@ -1,0 +1,15 @@
+{
+  "phase": "T2",
+  "transport": "adb",
+  "capture_steps": [
+    {"command": "adb devices", "classification": "safe_read"},
+    {"command": "adb shell getprop ro.product.model", "classification": "safe_read"},
+    {"command": "adb shell cat /proc/asound/cards", "classification": "safe_read"},
+    {"command": "adb shell dmesg", "classification": "safe_read"}
+  ],
+  "notes": [
+    "No write operations",
+    "No root assumption",
+    "Failures remain UNKNOWN"
+  ]
+}

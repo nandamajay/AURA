@@ -11,11 +11,13 @@ from core.routers import (
     agents,
     auth,
     charter,
+    engineering,
     governance,
     health,
     knowledge,
     memory,
     patches,
+    provenance,
     simulation,
     tasks,
 )
@@ -46,9 +48,11 @@ app.include_router(tasks.router, prefix="/api/v1/tasks", tags=["tasks"])
 app.include_router(patches.router, prefix="/api/v1/patches", tags=["patches"])
 app.include_router(knowledge.router, prefix="/api/v1/knowledge", tags=["knowledge"])
 app.include_router(governance.router, prefix="/api/v1/governance", tags=["governance"])
+app.include_router(engineering.router, prefix="/api/v1/engineering", tags=["engineering"])
 app.include_router(simulation.router, prefix="/api/v1/simulation", tags=["simulation"])
 app.include_router(memory.router, prefix="/api/v1/memory", tags=["memory"])
 app.include_router(charter.router, prefix="/api/v1/charter", tags=["charter"])
+app.include_router(provenance.router, prefix="/api/v1/provenance", tags=["provenance"])
 
 # ── Metrics endpoint (Prometheus format) ──
 @app.get("/metrics", response_class=PlainTextResponse)

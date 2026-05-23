@@ -1,0 +1,254 @@
+{
+  "agents": [
+    {
+      "agent_id": "runtime_agent",
+      "capability_boundaries": {
+        "allowed": [
+          "read_runtime_traces",
+          "read_procedural_memory",
+          "emit_runtime_validation_state"
+        ],
+        "blocked": [
+          "autonomous_patching",
+          "autonomous_topology_rewrite",
+          "unsupervised_runtime_mutation",
+          "automatic_upstream_generation"
+        ]
+      },
+      "responsibilities": [
+        "playback_orchestration",
+        "capture_orchestration",
+        "pcm_evidence_collection",
+        "runtime_validation",
+        "execution_sequencing",
+        "procedural_replay_execution"
+      ],
+      "role": "runtime_orchestration"
+    },
+    {
+      "agent_id": "topology_agent",
+      "capability_boundaries": {
+        "allowed": [
+          "read_topology_artifacts",
+          "read_runtime_correlation",
+          "emit_topology_confidence"
+        ],
+        "blocked": [
+          "self_modifying_topology",
+          "route_guessing_without_evidence",
+          "topology_rewriting"
+        ]
+      },
+      "responsibilities": [
+        "fe_be_correlation",
+        "dtsi_parsing",
+        "dapm_graph_reasoning",
+        "soundwire_cognition",
+        "overlay_mutation_tracking",
+        "route_graph_generation"
+      ],
+      "role": "topology_reasoning"
+    },
+    {
+      "agent_id": "governance_agent",
+      "capability_boundaries": {
+        "allowed": [
+          "enforce_phase_scope",
+          "enforce_governance_state",
+          "emit_policy_decisions"
+        ],
+        "blocked": [
+          "disable_fail_closed_without_state_change",
+          "silent_policy_mutation"
+        ]
+      },
+      "responsibilities": [
+        "fail_closed_enforcement",
+        "execution_policy",
+        "command_allowlists",
+        "write_approvals",
+        "autonomous_action_restrictions",
+        "transport_validation"
+      ],
+      "role": "policy_enforcement"
+    },
+    {
+      "agent_id": "regression_agent",
+      "capability_boundaries": {
+        "allowed": [
+          "read_regression_lineage",
+          "read_runtime_and_topology_confidence",
+          "emit_regression_summary"
+        ],
+        "blocked": [
+          "runtime_mutation",
+          "topology_mutation"
+        ]
+      },
+      "responsibilities": [
+        "deterministic_replay_scoring",
+        "drift_detection",
+        "timing_regression",
+        "route_instability_analysis",
+        "confidence_evolution",
+        "replay_comparison"
+      ],
+      "role": "drift_and_confidence_analysis"
+    },
+    {
+      "agent_id": "persistence_agent",
+      "capability_boundaries": {
+        "allowed": [
+          "read_write_registry",
+          "refresh_artifact_index",
+          "export_import_portable_snapshot"
+        ],
+        "blocked": [
+          "modify_runtime_execution_path",
+          "alter_governance_constraints_implicitly"
+        ]
+      },
+      "responsibilities": [
+        "cognition_registry_management",
+        "boot_reconstruction",
+        "cognition_lineage",
+        "artifact_indexing",
+        "portability_snapshots",
+        "procedural_memory_persistence"
+      ],
+      "role": "state_durability_and_portability"
+    }
+  ],
+  "architecture_name": "AURA_Internal_Agentization_Runtime",
+  "board": "RB3Gen2",
+  "coordination_model": "shared_persistent_cognition_state",
+  "fail_closed": true,
+  "health": {
+    "governance_agent": {
+      "agent": "governance_agent",
+      "details": {
+        "allowed_execution_scope": [
+          "board:RB3Gen2",
+          "workflow:playback",
+          "transport:adb_shell"
+        ],
+        "blocked_capabilities": [
+          "capture_workflows",
+          "new_targets",
+          "autonomous_patching",
+          "autonomous_topology_rewriting",
+          "autonomous_upstream_generation"
+        ],
+        "execution_approval_mode": "linux_authoritative_windows_execute_only",
+        "fail_closed_posture": true,
+        "write_policy": "governed_write_approved_only"
+      },
+      "ok": true,
+      "reasons": [
+        "fail_closed_enforced"
+      ],
+      "status": "HEALTHY",
+      "updated_at": "2026-05-23T05:31:20.823449+00:00"
+    },
+    "persistence_agent": {
+      "agent": "persistence_agent",
+      "details": {
+        "artifact_count": 1205,
+        "boot_summary": {
+          "booted_at": "2026-05-23T05:31:29.215939+00:00",
+          "cognition_graph_nodes": 10,
+          "execution_policies_restored": true,
+          "loaded_baseline_registry": true,
+          "loaded_governance_state": true,
+          "loaded_phase_state": true,
+          "loaded_procedural_memory": true,
+          "loaded_regression_history": true,
+          "loaded_topology_memory": true
+        },
+        "governance_state_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_governance_state.json",
+        "phase_state_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_phase_state.json",
+        "portable_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_portable_snapshot.json",
+        "registry_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json"
+      },
+      "ok": true,
+      "reasons": [
+        "persistence_synced"
+      ],
+      "status": "HEALTHY",
+      "updated_at": "2026-05-23T05:31:30.233498+00:00"
+    },
+    "regression_agent": {
+      "agent": "regression_agent",
+      "details": {
+        "degraded_evidence_runs": [],
+        "deterministic_replay_score": 0.869,
+        "playback_timing_drift_detected": false,
+        "regression_detected": true,
+        "regression_severity": "MEDIUM",
+        "route_instability_detected": false,
+        "runtime_confidence": 1.0,
+        "topology_confidence": 0.565
+      },
+      "ok": false,
+      "reasons": [
+        "regression_detected"
+      ],
+      "status": "DEGRADED",
+      "updated_at": "2026-05-23T05:31:27.009778+00:00"
+    },
+    "runtime_agent": {
+      "agent": "runtime_agent",
+      "details": {
+        "classification": "ADVISORY_ONLY",
+        "command_ordering_length": 30,
+        "current_state": "cleanup_completed",
+        "evidence_success": true,
+        "execution_sequence_length": 30,
+        "playback_completion": true,
+        "process_success": true,
+        "route_activation_confidence": "MEDIUM"
+      },
+      "ok": true,
+      "reasons": [
+        "runtime_flow_stable"
+      ],
+      "status": "HEALTHY",
+      "updated_at": "2026-05-23T05:31:22.351271+00:00"
+    },
+    "topology_agent": {
+      "agent": "topology_agent",
+      "details": {
+        "graph_edges": 42,
+        "graph_nodes": 43,
+        "runtime_state_transitions": [
+          "playback_started",
+          "playback_completed",
+          "cleanup_completed"
+        ],
+        "targeted_interrogation_mode": true,
+        "targeted_questions": [
+          {
+            "id": "codec_identity",
+            "question": "Codec endpoint could not be confirmed from evidence. Provide codec identity from target."
+          },
+          {
+            "id": "intended_route",
+            "question": "Confirm intended FE->BE route chain for playback validation."
+          }
+        ],
+        "topology_confidence": 0.565,
+        "topology_state": "INFERRED"
+      },
+      "ok": true,
+      "reasons": [
+        "topology_state_inferred"
+      ],
+      "status": "HEALTHY",
+      "updated_at": "2026-05-23T05:31:25.461176+00:00"
+    }
+  },
+  "memory_model": "machine_readable_registry_only",
+  "schema_version": "1.0",
+  "state_source_of_truth": "/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json",
+  "updated_at": "2026-05-23T05:31:34.633319+00:00"
+}

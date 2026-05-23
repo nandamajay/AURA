@@ -1,0 +1,79 @@
+{
+  "executor_command_trace": [
+    {
+      "normalized_command": "cat /proc/version",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "started_at": "2026-05-22T08:02:37.4653279Z",
+      "finished_at": "2026-05-22T08:02:37.6209362Z"
+    },
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "started_at": "2026-05-22T08:02:37.6224573Z",
+      "finished_at": "2026-05-22T08:02:37.7766956Z"
+    }
+  ],
+  "request_integrity_sha256": "1461d2506e5c68038a673c592955bfe3c4571359952c8f1110e66830f8839754",
+  "execution_status": "executed",
+  "timestamps": {
+    "started_at": "2026-05-22T08:02:37.4645558Z",
+    "received_at": "2026-05-22T08:02:37.2274184Z",
+    "finished_at": "2026-05-22T08:02:37.7782850Z"
+  },
+  "executor_identity": {
+    "worker_id": "nandam@QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "hostname": "QCOM-X1M5XIGBIY",
+    "worker_type": "windows_shared_folder_worker"
+  },
+  "transport": "shared_folder",
+  "transport_metadata": {
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "command_runtime": "adb_shell",
+    "worker_transport": "shared_folder",
+    "adb_serial": "12345678",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "request_sequence": 16,
+  "response_integrity_sha256": "862ef90255317da10ffe2ffa2abd2a38a5a5fffa6ddb1d9a7fb9f992bb014364",
+  "timeout_seconds": 45,
+  "stderr": "",
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/version",
+      "original_command": "cat /proc/version"
+    },
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "original_command": "cat /proc/asound/cards"
+    }
+  ],
+  "request_id": "ceb727e7-e41f-4a50-a031-f02088b1ff22",
+  "protocol_version": "bridge-v1",
+  "execution_mode": "governed_read_only",
+  "approved_commands": [
+    "cat /proc/version",
+    "cat /proc/asound/cards"
+  ],
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "cat /proc/version",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    },
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+  ],
+  "raw_output": "Linux version 7.1.0-rc2-next-20260508-00007-gd7f4b2036195 (nandam@hu-nandam-hyd) (aarch64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #39 SMP PREEMPT Mon May 18 13:07:23 +0530 2026\r\r\n\n 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n"
+}

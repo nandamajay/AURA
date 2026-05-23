@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Remote Transport Response Block",
+  "type": "object",
+  "required": [
+    "protocol_version",
+    "request_id",
+    "approved_commands",
+    "timeout_seconds",
+    "transport",
+    "execution_mode",
+    "timestamps",
+    "execution_status",
+    "raw_output",
+    "stderr",
+    "request_integrity_sha256",
+    "response_integrity_sha256"
+  ],
+  "properties": {
+    "protocol_version": {"type": "string"},
+    "request_id": {"type": "string", "minLength": 1},
+    "approved_commands": {
+      "type": "array",
+      "items": {"type": "string"}
+    },
+    "timeout_seconds": {"type": "integer", "minimum": 0},
+    "transport": {"type": "string", "minLength": 1},
+    "execution_mode": {"type": "string", "minLength": 1},
+    "timestamps": {
+      "type": "object",
+      "required": ["received_at", "started_at", "finished_at"],
+      "properties": {
+        "received_at": {"type": "string"},
+        "started_at": {"type": "string"},
+        "finished_at": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "execution_status": {
+      "type": "string",
+      "enum": [
+        "executed",
+        "timeout",
+        "partial_response",
+        "transport_disconnected",
+        "invalid",
+        "failed",
+        "rejected_malformed_request"
+      ]
+    },
+    "raw_output": {"type": "string"},
+    "stderr": {"type": "string"},
+    "command_results": {
+      "type": "array"
+    },
+    "request_integrity_sha256": {"type": "string"},
+    "response_integrity_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    }
+  },
+  "additionalProperties": false
+}

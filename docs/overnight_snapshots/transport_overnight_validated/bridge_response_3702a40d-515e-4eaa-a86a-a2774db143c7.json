@@ -1,0 +1,62 @@
+{
+  "executor_identity": {
+    "username": "nandam",
+    "hostname": "QCOM-X1M5XIGBIY",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "command_entries": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "request_integrity_sha256": "8dac5b40133ffd0dc1e1c23f41e63e6bc7d676f74e28ca8e5d0eff20696d5901",
+  "timestamps": {
+    "received_at": "2026-05-22T10:15:21.0470360Z",
+    "finished_at": "2026-05-22T10:15:21.4295113Z",
+    "started_at": "2026-05-22T10:15:21.2757377Z"
+  },
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "expanded_command": "adb.exe shell rm -f <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "request_id": "3702a40d-515e-4eaa-a86a-a2774db143c7",
+  "transport_metadata": {
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+    "adb_serial": "12345678",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "command_runtime": "adb_shell",
+    "worker_transport": "shared_folder"
+  },
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "",
+      "stderr": "",
+      "started_at": "2026-05-22T10:15:21.2763704Z",
+      "finished_at": "2026-05-22T10:15:21.4292918Z"
+    }
+  ],
+  "execution_mode": "governed_write_approved",
+  "raw_output": "",
+  "execution_status": "executed",
+  "response_integrity_sha256": "f59891e2634615968d8e25dba252e51cb1924cf75d73b98c0de2e49008c9f9fd",
+  "stderr": "",
+  "timeout_seconds": 60,
+  "request_sequence": 49,
+  "approved_commands": [
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "protocol_version": "bridge-v1",
+  "transport": "shared_folder"
+}

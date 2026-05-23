@@ -1,0 +1,105 @@
+{
+  "baseline_locked": false,
+  "confidence": {
+    "audible_confirmed_runs": 1,
+    "evidence_success_runs": 0,
+    "route_certainty": "LOW",
+    "score": 0.25,
+    "successful_runs": 0,
+    "total_runs": 1
+  },
+  "profile_id": "audible_25s_speaker_v1",
+  "profile_version": 1,
+  "regression": {
+    "deviations": [],
+    "regression_detected": false,
+    "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+    "severity": "NONE",
+    "status": "NO_BASELINE"
+  },
+  "run_id": "0049951c-be40-4181-af40-d8c46c9025a0",
+  "runtime_profile": {
+    "board": "RB3Gen2",
+    "evidence": {
+      "evidence_quality": "LOW",
+      "missing_evidence": [
+        "cat /proc/asound/cards",
+        "cat /proc/asound/pcm",
+        "cat /sys/kernel/debug/asoc/*/dapm",
+        "dmesg | tail -200"
+      ]
+    },
+    "evidence_mode": "governed_runtime",
+    "final_classification": "ADVISORY_ONLY",
+    "human_validation": {
+      "audible_confirmation": true,
+      "audible_status": "confirmed",
+      "evidence_success": false,
+      "process_success": false
+    },
+    "mixer_capability_state": {
+      "supports_amixer": "UNKNOWN",
+      "supports_tinymix": "UNKNOWN"
+    },
+    "overlay": "qcs6490-audioreach.dtsi",
+    "pcm": {
+      "alsa_device": "hw:0,0",
+      "pcm_id": "00-00",
+      "signature_sha256": "316deeb28892b1cdebfe5c12c2cd620b5b8f29289c1ffe3d4f5fc1b2e6a4ea7d"
+    },
+    "route": {
+      "route_activation_confidence": "LOW",
+      "route_dependencies": [
+        "MultiMedia1->PRIMARY_MI2S_RX",
+        "PRIMARY_MI2S_RX->WSA_SPKR"
+      ],
+      "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+    },
+    "run_id": "0049951c-be40-4181-af40-d8c46c9025a0",
+    "runtime_timing": {
+      "cleanup_runtime_seconds": 0.0,
+      "duration_drift_seconds": 25.0,
+      "evidence_collection_runtime_seconds": 3e-06,
+      "phase_durations_seconds": {
+        "asset_deploy": 0.0,
+        "cleanup": 0.0,
+        "mixer_apply": 0.0,
+        "pcm_playback": 0.0,
+        "post_runtime_snapshot:amixer": 0.0,
+        "post_runtime_snapshot:cat /proc/asound/cards": 0.0,
+        "post_runtime_snapshot:cat /proc/asound/pcm": 0.0,
+        "post_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 0.0,
+        "post_runtime_snapshot:dmesg | tail -200": 0.0,
+        "post_runtime_snapshot:tinymix": 0.0,
+        "pre_runtime_snapshot:amixer": 0.0,
+        "pre_runtime_snapshot:cat /proc/asound/cards": 0.0,
+        "pre_runtime_snapshot:cat /proc/asound/pcm": 0.0,
+        "pre_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 0.0,
+        "pre_runtime_snapshot:dmesg | tail -200": 0.0,
+        "pre_runtime_snapshot:tinymix": 0.0
+      },
+      "playback_duration_match": false,
+      "playback_runtime_seconds": 0.0,
+      "total_runtime_seconds": 2.6e-05,
+      "wav_duration_seconds": 25.0
+    },
+    "transport": {
+      "capture_ready_count": 0,
+      "disconnected_count": 0,
+      "invalid_count": 0,
+      "timeout_count": 0,
+      "transport_mode": "UNKNOWN",
+      "unknown_count": 0
+    },
+    "wav_asset": {
+      "asset_id": "rb3_speaker_48k_stereo_v1",
+      "channels": 2,
+      "duration_seconds": 25.0,
+      "format": "S16_LE",
+      "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+      "sample_rate_hz": 48000,
+      "sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122"
+    }
+  },
+  "state": "CANDIDATE"
+}

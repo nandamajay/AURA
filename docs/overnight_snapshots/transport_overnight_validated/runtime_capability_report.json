@@ -1,0 +1,469 @@
+{
+  "adaptive_execution": {
+    "response": {
+      "approved_commands": [
+        "cat /proc/version",
+        "cat /proc/asound/cards"
+      ],
+      "command_entries": [
+        {
+          "normalized_command": "cat /proc/version",
+          "original_command": "cat /proc/version"
+        },
+        {
+          "normalized_command": "cat /proc/asound/cards",
+          "original_command": "cat /proc/asound/cards"
+        }
+      ],
+      "execution_mode": "governed_read_only",
+      "execution_status": "executed",
+      "executor_command_trace": [
+        {
+          "execution_status": "executed",
+          "exit_code": 0,
+          "finished_at": "2026-05-22T08:02:37.6209362Z",
+          "normalized_command": "cat /proc/version",
+          "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+          "started_at": "2026-05-22T08:02:37.4653279Z"
+        },
+        {
+          "execution_status": "executed",
+          "exit_code": 0,
+          "finished_at": "2026-05-22T08:02:37.7766956Z",
+          "normalized_command": "cat /proc/asound/cards",
+          "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+          "started_at": "2026-05-22T08:02:37.6224573Z"
+        }
+      ],
+      "executor_identity": {
+        "hostname": "QCOM-X1M5XIGBIY",
+        "username": "nandam",
+        "worker_id": "nandam@QCOM-X1M5XIGBIY",
+        "worker_type": "windows_shared_folder_worker"
+      },
+      "protocol_version": "bridge-v1",
+      "raw_executor_invocation": [
+        "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+        "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+      ],
+      "raw_output": "Linux version 7.1.0-rc2-next-20260508-00007-gd7f4b2036195 (nandam@hu-nandam-hyd) (aarch64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #39 SMP PREEMPT Mon May 18 13:07:23 +0530 2026\r\r\n\n 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+      "request_id": "ceb727e7-e41f-4a50-a031-f02088b1ff22",
+      "request_integrity_sha256": "1461d2506e5c68038a673c592955bfe3c4571359952c8f1110e66830f8839754",
+      "request_sequence": 16,
+      "response_integrity_sha256": "862ef90255317da10ffe2ffa2abd2a38a5a5fffa6ddb1d9a7fb9f992bb014364",
+      "stderr": "",
+      "timeout_seconds": 45,
+      "timestamps": {
+        "finished_at": "2026-05-22T08:02:37.7782850Z",
+        "received_at": "2026-05-22T08:02:37.2274184Z",
+        "started_at": "2026-05-22T08:02:37.4645558Z"
+      },
+      "transport": "shared_folder",
+      "transport_expansion_trace": [
+        {
+          "boundary": "adb_shell_boundary",
+          "expanded_command": "adb.exe shell <normalized_command>",
+          "normalized_command": "cat /proc/version"
+        },
+        {
+          "boundary": "adb_shell_boundary",
+          "expanded_command": "adb.exe shell <normalized_command>",
+          "normalized_command": "cat /proc/asound/cards"
+        }
+      ],
+      "transport_metadata": {
+        "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+        "adb_serial": "12345678",
+        "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+        "command_runtime": "adb_shell",
+        "worker_transport": "shared_folder"
+      }
+    },
+    "return_code": 0,
+    "summary": {
+      "classification": "CAPTURE_READY",
+      "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_ceb727e7-e41f-4a50-a031-f02088b1ff22.json",
+      "reason": "response_validated",
+      "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_ceb727e7-e41f-4a50-a031-f02088b1ff22.md",
+      "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_ceb727e7-e41f-4a50-a031-f02088b1ff22.json",
+      "request_id": "ceb727e7-e41f-4a50-a031-f02088b1ff22",
+      "request_sequence": 16,
+      "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_ceb727e7-e41f-4a50-a031-f02088b1ff22.json"
+    }
+  },
+  "adaptive_plan": {
+    "planning_mode": "EMBEDDED_LINUX",
+    "proof_getprop_avoidance": {
+      "planner_avoided_getprop": true,
+      "proof": true,
+      "selected_commands": [
+        "cat /proc/version",
+        "cat /proc/asound/cards"
+      ],
+      "supports_getprop": "UNSUPPORTED"
+    },
+    "selected_commands": [
+      "cat /proc/version",
+      "cat /proc/asound/cards"
+    ],
+    "skipped_commands": [
+      {
+        "command": "uname -a",
+        "reason": "supports_uname:unknown"
+      },
+      {
+        "command": "dmesg",
+        "reason": "supports_dmesg:unknown"
+      },
+      {
+        "command": "lsmod",
+        "reason": "supports_lsmod:unknown"
+      }
+    ]
+  },
+  "claims": {
+    "behavioral_equivalence": "NOT_CLAIMED",
+    "merge_readiness": "NOT_CLAIMED",
+    "runtime_parity": "NOT_CLAIMED"
+  },
+  "fingerprint": {
+    "audio_discovery": {
+      "alsa_topology_cards": [
+        {
+          "card_id": "QCS6490RB3Gen2",
+          "card_index": 0,
+          "descriptor": "qcs6490 - QCS6490-RB3Gen2"
+        }
+      ],
+      "audio_subsystem_evidence_graph": {
+        "cards": [
+          {
+            "card_id": "QCS6490RB3Gen2",
+            "card_index": 0,
+            "descriptor": "qcs6490 - QCS6490-RB3Gen2"
+          }
+        ],
+        "pcm": []
+      },
+      "pcm_entries": [],
+      "qdsp_present": false,
+      "rb3gen2_detected": true
+    },
+    "capabilities": {
+      "supports_debugfs": "UNKNOWN",
+      "supports_dmesg": "UNKNOWN",
+      "supports_dumpsys": "UNKNOWN",
+      "supports_getprop": "UNSUPPORTED",
+      "supports_logcat": "UNKNOWN",
+      "supports_lsmod": "UNKNOWN",
+      "supports_procfs": "SUPPORTED",
+      "supports_systemd": "UNKNOWN",
+      "supports_tinymix": "UNKNOWN",
+      "supports_uname": "UNKNOWN"
+    },
+    "claims": {
+      "behavioral_equivalence": "NOT_CLAIMED",
+      "merge_readiness": "NOT_CLAIMED",
+      "runtime_parity": "NOT_CLAIMED"
+    },
+    "environment": {
+      "confidence": "LOW",
+      "detected_environments": [
+        "Embedded Linux"
+      ],
+      "evidence": {},
+      "primary_environment": "Embedded Linux"
+    },
+    "governance_posture": "ADVISORY_ONLY",
+    "probe_outputs": {
+      "cat /proc/asound/cards": {
+        "execution_status": "executed",
+        "exit_code": 0,
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+        "stderr": "",
+        "stdout": ""
+      },
+      "cat /proc/version": {
+        "execution_status": "executed",
+        "exit_code": 0,
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+        "stderr": "",
+        "stdout": ""
+      },
+      "getprop ro.build.fingerprint": {
+        "execution_status": "failed",
+        "exit_code": 127,
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell getprop ro.build.fingerprint",
+        "stderr": "",
+        "stdout": ""
+      }
+    },
+    "runtime_capability_graph": {
+      "edges": [
+        {
+          "from": "target",
+          "relation": "classified_as",
+          "to": "env:Embedded Linux"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_getprop"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_logcat"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_procfs"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_uname"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_dmesg"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_lsmod"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_tinymix"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_systemd"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_dumpsys"
+        },
+        {
+          "from": "target",
+          "relation": "has_capability",
+          "to": "cap:supports_debugfs"
+        },
+        {
+          "from": "target",
+          "relation": "audio_signal",
+          "to": "audio:rb3gen2_detected"
+        },
+        {
+          "from": "target",
+          "relation": "audio_signal",
+          "to": "audio:qdsp_present"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "target",
+          "kind": "target",
+          "label": "9e689263-cf0d-423d-97d0-193d5379526f"
+        },
+        {
+          "id": "env:Embedded Linux",
+          "kind": "environment",
+          "label": "Embedded Linux"
+        },
+        {
+          "id": "cap:supports_getprop",
+          "kind": "capability",
+          "label": "supports_getprop=UNSUPPORTED"
+        },
+        {
+          "id": "cap:supports_logcat",
+          "kind": "capability",
+          "label": "supports_logcat=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_procfs",
+          "kind": "capability",
+          "label": "supports_procfs=SUPPORTED"
+        },
+        {
+          "id": "cap:supports_uname",
+          "kind": "capability",
+          "label": "supports_uname=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_dmesg",
+          "kind": "capability",
+          "label": "supports_dmesg=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_lsmod",
+          "kind": "capability",
+          "label": "supports_lsmod=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_tinymix",
+          "kind": "capability",
+          "label": "supports_tinymix=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_systemd",
+          "kind": "capability",
+          "label": "supports_systemd=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_dumpsys",
+          "kind": "capability",
+          "label": "supports_dumpsys=UNKNOWN"
+        },
+        {
+          "id": "cap:supports_debugfs",
+          "kind": "capability",
+          "label": "supports_debugfs=UNKNOWN"
+        },
+        {
+          "id": "audio:rb3gen2_detected",
+          "kind": "audio",
+          "label": "rb3gen2_detected=True"
+        },
+        {
+          "id": "audio:qdsp_present",
+          "kind": "audio",
+          "label": "qdsp_present=False"
+        }
+      ]
+    },
+    "target_id": "9e689263-cf0d-423d-97d0-193d5379526f",
+    "unsupported_command_evidence": [
+      {
+        "exit_code": 127,
+        "normalized_command": "getprop ro.build.fingerprint",
+        "stderr": "",
+        "stdout": ""
+      }
+    ]
+  },
+  "governance_posture": "ADVISORY_ONLY",
+  "probe": {
+    "commands": [
+      "getprop ro.build.fingerprint",
+      "cat /proc/version",
+      "cat /proc/asound/cards"
+    ],
+    "response": {
+      "approved_commands": [
+        "getprop ro.build.fingerprint",
+        "cat /proc/version",
+        "cat /proc/asound/cards"
+      ],
+      "command_entries": [
+        {
+          "normalized_command": "getprop ro.build.fingerprint",
+          "original_command": "getprop ro.build.fingerprint"
+        },
+        {
+          "normalized_command": "cat /proc/version",
+          "original_command": "cat /proc/version"
+        },
+        {
+          "normalized_command": "cat /proc/asound/cards",
+          "original_command": "cat /proc/asound/cards"
+        }
+      ],
+      "execution_mode": "governed_read_only",
+      "execution_status": "failed",
+      "executor_command_trace": [
+        {
+          "execution_status": "failed",
+          "exit_code": 127,
+          "finished_at": "2026-05-22T08:02:27.2531366Z",
+          "normalized_command": "getprop ro.build.fingerprint",
+          "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell getprop ro.build.fingerprint",
+          "started_at": "2026-05-22T08:02:27.0965682Z"
+        },
+        {
+          "execution_status": "executed",
+          "exit_code": 0,
+          "finished_at": "2026-05-22T08:02:27.4124304Z",
+          "normalized_command": "cat /proc/version",
+          "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+          "started_at": "2026-05-22T08:02:27.2555101Z"
+        },
+        {
+          "execution_status": "executed",
+          "exit_code": 0,
+          "finished_at": "2026-05-22T08:02:27.6164022Z",
+          "normalized_command": "cat /proc/asound/cards",
+          "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards",
+          "started_at": "2026-05-22T08:02:27.4144012Z"
+        }
+      ],
+      "executor_identity": {
+        "hostname": "QCOM-X1M5XIGBIY",
+        "username": "nandam",
+        "worker_id": "nandam@QCOM-X1M5XIGBIY",
+        "worker_type": "windows_shared_folder_worker"
+      },
+      "protocol_version": "bridge-v1",
+      "raw_executor_invocation": [
+        "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell getprop ro.build.fingerprint",
+        "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/version",
+        "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/cards"
+      ],
+      "raw_output": "/bin/sh: getprop: not found\r\r\n\nLinux version 7.1.0-rc2-next-20260508-00007-gd7f4b2036195 (nandam@hu-nandam-hyd) (aarch64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0, GNU ld (GNU Binutils for Ubuntu) 2.38) #39 SMP PREEMPT Mon May 18 13:07:23 +0530 2026\r\r\n\n 0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2\r\r\n                      QCS6490-RB3Gen2\r\r\n",
+      "request_id": "9e689263-cf0d-423d-97d0-193d5379526f",
+      "request_integrity_sha256": "46797948c56cf8119af467a00a67e6ed1c1a7a29df4fd13795cd4d5e331c7599",
+      "request_sequence": 15,
+      "response_integrity_sha256": "6d70788b3df9465c7cada18864e0b8a524ea452c95480110dac1a1af6933817c",
+      "stderr": "",
+      "timeout_seconds": 45,
+      "timestamps": {
+        "finished_at": "2026-05-22T08:02:27.6180271Z",
+        "received_at": "2026-05-22T08:02:26.8485149Z",
+        "started_at": "2026-05-22T08:02:27.0960735Z"
+      },
+      "transport": "shared_folder",
+      "transport_expansion_trace": [
+        {
+          "boundary": "adb_shell_boundary",
+          "expanded_command": "adb.exe shell <normalized_command>",
+          "normalized_command": "getprop ro.build.fingerprint"
+        },
+        {
+          "boundary": "adb_shell_boundary",
+          "expanded_command": "adb.exe shell <normalized_command>",
+          "normalized_command": "cat /proc/version"
+        },
+        {
+          "boundary": "adb_shell_boundary",
+          "expanded_command": "adb.exe shell <normalized_command>",
+          "normalized_command": "cat /proc/asound/cards"
+        }
+      ],
+      "transport_metadata": {
+        "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+        "adb_serial": "12345678",
+        "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+        "command_runtime": "adb_shell",
+        "worker_transport": "shared_folder"
+      }
+    },
+    "return_code": 0,
+    "summary": {
+      "classification": "ADVISORY_ONLY",
+      "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_9e689263-cf0d-423d-97d0-193d5379526f.json",
+      "reason": "nonzero_exit_code",
+      "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_9e689263-cf0d-423d-97d0-193d5379526f.md",
+      "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_9e689263-cf0d-423d-97d0-193d5379526f.json",
+      "request_id": "9e689263-cf0d-423d-97d0-193d5379526f",
+      "request_sequence": 15,
+      "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_9e689263-cf0d-423d-97d0-193d5379526f.json"
+    }
+  }
+}

@@ -1,0 +1,101 @@
+{
+  "classification": "CAPTURE_READY",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "CAPTURE_READY"
+  ],
+  "reason": "response_validated",
+  "request": {
+    "approved_commands": [
+      "cat /proc/asound/pcm"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "cat /proc/asound/pcm",
+        "original_command": "cat /proc/asound/pcm"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "protocol_version": "bridge-v1",
+    "request_id": "b360f0ab-98f3-43fe-a488-00f1740518a8",
+    "request_integrity_sha256": "809a03928251e30c173f22fe5940c9c998e5cd6309f20fe92f590cdfc40b9a92",
+    "request_sequence": 186,
+    "request_timestamp": "1779454540.0266697",
+    "timeout_seconds": 20,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "b360f0ab-98f3-43fe-a488-00f1740518a8",
+  "request_sequence": 186,
+  "response": {
+    "approved_commands": [
+      "cat /proc/asound/pcm"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "cat /proc/asound/pcm",
+        "original_command": "cat /proc/asound/pcm"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "execution_status": "executed",
+    "executor_command_trace": [
+      {
+        "execution_status": "executed",
+        "exit_code": 0,
+        "finished_at": "2026-05-22T12:55:50.1359604Z",
+        "normalized_command": "cat /proc/asound/pcm",
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm",
+        "started_at": "2026-05-22T12:55:49.9683590Z",
+        "stderr": "",
+        "stdout": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n"
+      }
+    ],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [
+      "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell cat /proc/asound/pcm"
+    ],
+    "raw_output": "00-00: MultiMedia1 Playback (*) :  : playback 1\r\r\n00-01: MultiMedia2 Capture (*) :  : capture 1\r\r\n00-02: MultiMedia3 Playback (*) :  : playback 1\r\r\n00-03: MultiMedia4 Playback (*) :  : playback 1\r\r\n",
+    "request_id": "b360f0ab-98f3-43fe-a488-00f1740518a8",
+    "request_integrity_sha256": "809a03928251e30c173f22fe5940c9c998e5cd6309f20fe92f590cdfc40b9a92",
+    "request_sequence": 186,
+    "response_integrity_sha256": "5d51874bff93e5461ba5d0901f78dc574062784f0c88c13b0b1ff2879b4bb7f9",
+    "stderr": "",
+    "timeout_seconds": 20,
+    "timestamps": {
+      "finished_at": "2026-05-22T12:55:50.1386570Z",
+      "received_at": "2026-05-22T12:55:49.7385991Z",
+      "started_at": "2026-05-22T12:55:49.9657008Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [
+      {
+        "boundary": "adb_shell_boundary",
+        "expanded_command": "adb.exe shell <normalized_command>",
+        "normalized_command": "cat /proc/asound/pcm"
+      }
+    ],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

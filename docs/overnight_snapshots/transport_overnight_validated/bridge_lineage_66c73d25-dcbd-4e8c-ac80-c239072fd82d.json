@@ -1,0 +1,82 @@
+{
+  "classification": "INVALID",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "INVALID"
+  ],
+  "reason": "executor_command_trace_length_mismatch",
+  "request": {
+    "approved_commands": [
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+        "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "execution_mode": "governed_write_approved",
+    "protocol_version": "bridge-v1",
+    "request_id": "66c73d25-dcbd-4e8c-ac80-c239072fd82d",
+    "request_integrity_sha256": "8df0e12a2981221fcdfaeb1ad69be19e8702621bd1e4ab37db964906df4e9965",
+    "request_sequence": 22,
+    "request_timestamp": "1779442458.1529117",
+    "timeout_seconds": 8,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "66c73d25-dcbd-4e8c-ac80-c239072fd82d",
+  "request_sequence": 22,
+  "response": {
+    "approved_commands": [
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+        "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "execution_mode": "governed_write_approved",
+    "execution_status": "rejected",
+    "executor_command_trace": [],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [],
+    "raw_output": "",
+    "request_id": "66c73d25-dcbd-4e8c-ac80-c239072fd82d",
+    "request_integrity_sha256": "8df0e12a2981221fcdfaeb1ad69be19e8702621bd1e4ab37db964906df4e9965",
+    "request_sequence": 22,
+    "response_integrity_sha256": "806a03a9c8d44016e4c7287f5183ad17dbed04f362af82fdcece5362fcd9afa6",
+    "stderr": "allowlist_violation",
+    "timeout_seconds": 8,
+    "timestamps": {
+      "finished_at": "2026-05-22T09:34:19.7409829Z",
+      "received_at": "2026-05-22T09:34:19.6825534Z",
+      "started_at": "2026-05-22T09:34:19.6825534Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

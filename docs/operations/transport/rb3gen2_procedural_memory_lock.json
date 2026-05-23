@@ -1,0 +1,298 @@
+{
+  "board": "RB3Gen2",
+  "cleanup_ordering": [
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "command_ordering": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+    "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+    "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+    "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+    "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+    "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+    "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "degradation_decisions": [
+    "snapshot_skipped:tinymix:capability_supports_tinymix:unknown",
+    "snapshot_skipped:amixer:capability_supports_amixer:unknown",
+    "missing_evidence_detected"
+  ],
+  "evidence_collection_sequence": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "dmesg | tail -200",
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "dmesg | tail -200"
+  ],
+  "history": [
+    {
+      "audible_status": "confirmed",
+      "evidence_success": false,
+      "process_success": false,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T11:54:35.059698+00:00",
+      "run_id": "0049951c-be40-4181-af40-d8c46c9025a0"
+    },
+    {
+      "audible_status": "confirmed",
+      "evidence_success": false,
+      "process_success": false,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T11:57:18.614551+00:00",
+      "run_id": "2e8d7f32-bdd2-4162-9df0-94d8b7317dbe"
+    },
+    {
+      "audible_status": "confirmed",
+      "evidence_success": false,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:02:31.062896+00:00",
+      "run_id": "257698ff-23c8-46c5-bb39-82b2019a00e3"
+    },
+    {
+      "audible_status": "confirmed",
+      "evidence_success": false,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:06:09.133213+00:00",
+      "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": false,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:35:03.129030+00:00",
+      "run_id": "90e03551-964c-40e1-8636-91ea1df82de5"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:46:53.936899+00:00",
+      "run_id": "3c9452fe-9ba4-4109-a5b6-dfde69f76fcb"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:48:36.728532+00:00",
+      "run_id": "85896c3d-fdc2-4d38-bdc4-ea51657403c3"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:50:19.552736+00:00",
+      "run_id": "2866e236-c4df-4854-be74-4a84e9d737de"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:52:02.374309+00:00",
+      "run_id": "6d74f0de-c4e5-4e5c-8eec-3c3b87476852"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:53:45.230327+00:00",
+      "run_id": "7637cba7-0023-48e3-b5be-fc0eccd8e32d"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:55:29.044337+00:00",
+      "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:57:11.885005+00:00",
+      "run_id": "2519150c-02e3-4bd7-b4cb-8f3588147b29"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T12:58:52.731664+00:00",
+      "run_id": "a27f4ac3-00bf-41ad-9947-f101905e8906"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T13:00:36.598752+00:00",
+      "run_id": "d06b7009-2c17-4c78-b38d-c11f76f2e05d"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T13:02:20.406498+00:00",
+      "run_id": "dc2ade03-2d92-4388-9a2b-0d28fe6342e6"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T13:41:00.965906+00:00",
+      "run_id": "474820fe-b832-4db4-b070-bffba7738077"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T13:44:05.833600+00:00",
+      "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T13:46:41.300113+00:00",
+      "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T14:33:40.294269+00:00",
+      "run_id": "2784a71e-d137-4c94-b948-867bd05184fd"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T14:37:49.610211+00:00",
+      "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T15:45:23.026859+00:00",
+      "run_id": "8055e822-70cb-4740-95c2-029823eea469"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": false,
+      "process_success": false,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T15:46:37.585022+00:00",
+      "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7"
+    },
+    {
+      "audible_status": "unknown",
+      "evidence_success": true,
+      "process_success": true,
+      "profile_id": "audible_25s_speaker_v1",
+      "recorded_at": "2026-05-22T15:48:29.277703+00:00",
+      "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82"
+    }
+  ],
+  "lock_confidence": 0.2,
+  "lock_revision": 2,
+  "locked_profile_id": "audible_25s_speaker_v1",
+  "schema_version": "1.0",
+  "successful_execution_sequence": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+    "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+    "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+    "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+    "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+    "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+    "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /sys/kernel/debug/asoc/*/dapm",
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "timing_windows": {
+    "cleanup_runtime_seconds": {
+      "last_seconds": 9.413336,
+      "max_seconds": 11.455759,
+      "min_seconds": 0.0
+    },
+    "evidence_collection_runtime_seconds": {
+      "last_seconds": 28.612016,
+      "max_seconds": 70.37222,
+      "min_seconds": 3e-06
+    },
+    "playback_runtime_seconds": {
+      "last_seconds": 25.902215,
+      "max_seconds": 25.957985,
+      "min_seconds": 0.0
+    },
+    "total_runtime_seconds": {
+      "last_seconds": 95.398884,
+      "max_seconds": 140.21638,
+      "min_seconds": 2.2e-05
+    }
+  },
+  "updated_at": "2026-05-22T15:48:29.277712+00:00"
+}

@@ -1,0 +1,50 @@
+{
+  "supports_getprop": {
+    "probe_commands": ["getprop ro.build.fingerprint"],
+    "mode": "all_success"
+  },
+  "supports_logcat": {
+    "probe_commands": ["logcat -d -t 200"],
+    "mode": "all_success"
+  },
+  "supports_procfs": {
+    "probe_commands": ["cat /proc/version", "cat /proc/asound/cards"],
+    "mode": "any_success"
+  },
+  "supports_uname": {
+    "probe_commands": ["uname -a"],
+    "mode": "all_success"
+  },
+  "supports_dmesg": {
+    "probe_commands": ["dmesg"],
+    "mode": "all_success"
+  },
+  "supports_lsmod": {
+    "probe_commands": ["lsmod"],
+    "mode": "all_success"
+  },
+  "supports_tinymix": {
+    "probe_commands": ["tinymix"],
+    "mode": "all_success"
+  },
+  "supports_amixer": {
+    "probe_commands": ["amixer"],
+    "mode": "all_success"
+  },
+  "supports_systemd": {
+    "probe_commands": ["systemctl --version"],
+    "mode": "all_success"
+  },
+  "supports_dumpsys": {
+    "probe_commands": ["dumpsys media.audio_flinger"],
+    "mode": "all_success"
+  },
+  "supports_debugfs": {
+    "probe_commands": ["ls /sys/kernel/debug", "ls /sys/kernel/debug/asoc"],
+    "mode": "any_success"
+  },
+  "supports_dapm": {
+    "probe_commands": ["cat /sys/kernel/debug/asoc/*/dapm"],
+    "mode": "all_success"
+  }
+}

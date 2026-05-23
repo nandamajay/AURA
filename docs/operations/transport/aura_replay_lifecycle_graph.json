@@ -1,0 +1,58 @@
+{
+  "deterministic_replay_requires": [
+    "ordered_sequence",
+    "persisted_event_stream",
+    "fail_closed_validation"
+  ],
+  "edges": [
+    {
+      "from": "emitted",
+      "relation": "allowed_transition",
+      "to": "acknowledged"
+    },
+    {
+      "from": "acknowledged",
+      "relation": "allowed_transition",
+      "to": "correlated"
+    },
+    {
+      "from": "correlated",
+      "relation": "allowed_transition",
+      "to": "persisted"
+    },
+    {
+      "from": "persisted",
+      "relation": "allowed_transition",
+      "to": "replayed"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "emitted",
+      "kind": "lifecycle_state",
+      "label": "emitted"
+    },
+    {
+      "id": "acknowledged",
+      "kind": "lifecycle_state",
+      "label": "acknowledged"
+    },
+    {
+      "id": "correlated",
+      "kind": "lifecycle_state",
+      "label": "correlated"
+    },
+    {
+      "id": "persisted",
+      "kind": "lifecycle_state",
+      "label": "persisted"
+    },
+    {
+      "id": "replayed",
+      "kind": "lifecycle_state",
+      "label": "replayed"
+    }
+  ],
+  "schema_version": "1.0",
+  "updated_at": "2026-05-23T05:31:35.655876+00:00"
+}

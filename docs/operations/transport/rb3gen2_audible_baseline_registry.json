@@ -1,0 +1,1122 @@
+{
+  "board": "RB3Gen2",
+  "created_at": "2026-05-22T11:54:35.059377+00:00",
+  "latest_profile_id": "audible_25s_speaker_v1",
+  "profiles": {
+    "audible_25s_speaker_v1": {
+      "baseline_locked_at": "2026-05-22T12:02:31.062289+00:00",
+      "baseline_profile": {
+        "board": "RB3Gen2",
+        "evidence": {
+          "evidence_quality": "MEDIUM",
+          "missing_evidence": [
+            "dmesg | tail -200"
+          ]
+        },
+        "evidence_mode": "governed_runtime",
+        "final_classification": "ADVISORY_ONLY",
+        "human_validation": {
+          "audible_confirmation": true,
+          "audible_status": "confirmed",
+          "evidence_success": false,
+          "process_success": true
+        },
+        "mixer_capability_state": {
+          "supports_amixer": "UNKNOWN",
+          "supports_tinymix": "UNKNOWN"
+        },
+        "overlay": "qcs6490-audioreach.dtsi",
+        "pcm": {
+          "alsa_device": "hw:0,0",
+          "pcm_id": "00-00",
+          "signature_sha256": "9b262a14c4fde9970b04136c0fc403710faec0a79b5ee4134dea9b2beb210a1c"
+        },
+        "route": {
+          "route_activation_confidence": "MEDIUM",
+          "route_dependencies": [
+            "MultiMedia1->PRIMARY_MI2S_RX",
+            "PRIMARY_MI2S_RX->WSA_SPKR"
+          ],
+          "route_fingerprint": "3f806a66e070428f7478a05a23b1f84c7d8c50ed9859e67a718d28755a7486bb"
+        },
+        "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4",
+        "runtime_timing": {
+          "cleanup_runtime_seconds": 10.423563,
+          "duration_drift_seconds": 0.896805,
+          "evidence_collection_runtime_seconds": 67.305939,
+          "phase_durations_seconds": {
+            "asset_deploy": 12.426689,
+            "cleanup": 10.423563,
+            "mixer_apply": 12.425369,
+            "pcm_playback": 32.520065,
+            "post_runtime_snapshot:amixer": 0.0,
+            "post_runtime_snapshot:cat /proc/asound/cards": 1.402889,
+            "post_runtime_snapshot:cat /proc/asound/pcm": 10.412608,
+            "post_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 10.420506,
+            "post_runtime_snapshot:dmesg | tail -200": 11.423176,
+            "post_runtime_snapshot:tinymix": 0.0,
+            "pre_runtime_snapshot:amixer": 0.0,
+            "pre_runtime_snapshot:cat /proc/asound/cards": 1.383421,
+            "pre_runtime_snapshot:cat /proc/asound/pcm": 11.427966,
+            "pre_runtime_snapshot:cat /sys/kernel/debug/asoc/*/dapm": 10.417818,
+            "pre_runtime_snapshot:dmesg | tail -200": 10.417554,
+            "pre_runtime_snapshot:tinymix": 0.0
+          },
+          "playback_duration_match": true,
+          "playback_runtime_seconds": 25.896805,
+          "total_runtime_seconds": 135.101761,
+          "wav_duration_seconds": 25.0
+        },
+        "transport": {
+          "capture_ready_count": 10,
+          "disconnected_count": 0,
+          "invalid_count": 2,
+          "timeout_count": 0,
+          "transport_mode": "adb_shell",
+          "unknown_count": 0
+        },
+        "wav_asset": {
+          "asset_id": "rb3_speaker_48k_stereo_v1",
+          "channels": 2,
+          "duration_seconds": 25.0,
+          "format": "S16_LE",
+          "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+          "sample_rate_hz": 48000,
+          "sha256": "e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122"
+        }
+      },
+      "baseline_repaired_at": "2026-05-22T12:06:09.132565+00:00",
+      "confidence": {
+        "audible_confirmed_runs": 4,
+        "evidence_success_runs": 17,
+        "route_certainty": "MEDIUM",
+        "score": 0.657,
+        "successful_runs": 20,
+        "total_runs": 23
+      },
+      "lineage": [
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T11:54:35.059400+00:00",
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "request_ids": [],
+          "run_id": "0049951c-be40-4181-af40-d8c46c9025a0",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T11:57:18.614064+00:00",
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "request_ids": [
+            "95e3f24a-9c30-44c7-8c74-dd76011f13dc",
+            "9f6fc820-4749-464f-bab6-3e40a4783e40",
+            "9cf09870-f86d-4ef2-8903-97e770517fe8",
+            "02910367-1bf0-423c-aed9-5318a7c046dc",
+            "039504e2-4c0e-4f5b-b9de-626ed566bbfe",
+            "7f0cad44-a635-4a45-a5f5-f3c5d0d2389c",
+            "179a98e3-d959-497f-8c0e-0a9eddfb465e",
+            "f9a660a3-e784-4166-8a58-b80bb1b576f2",
+            "2f06efb2-8be7-4bb6-9acd-001f770a7494",
+            "1169bc80-ff74-45ec-b719-ab4b31113511",
+            "d717cb86-0840-4866-8da4-8f5d6e3135e0",
+            "f5ceab33-31ec-44e4-b354-94f03d34c0cc"
+          ],
+          "run_id": "2e8d7f32-bdd2-4162-9df0-94d8b7317dbe",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:02:31.062281+00:00",
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "request_ids": [
+            "261eb989-f8a5-4e99-b256-dca38e841eab",
+            "18c6c67d-5f57-44c5-ac65-d01e4ba58d8f",
+            "42c6cf5c-7bd3-4e04-83ae-46ace834aeef",
+            "d0c54749-e344-4291-b45c-3735ad99f85d",
+            "1cf6fe92-d0ba-40b6-a3c8-1e8e08b55e1c",
+            "0120e093-9d3a-49f0-8052-11349002f6cf",
+            "609a226f-a741-4c43-99bf-678e938550f7",
+            "359d5086-c558-43dc-b951-724a4907f290",
+            "3bd6272a-7ae5-415a-9019-9adc09f0f431",
+            "6add0595-68b4-48d4-8e7b-41a85b852f1c",
+            "a15d7185-6790-4aef-91bf-a8e3c8d9fa8a",
+            "2af98a72-2a7e-41cc-a733-639925b6f4a4"
+          ],
+          "run_id": "257698ff-23c8-46c5-bb39-82b2019a00e3",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:06:09.132555+00:00",
+          "regression_fingerprint": "c1850e6c8dd5148abcf6d4294c067127cb90d981f0f3ad903d70970e281afe78",
+          "request_ids": [
+            "7cd7297e-c8c6-4ac9-827c-0f5fe9d8a01a",
+            "140f02fc-dfed-4ec5-9219-04e636737da7",
+            "cc5e6eec-6b73-4979-91ae-2fc99157db3f",
+            "60828313-e199-425c-be72-6b34532f9d95",
+            "1eab3896-3eae-4682-8233-a29834d18410",
+            "5f406eaa-d29a-4f11-b57c-86663845264e",
+            "3a503bda-b9e0-4649-83d3-88c05c78a1ca",
+            "07050b6c-9f6e-4574-97e5-ad7a9d20a524",
+            "b943a679-4712-4c32-a212-9b692c03325d",
+            "3736be17-4c51-4ace-bcc5-31f0ca4050ad",
+            "dad3c9dc-af87-4721-bb5b-ed3ed03a1d05",
+            "2ee82648-121f-44a5-9e19-02eeb08b93ba"
+          ],
+          "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:35:03.128263+00:00",
+          "regression_fingerprint": "021b4d9599a40fbfe800f91b14e28f079a021ac39fb2cea4267222718b1b6f7a",
+          "request_ids": [
+            "8dddb4d7-cfa4-4e9b-aedd-971a2c07603d",
+            "b596365a-5fac-4a85-ae02-c1f177bf8a0b",
+            "966af4cb-0b95-4bba-bcfe-3092a4dd5afd",
+            "efa45a06-2f8e-424a-b8a5-6a6dfc4f5bd1",
+            "f452896a-5ab6-4f26-997b-3c49e071a5ad",
+            "fa0cdadb-9441-4326-93d8-79be283770b7",
+            "bcb78051-fbd0-4253-affe-8d2adf186ed6",
+            "736f8b21-88dc-4f0f-bead-5584bd0b6611",
+            "6df72afd-8b1c-4ad6-b254-ab762399aa59",
+            "e11faf66-27bc-4e9e-904e-a0113166b2d5",
+            "60116c36-db43-410e-b1ed-988112c8982f",
+            "c030913f-3e89-4ade-ae39-a061b8891e93"
+          ],
+          "run_id": "90e03551-964c-40e1-8636-91ea1df82de5",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:46:53.936175+00:00",
+          "regression_fingerprint": "d1adbde2123c060a7c40a95978acc81acd4b130f0e6e7061f6236f55fc41d4e4",
+          "request_ids": [
+            "cc4146db-90d4-4b97-84d3-c44f8a3d4c7d",
+            "7338b45f-2210-40e1-ae2c-8c6a39cd91fb",
+            "fb35ea6f-5f1a-460b-acd6-101700bf0733",
+            "e535bcfd-cda1-43cb-b177-577f631ab41a",
+            "5f3624e5-e249-4ada-aef6-524861608629",
+            "a53b398c-437e-4793-88e4-c708b430d44e",
+            "3f0e14f4-1970-4d83-96be-dac2ce64fe5e",
+            "2f71d9d9-a144-4540-ab63-109cd424f185"
+          ],
+          "run_id": "3c9452fe-9ba4-4109-a5b6-dfde69f76fcb",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:48:36.727571+00:00",
+          "regression_fingerprint": "578e0719e5a6b4954126b60ca78bf9be384e1061acace40ee6a10765b9ae562f",
+          "request_ids": [
+            "dfe5704c-22cb-48b3-b443-01425b4a734e",
+            "4ab39340-8305-4d99-9f14-4b86488ec145",
+            "3c321746-a496-4598-b5cd-c36cd8eaf8f2",
+            "3dfa9c8b-f60e-4575-8cca-5de530b14800",
+            "914c3034-4bae-4d4c-88ad-4aafd4257e2f",
+            "ccd4e1b4-9af0-478b-ba8a-73eda5d7f9a7",
+            "6aa6f919-45f9-46d6-9f7e-6dc1f0b74a1e",
+            "189fb5ad-991b-4676-aa0b-6bd97028913e"
+          ],
+          "run_id": "85896c3d-fdc2-4d38-bdc4-ea51657403c3",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:50:19.551806+00:00",
+          "regression_fingerprint": "33c75b770fa8ebc403adc9872b53a3ae712315a75abd06db052f25e3867630d1",
+          "request_ids": [
+            "eb119c80-86e4-4c28-b16b-1db7a9e30350",
+            "caa5b39f-d07f-4c92-8086-ed216d80e187",
+            "1aad2a81-28bc-49bf-bba2-aecbd12e775d",
+            "0b7404d0-3872-4809-9baa-3560171722c0",
+            "19c6dfce-b5a4-4443-b2f6-75d973bf263e",
+            "6551106d-a242-4043-a1ac-f46e07c9cd9b",
+            "8a67c477-e2a4-4e5e-9d23-cf80b855b230",
+            "d6091696-1b94-437d-96c4-a9b81ea0a56b"
+          ],
+          "run_id": "2866e236-c4df-4854-be74-4a84e9d737de",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:52:02.373414+00:00",
+          "regression_fingerprint": "8db9a5255ee1d38aa8b07e1f6d1ccbad8a12c5947ba1cfee8616b4ae5d8ff4ab",
+          "request_ids": [
+            "32a27f40-d193-402e-a919-f54a074c2a2b",
+            "80238de5-3796-44ff-bfe2-956d87b5528a",
+            "f4b6f91b-dfd2-44b4-8081-7ed2568dcf0c",
+            "7d5c565e-cb42-4cf9-b214-65667022fca1",
+            "29b97896-9bf7-4c94-b64a-2dce1bf02bf7",
+            "4a7e40c0-75af-4ef0-a9ec-32c0ac1c5ef9",
+            "2efd3b71-cc85-48c0-823c-2e6df2078996",
+            "fe86cb97-c3cc-4d24-9c33-e6a0616e9ad7"
+          ],
+          "run_id": "6d74f0de-c4e5-4e5c-8eec-3c3b87476852",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:53:45.229389+00:00",
+          "regression_fingerprint": "428d71a4519325465a6ccb6b7dc24cb2f3548328df5692e5baa14e8ee3c5606e",
+          "request_ids": [
+            "c61c608f-1fde-4bda-a5eb-18ff0814ea7e",
+            "02cb95bf-d63f-4bda-8cfa-f9aa0fe4c9b5",
+            "b684bc41-143e-487a-89f2-26721b7c771d",
+            "763b0d41-a7ae-4989-a962-7400978d9352",
+            "8d42ffc7-55ea-415c-8f88-76fd9d6971c2",
+            "62d7b999-636e-4bc7-a7e8-35ffe5c0b1e8",
+            "693750d0-12fa-4239-bac8-c66ead54a2c4",
+            "c0c71b4a-8165-4598-9400-3d0ba9fb9bdf"
+          ],
+          "run_id": "7637cba7-0023-48e3-b5be-fc0eccd8e32d",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:55:29.043321+00:00",
+          "regression_fingerprint": "3f4ccbecc43221e283d517482762e20c311b06ed2b2bcf3b7548673ae3906d18",
+          "request_ids": [
+            "5820a180-077a-4767-958a-7827968d4217",
+            "45bca230-e524-408d-b22a-ffe9128d185d",
+            "fe017470-1a01-4e37-892f-6a1fa00c979d",
+            "bc0017d9-fefd-45ec-824c-abec3a401309",
+            "d4ac4736-1dbe-44e6-b73d-e85584c180e5",
+            "8be37760-7d01-4bff-8bc0-3023efeff0c5",
+            "0b69f01b-27b5-4361-b1df-7b90a02c4343",
+            "1f35220a-c638-4beb-a968-479643032b90"
+          ],
+          "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:57:11.883974+00:00",
+          "regression_fingerprint": "c46c306e5aeb145a6acbc1b7de6ccedd3f26547f7437303a77594233b55db798",
+          "request_ids": [
+            "2be839e2-720f-459f-88e5-91c520a94d46",
+            "b360f0ab-98f3-43fe-a488-00f1740518a8",
+            "31f3f509-3d36-4aa5-aec7-24457820d143",
+            "4007f571-d840-4abd-a487-858a8e1d4a2c",
+            "a084409b-89f9-4194-a171-1e8074863f6e",
+            "1481d990-dc69-42bc-9b16-4961f519d972",
+            "bdabfa8c-0942-4e08-b384-ab3e6bbe24f2",
+            "2aec597d-eee8-41a6-af40-87c76706c7a6"
+          ],
+          "run_id": "2519150c-02e3-4bd7-b4cb-8f3588147b29",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T12:58:52.730560+00:00",
+          "regression_fingerprint": "c609ffbb7b714ebbb27c07b073672053316721d5d885a408e731c4452621ee59",
+          "request_ids": [
+            "9872f606-9d7f-484c-a674-7a59213b56b3",
+            "93a8b6cc-675f-4e76-8ba1-c989309ac570",
+            "53a22641-989b-47d1-a8bc-dad8ced36566",
+            "51618580-0efb-436f-9653-7865b2a1de09",
+            "bd6c062c-dc70-460c-9c20-3d1494252f2d",
+            "0ecb5f8b-53cd-4a80-ad70-1e98bef3cda9",
+            "7452c2b9-95d4-4d6f-9ba0-fa9faa7b19de",
+            "c5de5859-1a92-40b1-9639-be42cd55ab6b"
+          ],
+          "run_id": "a27f4ac3-00bf-41ad-9947-f101905e8906",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T13:00:36.597640+00:00",
+          "regression_fingerprint": "6a82f21963427469e41da370dc498c4b70bebff84f35d389a099e85dda6d0a56",
+          "request_ids": [
+            "ffafd92c-9c0b-441c-b22e-634a47fedb34",
+            "67db8eb4-1543-4d29-a496-7ead34425d95",
+            "7034b9f8-1417-4744-a9c8-a2245ac21cc5",
+            "42786a38-d91e-4baf-bea6-b11d8046b7d1",
+            "56b3eec7-0b8c-4fbb-9e28-c5b508d90335",
+            "e4a10569-3425-44c1-ab2f-62c6eb468938",
+            "1f882c88-b583-43db-bb39-948fada27921",
+            "de802242-083b-4440-8381-f39d29d96230"
+          ],
+          "run_id": "d06b7009-2c17-4c78-b38d-c11f76f2e05d",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T13:02:20.402975+00:00",
+          "regression_fingerprint": "37b27dd45c9564a87ba4325d4028dc573df8425fa92b8a52386ada691253225b",
+          "request_ids": [
+            "39d03204-d0f9-44f5-9109-9672e4ba78e2",
+            "258e91aa-11e4-4963-acd5-e0e9710f1803",
+            "6ad3d0f4-5a21-454c-b88b-a2330e1311ba",
+            "b1b89b8e-86ef-4fc9-814f-b619ada0553c",
+            "1bafd4da-adfa-4e4f-8e8b-09ea17e1eb6f",
+            "f5b2bc69-8530-459e-8bb6-a9c301ba911f",
+            "21f2c9c3-3207-474f-b190-60f39a20a555",
+            "988adb16-d8a2-4a9c-a063-a051a1bbd46f"
+          ],
+          "run_id": "dc2ade03-2d92-4388-9a2b-0d28fe6342e6",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T13:41:00.964716+00:00",
+          "regression_fingerprint": "64db7576626e6efea44c943215f3c070fcfdba866066a9a7fcca989b6c8d4ea0",
+          "request_ids": [
+            "3467487e-5e6c-4c4c-9f85-56e14f15ddfa",
+            "aa8cd64b-68bb-41d0-82c1-8067a4898f59",
+            "29834061-f8bb-4ffa-9e06-59ad21373dec",
+            "da2435eb-961d-494c-a66c-e4655be73b96",
+            "350e838d-7859-4b2f-b492-cee1143b86f7",
+            "af8bcce0-278a-46f1-90ac-2f35a106191c",
+            "b164c536-aee1-4307-8b2d-ce3580bd5d0a",
+            "eb94c784-676c-4289-8a21-8f18b3f16cd3"
+          ],
+          "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T13:44:05.832355+00:00",
+          "regression_fingerprint": "303b56ba8b19098fa97eb77005f1c317897a3550b5efb7c9e393af6906b79d95",
+          "request_ids": [
+            "17068011-d130-4577-bb1a-3f8fbb61dd07",
+            "d98d61a4-fe50-466d-9689-74ce53f2d7a5",
+            "ee6223b7-3efd-48be-a940-21f56943125a",
+            "bda3c9b9-0ef1-4972-adcf-e33d8512abae",
+            "338fa00a-701c-4d8f-a3cd-1ee6987899cc",
+            "19d5526d-1ee1-4ccd-9b95-b090af15e239",
+            "6416aa8d-1167-4a26-9256-12bdd800b21a",
+            "b0ae41f5-6f0b-4555-bc49-f1b218ed42bd"
+          ],
+          "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T13:46:41.298863+00:00",
+          "regression_fingerprint": "00f50b3a71910ff21a7119946ce84cd74fe17e3befd6e0cd97cc586251b1ec55",
+          "request_ids": [
+            "daa631cd-3317-49d0-a599-bc65b471ca85",
+            "b6e1af33-e0ba-496d-9969-1d61211a3ae8",
+            "0135d45e-52e4-42e2-bdf8-68fbe747415b",
+            "72363d86-1ef7-4615-8a17-1b97bdc86092",
+            "d9e02bc5-9bdf-464f-9eb3-432375665846",
+            "3dd7b0fe-1df5-4335-9cb6-c3aa810b8d8b",
+            "66f65992-e426-4a75-ad99-b320908953e3",
+            "2db75754-320f-435a-bb81-6d5f495f3d5e"
+          ],
+          "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T14:33:40.293020+00:00",
+          "regression_fingerprint": "111e188ff8bd38d233c519d2bc585175ccacbc51ba3cb22cc33e1fdebcc17959",
+          "request_ids": [
+            "ed37b3a2-0747-4582-a65b-c687d53c7f2c",
+            "3810bc21-e398-4411-bcdc-17cebf8cdcbe",
+            "686ebaa6-6afa-4811-aed9-6dbf80922299",
+            "b6b600de-7500-4a3a-b723-53ecd6692c7e",
+            "e29db929-6a48-4165-8989-4be3b4e3dd38",
+            "9ba5877f-634d-4c08-bd0f-9a741a30d9c1",
+            "309808b4-88b5-4b64-9fc4-e51336bc8eb5",
+            "94adc72d-d2c8-435f-803f-0348ab54facd"
+          ],
+          "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T14:37:49.608826+00:00",
+          "regression_fingerprint": "f7ff8e3582c3e915e947362f9ec59b9e125de7290e5986d67abd0318e4f46422",
+          "request_ids": [
+            "56c36b3f-8723-44f3-a08f-cf71c5732472",
+            "fea18017-8eed-480d-ac83-2c126827dce9",
+            "b3fff2ab-d529-4262-8fba-b780c456bf67",
+            "4b7f4669-4633-40f3-bb59-a3ecf0a378c4",
+            "ec5a86a3-4ec8-4eb2-9a28-5aabec834310",
+            "66fe923d-1ade-4390-bff9-4f7a7f155487",
+            "06d8e8a4-22d6-48b4-b888-4b7d34063925",
+            "f04ef6eb-5359-4314-8437-e2020461fa58"
+          ],
+          "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T15:45:23.025323+00:00",
+          "regression_fingerprint": "3e17f7d5b6e7ebd84be2a2c061c7a75a9a349b958ae066b6a2f70cd60392a524",
+          "request_ids": [
+            "183dbe22-d86b-443b-b8d2-969c9caedf4a",
+            "d781587b-7b63-4cc2-92f9-11e11810e317",
+            "d128db8d-e3d6-4506-8145-0625264b5a71",
+            "94db9eac-3b29-4b08-aa97-2068b9f48c30",
+            "d8a99db2-7291-4b79-91a9-684826fb856d",
+            "aa19526a-1a1b-483b-be99-0ff91808c91d",
+            "61fd2bcf-2ea3-4f2b-bb05-14da1bd207b3",
+            "851ba6a7-b0b7-4349-87e4-bc979af592ac"
+          ],
+          "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T15:46:37.583530+00:00",
+          "regression_fingerprint": "02b21b937dd512672dddc72e6919c44c769bcbf43319be1c9ec4602cdd2ed20d",
+          "request_ids": [],
+          "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        },
+        {
+          "board": "RB3Gen2",
+          "correlation_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_validation_correlation_live.json",
+          "memory_snapshot_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_memory_live.json",
+          "profile_id": "audible_25s_speaker_v1",
+          "recorded_at": "2026-05-22T15:48:29.276122+00:00",
+          "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+          "request_ids": [
+            "683fa055-4fa1-41a4-ab48-7d9b1ad80dd9",
+            "b26b945d-8e1d-4bff-bdad-ea7d3fe2c2fc",
+            "00f4103d-eebc-4ddc-8f42-cd8b93ad3abd",
+            "ff670ff9-e1d4-4fd8-a249-c5ae048683ee",
+            "10459ba0-856e-4331-827f-f62cff15c3f2",
+            "a59be1c9-03b9-4213-beae-16ad359c2132",
+            "6570c176-e1de-4215-a6cb-974e725db0da",
+            "307ac692-13a1-458d-a7e0-dfd45c95e9c9"
+          ],
+          "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+          "state_machine_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_playback_state_machine_live.json",
+          "trace_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/rb3_runtime_procedural_execution_trace.json"
+        }
+      ],
+      "profile_id": "audible_25s_speaker_v1",
+      "profile_version": 1,
+      "regression_history": [
+        {
+          "deviations": [],
+          "recorded_at": "2026-05-22T11:54:35.059396+00:00",
+          "regression_detected": false,
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "run_id": "0049951c-be40-4181-af40-d8c46c9025a0",
+          "severity": "NONE",
+          "status": "NO_BASELINE"
+        },
+        {
+          "deviations": [],
+          "recorded_at": "2026-05-22T11:57:18.614052+00:00",
+          "regression_detected": false,
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "run_id": "2e8d7f32-bdd2-4162-9df0-94d8b7317dbe",
+          "severity": "NONE",
+          "status": "NO_BASELINE"
+        },
+        {
+          "deviations": [],
+          "recorded_at": "2026-05-22T12:02:31.062262+00:00",
+          "regression_detected": false,
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "run_id": "257698ff-23c8-46c5-bb39-82b2019a00e3",
+          "severity": "NONE",
+          "status": "NO_BASELINE"
+        },
+        {
+          "deviations": [],
+          "recorded_at": "2026-05-22T12:06:09.132535+00:00",
+          "regression_detected": false,
+          "regression_fingerprint": "c1850e6c8dd5148abcf6d4294c067127cb90d981f0f3ad903d70970e281afe78",
+          "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4",
+          "severity": "NONE",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [],
+          "recorded_at": "2026-05-22T12:35:03.128251+00:00",
+          "regression_detected": false,
+          "regression_fingerprint": "021b4d9599a40fbfe800f91b14e28f079a021ac39fb2cea4267222718b1b6f7a",
+          "run_id": "90e03551-964c-40e1-8636-91ea1df82de5",
+          "severity": "NONE",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 36.533s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:46:53.936162+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "d1adbde2123c060a7c40a95978acc81acd4b130f0e6e7061f6236f55fc41d4e4",
+          "run_id": "3c9452fe-9ba4-4109-a5b6-dfde69f76fcb",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 32.662s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:48:36.727559+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "578e0719e5a6b4954126b60ca78bf9be384e1061acace40ee6a10765b9ae562f",
+          "run_id": "85896c3d-fdc2-4d38-bdc4-ea51657403c3",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 32.630s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:50:19.551794+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "33c75b770fa8ebc403adc9872b53a3ae712315a75abd06db052f25e3867630d1",
+          "run_id": "2866e236-c4df-4854-be74-4a84e9d737de",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 32.639s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:52:02.373402+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "8db9a5255ee1d38aa8b07e1f6d1ccbad8a12c5947ba1cfee8616b4ae5d8ff4ab",
+          "run_id": "6d74f0de-c4e5-4e5c-8eec-3c3b87476852",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 32.603s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:53:45.229376+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "428d71a4519325465a6ccb6b7dc24cb2f3548328df5692e5baa14e8ee3c5606e",
+          "run_id": "7637cba7-0023-48e3-b5be-fc0eccd8e32d",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 31.648s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:55:29.043309+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "3f4ccbecc43221e283d517482762e20c311b06ed2b2bcf3b7548673ae3906d18",
+          "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 32.618s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:57:11.883962+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "c46c306e5aeb145a6acbc1b7de6ccedd3f26547f7437303a77594233b55db798",
+          "run_id": "2519150c-02e3-4bd7-b4cb-8f3588147b29",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 34.615s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T12:58:52.730545+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "c609ffbb7b714ebbb27c07b073672053316721d5d885a408e731c4452621ee59",
+          "run_id": "a27f4ac3-00bf-41ad-9947-f101905e8906",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 31.601s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T13:00:36.597620+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "6a82f21963427469e41da370dc498c4b70bebff84f35d389a099e85dda6d0a56",
+          "run_id": "d06b7009-2c17-4c78-b38d-c11f76f2e05d",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 31.644s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T13:02:20.402957+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "37b27dd45c9564a87ba4325d4028dc573df8425fa92b8a52386ada691253225b",
+          "run_id": "dc2ade03-2d92-4388-9a2b-0d28fe6342e6",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 33.631s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T13:41:00.964658+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "64db7576626e6efea44c943215f3c070fcfdba866066a9a7fcca989b6c8d4ea0",
+          "run_id": "474820fe-b832-4db4-b070-bffba7738077",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 41.633s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T13:44:05.832340+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "303b56ba8b19098fa97eb77005f1c317897a3550b5efb7c9e393af6906b79d95",
+          "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 36.650s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T13:46:41.298850+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "00f50b3a71910ff21a7119946ce84cd74fe17e3befd6e0cd97cc586251b1ec55",
+          "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 40.655s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T14:33:40.293008+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "111e188ff8bd38d233c519d2bc585175ccacbc51ba3cb22cc33e1fdebcc17959",
+          "run_id": "2784a71e-d137-4c94-b948-867bd05184fd",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [],
+          "recorded_at": "2026-05-22T14:37:49.608813+00:00",
+          "regression_detected": false,
+          "regression_fingerprint": "f7ff8e3582c3e915e947362f9ec59b9e125de7290e5986d67abd0318e4f46422",
+          "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805",
+          "severity": "NONE",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 34.671s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T15:45:23.025310+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "3e17f7d5b6e7ebd84be2a2c061c7a75a9a349b958ae066b6a2f70cd60392a524",
+          "run_id": "8055e822-70cb-4740-95c2-029823eea469",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "pcm_change",
+              "details": "PCM signature changed from locked baseline.",
+              "severity": "HIGH"
+            },
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 135.102s exceeds threshold.",
+              "severity": "MEDIUM"
+            },
+            {
+              "code": "playback_timing_drift",
+              "details": "Playback runtime drift 25.897s exceeds threshold.",
+              "severity": "MEDIUM"
+            },
+            {
+              "code": "missing_evidence",
+              "details": "New missing evidence detected: cat /proc/asound/cards, cat /proc/asound/pcm",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T15:46:37.583521+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "02b21b937dd512672dddc72e6919c44c769bcbf43319be1c9ec4602cdd2ed20d",
+          "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7",
+          "severity": "HIGH",
+          "status": "COMPARED"
+        },
+        {
+          "deviations": [
+            {
+              "code": "runtime_latency_drift",
+              "details": "Total runtime drift 39.703s exceeds threshold.",
+              "severity": "MEDIUM"
+            }
+          ],
+          "recorded_at": "2026-05-22T15:48:29.276111+00:00",
+          "regression_detected": true,
+          "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+          "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+          "severity": "MEDIUM",
+          "status": "COMPARED"
+        }
+      ],
+      "runs": [
+        {
+          "audible_status": "confirmed",
+          "evidence_success": false,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": false,
+          "recorded_at": "2026-05-22T11:54:35.059402+00:00",
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "run_id": "0049951c-be40-4181-af40-d8c46c9025a0"
+        },
+        {
+          "audible_status": "confirmed",
+          "evidence_success": false,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": false,
+          "recorded_at": "2026-05-22T11:57:18.614067+00:00",
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "run_id": "2e8d7f32-bdd2-4162-9df0-94d8b7317dbe"
+        },
+        {
+          "audible_status": "confirmed",
+          "evidence_success": false,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:02:31.062285+00:00",
+          "regression_fingerprint": "46d9c8f37ca81697c3e46f8d6700b2c859797fb32fc6b54429fd34ba5e922464",
+          "run_id": "257698ff-23c8-46c5-bb39-82b2019a00e3"
+        },
+        {
+          "audible_status": "confirmed",
+          "evidence_success": false,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:06:09.132559+00:00",
+          "regression_fingerprint": "c1850e6c8dd5148abcf6d4294c067127cb90d981f0f3ad903d70970e281afe78",
+          "run_id": "168aab6f-dec9-4a4b-bbae-0e9178ec2da4"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": false,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:35:03.128267+00:00",
+          "regression_fingerprint": "021b4d9599a40fbfe800f91b14e28f079a021ac39fb2cea4267222718b1b6f7a",
+          "run_id": "90e03551-964c-40e1-8636-91ea1df82de5"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:46:53.936178+00:00",
+          "regression_fingerprint": "d1adbde2123c060a7c40a95978acc81acd4b130f0e6e7061f6236f55fc41d4e4",
+          "run_id": "3c9452fe-9ba4-4109-a5b6-dfde69f76fcb"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:48:36.727574+00:00",
+          "regression_fingerprint": "578e0719e5a6b4954126b60ca78bf9be384e1061acace40ee6a10765b9ae562f",
+          "run_id": "85896c3d-fdc2-4d38-bdc4-ea51657403c3"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:50:19.551809+00:00",
+          "regression_fingerprint": "33c75b770fa8ebc403adc9872b53a3ae712315a75abd06db052f25e3867630d1",
+          "run_id": "2866e236-c4df-4854-be74-4a84e9d737de"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:52:02.373418+00:00",
+          "regression_fingerprint": "8db9a5255ee1d38aa8b07e1f6d1ccbad8a12c5947ba1cfee8616b4ae5d8ff4ab",
+          "run_id": "6d74f0de-c4e5-4e5c-8eec-3c3b87476852"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:53:45.229392+00:00",
+          "regression_fingerprint": "428d71a4519325465a6ccb6b7dc24cb2f3548328df5692e5baa14e8ee3c5606e",
+          "run_id": "7637cba7-0023-48e3-b5be-fc0eccd8e32d"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:55:29.043325+00:00",
+          "regression_fingerprint": "3f4ccbecc43221e283d517482762e20c311b06ed2b2bcf3b7548673ae3906d18",
+          "run_id": "65ce7c46-d929-4105-bbeb-58decfef72d0"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:57:11.883977+00:00",
+          "regression_fingerprint": "c46c306e5aeb145a6acbc1b7de6ccedd3f26547f7437303a77594233b55db798",
+          "run_id": "2519150c-02e3-4bd7-b4cb-8f3588147b29"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T12:58:52.730563+00:00",
+          "regression_fingerprint": "c609ffbb7b714ebbb27c07b073672053316721d5d885a408e731c4452621ee59",
+          "run_id": "a27f4ac3-00bf-41ad-9947-f101905e8906"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T13:00:36.597643+00:00",
+          "regression_fingerprint": "6a82f21963427469e41da370dc498c4b70bebff84f35d389a099e85dda6d0a56",
+          "run_id": "d06b7009-2c17-4c78-b38d-c11f76f2e05d"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T13:02:20.402979+00:00",
+          "regression_fingerprint": "37b27dd45c9564a87ba4325d4028dc573df8425fa92b8a52386ada691253225b",
+          "run_id": "dc2ade03-2d92-4388-9a2b-0d28fe6342e6"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T13:41:00.964721+00:00",
+          "regression_fingerprint": "64db7576626e6efea44c943215f3c070fcfdba866066a9a7fcca989b6c8d4ea0",
+          "run_id": "474820fe-b832-4db4-b070-bffba7738077"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T13:44:05.832359+00:00",
+          "regression_fingerprint": "303b56ba8b19098fa97eb77005f1c317897a3550b5efb7c9e393af6906b79d95",
+          "run_id": "89b9ba5e-66e6-4888-af1e-f503ac9a22c3"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T13:46:41.298867+00:00",
+          "regression_fingerprint": "00f50b3a71910ff21a7119946ce84cd74fe17e3befd6e0cd97cc586251b1ec55",
+          "run_id": "9e0acfd7-3987-4ede-bbe6-397f1a1fadd5"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T14:33:40.293024+00:00",
+          "regression_fingerprint": "111e188ff8bd38d233c519d2bc585175ccacbc51ba3cb22cc33e1fdebcc17959",
+          "run_id": "2784a71e-d137-4c94-b948-867bd05184fd"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T14:37:49.608829+00:00",
+          "regression_fingerprint": "f7ff8e3582c3e915e947362f9ec59b9e125de7290e5986d67abd0318e4f46422",
+          "run_id": "40a74e57-26d5-4402-83b1-0c06420ae805"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T15:45:23.025326+00:00",
+          "regression_fingerprint": "3e17f7d5b6e7ebd84be2a2c061c7a75a9a349b958ae066b6a2f70cd60392a524",
+          "run_id": "8055e822-70cb-4740-95c2-029823eea469"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": false,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": false,
+          "recorded_at": "2026-05-22T15:46:37.583533+00:00",
+          "regression_fingerprint": "02b21b937dd512672dddc72e6919c44c769bcbf43319be1c9ec4602cdd2ed20d",
+          "run_id": "4a53d159-b966-4616-8ac5-54a0d4b590d7"
+        },
+        {
+          "audible_status": "unknown",
+          "evidence_success": true,
+          "final_classification": "ADVISORY_ONLY",
+          "process_success": true,
+          "recorded_at": "2026-05-22T15:48:29.276126+00:00",
+          "regression_fingerprint": "2adc87ef95bc9622719a1bc5ebf63740c7fa93af95872efa1f0eca4eba51e0bf",
+          "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82"
+        }
+      ],
+      "state": "LOCKED"
+    }
+  },
+  "schema_version": "1.0",
+  "updated_at": "2026-05-22T15:48:29.276130+00:00"
+}

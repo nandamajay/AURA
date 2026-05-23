@@ -1,0 +1,62 @@
+{
+  "execution_mode": "governed_write_approved",
+  "response_integrity_sha256": "dcd3d03400c29800d3207d5622382f4be053b01dfc7f2b65f6ed2902e56379c0",
+  "approved_commands": [
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "timeout_seconds": 180,
+  "request_id": "2af98a72-2a7e-41cc-a733-639925b6f4a4",
+  "request_sequence": 112,
+  "timestamps": {
+    "received_at": "2026-05-22T12:02:29.7023368Z",
+    "started_at": "2026-05-22T12:02:29.9258874Z",
+    "finished_at": "2026-05-22T12:02:30.0811224Z"
+  },
+  "raw_output": "",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "transport": "shared_folder",
+  "command_entries": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "transport_metadata": {
+    "command_runtime": "adb_shell",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "request_integrity_sha256": "257bff4c34c0ede003b61dbf664bc159b1e9fcbc2a6c7737768b70eb28ccf029",
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "",
+      "stderr": "",
+      "started_at": "2026-05-22T12:02:29.9266616Z",
+      "finished_at": "2026-05-22T12:02:30.0809458Z"
+    }
+  ],
+  "execution_status": "executed",
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "expanded_command": "adb.exe shell rm -f <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "stderr": ""
+}

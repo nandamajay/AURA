@@ -1,0 +1,33 @@
+{
+  "approved_commands": [
+    "cat /proc/version",
+    "cat /proc/asound/cards"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "cat /proc/version",
+      "original_command": "cat /proc/version"
+    },
+    {
+      "normalized_command": "cat /proc/asound/cards",
+      "original_command": "cat /proc/asound/cards"
+    }
+  ],
+  "execution_mode": "governed_read_only",
+  "protocol_version": "bridge-v1",
+  "request_id": "ceb727e7-e41f-4a50-a031-f02088b1ff22",
+  "request_integrity_sha256": "1461d2506e5c68038a673c592955bfe3c4571359952c8f1110e66830f8839754",
+  "request_sequence": 16,
+  "request_timestamp": "1779436948.3026662",
+  "timeout_seconds": 45,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

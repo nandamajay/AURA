@@ -1,0 +1,52 @@
+{
+  "phase": "T5_W3",
+  "status": "executed",
+  "result": "PASSED_WITH_ADVISORY",
+  "timestamp": "2026-05-20",
+  "scope": {
+    "root": "AURA",
+    "excluded_dirs": ["transport"],
+    "file_types": [".py"],
+    "notes": "Static string scan for hardcoded transport usage outside adapters"
+  },
+  "commands": [
+    {
+      "command": "grep -RIn \\\"\\\\badb\\\\b\\\" AURA --include='*.py' --exclude-dir='transport'",
+      "result": "no matches"
+    },
+    {
+      "command": "grep -RIn \\\"\\\\bssh\\\\b\\\" AURA --include='*.py' --exclude-dir='transport'",
+      "result": "single match in URL parser",
+      "match": "AURA/services/core/src/core/routers/provenance.py:120"
+    },
+    {
+      "command": "grep -RIn \\\"ttyUSB|serial\\\" AURA --include='*.py' --exclude-dir='transport'",
+      "result": "no matches"
+    },
+    {
+      "command": "grep -RIn \\\"pyserial|import serial|COM[0-9]\\\" AURA --include='*.py' --exclude-dir='transport'",
+      "result": "no matches"
+    }
+  ],
+  "findings": [
+    {
+      "id": "no_hardcoded_adb",
+      "status": "pass",
+      "details": "No adb usage detected outside transport adapters."
+    },
+    {
+      "id": "no_hardcoded_ssh_exec",
+      "status": "pass",
+      "details": "No ssh command execution detected outside transport adapters."
+    },
+    {
+      "id": "no_hardcoded_serial_com",
+      "status": "pass",
+      "details": "No ttyUSB/COM usage detected outside transport adapters."
+    }
+  ],
+  "advisories": [
+    "Scan is pattern-based and does not prove runtime behavior across dynamic code paths.",
+    "Distributed remote serial runtime was not executed in this pass."
+  ]
+}

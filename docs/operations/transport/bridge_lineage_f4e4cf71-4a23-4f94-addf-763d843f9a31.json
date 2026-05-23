@@ -1,0 +1,132 @@
+{
+  "classification": "INVALID",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "INVALID"
+  ],
+  "reason": "executor_command_trace_length_mismatch",
+  "request": {
+    "approved_commands": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "tinymix",
+      "amixer",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "dmesg"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "cat /proc/asound/cards",
+        "original_command": "cat /proc/asound/cards"
+      },
+      {
+        "normalized_command": "cat /proc/asound/pcm",
+        "original_command": "cat /proc/asound/pcm"
+      },
+      {
+        "normalized_command": "tinymix",
+        "original_command": "tinymix"
+      },
+      {
+        "normalized_command": "amixer",
+        "original_command": "amixer"
+      },
+      {
+        "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+        "original_command": "cat /sys/kernel/debug/asoc/*/dapm"
+      },
+      {
+        "normalized_command": "dmesg",
+        "original_command": "dmesg"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "protocol_version": "bridge-v1",
+    "request_id": "f4e4cf71-4a23-4f94-addf-763d843f9a31",
+    "request_integrity_sha256": "9856fc7e9d93df4c1d40b163a671b99ee37c581d4f4cccdcf4145f88379a7679",
+    "request_sequence": 18,
+    "request_timestamp": "1779442430.666354",
+    "timeout_seconds": 8,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "f4e4cf71-4a23-4f94-addf-763d843f9a31",
+  "request_sequence": 18,
+  "response": {
+    "approved_commands": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "tinymix",
+      "amixer",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "dmesg"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "cat /proc/asound/cards",
+        "original_command": "cat /proc/asound/cards"
+      },
+      {
+        "normalized_command": "cat /proc/asound/pcm",
+        "original_command": "cat /proc/asound/pcm"
+      },
+      {
+        "normalized_command": "tinymix",
+        "original_command": "tinymix"
+      },
+      {
+        "normalized_command": "amixer",
+        "original_command": "amixer"
+      },
+      {
+        "normalized_command": "cat /sys/kernel/debug/asoc/*/dapm",
+        "original_command": "cat /sys/kernel/debug/asoc/*/dapm"
+      },
+      {
+        "normalized_command": "dmesg",
+        "original_command": "dmesg"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "execution_status": "rejected",
+    "executor_command_trace": [],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [],
+    "raw_output": "",
+    "request_id": "f4e4cf71-4a23-4f94-addf-763d843f9a31",
+    "request_integrity_sha256": "9856fc7e9d93df4c1d40b163a671b99ee37c581d4f4cccdcf4145f88379a7679",
+    "request_sequence": 18,
+    "response_integrity_sha256": "897a5b19edb76725b86583ec6c059ed569e8a4c22de6b0c1de329d2e35c6e068",
+    "stderr": "allowlist_violation",
+    "timeout_seconds": 8,
+    "timestamps": {
+      "finished_at": "2026-05-22T09:33:58.2315286Z",
+      "received_at": "2026-05-22T09:33:58.1570319Z",
+      "started_at": "2026-05-22T09:33:58.1570319Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

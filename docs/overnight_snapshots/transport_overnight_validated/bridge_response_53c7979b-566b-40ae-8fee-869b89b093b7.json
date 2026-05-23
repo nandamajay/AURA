@@ -1,0 +1,62 @@
+{
+  "executor_identity": {
+    "username": "nandam",
+    "hostname": "QCOM-X1M5XIGBIY",
+    "worker_type": "windows_shared_folder_worker",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY"
+  },
+  "command_entries": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "original_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "request_integrity_sha256": "25c3e18bf2b442ce6f3f5882d876307475f5698e1d9bf92c08bf16d058748f2d",
+  "timestamps": {
+    "received_at": "2026-05-22T09:59:21.4495573Z",
+    "finished_at": "2026-05-22T09:59:21.8773764Z",
+    "started_at": "2026-05-22T09:59:21.6990442Z"
+  },
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "expanded_command": "adb.exe shell aplay -D <hw:x,y> <target_path>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "request_id": "53c7979b-566b-40ae-8fee-869b89b093b7",
+  "transport_metadata": {
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+    "adb_serial": "12345678",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "command_runtime": "adb_shell",
+    "worker_transport": "shared_folder"
+  },
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "executor_command_trace": [
+    {
+      "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "exit_code": 32,
+      "execution_status": "failed",
+      "stdout": "aplay: main:831: audio open error: Invalid argument\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T09:59:21.7074383Z",
+      "finished_at": "2026-05-22T09:59:21.8758638Z"
+    }
+  ],
+  "execution_mode": "governed_write_approved",
+  "raw_output": "aplay: main:831: audio open error: Invalid argument\r\r\n",
+  "execution_status": "failed",
+  "response_integrity_sha256": "5231c0ca4e22b6cc7dc81962f15c871a369fdd52ae1af82ea2ef0c8909a0d46a",
+  "stderr": "",
+  "timeout_seconds": 45,
+  "request_sequence": 41,
+  "approved_commands": [
+    "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "protocol_version": "bridge-v1",
+  "transport": "shared_folder"
+}

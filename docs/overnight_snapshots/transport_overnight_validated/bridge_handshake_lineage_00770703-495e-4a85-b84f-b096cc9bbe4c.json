@@ -1,0 +1,101 @@
+{
+  "classification": "CONNECTED",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "CONNECTED"
+  ],
+  "reason": "valid_handshake",
+  "request": {
+    "approved_commands": [
+      "echo AURA_BRIDGE_PING"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "echo AURA_BRIDGE_PING",
+        "original_command": "echo AURA_BRIDGE_PING"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "protocol_version": "bridge-v1",
+    "request_id": "00770703-495e-4a85-b84f-b096cc9bbe4c",
+    "request_integrity_sha256": "9ba8da37974e9dd139c0351e7ea5c467d34763d3124b401dd75278005945c150",
+    "request_sequence": 64,
+    "request_timestamp": "1779448263.508228",
+    "timeout_seconds": 30,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "00770703-495e-4a85-b84f-b096cc9bbe4c",
+  "request_sequence": 64,
+  "response": {
+    "approved_commands": [
+      "echo AURA_BRIDGE_PING"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "echo AURA_BRIDGE_PING",
+        "original_command": "echo AURA_BRIDGE_PING"
+      }
+    ],
+    "execution_mode": "governed_read_only",
+    "execution_status": "executed",
+    "executor_command_trace": [
+      {
+        "execution_status": "executed",
+        "exit_code": 0,
+        "finished_at": "2026-05-22T11:11:12.5677836Z",
+        "normalized_command": "echo AURA_BRIDGE_PING",
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell echo AURA_BRIDGE_PING",
+        "started_at": "2026-05-22T11:11:12.4085978Z",
+        "stderr": "",
+        "stdout": "AURA_BRIDGE_PING\r\r\n"
+      }
+    ],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [
+      "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell echo AURA_BRIDGE_PING"
+    ],
+    "raw_output": "AURA_BRIDGE_PING\r\r\n",
+    "request_id": "00770703-495e-4a85-b84f-b096cc9bbe4c",
+    "request_integrity_sha256": "9ba8da37974e9dd139c0351e7ea5c467d34763d3124b401dd75278005945c150",
+    "request_sequence": 64,
+    "response_integrity_sha256": "c998bcb415fe390dcf0fe97c306345de1d479a90919fe15c1548303335ae2447",
+    "stderr": "",
+    "timeout_seconds": 30,
+    "timestamps": {
+      "finished_at": "2026-05-22T11:11:12.5691548Z",
+      "received_at": "2026-05-22T11:11:12.1468275Z",
+      "started_at": "2026-05-22T11:11:12.4081688Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [
+      {
+        "boundary": "adb_shell_boundary",
+        "expanded_command": "adb.exe shell <normalized_command>",
+        "normalized_command": "echo AURA_BRIDGE_PING"
+      }
+    ],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

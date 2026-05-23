@@ -1,0 +1,609 @@
+{
+  "board": "RB3Gen2",
+  "claims": {
+    "behavioral_equivalence": "NOT_CLAIMED",
+    "merge_readiness": "NOT_CLAIMED",
+    "runtime_parity": "NOT_CLAIMED"
+  },
+  "failure_reasoning": {
+    "classification": "ADVISORY_ONLY",
+    "failure_reasons": [
+      {
+        "code": "unresolved_routes",
+        "why": "No backend/frontend route mapping was extracted from DTS routing evidence."
+      },
+      {
+        "code": "missing_mixer",
+        "why": "No runtime mixer state change was observed while playback workflow was attempted."
+      },
+      {
+        "code": "missing_backend",
+        "why": "Runtime telemetry did not show backend activity during playback validation."
+      },
+      {
+        "code": "unsupported_backend",
+        "why": "Runtime telemetry did not show backend activity during playback validation."
+      },
+      {
+        "code": "soundwire_dependency_failure",
+        "why": "SoundWire-related topology markers exist but DAPM route activation was not observed."
+      },
+      {
+        "code": "invalid_pcm",
+        "why": "PCM runtime state did not become active for the planned playback path."
+      },
+      {
+        "code": "route_collapse",
+        "why": "Playback started but route activation confidence did not reach HIGH."
+      },
+      {
+        "code": "playback_not_completed",
+        "why": "Playback command did not complete successfully."
+      }
+    ]
+  },
+  "governance_posture": "ADVISORY_ONLY",
+  "memory_snapshot": {
+    "board": "RB3Gen2",
+    "board_specific_quirks": [
+      "static_validation_without_live_playback",
+      "dry_run_planning_only",
+      "live_runtime_validation"
+    ],
+    "failure_signatures": [
+      "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed"
+    ],
+    "history": [
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "295d5b23-4073-4c50-a177-2f699155e1c0",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "0eb2a876-44ab-49cd-b6ff-4b0ce77f6ba5",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "e0a45dc3-10dd-4f31-aac0-6e2c01783d9a",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "36cad741-1a81-4111-ab44-002054cc02e6",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "39a2ee77-794a-43c0-9534-174508848a4b",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "0d7bd48b-8b27-4c2c-a706-1076aeb49ddb",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "aee84ab5-24b0-4b1c-b8c5-2a11fcf933ca",
+        "success": false
+      },
+      {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "failure_signature": "",
+        "overlay": "qcs6490-audioreach.dtsi",
+        "run_id": "e9fb7b11-4bff-4061-b8c1-c596230f8c3d",
+        "success": false
+      }
+    ],
+    "recovery_patterns": [
+      "re-run with live telemetry and operator-approved playback",
+      "retry_with_verified_mixer_sequence",
+      "re-capture_dmesg_and_dapm_after_mixer_apply"
+    ],
+    "route_specific_constraints": [
+      "speaker_validation_requires_overlay_resolution",
+      "route_activation_requires_backend_and_dapm"
+    ],
+    "runtime_signatures": [
+      {
+        "backend_activity": false,
+        "pcm_activation": false,
+        "playback_completion": false,
+        "route_activation_confidence": "LOW",
+        "soundwire_activity": false
+      }
+    ],
+    "successful_playback_procedures": [],
+    "successful_wav_assets": [],
+    "unsupported_formats": []
+  },
+  "runtime_correlation": {
+    "backend_activity": false,
+    "cleanup_completed": false,
+    "dapm_state_change": false,
+    "evidence_quality": "LOW",
+    "mixer_change": false,
+    "pcm_activation": false,
+    "pcm_runtime_state_after": "",
+    "pcm_runtime_state_before": "",
+    "pcm_runtime_state_change": false,
+    "playback_attempted": true,
+    "playback_completion": false,
+    "playback_started": true,
+    "route_activation_confidence": "LOW",
+    "soundwire_activity": false
+  },
+  "state_machine": {
+    "current_state": "playback_failed",
+    "final_classification": "ADVISORY_ONLY",
+    "states": [
+      "asset_selected",
+      "asset_deployed",
+      "mixers_applied",
+      "backend_enabled",
+      "pcm_active",
+      "playback_running",
+      "playback_completed",
+      "playback_failed",
+      "cleanup_completed"
+    ],
+    "transitions": [
+      {
+        "condition": "deployment_success",
+        "from": "asset_selected",
+        "to": "asset_deployed"
+      },
+      {
+        "condition": "mixer_apply_success",
+        "from": "asset_deployed",
+        "to": "mixers_applied"
+      },
+      {
+        "condition": "backend_activity_true",
+        "from": "mixers_applied",
+        "to": "backend_enabled"
+      },
+      {
+        "condition": "pcm_activation_true",
+        "from": "backend_enabled",
+        "to": "pcm_active"
+      },
+      {
+        "condition": "playback_started",
+        "from": "pcm_active",
+        "to": "playback_running"
+      },
+      {
+        "condition": "playback_exit_zero",
+        "from": "playback_running",
+        "to": "playback_completed"
+      },
+      {
+        "condition": "playback_exit_nonzero",
+        "from": "playback_running",
+        "to": "playback_failed"
+      },
+      {
+        "condition": "cleanup_success",
+        "from": "playback_completed",
+        "to": "cleanup_completed"
+      },
+      {
+        "condition": "cleanup_success_or_skipped",
+        "from": "playback_failed",
+        "to": "cleanup_completed"
+      }
+    ]
+  },
+  "workflow": {
+    "asset_deployment": {
+      "asset_selected": true,
+      "deployment_status": "BLOCKED",
+      "overwrite_policy": "no_overwrite",
+      "push_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b no_overwrite",
+      "requires_operator_approval": true,
+      "selected_asset": {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "bridge_relative_path": "assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "channels": 2,
+        "exists": true,
+        "format": "S16_LE",
+        "intended_playback_path": "speaker_primary",
+        "repository_path": "AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "sample_rate_hz": 48000,
+        "sha256": "f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b",
+        "validation_purpose": "validate speaker playback"
+      },
+      "staging": {
+        "reason": "bridge_stage_overwrite_blocked",
+        "staged": false,
+        "staged_path": "/local/mnt/workspace/AURA_V1/bridge/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "status": "BLOCKED"
+      },
+      "target_path": "/data/local/tmp/aura/audio/speaker_validation.wav"
+    },
+    "audio_route_knowledge_graph": {
+      "edges": [
+        {
+          "from": "board:RB3Gen2",
+          "relation": "inherits",
+          "to": "overlay:qcs6490-audioreach.dtsi"
+        },
+        {
+          "from": "route:MultiMedia1",
+          "relation": "route_dependency",
+          "to": "route:PRIMARY_MI2S_RX"
+        },
+        {
+          "from": "route:PRIMARY_MI2S_RX",
+          "relation": "route_dependency",
+          "to": "route:WSA_SPKR"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:soundwire"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:swr0"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:swr1"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:swr2"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "soundwire_dependency",
+          "to": "soundwire:wsa"
+        },
+        {
+          "from": "board:RB3Gen2",
+          "relation": "playback_topology",
+          "to": "pcm:hw:0,0"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "board:RB3Gen2",
+          "kind": "board",
+          "label": "RB3Gen2"
+        },
+        {
+          "id": "overlay:qcs6490-audioreach.dtsi",
+          "kind": "overlay",
+          "label": "qcs6490-audioreach.dtsi"
+        },
+        {
+          "id": "route:MultiMedia1",
+          "kind": "route_node",
+          "label": "MultiMedia1"
+        },
+        {
+          "id": "route:PRIMARY_MI2S_RX",
+          "kind": "route_node",
+          "label": "PRIMARY_MI2S_RX"
+        },
+        {
+          "id": "route:WSA_SPKR",
+          "kind": "route_node",
+          "label": "WSA_SPKR"
+        },
+        {
+          "id": "soundwire:soundwire",
+          "kind": "soundwire",
+          "label": "soundwire"
+        },
+        {
+          "id": "soundwire:swr0",
+          "kind": "soundwire",
+          "label": "swr0"
+        },
+        {
+          "id": "soundwire:swr1",
+          "kind": "soundwire",
+          "label": "swr1"
+        },
+        {
+          "id": "soundwire:swr2",
+          "kind": "soundwire",
+          "label": "swr2"
+        },
+        {
+          "id": "soundwire:wsa",
+          "kind": "soundwire",
+          "label": "wsa"
+        },
+        {
+          "id": "pcm:hw:0,0",
+          "kind": "pcm",
+          "label": "hw:0,0"
+        }
+      ]
+    },
+    "board": "RB3Gen2",
+    "claims": {
+      "behavioral_equivalence": "NOT_CLAIMED",
+      "merge_readiness": "NOT_CLAIMED",
+      "runtime_parity": "NOT_CLAIMED"
+    },
+    "classification": "ADVISORY_ONLY",
+    "governance": {
+      "evidence_backed_planning_only": true,
+      "fail_closed": true,
+      "linux_role": "authoritative_governance_and_cognition",
+      "no_hallucinated_assets": true,
+      "no_unsafe_writes": true,
+      "windows_role": "execution_only_worker"
+    },
+    "intent": "validate speaker playback",
+    "mixer_dependency": {
+      "codec_activation_candidates": [],
+      "mixer_confidence": "MEDIUM",
+      "mixer_sequence": [
+        {
+          "classification": "SAFE_READ",
+          "step": "validate_route_topology"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "snapshot_mixer_state"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "step": "apply_route_mixer_controls"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "verify_dapm_route_activation"
+        }
+      ],
+      "route_dependencies": [
+        "MultiMedia1->PRIMARY_MI2S_RX",
+        "PRIMARY_MI2S_RX->WSA_SPKR"
+      ],
+      "route_inferred": true
+    },
+    "overlay": {
+      "overlay": "qcs6490-audioreach.dtsi",
+      "reason": "single_candidate",
+      "status": "RESOLVED"
+    },
+    "pcm_inference": {
+      "alsa_device": "hw:0,0",
+      "confidence": "LOW",
+      "entry": null,
+      "pcm_id": "00-00",
+      "source": "card_fallback"
+    },
+    "playback_workflow": {
+      "cleanup_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+      "compatible_asset": {
+        "asset_id": "rb3_speaker_48k_stereo_v1",
+        "bridge_relative_path": "assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "channels": 2,
+        "exists": true,
+        "format": "S16_LE",
+        "intended_playback_path": "speaker_primary",
+        "repository_path": "AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "repository_path_abs": "/local/mnt/workspace/AURA_V1/AURA/assets/rb3gen2/speaker_validation_48k_stereo.wav",
+        "sample_rate_hz": 48000,
+        "sha256": "f0608cd61f72233ef9ae78aa23cdab65ae08f7c2543308f556489435d10a9c3b",
+        "validation_purpose": "validate speaker playback"
+      },
+      "deployment_path": "/data/local/tmp/aura/audio/speaker_validation.wav",
+      "mixer_apply_commands": [],
+      "mixer_sequence": [
+        {
+          "classification": "SAFE_READ",
+          "step": "validate_route_topology"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "snapshot_mixer_state"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "step": "apply_route_mixer_controls"
+        },
+        {
+          "classification": "SAFE_READ",
+          "step": "verify_dapm_route_activation"
+        }
+      ],
+      "playback_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "playback_pcm": {
+        "alsa_device": "hw:0,0",
+        "confidence": "LOW",
+        "entry": null,
+        "pcm_id": "00-00",
+        "source": "card_fallback"
+      },
+      "required_overlay": "qcs6490-audioreach.dtsi",
+      "runtime_telemetry_correlation": [
+        "pcm_activation",
+        "backend_activity",
+        "dapm_state_change",
+        "dmesg_delta",
+        "mixer_state_change",
+        "soundwire_activity",
+        "playback_completion"
+      ],
+      "runtime_validation_steps": [
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/cards"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/pcm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "tinymix"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "amixer"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /sys/kernel/debug/asoc/*/dapm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "dmesg"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/pcm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /sys/kernel/debug/asoc/*/dapm"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "tinymix"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "amixer"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "dmesg"
+        }
+      ]
+    },
+    "procedural_memory_hints": {
+      "failure_signatures": [
+        "unresolved_routes,missing_mixer,missing_backend,unsupported_backend,soundwire_dependency_failure,invalid_pcm,playback_not_completed"
+      ],
+      "known_quirks": [
+        "static_validation_without_live_playback",
+        "dry_run_planning_only",
+        "live_runtime_validation"
+      ],
+      "preferred_assets": [],
+      "recovery_patterns": [
+        "re-run with live telemetry and operator-approved playback",
+        "retry_with_verified_mixer_sequence",
+        "re-capture_dmesg_and_dapm_after_mixer_apply"
+      ],
+      "route_constraints": [
+        "speaker_validation_requires_overlay_resolution",
+        "route_activation_requires_backend_and_dapm"
+      ],
+      "runtime_signatures": [
+        {
+          "backend_activity": false,
+          "pcm_activation": false,
+          "playback_completion": false,
+          "route_activation_confidence": "LOW",
+          "soundwire_activity": false
+        }
+      ]
+    },
+    "state_machine": {
+      "current_state": "asset_selected",
+      "final_classification": "ADVISORY_ONLY",
+      "states": [
+        "asset_selected",
+        "asset_deployed",
+        "mixers_applied",
+        "backend_enabled",
+        "pcm_active",
+        "playback_running",
+        "playback_completed",
+        "playback_failed",
+        "cleanup_completed"
+      ],
+      "transitions": [
+        {
+          "condition": "deployment_success",
+          "from": "asset_selected",
+          "to": "asset_deployed"
+        },
+        {
+          "condition": "mixer_apply_success",
+          "from": "asset_deployed",
+          "to": "mixers_applied"
+        },
+        {
+          "condition": "backend_activity_true",
+          "from": "mixers_applied",
+          "to": "backend_enabled"
+        },
+        {
+          "condition": "pcm_activation_true",
+          "from": "backend_enabled",
+          "to": "pcm_active"
+        },
+        {
+          "condition": "playback_started",
+          "from": "pcm_active",
+          "to": "playback_running"
+        },
+        {
+          "condition": "playback_exit_zero",
+          "from": "playback_running",
+          "to": "playback_completed"
+        },
+        {
+          "condition": "playback_exit_nonzero",
+          "from": "playback_running",
+          "to": "playback_failed"
+        },
+        {
+          "condition": "cleanup_success",
+          "from": "playback_completed",
+          "to": "cleanup_completed"
+        },
+        {
+          "condition": "cleanup_success_or_skipped",
+          "from": "playback_failed",
+          "to": "cleanup_completed"
+        }
+      ]
+    },
+    "targeted_questions": [
+      {
+        "id": "runtime_profile",
+        "question": "Runtime confidence is not high. Confirm active audio runtime profile for RB3 speaker path validation."
+      },
+      {
+        "id": "route_confirmation",
+        "question": "Route chain was inferred from SoundWire markers. Confirm `MultiMedia1 -> PRIMARY_MI2S_RX -> WSA_SPKR` before mixer activation."
+      },
+      {
+        "id": "mixer_sequence_seed",
+        "question": "No proven mixer apply sequence is stored yet. Provide operator-approved `AURA_TINYMIX_SET`/`AURA_AMIXER_CSET` sequence for first run."
+      }
+    ]
+  }
+}

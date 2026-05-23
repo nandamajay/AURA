@@ -1,0 +1,113 @@
+{
+  "active_backend_paths": [
+    "MultiMedia1->PRIMARY_MI2S_RX",
+    "PRIMARY_MI2S_RX->WSA_SPKR"
+  ],
+  "amixer_controls_after": [],
+  "amixer_controls_before": [],
+  "cards_after": [],
+  "cards_before": [],
+  "mixer_dependencies": [
+    "SpkrLeft BOOST Switch",
+    "SpkrLeft COMP Switch",
+    "SpkrLeft DAC Switch",
+    "SpkrLeft PA Volume",
+    "SpkrLeft VISENSE Switch",
+    "SpkrLeft WSA MODE",
+    "SpkrRight BOOST Switch",
+    "SpkrRight COMP Switch",
+    "SpkrRight DAC Switch",
+    "SpkrRight PA Volume",
+    "SpkrRight VISENSE Switch",
+    "SpkrRight WSA MODE",
+    "WSA RX0 MUX",
+    "WSA RX1 MUX",
+    "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+    "WSA_COMP1 Switch",
+    "WSA_COMP2 Switch",
+    "WSA_RX0 Digital Volume",
+    "WSA_RX0 INP0",
+    "WSA_RX1 Digital Volume",
+    "WSA_RX1 INP0"
+  ],
+  "pcm_activation_after": [
+    {
+      "direction": "playback",
+      "interface": "",
+      "name": "MultiMedia1 Playback (*)",
+      "pcm_id": "00-00",
+      "streams": 1
+    },
+    {
+      "direction": "capture",
+      "interface": "",
+      "name": "MultiMedia2 Capture (*)",
+      "pcm_id": "00-01",
+      "streams": 1
+    },
+    {
+      "direction": "playback",
+      "interface": "",
+      "name": "MultiMedia3 Playback (*)",
+      "pcm_id": "00-02",
+      "streams": 1
+    },
+    {
+      "direction": "playback",
+      "interface": "",
+      "name": "MultiMedia4 Playback (*)",
+      "pcm_id": "00-03",
+      "streams": 1
+    }
+  ],
+  "pcm_activation_before": [
+    {
+      "direction": "playback",
+      "interface": "",
+      "name": "MultiMedia1 Playback (*)",
+      "pcm_id": "00-00",
+      "streams": 1
+    },
+    {
+      "direction": "capture",
+      "interface": "",
+      "name": "MultiMedia2 Capture (*)",
+      "pcm_id": "00-01",
+      "streams": 1
+    },
+    {
+      "direction": "playback",
+      "interface": "",
+      "name": "MultiMedia3 Playback (*)",
+      "pcm_id": "00-02",
+      "streams": 1
+    },
+    {
+      "direction": "playback",
+      "interface": "",
+      "name": "MultiMedia4 Playback (*)",
+      "pcm_id": "00-03",
+      "streams": 1
+    }
+  ],
+  "playback_pcm_device": "plughw:0,0",
+  "playback_target": "speaker",
+  "runtime_activation": {
+    "backend_activity": false,
+    "evidence_collection_sequence": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm"
+    ],
+    "pcm_activation": false,
+    "playback_completion": true,
+    "route_activation_confidence": "MEDIUM",
+    "runtime_state_transitions": [
+      "playback_started",
+      "playback_completed",
+      "cleanup_completed"
+    ],
+    "soundwire_activity": false
+  }
+}

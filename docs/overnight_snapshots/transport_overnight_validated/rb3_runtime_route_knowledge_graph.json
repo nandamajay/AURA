@@ -1,0 +1,106 @@
+{
+  "edges": [
+    {
+      "from": "board:RB3Gen2",
+      "relation": "inherits",
+      "to": "overlay:qcs6490-audioreach.dtsi"
+    },
+    {
+      "from": "route:MultiMedia1",
+      "relation": "route_dependency",
+      "to": "route:PRIMARY_MI2S_RX"
+    },
+    {
+      "from": "route:PRIMARY_MI2S_RX",
+      "relation": "route_dependency",
+      "to": "route:WSA_SPKR"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_dependency",
+      "to": "soundwire:soundwire"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_dependency",
+      "to": "soundwire:swr0"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_dependency",
+      "to": "soundwire:swr1"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_dependency",
+      "to": "soundwire:swr2"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_dependency",
+      "to": "soundwire:wsa"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "playback_topology",
+      "to": "pcm:hw:0,0"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "board:RB3Gen2",
+      "kind": "board",
+      "label": "RB3Gen2"
+    },
+    {
+      "id": "overlay:qcs6490-audioreach.dtsi",
+      "kind": "overlay",
+      "label": "qcs6490-audioreach.dtsi"
+    },
+    {
+      "id": "route:MultiMedia1",
+      "kind": "route_node",
+      "label": "MultiMedia1"
+    },
+    {
+      "id": "route:PRIMARY_MI2S_RX",
+      "kind": "route_node",
+      "label": "PRIMARY_MI2S_RX"
+    },
+    {
+      "id": "route:WSA_SPKR",
+      "kind": "route_node",
+      "label": "WSA_SPKR"
+    },
+    {
+      "id": "soundwire:soundwire",
+      "kind": "soundwire",
+      "label": "soundwire"
+    },
+    {
+      "id": "soundwire:swr0",
+      "kind": "soundwire",
+      "label": "swr0"
+    },
+    {
+      "id": "soundwire:swr1",
+      "kind": "soundwire",
+      "label": "swr1"
+    },
+    {
+      "id": "soundwire:swr2",
+      "kind": "soundwire",
+      "label": "swr2"
+    },
+    {
+      "id": "soundwire:wsa",
+      "kind": "soundwire",
+      "label": "wsa"
+    },
+    {
+      "id": "pcm:hw:0,0",
+      "kind": "pcm",
+      "label": "hw:0,0"
+    }
+  ]
+}

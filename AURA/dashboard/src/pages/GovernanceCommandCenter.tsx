@@ -1,4 +1,5 @@
-import { useEffect, useMemo, useState, type CSSProperties } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import { apiRequest, toErrorMessage } from '../api/client'
 import { ENDPOINTS } from '../config'
 import { DataPanel } from '../components/DataPanel'
@@ -22,74 +23,94 @@ interface AuditResponse {
   count: number
 }
 
-interface ChainSummary {
-  verified: number
-  mismatched: number
-  unverifiable: number
-  missingHashes: number
+interface TimelineStats {
+  approvals: number
+  escalations: number
+  failures: number
+  retries: number
+  policy: number
+  other: number
 }
 
-const CHAIN_SEED = '0'.repeat(64)
-
-function computeChainHash(previousHash: string, entry: AuditEntry): string {
-  const material = [
-    previousHash || CHAIN_SEED,
-    String(entry.timestamp),
-    entry.event_type,
-    entry.target_type,
-    entry.target_id,
-    entry.user_id || '',
-  ].join('|')
-  const bytes = new TextEncoder().encode(material)
-  const hex = Array.from(bytes)
-    .map((value) => value.toString(16).padStart(2, '0'))
-    .join('')
-  return hex.slice(0, 64)
-}
-
-function summarizeChain(entries: AuditEntry[]): ChainSummary {
-  if (!entries.length) {
-    return { verified: 0, mismatched: 0, unverifiable: 0, missingHashes: 0 }
-  }
-
-  let verified = 0
-  let mismatched = 0
-  let unverifiable = 0
-  let missingHashes = 0
-
-  for (const entry of entries) {
-    if (!entry.chain_hash) {
-      missingHashes += 1
+function classifyEvent(eventType: string): keyof TimelineStats {
+  if (eventType.includes('approval')) {
+    if (eventType.includes('escalat')) {
+      return 'escalations'
     }
+    return 'approvals'
+  }
+  if (eventType.includes('retry') || eventType.includes('task.queued')) {
+    return 'retries'
+  }
+  if (eventType.includes('failed') || eventType.includes('timeout') || eventType.includes('rejected')) {
+    return 'failures'
+  }
+  if (eventType.includes('governance') || eventType.includes('charter') || eventType.includes('policy')) {
+    return 'policy'
+  }
+  return 'other'
+}
+
+function continuitySummary(entries: AuditEntry[]): {
+  contiguous: number
+  gaps: number
+  nonMonotonicTime: number
+} {
+  if (entries.length <= 1) {
+    return { contiguous: entries.length, gaps: 0, nonMonotonicTime: 0 }
   }
 
-  for (let index = 0; index < entries.length; index += 1) {
+  let contiguous = 0
+  let gaps = 0
+  let nonMonotonicTime = 0
+
+  for (let index = 0; index < entries.length - 1; index += 1) {
     const current = entries[index]
-    const previous = entries[index + 1]
-
-    if (!current.chain_hash) {
-      continue
-    }
-
-    if (!previous) {
-      unverifiable += 1
-      continue
-    }
-
-    if (current.id - previous.id !== 1) {
-      unverifiable += 1
-      continue
-    }
-
-    const expected = computeChainHash(previous.chain_hash || CHAIN_SEED, current)
-    if (expected === current.chain_hash.toLowerCase()) {
-      verified += 1
+    const next = entries[index + 1]
+    if (current.id === next.id + 1) {
+      contiguous += 1
     } else {
-      mismatched += 1
+      gaps += 1
+    }
+    if (current.timestamp < next.timestamp) {
+      nonMonotonicTime += 1
     }
   }
 
-  return { verified, mismatched, unverifiable, missingHashes }
+  return { contiguous, gaps, nonMonotonicTime }
+}
+
+function eventTone(eventType: string): string {
+  const kind = classifyEvent(eventType)
+  if (kind === 'failures') {
+    return '#991b1b'
+  }
+  if (kind === 'escalations' || kind === 'retries') {
+    return '#92400e'
+  }
+  if (kind === 'approvals' || kind === 'policy') {
+    return '#0f766e'
+  }
+  return '#334155'
+}
+
+function approvalHint(status: string): string {
+  if (!status) {
+    return 'No action executed yet.'
+  }
+  if (status === 'pending') {
+    return 'Pending explicit human review.'
+  }
+  if (status === 'passed') {
+    return 'Approved transition recorded.'
+  }
+  if (status === 'failed') {
+    return 'Rejected transition recorded.'
+  }
+  if (status === 'in_progress') {
+    return 'Escalation in progress.'
+  }
+  return `Status: ${status}`
 }
 
 export default function GovernanceCommandCenter() {
@@ -98,7 +119,7 @@ export default function GovernanceCommandCenter() {
   const [destructive, setDestructive] = useState(false)
   const [explicitlyApproved, setExplicitlyApproved] = useState(false)
 
-  const [result, setResult] = useState<unknown>(null)
+  const [result, setResult] = useState<Record<string, unknown> | null>(null)
   const [error, setError] = useState('')
 
   const [auditEntries, setAuditEntries] = useState<AuditEntry[]>([])
@@ -107,10 +128,25 @@ export default function GovernanceCommandCenter() {
   const [auditLastUpdated, setAuditLastUpdated] = useState(0)
   const [userFilter, setUserFilter] = useState('all')
   const [eventFilter, setEventFilter] = useState('all')
-  const [dateFrom, setDateFrom] = useState('')
-  const [dateTo, setDateTo] = useState('')
+  const [searchTarget, setSearchTarget] = useState('')
 
-  const chainSummary = useMemo(() => summarizeChain(auditEntries), [auditEntries])
+  const timelineStats = useMemo<TimelineStats>(() => {
+    const stats: TimelineStats = {
+      approvals: 0,
+      escalations: 0,
+      failures: 0,
+      retries: 0,
+      policy: 0,
+      other: 0,
+    }
+    for (const entry of auditEntries) {
+      const kind = classifyEvent(entry.event_type)
+      stats[kind] += 1
+    }
+    return stats
+  }, [auditEntries])
+
+  const ordering = useMemo(() => continuitySummary(auditEntries), [auditEntries])
 
   const availableUsers = useMemo(() => {
     return Array.from(new Set(auditEntries.map((entry) => entry.user_id || 'system'))).sort()
@@ -121,24 +157,21 @@ export default function GovernanceCommandCenter() {
   }, [auditEntries])
 
   const filteredTimeline = useMemo(() => {
-    const fromMs = dateFrom ? new Date(`${dateFrom}T00:00:00`).getTime() : 0
-    const toMs = dateTo ? new Date(`${dateTo}T23:59:59`).getTime() : Number.POSITIVE_INFINITY
-
+    const targetNeedle = searchTarget.trim().toLowerCase()
     return auditEntries.filter((entry) => {
       const userValue = entry.user_id || 'system'
-      const timestampMs = entry.timestamp * 1000
       if (userFilter !== 'all' && userValue !== userFilter) {
         return false
       }
       if (eventFilter !== 'all' && entry.event_type !== eventFilter) {
         return false
       }
-      if (timestampMs < fromMs || timestampMs > toMs) {
+      if (targetNeedle && !`${entry.target_type}:${entry.target_id}`.toLowerCase().includes(targetNeedle)) {
         return false
       }
       return true
     })
-  }, [auditEntries, dateFrom, dateTo, eventFilter, userFilter])
+  }, [auditEntries, eventFilter, searchTarget, userFilter])
 
   useEffect(() => {
     let cancelled = false
@@ -146,7 +179,7 @@ export default function GovernanceCommandCenter() {
     async function loadAudit() {
       setAuditLoading(true)
       try {
-        const response = await apiRequest<AuditResponse>(`${ENDPOINTS.audit}?limit=250`)
+        const response = await apiRequest<AuditResponse>(`${ENDPOINTS.audit}?limit=300`)
         if (!cancelled) {
           setAuditEntries(response.entries || [])
           setAuditError('')
@@ -166,7 +199,7 @@ export default function GovernanceCommandCenter() {
     void loadAudit()
     const timer = window.setInterval(() => {
       void loadAudit()
-    }, 20_000)
+    }, 15_000)
 
     return () => {
       cancelled = true
@@ -177,32 +210,36 @@ export default function GovernanceCommandCenter() {
   async function checkAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError('')
+    setResult(null)
     try {
-      const response = await apiRequest(`${ENDPOINTS.charter}/check-action`, {
+      const response = await apiRequest<Record<string, unknown>>(`${ENDPOINTS.charter}/check-action`, {
         method: 'POST',
         body: JSON.stringify({
-          action_type: actionName,
+          action: actionName,
           confidence,
-          destructive,
-          explicitly_approved: explicitlyApproved,
+          context: {
+            destructive,
+            explicitly_approved: explicitlyApproved,
+          },
         }),
       })
       setResult(response)
     } catch (err) {
       setError(toErrorMessage(err))
-      setResult(null)
     }
   }
+
+  const resultStatus = typeof result?.allowed === 'boolean' ? (result.allowed ? 'passed' : 'failed') : ''
 
   return (
     <PageContainer>
       <PageHeader
-        title="Governance Command Center"
-        subtitle="Approval governance timeline with policy checks and append-only audit chain verification."
+        title="Governance Timeline Viewer"
+        subtitle="Deterministic governance chronology: approvals, escalations, retries, failures, and policy checks with audit visibility."
       />
 
       <Grid>
-        <SectionCard title="Policy Check Action">
+        <SectionCard title="Policy Evaluation (Dry-Run)">
           <form onSubmit={checkAction} style={{ display: 'grid', gap: '0.5rem' }}>
             <input
               style={inputStyle}
@@ -223,7 +260,7 @@ export default function GovernanceCommandCenter() {
             </label>
             <label style={checkboxStyle}>
               <input type="checkbox" checked={destructive} onChange={(e) => setDestructive(e.target.checked)} />
-              Destructive action
+              Destructive intent
             </label>
             <label style={checkboxStyle}>
               <input
@@ -231,19 +268,33 @@ export default function GovernanceCommandCenter() {
                 checked={explicitlyApproved}
                 onChange={(e) => setExplicitlyApproved(e.target.checked)}
               />
-              Explicitly approved
+              Explicitly approved context
             </label>
             <button style={buttonStyle} type="submit">
-              Evaluate Action
+              Evaluate Policy
             </button>
           </form>
-          <div style={{ marginTop: '0.75rem' }}>
+          <div style={{ marginTop: '0.7rem' }}>
             {error ? <MetaText>{error}</MetaText> : null}
-            {result ? <JsonBlock data={result} /> : <MetaText>No policy check executed yet.</MetaText>}
+            <MetaText>{approvalHint(resultStatus)}</MetaText>
+            {result ? <JsonBlock data={result} /> : null}
           </div>
         </SectionCard>
 
-        <DataPanel title="Charter Summary" endpoint={`${ENDPOINTS.charter}/summary`} intervalMs={20_000} />
+        <SectionCard title="Timeline Classification Summary">
+          <MetaText>approvals={timelineStats.approvals}</MetaText>
+          <MetaText>escalations={timelineStats.escalations}</MetaText>
+          <MetaText>failures={timelineStats.failures}</MetaText>
+          <MetaText>retries={timelineStats.retries}</MetaText>
+          <MetaText>policy={timelineStats.policy}</MetaText>
+          <MetaText>other={timelineStats.other}</MetaText>
+          <div style={{ marginTop: '0.55rem' }}>
+            <MetaText>
+              Deterministic ordering checks: contiguous_pairs={ordering.contiguous}, id_gaps={ordering.gaps},
+              non_monotonic_timestamps={ordering.nonMonotonicTime}
+            </MetaText>
+          </div>
+        </SectionCard>
       </Grid>
 
       <div style={{ marginTop: '1rem' }}>
@@ -266,35 +317,44 @@ export default function GovernanceCommandCenter() {
                   </option>
                 ))}
               </select>
-              <input type="date" value={dateFrom} onChange={(event) => setDateFrom(event.target.value)} style={inputStyle} />
-              <input type="date" value={dateTo} onChange={(event) => setDateTo(event.target.value)} style={inputStyle} />
+              <input
+                style={inputStyle}
+                value={searchTarget}
+                onChange={(event) => setSearchTarget(event.target.value)}
+                placeholder="Filter target type:id"
+              />
             </div>
 
             {auditError ? <MetaText>{auditError}</MetaText> : null}
             <MetaText>
-              Chain hash verification: {chainSummary.verified} verified | {chainSummary.mismatched} mismatched |{' '}
-              {chainSummary.unverifiable} unverifiable | {chainSummary.missingHashes} missing hashes
-            </MetaText>
-            <MetaText>
               Showing {filteredTimeline.length} entries | Last refresh:{' '}
-              {auditLastUpdated ? new Date(auditLastUpdated).toLocaleTimeString() : 'never'} | {auditLoading ? 'Refreshing...' : 'Idle'}
+              {auditLastUpdated ? new Date(auditLastUpdated).toLocaleTimeString() : 'never'} |{' '}
+              {auditLoading ? 'Refreshing…' : 'Idle'}
             </MetaText>
 
             {filteredTimeline.length === 0 ? (
               <MetaText>No timeline entries match current filters.</MetaText>
             ) : (
               <div style={{ display: 'grid', gap: '0.45rem' }}>
-                {filteredTimeline.map((entry) => (
-                  <div key={entry.id} style={timelineRowStyle}>
-                    <strong style={{ fontSize: '0.84rem' }}>{entry.event_type}</strong>
-                    <MetaText>
-                      {new Date(entry.timestamp * 1000).toLocaleString()} | user={entry.user_id || 'system'} | target=
-                      {entry.target_type}:{entry.target_id}
-                    </MetaText>
-                    <MetaText>session={entry.session_id}</MetaText>
-                    <MetaText>chain_hash={entry.chain_hash || '(missing)'}</MetaText>
-                  </div>
-                ))}
+                {filteredTimeline.map((entry) => {
+                  const tone = eventTone(entry.event_type)
+                  const replayLink = entry.target_type === 'task' ? `/debug?task=${encodeURIComponent(entry.target_id)}` : ''
+                  return (
+                    <div key={entry.id} style={{ ...timelineRowStyle, borderColor: `${tone}55` }}>
+                      <strong style={{ fontSize: '0.84rem', color: tone }}>{entry.event_type}</strong>
+                      <MetaText>
+                        {new Date(entry.timestamp * 1000).toLocaleString()} | user={entry.user_id || 'system'} | target=
+                        {entry.target_type}:{entry.target_id}
+                      </MetaText>
+                      <MetaText>session={entry.session_id} | id={entry.id}</MetaText>
+                      {replayLink ? (
+                        <Link to={replayLink} style={linkStyle}>
+                          Inspect linked replay
+                        </Link>
+                      ) : null}
+                    </div>
+                  )
+                })}
               </div>
             )}
           </div>
@@ -303,35 +363,36 @@ export default function GovernanceCommandCenter() {
 
       <div style={{ marginTop: '1rem' }}>
         <Grid>
-          <DataPanel title="Integrity Report" endpoint={`${ENDPOINTS.charter}/integrity/report`} intervalMs={20_000} />
+          <DataPanel title="Governance Approvals" endpoint={`${ENDPOINTS.approvals}?status=pending&limit=50`} intervalMs={20_000} />
+          <DataPanel title="Charter Pending Approvals" endpoint={`${ENDPOINTS.charter}/approvals/pending`} intervalMs={20_000} />
           <DataPanel title="Fail-Safe Report" endpoint={`${ENDPOINTS.charter}/failsafe/report`} intervalMs={20_000} />
-          <DataPanel title="Violations" endpoint={`${ENDPOINTS.charter}/violations`} intervalMs={20_000} />
+          <DataPanel title="Integrity Report" endpoint={`${ENDPOINTS.charter}/integrity/report`} intervalMs={20_000} />
         </Grid>
       </div>
     </PageContainer>
   )
 }
 
-const inputStyle: CSSProperties = {
+const inputStyle: React.CSSProperties = {
   border: '1px solid #cbd5e1',
   borderRadius: '6px',
   padding: '0.45rem 0.6rem',
 }
 
-const labelStyle: CSSProperties = {
+const labelStyle: React.CSSProperties = {
   display: 'grid',
   gap: '0.35rem',
   fontSize: '0.88rem',
 }
 
-const checkboxStyle: CSSProperties = {
+const checkboxStyle: React.CSSProperties = {
   display: 'flex',
   alignItems: 'center',
   gap: '0.45rem',
   fontSize: '0.88rem',
 }
 
-const buttonStyle: CSSProperties = {
+const buttonStyle: React.CSSProperties = {
   border: '1px solid #0f172a',
   borderRadius: '6px',
   background: '#0f172a',
@@ -340,11 +401,17 @@ const buttonStyle: CSSProperties = {
   cursor: 'pointer',
 }
 
-const timelineRowStyle: CSSProperties = {
+const timelineRowStyle: React.CSSProperties = {
   border: '1px solid #dbe3ec',
   borderRadius: '7px',
   background: '#f8fafc',
   padding: '0.55rem 0.65rem',
   display: 'grid',
   gap: '0.2rem',
+}
+
+const linkStyle: React.CSSProperties = {
+  color: '#1d4ed8',
+  textDecoration: 'none',
+  fontSize: '0.8rem',
 }

@@ -1,0 +1,492 @@
+{
+  "edges": [
+    {
+      "from": "board:RB3Gen2",
+      "relation": "defines",
+      "to": "dts:qcs6490-rb3gen2.dts"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:pm7250b.dtsi"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:pm7325.dtsi"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:pm8350c.dtsi"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:pmk8350.dtsi"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:qcs6490-audioreach.dtsi"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:qcs6490-rb3gen2.dts"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "includes_or_references",
+      "to": "dtsi:sc7280.dtsi"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "has_sound_card",
+      "to": "soundcard:/"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "has_sound_card",
+      "to": "soundcard:channel@146"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_link",
+      "to": "soundwire:soundwire"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_link",
+      "to": "soundwire:swr0"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_link",
+      "to": "soundwire:swr1"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_link",
+      "to": "soundwire:swr2"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "soundwire_link",
+      "to": "soundwire:wsa"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "defines_dai_link",
+      "to": "dai_link:link-name = \"VA Capture\";"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "defines_dai_link",
+      "to": "dai_link:link-name = \"WSA Playback\";"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "defines_dai_link",
+      "to": "dai_link:va-dai-link {"
+    },
+    {
+      "from": "dts:qcs6490-rb3gen2.dts",
+      "relation": "defines_dai_link",
+      "to": "dai_link:wsa-dai-link {"
+    },
+    {
+      "from": "board:RB3Gen2",
+      "relation": "playback_pcm",
+      "to": "pcm:hw:0,0"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrLeft BOOST Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrLeft COMP Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrLeft DAC Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrLeft PA Volume"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrLeft VISENSE Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrLeft WSA MODE"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrRight BOOST Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrRight COMP Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrRight DAC Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrRight PA Volume"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrRight VISENSE Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:SpkrRight WSA MODE"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA RX0 MUX"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA RX1 MUX"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_COMP1 Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_COMP2 Switch"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_RX0 Digital Volume"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_RX0 INP0"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_RX1 Digital Volume"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "depends_on_mixer",
+      "to": "mixer:WSA_RX1 INP0"
+    },
+    {
+      "from": "pcm:hw:0,0",
+      "relation": "runtime_activation",
+      "to": "runtime:playback_activation"
+    }
+  ],
+  "entry_dts": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+  "governance_posture": "ADVISORY_ONLY",
+  "layers": [
+    "dts_dtsi_topology",
+    "sound_card_nodes",
+    "dai_links",
+    "frontend_dais",
+    "backend_dais",
+    "codec_nodes",
+    "soundwire_links",
+    "widgets",
+    "routing_paths",
+    "mixer_controls",
+    "pcm_devices",
+    "runtime_activation",
+    "overlay_mutations"
+  ],
+  "nodes": [
+    {
+      "id": "board:RB3Gen2",
+      "kind": "board",
+      "label": "RB3Gen2",
+      "layer": "board"
+    },
+    {
+      "id": "dts:qcs6490-rb3gen2.dts",
+      "kind": "dts_entry",
+      "label": "qcs6490-rb3gen2.dts",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:pm7250b.dtsi",
+      "kind": "dtsi_file",
+      "label": "pm7250b.dtsi",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:pm7325.dtsi",
+      "kind": "dtsi_file",
+      "label": "pm7325.dtsi",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:pm8350c.dtsi",
+      "kind": "dtsi_file",
+      "label": "pm8350c.dtsi",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:pmk8350.dtsi",
+      "kind": "dtsi_file",
+      "label": "pmk8350.dtsi",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:qcs6490-audioreach.dtsi",
+      "kind": "dtsi_file",
+      "label": "qcs6490-audioreach.dtsi",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:qcs6490-rb3gen2.dts",
+      "kind": "dtsi_file",
+      "label": "qcs6490-rb3gen2.dts",
+      "layer": "dts"
+    },
+    {
+      "id": "dtsi:sc7280.dtsi",
+      "kind": "dtsi_file",
+      "label": "sc7280.dtsi",
+      "layer": "dts"
+    },
+    {
+      "id": "soundcard:/",
+      "kind": "sound_card",
+      "label": "Qualcomm Technologies, Inc. Robotics RB3gen2",
+      "layer": "sound_card"
+    },
+    {
+      "id": "soundcard:channel@146",
+      "kind": "sound_card",
+      "label": "QCS6490-RB3Gen2",
+      "layer": "sound_card"
+    },
+    {
+      "id": "soundwire:soundwire",
+      "kind": "soundwire",
+      "label": "soundwire",
+      "layer": "soundwire"
+    },
+    {
+      "id": "soundwire:swr0",
+      "kind": "soundwire",
+      "label": "swr0",
+      "layer": "soundwire"
+    },
+    {
+      "id": "soundwire:swr1",
+      "kind": "soundwire",
+      "label": "swr1",
+      "layer": "soundwire"
+    },
+    {
+      "id": "soundwire:swr2",
+      "kind": "soundwire",
+      "label": "swr2",
+      "layer": "soundwire"
+    },
+    {
+      "id": "soundwire:wsa",
+      "kind": "soundwire",
+      "label": "wsa",
+      "layer": "soundwire"
+    },
+    {
+      "id": "dai_link:link-name = \"VA Capture\";",
+      "kind": "dai_link",
+      "label": "link-name = \"VA Capture\";",
+      "layer": "dai_link"
+    },
+    {
+      "id": "dai_link:link-name = \"WSA Playback\";",
+      "kind": "dai_link",
+      "label": "link-name = \"WSA Playback\";",
+      "layer": "dai_link"
+    },
+    {
+      "id": "dai_link:va-dai-link {",
+      "kind": "dai_link",
+      "label": "va-dai-link {",
+      "layer": "dai_link"
+    },
+    {
+      "id": "dai_link:wsa-dai-link {",
+      "kind": "dai_link",
+      "label": "wsa-dai-link {",
+      "layer": "dai_link"
+    },
+    {
+      "id": "pcm:hw:0,0",
+      "kind": "pcm_device",
+      "label": "hw:0,0",
+      "layer": "pcm"
+    },
+    {
+      "id": "mixer:SpkrLeft BOOST Switch",
+      "kind": "mixer_control",
+      "label": "SpkrLeft BOOST Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrLeft COMP Switch",
+      "kind": "mixer_control",
+      "label": "SpkrLeft COMP Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrLeft DAC Switch",
+      "kind": "mixer_control",
+      "label": "SpkrLeft DAC Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrLeft PA Volume",
+      "kind": "mixer_control",
+      "label": "SpkrLeft PA Volume",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrLeft VISENSE Switch",
+      "kind": "mixer_control",
+      "label": "SpkrLeft VISENSE Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrLeft WSA MODE",
+      "kind": "mixer_control",
+      "label": "SpkrLeft WSA MODE",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrRight BOOST Switch",
+      "kind": "mixer_control",
+      "label": "SpkrRight BOOST Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrRight COMP Switch",
+      "kind": "mixer_control",
+      "label": "SpkrRight COMP Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrRight DAC Switch",
+      "kind": "mixer_control",
+      "label": "SpkrRight DAC Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrRight PA Volume",
+      "kind": "mixer_control",
+      "label": "SpkrRight PA Volume",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrRight VISENSE Switch",
+      "kind": "mixer_control",
+      "label": "SpkrRight VISENSE Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:SpkrRight WSA MODE",
+      "kind": "mixer_control",
+      "label": "SpkrRight WSA MODE",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA RX0 MUX",
+      "kind": "mixer_control",
+      "label": "WSA RX0 MUX",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA RX1 MUX",
+      "kind": "mixer_control",
+      "label": "WSA RX1 MUX",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+      "kind": "mixer_control",
+      "label": "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_COMP1 Switch",
+      "kind": "mixer_control",
+      "label": "WSA_COMP1 Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_COMP2 Switch",
+      "kind": "mixer_control",
+      "label": "WSA_COMP2 Switch",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_RX0 Digital Volume",
+      "kind": "mixer_control",
+      "label": "WSA_RX0 Digital Volume",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_RX0 INP0",
+      "kind": "mixer_control",
+      "label": "WSA_RX0 INP0",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_RX1 Digital Volume",
+      "kind": "mixer_control",
+      "label": "WSA_RX1 Digital Volume",
+      "layer": "mixer"
+    },
+    {
+      "id": "mixer:WSA_RX1 INP0",
+      "kind": "mixer_control",
+      "label": "WSA_RX1 INP0",
+      "layer": "mixer"
+    },
+    {
+      "id": "runtime:playback_activation",
+      "kind": "runtime_activation",
+      "label": "playback_activation",
+      "layer": "runtime",
+      "route_activation_confidence": "MEDIUM"
+    }
+  ]
+}

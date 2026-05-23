@@ -1,0 +1,101 @@
+{
+  "classification": "CAPTURE_READY",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "CAPTURE_READY"
+  ],
+  "reason": "response_validated",
+  "request": {
+    "approved_commands": [
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+        "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "execution_mode": "governed_write_approved",
+    "protocol_version": "bridge-v1",
+    "request_id": "b65dfe33-f201-4645-a1e5-20c3a999fe46",
+    "request_integrity_sha256": "371120d43ac079509c7221d1f9b54dcad64c356dc7e20a18ac64e597214800cb",
+    "request_sequence": 33,
+    "request_timestamp": "1779443351.0429459",
+    "timeout_seconds": 45,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "b65dfe33-f201-4645-a1e5-20c3a999fe46",
+  "request_sequence": 33,
+  "response": {
+    "approved_commands": [
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+        "original_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "execution_mode": "governed_write_approved",
+    "execution_status": "executed",
+    "executor_command_trace": [
+      {
+        "execution_status": "executed",
+        "exit_code": 0,
+        "finished_at": "2026-05-22T09:49:23.0209295Z",
+        "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav",
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav",
+        "started_at": "2026-05-22T09:49:22.8582627Z",
+        "stderr": "",
+        "stdout": ""
+      }
+    ],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [
+      "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell rm -f /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "raw_output": "",
+    "request_id": "b65dfe33-f201-4645-a1e5-20c3a999fe46",
+    "request_integrity_sha256": "371120d43ac079509c7221d1f9b54dcad64c356dc7e20a18ac64e597214800cb",
+    "request_sequence": 33,
+    "response_integrity_sha256": "4136ab8349351cdd060c70a84bb2502b94bcf425b8bb159be8f1d6cbade06e38",
+    "stderr": "",
+    "timeout_seconds": 45,
+    "timestamps": {
+      "finished_at": "2026-05-22T09:49:23.0210196Z",
+      "received_at": "2026-05-22T09:49:22.6612840Z",
+      "started_at": "2026-05-22T09:49:22.8566460Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [
+      {
+        "boundary": "adb_shell_boundary",
+        "expanded_command": "adb.exe shell rm -f <target_path>",
+        "normalized_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

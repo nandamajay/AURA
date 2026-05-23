@@ -1,0 +1,62 @@
+{
+  "current_state": "playback_failed",
+  "final_classification": "ADVISORY_ONLY",
+  "states": [
+    "asset_selected",
+    "asset_deployed",
+    "mixers_applied",
+    "backend_enabled",
+    "pcm_active",
+    "playback_running",
+    "playback_completed",
+    "playback_failed",
+    "cleanup_completed"
+  ],
+  "transitions": [
+    {
+      "condition": "deployment_success",
+      "from": "asset_selected",
+      "to": "asset_deployed"
+    },
+    {
+      "condition": "mixer_apply_success",
+      "from": "asset_deployed",
+      "to": "mixers_applied"
+    },
+    {
+      "condition": "backend_activity_true",
+      "from": "mixers_applied",
+      "to": "backend_enabled"
+    },
+    {
+      "condition": "pcm_activation_true",
+      "from": "backend_enabled",
+      "to": "pcm_active"
+    },
+    {
+      "condition": "playback_started",
+      "from": "pcm_active",
+      "to": "playback_running"
+    },
+    {
+      "condition": "playback_exit_zero",
+      "from": "playback_running",
+      "to": "playback_completed"
+    },
+    {
+      "condition": "playback_exit_nonzero",
+      "from": "playback_running",
+      "to": "playback_failed"
+    },
+    {
+      "condition": "cleanup_success",
+      "from": "playback_completed",
+      "to": "cleanup_completed"
+    },
+    {
+      "condition": "cleanup_success_or_skipped",
+      "from": "playback_failed",
+      "to": "cleanup_completed"
+    }
+  ]
+}

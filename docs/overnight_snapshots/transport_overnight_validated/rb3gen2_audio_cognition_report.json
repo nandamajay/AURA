@@ -1,0 +1,558 @@
+{
+  "claims": {
+    "behavioral_equivalence": "NOT_CLAIMED",
+    "merge_readiness": "NOT_CLAIMED",
+    "runtime_parity": "NOT_CLAIMED"
+  },
+  "cognition": {
+    "capture_workflow": {
+      "command_templates": [
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/pcm"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "command": "arecord -D <capture_device> -f S16_LE -r 48000 -c 2 <capture.wav>"
+        }
+      ],
+      "mode": "Learning Mode",
+      "runtime_sequence": [
+        "collect capture PCM endpoints",
+        "resolve backend/frontend capture route",
+        "build capture template only after target selection"
+      ],
+      "selected_overlay": "UNRESOLVED",
+      "workflow_name": "adaptive_capture"
+    },
+    "claims": {
+      "behavioral_equivalence": "NOT_CLAIMED",
+      "merge_readiness": "NOT_CLAIMED",
+      "runtime_parity": "NOT_CLAIMED"
+    },
+    "cognition_mode": "Learning Mode",
+    "governance": {
+      "fail_closed": true,
+      "immutable_lineage": true,
+      "linux_role": "governance_and_cognition",
+      "normalized_execution": true,
+      "windows_role": "execution_worker_only"
+    },
+    "mixer_dependency_graph": {
+      "edges": [],
+      "nodes": []
+    },
+    "overlay_selection": "UNRESOLVED",
+    "playback_workflow": {
+      "alsa_playback_device": {
+        "alsa_device": "hw:0,0",
+        "confidence": "LOW",
+        "pcm_entry": null,
+        "source": "card_fallback"
+      },
+      "blocked_mutation_commands": [
+        "tinymix set ...",
+        "amixer cset ...",
+        "echo ... > /sys/..."
+      ],
+      "command_templates": [
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/cards"
+        },
+        {
+          "classification": "SAFE_READ",
+          "command": "cat /proc/asound/pcm"
+        },
+        {
+          "classification": "REQUIRES_OPERATOR_APPROVAL",
+          "command": "aplay -D hw:0,0 <wav_asset_path>",
+          "enabled": true
+        }
+      ],
+      "mode": "Learning Mode",
+      "runtime_sequence": [
+        "validate governance allowlist and execution classification",
+        "collect read-only route evidence (/proc/asound, dmesg, debugfs when available)",
+        "resolve overlay + target ambiguity before any mixer mutation",
+        "derive ALSA playback command template"
+      ],
+      "selected_overlay": "UNRESOLVED",
+      "selected_playback_target": "speaker",
+      "validation_status": "VALIDATED_TEMPLATE",
+      "wav_asset_requirements": {
+        "bit_depth": "operator_selected",
+        "channels": "operator_selected",
+        "format": "wav_pcm",
+        "path": "REQUIRED",
+        "sample_rate_hz": "operator_selected"
+      },
+      "workflow_name": "adaptive_playback"
+    },
+    "runtime_audio_knowledge_graph": {
+      "edges": [
+        {
+          "from": "audio_target",
+          "relation": "reports",
+          "to": "card:0"
+        },
+        {
+          "from": "audio_target",
+          "relation": "supports",
+          "to": "playback_target:speaker"
+        },
+        {
+          "from": "audio_target",
+          "relation": "unsupported",
+          "to": "unsupported:tinymix_control_paths:unsupported_or_unknown"
+        },
+        {
+          "from": "audio_target",
+          "relation": "unsupported",
+          "to": "unsupported:dapm_debugfs_paths:unsupported_or_unknown"
+        },
+        {
+          "from": "audio_target",
+          "relation": "unsupported",
+          "to": "unsupported:qcom_audio_routing:not_available"
+        },
+        {
+          "from": "audio_target",
+          "relation": "candidate_playback_device",
+          "to": "alsa:hw:0,0"
+        }
+      ],
+      "nodes": [
+        {
+          "id": "audio_target",
+          "kind": "target",
+          "label": "runtime_audio_target"
+        },
+        {
+          "id": "card:0",
+          "kind": "device",
+          "label": "QCS6490RB3Gen2"
+        },
+        {
+          "id": "playback_target:speaker",
+          "kind": "playback_target",
+          "label": "speaker"
+        },
+        {
+          "id": "unsupported:tinymix_control_paths:unsupported_or_unknown",
+          "kind": "unsupported_path",
+          "label": "tinymix_control_paths:unsupported_or_unknown"
+        },
+        {
+          "id": "unsupported:dapm_debugfs_paths:unsupported_or_unknown",
+          "kind": "unsupported_path",
+          "label": "dapm_debugfs_paths:unsupported_or_unknown"
+        },
+        {
+          "id": "unsupported:qcom_audio_routing:not_available",
+          "kind": "unsupported_path",
+          "label": "qcom_audio_routing:not_available"
+        },
+        {
+          "id": "alsa:hw:0,0",
+          "kind": "device",
+          "label": "hw:0,0"
+        }
+      ]
+    },
+    "runtime_confidence": "LOW",
+    "selected_playback_target": "speaker",
+    "supported_playback_targets": [
+      "speaker"
+    ],
+    "targeted_questions": [
+      {
+        "id": "runtime_profile",
+        "question": "Runtime confidence is low. Confirm if this boot uses production audio overlay or bring-up overlay."
+      },
+      {
+        "id": "overlay_selection",
+        "question": "Select active DTS overlay/config before playback planning continues."
+      },
+      {
+        "id": "wav_asset",
+        "question": "Provide WAV asset path and format (sample rate/channels/bit depth)."
+      }
+    ],
+    "unsupported_commands": [
+      {
+        "exit_code": 127,
+        "normalized_command": "getprop ro.build.fingerprint",
+        "stderr": "",
+        "stdout": ""
+      }
+    ],
+    "unsupported_mixer_paths": [
+      "tinymix_control_paths:unsupported_or_unknown",
+      "dapm_debugfs_paths:unsupported_or_unknown",
+      "qcom_audio_routing:not_available"
+    ]
+  },
+  "demonstration": {
+    "generated_validated_playback_workflow": true,
+    "identified_unsupported_commands": true,
+    "inferred_alsa_playback_path": {
+      "alsa_device": "hw:0,0",
+      "confidence": "LOW",
+      "pcm_entry": null,
+      "source": "card_fallback"
+    },
+    "overlay_clarification_requested": true
+  },
+  "execution_mode": "COGNITION_ONLY",
+  "governance_posture": "ADVISORY_ONLY",
+  "static_audio_context": {
+    "backend_frontend_mappings": [],
+    "codec_nodes": [],
+    "dai_links": [
+      "link-name = \"VA Capture\";",
+      "link-name = \"WSA Playback\";",
+      "va-dai-link {",
+      "wsa-dai-link {"
+    ],
+    "entry_dts": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+    "governance_posture": "ADVISORY_ONLY",
+    "include_graph": [
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi"
+      }
+    ],
+    "overlay_inheritance": {
+      "ambiguous": false,
+      "overlay_candidates": [
+        "qcs6490-audioreach.dtsi"
+      ]
+    },
+    "parse_confidence": "MEDIUM",
+    "qcom_audio_routing": [],
+    "sound_card_nodes": [
+      {
+        "model": "Qualcomm Technologies, Inc. Robotics RB3gen2",
+        "node": "/"
+      },
+      {
+        "model": "QCS6490-RB3Gen2",
+        "node": "channel@146"
+      }
+    ],
+    "soundwire_topology_markers": [
+      "soundwire",
+      "swr0",
+      "swr1",
+      "swr2",
+      "wsa"
+    ],
+    "source_files": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi"
+    ],
+    "unresolved_includes": [
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "dt-bindings/iio/qcom,spmi-adc7-pmk8350.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "dt-bindings/iio/qcom,spmi-adc7-pm7325.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "dt-bindings/leds/common.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "dt-bindings/pinctrl/qcom,pmic-gpio.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "include": "dt-bindings/regulator/qcom,rpmh-regulator.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,camcc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,dispcc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,dsi-phy-28nm.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,gcc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,gpucc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,lpassaudiocc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,lpasscorecc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,rpmh.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/clock/qcom,videocc-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/dma/qcom-gpi.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/firmware/qcom,scm.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/gpio/gpio.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/interconnect/qcom,icc.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/interconnect/qcom,osm-l3.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/interconnect/qcom,sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/interrupt-controller/arm-gic.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/mailbox/qcom-ipcc.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/phy/phy-qcom-qmp.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/power/qcom-rpmpd.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/reset/qcom,sdm845-aoss.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/reset/qcom,sdm845-pdc.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/soc/qcom,apr.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/soc/qcom,rpmh-rsc.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/sound/qcom,lpass.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/sound/qcom,q6afe.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/sound/qcom,q6asm.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/sc7280.dtsi",
+        "include": "dt-bindings/thermal/thermal.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi",
+        "include": "dt-bindings/iio/qcom,spmi-vadc.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi",
+        "include": "dt-bindings/interrupt-controller/irq.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7250b.dtsi",
+        "include": "dt-bindings/spmi/spmi.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi",
+        "include": "dt-bindings/interrupt-controller/irq.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm7325.dtsi",
+        "include": "dt-bindings/spmi/spmi.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi",
+        "include": "dt-bindings/interrupt-controller/irq.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pm8350c.dtsi",
+        "include": "dt-bindings/spmi/spmi.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+        "include": "dt-bindings/input/input.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+        "include": "dt-bindings/input/linux-event-codes.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+        "include": "dt-bindings/interrupt-controller/irq.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/pmk8350.dtsi",
+        "include": "dt-bindings/spmi/spmi.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi",
+        "include": "dt-bindings/clock/qcom,lpass-sc7280.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi",
+        "include": "dt-bindings/soc/qcom,gpr.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi",
+        "include": "dt-bindings/sound/qcom,q6afe.h",
+        "reason": "not_resolved"
+      },
+      {
+        "from": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/arch/arm64/boot/dts/qcom/qcs6490-audioreach.dtsi",
+        "include": "dt-bindings/sound/qcom,q6dsp-lpass-ports.h",
+        "reason": "not_resolved"
+      }
+    ],
+    "widgets": []
+  },
+  "summary": {
+    "alsa_playback_device": {
+      "alsa_device": "hw:0,0",
+      "confidence": "LOW",
+      "pcm_entry": null,
+      "source": "card_fallback"
+    },
+    "cognition_mode": "Learning Mode",
+    "overlay_selection": "UNRESOLVED",
+    "question_count": 3,
+    "questions": [
+      {
+        "id": "runtime_profile",
+        "question": "Runtime confidence is low. Confirm if this boot uses production audio overlay or bring-up overlay."
+      },
+      {
+        "id": "overlay_selection",
+        "question": "Select active DTS overlay/config before playback planning continues."
+      },
+      {
+        "id": "wav_asset",
+        "question": "Provide WAV asset path and format (sample rate/channels/bit depth)."
+      }
+    ],
+    "runtime_confidence": "LOW",
+    "selected_playback_target": "speaker",
+    "supported_playback_targets": [
+      "speaker"
+    ],
+    "unsupported_commands": [
+      {
+        "exit_code": 127,
+        "normalized_command": "getprop ro.build.fingerprint",
+        "stderr": "",
+        "stdout": ""
+      }
+    ]
+  },
+  "validation_target": "RB3Gen2"
+}

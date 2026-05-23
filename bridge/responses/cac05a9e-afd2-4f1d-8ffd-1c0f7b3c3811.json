@@ -1,0 +1,62 @@
+{
+  "transport": "shared_folder",
+  "timestamps": {
+    "received_at": "2026-05-22T09:47:06.9543800Z",
+    "finished_at": "2026-05-22T09:47:07.4753577Z",
+    "started_at": "2026-05-22T09:47:07.2713790Z"
+  },
+  "raw_output": "AURA_BRIDGE_PING\r\r\n",
+  "transport_metadata": {
+    "adb_serial": "12345678",
+    "worker_transport": "shared_folder",
+    "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+    "command_runtime": "adb_shell",
+    "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge"
+  },
+  "execution_status": "executed",
+  "raw_executor_invocation": [
+    "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell echo AURA_BRIDGE_PING"
+  ],
+  "executor_command_trace": [
+    {
+      "normalized_command": "echo AURA_BRIDGE_PING",
+      "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell echo AURA_BRIDGE_PING",
+      "exit_code": 0,
+      "execution_status": "executed",
+      "stdout": "AURA_BRIDGE_PING\r\r\n",
+      "stderr": "",
+      "started_at": "2026-05-22T09:47:07.2767382Z",
+      "finished_at": "2026-05-22T09:47:07.4682288Z"
+    }
+  ],
+  "protocol_version": "bridge-v1",
+  "request_id": "cac05a9e-afd2-4f1d-8ffd-1c0f7b3c3811",
+  "timeout_seconds": 20,
+  "approved_commands": [
+    "echo AURA_BRIDGE_PING"
+  ],
+  "execution_mode": "governed_read_only",
+  "response_integrity_sha256": "e951bdf1cbd3224c8b305a005c5877733d448f3cd6977d25b61a03a65b064854",
+  "executor_identity": {
+    "hostname": "QCOM-X1M5XIGBIY",
+    "worker_id": "nandam@QCOM-X1M5XIGBIY",
+    "username": "nandam",
+    "worker_type": "windows_shared_folder_worker"
+  },
+  "request_integrity_sha256": "d80846b861f2160e4cc0ac1f3a2625e5415498a5e80716cac707b851b98b3c18",
+  "stderr": "",
+  "command_entries": [
+    {
+      "normalized_command": "echo AURA_BRIDGE_PING",
+      "original_command": "echo AURA_BRIDGE_PING"
+    }
+  ],
+  "transport_expansion_trace": [
+    {
+      "normalized_command": "echo AURA_BRIDGE_PING",
+      "expanded_command": "adb.exe shell <normalized_command>",
+      "boundary": "adb_shell_boundary"
+    }
+  ],
+  "request_sequence": 28
+}

@@ -1,0 +1,62 @@
+{
+  "category_enum": [
+    "runtime",
+    "topology",
+    "governance",
+    "regression",
+    "persistence",
+    "transport"
+  ],
+  "deterministic_ordering_required": true,
+  "fail_closed": true,
+  "governance_classification_enum": [
+    "FAIL_CLOSED",
+    "GOVERNED_APPROVED",
+    "ADVISORY_ONLY",
+    "REJECTED",
+    "QUARANTINED"
+  ],
+  "lifecycle_enum": [
+    "emitted",
+    "acknowledged",
+    "correlated",
+    "persisted",
+    "replayed"
+  ],
+  "lifecycle_transition_rules": {
+    "acknowledged": [
+      "correlated"
+    ],
+    "correlated": [
+      "persisted"
+    ],
+    "emitted": [
+      "acknowledged"
+    ],
+    "persisted": [
+      "replayed"
+    ],
+    "replayed": []
+  },
+  "metadata_fields": {
+    "cognition_lineage_id": "string",
+    "confidence": "float_0_to_1",
+    "evidence_references": "list[string]",
+    "governance_classification": "enum",
+    "originating_agent": "string",
+    "replay_correlation_id": "string",
+    "target_agent": "string_optional",
+    "timestamp": "iso8601"
+  },
+  "required_fields": [
+    "event_id",
+    "sequence",
+    "category",
+    "event_name",
+    "payload",
+    "metadata",
+    "lifecycle"
+  ],
+  "schema_version": "1.0",
+  "updated_at": "2026-05-23T05:30:28.897449+00:00"
+}

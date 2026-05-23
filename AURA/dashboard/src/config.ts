@@ -20,6 +20,7 @@ export const WS_URL = config.WS_URL.endsWith('/ws') ? config.WS_URL : `${config.
 // API endpoints
 export const ENDPOINTS = {
   health: `${API_BASE}/health/ready`,
+  runtimeOverview: `${API_BASE}/health/runtime-overview`,
   metrics: `${API_BASE}/metrics`,
   login: `${API_BASE}/api/v1/auth/login`,
   me: `${API_BASE}/api/v1/auth/me`,
@@ -33,4 +34,6 @@ export const ENDPOINTS = {
   approvals: `${API_BASE}/api/v1/governance/approvals`,
   audit: `${API_BASE}/api/v1/governance/audit`,
   simulation: `${API_BASE}/api/v1/simulation`,
+  evidenceIndex: `${API_BASE}/api/v1/knowledge/evidence/index`,
+  evidenceRead: `${API_BASE}/api/v1/knowledge/evidence/read`,
 } as const

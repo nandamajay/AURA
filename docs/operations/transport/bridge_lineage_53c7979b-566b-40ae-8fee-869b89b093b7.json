@@ -1,0 +1,101 @@
+{
+  "classification": "ADVISORY_ONLY",
+  "governance_verdict_chain": [
+    "APPROVED",
+    "EXECUTING",
+    "ADVISORY_ONLY"
+  ],
+  "reason": "nonzero_exit_code",
+  "request": {
+    "approved_commands": [
+      "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+        "original_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "execution_mode": "governed_write_approved",
+    "protocol_version": "bridge-v1",
+    "request_id": "53c7979b-566b-40ae-8fee-869b89b093b7",
+    "request_integrity_sha256": "25c3e18bf2b442ce6f3f5882d876307475f5698e1d9bf92c08bf16d058748f2d",
+    "request_sequence": 41,
+    "request_timestamp": "1779443952.5484867",
+    "timeout_seconds": 45,
+    "transport": "shared_folder",
+    "transport_expansion_trace": {
+      "executor_expansion_rule": "adb.exe shell <normalized_command>",
+      "forbidden": [
+        "nested adb shell",
+        "linux shell wrapper leakage",
+        "transport prefix duplication"
+      ],
+      "linux_emission": "canonical_target_command_only"
+    }
+  },
+  "request_id": "53c7979b-566b-40ae-8fee-869b89b093b7",
+  "request_sequence": 41,
+  "response": {
+    "approved_commands": [
+      "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "command_entries": [
+      {
+        "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+        "original_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "execution_mode": "governed_write_approved",
+    "execution_status": "failed",
+    "executor_command_trace": [
+      {
+        "execution_status": "failed",
+        "exit_code": 32,
+        "finished_at": "2026-05-22T09:59:21.8758638Z",
+        "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+        "raw_executor_invocation": "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+        "started_at": "2026-05-22T09:59:21.7074383Z",
+        "stderr": "",
+        "stdout": "aplay: main:831: audio open error: Invalid argument\r\r\n"
+      }
+    ],
+    "executor_identity": {
+      "hostname": "QCOM-X1M5XIGBIY",
+      "username": "nandam",
+      "worker_id": "nandam@QCOM-X1M5XIGBIY",
+      "worker_type": "windows_shared_folder_worker"
+    },
+    "protocol_version": "bridge-v1",
+    "raw_executor_invocation": [
+      "C:\\adb_tool\\platform-tools\\adb.exe -s 12345678 shell aplay -D hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "raw_output": "aplay: main:831: audio open error: Invalid argument\r\r\n",
+    "request_id": "53c7979b-566b-40ae-8fee-869b89b093b7",
+    "request_integrity_sha256": "25c3e18bf2b442ce6f3f5882d876307475f5698e1d9bf92c08bf16d058748f2d",
+    "request_sequence": 41,
+    "response_integrity_sha256": "5231c0ca4e22b6cc7dc81962f15c871a369fdd52ae1af82ea2ef0c8909a0d46a",
+    "stderr": "",
+    "timeout_seconds": 45,
+    "timestamps": {
+      "finished_at": "2026-05-22T09:59:21.8773764Z",
+      "received_at": "2026-05-22T09:59:21.4495573Z",
+      "started_at": "2026-05-22T09:59:21.6990442Z"
+    },
+    "transport": "shared_folder",
+    "transport_expansion_trace": [
+      {
+        "boundary": "adb_shell_boundary",
+        "expanded_command": "adb.exe shell aplay -D <hw:x,y> <target_path>",
+        "normalized_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+      }
+    ],
+    "transport_metadata": {
+      "adb_path": "C:\\adb_tool\\platform-tools\\adb.exe",
+      "adb_serial": "12345678",
+      "bridge_root": "\\\\hu-nandam-hyd\\workspace\\AURA_V1\\bridge",
+      "command_runtime": "adb_shell",
+      "worker_transport": "shared_folder"
+    }
+  }
+}

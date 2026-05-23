@@ -1,0 +1,59 @@
+{
+  "generated_at_epoch": 1779514290.054086,
+  "scenarios": [
+    {
+      "detail": "fail_closed_event_rejected:missing_event_name",
+      "passed": true,
+      "scenario": "malformed_event"
+    },
+    {
+      "detail": "fail_closed_event_rejected:unsupported_category",
+      "passed": true,
+      "scenario": "unsupported_event_type"
+    },
+    {
+      "detail": "fail_closed_event_rejected:confidence_out_of_range",
+      "passed": true,
+      "scenario": "invalid_confidence_metadata"
+    },
+    {
+      "detail": "fail_closed_event_rejected:invalid_lifecycle_transition",
+      "passed": true,
+      "scenario": "duplicated_replay_ids"
+    },
+    {
+      "detail": {
+        "errors": [
+          "duplicate_sequence:1",
+          "out_of_order_sequence:1"
+        ],
+        "event_count": 2,
+        "quarantine_count": 0,
+        "updated_at": "2026-05-23T05:31:30.050375+00:00",
+        "valid": false
+      },
+      "passed": true,
+      "scenario": "replay_ordering_corruption"
+    },
+    {
+      "detail": "fail_closed_event_rejected:unsupported_category",
+      "ordering_after_corruption": {
+        "errors": [],
+        "event_count": 0,
+        "quarantine_count": 1,
+        "updated_at": "2026-05-23T05:31:30.052293+00:00",
+        "valid": true
+      },
+      "passed": true,
+      "scenario": "lineage_corruption_then_reject_poison"
+    }
+  ],
+  "schema_version": "1.0",
+  "summary": {
+    "event_quarantine_score": 1.0,
+    "passed": 6,
+    "quarantine_total": 5,
+    "total": 6
+  },
+  "validator": "aura_event_quarantine_tests"
+}

@@ -43,6 +43,53 @@ interface WatchdogResponse {
   states: Record<string, WatchdogState>
 }
 
+interface RuntimeOverviewDomainStats {
+  dispatches: number
+  starvation_events: number
+  fairness_overrides: number
+  last_queue_wait_ms: number
+}
+
+interface RuntimeOverview {
+  queue_isolation?: {
+    per_domain?: Record<string, RuntimeOverviewDomainStats>
+  }
+  tasks?: {
+    domain_activity?: Record<
+      string,
+      {
+        total: number
+        running: number
+        queued: number
+        failed: number
+        completed: number
+      }
+    >
+    retry_pressure?: {
+      retry_pending_tasks: number
+      tasks_with_retry_lineage: number
+    }
+  }
+  websocket?: {
+    available?: boolean
+    payload?: {
+      event_buffer_size?: number
+      event_buffer_capacity?: number
+      buffer_evictions_total?: number
+      sse_drop_total?: number
+      domain_ingest_count?: Record<string, number>
+      domain_ws_delivery_count?: Record<string, number>
+      domain_sse_delivery_count?: Record<string, number>
+    }
+    error?: string
+  }
+  pressure_alerts?: Array<{
+    severity: string
+    surface: string
+    message: string
+  }>
+}
+
 type AgentCardStatus = 'running' | 'queued' | 'completed' | 'failed' | 'timeout'
 
 interface AgentCard {
@@ -138,6 +185,9 @@ export default function LiveAgentObservability() {
   const { data: running, reload: reloadRunning } = useApiData<RunningAgentsResponse>(`${ENDPOINTS.agents}/running`)
   const { data: watchdog, reload: reloadWatchdog } = useApiData<WatchdogResponse>(`${ENDPOINTS.agents}/watchdog`)
   const { data: breakers, reload: reloadBreakers } = useApiData(`${ENDPOINTS.agents}/circuit-breakers`)
+  const { data: runtimeOverview, reload: reloadRuntimeOverview } = useApiData<RuntimeOverview>(ENDPOINTS.runtimeOverview, {
+    intervalMs: 12_000,
+  })
 
   const options = useMemo(() => {
     return catalog?.agent_types?.length ? catalog.agent_types : ['learning', 'validation', 'refactor']
@@ -153,6 +203,17 @@ export default function LiveAgentObservability() {
     }
     return events.filter((event) => event.source.agentId === focusedAgentId).slice(0, 15)
   }, [events, focusedAgentId])
+
+  const domainRows = useMemo(() => {
+    const domainActivity = runtimeOverview?.tasks?.domain_activity || {}
+    const isolation = runtimeOverview?.queue_isolation?.per_domain || {}
+    const domains = Array.from(new Set([...Object.keys(domainActivity), ...Object.keys(isolation)])).sort()
+    return domains.map((domain) => ({
+      domain,
+      activity: domainActivity[domain],
+      isolation: isolation[domain],
+    }))
+  }, [runtimeOverview])
 
   useEffect(() => {
     if (!running && !watchdog) {
@@ -339,7 +400,7 @@ export default function LiveAgentObservability() {
   }, [])
 
   async function refreshSnapshots() {
-    await Promise.all([reloadRunning(), reloadWatchdog(), reloadBreakers()])
+    await Promise.all([reloadRunning(), reloadWatchdog(), reloadBreakers(), reloadRuntimeOverview()])
   }
 
   async function spawn() {
@@ -496,6 +557,64 @@ export default function LiveAgentObservability() {
           </SectionCard>
           <SectionCard title="Circuit Breakers">
             <JsonBlock data={breakers || {}} />
+          </SectionCard>
+        </Grid>
+      </div>
+
+      <div style={{ marginTop: '1rem' }}>
+        <Grid>
+          <SectionCard title="Runtime Pressure Surface">
+            <MetaText>
+              retry_pending={runtimeOverview?.tasks?.retry_pressure?.retry_pending_tasks || 0} | replay_buffer=
+              {runtimeOverview?.websocket?.payload?.event_buffer_size || 0}/
+              {runtimeOverview?.websocket?.payload?.event_buffer_capacity || 0}
+            </MetaText>
+            <MetaText>
+              ws_sse_drop_total={runtimeOverview?.websocket?.payload?.sse_drop_total || 0} | buffer_evictions=
+              {runtimeOverview?.websocket?.payload?.buffer_evictions_total || 0}
+            </MetaText>
+            <MetaText>
+              websocket_metrics={runtimeOverview?.websocket?.available ? 'available' : runtimeOverview?.websocket?.error || 'unavailable'}
+            </MetaText>
+            <div style={{ marginTop: '0.6rem' }}>
+              {runtimeOverview?.pressure_alerts?.length ? (
+                <div style={{ display: 'grid', gap: '0.3rem' }}>
+                  {runtimeOverview.pressure_alerts.slice(0, 8).map((alert, index) => (
+                    <div key={`${alert.surface}-${index}`} style={eventRowStyle}>
+                      <strong style={{ fontSize: '0.76rem' }}>{alert.surface}</strong>
+                      <MetaText>
+                        severity={alert.severity} | {alert.message}
+                      </MetaText>
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <MetaText>No active pressure alerts.</MetaText>
+              )}
+            </div>
+          </SectionCard>
+
+          <SectionCard title="Per-Domain Coexistence Health">
+            {domainRows.length === 0 ? (
+              <MetaText>No domain-tagged activity available.</MetaText>
+            ) : (
+              <div style={{ display: 'grid', gap: '0.4rem', maxHeight: '320px', overflowY: 'auto' }}>
+                {domainRows.map((row) => (
+                  <div key={row.domain} style={eventRowStyle}>
+                    <strong style={{ fontSize: '0.82rem' }}>{row.domain}</strong>
+                    <MetaText>
+                      total={row.activity?.total || 0} running={row.activity?.running || 0} queued=
+                      {row.activity?.queued || 0} failed={row.activity?.failed || 0}
+                    </MetaText>
+                    <MetaText>
+                      dispatches={row.isolation?.dispatches || 0} fairness_overrides=
+                      {row.isolation?.fairness_overrides || 0} starvation_events=
+                      {row.isolation?.starvation_events || 0} wait_ms={row.isolation?.last_queue_wait_ms || 0}
+                    </MetaText>
+                  </div>
+                ))}
+              </div>
+            )}
           </SectionCard>
         </Grid>
       </div>

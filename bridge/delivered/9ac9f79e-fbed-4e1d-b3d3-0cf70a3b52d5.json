@@ -1,0 +1,28 @@
+{
+  "approved_commands": [
+    "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav 50d7f7f17bdcd02a0a71f64b661dcc28985baeb82725b7a446accbcda2127fca allow_overwrite"
+  ],
+  "command_entries": [
+    {
+      "normalized_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav 50d7f7f17bdcd02a0a71f64b661dcc28985baeb82725b7a446accbcda2127fca allow_overwrite",
+      "original_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav 50d7f7f17bdcd02a0a71f64b661dcc28985baeb82725b7a446accbcda2127fca allow_overwrite"
+    }
+  ],
+  "execution_mode": "governed_write_approved",
+  "protocol_version": "bridge-v1",
+  "request_id": "9ac9f79e-fbed-4e1d-b3d3-0cf70a3b52d5",
+  "request_integrity_sha256": "eb640ec4b24c3267bedd309eb601ec4a2b53d3bfecc838ea4080561beec44c5e",
+  "request_sequence": 81,
+  "request_timestamp": "1779448819.927119",
+  "timeout_seconds": 180,
+  "transport": "shared_folder",
+  "transport_expansion_trace": {
+    "executor_expansion_rule": "adb.exe shell <normalized_command>",
+    "forbidden": [
+      "nested adb shell",
+      "linux shell wrapper leakage",
+      "transport prefix duplication"
+    ],
+    "linux_emission": "canonical_target_command_only"
+  }
+}

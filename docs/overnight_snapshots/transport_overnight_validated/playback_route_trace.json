@@ -1,0 +1,79 @@
+{
+  "backend_activation_ordering": [
+    "MultiMedia1->PRIMARY_MI2S_RX",
+    "PRIMARY_MI2S_RX->WSA_SPKR"
+  ],
+  "deterministic_alignment": {
+    "baseline_pcm_match": true,
+    "baseline_route_match": true,
+    "command_ordering_match_locked_sequence": true,
+    "evidence_ordering_match_locked_sequence": true,
+    "playback_runtime_drift_seconds": 0.00541,
+    "playback_runtime_within_baseline_window": true
+  },
+  "evidence_collection_sequence": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm"
+  ],
+  "execution_ordering": [
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+    "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+    "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+    "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+    "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+    "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+    "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+    "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+    "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+    "cat /proc/asound/cards",
+    "cat /proc/asound/pcm",
+    "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+  ],
+  "mixer_dependency_chains": [
+    "SpkrLeft BOOST Switch",
+    "SpkrLeft COMP Switch",
+    "SpkrLeft DAC Switch",
+    "SpkrLeft PA Volume",
+    "SpkrLeft VISENSE Switch",
+    "SpkrLeft WSA MODE",
+    "SpkrRight BOOST Switch",
+    "SpkrRight COMP Switch",
+    "SpkrRight DAC Switch",
+    "SpkrRight PA Volume",
+    "SpkrRight VISENSE Switch",
+    "SpkrRight WSA MODE",
+    "WSA RX0 MUX",
+    "WSA RX1 MUX",
+    "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+    "WSA_COMP1 Switch",
+    "WSA_COMP2 Switch",
+    "WSA_RX0 Digital Volume",
+    "WSA_RX0 INP0",
+    "WSA_RX1 Digital Volume",
+    "WSA_RX1 INP0"
+  ],
+  "run_id": "207873ea-49b5-4a59-a1d1-638802bb1d82",
+  "runtime_state_transitions": [
+    "playback_started",
+    "playback_completed",
+    "cleanup_completed"
+  ]
+}

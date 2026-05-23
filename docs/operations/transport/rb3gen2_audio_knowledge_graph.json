@@ -1,0 +1,71 @@
+{
+  "edges": [
+    {
+      "from": "audio_target",
+      "relation": "reports",
+      "to": "card:0"
+    },
+    {
+      "from": "audio_target",
+      "relation": "supports",
+      "to": "playback_target:speaker"
+    },
+    {
+      "from": "audio_target",
+      "relation": "unsupported",
+      "to": "unsupported:tinymix_control_paths:unsupported_or_unknown"
+    },
+    {
+      "from": "audio_target",
+      "relation": "unsupported",
+      "to": "unsupported:dapm_debugfs_paths:unsupported_or_unknown"
+    },
+    {
+      "from": "audio_target",
+      "relation": "unsupported",
+      "to": "unsupported:qcom_audio_routing:not_available"
+    },
+    {
+      "from": "audio_target",
+      "relation": "candidate_playback_device",
+      "to": "alsa:hw:0,0"
+    }
+  ],
+  "nodes": [
+    {
+      "id": "audio_target",
+      "kind": "target",
+      "label": "runtime_audio_target"
+    },
+    {
+      "id": "card:0",
+      "kind": "device",
+      "label": "QCS6490RB3Gen2"
+    },
+    {
+      "id": "playback_target:speaker",
+      "kind": "playback_target",
+      "label": "speaker"
+    },
+    {
+      "id": "unsupported:tinymix_control_paths:unsupported_or_unknown",
+      "kind": "unsupported_path",
+      "label": "tinymix_control_paths:unsupported_or_unknown"
+    },
+    {
+      "id": "unsupported:dapm_debugfs_paths:unsupported_or_unknown",
+      "kind": "unsupported_path",
+      "label": "dapm_debugfs_paths:unsupported_or_unknown"
+    },
+    {
+      "id": "unsupported:qcom_audio_routing:not_available",
+      "kind": "unsupported_path",
+      "label": "qcom_audio_routing:not_available"
+    },
+    {
+      "id": "alsa:hw:0,0",
+      "kind": "device",
+      "label": "hw:0,0"
+    }
+  ]
+}

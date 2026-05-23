@@ -1,0 +1,20 @@
+{
+  "manifest_type": "distributed_runtime_replay",
+  "classification": "DISTRIBUTED_TRANSPORT_FOUNDATION",
+  "replayability_status": "partial_without_live_endpoint",
+  "required_inputs": {
+    "windows_agent_config": "serial_agent_config.json",
+    "aura_adapter": "remote_serial_transport_adapter.py",
+    "bridge_protocol": "transport_request_schema.json"
+  },
+  "execution_sequence": [
+    "start_windows_serial_agent",
+    "register_remote_serial_adapter",
+    "dispatch_safe_read_commands",
+    "persist_jsonl_logs"
+  ],
+  "missing_runtime_evidence": [
+    "live_windows_agent_connectivity",
+    "rb3_serial_shell_prompt_observability"
+  ]
+}

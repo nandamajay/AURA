@@ -70,6 +70,17 @@ async def create_task(
     current_user: dict = Depends(get_current_user),
 ):
     """Create a new task."""
+    if isinstance(task.input_data, dict):
+        workflow_kind = str(task.input_data.get("workflow_kind") or "").strip().lower()
+        if workflow_kind == "engineering":
+            required = ("intake_id", "snapshot_id", "provenance_lineage_hash", "workflow_id")
+            missing = [key for key in required if not str(task.input_data.get(key) or "").strip()]
+            if missing:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"detached_engineering_execution_forbidden:missing={','.join(missing)}",
+                )
+
     queue = _get_task_queue(request)
     created = await queue.create_task(task, requested_by=current_user.get("email", "unknown"))
     task_id = created.id
@@ -181,6 +192,43 @@ async def replay_task(
         "requested_by": current_user.get("email"),
         "integrity_ok": integrity_ok,
         "replay": replay_result,
+    }
+
+
+@router.get("/{task_id}/replay/state")
+async def replay_state(
+    task_id: str,
+    current_user: dict = Depends(get_current_user),
+):
+    """Inspect replay recording state without requiring finalized replay."""
+    recorder = TaskRecorder(Config.SQLITE_PATH)
+    log = recorder.get_log(task_id)
+    if log is None:
+        return {
+            "task_id": task_id,
+            "exists": False,
+            "recording_state": "missing",
+            "replayable": False,
+            "integrity_ok": False,
+        }
+
+    recording_state = str(log.get("recording_state") or "mutable")
+    replayable = recording_state == "finalized"
+    integrity_ok = False
+    if replayable:
+        integrity_ok = ReplayEngine(recorder).verify_integrity(task_id)
+
+    return {
+        "task_id": task_id,
+        "exists": True,
+        "recording_state": recording_state,
+        "replayable": replayable,
+        "integrity_ok": integrity_ok,
+        "revision": int(log.get("revision") or 0),
+        "created_at": int(log.get("created_at") or 0),
+        "finalized_at": int(log.get("finalized_at") or 0),
+        "output_hash": str(log.get("output_hash") or ""),
+        "snapshot_hash": str(log.get("snapshot_hash") or ""),
     }
 
 
