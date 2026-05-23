@@ -1,0 +1,37 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "c0e408bf2932c522d295dfe6f79aec5f1bb7bb2cc1ff5f9312d7e0e617528a9d",
+  "drift_score": 0.24,
+  "drifts": [
+    {
+      "details": "Missing expected sequence steps: collect_runtime_evidence, apply_route_translation, validate_pcm_activation, validate_replay_compatibility, finalize_governed_plan",
+      "severity": "MEDIUM",
+      "type": "execution_sequence_drift"
+    },
+    {
+      "details": "Detected 2 trace ordering warnings.",
+      "severity": "MEDIUM",
+      "type": "ordering_warning_drift"
+    }
+  ],
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "offline://synthetic_runtime_sequences",
+    "offline://archived_runtime_lineage"
+  ],
+  "offline_foundation_mode": true,
+  "report_name": "runtime_drift_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "high_drift_count": 0,
+    "lineage_entries_compared": 0,
+    "medium_drift_count": 2,
+    "runtime_delta_seconds": 0.0
+  },
+  "target_id": "RB3Gen2"
+}

@@ -1,0 +1,100 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "d2862d5a64a2077b6bad4d977095a92fe85fcd3870d8ebe5afe2318f6ee7a34b",
+  "domain_fingerprints": {
+    "dapm": "10ce0a7ba72d665e96085981c6e52a41409da2963d3c81cc688b891b70548d12",
+    "drift": "c0e408bf2932c522d295dfe6f79aec5f1bb7bb2cc1ff5f9312d7e0e617528a9d",
+    "dsp": "68cc1a6bf74917b487453b5dc852206c65ca5ca7586a03b7193170fa45530944",
+    "irq": "6b58f3c3f1b33c986fecd59238fef5877546e48f1054ff4ec9b3cf826e407526",
+    "pcm": "f0c70a9e86f289d37e7d0d2ca991437feb29a9b7f949d62a52f4773e20bc203e",
+    "runtime_event_ingestion": "55eed2f67cdd8403fd274dcb59a140c4ad6bae67f69fb0ac5f4f7dfcc90df5cc",
+    "soundwire": "e54cc46c4238636a938de70e8af6374717a4986354282c5325334f894f5dcbae",
+    "trace_correlation": "35bf8a285317c8f7557a23dc7c26a0eec1260066b56e88942d1996cf525530ad"
+  },
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "observed_by",
+      "to": "runtime_event_ingestion"
+    },
+    {
+      "from": "runtime_event_ingestion",
+      "relation": "correlates",
+      "to": "trace_correlation"
+    },
+    {
+      "from": "runtime_event_ingestion",
+      "relation": "extracts",
+      "to": "dapm_transition_trace"
+    },
+    {
+      "from": "runtime_event_ingestion",
+      "relation": "extracts",
+      "to": "pcm_lifecycle_trace"
+    },
+    {
+      "from": "runtime_event_ingestion",
+      "relation": "extracts",
+      "to": "soundwire_runtime_graph"
+    },
+    {
+      "from": "runtime_event_ingestion",
+      "relation": "extracts",
+      "to": "irq_timing_report"
+    },
+    {
+      "from": "runtime_event_ingestion",
+      "relation": "extracts",
+      "to": "dsp_sync_report"
+    },
+    {
+      "from": "trace_correlation",
+      "relation": "detects_drift",
+      "to": "runtime_drift_report"
+    }
+  ],
+  "graph_name": "runtime_truth_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "runtime_event_ingestion",
+      "kind": "ingestion"
+    },
+    {
+      "id": "trace_correlation",
+      "kind": "correlation"
+    },
+    {
+      "id": "dapm_transition_trace",
+      "kind": "runtime_domain"
+    },
+    {
+      "id": "pcm_lifecycle_trace",
+      "kind": "runtime_domain"
+    },
+    {
+      "id": "soundwire_runtime_graph",
+      "kind": "runtime_domain"
+    },
+    {
+      "id": "irq_timing_report",
+      "kind": "runtime_domain"
+    },
+    {
+      "id": "dsp_sync_report",
+      "kind": "runtime_domain"
+    },
+    {
+      "id": "runtime_drift_report",
+      "kind": "runtime_domain"
+    }
+  ],
+  "offline_foundation_mode": true,
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

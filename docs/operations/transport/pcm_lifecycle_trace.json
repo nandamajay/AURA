@@ -1,0 +1,79 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "f0c70a9e86f289d37e7d0d2ca991437feb29a9b7f949d62a52f4773e20bc203e",
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "offline://synthetic_runtime_sequences",
+    "offline://archived_runtime_lineage"
+  ],
+  "offline_foundation_mode": true,
+  "pcm_confidence": 1.0,
+  "report_name": "pcm_lifecycle_trace",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "expected_seconds": 25.0,
+    "missing_stages": [
+      "OPEN"
+    ],
+    "observed_stages": [
+      "CLOSE",
+      "DRAIN_STOP",
+      "PREPARE",
+      "START",
+      "STATE"
+    ],
+    "runtime_drift_seconds": 0.0,
+    "runtime_seconds": 25.0,
+    "transition_count": 6
+  },
+  "target_id": "RB3Gen2",
+  "transitions": [
+    {
+      "detail": "pcm_prepare",
+      "event_id": "ftrace:2",
+      "sequence": 1,
+      "stage": "PREPARE",
+      "timestamp_ms": 1010.0
+    },
+    {
+      "detail": "pcm_start",
+      "event_id": "ftrace:3",
+      "sequence": 2,
+      "stage": "START",
+      "timestamp_ms": 1015.0
+    },
+    {
+      "detail": "pcm_drain",
+      "event_id": "ftrace:4",
+      "sequence": 3,
+      "stage": "DRAIN_STOP",
+      "timestamp_ms": 1020.0
+    },
+    {
+      "detail": "pcm_close",
+      "event_id": "ftrace:5",
+      "sequence": 4,
+      "stage": "CLOSE",
+      "timestamp_ms": 1025.0
+    },
+    {
+      "detail": "/proc/asound/pcm read",
+      "event_id": "procfs_sysfs:37",
+      "sequence": 5,
+      "stage": "STATE",
+      "timestamp_ms": 1185.0
+    },
+    {
+      "detail": "DPCM route stable",
+      "event_id": "alsa_topology_runtime:42",
+      "sequence": 6,
+      "stage": "STATE",
+      "timestamp_ms": 1210.0
+    }
+  ]
+}

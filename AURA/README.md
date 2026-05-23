@@ -1018,6 +1018,99 @@ python3 -m pytest \
 - runtime-truth precedence
 - semantic/structural/runtime separation
 
+## Runtime Truth Cognition Layer (Offline Foundation)
+
+This phase introduces runtime-truth correlation and replay-aware execution
+cognition using archived traces, synthetic runtime sequences, deterministic
+replay artifacts, and persisted runtime lineage. Live target/device dependency
+is explicitly out of scope for this phase.
+
+### Mission Alignment
+
+This phase directly improves:
+
+- runtime debugging:
+  - correlates runtime events into domain-specific traces (PCM/DAPM/IRQ/DSP/SoundWire)
+- real hardware reasoning:
+  - builds hardware-facing cognition models from offline runtime evidence without requiring live connection
+- downstream timing analysis:
+  - tracks PCM lifecycle timing, IRQ ordering, DSP sync latency, and runtime timing drift
+- regression localization:
+  - drift detector localizes sequencing/timing regressions against expected lineage
+- topology runtime validation:
+  - validates runtime topology activation via FE/BE and SoundWire runtime graph correlation
+- DSP/runtime synchronization analysis:
+  - reasons over mailbox + DSP response sequencing and sync failure patterns
+- deterministic runtime replay:
+  - produces deterministic runtime replay artifact and replay-safe lineage persistence
+- upstream runtime equivalence reasoning:
+  - creates replayable runtime truth evidence usable by governed downstream→upstream reasoning phases
+
+### Implemented Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_truth_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_event_ingestion.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/trace_correlation_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/dapm_runtime_reasoner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/pcm_lifecycle_tracker.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/soundwire_runtime_graph.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/irq_timing_analyzer.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/dsp_sync_reasoner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_drift_detector.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/deterministic_runtime_replay.py`
+
+Runner:
+
+- `scripts/aura-runtime-truth-cognition.py`
+
+### Required Artifacts
+
+- `runtime_truth_graph.json`
+- `dapm_transition_trace.json`
+- `pcm_lifecycle_trace.json`
+- `soundwire_runtime_graph.json`
+- `irq_timing_report.json`
+- `dsp_sync_report.json`
+- `runtime_drift_report.json`
+- `deterministic_runtime_replay.json`
+- `runtime_confidence_score.json`
+
+Additional outputs:
+
+- `runtime_truth_summary.json`
+- `docs/operations/transport/runtime_truth_cognition_architecture.md`
+
+### Run Runtime Truth Cognition
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-runtime-truth-cognition.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id runtime_truth_cognition_offline_v1
+```
+
+### Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_runtime_truth_cognition_static.py \
+  workspace/aura-sdk/tests/test_patch_cognition_static.py \
+  workspace/aura-sdk/tests/test_real_downstream_ingestion_static.py -q
+```
+
+### Runtime Truth Constraints (Preserved)
+
+- runtime-truth precedence over static assumptions
+- fail-closed governance boundaries
+- deterministic replay-first behavior
+- plugin isolation and hardware-agnostic core reasoning
+- advisory-only behavior
+- semantic/structural/runtime separation
+- offline foundation mode (no live device connection required)
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

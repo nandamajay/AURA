@@ -1,0 +1,74 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "e54cc46c4238636a938de70e8af6374717a4986354282c5325334f894f5dcbae",
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "observed_soundwire_event",
+      "to": "soundwire_event:soundwire_debugfs:39"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "observed_soundwire_event",
+      "to": "soundwire_event:soundwire_debugfs:40"
+    },
+    {
+      "from": "fe:msm_bolero_fe_dai_links",
+      "relation": "topology_runtime_link",
+      "to": "be:ext_disp_be_dai_link"
+    },
+    {
+      "from": "fe:msm_common_misc_fe_dai_links",
+      "relation": "topology_runtime_link",
+      "to": "be:ext_disp_be_dai_link"
+    },
+    {
+      "from": "fe:msm_stub_fe_dai_links",
+      "relation": "topology_runtime_link",
+      "to": "be:msm_stub_be_dai_links"
+    },
+    {
+      "from": "fe:msm_tavil_fe_dai_links",
+      "relation": "topology_runtime_link",
+      "to": "be:msm_tavil_be_dai_links"
+    }
+  ],
+  "evidence_references": [
+    "registry://runtime_cognition",
+    "registry://governance_state",
+    "artifact://runtime_source_correlation",
+    "artifact://topology_runtime_graph",
+    "offline://synthetic_runtime_sequences",
+    "offline://archived_runtime_lineage"
+  ],
+  "graph_name": "soundwire_runtime_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "detail": "soundwire port active",
+      "id": "soundwire_event:soundwire_debugfs:39",
+      "kind": "soundwire_event",
+      "timestamp_ms": 1195.0
+    },
+    {
+      "detail": "soundwire lane stable",
+      "id": "soundwire_event:soundwire_debugfs:40",
+      "kind": "soundwire_event",
+      "timestamp_ms": 1200.0
+    }
+  ],
+  "offline_foundation_mode": true,
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "soundwire_confidence": 0.323,
+  "summary": {
+    "graph_edge_count": 6,
+    "graph_node_count": 3,
+    "runtime_soundwire_events": 2
+  },
+  "target_id": "RB3Gen2"
+}
