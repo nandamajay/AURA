@@ -25,6 +25,7 @@ Verify deterministic replay remains target-agnostic across simulated targets.
 - No target-specific branching required in replay engine.
 - Semantic replay trace preserves lineage and artifact references.
 - Correlation replay trace preserves lineage ID, confidence state, and anomaly classification.
+- Translation replay trace preserves mapping/topology/runtime/migration fingerprints and lineage.
 
 ## Related
 - `replay_lineage.md`

@@ -35,6 +35,9 @@ class TargetPluginContract(Protocol):
     runtime_evidence_adapter: ProviderFn
     topology_evidence_adapter: ProviderFn
     semantic_evidence_adapter: ProviderFn
+    downstream_upstream_adapter: ProviderFn
+    topology_translation_adapter: ProviderFn
+    runtime_conversion_adapter: ProviderFn
 
 
 @dataclass(frozen=True)
@@ -74,6 +77,9 @@ def assert_plugin_contract(plugin: Any) -> None:
         "runtime_evidence_adapter",
         "topology_evidence_adapter",
         "semantic_evidence_adapter",
+        "downstream_upstream_adapter",
+        "topology_translation_adapter",
+        "runtime_conversion_adapter",
     )
 
     missing: list[str] = []

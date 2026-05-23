@@ -168,6 +168,27 @@ from aura_sdk.transport.cognition_correlation import (
     CognitionCorrelationResult,
     UnifiedCognitionCorrelationEngine,
 )
+from aura_sdk.transport.downstream_upstream_mapping import (
+    DownstreamUpstreamMappingResult,
+    build_downstream_upstream_mapping,
+)
+from aura_sdk.transport.topology_translation_cognition import (
+    TopologyTranslationResult,
+    build_topology_translation_report,
+)
+from aura_sdk.transport.runtime_conversion_reasoning import (
+    RuntimeConversionReasoningResult,
+    analyze_runtime_conversion,
+)
+from aura_sdk.transport.migration_lineage import (
+    MigrationLineageResult,
+    build_migration_lineage,
+)
+from aura_sdk.transport.upstream_conversion_planner import (
+    TranslationIntelligenceRegistry,
+    UpstreamConversionPlanner,
+    UpstreamConversionPlannerResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -293,4 +314,15 @@ __all__ = [
     "CognitionCorrelationResult",
     "UnifiedCognitionCorrelationEngine",
     "CognitionCorrelationRegistry",
+    "DownstreamUpstreamMappingResult",
+    "build_downstream_upstream_mapping",
+    "TopologyTranslationResult",
+    "build_topology_translation_report",
+    "RuntimeConversionReasoningResult",
+    "analyze_runtime_conversion",
+    "MigrationLineageResult",
+    "build_migration_lineage",
+    "UpstreamConversionPlannerResult",
+    "UpstreamConversionPlanner",
+    "TranslationIntelligenceRegistry",
 ]

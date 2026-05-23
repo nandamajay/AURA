@@ -26,6 +26,7 @@ class PluginIsolationValidator:
             base / "portable_runtime_layer.py",
             base / "semantic_cognition.py",
             base / "cognition_correlation.py",
+            base / "upstream_conversion_planner.py",
             base / "plugins/loader.py",
             base / "plugins/contracts.py",
         ]
@@ -61,8 +62,9 @@ class PluginIsolationValidator:
         portable_runtime_file = files[0]
         semantic_core_file = files[1]
         correlation_core_file = files[2]
-        loader_file = files[3]
-        contract_file = files[4]
+        translation_core_file = files[3]
+        loader_file = files[4]
+        contract_file = files[5]
         branch_findings: dict[str, list[str]] = {}
         assumption_findings: dict[str, list[str]] = {}
 
@@ -103,6 +105,15 @@ class PluginIsolationValidator:
                     ".semantic_evidence_adapter(",
                 )
             ),
+            "translation_core_uses_plugin_loader": "TargetPluginLoader" in _read(translation_core_file),
+            "translation_core_invokes_plugin_conversion_adapters": all(
+                token in _read(translation_core_file)
+                for token in (
+                    ".downstream_upstream_adapter(",
+                    ".topology_translation_adapter(",
+                    ".runtime_conversion_adapter(",
+                )
+            ),
             "loader_uses_contract_validation": "assert_plugin_contract" in _read(loader_file),
             "contract_has_required_providers": all(
                 token in _read(contract_file)
@@ -121,6 +132,9 @@ class PluginIsolationValidator:
                     "runtime_evidence_adapter",
                     "topology_evidence_adapter",
                     "semantic_evidence_adapter",
+                    "downstream_upstream_adapter",
+                    "topology_translation_adapter",
+                    "runtime_conversion_adapter",
                 )
             ),
         }

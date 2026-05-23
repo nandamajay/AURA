@@ -377,6 +377,97 @@ class _BaseSimulationPlugin:
             ),
         }
 
+    def downstream_upstream_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        if self.target_id == "degraded_target_gamma":
+            vendor_constructs = ["gamma_vendor_api", "vendor_hook_gamma", "gamma_shim"]
+            upstream_equivalents = {
+                "gamma_vendor_api": "UNRESOLVED",
+                "vendor_hook_gamma": "tracepoint_or_standard_callback",
+                "gamma_shim": "asoc_helper_layer",
+            }
+            confidence = {
+                "gamma_vendor_api": 0.2,
+                "vendor_hook_gamma": 0.6,
+                "gamma_shim": 0.5,
+            }
+        elif self.target_id == "fake_target_beta":
+            vendor_constructs = ["vendor_beta_wrap", "vendor_hook_beta", "beta_shim"]
+            upstream_equivalents = {
+                "vendor_beta_wrap": "asoc_generic_wrapper",
+                "vendor_hook_beta": "tracepoint_or_standard_callback",
+                "beta_shim": "asoc_helper_layer",
+            }
+            confidence = {
+                "vendor_beta_wrap": 0.75,
+                "vendor_hook_beta": 0.7,
+                "beta_shim": 0.68,
+            }
+        else:
+            vendor_constructs = ["generic_vendor_node"]
+            upstream_equivalents = {
+                "generic_vendor_node": "audio-routing",
+            }
+            confidence = {
+                "generic_vendor_node": 0.86,
+            }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.downstream_upstream_adapter",
+            "vendor_constructs": vendor_constructs,
+            "upstream_equivalents": upstream_equivalents,
+            "equivalence_confidence": confidence,
+            "fingerprint": _hash(
+                {
+                    "vendor_constructs": vendor_constructs,
+                    "upstream_equivalents": upstream_equivalents,
+                    "equivalence_confidence": confidence,
+                }
+            ),
+        }
+
+    def topology_translation_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        route = f"{self.target_id}:fe0->be0"
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.topology_translation_adapter",
+            "fe_be_routes": [route],
+            "vendor_topology_abstractions": [f"{self.target_id}:vendor_topology"] if self.health == "DEGRADED" else [],
+            "pcm_nodes": [f"{self.target_id}:pcm0"],
+            "dpcm_links": [route],
+            "route_fingerprint": _hash({"route": route}),
+            "expected_sequence": ["resolve_pcm", "resolve_backend", "validate_route"],
+            "fingerprint": _hash({"route": route, "health": self.health}),
+        }
+
+    def runtime_conversion_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        required_capabilities = _as_dict(_as_dict(payload.get("plugin_capability_state")).get("capabilities", {}))
+        replay_safe = ["normalize_route_labels", "normalize_pcm_identifiers"]
+        advisory = ["manual_codec_binding_review"]
+        forbidden = ["autonomous_code_rewrite", "autonomous_dts_mutation", "autonomous_driver_mutation", "unsafe_topology_mutation"]
+        deps = ["simulated_vendor_dependency"] if self.health == "DEGRADED" else ["simulated_runtime_dependency"]
+        expected_sequence = ["resolve_pcm", "resolve_backend", "validate_route"]
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.runtime_conversion_adapter",
+            "downstream_runtime_dependencies": deps,
+            "replay_safe_transformations": replay_safe,
+            "advisory_only_transformations": advisory,
+            "forbidden_autonomous_transformations": forbidden,
+            "required_capabilities": required_capabilities,
+            "expected_runtime_seconds": 25.0,
+            "expected_sequence": expected_sequence,
+            "fingerprint": _hash(
+                {
+                    "deps": deps,
+                    "replay_safe_transformations": replay_safe,
+                    "advisory_only_transformations": advisory,
+                    "forbidden_autonomous_transformations": forbidden,
+                    "expected_runtime_seconds": 25.0,
+                    "expected_sequence": expected_sequence,
+                }
+            ),
+        }
+
 
 class FakeTargetAlphaPlugin(_BaseSimulationPlugin):
     target_id = "fake_target_alpha"

@@ -585,6 +585,155 @@ class RB3TargetPlugin:
             ),
         }
 
+    def downstream_upstream_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        semantic = _as_dict(payload.get("semantic_cognition"))
+        adapters = _as_dict(semantic.get("adapters"))
+        driver = _as_dict(_as_dict(adapters.get("vendor_api")).get("semantic_driver"))
+        constructs = sorted(
+            {
+                str(item)
+                for key in ("downstream_only_apis", "vendor_hooks", "wrapper_layers")
+                for item in _as_list(driver.get(key))
+                if str(item).strip()
+            }
+        )
+
+        upstream_equivalents = {
+            "msm_": "snd_soc_component_*",
+            "qcom_": "asoc_generic_component_*",
+            "snd_soc_qcom_": "snd_soc_*",
+            "msm_pcm": "soc_pcm_runtime_helpers",
+            "vendor_hook": "tracepoint_or_standard_callback",
+            "wrapper": "asoc_helper_layer",
+        }
+
+        confidence = {
+            key: 0.82 if value != "UNRESOLVED" else 0.25 for key, value in upstream_equivalents.items()
+        }
+
+        # Preserve unmapped constructs with conservative confidence.
+        for item in constructs:
+            upstream_equivalents.setdefault(item, "UNRESOLVED")
+            confidence.setdefault(item, 0.3)
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.downstream_upstream_adapter",
+            "vendor_constructs": constructs,
+            "upstream_equivalents": upstream_equivalents,
+            "equivalence_confidence": confidence,
+            "fingerprint": _stable_hash(
+                {
+                    "vendor_constructs": constructs,
+                    "upstream_equivalents": upstream_equivalents,
+                    "equivalence_confidence": confidence,
+                }
+            ),
+        }
+
+    def topology_translation_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        topology = _as_dict(payload.get("topology_cognition"))
+        dts = _as_dict(payload.get("dts_cognition"))
+        runtime = _as_dict(payload.get("runtime_evidence"))
+
+        fe_be_routes = [
+            str(item)
+            for item in _as_list(dts.get("backend_frontend_mappings"))
+            if str(item).strip()
+        ]
+        if not fe_be_routes:
+            fe_be_routes = [
+                str(item)
+                for item in _as_list(_as_dict(topology.get("runtime_route_graph")).get("runtime_paths"))
+                if str(item).strip()
+            ]
+
+        vendor_abstractions = [
+            str(item)
+            for item in _as_list(dts.get("qcom_audio_routing"))
+            if str(item).strip()
+        ]
+
+        expected_sequence = [
+            str(item)
+            for item in _as_list(runtime.get("command_sequence"))
+            if str(item).strip()
+        ]
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.topology_translation_adapter",
+            "fe_be_routes": fe_be_routes,
+            "vendor_topology_abstractions": vendor_abstractions,
+            "pcm_nodes": [str(item) for item in _as_list(_as_dict(topology.get("procedural_route_memory")).get("stable_pcm_fingerprints")) if str(item).strip()],
+            "dpcm_links": fe_be_routes,
+            "route_fingerprint": str(runtime.get("route_fingerprint", "")),
+            "expected_sequence": expected_sequence,
+            "fingerprint": _stable_hash(
+                {
+                    "fe_be_routes": fe_be_routes,
+                    "vendor_topology_abstractions": vendor_abstractions,
+                    "route_fingerprint": str(runtime.get("route_fingerprint", "")),
+                }
+            ),
+        }
+
+    def runtime_conversion_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        runtime = _as_dict(payload.get("runtime_evidence"))
+        capabilities = _as_dict(payload.get("plugin_capability_state"))
+        governance = _as_dict(payload.get("governance_state"))
+
+        deps = [
+            "vendor_amixer_sequence",
+            "vendor_route_fingerprint",
+            "vendor_codec_dependency",
+        ]
+        replay_safe = [
+            "normalize_mixer_control_aliases",
+            "normalize_route_chain_labels",
+            "derive_generic_asoc_identifiers",
+        ]
+        advisory = [
+            "manual_codec_binding_review",
+            "manual_dai_link_reconciliation",
+        ]
+        expected_sequence = [
+            "collect_runtime_evidence",
+            "apply_route_translation",
+            "validate_pcm_activation",
+            "validate_replay_compatibility",
+            "finalize_governed_plan",
+        ]
+        forbidden = [
+            "autonomous_code_rewrite",
+            "autonomous_dts_mutation",
+            "autonomous_driver_mutation",
+            "unsafe_topology_mutation",
+        ]
+
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.runtime_conversion_adapter",
+            "downstream_runtime_dependencies": deps,
+            "replay_safe_transformations": replay_safe,
+            "advisory_only_transformations": advisory,
+            "forbidden_autonomous_transformations": forbidden,
+            "required_capabilities": _as_dict(capabilities.get("capabilities", capabilities)),
+            "expected_runtime_seconds": 25.0,
+            "expected_sequence": expected_sequence,
+            "governance": governance,
+            "fingerprint": _stable_hash(
+                {
+                    "dependencies": deps,
+                    "replay_safe_transformations": replay_safe,
+                    "advisory_only_transformations": advisory,
+                    "forbidden_autonomous_transformations": forbidden,
+                    "expected_runtime_seconds": 25.0,
+                    "expected_sequence": expected_sequence,
+                }
+            ),
+        }
+
 
 def get_plugin() -> RB3TargetPlugin:
     return RB3TargetPlugin()

@@ -62,6 +62,9 @@ def test_plugin_isolation_contract_and_core_genericity() -> None:
         "runtime_evidence_adapter",
         "topology_evidence_adapter",
         "semantic_evidence_adapter",
+        "downstream_upstream_adapter",
+        "topology_translation_adapter",
+        "runtime_conversion_adapter",
     ):
         assert callable(getattr(plugin, field))
 

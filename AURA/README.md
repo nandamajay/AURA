@@ -48,6 +48,7 @@ The platform currently includes:
 - cognition bus with event lifecycle, lineage, and replay
 - stability harnesses for replay determinism and quarantine
 - portability architecture artifacts for multi-target cognition
+- translation intelligence foundation for downstream-to-upstream conversion planning
 
 ## Quick Start (Deterministic Local Bring-up)
 

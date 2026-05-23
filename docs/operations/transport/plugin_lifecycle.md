@@ -47,3 +47,12 @@ Portable runtime stabilization lifecycle for target plugins under fail-closed go
   - `semantic_evidence_adapter`
 - Correlation outputs must remain deterministic, replay-safe, and lineage-backed.
 - Correlation adapter failures trigger `quarantine` and preserve fail-closed posture.
+
+## Translation Adapter Lifecycle
+- Translation adapters are plugin-owned and invoked only by the conversion planner layer.
+- Required translation adapters:
+  - `downstream_upstream_adapter`
+  - `topology_translation_adapter`
+  - `runtime_conversion_adapter`
+- Translation adapters must not execute runtime mutation and must return advisory cognition data only.
+- Adapter contract failures are quarantined and fail-closed.

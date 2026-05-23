@@ -38,3 +38,8 @@
 - Allowed correlation actions: correlate, classify, infer, recommend, replay, quarantine.
 - Forbidden correlation actions: fabricate evidence, fabricate causality, auto patch, auto modify runtime, override governance.
 - Correlation anomaly handling must preserve fail-closed posture and plugin isolation.
+
+## Translation Governance Boundaries
+- Allowed translation actions: analyze mappings, classify equivalence, correlate runtime evidence, plan advisory migration steps, replay.
+- Forbidden translation actions: autonomous code rewrite, autonomous DTS mutation, autonomous driver mutation, unsafe topology mutation.
+- Translation planner output is advisory cognition only and cannot bypass execution governance.
