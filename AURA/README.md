@@ -2051,6 +2051,73 @@ python3 -m pytest \
 - deterministic replay + rollback checkpoint lineage required
 - no autonomous patch application/submission
 
+## Real Source-Tree Governed Conversion Layer
+
+This phase upgrades AURA from synthetic-only micro transformations to real
+Qualcomm downstream source-tree cognition with strict fail-closed governance.
+
+### Focus Coverage
+
+- parse real `.c/.h/Kconfig/Makefile` driver trees
+- build source graph, include dependency graph, symbol dependency graph
+- identify subsystem boundaries and runtime-sensitive regions
+- classify vendor wrappers and upstream equivalence opportunities
+- plan tiny controlled transformations (debug/helper normalization only)
+- generate real patch proposal from actual source paths
+- enforce compile-oriented validation and deterministic replay lineage
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/real_source_tree_governed_conversion.py`
+- Runner:
+  - `scripts/aura-real-source-tree-governed-conversion.py`
+
+### Required Artifacts (Generated)
+
+- `source_tree_graph.json`
+- `subsystem_boundary_map.json`
+- `symbol_dependency_graph.json`
+- `wrapper_classification_report.json`
+- `governed_conversion_plan.json`
+- `compile_validation_report.json`
+- `runtime_sensitive_regions.json`
+- `governance_escalation_report.json`
+- `deterministic_driver_replay.json`
+- `transformation_confidence_report.json`
+- `upstream_equivalence_map.json`
+- `downstream_to_upstream.patch`
+- `real_driver_conversion_summary.json`
+
+### Run Real Source-Tree Governed Conversion
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-real-source-tree-governed-conversion.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --source-root /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar \
+  --session-id real_source_tree_conversion_session_v1 \
+  --lineage-id real_source_tree_governed_conversion_v1
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_real_source_tree_governed_conversion_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed on runtime-sensitive unsafe changes
+- fail-closed on compile/inclusion/symbol-lineage uncertainty
+- fail-closed on confidence drop below threshold
+- advisory-only behavior; no autonomous patch application/submission
+- deterministic replay lineage persisted for every artifact
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

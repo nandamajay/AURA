@@ -1,0 +1,188 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "6e28e7a1026cc9d44016d24a95f0b1ad2f2ae0f6300f21e323f049605c4a2063",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://real_source_tree_governed_conversion",
+    "source://downstream_audio_kernel_tree",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "report_name": "wrapper_classification_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "capability_wrapper_count": 3,
+    "debug_wrapper_count": 12,
+    "wrapper_count": 15
+  },
+  "target_id": "RB3Gen2",
+  "wrappers": [
+    {
+      "files": [
+        "asoc/audio_machine.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc.h",
+        "asoc/kalama.c",
+        "asoc/pineapple.c",
+        "asoc/sun.c",
+        "asoc/waipio.c"
+      ],
+      "kind": "capability_wrapper",
+      "occurrences": 17,
+      "symbol": "lpass_cdc_rx_set_fir_capability"
+    },
+    {
+      "files": [
+        "dsp/msm_audio_ion.c",
+        "include/dsp/msm_audio_ion.h"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "msm_audio_fd_list_debug"
+    },
+    {
+      "files": [
+        "asoc/audio_machine.c",
+        "asoc/codecs/bolero/rx-macro.c",
+        "asoc/codecs/bolero/tx-macro.c",
+        "asoc/codecs/bolero/va-macro.c",
+        "asoc/codecs/bolero/wsa-macro.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc-wsa2-macro.c",
+        "asoc/codecs/msm-cdc-pinctrl.c",
+        "asoc/holi.c",
+        "asoc/kalama.c",
+        "asoc/kona.c",
+        "asoc/lahaina.c",
+        "asoc/pineapple.c",
+        "asoc/sdx-target.c",
+        "asoc/sun.c",
+        "asoc/waipio.c",
+        "include/asoc/msm-cdc-pinctrl.h"
+      ],
+      "kind": "capability_wrapper",
+      "occurrences": 47,
+      "symbol": "msm_cdc_pinctrl_set_wakeup_capable"
+    },
+    {
+      "files": [
+        "asoc/msm_common.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "msm_lpi_logging_enable_get"
+    },
+    {
+      "files": [
+        "asoc/msm_common.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "msm_lpi_logging_enable_put"
+    },
+    {
+      "files": [
+        "asoc/codecs/qmp1000/qmp-dmic.c",
+        "asoc/codecs/rouleur/rouleur.c",
+        "asoc/codecs/rouleur/rouleur_slave.c",
+        "asoc/codecs/sdca/simple-amp.c",
+        "asoc/codecs/swr-dmic.c",
+        "asoc/codecs/swr-haptics.c",
+        "asoc/codecs/wcd9378/wcd9378-slave.c",
+        "asoc/codecs/wcd9378/wcd9378.c",
+        "asoc/codecs/wcd937x/wcd937x.c",
+        "asoc/codecs/wcd937x/wcd937x_slave.c",
+        "asoc/codecs/wcd938x/wcd938x-slave.c",
+        "asoc/codecs/wcd938x/wcd938x.c",
+        "asoc/codecs/wcd939x/wcd939x-slave.c",
+        "asoc/codecs/wcd939x/wcd939x.c",
+        "asoc/codecs/wsa881x.c",
+        "asoc/codecs/wsa883x/wsa883x.c",
+        "asoc/codecs/wsa884x/wsa884x.c",
+        "include/soc/soundwire.h",
+        "soc/soundwire.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 28,
+      "symbol": "swr_get_logical_dev_num"
+    },
+    {
+      "files": [
+        "soc/swr-mstr-ctrl.c",
+        "soc/swr-mstr-ctrl.h"
+      ],
+      "kind": "capability_wrapper",
+      "occurrences": 6,
+      "symbol": "swr_irq_wakeup_capable"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd934x/wcd934x-dsp-cntl.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 4,
+      "symbol": "wcd_cntl_collect_debug_dumps"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd934x/wcd934x-dsp-cntl.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "wcd_cntl_debugfs_init"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd934x/wcd934x-dsp-cntl.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "wcd_cntl_debugfs_remove"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd_cpe_core.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "wcd_cpe_debugfs_init"
+    },
+    {
+      "files": [
+        "include/asoc/wcd-mbhc-v2.h"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 1,
+      "symbol": "wcd_mbhc_detect_logic"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd-spi.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 5,
+      "symbol": "wcd_spi_debug_data"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd-spi.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "wcd_spi_debugfs_init"
+    },
+    {
+      "files": [
+        "asoc/codecs/wcd-spi.c"
+      ],
+      "kind": "debug_wrapper",
+      "occurrences": 2,
+      "symbol": "wcd_spi_debugfs_mem_read"
+    }
+  ]
+}

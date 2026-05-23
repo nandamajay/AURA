@@ -447,6 +447,11 @@ from aura_sdk.transport.governed_patchset_orchestration import (
     GovernedPatchsetOrchestrationRegistry,
     GovernedPatchsetOrchestrationResult,
 )
+from aura_sdk.transport.real_source_tree_governed_conversion import (
+    RealSourceTreeGovernedConversionEngine,
+    RealSourceTreeGovernedConversionRegistry,
+    RealSourceTreeGovernedConversionResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -724,4 +729,7 @@ __all__ = [
     "GovernedPatchsetOrchestrationEngine",
     "GovernedPatchsetOrchestrationRegistry",
     "GovernedPatchsetOrchestrationResult",
+    "RealSourceTreeGovernedConversionEngine",
+    "RealSourceTreeGovernedConversionRegistry",
+    "RealSourceTreeGovernedConversionResult",
 ]
