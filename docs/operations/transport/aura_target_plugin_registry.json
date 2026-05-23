@@ -1,0 +1,29 @@
+{
+  "plugins": [
+    {
+      "detection": {
+        "audio_discovery_flags": [
+          "rb3gen2_detected"
+        ],
+        "required_capabilities": [
+          "supports_amixer"
+        ],
+        "text_markers": [
+          "rb3gen2",
+          "qcs6490",
+          "qcm6490"
+        ]
+      },
+      "entrypoint": "aura_sdk.transport.plugins.rb3_plugin:get_plugin",
+      "governance": {
+        "autonomous_mutation_allowed": false,
+        "deterministic_replay_required": true,
+        "execution_posture": "ADVISORY_ONLY_OR_GOVERNED_ONLY"
+      },
+      "priority": 100,
+      "target_id": "RB3Gen2"
+    }
+  ],
+  "registry_name": "aura_target_plugin_registry",
+  "schema_version": "1.0"
+}

@@ -8,6 +8,7 @@ from typing import Any, Mapping
 
 from aura_sdk.transport.audio_runtime_cognition import build_audio_runtime_cognition
 from aura_sdk.transport.dts_audio_cognition import parse_dts_audio_cognition
+from aura_sdk.transport.portable_runtime_layer import PortableRuntimeLayer
 from aura_sdk.transport.rb3_playback_cognition import (
     RB3ProceduralMemory,
     build_rb3_speaker_playback_plan,
@@ -32,6 +33,12 @@ class ProceduralAudioPlanResult:
 @dataclass(frozen=True)
 class RB3SpeakerWorkflowResult:
     static_context: dict[str, Any]
+    workflow: dict[str, Any]
+
+
+@dataclass(frozen=True)
+class TargetPluginWorkflowResult:
+    negotiation: dict[str, Any]
     workflow: dict[str, Any]
 
 
@@ -175,3 +182,48 @@ def build_rb3_speaker_workflow(
         overwrite_policy=overwrite_policy,
     ).plan
     return RB3SpeakerWorkflowResult(static_context=static_context, workflow=workflow)
+
+
+def build_target_plugin_workflow(
+    fingerprint: Mapping[str, Any],
+    *,
+    entry_dts: str | Path | None = None,
+    target_profile: Mapping[str, Any] | None = None,
+    capability_registry: Mapping[str, Any] | None = None,
+    governance_state: Mapping[str, Any] | None = None,
+    memory: Mapping[str, Any] | None = None,
+    memory_path: str | Path | None = None,
+    bridge_root: str | Path | None = None,
+    intent: str = "validate speaker playback",
+    target_path: str = "/data/local/tmp/aura/audio/speaker_validation.wav",
+    overwrite_policy: str = "no_overwrite",
+    replay_contract: Mapping[str, Any] | None = None,
+) -> TargetPluginWorkflowResult:
+    """Build target workflows through plugin negotiation without target branching."""
+
+    runtime = PortableRuntimeLayer()
+    result = runtime.build_workflow(
+        fingerprint=fingerprint,
+        target_profile=target_profile,
+        capability_registry=capability_registry,
+        governance_state=governance_state,
+        entry_dts=str(entry_dts) if entry_dts is not None else None,
+        memory=memory,
+        memory_path=str(memory_path) if memory_path is not None else None,
+        bridge_root=str(bridge_root) if bridge_root is not None else None,
+        intent=intent,
+        target_path=target_path,
+        overwrite_policy=overwrite_policy,
+        replay_contract=replay_contract,
+    )
+    workflow = {
+        "classification": result.classification,
+        "target_id": result.target_id,
+        "topology": result.topology,
+        "mixer": result.mixer,
+        "pcm": result.pcm,
+        "route": result.route,
+        "evidence": result.evidence,
+        "replay_compatibility": result.replay_compatibility,
+    }
+    return TargetPluginWorkflowResult(negotiation=result.negotiation, workflow=workflow)

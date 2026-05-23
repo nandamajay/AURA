@@ -54,9 +54,11 @@ from aura_sdk.transport.command_planner import (
     PlanResult,
     ProceduralAudioPlanResult,
     RB3SpeakerWorkflowResult,
+    TargetPluginWorkflowResult,
     build_adaptive_plan,
     build_procedural_audio_plan,
     build_rb3_speaker_workflow,
+    build_target_plugin_workflow,
 )
 from aura_sdk.transport.rb3_playback_cognition import (
     RB3PlaybackPlanResult,
@@ -115,6 +117,19 @@ from aura_sdk.transport.target_fingerprint_engine import (
     TargetFingerprintEngine,
 )
 from aura_sdk.transport.runtime_capability_graph import build_runtime_capability_graph
+from aura_sdk.transport.portable_runtime_layer import (
+    PortableRuntimeLayer,
+    PortableRuntimeWorkflowResult,
+)
+from aura_sdk.transport.plugins import (
+    PluginNegotiationRequest,
+    PluginNegotiationResult,
+    RB3TargetPlugin,
+    TargetPluginContract,
+    TargetPluginLoader,
+    assert_plugin_contract,
+    get_rb3_plugin,
+)
 
 __all__ = [
     "CommandClassification",
@@ -159,9 +174,11 @@ __all__ = [
     "PlanResult",
     "ProceduralAudioPlanResult",
     "RB3SpeakerWorkflowResult",
+    "TargetPluginWorkflowResult",
     "build_adaptive_plan",
     "build_procedural_audio_plan",
     "build_rb3_speaker_workflow",
+    "build_target_plugin_workflow",
     "RB3PlaybackPlanResult",
     "RB3ProceduralMemory",
     "build_audio_route_knowledge_graph",
@@ -203,4 +220,13 @@ __all__ = [
     "FingerprintResult",
     "TargetFingerprintEngine",
     "build_runtime_capability_graph",
+    "PortableRuntimeLayer",
+    "PortableRuntimeWorkflowResult",
+    "TargetPluginContract",
+    "PluginNegotiationRequest",
+    "PluginNegotiationResult",
+    "TargetPluginLoader",
+    "RB3TargetPlugin",
+    "assert_plugin_contract",
+    "get_rb3_plugin",
 ]

@@ -167,6 +167,67 @@ python3 scripts/aura-portable-target-cognition-architecture.py \
 - `cross_target_governance_boundaries.json`
 - `portable_multi_target_cognition_phase_summary.json`
 
+## Phase-3 Plugin Hardening
+
+Phase-3 converts RB3-focused cognition into a plugin-oriented portable target framework
+without rewriting validated runtime execution paths.
+
+### Hardening Principles
+
+- generic runtime layer has no target-specific branching
+- all target intelligence comes from plugin providers
+- deterministic replay compatibility is validated per plugin
+- fail-closed governance remains the default behavior
+- no autonomous patching/topology mutation/upstream generation
+
+### Plugin Contract
+
+Every target plugin must expose:
+
+- `target_id`
+- `topology_provider`
+- `mixer_provider`
+- `pcm_provider`
+- `route_provider`
+- `evidence_provider`
+- `capability_provider`
+- `validation_provider`
+
+### Runtime Components
+
+- Plugin contracts and loader:
+  - `workspace/aura-sdk/src/aura_sdk/transport/plugins/contracts.py`
+  - `workspace/aura-sdk/src/aura_sdk/transport/plugins/loader.py`
+  - `workspace/aura-sdk/src/aura_sdk/transport/plugins/target_plugin_registry.json`
+- First formal plugin:
+  - `workspace/aura-sdk/src/aura_sdk/transport/plugins/rb3_plugin.py`
+- Generic plugin runtime facade:
+  - `workspace/aura-sdk/src/aura_sdk/transport/portable_runtime_layer.py`
+- Optional planner entrypoint:
+  - `build_target_plugin_workflow(...)` in `workspace/aura-sdk/src/aura_sdk/transport/command_planner.py`
+
+### Phase-3 Artifact Generator
+
+```bash
+python3 scripts/aura-phase3-plugin-hardening.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport
+```
+
+### Phase-3 Artifacts
+
+- `aura_plugin_contract.json`
+- `aura_target_plugin_registry.json`
+- `rb3_plugin_capabilities.json`
+- `portable_runtime_layer.json`
+- `plugin_replay_compatibility.json`
+- `target_negotiation_graph.json`
+- `phase3_plugin_hardening_summary.json`
+
+### Migration + Lifecycle Docs
+
+- `phase3_plugin_migration_notes.md`
+- `plugin_lifecycle.md`
+
 ### Artifact Intent
 
 - `portable_target_cognition_architecture.json`
