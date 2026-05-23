@@ -436,6 +436,12 @@ from aura_sdk.transport.controlled_pilot_conversion import (
     ControlledPilotConversionRegistry,
     ControlledPilotConversionResult,
 )
+from aura_sdk.transport.real_micro_conversion_pilot import (
+    RealMicroConversionPilotEngine,
+    RealMicroConversionPilotRegistry,
+    RealMicroConversionPilotResult,
+    build_real_micro_source_input_model,
+)
 
 __all__ = [
     "CommandClassification",
@@ -706,4 +712,8 @@ __all__ = [
     "ControlledPilotConversionEngine",
     "ControlledPilotConversionRegistry",
     "ControlledPilotConversionResult",
+    "RealMicroConversionPilotEngine",
+    "RealMicroConversionPilotRegistry",
+    "RealMicroConversionPilotResult",
+    "build_real_micro_source_input_model",
 ]

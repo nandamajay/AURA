@@ -1,32 +1,34 @@
 {
   "advisory_only_behavior": true,
   "classification": "FAIL_CLOSED",
+  "compile_validation": {
+    "command": "cc -x c -std=gnu11 -fsyntax-only <source>",
+    "compile_validation_executed": true,
+    "compile_validation_passed": true,
+    "compiler": "cc",
+    "stderr": "",
+    "stdout": ""
+  },
   "decision": {
     "delivery_authorization": false,
     "escalation_level": "L2_ENGINEERING_REVIEW",
     "escalation_reasons": [
       "runtime_equivalence_validation_failed",
-      "unsupported_vendor_abstractions_unresolved",
       "upstream_acceptance_threshold_not_met"
     ],
     "escalation_required": true,
     "pilot_transformation_authorized": false
   },
-  "deterministic_fingerprint": "e93d7d230e0fcc99defa5044a6f610328938358f121b3256ec4388e03dcc81b4",
+  "deterministic_fingerprint": "1e4ccc6da535d767629b740bc5bb5177f078a39afdcb0bd1014d973697e54d28",
   "evidence_references": [
     "registry://governance_state",
-    "registry://controlled_pilot_conversion",
-    "artifact://api_replacement_map",
-    "artifact://unsupported_vendor_constructs",
-    "artifact://runtime_equivalence_validation",
-    "artifact://runtime_validated_patch_segments",
-    "artifact://translation_execution_report",
-    "artifact://upstream_acceptance_report",
-    "artifact://acceptance_confidence_score",
-    "artifact://regression_risk_assessment",
+    "registry://real_micro_conversion_pilot",
+    "artifact://runtime_truth_graph",
     "artifact://runtime_equivalence_fingerprint",
-    "artifact://topology_runtime_graph",
-    "artifact://aura_replay_determinism_report"
+    "artifact://api_replacement_map",
+    "artifact://generated_upstream_patch",
+    "artifact://acceptance_confidence_score",
+    "artifact://acceptance_confidence_score"
   ],
   "governance_policy": {
     "autonomous_patch_application_allowed": false,
@@ -59,15 +61,15 @@
     "updated_at": "2026-05-22T14:31:45.397414+00:00",
     "write_policy": "governed_write_approved_only"
   },
-  "lineage_id": "controlled_pilot_conversion_v1",
+  "lineage_id": "real_micro_conversion_v1:pilot",
   "report_name": "governance_decision_report",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "controlled_pilot_conversion_session_v1",
+  "session_id": "real_micro_conversion_session_v1:pilot",
   "summary": {
     "blocked_candidate_count": 0,
     "cross_subsystem_violation": false,
-    "unsupported_vendor_count": 2834
+    "unsupported_vendor_count": 0
   },
   "target_id": "RB3Gen2"
 }

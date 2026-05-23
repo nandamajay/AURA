@@ -1,0 +1,21 @@
+# Governed Translation Execution Patch
+# mode=emit
+
+--- a/sound/soc/qcom/q6apm-compat-micro-pilot.c
++++ b/sound/soc/qcom/q6apm-compat-micro-pilot.c
+@@ -3,11 +3,11 @@
+ void dev_dbg(struct device *dev, const char *fmt, ...);
+ int device_is_registered(struct device *dev);
+ 
+-void qcom_dbg_log(struct device *dev, const char *fmt, ...);
+-int qcom_cap_bool(struct device *dev);
++void dev_dbg(struct device *dev, const char *fmt, ...);
++int device_is_registered(struct device *dev);
+ 
+-#define QCOM_AUD_DBG(dev, fmt, ...) qcom_dbg_log(dev, fmt, ##__VA_ARGS__)
+-#define QCOM_AUD_CAP(dev) qcom_cap_bool(dev)
++#define QCOM_AUD_DBG(dev, fmt, ...) dev_dbg(dev, fmt, ##__VA_ARGS__)
++#define QCOM_AUD_CAP(dev) device_is_registered(dev)
+ 
+ int qcom_audio_probe(struct device *dev)
+ {

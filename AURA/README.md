@@ -1910,6 +1910,68 @@ python3 -m pytest \
 
 - `docs/operations/transport/controlled_pilot_conversion_architecture.md`
 
+## First Real Governed Micro-Conversion Pilot
+
+This phase runs one real tiny Qualcomm-style downstream construct conversion
+end-to-end using existing governed layers:
+
+- runtime truth cognition
+- runtime evidence acquisition
+- governed translation intelligence
+- governed translation execution
+- adaptive remediation
+- upstream acceptance simulation
+- controlled pilot conversion
+
+### Pilot Focus
+
+- `qcom_dbg_log` -> `dev_dbg`
+- `qcom_cap_bool` -> `device_is_registered`
+
+### Runner
+
+- `scripts/aura-real-micro-conversion-pilot.py`
+
+### Required Artifacts (Generated)
+
+- `real_micro_conversion.patch`
+- `transformation_explainability_report.json`
+- `runtime_equivalence_validation.json`
+- `governance_decision_report.json`
+- `conversion_confidence_report.json`
+- `rollback_lineage.json`
+- `deterministic_conversion_replay.json`
+- `upstream_acceptance_prediction.json`
+- `real_micro_conversion_summary.json`
+
+### Run
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-real-micro-conversion-pilot.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id real_micro_conversion_session_v1 \
+  --lineage-id real_micro_conversion_v1
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_real_micro_conversion_pilot_static.py -q
+```
+
+### Governance Rules
+
+- fail-closed default
+- no autonomous production patch application
+- runtime-backed equivalence required
+- unsupported vendor constructs must block conversion
+- deterministic replay + lineage persistence required
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

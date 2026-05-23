@@ -1,37 +1,89 @@
 {
   "advisory_only_behavior": true,
   "classification": "FAIL_CLOSED",
-  "deterministic_fingerprint": "0dd97d729a76250e8dcb8a0de16dbce0d1229913dee81441f32a55c0a1ca1d53",
+  "deterministic_fingerprint": "839e51ed1149f5158abe0e7052af684d5dd51fc617ce5f4e062cc23f809b5df2",
   "evidence_references": [
     "registry://governance_state",
-    "registry://controlled_pilot_conversion",
-    "artifact://api_replacement_map",
-    "artifact://unsupported_vendor_constructs",
-    "artifact://runtime_equivalence_validation",
-    "artifact://runtime_validated_patch_segments",
-    "artifact://translation_execution_report",
-    "artifact://upstream_acceptance_report",
-    "artifact://acceptance_confidence_score",
-    "artifact://regression_risk_assessment",
+    "registry://real_micro_conversion_pilot",
+    "artifact://runtime_truth_graph",
     "artifact://runtime_equivalence_fingerprint",
-    "artifact://topology_runtime_graph",
-    "artifact://aura_replay_determinism_report"
+    "artifact://api_replacement_map",
+    "artifact://generated_upstream_patch",
+    "artifact://acceptance_confidence_score",
+    "artifact://acceptance_confidence_score"
   ],
-  "explanations": [],
-  "lineage_id": "controlled_pilot_conversion_v1",
+  "explanations": [
+    {
+      "applied": false,
+      "confidence": 0.876,
+      "downstream_construct": "qcom_dbg_log",
+      "evidence_references": [
+        "artifact://acceptance_confidence_score",
+        "artifact://api_replacement_map",
+        "artifact://downstream_driver_graph",
+        "artifact://generated_upstream_patch",
+        "artifact://runtime_equivalence_fingerprint",
+        "artifact://runtime_truth_graph",
+        "artifact://semantic_entity_graph",
+        "registry://governance_state",
+        "registry://real_micro_conversion_pilot"
+      ],
+      "file": "",
+      "pilot_category": "logging_wrapper_replacement",
+      "reasoning_chain": [
+        "runtime_evidence_correlation",
+        "translation_proposal_validation",
+        "upstream_acceptance_simulation_gate",
+        "governance_scoring_gate",
+        "scope_limiter_enforcement",
+        "human_review_packaging"
+      ],
+      "replacement_count": 0,
+      "upstream_replacement": "dev_dbg"
+    },
+    {
+      "applied": false,
+      "confidence": 0.861,
+      "downstream_construct": "qcom_cap_bool",
+      "evidence_references": [
+        "artifact://acceptance_confidence_score",
+        "artifact://api_replacement_map",
+        "artifact://downstream_driver_graph",
+        "artifact://generated_upstream_patch",
+        "artifact://runtime_equivalence_fingerprint",
+        "artifact://runtime_truth_graph",
+        "artifact://semantic_entity_graph",
+        "registry://governance_state",
+        "registry://real_micro_conversion_pilot"
+      ],
+      "file": "",
+      "pilot_category": "vendor_macro_normalization",
+      "reasoning_chain": [
+        "runtime_evidence_correlation",
+        "translation_proposal_validation",
+        "upstream_acceptance_simulation_gate",
+        "governance_scoring_gate",
+        "scope_limiter_enforcement",
+        "human_review_packaging"
+      ],
+      "replacement_count": 0,
+      "upstream_replacement": "device_is_registered"
+    }
+  ],
+  "lineage_id": "real_micro_conversion_v1:pilot",
   "report_name": "transformation_explainability_report",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
   "scope_rejections": [],
-  "session_id": "controlled_pilot_conversion_session_v1",
+  "session_id": "real_micro_conversion_session_v1:pilot",
   "summary": {
     "applied_count": 0,
-    "candidate_count": 0,
+    "candidate_count": 2,
     "scope_rejection_count": 0
   },
   "target_id": "RB3Gen2",
   "validation_linkage": {
-    "governance_decision_fingerprint": "e93d7d230e0fcc99defa5044a6f610328938358f121b3256ec4388e03dcc81b4",
-    "runtime_equivalence_validation_fingerprint": "bcc54fcbb4ed1355bcd504cc4ae9637aaea20f9b3f81a97a124939646eca9286"
+    "governance_decision_fingerprint": "2b97d1dee42c68b7b2cf83a92a735a7bbc0628a8cc7c7e9aa4f130c64bf1aea6",
+    "runtime_equivalence_validation_fingerprint": "094149f5e9153a04bc4290650665e3692f07d31d4a52c3c09dd5b3864e675b5d"
   }
 }
