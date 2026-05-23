@@ -55,6 +55,10 @@ def test_plugin_isolation_contract_and_core_genericity() -> None:
         "evidence_provider",
         "capability_provider",
         "validation_provider",
+        "dts_adapter",
+        "topology_adapter",
+        "vendor_api_adapter",
+        "subsystem_descriptor_provider",
     ):
         assert callable(getattr(plugin, field))
 

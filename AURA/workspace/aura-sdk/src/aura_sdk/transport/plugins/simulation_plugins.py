@@ -180,6 +180,95 @@ class _BaseSimulationPlugin:
             "health": self.health,
         }
 
+    def dts_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        semantic = {
+            "overlay_hierarchy": [f"{self.target_id}.dtsi"],
+            "vendor_only_nodes": [f"{self.target_id}:vendor_node"] if self.health == "DEGRADED" else [],
+            "reusable_upstream_nodes": [f"{self.target_id}:generic_audio_node"],
+            "fe_be_route_topology": [f"{self.target_id}:fe0->be0"],
+            "codec_bindings": [f"{self.target_id}:codec0"],
+            "dependencies": {
+                "clocks": ["clk_audio_core"],
+                "regulators": ["vdd_audio"],
+                "gpios": ["gpio_spkr_en"],
+            },
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.dts_adapter",
+            "semantic_dts": semantic,
+            "fingerprint": _hash(semantic),
+        }
+
+    def topology_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        topology = {
+            "routes": [f"{self.target_id}:pcm0->spkr"],
+            "frontend_backend": [f"{self.target_id}:fe0->be0"],
+            "topology_state": self.health,
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.topology_adapter",
+            "topology_graph": topology,
+            "fingerprint": _hash(topology),
+        }
+
+    def vendor_api_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        if self.target_id == "fake_target_alpha":
+            driver = {
+                "downstream_only_apis": [],
+                "vendor_hooks": [],
+                "wrapper_layers": [],
+                "duplicated_vendor_abstractions": False,
+                "codec_coupling": False,
+                "platform_assumptions": [],
+                "subsystem_ownership": "audio",
+            }
+        elif self.target_id == "fake_target_beta":
+            driver = {
+                "downstream_only_apis": ["vendor_beta_wrap"],
+                "vendor_hooks": ["vendor_hook_beta"],
+                "wrapper_layers": ["beta_shim"],
+                "duplicated_vendor_abstractions": False,
+                "codec_coupling": True,
+                "platform_assumptions": ["beta_soc"],
+                "subsystem_ownership": "audio",
+            }
+        else:
+            driver = {
+                "downstream_only_apis": ["gamma_vendor_api"],
+                "vendor_hooks": ["vendor_hook_gamma"],
+                "wrapper_layers": ["gamma_shim"],
+                "duplicated_vendor_abstractions": True,
+                "codec_coupling": True,
+                "platform_assumptions": ["gamma_soc"],
+                "subsystem_ownership": "audio",
+            }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.vendor_api_adapter",
+            "semantic_driver": driver,
+            "fingerprint": _hash(driver),
+        }
+
+    def subsystem_descriptor_provider(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        descriptors = {
+            "audio": {
+                "owner": "simulated",
+                "state": self.health,
+            },
+            "platform": {
+                "owner": self.target_id,
+                "portable": self.target_id != "degraded_target_gamma",
+            },
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": f"{self.target_id}.subsystem_descriptor_provider",
+            "descriptors": descriptors,
+            "fingerprint": _hash(descriptors),
+        }
+
 
 class FakeTargetAlphaPlugin(_BaseSimulationPlugin):
     target_id = "fake_target_alpha"

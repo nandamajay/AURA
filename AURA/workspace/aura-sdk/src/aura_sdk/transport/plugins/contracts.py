@@ -28,6 +28,10 @@ class TargetPluginContract(Protocol):
     evidence_provider: ProviderFn
     capability_provider: ProviderFn
     validation_provider: ProviderFn
+    dts_adapter: ProviderFn
+    topology_adapter: ProviderFn
+    vendor_api_adapter: ProviderFn
+    subsystem_descriptor_provider: ProviderFn
 
 
 @dataclass(frozen=True)
@@ -60,6 +64,10 @@ def assert_plugin_contract(plugin: Any) -> None:
         "evidence_provider",
         "capability_provider",
         "validation_provider",
+        "dts_adapter",
+        "topology_adapter",
+        "vendor_api_adapter",
+        "subsystem_descriptor_provider",
     )
 
     missing: list[str] = []

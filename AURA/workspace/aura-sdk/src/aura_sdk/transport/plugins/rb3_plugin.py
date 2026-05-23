@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import re
 from pathlib import Path
 from typing import Any, Mapping
 
@@ -35,6 +36,13 @@ def _as_list(value: Any) -> list[Any]:
 
 def _text_corpus(payload: Mapping[str, Any]) -> str:
     return json.dumps(dict(payload), sort_keys=True).lower()
+
+
+def _read_text(path: str | Path) -> str:
+    try:
+        return Path(path).read_text(encoding="utf-8")
+    except Exception:
+        return ""
 
 
 class RB3TargetPlugin:
@@ -302,6 +310,158 @@ class RB3TargetPlugin:
             "provider": "rb3.validation_provider",
             "mode": mode,
             "health": "OK",
+        }
+
+    def dts_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        entry_dts = str(payload.get("entry_dts", "")).strip()
+        static_context = _as_dict(payload.get("static_context"))
+        if not static_context and entry_dts and Path(entry_dts).exists():
+            static_context = parse_dts_audio_cognition(entry_dts, max_include_depth=6).context
+
+        entry_text = _read_text(entry_dts) if entry_dts else ""
+        include_graph = _as_list(static_context.get("include_graph"))
+        source_files = [str(item) for item in _as_list(static_context.get("source_files")) if str(item).strip()]
+        overlay_candidates = _as_list(_as_dict(static_context.get("overlay_inheritance")).get("overlay_candidates"))
+        overlay_hierarchy = [str(item.get("path", "")) for item in include_graph if isinstance(item, dict)]
+
+        nodes = _as_list(static_context.get("sound_card_nodes"))
+        vendor_only_nodes = [
+            str(item.get("node", item))
+            for item in nodes
+            if "qcom" in str(item).lower() or "qcs" in str(item).lower() or "msm" in str(item).lower()
+        ]
+        reusable_nodes = [
+            str(item.get("node", item))
+            for item in nodes
+            if str(item.get("node", item)).strip() and str(item.get("node", item)) not in vendor_only_nodes
+        ]
+
+        fe_be_routes = _as_list(static_context.get("backend_frontend_mappings"))
+        codec_bindings = _as_list(static_context.get("codec_nodes"))
+
+        clock_deps = sorted(set(re.findall(r"\bclocks?\b", entry_text, flags=re.IGNORECASE)))
+        regulator_deps = sorted(set(re.findall(r"\bregulators?\b", entry_text, flags=re.IGNORECASE)))
+        gpio_deps = sorted(set(re.findall(r"\bgpios?\b", entry_text, flags=re.IGNORECASE)))
+
+        payload_obj = {
+            "overlay_hierarchy": overlay_hierarchy,
+            "overlay_candidates": [str(item) for item in overlay_candidates],
+            "vendor_only_nodes": vendor_only_nodes,
+            "reusable_upstream_nodes": reusable_nodes,
+            "fe_be_route_topology": fe_be_routes,
+            "codec_bindings": codec_bindings,
+            "dependencies": {
+                "clocks": clock_deps,
+                "regulators": regulator_deps,
+                "gpios": gpio_deps,
+            },
+            "source_files": source_files,
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.dts_adapter",
+            "semantic_dts": payload_obj,
+            "fingerprint": _stable_hash(payload_obj),
+        }
+
+    def topology_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        static_context = _as_dict(payload.get("static_context"))
+        if not static_context and str(payload.get("entry_dts", "")).strip():
+            static_context = self.topology_provider(payload).get("static_context", {})
+        routes = _as_list(static_context.get("qcom_audio_routing"))
+        fe_be = _as_list(static_context.get("backend_frontend_mappings"))
+        soundwire = _as_list(static_context.get("soundwire_topology_markers"))
+        graph = {
+            "routes": routes,
+            "frontend_backend": fe_be,
+            "soundwire_markers": soundwire,
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.topology_adapter",
+            "topology_graph": graph,
+            "fingerprint": _stable_hash(graph),
+        }
+
+    def vendor_api_adapter(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        driver_context = str(payload.get("driver_context", ""))
+        lowered = driver_context.lower()
+        downstream_only_apis = sorted(
+            {
+                token
+                for token in (
+                    "msm_",
+                    "qcom_",
+                    "snd_soc_qcom_",
+                    "wcd9",
+                    "audioreach",
+                )
+                if token in lowered
+            }
+        )
+        vendor_hooks = sorted(
+            {
+                token
+                for token in (
+                    "vendor_hook",
+                    "trace_android_vh",
+                    "qcom_snd",
+                    "msm_pcm",
+                )
+                if token in lowered
+            }
+        )
+        wrapper_layers = sorted(
+            {
+                token
+                for token in (
+                    "wrapper",
+                    "compat_layer",
+                    "shim",
+                )
+                if token in lowered
+            }
+        )
+        duplicated_vendor_abstractions = bool("abstract" in lowered and "vendor" in lowered)
+        codec_coupling = "wcd" in lowered or "codec" in lowered
+        platform_assumptions = sorted({item for item in ("qcs6490", "rb3gen2", "msm") if item in lowered})
+        subsystem_ownership = "audio" if any(token in lowered for token in ("snd", "audio", "codec")) else "unknown"
+
+        payload_obj = {
+            "downstream_only_apis": downstream_only_apis,
+            "vendor_hooks": vendor_hooks,
+            "wrapper_layers": wrapper_layers,
+            "duplicated_vendor_abstractions": duplicated_vendor_abstractions,
+            "codec_coupling": codec_coupling,
+            "platform_assumptions": platform_assumptions,
+            "subsystem_ownership": subsystem_ownership,
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.vendor_api_adapter",
+            "semantic_driver": payload_obj,
+            "fingerprint": _stable_hash(payload_obj),
+        }
+
+    def subsystem_descriptor_provider(self, payload: Mapping[str, Any]) -> dict[str, Any]:
+        static_context = _as_dict(payload.get("static_context"))
+        descriptors = {
+            "audio": {
+                "owner": "alsa_asoc",
+                "topology_markers": _as_list(static_context.get("soundwire_topology_markers")),
+                "codec_nodes": _as_list(static_context.get("codec_nodes")),
+            },
+            "device_tree": {
+                "owner": "dts_overlay",
+                "overlay_candidates": _as_list(_as_dict(static_context.get("overlay_inheritance")).get("overlay_candidates")),
+                "source_count": len(_as_list(static_context.get("source_files"))),
+            },
+        }
+        return {
+            "target_id": self.target_id,
+            "provider": "rb3.subsystem_descriptor_provider",
+            "descriptors": descriptors,
+            "fingerprint": _stable_hash(descriptors),
         }
 
 

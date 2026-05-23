@@ -229,6 +229,7 @@ python3 scripts/aura-phase3-plugin-hardening.py \
 - `plugin_lifecycle.md`
 - `replay_portability.md`
 - `governance_portability_boundaries.md`
+- `plugin_semantic_lifecycle.md`
 
 ## Portable Runtime Stabilization Phase
 
@@ -261,6 +262,53 @@ python3 scripts/aura-portable-runtime-stabilization.py \
 - `capability_negotiation_trace.json`
 - `plugin_lifecycle_graph.json`
 - `quarantine_recovery_trace.json`
+
+## Semantic Kernel Cognition Foundation
+
+This phase introduces plugin-driven downstream kernel semantic cognition while
+keeping replay determinism, governance boundaries, and portability isolation.
+
+### Semantic Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_cognition.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_registry.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/semantic_fingerprint.py`
+
+### Semantic Plugin Adapters
+
+Each plugin provides:
+
+- `dts_adapter`
+- `topology_adapter`
+- `vendor_api_adapter`
+- `subsystem_descriptor_provider`
+
+Core runtime does not parse target semantics directly.
+
+### Semantic Generator
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-semantic-kernel-foundation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2
+```
+
+### Semantic Artifacts
+
+- `downstream_semantic_graph.json`
+- `subsystem_mapping_graph.json`
+- `dts_topology_graph.json`
+- `vendor_dependency_fingerprint.json`
+- `semantic_confidence_report.json`
+- `semantic_replay_trace.json`
+- `semantic_kernel_foundation_summary.json`
+
+### Semantic Governance Constraints
+
+- Allowed: analyze, classify, correlate, fingerprint, replay, recommend
+- Forbidden: generate final patches, rewrite DTS, mutate drivers, fabricate compatibility
 
 ### Stabilization Tests
 

@@ -24,6 +24,7 @@ class PluginIsolationValidator:
         base = self._root / "AURA/workspace/aura-sdk/src/aura_sdk/transport"
         return [
             base / "portable_runtime_layer.py",
+            base / "semantic_cognition.py",
             base / "plugins/loader.py",
             base / "plugins/contracts.py",
         ]
@@ -56,6 +57,10 @@ class PluginIsolationValidator:
 
     def validate(self) -> dict[str, Any]:
         files = self._core_files()
+        portable_runtime_file = files[0]
+        semantic_core_file = files[1]
+        loader_file = files[2]
+        contract_file = files[3]
         branch_findings: dict[str, list[str]] = {}
         assumption_findings: dict[str, list[str]] = {}
 
@@ -75,11 +80,21 @@ class PluginIsolationValidator:
                 assumption_findings[str(path)] = assumptions
 
         portable_boundary_checks = {
-            "portable_runtime_uses_plugin_loader": "TargetPluginLoader" in _read(files[0]),
-            "portable_runtime_uses_negotiation_request": "PluginNegotiationRequest" in _read(files[0]),
-            "loader_uses_contract_validation": "assert_plugin_contract" in _read(files[1]),
+            "portable_runtime_uses_plugin_loader": "TargetPluginLoader" in _read(portable_runtime_file),
+            "portable_runtime_uses_negotiation_request": "PluginNegotiationRequest" in _read(portable_runtime_file),
+            "semantic_core_uses_plugin_loader": "TargetPluginLoader" in _read(semantic_core_file),
+            "semantic_core_invokes_plugin_adapters": all(
+                token in _read(semantic_core_file)
+                for token in (
+                    ".dts_adapter(",
+                    ".topology_adapter(",
+                    ".vendor_api_adapter(",
+                    ".subsystem_descriptor_provider(",
+                )
+            ),
+            "loader_uses_contract_validation": "assert_plugin_contract" in _read(loader_file),
             "contract_has_required_providers": all(
-                token in _read(files[2])
+                token in _read(contract_file)
                 for token in (
                     "topology_provider",
                     "mixer_provider",
@@ -88,6 +103,10 @@ class PluginIsolationValidator:
                     "evidence_provider",
                     "capability_provider",
                     "validation_provider",
+                    "dts_adapter",
+                    "topology_adapter",
+                    "vendor_api_adapter",
+                    "subsystem_descriptor_provider",
                 )
             ),
         }

@@ -8,6 +8,8 @@ Verify deterministic replay remains target-agnostic across simulated targets.
 - Governance classification preservation through replay reconstruction.
 - Replay operation independent of hardware topology specifics.
 - Procedural memory integrity preserved by orchestration-only operations.
+- Semantic cognition replay determinism (lineage-bound semantic fingerprints).
+- Semantic evidence references preserved across replay restore.
 
 ## Matrix Targets
 - `fake_target_alpha`
@@ -19,3 +21,4 @@ Verify deterministic replay remains target-agnostic across simulated targets.
 - Replay event count remains invariant for identical event stream.
 - Governance labels remain in allowed set (`GOVERNED_APPROVED`, `ADVISORY_ONLY`, `FAIL_CLOSED`).
 - No target-specific branching required in replay engine.
+- Semantic replay trace preserves lineage and artifact references.

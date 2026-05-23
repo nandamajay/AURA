@@ -141,6 +141,16 @@ from aura_sdk.transport.plugins import (
     get_fake_target_beta_plugin,
     get_rb3_plugin,
 )
+from aura_sdk.transport.semantic_cognition import (
+    SemanticCognitionEngine,
+    SemanticCognitionResult,
+)
+from aura_sdk.transport.semantic_fingerprint import (
+    SemanticFingerprintResult,
+    build_vendor_dependency_fingerprint,
+    stable_fingerprint,
+)
+from aura_sdk.transport.semantic_registry import SemanticCognitionRegistry
 
 __all__ = [
     "CommandClassification",
@@ -251,4 +261,10 @@ __all__ = [
     "get_fake_target_beta_plugin",
     "get_degraded_target_gamma_plugin",
     "build_simulation_registry_payload",
+    "SemanticCognitionEngine",
+    "SemanticCognitionResult",
+    "SemanticCognitionRegistry",
+    "SemanticFingerprintResult",
+    "build_vendor_dependency_fingerprint",
+    "stable_fingerprint",
 ]

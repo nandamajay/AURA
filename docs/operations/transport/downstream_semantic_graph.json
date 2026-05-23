@@ -1,0 +1,116 @@
+{
+  "classification": {
+    "ordered": [
+      {
+        "category": "vendor_coupled",
+        "score": 0.82
+      },
+      {
+        "category": "governance_risky",
+        "score": 0.75
+      },
+      {
+        "category": "upstream_friendly",
+        "score": 0.45
+      },
+      {
+        "category": "topology_sensitive",
+        "score": 0.35
+      },
+      {
+        "category": "partially_portable",
+        "score": 0.33
+      },
+      {
+        "category": "replay_sensitive",
+        "score": 0.15
+      }
+    ],
+    "primary_classification": "vendor_coupled",
+    "scores": {
+      "governance_risky": 0.75,
+      "partially_portable": 0.33,
+      "replay_sensitive": 0.15,
+      "topology_sensitive": 0.35,
+      "upstream_friendly": 0.45,
+      "vendor_coupled": 0.82
+    }
+  },
+  "driver_semantic": {
+    "codec_coupling": true,
+    "downstream_only_apis": [
+      "msm_",
+      "qcom_",
+      "snd_soc_qcom_"
+    ],
+    "duplicated_vendor_abstractions": false,
+    "platform_assumptions": [
+      "msm"
+    ],
+    "subsystem_ownership": "audio",
+    "vendor_hooks": [
+      "msm_pcm",
+      "vendor_hook"
+    ],
+    "wrapper_layers": [
+      "wrapper"
+    ]
+  },
+  "dts_semantic": {
+    "codec_bindings": [],
+    "dependencies": {
+      "clocks": [],
+      "gpios": [],
+      "regulators": []
+    },
+    "fe_be_route_topology": [],
+    "overlay_candidates": [],
+    "overlay_hierarchy": [],
+    "reusable_upstream_nodes": [],
+    "source_files": [],
+    "vendor_only_nodes": []
+  },
+  "edges": [
+    {
+      "from": "target:RB3Gen2",
+      "relation": "described_by",
+      "to": "dts"
+    },
+    {
+      "from": "target:RB3Gen2",
+      "relation": "implemented_by",
+      "to": "driver"
+    },
+    {
+      "from": "dts",
+      "relation": "influences",
+      "to": "classification"
+    },
+    {
+      "from": "driver",
+      "relation": "influences",
+      "to": "classification"
+    }
+  ],
+  "graph_name": "downstream_semantic_graph",
+  "nodes": [
+    {
+      "id": "target:RB3Gen2",
+      "kind": "target"
+    },
+    {
+      "id": "dts",
+      "kind": "dts_semantics"
+    },
+    {
+      "id": "driver",
+      "kind": "driver_semantics"
+    },
+    {
+      "id": "classification",
+      "kind": "semantic_classification"
+    }
+  ],
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2"
+}

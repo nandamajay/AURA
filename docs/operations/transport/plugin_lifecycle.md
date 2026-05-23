@@ -28,3 +28,13 @@ Portable runtime stabilization lifecycle for target plugins under fail-closed go
 - Core runtime controls lifecycle orchestration only.
 - Target-specific route/topology/mixer/evidence logic is plugin-owned only.
 - Core runtime does not branch on `if target == ...`.
+
+## Semantic Adapter Lifecycle
+- Semantic adapters are plugin-owned and invoked after lifecycle `activate`.
+- Required semantic adapters:
+  - `dts_adapter`
+  - `topology_adapter`
+  - `vendor_api_adapter`
+  - `subsystem_descriptor_provider`
+- Semantic outputs are advisory/governed cognition artifacts only.
+- Semantic adapter failures trigger `quarantine` and preserve fail-closed posture.

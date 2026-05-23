@@ -11,6 +11,9 @@
 - Autonomous topology rewriting.
 - Autonomous mixer mutation.
 - Autonomous upstream generation.
+- Autonomous semantic patch authoring.
+- Autonomous DTS rewrite proposals.
+- Autonomous driver mutation proposals.
 
 ## Cross-Target Safety
 - Target intelligence must remain in plugin layer.
@@ -22,3 +25,8 @@
 - Recovery requires explicit quarantine clear + reload.
 - Recovery does not bypass replay compatibility validation.
 - Governance decisions remain preserved across replay reconstruction.
+
+## Semantic Governance Boundaries
+- Allowed semantic actions: analyze, classify, correlate, fingerprint, replay, recommend.
+- Forbidden semantic actions: generate final patches, rewrite DTS, mutate drivers, fabricate compatibility.
+- Semantic cognition must remain evidence-backed and lineage-linked.
