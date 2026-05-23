@@ -1,0 +1,144 @@
+{
+  "advisory_only_behavior": true,
+  "api_validation": {
+    "unresolved_api_count": 639
+  },
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "ead3147bd7bc07059872a6eca8c74121dae028ad1cdc22d62bb57a81a1bfecbf",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://upstream_acceptance_simulation",
+    "artifact://runtime_equivalence_fingerprint",
+    "artifact://runtime_divergence_report",
+    "artifact://downstream_upstream_runtime_diff",
+    "artifact://evidence_quality_report",
+    "artifact://target_runtime_capture",
+    "artifact://patch_dependency_graph",
+    "artifact://subsystem_boundary_map",
+    "artifact://bisectability_report",
+    "artifact://patch_series_plan",
+    "artifact://api_evolution_trace",
+    "artifact://runtime_patch_correlation",
+    "artifact://generated_upstream_patch.diff",
+    "artifact://unsupported_vendor_constructs",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "fail_closed_reasons": [
+    "structural_incorrect",
+    "runtime_equivalence_insufficient",
+    "subsystem_isolation_violation",
+    "patch_dependency_order_violation",
+    "bisectability_violation",
+    "api_compatibility_violation",
+    "commit_taxonomy_violation"
+  ],
+  "patch_statistics": {
+    "added_line_count": 0,
+    "file_count": 0,
+    "files": [],
+    "hunk_count": 0,
+    "removed_line_count": 0,
+    "style_violation_count": 0,
+    "style_violations": []
+  },
+  "report_name": "patch_series_validation",
+  "runtime_evidence_citations": [],
+  "runtime_ordering_validation": {
+    "deterministic_ordering_observed": true,
+    "normalized_event_count": 11
+  },
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "sequence_validation": {
+    "ordered_patch_ids": [
+      "patch_01_subsystem_boundary_prep",
+      "patch_02_topology_fe_be_normalization",
+      "patch_03_api_evolution_alignment",
+      "patch_04_vendor_contamination_isolation",
+      "patch_06_runtime_correlation_guardrails",
+      "patch_05_soundwire_and_dsp_decoupling",
+      "patch_07_upstream_equivalence_refinement",
+      "patch_08_bisectability_and_series_finalize"
+    ],
+    "sequence_violations": 2
+  },
+  "summary": {
+    "file_count": 0,
+    "series_count": 8,
+    "style_violation_count": 0
+  },
+  "target_id": "RB3Gen2",
+  "taxonomy_validation": {
+    "invalid_taxonomy_count": 5,
+    "rows": [
+      {
+        "declared_sequence": 1,
+        "dependency_order_sequence": 1,
+        "patch_group_id": "patch_01_subsystem_boundary_prep",
+        "taxonomy": "unclassified",
+        "taxonomy_valid": false
+      },
+      {
+        "declared_sequence": 2,
+        "dependency_order_sequence": 2,
+        "patch_group_id": "patch_02_topology_fe_be_normalization",
+        "taxonomy": "topology",
+        "taxonomy_valid": true
+      },
+      {
+        "declared_sequence": 3,
+        "dependency_order_sequence": 3,
+        "patch_group_id": "patch_03_api_evolution_alignment",
+        "taxonomy": "unclassified",
+        "taxonomy_valid": false
+      },
+      {
+        "declared_sequence": 4,
+        "dependency_order_sequence": 4,
+        "patch_group_id": "patch_04_vendor_contamination_isolation",
+        "taxonomy": "unclassified",
+        "taxonomy_valid": false
+      },
+      {
+        "declared_sequence": 5,
+        "dependency_order_sequence": 6,
+        "patch_group_id": "patch_05_soundwire_and_dsp_decoupling",
+        "taxonomy": "soundwire",
+        "taxonomy_valid": true
+      },
+      {
+        "declared_sequence": 6,
+        "dependency_order_sequence": 5,
+        "patch_group_id": "patch_06_runtime_correlation_guardrails",
+        "taxonomy": "runtime",
+        "taxonomy_valid": true
+      },
+      {
+        "declared_sequence": 7,
+        "dependency_order_sequence": 7,
+        "patch_group_id": "patch_07_upstream_equivalence_refinement",
+        "taxonomy": "unclassified",
+        "taxonomy_valid": false
+      },
+      {
+        "declared_sequence": 8,
+        "dependency_order_sequence": 8,
+        "patch_group_id": "patch_08_bisectability_and_series_finalize",
+        "taxonomy": "unclassified",
+        "taxonomy_valid": false
+      }
+    ]
+  },
+  "validation_dimensions": {
+    "api_compatibility": false,
+    "maintainer_scope_correctness": false,
+    "patch_dependency_ordering": false,
+    "regression_containment_confidence": false,
+    "replay_determinism": true,
+    "runtime_equivalence_confidence": false,
+    "runtime_ordering_validation": true,
+    "structural_correctness": false,
+    "subsystem_isolation": false,
+    "upstream_policy_alignment": false
+  }
+}

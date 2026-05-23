@@ -1,0 +1,176 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "delivery_authorization": {
+    "acceptance_confidence": 0.401,
+    "autonomous_delivery_permitted": false
+  },
+  "deterministic_fingerprint": "1683bcf20e287e587bfd8380331e779825ba468177a9f267768c97e0ecaa2bf2",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://upstream_acceptance_simulation",
+    "artifact://runtime_equivalence_fingerprint",
+    "artifact://runtime_divergence_report",
+    "artifact://downstream_upstream_runtime_diff",
+    "artifact://evidence_quality_report",
+    "artifact://target_runtime_capture",
+    "artifact://patch_dependency_graph",
+    "artifact://subsystem_boundary_map",
+    "artifact://bisectability_report",
+    "artifact://patch_series_plan",
+    "artifact://api_evolution_trace",
+    "artifact://runtime_patch_correlation",
+    "artifact://generated_upstream_patch.diff",
+    "artifact://unsupported_vendor_constructs",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "execution_flow": [
+    "Reason",
+    "Translate",
+    "Validate",
+    "Runtime equivalence verification",
+    "Upstream acceptance simulation",
+    "Governance scoring",
+    "Delivery authorization",
+    "Commit/push orchestration",
+    "Deterministic replay persistence"
+  ],
+  "patch_series": [
+    {
+      "patch_group_id": "patch_01_subsystem_boundary_prep",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=unclassified"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 1,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": false
+      },
+      "taxonomy": "unclassified"
+    },
+    {
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=topology"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 2,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": false
+      },
+      "taxonomy": "topology"
+    },
+    {
+      "patch_group_id": "patch_03_api_evolution_alignment",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=unclassified"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 3,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": false
+      },
+      "taxonomy": "unclassified"
+    },
+    {
+      "patch_group_id": "patch_04_vendor_contamination_isolation",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=unclassified"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 4,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": false
+      },
+      "taxonomy": "unclassified"
+    },
+    {
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=runtime"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 5,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": true
+      },
+      "taxonomy": "runtime"
+    },
+    {
+      "patch_group_id": "patch_05_soundwire_and_dsp_decoupling",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=soundwire"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 6,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": true
+      },
+      "taxonomy": "soundwire"
+    },
+    {
+      "patch_group_id": "patch_07_upstream_equivalence_refinement",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=unclassified"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 7,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": false
+      },
+      "taxonomy": "unclassified"
+    },
+    {
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "patch_justification": [
+        "bisectability_guardrail_enabled",
+        "runtime_equivalence_validated",
+        "subsystem_scope_review_required",
+        "taxonomy=unclassified"
+      ],
+      "runtime_evidence_citations": [],
+      "sequence": 8,
+      "stable_backport_suitability": {
+        "reason": "limited_scope_and_runtime_backed_validation",
+        "recommended": false
+      },
+      "taxonomy": "unclassified"
+    }
+  ],
+  "report_name": "upstream_submission_plan",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "flow_steps": 9,
+    "series_count": 8
+  },
+  "target_id": "RB3Gen2"
+}

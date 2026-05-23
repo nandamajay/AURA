@@ -1764,6 +1764,81 @@ python3 -m pytest \
 
 - `docs/operations/transport/runtime_evidence_acquisition_architecture.md`
 
+## Upstream Acceptance Simulation and Patch Validation Layer
+
+This layer simulates upstream maintainer review readiness and blocks unsafe
+downstream-to-upstream delivery unless runtime-backed governance thresholds are
+met.
+
+### Focus Coverage
+
+- upstream review simulation
+- patch series quality validation
+- bisectability validation
+- maintainer ownership reasoning
+- subsystem boundary validation
+- API conformity validation
+- dependency cleanliness analysis
+- runtime-backed regression risk scoring
+- patch sequencing + commit taxonomy enforcement
+- coding-style validation
+- stable/backport suitability analysis
+- runtime evidence citation mapping
+- governance-aware acceptance confidence scoring
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/upstream_acceptance_simulation.py`
+- Runner:
+  - `scripts/aura-upstream-acceptance-simulation.py`
+
+### Required Artifacts (Generated)
+
+- `upstream_acceptance_report.json`
+- `patch_series_validation.json`
+- `maintainer_scope_map.json`
+- `regression_risk_assessment.json`
+- `bisectability_validation.json`
+- `upstream_submission_plan.json`
+- `patch_dependency_order.json`
+- `acceptance_confidence_score.json`
+- `deterministic_submission_replay.json`
+- `upstream_acceptance_simulation_summary.json`
+
+### Run Upstream Acceptance Simulation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-upstream-acceptance-simulation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --session-id upstream_acceptance_session_v1 \
+  --lineage-id upstream_acceptance_v1
+```
+
+### Validation
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_upstream_acceptance_simulation_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed on insufficient runtime-backed equivalence confidence
+- fail-closed on subsystem isolation violations
+- fail-closed on regression containment confidence below threshold
+- fail-closed when unsupported vendor abstractions remain unresolved
+- autonomous delivery authorization only after acceptance passes threshold
+- deterministic replay-safe submission lineage persistence
+
+### Architecture Document
+
+- `docs/operations/transport/upstream_acceptance_simulation_architecture.md`
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

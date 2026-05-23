@@ -426,6 +426,11 @@ from aura_sdk.transport.runtime_evidence_acquisition import (
     RuntimeEvidenceAcquisitionRegistry,
     RuntimeEvidenceAcquisitionResult,
 )
+from aura_sdk.transport.upstream_acceptance_simulation import (
+    UpstreamAcceptanceSimulationEngine,
+    UpstreamAcceptanceSimulationRegistry,
+    UpstreamAcceptanceSimulationResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -690,4 +695,7 @@ __all__ = [
     "RuntimeEvidenceAcquisitionEngine",
     "RuntimeEvidenceAcquisitionRegistry",
     "RuntimeEvidenceAcquisitionResult",
+    "UpstreamAcceptanceSimulationEngine",
+    "UpstreamAcceptanceSimulationRegistry",
+    "UpstreamAcceptanceSimulationResult",
 ]
