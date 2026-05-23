@@ -1,0 +1,2676 @@
+{
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "d6acc1dacce0f5dbc9334511f19005973783a2e6841f3bbc02fe22183f6c44cb",
+  "governance_conversion_boundaries": {
+    "allowed_actions": [
+      "analyze",
+      "classify",
+      "correlate",
+      "fingerprint",
+      "plan",
+      "recommend",
+      "replay"
+    ],
+    "blocked_by_state": [],
+    "classification": "PASS",
+    "deterministic_fingerprint": "748337186d137cc6c0268ab2406a5fff06cabc04b29f97286d88774de984ec8e",
+    "fail_closed_posture": true,
+    "forbidden_actions": [
+      "autonomous_patch_generation",
+      "autonomous_topology_mutation",
+      "unsafe_runtime_rewrite",
+      "unsupported_semantic_assumption"
+    ],
+    "governance_state": {
+      "execution_approval_mode": "linux_authoritative_windows_execute_only",
+      "fail_closed_posture": true,
+      "patching_restrictions": {
+        "autonomous_patching_allowed": false,
+        "autonomous_upstream_generation_allowed": false
+      },
+      "topology_mutation_restrictions": {
+        "autonomous_mixer_mutation_allowed": false,
+        "autonomous_topology_rewrite_allowed": false
+      },
+      "transport_restrictions": {
+        "allowed_modes": [
+          "adb_shell"
+        ],
+        "blocked_modes": [
+          "serial_raw",
+          "ssh_unapproved"
+        ]
+      },
+      "updated_at": "2026-05-22T14:31:45.397414+00:00",
+      "write_policy": "governed_write_approved_only"
+    },
+    "report_name": "governance_conversion_boundaries",
+    "schema_version": "1.0"
+  },
+  "lineage_id": "real_downstream_ingestion_v1",
+  "phases": [
+    {
+      "deterministic_gate": "downstream_driver_graph.deterministic_fingerprint_stable",
+      "goal": "extract downstream driver cognition graph",
+      "phase": "phase_1_real_ingestion"
+    },
+    {
+      "deterministic_gate": "topology_runtime_graph.deterministic_fingerprint_stable",
+      "goal": "reconstruct FE/BE + PCM/DPCM portable runtime graph",
+      "phase": "phase_2_topology_normalization"
+    },
+    {
+      "deterministic_gate": "upstream_equivalence_map.semantic_equivalence_confidence_non_degrading",
+      "goal": "map downstream vendor constructs to upstream abstractions",
+      "phase": "phase_3_semantic_equivalence_mapping"
+    },
+    {
+      "deterministic_gate": "replay_compatibility.compatibility_level_not_incompatible",
+      "goal": "produce governed migration advisory plan with replay checks",
+      "phase": "phase_4_governed_migration_advisory"
+    }
+  ],
+  "regression_risk_analysis": {
+    "blocker_summary": {
+      "advisory_count": 2,
+      "blocked_unsafe_count": 1,
+      "total_detected": 3
+    },
+    "classification": "HIGH_RISK_FAIL_CLOSED",
+    "deterministic_fingerprint": "263d16c1a9f770fad71a6846cc41b9e8d65492b10dca82c84f1cf8ba16191d63",
+    "drift_details": [
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      },
+      {
+        "details": "Total runtime drift 39.703s exceeds threshold.",
+        "severity": "MEDIUM",
+        "source": "regression_history",
+        "type": "runtime_latency_drift"
+      }
+    ],
+    "drivers": {
+      "advisory_count": 2,
+      "blocked_unsafe_count": 1,
+      "migration_drift_score": 1.0,
+      "semantic_equivalence_confidence": 0.613,
+      "topology_reconstruction_confidence": 1.0,
+      "unresolved_equivalence_count": 660
+    },
+    "report_name": "migration_risk_report",
+    "risk_score": 0.48,
+    "schema_version": "1.0",
+    "target_id": "RB3Gen2"
+  },
+  "replay_compatibility_analysis": {
+    "compatibility_level": "FULL",
+    "deterministic": true,
+    "missing_contract_elements": [],
+    "mode": "replay_compatibility",
+    "provider": "rb3.validation_provider",
+    "target_id": "RB3Gen2"
+  },
+  "report_name": "deterministic_conversion_plan",
+  "schema_version": "1.0",
+  "suggested_upstream_mappings": [
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_audio",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_cb_func",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_client",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_client_data",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_deregister",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_end_rx_rt",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_fill_hdr",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_fn",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_client",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_data_src",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_dest_id",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_lpass_subsys_name",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_modem_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_q6_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_reset_domain",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_subsys_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_get_svc",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_hdr",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_hdr_fields",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_load_adsp_image",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_pkt_cfg",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_q6",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_register",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_register_adsp_state_cb",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_reset",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_rx_intents",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_send_pkt",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_set_modem_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_set_q6_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_set_subsys_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_start_rx_rt",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_subsys_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_svc",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_svc_ch_dev",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "apr_wait_for_device_up",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "aqt_audio_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_i2s_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_callback",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_device_id",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_module_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_module_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_service_cb",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_cdc_earpa_duty_cycling_req",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_lpass_clk_cfg",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_lpass_clk_cfg_rel",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_lpass_clk_cfg_req",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_lpass_hw_core_req",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_lpi_logging_status",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "audio_prm_set_vote_against_sleep",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_add_child_devices",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_add_child_devices_work",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_ahb_read_device",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_ahb_write_device",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_cdc_notifier_call",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_cdc_register_notifier",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_cdc_update_wcd_event",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_check_core_votes",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clear_amic_tx_hold",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_cb",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_check_and_update_va_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_dt_match",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_enable_all_clocks",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_fs_gen_request",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_get_clk_muxsel",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_mgr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_mgr_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_mgr_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_mux0_clk_request",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_mux1_clk_request",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_clk_rsc_request_clock",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_codec",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_component",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_copy_dais_from_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_dais",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_defaults",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_dev",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_dev_pm_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_dmic_clk_div_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_dmic_clk_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_drv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_drv_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_drv_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_dt_match",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_get_device_ptr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_get_macro_id",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_get_rsc_clk_device_ptr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_get_version",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_info_create_codec_entry",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_info_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_is_readable_register",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_is_va_macro_registered",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_is_valid_child_dev",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_is_valid_codec_dev",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_is_volatile_register",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_is_writeable_register",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_mclk_mux_tbl",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_nblock",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_np",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_priv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_register_event_listener",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_register_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_register_res_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_register_wake_irq",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_regmap_config",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_regmap_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_rsc_clk_reset",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_runtime_resume",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_runtime_suspend",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_rx_pa_on",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_rx_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_set_port_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_soc_codec_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_soc_codec_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_ssr_disable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_ssr_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_ssr_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_tx_clk_switch",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_tx_mclk_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_tx_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_tx_reg_access_v2",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_unregister_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_unregister_res_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_va_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_va_reg_access_v2",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_va_reg_access_v3",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_va_top_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_version_read",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_wsa_pa_on",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "bolero_wsa_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.69,
+      "downstream_construct": "csra66x0_dapm_routes",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_dapm"
+    },
+    {
+      "confidence": 0.69,
+      "downstream_construct": "ext_disp_be_dai_link",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_dpcm"
+    },
+    {
+      "confidence": 0.69,
+      "downstream_construct": "ext_hdmi_be_dai_link",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_dpcm"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_add_device",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_adsp",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_adsp_down",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_adsp_up",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_callback",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_dev_release",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_device",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_device_id",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_device_match",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_device_probe",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_device_remove",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_driver",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_driver_register",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_driver_unregister",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_exit",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_get_modem_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_get_q6_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_hdr",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_init",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_lock",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_modem",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_modem_down",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_modem_up",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_notifier_register",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_notifier_service_cb",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_of_match",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_pkt",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_priv",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_probe",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_q6",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_remove",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_remove_device",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_send_pkt",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_set_modem_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_set_q6_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_ssr_disable",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_ssr_ops",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_subsys_notif_deregister",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_subsys_notif_register",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_subsys_state",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.42,
+      "downstream_construct": "gpr_uevent",
+      "status": "PARTIAL",
+      "upstream_equivalent": "mailbox_or_soundwire_control"
+    },
+    {
+      "confidence": 0.69,
+      "downstream_construct": "haptics_comp_dapm_route",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_dapm"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_audio_hw_vote",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_audio_hw_vote_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_audio_hw_vote_ref_cnt",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_audio_hwvote_client_handle",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_priv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_add_child_devices",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_add_child_devices_work",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_check_core_votes",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_core_vote",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_ctrl_data",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_ctrl_platform_data",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_drv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_drv_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_drv_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_dt_match",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_mclk_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_pdev",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_pm_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_priv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_runtime_resume",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_runtime_suspend",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_ssr_disable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_ssr_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swr_ssr_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_bt_swrm_clock",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_add_child_devices",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_add_child_devices_work",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_ahb_read_device",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_ahb_write_device",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_check_core_votes",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clear_amic_tx_hold",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_cb",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_check_and_update_va_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_dt_match",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_enable_all_clocks",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_fs_gen_request",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_get_clk_muxsel",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_mgr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_mgr_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_mgr_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_mux0_clk_request",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_mux1_clk_request",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_clk_rsc_request_clock",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_comp_setting",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_component",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_copy_dais_from_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_dais",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_defaults",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_dev_pm_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_dmic_clk_div_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_dmic_clk_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_drv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_drv_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_drv_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_dt_match",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_exit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_get_device_ptr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_get_macro_id",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_get_rsc_clk_device_ptr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_get_version",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_info_create_codec_entry",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_info_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_is_readable_register",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_is_va_macro_registered",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_is_valid_child_dev",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_is_valid_codec_dev",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_is_volatile_register",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_is_writeable_register",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_load_compander_coeff",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_macro_idle_detect_control",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_mclk_mux_tbl",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_notifier_call",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_notify_wcd_rx_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_priv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_proc_entry",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_proc_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_proc_read",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_regdump",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_reginfo",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_register_event_listener",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_register_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_register_notifier",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_register_res_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_register_wake_irq",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_regmap_config",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_regmap_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rsc_clk_reset",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_runtime_resume",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_runtime_suspend",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx0_rx_path_ctl_phy_addr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_add_child_devices",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_add_child_devices_work",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_adie_lb",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_aux_hpf_mode_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_aux_hpf_mode_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_config_aux_hpf",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_config_classh",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_config_compander",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_config_softclip",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_core_vote",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_dai",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_dai_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.69,
+      "downstream_construct": "lpass_cdc_rx_macro_dapm_widgets",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_soc_dapm"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_deinit",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_driver",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_droop_setting",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_dt_match",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_ear_mode_enum",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_ear_mode_text",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_clsh_block",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_echo",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_interp_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_main_path",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_mix_path",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_rx_path_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_softclip_clk",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_enable_vbat",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_event_handler",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_find_playback_dai_id_for_port",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_audio_mixer_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_audio_mixer_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_coeff_num_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_coeff_num_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_filter_ctl",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_filter_enable_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_filter_enable_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_filter_enum",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_filter_info",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_fir_filter_text",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_get_channel_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_get_compander",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_get_data",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_get_ear_mode",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_get_hph_hd2_mode",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_get_hph_pwr_mode",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.78,
+      "downstream_construct": "lpass_cdc_rx_macro_get_pcm_path",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_pcm"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hd2_control",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hph_hd2_mode_enum",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hph_hd2_mode_text",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hph_idle_detect_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hph_idle_detect_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hph_pwr_mode_enum",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hph_pwr_mode_text",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hphdelay_lutbypass",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_hw_params",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_idle_detect_config",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_idle_detect_control",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_iir_band_audio_mixer_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_iir_band_audio_mixer_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_iir_enable_audio_mixer_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_iir_enable_audio_mixer_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_iir_filter_ctl",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_iir_filter_info",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_init_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_int_dem_inp_mux_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_is_fractional_sample_rate",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_mclk_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_mclk_event",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_mux_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_mux_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_mux_text",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_priv",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_put_ear_mode",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_put_hph_hd2_mode",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_put_hph_pwr_mode",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.78,
+      "downstream_construct": "lpass_cdc_rx_macro_put_pcm_path",
+      "status": "PARTIAL",
+      "upstream_equivalent": "snd_pcm"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_reg_init",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_reg_mask_val",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_restore_iir_coeff",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_rx0",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_rx1",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_rx2",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_rx3",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_rx4",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_rx5",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_compander",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_idle_detect_thr",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_iir_gain",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_interpolator_rate",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_mix_interpolator_rate",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_port_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_set_prim_interpolator_rate",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_snd_controls",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_soft_clip_enable_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_soft_clip_enable_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_vbat_bcl_gsm_mode_enum",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_vbat_bcl_gsm_mode_func_get",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_vbat_bcl_gsm_mode_func_put",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_vbat_bcl_gsm_mode_text",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_macro_wcd_clsh_imped_config",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_reg_access",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_rx_set_fir_capability",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_set_port_map",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_soc_codec_probe",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_soc_codec_remove",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_ssr_disable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_ssr_enable",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_ssr_ops",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    },
+    {
+      "confidence": 0.2,
+      "downstream_construct": "lpass_cdc_tx_macro",
+      "status": "UNRESOLVED",
+      "upstream_equivalent": "UNRESOLVED"
+    }
+  ],
+  "target_id": "RB3Gen2",
+  "topology_equivalence_reasoning": {
+    "runtime_activation_order": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20",
+      "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1",
+      "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1",
+      "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0",
+      "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85",
+      "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1",
+      "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav",
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    ],
+    "topology_confidence": 1.0,
+    "topology_fingerprint": "7f68a1bfb8b5f6c7899eec1fe1dea1e222f8a7511330c5f949cf6cc913df6a8a"
+  },
+  "transformation_policy": {
+    "advisory_only": [
+      "manual_driver_ops_refactor_review",
+      "manual_dai_link_portability_review",
+      "manual_runtime_hook_replacement_review"
+    ],
+    "forbidden_autonomous_transformations": [
+      "autonomous_patch_generation",
+      "autonomous_topology_mutation",
+      "unsafe_runtime_rewrite"
+    ],
+    "replay_safe": [
+      "normalize_vendor_identifiers",
+      "normalize_fe_be_labels",
+      "normalize_pcm_route_signatures"
+    ]
+  }
+}

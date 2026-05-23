@@ -455,6 +455,103 @@ python3 -m pytest \
   workspace/aura-sdk/tests/test_translation_intelligence_static.py -q
 ```
 
+## Real Downstream Kernel Ingestion Cognition
+
+This phase moves conversion reasoning from synthetic semantic assumptions to
+real downstream kernel source ingestion while keeping execution governed and
+fail-closed.
+
+### Mission Alignment
+
+Each new component directly maps to AURA mission goals:
+
+- driver understanding:
+  - real-tree parsing for `snd_soc_ops`, dai-link structures, vendor hooks, and proprietary runtime paths
+- topology understanding:
+  - FE/BE/DPCM reconstruction and normalized portable route modeling
+- runtime evidence reasoning:
+  - runtime evidence + replay contract are required inputs for conversion safety
+- regression detection:
+  - migration risk report merges drift lineage and blocker classification
+- deterministic replay:
+  - conversion bundle, artifact set, and replay traces use deterministic fingerprints
+- upstream conversion capability:
+  - confidence-scored upstream equivalence map + staged deterministic conversion plan
+
+### New Engines
+
+- `workspace/aura-sdk/src/aura_sdk/transport/downstream_driver_ingestion.py`
+  - parses real downstream trees and emits `downstream_driver_graph`
+- `workspace/aura-sdk/src/aura_sdk/transport/upstream_semantic_matcher.py`
+  - maps downstream constructs to upstream ALSA/ASoC/DAPM/SoundWire abstractions
+- `workspace/aura-sdk/src/aura_sdk/transport/portability_blocker_classifier.py`
+  - classifies blockers into replay-safe/advisory/blocked-unsafe classes
+- `workspace/aura-sdk/src/aura_sdk/transport/topology_reconstruction_cognition.py`
+  - reconstructs normalized FE/BE + PCM/DPCM runtime topology graph
+- `workspace/aura-sdk/src/aura_sdk/transport/real_downstream_conversion_planner.py`
+  - plugin-driven orchestration, deterministic conversion plan, and replay-safe persistence
+
+### Plugin Isolation Extensions
+
+Target plugins now provide real ingestion adapters:
+
+- `downstream_ingestion_adapter`
+- `upstream_match_adapter`
+- `topology_reconstruction_adapter`
+
+Core runtime remains target-agnostic and contains no `if target == ...` branching.
+
+### Real Ingestion Generator
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-real-downstream-ingestion.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id real_downstream_ingestion_v1
+```
+
+Default source references used by this generator:
+
+- downstream:
+  - `/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar`
+- upstream:
+  - `/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/linux-upstream-v6.18`
+
+### Generated Artifacts
+
+- `downstream_driver_graph.json`
+- `topology_runtime_graph.json`
+- `upstream_equivalence_map.json`
+- `portability_blockers.json`
+- `migration_risk_report.json`
+- `deterministic_conversion_plan.json`
+- `governance_conversion_boundaries.json`
+- `deterministic_conversion_replay.json`
+- `real_downstream_ingestion_summary.json`
+
+### Governance Constraints (Enforced)
+
+- Allowed: analyze, classify, correlate, fingerprint, plan, recommend, replay
+- Forbidden:
+  - autonomous patch generation
+  - autonomous topology mutation
+  - unsafe runtime rewriting
+  - unsupported semantic assumptions
+- Planner is advisory/governed only and never rewrites DTS/drivers.
+
+### Real Ingestion Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_target_plugin_runtime_static.py \
+  workspace/aura-sdk/tests/test_portable_runtime_stabilization_static.py \
+  workspace/aura-sdk/tests/test_translation_intelligence_static.py \
+  workspace/aura-sdk/tests/test_real_downstream_ingestion_static.py -q
+```
+
 ### Artifact Intent
 
 - `portable_target_cognition_architecture.json`

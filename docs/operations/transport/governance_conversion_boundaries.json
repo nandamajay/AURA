@@ -1,0 +1,46 @@
+{
+  "allowed_actions": [
+    "analyze",
+    "classify",
+    "correlate",
+    "fingerprint",
+    "plan",
+    "recommend",
+    "replay"
+  ],
+  "blocked_by_state": [],
+  "classification": "PASS",
+  "deterministic_fingerprint": "748337186d137cc6c0268ab2406a5fff06cabc04b29f97286d88774de984ec8e",
+  "fail_closed_posture": true,
+  "forbidden_actions": [
+    "autonomous_patch_generation",
+    "autonomous_topology_mutation",
+    "unsafe_runtime_rewrite",
+    "unsupported_semantic_assumption"
+  ],
+  "governance_state": {
+    "execution_approval_mode": "linux_authoritative_windows_execute_only",
+    "fail_closed_posture": true,
+    "patching_restrictions": {
+      "autonomous_patching_allowed": false,
+      "autonomous_upstream_generation_allowed": false
+    },
+    "topology_mutation_restrictions": {
+      "autonomous_mixer_mutation_allowed": false,
+      "autonomous_topology_rewrite_allowed": false
+    },
+    "transport_restrictions": {
+      "allowed_modes": [
+        "adb_shell"
+      ],
+      "blocked_modes": [
+        "serial_raw",
+        "ssh_unapproved"
+      ]
+    },
+    "updated_at": "2026-05-22T14:31:45.397414+00:00",
+    "write_policy": "governed_write_approved_only"
+  },
+  "report_name": "governance_conversion_boundaries",
+  "schema_version": "1.0"
+}

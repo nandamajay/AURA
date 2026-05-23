@@ -1,0 +1,80 @@
+{
+  "classification": "FAIL_CLOSED",
+  "detected": [
+    {
+      "classification": "blocked_unsafe",
+      "code": "downstream_only_apis",
+      "details": {
+        "count": 660,
+        "examples": [
+          "aqt_audio_map",
+          "audio_i2s_map",
+          "audio_map",
+          "audio_prm_callback",
+          "audio_prm_device_id",
+          "audio_prm_module_exit",
+          "audio_prm_module_init",
+          "audio_prm_probe",
+          "audio_prm_remove",
+          "audio_prm_service_cb",
+          "audio_prm_set_cdc_earpa_duty_cycling_req",
+          "audio_prm_set_lpass_clk_cfg",
+          "audio_prm_set_lpass_clk_cfg_rel",
+          "audio_prm_set_lpass_clk_cfg_req",
+          "audio_prm_set_lpass_hw_core_req",
+          "audio_prm_set_lpi_logging_status",
+          "audio_prm_set_vote_against_sleep",
+          "bolero_add_child_devices",
+          "bolero_add_child_devices_work",
+          "bolero_ahb_read_device"
+        ]
+      },
+      "severity": "HIGH"
+    },
+    {
+      "classification": "advisory_only",
+      "code": "vendor_private_abstractions",
+      "details": {
+        "proprietary_hook_count": 157,
+        "vendor_extension_count": 2704
+      },
+      "severity": "MEDIUM"
+    },
+    {
+      "classification": "advisory_only",
+      "code": "timing_dependencies",
+      "details": "Downstream source contains explicit sleep/delay timing dependencies.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "deterministic_fingerprint": "7229e3fbf36d467d24b3bc858e6551b6202324f9956554eb2353e03ca88e977e",
+  "portability_score": 0.59,
+  "report_name": "portability_blockers",
+  "schema_version": "1.0",
+  "summary": {
+    "advisory_count": 2,
+    "blocked_unsafe_count": 1,
+    "total_detected": 3
+  },
+  "target_id": "RB3Gen2",
+  "transformation_classes": {
+    "advisory_only": [
+      "manual_driver_ops_refactor_review",
+      "manual_dai_link_portability_review",
+      "manual_runtime_hook_replacement_review"
+    ],
+    "blocked_unsafe": [
+      "downstream_only_apis"
+    ],
+    "forbidden_autonomous_transformations": [
+      "autonomous_patch_generation",
+      "autonomous_topology_mutation",
+      "unsafe_runtime_rewrite"
+    ],
+    "replay_safe": [
+      "normalize_vendor_identifiers",
+      "normalize_fe_be_labels",
+      "normalize_pcm_route_signatures"
+    ]
+  }
+}
