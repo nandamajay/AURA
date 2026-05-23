@@ -1,0 +1,311 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "e0f968a8d67838648fadd9618238eb3a4d00958c307aa97fe88017322d8507ab",
+  "dpcm_lifecycle_transitions": [
+    {
+      "classification": "TRANSITION",
+      "sequence": 1,
+      "transition": "PREPARE"
+    },
+    {
+      "classification": "TRANSITION",
+      "sequence": 2,
+      "transition": "START"
+    },
+    {
+      "classification": "TRANSITION",
+      "sequence": 3,
+      "transition": "DRAIN_STOP"
+    },
+    {
+      "classification": "TRANSITION",
+      "sequence": 4,
+      "transition": "CLOSE"
+    },
+    {
+      "classification": "STATE",
+      "sequence": 5,
+      "transition": "STATE"
+    },
+    {
+      "classification": "STATE",
+      "sequence": 6,
+      "transition": "STATE"
+    }
+  ],
+  "drift_score": 0.128,
+  "drifts": [
+    {
+      "details": "Detected 1 long timeline gaps above 120ms.",
+      "severity": "MEDIUM",
+      "type": "timing_gap_drift"
+    }
+  ],
+  "dsp_synchronization_timing": {
+    "pair_latencies_ms": [
+      5.0
+    ],
+    "sync_failure_count": 0
+  },
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://runtime_evidence_fusion",
+    "artifact://runtime_truth_graph",
+    "artifact://pcm_lifecycle_trace",
+    "artifact://dapm_transition_trace",
+    "artifact://soundwire_runtime_graph",
+    "artifact://irq_timing_report",
+    "artifact://dsp_sync_report",
+    "artifact://topology_runtime_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://migration_runtime_alignment",
+    "artifact://upstream_equivalence_map"
+  ],
+  "fe_be_dependency_sequence": [
+    {
+      "dependency": "PREPARE",
+      "sequence": 1,
+      "source": "pcm_lifecycle_trace"
+    },
+    {
+      "dependency": "START",
+      "sequence": 2,
+      "source": "pcm_lifecycle_trace"
+    },
+    {
+      "dependency": "DRAIN_STOP",
+      "sequence": 3,
+      "source": "pcm_lifecycle_trace"
+    },
+    {
+      "dependency": "CLOSE",
+      "sequence": 4,
+      "source": "pcm_lifecycle_trace"
+    },
+    {
+      "dependency": "STATE",
+      "sequence": 5,
+      "source": "pcm_lifecycle_trace"
+    },
+    {
+      "dependency": "STATE",
+      "sequence": 6,
+      "source": "pcm_lifecycle_trace"
+    }
+  ],
+  "irq_runtime_causality_chains": [],
+  "ordered_runtime_timeline": [
+    {
+      "domain": "dmesg",
+      "event_id": "dmesg:line:1",
+      "label": "Missing expected sequence steps: collect_runtime_evidence, apply_route_translation, validate_pcm_activation, validate_replay_compatibility, finalize_governed_plan",
+      "source": "dmesg",
+      "timestamp_ms": 1004.0
+    },
+    {
+      "domain": "dmesg",
+      "event_id": "dmesg:line:2",
+      "label": "Detected 2 trace ordering warnings.",
+      "source": "dmesg",
+      "timestamp_ms": 1008.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:2",
+      "label": "PREPARE",
+      "source": "pcm_lifecycle_trace",
+      "timestamp_ms": 1010.0
+    },
+    {
+      "domain": "ftrace",
+      "event_id": "ftrace:line:3",
+      "label": "1.010: pcm PREPARE",
+      "source": "ftrace",
+      "timestamp_ms": 1010.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:3",
+      "label": "START",
+      "source": "pcm_lifecycle_trace",
+      "timestamp_ms": 1015.0
+    },
+    {
+      "domain": "ftrace",
+      "event_id": "ftrace:line:4",
+      "label": "1.015: pcm START",
+      "source": "ftrace",
+      "timestamp_ms": 1015.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:4",
+      "label": "DRAIN_STOP",
+      "source": "pcm_lifecycle_trace",
+      "timestamp_ms": 1020.0
+    },
+    {
+      "domain": "ftrace",
+      "event_id": "ftrace:line:5",
+      "label": "1.020: pcm DRAIN_STOP",
+      "source": "ftrace",
+      "timestamp_ms": 1020.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "ftrace:5",
+      "label": "CLOSE",
+      "source": "pcm_lifecycle_trace",
+      "timestamp_ms": 1025.0
+    },
+    {
+      "domain": "ftrace",
+      "event_id": "ftrace:line:6",
+      "label": "1.025: pcm CLOSE",
+      "source": "ftrace",
+      "timestamp_ms": 1025.0
+    },
+    {
+      "domain": "dsp",
+      "event_id": "dsp:pair:1",
+      "label": "DSP_SYNC",
+      "source": "dsp_sync_report",
+      "timestamp_ms": 1034.0
+    },
+    {
+      "domain": "ftrace",
+      "event_id": "ftrace:line:7",
+      "label": "1.185: pcm STATE",
+      "source": "ftrace",
+      "timestamp_ms": 1185.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "procfs_sysfs:37",
+      "label": "STATE",
+      "source": "pcm_lifecycle_trace",
+      "timestamp_ms": 1185.0
+    },
+    {
+      "domain": "dapm",
+      "event_id": "procfs_sysfs:38",
+      "label": "STATE",
+      "source": "dapm_transition_trace",
+      "timestamp_ms": 1190.0
+    },
+    {
+      "domain": "dapm",
+      "event_id": "trace_cmd:event:9",
+      "label": "STATE",
+      "source": "trace_cmd",
+      "timestamp_ms": 1190.0
+    },
+    {
+      "domain": "pcm",
+      "event_id": "alsa_topology_runtime:42",
+      "label": "STATE",
+      "source": "pcm_lifecycle_trace",
+      "timestamp_ms": 1210.0
+    },
+    {
+      "domain": "ftrace",
+      "event_id": "ftrace:line:8",
+      "label": "1.210: pcm STATE",
+      "source": "ftrace",
+      "timestamp_ms": 1210.0
+    }
+  ],
+  "report_name": "runtime_sequence_drift",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "soundwire_activation_graph": {
+    "soundwire_edges": [
+      {
+        "from": "target:RB3Gen2",
+        "relation": "observed_soundwire_event",
+        "to": "soundwire_event:soundwire_debugfs:39"
+      },
+      {
+        "from": "target:RB3Gen2",
+        "relation": "observed_soundwire_event",
+        "to": "soundwire_event:soundwire_debugfs:40"
+      },
+      {
+        "from": "fe:msm_bolero_fe_dai_links",
+        "relation": "topology_runtime_link",
+        "to": "be:ext_disp_be_dai_link"
+      },
+      {
+        "from": "fe:msm_common_misc_fe_dai_links",
+        "relation": "topology_runtime_link",
+        "to": "be:ext_disp_be_dai_link"
+      },
+      {
+        "from": "fe:msm_stub_fe_dai_links",
+        "relation": "topology_runtime_link",
+        "to": "be:msm_stub_be_dai_links"
+      },
+      {
+        "from": "fe:msm_tavil_fe_dai_links",
+        "relation": "topology_runtime_link",
+        "to": "be:msm_tavil_be_dai_links"
+      }
+    ],
+    "soundwire_event_count": 2,
+    "soundwire_nodes": [
+      {
+        "id": "target:RB3Gen2",
+        "kind": "target"
+      },
+      {
+        "detail": "soundwire port active",
+        "id": "soundwire_event:soundwire_debugfs:39",
+        "kind": "soundwire_event",
+        "timestamp_ms": 1195.0
+      },
+      {
+        "detail": "soundwire lane stable",
+        "id": "soundwire_event:soundwire_debugfs:40",
+        "kind": "soundwire_event",
+        "timestamp_ms": 1200.0
+      }
+    ]
+  },
+  "subsystem_activation_ordering": [
+    {
+      "domain": "dmesg",
+      "first_event_id": "dmesg:line:1",
+      "first_timestamp_ms": 1004.0
+    },
+    {
+      "domain": "pcm",
+      "first_event_id": "ftrace:2",
+      "first_timestamp_ms": 1010.0
+    },
+    {
+      "domain": "ftrace",
+      "first_event_id": "ftrace:line:3",
+      "first_timestamp_ms": 1010.0
+    },
+    {
+      "domain": "dsp",
+      "first_event_id": "dsp:pair:1",
+      "first_timestamp_ms": 1034.0
+    },
+    {
+      "domain": "dapm",
+      "first_event_id": "procfs_sysfs:38",
+      "first_timestamp_ms": 1190.0
+    }
+  ],
+  "summary": {
+    "drift_count": 1,
+    "long_gap_count": 1,
+    "missing_expected_count": 0,
+    "timeline_event_count": 17
+  },
+  "target_id": "RB3Gen2"
+}

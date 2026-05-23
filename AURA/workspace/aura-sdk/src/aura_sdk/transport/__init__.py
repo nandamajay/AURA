@@ -296,6 +296,35 @@ from aura_sdk.transport.runtime_evidence_fusion_engine import (
     RuntimeEvidenceFusionRegistry,
     RuntimeEvidenceFusionResult,
 )
+from aura_sdk.transport.runtime_sequence_drift_engine import (
+    RuntimeSequenceDriftResult,
+    reconstruct_runtime_sequence_drift,
+)
+from aura_sdk.transport.lifecycle_violation_detector import (
+    LifecycleViolationReportResult,
+    detect_lifecycle_violations,
+)
+from aura_sdk.transport.topology_runtime_failure_mapper import (
+    TopologyRuntimeCausalityResult,
+    map_topology_runtime_failures,
+)
+from aura_sdk.transport.patch_runtime_causality_engine import (
+    RegressionCausalityReportResult,
+    build_patch_runtime_causality,
+)
+from aura_sdk.transport.root_cause_reasoner import (
+    RootCauseCandidatesResult,
+    build_root_cause_candidates,
+)
+from aura_sdk.transport.evidence_confidence_engine import (
+    EngineeringConfidenceReportResult,
+    build_engineering_confidence_report,
+)
+from aura_sdk.transport.runtime_incident_reconstructor import (
+    RuntimeIncidentReconstructionRegistry,
+    RuntimeIncidentReconstructionResult,
+    RuntimeIncidentReconstructor,
+)
 
 __all__ = [
     "CommandClassification",
@@ -487,4 +516,19 @@ __all__ = [
     "RuntimeEvidenceFusionResult",
     "RuntimeEvidenceFusionEngine",
     "RuntimeEvidenceFusionRegistry",
+    "RuntimeSequenceDriftResult",
+    "reconstruct_runtime_sequence_drift",
+    "LifecycleViolationReportResult",
+    "detect_lifecycle_violations",
+    "TopologyRuntimeCausalityResult",
+    "map_topology_runtime_failures",
+    "RegressionCausalityReportResult",
+    "build_patch_runtime_causality",
+    "RootCauseCandidatesResult",
+    "build_root_cause_candidates",
+    "EngineeringConfidenceReportResult",
+    "build_engineering_confidence_report",
+    "RuntimeIncidentReconstructionResult",
+    "RuntimeIncidentReconstructor",
+    "RuntimeIncidentReconstructionRegistry",
 ]

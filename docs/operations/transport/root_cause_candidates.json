@@ -1,0 +1,156 @@
+{
+  "advisory_only_behavior": true,
+  "candidates": [
+    {
+      "candidate": "migration_induced_incompatibility",
+      "confidence": 0.85,
+      "details": "Migration/runtime alignment is FAIL_CLOSED.",
+      "evidence_links": [
+        "regression_causality_report"
+      ],
+      "origin": "patch_runtime_causality_engine",
+      "severity": "HIGH"
+    },
+    {
+      "candidate": "blocked_transition_alignment",
+      "confidence": 0.8,
+      "details": "Migration transitions are blocked against current runtime behavior.",
+      "evidence_links": [
+        "regression_rootcause_report"
+      ],
+      "origin": "runtime_evidence_fusion",
+      "severity": "HIGH"
+    },
+    {
+      "candidate": "unsupported_upstream_abstraction",
+      "confidence": 0.79,
+      "details": "Detected 1 blocked portability blockers.",
+      "evidence_links": [
+        "regression_causality_report"
+      ],
+      "origin": "patch_runtime_causality_engine",
+      "severity": "HIGH"
+    },
+    {
+      "candidate": "upstream_downstream_abstraction_mismatch",
+      "confidence": 0.74,
+      "details": "Detected 660 unresolved upstream equivalence mappings.",
+      "evidence_links": [
+        "regression_causality_report"
+      ],
+      "origin": "patch_runtime_causality_engine",
+      "severity": "HIGH"
+    },
+    {
+      "candidate": "vendor_dependency_contamination",
+      "confidence": 0.72,
+      "details": "Vendor contamination score is 0.706.",
+      "evidence_links": [
+        "regression_causality_report"
+      ],
+      "origin": "patch_runtime_causality_engine",
+      "severity": "HIGH"
+    },
+    {
+      "candidate": "execution_sequence_drift",
+      "confidence": 0.75,
+      "details": "Missing expected sequence steps: collect_runtime_evidence, apply_route_translation, validate_pcm_activation, validate_replay_compatibility, finalize_governed_plan",
+      "evidence_links": [
+        "regression_rootcause_report"
+      ],
+      "origin": "runtime_evidence_fusion",
+      "severity": "MEDIUM"
+    },
+    {
+      "candidate": "ordering_warning_drift",
+      "confidence": 0.75,
+      "details": "Detected 2 trace ordering warnings.",
+      "evidence_links": [
+        "regression_rootcause_report"
+      ],
+      "origin": "runtime_evidence_fusion",
+      "severity": "MEDIUM"
+    },
+    {
+      "candidate": "patch_runtime_drift_overlap",
+      "confidence": 0.7,
+      "details": "2 medium runtime drifts overlap with patch/runtime causal links.",
+      "evidence_links": [
+        "regression_causality_report"
+      ],
+      "origin": "patch_runtime_causality_engine",
+      "severity": "MEDIUM"
+    },
+    {
+      "candidate": "runtime_drift_linked_violation",
+      "confidence": 0.68,
+      "details": "Runtime sequence drift contributed 1 lifecycle risk signals.",
+      "evidence_links": [
+        "lifecycle_violation_report",
+        "runtime_sequence_drift"
+      ],
+      "origin": "lifecycle_violation_detector",
+      "severity": "MEDIUM"
+    },
+    {
+      "candidate": "runtime_sequence_drift",
+      "confidence": 0.66,
+      "details": "Detected 1 drift signals in ordered runtime timeline.",
+      "evidence_links": [
+        "runtime_sequence_drift"
+      ],
+      "origin": "runtime_sequence_drift_engine",
+      "severity": "MEDIUM"
+    },
+    {
+      "candidate": "weak_lifecycle_causality_edges",
+      "confidence": 0.65,
+      "details": "Detected 1 low-strength lifecycle edges.",
+      "evidence_links": [
+        "regression_rootcause_report"
+      ],
+      "origin": "runtime_evidence_fusion",
+      "severity": "MEDIUM"
+    },
+    {
+      "candidate": "topology_runtime_dependency_break",
+      "confidence": 0.64,
+      "details": "Detected 1 topology/runtime inconsistencies.",
+      "evidence_links": [
+        "topology_runtime_causality"
+      ],
+      "origin": "topology_runtime_failure_mapper",
+      "severity": "MEDIUM"
+    }
+  ],
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "2727d339555a0811fd679987c4e3a253c6fb0c586f5466140e593173ad21923c",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://runtime_evidence_fusion",
+    "artifact://runtime_truth_graph",
+    "artifact://pcm_lifecycle_trace",
+    "artifact://dapm_transition_trace",
+    "artifact://soundwire_runtime_graph",
+    "artifact://irq_timing_report",
+    "artifact://dsp_sync_report",
+    "artifact://topology_runtime_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://migration_runtime_alignment",
+    "artifact://upstream_equivalence_map"
+  ],
+  "report_name": "root_cause_candidates",
+  "root_cause_confidence": 0.718,
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "candidate_count": 12,
+    "high_severity_count": 5,
+    "medium_severity_count": 7,
+    "top_candidate": "migration_induced_incompatibility",
+    "uncertain_classification": false
+  },
+  "target_id": "RB3Gen2"
+}

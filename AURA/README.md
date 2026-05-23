@@ -119,6 +119,7 @@ Primary scripts:
 - `scripts/aura_event_quarantine_tests.py`
 - `scripts/aura-incremental-migration-orchestration.py`
 - `scripts/aura-runtime-evidence-fusion.py`
+- `scripts/aura-runtime-incident-reconstruction.py`
 
 Key output directory:
 
@@ -1202,6 +1203,101 @@ python3 -m pytest \
 - plugin isolation with target intelligence only through adapters
 - semantic/runtime separation boundaries
 - migration governance preservation (no autonomous rewriting or mutation)
+
+## Runtime Incident Reconstruction and Root-Cause Reasoning Layer
+
+This phase transitions AURA from knowledge+migration cognition into deterministic
+runtime engineering incident reasoning.
+
+It reconstructs:
+
+- what failed
+- where failure originated
+- what runtime sequence drifted
+- what topology/runtime dependency broke
+- what patch/migration/runtime event contributed to the issue
+- what upstream/downstream abstraction mismatch exists
+
+This layer remains advisory-only and governed. It does not autonomously fix,
+rewrite source, or mutate runtime evidence.
+
+### Mission Alignment
+
+This phase directly improves:
+
+- runtime debugging:
+  - reconstructs ordered runtime timeline and subsystem activation chain from multi-source evidence
+- regression localization:
+  - correlates drift, lifecycle violations, topology inconsistencies, and patch/migration causality
+- upstream migration confidence:
+  - surfaces abstraction mismatches, portability blockers, and migration-induced incompatibilities
+- deterministic replay:
+  - persists replay-safe incident lineage with deterministic incident replay fingerprints
+- topology/runtime reasoning:
+  - maps FE/BE dependency sequence, DPCM lifecycle transitions, and topology activation inconsistencies
+- DSP/runtime synchronization analysis:
+  - incorporates DSP/mailbox/IRQ/SoundWire timing into incident causality and confidence scoring
+
+### Implemented Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_incident_reconstructor.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/root_cause_reasoner.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/topology_runtime_failure_mapper.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/patch_runtime_causality_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/lifecycle_violation_detector.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_sequence_drift_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/evidence_confidence_engine.py`
+
+Runner:
+
+- `scripts/aura-runtime-incident-reconstruction.py`
+
+### Required Artifacts
+
+- `runtime_incident_graph.json`
+- `root_cause_candidates.json`
+- `lifecycle_violation_report.json`
+- `runtime_sequence_drift.json`
+- `topology_runtime_causality.json`
+- `regression_causality_report.json`
+- `deterministic_incident_replay.json`
+- `engineering_confidence_report.json`
+
+Additional outputs:
+
+- `runtime_incident_reconstruction_summary.json`
+- `docs/operations/transport/runtime_incident_reasoning_architecture.md`
+
+### Run Runtime Incident Reconstruction
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 scripts/aura-runtime-incident-reconstruction.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --lineage-id runtime_incident_reconstruction_v1
+```
+
+### Validation Tests
+
+```bash
+PYTHONPATH=/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src \
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_runtime_incident_reconstruction_static.py \
+  workspace/aura-sdk/tests/test_runtime_evidence_fusion_static.py \
+  workspace/aura-sdk/tests/test_runtime_truth_cognition_static.py \
+  workspace/aura-sdk/tests/test_patch_cognition_static.py -q
+```
+
+### Incident Reasoning Constraints (Preserved)
+
+- runtime-truth precedence over static assumptions
+- fail-closed behavior on uncertain classifications
+- deterministic replay and lineage persistence
+- plugin/runtime isolation via adapter contracts
+- advisory-only behavior (no autonomous source/runtime mutation)
+- migration governance and semantic/runtime separation boundaries
 
 ## Runtime Loop Automation (Three-Screen Validation)
 

@@ -1,0 +1,69 @@
+{
+  "advisory_only_behavior": true,
+  "causality_score": 0.798,
+  "classification": "ADVISORY_ONLY",
+  "deterministic_fingerprint": "6a14d603f181ff913e36a6168cd86a6465f659e51e5c18320a98b31520b01d3d",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://runtime_evidence_fusion",
+    "artifact://runtime_truth_graph",
+    "artifact://pcm_lifecycle_trace",
+    "artifact://dapm_transition_trace",
+    "artifact://soundwire_runtime_graph",
+    "artifact://irq_timing_report",
+    "artifact://dsp_sync_report",
+    "artifact://topology_runtime_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://migration_runtime_alignment",
+    "artifact://upstream_equivalence_map"
+  ],
+  "inconsistencies": [
+    {
+      "code": "runtime_sequence_drift_present",
+      "details": "Detected 1 runtime sequence drift signals.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "report_name": "topology_runtime_causality",
+  "route_activation_links": [
+    {
+      "activation_index": 1,
+      "route_id": "{'backend': 'ext_disp_be_dai_link', 'frontend': 'msm_bolero_fe_dai_links', 'normalized': 'FE:MSM_BOLERO_FE_DAI_LINKS->BE:EXT_DISP_BE_DAI_LINK'}",
+      "runtime_activation_probability": 1.0,
+      "status": "ACTIVE"
+    },
+    {
+      "activation_index": 2,
+      "route_id": "{'backend': 'ext_disp_be_dai_link', 'frontend': 'msm_common_misc_fe_dai_links', 'normalized': 'FE:MSM_COMMON_MISC_FE_DAI_LINKS->BE:EXT_DISP_BE_DAI_LINK'}",
+      "runtime_activation_probability": 1.0,
+      "status": "ACTIVE"
+    },
+    {
+      "activation_index": 3,
+      "route_id": "{'backend': 'msm_stub_be_dai_links', 'frontend': 'msm_stub_fe_dai_links', 'normalized': 'FE:MSM_STUB_FE_DAI_LINKS->BE:MSM_STUB_BE_DAI_LINKS'}",
+      "runtime_activation_probability": 1.0,
+      "status": "ACTIVE"
+    },
+    {
+      "activation_index": 4,
+      "route_id": "{'backend': 'msm_tavil_be_dai_links', 'frontend': 'msm_tavil_fe_dai_links', 'normalized': 'FE:MSM_TAVIL_FE_DAI_LINKS->BE:MSM_TAVIL_BE_DAI_LINKS'}",
+      "runtime_activation_probability": 1.0,
+      "status": "ACTIVE"
+    }
+  ],
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "dapm_transition_count": 1,
+    "fe_be_route_count": 4,
+    "high_inconsistency_count": 0,
+    "medium_inconsistency_count": 1,
+    "pcm_transition_count": 6,
+    "runtime_edge_count": 8,
+    "soundwire_event_count": 2,
+    "topology_edge_count": 4
+  },
+  "target_id": "RB3Gen2"
+}

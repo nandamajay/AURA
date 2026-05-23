@@ -1,0 +1,419 @@
+{
+  "advisory_only_behavior": true,
+  "causality_confidence": 0.612,
+  "causes": [
+    {
+      "cause": "migration_induced_incompatibility",
+      "confidence": 0.85,
+      "details": "Migration/runtime alignment is FAIL_CLOSED.",
+      "severity": "HIGH"
+    },
+    {
+      "cause": "unsupported_upstream_abstraction",
+      "confidence": 0.79,
+      "details": "Detected 1 blocked portability blockers.",
+      "severity": "HIGH"
+    },
+    {
+      "cause": "upstream_downstream_abstraction_mismatch",
+      "confidence": 0.74,
+      "details": "Detected 660 unresolved upstream equivalence mappings.",
+      "severity": "HIGH"
+    },
+    {
+      "cause": "vendor_dependency_contamination",
+      "confidence": 0.72,
+      "details": "Vendor contamination score is 0.706.",
+      "severity": "HIGH"
+    },
+    {
+      "cause": "patch_runtime_drift_overlap",
+      "confidence": 0.7,
+      "details": "2 medium runtime drifts overlap with patch/runtime causal links.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "3d4d5f5a09bc8c3535e591e2dac8dc074c1fc531b52e3b78e25256a167df98c1",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_truth_cognition",
+    "registry://runtime_evidence_fusion",
+    "artifact://runtime_truth_graph",
+    "artifact://pcm_lifecycle_trace",
+    "artifact://dapm_transition_trace",
+    "artifact://soundwire_runtime_graph",
+    "artifact://irq_timing_report",
+    "artifact://dsp_sync_report",
+    "artifact://topology_runtime_graph",
+    "artifact://patch_series_plan",
+    "artifact://runtime_patch_correlation",
+    "artifact://migration_runtime_alignment",
+    "artifact://upstream_equivalence_map"
+  ],
+  "patch_runtime_causal_links": [
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "cat /proc/asound/pcm"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "runtime_command": "cat /proc/asound/pcm"
+    },
+    {
+      "correlation_confidence": 0.99,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "correlation_confidence": 0.99,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_04_vendor_contamination_isolation",
+      "risk": "HIGH",
+      "runtime_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_05_soundwire_and_dsp_decoupling",
+      "risk": "HIGH",
+      "runtime_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0"
+    },
+    {
+      "correlation_confidence": 0.78,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85"
+    },
+    {
+      "correlation_confidence": 0.78,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0"
+    },
+    {
+      "correlation_confidence": 0.96,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0"
+    },
+    {
+      "correlation_confidence": 0.78,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85"
+    },
+    {
+      "correlation_confidence": 0.78,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX1JYMSBEaWdpdGFsIFZvbHVtZQ 85"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+    },
+    {
+      "correlation_confidence": 0.93,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "runtime_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "cat /proc/asound/pcm"
+    },
+    {
+      "correlation_confidence": 0.0,
+      "patch_group_id": "patch_08_bisectability_and_series_finalize",
+      "risk": "MEDIUM",
+      "runtime_command": "cat /proc/asound/pcm"
+    },
+    {
+      "correlation_confidence": 0.99,
+      "patch_group_id": "patch_02_topology_fe_be_normalization",
+      "risk": "LOW",
+      "runtime_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "correlation_confidence": 0.99,
+      "patch_group_id": "patch_06_runtime_correlation_guardrails",
+      "risk": "MEDIUM",
+      "runtime_command": "cat /sys/kernel/debug/asoc/*/dapm"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_04_vendor_contamination_isolation",
+      "risk": "HIGH",
+      "runtime_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    },
+    {
+      "correlation_confidence": 1.0,
+      "patch_group_id": "patch_05_soundwire_and_dsp_decoupling",
+      "risk": "HIGH",
+      "runtime_command": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav"
+    }
+  ],
+  "preserve_migration_governance_rules": true,
+  "report_name": "regression_causality_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "blocked_unsafe_count": 1,
+    "high_severity_cause_count": 4,
+    "medium_severity_cause_count": 1,
+    "patch_causal_link_count": 58,
+    "runtime_drift_high_count": 0,
+    "runtime_drift_medium_count": 2,
+    "unresolved_equivalence_count": 660,
+    "vendor_contamination_score": 0.706
+  },
+  "target_id": "RB3Gen2"
+}
