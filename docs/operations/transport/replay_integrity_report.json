@@ -1,0 +1,67 @@
+{
+  "artifact_mutation_risk": [
+    {
+      "artifact": "replay_consistency_report.json",
+      "risk": "LOW",
+      "sha256": "1f888c144a7f087945638d7671eeab0ec059cb494427f51ab0797fe2c5ebd2d9"
+    },
+    {
+      "artifact": "runtime_governance_decision.json",
+      "risk": "LOW",
+      "sha256": "fa33a85dfd92018e780c26bee5778e8f441e02d3066334b2c99e7a8fc8a88b46"
+    },
+    {
+      "artifact": "runtime_replay_registry.json",
+      "risk": "LOW",
+      "sha256": "33abb6eecfe2171e172fc24e81da8258a0003a1da9bdf1da643c45ef691b2aca"
+    },
+    {
+      "artifact": "deterministic_runtime_replay.json",
+      "risk": "LOW",
+      "sha256": "9a5a54506ff550c581fb44a6c8c868a990ebd96a40d2d53bd14ddbeb09ea8dde"
+    },
+    {
+      "artifact": "aura_governance_state.json",
+      "risk": "LOW",
+      "sha256": "ad600b8cf9d1a47078010f9d18bb22c1b4c1806b4c27311fb9cc1e67798f8350"
+    }
+  ],
+  "consistency": {
+    "advisory_only_behavior": true,
+    "classification": "PASS",
+    "consistency": {
+      "deterministic_event_ordering": true,
+      "lineage_fingerprint": "2dd08240e2a6c87312c7fd2476f47cbd5910a0f3c259f830c0f32f3675bbc862",
+      "previous_lineage_fingerprint": "",
+      "replay_drift": false
+    },
+    "deterministic_fingerprint": "add6c6afa500ae8ea38ffa0f846689de2fa9fa06031b92b4265ea349a7911f31",
+    "evidence_references": [
+      "artifact://deterministic_runtime_replay",
+      "artifact://runtime_equivalence_fingerprint",
+      "artifact://runtime_governance_decision"
+    ],
+    "lineage_id": "runtime_governance_v1",
+    "reasons": [],
+    "report_name": "replay_consistency_report",
+    "runtime_truth_precedence": true,
+    "schema_version": "1.0",
+    "session_id": "runtime_governance_session_v1",
+    "target_id": "RB3Gen2"
+  },
+  "generated_at": "2026-05-24T12:16:18.943954+00:00",
+  "registry": {
+    "deterministic_fingerprint": "0b9f3c411541e879adc317c5087d6e1b47ba8afc3c30aa1a441d9f365fc46360",
+    "deterministic_ready": true,
+    "generated_at": "2026-05-24T12:16:18.943924+00:00",
+    "history_count": 1,
+    "latest_lineage_id": "runtime_governance_v1",
+    "latest_session_id": "runtime_governance_session_v1",
+    "registry_exists": true,
+    "replay_drift": false,
+    "status": "PASS"
+  },
+  "runtime_replay_event_count": 24,
+  "runtime_replay_fingerprint": "e5b07aa883b07a9171a7e6418af5d8e645d8a53be0ec4c9357472fccd68af414",
+  "status": "PASS"
+}

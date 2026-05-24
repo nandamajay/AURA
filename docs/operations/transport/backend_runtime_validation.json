@@ -1,0 +1,159 @@
+{
+  "fastapi_live_probe": {
+    "details": {
+      "command": [
+        "/usr/bin/python3",
+        "-m",
+        "uvicorn",
+        "core.main:app",
+        "--host",
+        "127.0.0.1",
+        "--port",
+        "18780",
+        "--log-level",
+        "warning"
+      ],
+      "duration_seconds": 0.50351,
+      "last_error": "<urlopen error [Errno 111] Connection refused>",
+      "ready": false,
+      "ready_endpoint": "http://127.0.0.1:18780/health/live",
+      "returncode": 1,
+      "started": false,
+      "status": "FAIL",
+      "stderr_tail": "/usr/bin/python3: No module named uvicorn\n",
+      "stdout_tail": ""
+    },
+    "status": "BLOCKED_ENV"
+  },
+  "fastapi_startup_probe": {
+    "returncode": 1,
+    "status": "BLOCKED_ENV",
+    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/local/mnt/workspace/AURA_V1/AURA/services/core/src/core/main.py\", line 9, in <module>\n    from core.lifespan import lifespan, get_uptime\n  File \"/local/mnt/workspace/AURA_V1/AURA/services/core/src/core/lifespan.py\", line 11, in <module>\n    from aura_sdk.models.event import EventType\n  File \"/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src/aura_sdk/models/__init__.py\", line 3, in <module>\n    from aura_sdk.models.event import EventEnvelope, EventType, EventSource\n  File \"/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src/aura_sdk/models/event.py\", line 4, in <module>\n    from enum import StrEnum\nImportError: cannot import name 'StrEnum' from 'enum' (/usr/lib/python3.10/enum.py)",
+    "stdout": ""
+  },
+  "generated_at": "2026-05-24T12:16:19.084278+00:00",
+  "governance_artifact_accessible": true,
+  "python312_available": false,
+  "python312_version": "[Errno 2] No such file or directory: 'python3.12'",
+  "python_current": "Python 3.10.12",
+  "replay_registry_accessible": true,
+  "runtime_artifact_access": {
+    "aura_governance_state.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "ad600b8cf9d1a47078010f9d18bb22c1b4c1806b4c27311fb9cc1e67798f8350",
+      "size_bytes": 631,
+      "top_level_type": "dict"
+    },
+    "deterministic_runtime_replay.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "9a5a54506ff550c581fb44a6c8c868a990ebd96a40d2d53bd14ddbeb09ea8dde",
+      "size_bytes": 5223,
+      "top_level_type": "dict"
+    },
+    "hardware_truth_graph.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "a8f1516701ecb55f3f294b6b989bbe8d6bfd693f3b8fea2405ef63143ef0dd89",
+      "size_bytes": 5571,
+      "top_level_type": "dict"
+    },
+    "replay_consistency_report.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "1f888c144a7f087945638d7671eeab0ec059cb494427f51ab0797fe2c5ebd2d9",
+      "size_bytes": 806,
+      "top_level_type": "dict"
+    },
+    "runtime_equivalence_report.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "f2f14cf723cc992bce33563812f2ade3608f89a927b87680252f5475dbb43f13",
+      "size_bytes": 4030,
+      "top_level_type": "dict"
+    },
+    "runtime_governance_decision.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "fa33a85dfd92018e780c26bee5778e8f441e02d3066334b2c99e7a8fc8a88b46",
+      "size_bytes": 1624,
+      "top_level_type": "dict"
+    },
+    "runtime_replay_registry.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "33abb6eecfe2171e172fc24e81da8258a0003a1da9bdf1da643c45ef691b2aca",
+      "size_bytes": 2112,
+      "top_level_type": "dict"
+    },
+    "transformation_confidence_report.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "7a8f6397d20401363d49dcea5d0acd615e5400bf5eb4c3ae254fdf066a14b9d6",
+      "size_bytes": 983,
+      "top_level_type": "dict"
+    }
+  },
+  "runtime_contract_import": {
+    "returncode": 0,
+    "status": "BLOCKED_ENV",
+    "stderr": "",
+    "stdout": "contracts 5"
+  },
+  "runtime_endpoint_registration": {
+    "expected_paths_present": [
+      "/artifacts/index",
+      "/artifacts/read",
+      "/confidence",
+      "/equivalence",
+      "/governance/summary",
+      "/topology"
+    ],
+    "missing_expected_paths": [],
+    "routes": [
+      {
+        "handler": "runtime_artifacts_index",
+        "method": "GET",
+        "path": "/artifacts/index"
+      },
+      {
+        "handler": "runtime_artifacts_read",
+        "method": "GET",
+        "path": "/artifacts/read"
+      },
+      {
+        "handler": "runtime_governance_summary",
+        "method": "GET",
+        "path": "/governance/summary"
+      },
+      {
+        "handler": "runtime_topology",
+        "method": "GET",
+        "path": "/topology"
+      },
+      {
+        "handler": "runtime_equivalence",
+        "method": "GET",
+        "path": "/equivalence"
+      },
+      {
+        "handler": "runtime_confidence",
+        "method": "GET",
+        "path": "/confidence"
+      }
+    ],
+    "runtime_route_count": 6,
+    "runtime_router_mounted": true,
+    "status": "PASS"
+  },
+  "status": "BLOCKED_ENV"
+}

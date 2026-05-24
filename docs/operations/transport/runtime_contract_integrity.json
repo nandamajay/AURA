@@ -1,0 +1,90 @@
+{
+  "artifacts": [
+    {
+      "artifact_type": "runtime_equivalence_report",
+      "classification": "FAIL_CLOSED",
+      "issue_count": 1,
+      "issues": [
+        {
+          "code": "derived_replay_fingerprint",
+          "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+          "severity": "warning"
+        }
+      ],
+      "lineage_id": "runtime_equivalence_v1",
+      "session_id": "runtime_equivalence_session_v1",
+      "valid": true
+    },
+    {
+      "artifact_type": "hardware_truth_graph",
+      "classification": "PASS",
+      "issue_count": 1,
+      "issues": [
+        {
+          "code": "derived_replay_fingerprint",
+          "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+          "severity": "warning"
+        }
+      ],
+      "lineage_id": "runtime_equivalence_v1_transformed",
+      "session_id": "runtime_equivalence_session_v1",
+      "valid": true
+    },
+    {
+      "artifact_type": "replay_consistency_report",
+      "classification": "PASS",
+      "issue_count": 1,
+      "issues": [
+        {
+          "code": "derived_created_at",
+          "message": "created_at missing; derived from filesystem mtime.",
+          "severity": "warning"
+        }
+      ],
+      "lineage_id": "runtime_governance_v1",
+      "session_id": "runtime_governance_session_v1",
+      "valid": true
+    },
+    {
+      "artifact_type": "runtime_governance_decision",
+      "classification": "FAIL_CLOSED",
+      "issue_count": 0,
+      "issues": [],
+      "lineage_id": "runtime_governance_v1",
+      "session_id": "runtime_governance_session_v1",
+      "valid": true
+    },
+    {
+      "artifact_type": "transformation_confidence_report",
+      "classification": "FAIL_CLOSED",
+      "issue_count": 4,
+      "issues": [
+        {
+          "code": "missing_lineage_id",
+          "message": "lineage_id missing; replay lineage traceability is reduced.",
+          "severity": "warning"
+        },
+        {
+          "code": "missing_session_id",
+          "message": "session_id missing; session-scoped replay correlation is reduced.",
+          "severity": "warning"
+        },
+        {
+          "code": "derived_created_at",
+          "message": "created_at missing; derived from filesystem mtime.",
+          "severity": "warning"
+        },
+        {
+          "code": "derived_replay_fingerprint",
+          "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+          "severity": "warning"
+        }
+      ],
+      "lineage_id": "",
+      "session_id": "",
+      "valid": true
+    }
+  ],
+  "generated_at": "2026-05-24T12:16:18.943969+00:00",
+  "status": "PASS"
+}

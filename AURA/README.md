@@ -76,6 +76,11 @@ curl http://localhost:8000/health/ready
 # deterministic Python environment sync
 make env-sync
 
+# stabilization bootstrap / validation / startup
+make aura-bootstrap
+make aura-validate
+make aura-start
+
 # development mode
 make dev
 
@@ -92,6 +97,35 @@ make lint
 make logs-core
 make shell-db
 ```
+
+## Environment Stabilization and Replay Hardening
+
+Use the stabilization scripts when preparing for runtime ingestion and
+contract/governance checks:
+
+- `scripts/aura_bootstrap.sh`
+  - strict host diagnostics
+  - deterministic Python env sync (expects Python 3.12)
+  - deterministic dashboard dependency sync
+  - optional validation execution
+- `scripts/aura_validate.sh`
+  - emits required reports to `docs/operations/transport/`:
+    - `environment_validation_report.json`
+    - `backend_runtime_validation.json`
+    - `dashboard_runtime_validation.json`
+    - `dependency_integrity_report.json`
+    - `bootstrap_readiness_report.md`
+    - `replay_integrity_report.json`
+    - `replay_drift_analysis.json`
+    - `replay_registry_validation.json`
+    - `governance_replay_consistency.json`
+    - `runtime_contract_integrity.json`
+    - `dto_alignment_report.json`
+    - `transport_schema_validation.json`
+- `scripts/aura_start.sh`
+  - unified backend-first startup sequencing
+  - runtime verification before promotion
+  - optional post-start validation pass
 
 ## Deterministic Demo Flow
 
@@ -270,6 +304,53 @@ gating using mocked/simulated traces first (no mandatory hardware dependency).
 - fail-closed runtime promotion gating on low confidence or drift
 - runtime-sensitive instability blocks promotion by policy
 - plugin/runtime isolation preserved
+
+## Contract-First Runtime Cognition Integration
+
+This phase bridges runtime transport artifacts into operational dashboard
+workflows using typed contracts and governed runtime APIs.
+
+### Backend Contract Layer
+
+- `services/core/src/core/contracts/transport_artifact_contracts.py`
+- Strict typed models for:
+  - `runtime_equivalence_report.json`
+  - `hardware_truth_graph.json`
+  - `replay_consistency_report.json`
+  - `runtime_governance_decision.json`
+  - `transformation_confidence_report.json`
+- Contract validation includes:
+  - schema/type validation
+  - lineage/session/timestamp metadata normalization
+  - replay fingerprint extraction
+  - topology integrity checks
+  - cross-artifact lineage consistency checks
+
+### Runtime API Endpoints
+
+- `GET /api/v1/runtime/artifacts/index`
+- `GET /api/v1/runtime/artifacts/read`
+- `GET /api/v1/runtime/governance/summary`
+- `GET /api/v1/runtime/topology`
+- `GET /api/v1/runtime/equivalence`
+- `GET /api/v1/runtime/confidence`
+
+### Dashboard Runtime View
+
+- Route: `/runtime`
+- Page: `dashboard/src/pages/RuntimeCognitionCenter.tsx`
+- Shared frontend runtime contract/adapter layer:
+  - `dashboard/src/runtime/contracts.ts`
+  - `dashboard/src/runtime/adapters.ts`
+  - `dashboard/src/runtime/useRuntimeQuery.ts`
+
+### Integration Artifacts
+
+- `docs/operations/transport/runtime_contract_integration_summary.md`
+- `docs/operations/transport/runtime_dashboard_contracts.md`
+- `docs/operations/transport/runtime_api_contracts.json`
+- `docs/operations/transport/runtime_integration_validation_report.json`
+- `docs/operations/transport/runtime_dashboard_readiness_report.md`
 
 ## Portable Multi-Target Cognition Phase
 

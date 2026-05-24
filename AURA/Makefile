@@ -1,7 +1,7 @@
 # AURA Platform — Phase 0 Foundation
 # Makefile for development, testing, and operations
 
-.PHONY: help up down dev logs shell-core test lint bootstrap backup health metrics export-knowledge compliance-export hardening-check clean status env-doctor env-sync repro-up repro-verify ci-parity demo-prepare demo-up demo-verify demo-workload demo-down
+.PHONY: help up down dev logs shell-core test lint bootstrap backup health metrics export-knowledge compliance-export hardening-check clean status env-doctor env-sync repro-up repro-verify ci-parity demo-prepare demo-up demo-verify demo-workload demo-down aura-bootstrap aura-start aura-validate
 
 # ── Help ───────────────────────────────────────────
 help: ## Show this help
@@ -74,6 +74,15 @@ env-doctor: ## Failure-first environment diagnostics
 
 env-sync: ## Deterministic local Python dependency sync (.venv)
 	./scripts/env-sync.sh
+
+aura-bootstrap: ## Environment bootstrap with deterministic validation outputs
+	./scripts/aura_bootstrap.sh
+
+aura-start: ## Unified backend/frontend startup sequencing with runtime verification
+	./scripts/aura_start.sh
+
+aura-validate: ## Generate environment/replay/contract validation artifacts
+	./scripts/aura_validate.sh
 
 ci-parity: ## Run shared CI/runtime parity suite locally
 	./scripts/ci-parity.sh
