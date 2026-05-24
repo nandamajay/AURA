@@ -462,6 +462,11 @@ from aura_sdk.transport.compile_cognition_engine import (
     CompileCognitionRegistry,
     CompileCognitionResult,
 )
+from aura_sdk.transport.build_execution_engine import (
+    BuildExecutionEngine,
+    BuildExecutionRegistry,
+    BuildExecutionResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -748,4 +753,7 @@ __all__ = [
     "CompileCognitionEngine",
     "CompileCognitionRegistry",
     "CompileCognitionResult",
+    "BuildExecutionEngine",
+    "BuildExecutionRegistry",
+    "BuildExecutionResult",
 ]

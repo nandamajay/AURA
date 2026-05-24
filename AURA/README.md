@@ -2249,6 +2249,69 @@ python3 -m pytest \
 - fail-closed if runtime-sensitive compile boundaries are crossed unsafely
 - deterministic replay lineage required for all compile cognition decisions
 
+## Real Build Execution + Compilation Governance Layer
+
+This phase extends compile cognition into real build command execution and
+governance-first compilation risk classification.
+
+### Focus Coverage
+
+- controlled dry-run + execution build commands
+- targeted subsystem/object build validation
+- build topology reconstruction from Makefiles/object lineage
+- symbol closure and cross-subsystem coupling analysis
+- linker/modpost instability signal detection
+- runtime-sensitive build-region risk escalation
+- deterministic replay persistence for build command lineage
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/build_execution_engine.py`
+- Runner:
+  - `scripts/aura-build-execution.py`
+
+### Required Artifacts (Generated)
+
+- `build_topology_graph.json`
+- `subsystem_build_map.json`
+- `object_lineage_graph.json`
+- `symbol_closure_report.json`
+- `unresolved_dependency_report.json`
+- `build_confidence_report.json`
+- `runtime_sensitive_build_regions.json`
+- `deterministic_build_replay.json`
+- `build_execution_summary.json`
+- `governance_build_decision.json`
+
+### Run Build Execution Governance
+
+```bash
+python3 scripts/aura-build-execution.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --source-root /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar \
+  --patch-path /local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch \
+  --session-id build_execution_session_v1 \
+  --lineage-id build_execution_v1
+```
+
+### Validation
+
+```bash
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_build_execution_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed on unresolved symbol/dependency closure
+- fail-closed on linker/modpost instability
+- fail-closed on unsafe runtime-sensitive build regions
+- fail-closed on unsafe incremental rebuild conditions
+- deterministic replay lineage required for all build decisions
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

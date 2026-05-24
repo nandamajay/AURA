@@ -1,0 +1,49 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "0a8e20f9c0b197d9fa2c30fa08aea895625c3272cda444dfde41b0ff934c307d",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://build_execution",
+    "artifact://downstream_to_upstream_patch",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "governance_reasons": [
+    "compile_confidence_below_threshold",
+    "dependency_graph_inconsistent",
+    "incremental_rebuild_unsafe"
+  ],
+  "governance_state": {
+    "execution_approval_mode": "linux_authoritative_windows_execute_only",
+    "fail_closed_posture": true,
+    "patching_restrictions": {
+      "autonomous_patching_allowed": false,
+      "autonomous_upstream_generation_allowed": false
+    },
+    "topology_mutation_restrictions": {
+      "autonomous_mixer_mutation_allowed": false,
+      "autonomous_topology_rewrite_allowed": false
+    },
+    "transport_restrictions": {
+      "allowed_modes": [
+        "adb_shell"
+      ],
+      "blocked_modes": [
+        "serial_raw",
+        "ssh_unapproved"
+      ]
+    },
+    "updated_at": "2026-05-22T14:31:45.397414+00:00",
+    "write_policy": "governed_write_approved_only"
+  },
+  "report_name": "governance_build_decision",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "build_promotion_blocked": true,
+    "reason_count": 3
+  },
+  "target_id": "RB3Gen2"
+}

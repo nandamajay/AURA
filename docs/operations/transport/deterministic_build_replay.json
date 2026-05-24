@@ -1,41 +1,225 @@
 {
   "advisory_only_behavior": true,
   "artifact_fingerprints": {
-    "applied_patch_diff": "0d1c1beee5ead2f90962adc70a696376943de1ef2319ec4c8d816f2816689f9d",
-    "build_confidence_report": "20c5dd46602ae50f92ac54a14dd08523b9d00ce85416e5ad89644153ec104572",
-    "compile_warning_clusters": "4435c346eb4074b9a19adfea1dc4c8f37a5a81540396d89ea76dc0b812624297",
-    "governance_build_escalation": "95e716cbe46a9a7812db885bb4e0b89b93f8b3031913e2aea4f314e678f5effd",
-    "include_closure_report": "cc2466747e66c00b31628a712593bd4523f1a085123f859dadf00321800fc69c",
-    "incremental_build_report": "36660967765d7f4281cc45e80c44011e960e9a623543c983414b5c4f92b490eb",
-    "patch_apply_report": "4fa31c8eeab2cab95e364a6e21a98c74f90881bf27bb7b2f8b0a479300bacbbd",
-    "rollback_lineage": "5953bd85a7af5d1a6eeb7ce83260ad7e45d40df17fa6e59e890fa4539e993922",
-    "runtime_sensitive_compile_report": "93c005321d3516dd523545ed53236b2ce35ec16b4e2560eec67169b263492d99",
-    "symbol_resolution_report": "baf3c7797eb69923d2b7de496aaa2835fd7e21be2df4d5eabd61d5723280b0e4",
-    "touched_object_graph": "89329e2d0d3f532d3d46a1ea1e17a09f16fe012520cb366ba62b73b8ceae365d"
+    "build_confidence_report": "3e0a78dacd63ac2f54512e043adfc473b6ed4b25a2548ca32f225153f1b25af3",
+    "build_topology_graph": "c4a34c7a738639005eeac1fe8f5e6769785314400ff8f7eb00c25a4b970d300b",
+    "command_report": "a8596f1cb5307cb0cfe5ff5100840eabf7f37d2b160fc9decdfb49bae1a0430c",
+    "compile_cognition_replay": "3b37f916483f0f817be289278060bf2d76a61235f23f2bcc4d5571632038c51c",
+    "governance_build_decision": "0a8e20f9c0b197d9fa2c30fa08aea895625c3272cda444dfde41b0ff934c307d",
+    "object_lineage_graph": "d1331dc4c3f7f8bbaec2fa72e0ab5d762c59a24536b6c5326d1cefe909839eb8",
+    "runtime_sensitive_build_regions": "6b317ebc7abaa555a00cb18d96c512d98f3f0fb8f7273db005d81f9041d2c992",
+    "subsystem_build_map": "d9ba22a5fd7f0c1872319e01d968fbdc250946d9ec8afdb4913d0a40b74e8600",
+    "symbol_closure_report": "3d4234fedcc06e856f3595a1bf463836b9eba8dfaa58acf3a4b34c35f5656f34",
+    "unresolved_dependency_report": "94df796a32221e4ea1d08846a810f4ea9c7dd2b2bb6b1af328633600e0403996"
   },
   "classification": "FAIL_CLOSED",
-  "deterministic_fingerprint": "d8035cf3324cf22c6cab3015a5f3e1120e7956e2925ae22028e5289a19f41f1b",
+  "command_lineage": [
+    {
+      "command_fingerprint": "0b75eab8486b041cd0abf2989adb6005774c079220611cf1194d7ef5130a11be",
+      "id": "cmd_0001",
+      "phase": "dry_run_subsystem",
+      "returncode": 2,
+      "subsystem": "asoc"
+    },
+    {
+      "command_fingerprint": "413604dff2e96ee360375241d46812ce1cfa8347c1d46b11749bb4e0954ba766",
+      "id": "cmd_0002",
+      "phase": "execute_subsystem",
+      "returncode": 2,
+      "subsystem": "asoc"
+    },
+    {
+      "command_fingerprint": "19c3246ee66c4f866128e276250106e41843e4d589aae5efd53514d6c4361483",
+      "id": "cmd_0003",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "e85a14bb5827fcd74fdf90dd9dd53697f0a2ae8c4e7571e50cfbb5cc42b3ea91",
+      "id": "cmd_0004",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "2618cd779d6fb474fa0cec83ea07d36cc6d83dd77e05d46842f80af34ffdc468",
+      "id": "cmd_0005",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "357570cdcbf175344aabb36a63057b313d03fbf8eda480801579bebe67c65e65",
+      "id": "cmd_0006",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "eed444e4570d4df5b6a5d062691fb69937e9681c4fd678439db08a1ebf3fcd0f",
+      "id": "cmd_0007",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "b5ed0801ffbb3a191956a585446dc20b9e9ee4e60693616e4b540aa7c01d8a61",
+      "id": "cmd_0008",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "fa98ab9b8021471b6bc67636870ae53084b80a218f3cbcff09c38365a2222d3b",
+      "id": "cmd_0009",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "c96b0a15672aaef33dea80f0e2e5070da8731bd3132b3d16ffa7c383ee8dbae5",
+      "id": "cmd_0010",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "960b7fe82aaf3d8d5808c8fa46fb2ee0183640000a4f6be87261aa090390908d",
+      "id": "cmd_0011",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "6e55c2ce5a4561e457de1b954bde62ae02f6a1b3ce16147e51ea172304975139",
+      "id": "cmd_0012",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "613fa78301c16a0388b947869900c2c6ff70cc0f68b10714f9c61ad3254f0fff",
+      "id": "cmd_0013",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "111e0bc838f8b39754aea95b36232cf87fcd0e001fc3b0f774e184a4834fabc4",
+      "id": "cmd_0014",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "9a0c0b7f0567cd9c93c1e9f4d2d9ea734cc0d2d00e3995f1df8ca9969ab945ed",
+      "id": "cmd_0015",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "d2c5305177a3d98a594d4a678d4187317597ee12716a1924604846f20a72d6e0",
+      "id": "cmd_0016",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "ba50311713b28f958eeae2a442e200e9492aac7431c72b466d853f5c86b6bc53",
+      "id": "cmd_0017",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "af58320a8c483d8ee88c495d28890505799dfa4a90ad39b0e6f980dab6623c78",
+      "id": "cmd_0018",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "cab7be20d799351158371549f751ebcfdc9a9b9dd30bb758694995cc7baf4865",
+      "id": "cmd_0019",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "e7a46c3dce9a1285741ac3918fde6d77b2dfa7e8d98e62fb5870cc4536a7eb89",
+      "id": "cmd_0020",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "f2f5d1a92f16c4b58ae00d291cd79c33a1dfb14bf36c67dbf5c2d327bbd043ae",
+      "id": "cmd_0021",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "a0eef30a5dec85d3dcf489e07f581ef48d7f4293df2ec788a789d6ea817762b0",
+      "id": "cmd_0022",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "4f9d132c27886fb784f11b1737112adb24c56e078e05b120577245f7cb3c7c01",
+      "id": "cmd_0023",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "5c0b4471ea4b0cc86cb6eaeb68f15cb267dc05a936f5d48b8eea20a82e47802e",
+      "id": "cmd_0024",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "0fb220f5488c29b0066c285ff041470ec4c1775d0afbeee98fa0a579a5603268",
+      "id": "cmd_0025",
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "subsystem": "audio_soc"
+    },
+    {
+      "command_fingerprint": "45a5983c7e2fd550a722c20a1907d27ecfff6fd4feaa7b5d02e6449aae2b1501",
+      "id": "cmd_0026",
+      "phase": "execute_object",
+      "returncode": 2,
+      "subsystem": "audio_soc"
+    }
+  ],
+  "dependency_snapshot_fingerprint": "739d97fe16307c909315f5e15093292f0a5f4b9d5ae1196bd482b9206d1589d4",
+  "deterministic_fingerprint": "4e48708bb709be2800a6ab6f823a8a7a56a02cbbc6245b5652d6c20d1d6244bd",
   "evidence_references": [
     "registry://governance_state",
     "registry://runtime_cognition",
     "registry://topology_cognition",
-    "registry://real_patch_application_governed_build",
+    "registry://build_execution",
     "artifact://downstream_to_upstream_patch",
     "artifact://aura_replay_determinism_report"
   ],
   "fail_closed_reasons": [
-    "build_confidence_below_threshold",
-    "dependency_closure_unresolved",
-    "incremental_compile_failed"
+    "compile_confidence_below_threshold",
+    "dependency_graph_inconsistent",
+    "incremental_rebuild_unsafe"
   ],
   "history": [
     {
       "classification": "FAIL_CLOSED",
-      "lineage_id": "real_patch_application_governed_build_v1",
-      "session_id": "real_patch_build_validation_session_v1"
+      "lineage_id": "build_execution_v1",
+      "session_id": "build_execution_session_v1"
     }
   ],
-  "lineage_id": "real_patch_application_governed_build_v1",
+  "lineage_id": "build_execution_v1",
   "replay_signal": {
     "deterministic_event_ordering": true,
     "deterministic_replay_fingerprint": ""
@@ -43,6 +227,6 @@
   "report_name": "deterministic_build_replay",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "real_patch_build_validation_session_v1",
+  "session_id": "build_execution_session_v1",
   "target_id": "RB3Gen2"
 }
