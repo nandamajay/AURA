@@ -2186,6 +2186,69 @@ python3 -m pytest \
 - deterministic rollback lineage required for any fail-closed outcome
 - advisory-only behavior; no autonomous patch application/submission
 
+## Kernel Dependency Closure + Compile Cognition Layer
+
+This phase hardens compile reasoning on top of governed source-tree conversion
+by adding deterministic include/symbol/Kconfig/Makefile dependency cognition.
+
+### Focus Coverage
+
+- full include closure graph generation
+- symbol provider/consumer dependency reasoning
+- Kconfig chain validation and impossible-config detection
+- Makefile object topology validation
+- compile boundary governance for patch-touched subsystems
+- runtime-sensitive compile strictness for DSP/mailbox/IRQ/PCM/DAPM/SoundWire
+- deterministic compile replay lineage persistence
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/compile_cognition_engine.py`
+- Runner:
+  - `scripts/aura-compile-cognition.py`
+
+### Required Artifacts (Generated)
+
+- `include_closure_graph.json`
+- `symbol_dependency_graph.json`
+- `kconfig_dependency_map.json`
+- `compile_boundary_report.json`
+- `unresolved_dependency_report.json`
+- `compile_governance_escalation.json`
+- `deterministic_compile_replay.json`
+- `compile_confidence_report.json`
+- `subsystem_compile_topology.json`
+
+### Run Compile Cognition
+
+```bash
+python3 scripts/aura-compile-cognition.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --source-root /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar \
+  --patch-path /local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch \
+  --session-id compile_cognition_session_v1 \
+  --lineage-id compile_cognition_v1
+```
+
+### Validation
+
+```bash
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_compile_cognition_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed if include closure is incomplete
+- fail-closed if symbol lineage is unresolved
+- fail-closed if Kconfig dependency chain is inconsistent
+- fail-closed if subsystem compile topology cannot be proven
+- fail-closed if runtime-sensitive compile boundaries are crossed unsafely
+- deterministic replay lineage required for all compile cognition decisions
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:

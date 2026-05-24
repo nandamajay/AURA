@@ -457,6 +457,11 @@ from aura_sdk.transport.real_patch_application_governed_build import (
     RealPatchApplicationGovernedBuildRegistry,
     RealPatchApplicationGovernedBuildResult,
 )
+from aura_sdk.transport.compile_cognition_engine import (
+    CompileCognitionEngine,
+    CompileCognitionRegistry,
+    CompileCognitionResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -740,4 +745,7 @@ __all__ = [
     "RealPatchApplicationGovernedBuildEngine",
     "RealPatchApplicationGovernedBuildRegistry",
     "RealPatchApplicationGovernedBuildResult",
+    "CompileCognitionEngine",
+    "CompileCognitionRegistry",
+    "CompileCognitionResult",
 ]

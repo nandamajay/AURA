@@ -1,0 +1,131 @@
+{
+  "advisory_only_behavior": true,
+  "boundary_crossings": [
+    {
+      "severity": "critical",
+      "subsystems": [
+        "asoc_codecs",
+        "asoc_machine"
+      ],
+      "type": "cross_subsystem_patch_scope"
+    }
+  ],
+  "classification": "FAIL_CLOSED",
+  "deterministic_fingerprint": "045a8382617f658a82b0435ff44240f81ed8d5b8bffc159df691e9c28a406496",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://compile_cognition",
+    "artifact://downstream_to_upstream_patch",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "report_name": "compile_boundary_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "crossing_count": 1,
+    "runtime_sensitive_touch_count": 16,
+    "touched_file_count": 16,
+    "touched_subsystem_count": 2
+  },
+  "target_id": "RB3Gen2",
+  "touched_files": [
+    {
+      "driver": "asoc/audio_machine.c",
+      "file": "asoc/audio_machine.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_machine"
+    },
+    {
+      "driver": "asoc/codecs/aqt1000",
+      "file": "asoc/codecs/aqt1000/aqt1000-clsh.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/aqt1000",
+      "file": "asoc/codecs/aqt1000/aqt1000-core.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/bolero",
+      "file": "asoc/codecs/bolero/rx-macro.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/csra66x0",
+      "file": "asoc/codecs/csra66x0/csra66x0.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/lpass-cdc",
+      "file": "asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/wcd9378",
+      "file": "asoc/codecs/wcd9378/wcd9378.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/wcd9xxx-common-v2.c",
+      "file": "asoc/codecs/wcd9xxx-common-v2.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/wsa881x-analog.c",
+      "file": "asoc/codecs/wsa881x-analog.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/wsa883x",
+      "file": "asoc/codecs/wsa883x/wsa883x.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/codecs/wsa884x",
+      "file": "asoc/codecs/wsa884x/wsa884x.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "driver": "asoc/gvm_auto_spf_dummy.c",
+      "file": "asoc/gvm_auto_spf_dummy.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_machine"
+    },
+    {
+      "driver": "asoc/kalama.c",
+      "file": "asoc/kalama.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_machine"
+    },
+    {
+      "driver": "asoc/pineapple.c",
+      "file": "asoc/pineapple.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_machine"
+    },
+    {
+      "driver": "asoc/sun.c",
+      "file": "asoc/sun.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_machine"
+    },
+    {
+      "driver": "asoc/waipio.c",
+      "file": "asoc/waipio.c",
+      "runtime_sensitive": true,
+      "subsystem": "asoc_machine"
+    }
+  ]
+}
