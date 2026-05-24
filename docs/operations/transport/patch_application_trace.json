@@ -1,0 +1,62 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "e19659c2b9aead7afe7127a265ccd740edd5eb202fadf3bf821592d4f52dccaa",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://sandbox_patch_validation",
+    "artifact://downstream_to_upstream_patch",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "patch_steps": [
+    {
+      "apply": {
+        "command": "git -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src apply /local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch",
+        "elapsed_ms": 11,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "dry_run": {
+        "command": "git -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src apply --check /local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch",
+        "elapsed_ms": 9,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": ""
+      },
+      "patch_index": 1,
+      "patch_path": "/local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch",
+      "status": "applied",
+      "touched_files": [
+        "asoc/audio_machine.c",
+        "asoc/codecs/aqt1000/aqt1000-clsh.c",
+        "asoc/codecs/aqt1000/aqt1000-core.c",
+        "asoc/codecs/bolero/rx-macro.c",
+        "asoc/codecs/csra66x0/csra66x0.c",
+        "asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+        "asoc/codecs/wcd9378/wcd9378.c",
+        "asoc/codecs/wcd9xxx-common-v2.c",
+        "asoc/codecs/wsa881x-analog.c",
+        "asoc/codecs/wsa883x/wsa883x.c",
+        "asoc/codecs/wsa884x/wsa884x.c",
+        "asoc/gvm_auto_spf_dummy.c",
+        "asoc/kalama.c",
+        "asoc/pineapple.c",
+        "asoc/sun.c",
+        "asoc/waipio.c"
+      ]
+    }
+  ],
+  "report_name": "patch_application_trace",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "applied_patch_count": 1,
+    "failed_patch_count": 0,
+    "patch_count": 1,
+    "touched_file_count": 16
+  },
+  "target_id": "RB3Gen2"
+}

@@ -1,0 +1,332 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "commands": [
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out M=asoc modules -n",
+      "elapsed_ms": 5,
+      "phase": "dry_run_subsystem",
+      "returncode": 2,
+      "stderr": "make[1]: *** M=asoc: No such file or directory.  Stop.\nmake: *** [Makefile:12: modules] Error 2\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\nmake -C  M=asoc modules AUDIO_ROOT=/asoc\nmake[1]: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\nmake[1]: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out M=asoc modules",
+      "elapsed_ms": 4,
+      "phase": "execute_subsystem",
+      "returncode": 2,
+      "stderr": "make[1]: *** M=asoc: No such file or directory.  Stop.\nmake: *** [Makefile:12: modules] Error 2\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\nmake -C  M=asoc modules AUDIO_ROOT=/asoc\nmake[1]: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\nmake[1]: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/audio_machine.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/audio_machine.o asoc/audio_machine.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/audio_machine.o",
+      "elapsed_ms": 13,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/audio_machine.c:7:10: fatal error: linux/clk.h: No such file or directory\n    7 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/audio_machine.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/audio_machine.o asoc/audio_machine.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/aqt1000/aqt1000-clsh.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/aqt1000/aqt1000-clsh.o asoc/codecs/aqt1000/aqt1000-clsh.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/aqt1000/aqt1000-clsh.o",
+      "elapsed_ms": 11,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/aqt1000/aqt1000-clsh.c:6:10: fatal error: linux/slab.h: No such file or directory\n    6 | #include <linux/slab.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/aqt1000/aqt1000-clsh.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/aqt1000/aqt1000-clsh.o asoc/codecs/aqt1000/aqt1000-clsh.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/aqt1000/aqt1000-core.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/aqt1000/aqt1000-core.o asoc/codecs/aqt1000/aqt1000-core.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/aqt1000/aqt1000-core.o",
+      "elapsed_ms": 13,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/aqt1000/aqt1000-core.c:7:10: fatal error: linux/of_device.h: No such file or directory\n    7 | #include <linux/of_device.h>\n      |          ^~~~~~~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/aqt1000/aqt1000-core.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/aqt1000/aqt1000-core.o asoc/codecs/aqt1000/aqt1000-core.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/bolero/rx-macro.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/bolero/rx-macro.o asoc/codecs/bolero/rx-macro.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/bolero/rx-macro.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/bolero/rx-macro.c:7:10: fatal error: linux/init.h: No such file or directory\n    7 | #include <linux/init.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/bolero/rx-macro.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/bolero/rx-macro.o asoc/codecs/bolero/rx-macro.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/csra66x0/csra66x0.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/csra66x0/csra66x0.o asoc/codecs/csra66x0/csra66x0.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/csra66x0/csra66x0.o",
+      "elapsed_ms": 11,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/csra66x0/csra66x0.c:5:10: fatal error: linux/init.h: No such file or directory\n    5 | #include <linux/init.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/csra66x0/csra66x0.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/csra66x0/csra66x0.o asoc/codecs/csra66x0/csra66x0.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.o asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.o",
+      "elapsed_ms": 13,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c:7:10: fatal error: linux/init.h: No such file or directory\n    7 | #include <linux/init.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.o asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wcd9378/wcd9378.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wcd9378/wcd9378.o asoc/codecs/wcd9378/wcd9378.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wcd9378/wcd9378.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/wcd9378/wcd9378.c:6:10: fatal error: linux/slab.h: No such file or directory\n    6 | #include <linux/slab.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/wcd9378/wcd9378.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wcd9378/wcd9378.o asoc/codecs/wcd9378/wcd9378.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wcd9xxx-common-v2.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wcd9xxx-common-v2.o asoc/codecs/wcd9xxx-common-v2.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wcd9xxx-common-v2.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/wcd9xxx-common-v2.c:8:10: fatal error: linux/slab.h: No such file or directory\n    8 | #include <linux/slab.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/wcd9xxx-common-v2.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wcd9xxx-common-v2.o asoc/codecs/wcd9xxx-common-v2.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wsa881x-analog.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wsa881x-analog.o asoc/codecs/wsa881x-analog.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wsa881x-analog.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/wsa881x-analog.c:7:10: fatal error: linux/clk.h: No such file or directory\n    7 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/wsa881x-analog.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wsa881x-analog.o asoc/codecs/wsa881x-analog.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wsa883x/wsa883x.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wsa883x/wsa883x.o asoc/codecs/wsa883x/wsa883x.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wsa883x/wsa883x.o",
+      "elapsed_ms": 11,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/wsa883x/wsa883x.c:8:10: fatal error: linux/init.h: No such file or directory\n    8 | #include <linux/init.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/wsa883x/wsa883x.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wsa883x/wsa883x.o asoc/codecs/wsa883x/wsa883x.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wsa884x/wsa884x.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wsa884x/wsa884x.o asoc/codecs/wsa884x/wsa884x.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/codecs/wsa884x/wsa884x.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/codecs/wsa884x/wsa884x.c:8:10: fatal error: linux/init.h: No such file or directory\n    8 | #include <linux/init.h>\n      |          ^~~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/codecs/wsa884x/wsa884x.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/codecs/wsa884x/wsa884x.o asoc/codecs/wsa884x/wsa884x.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_codecs"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/gvm_auto_spf_dummy.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/gvm_auto_spf_dummy.o asoc/gvm_auto_spf_dummy.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/gvm_auto_spf_dummy.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/gvm_auto_spf_dummy.c:6:10: fatal error: linux/clk.h: No such file or directory\n    6 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/gvm_auto_spf_dummy.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/gvm_auto_spf_dummy.o asoc/gvm_auto_spf_dummy.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/kalama.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/kalama.o asoc/kalama.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/kalama.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/kalama.c:7:10: fatal error: linux/clk.h: No such file or directory\n    7 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/kalama.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/kalama.o asoc/kalama.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/pineapple.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/pineapple.o asoc/pineapple.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/pineapple.o",
+      "elapsed_ms": 12,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/pineapple.c:7:10: fatal error: linux/clk.h: No such file or directory\n    7 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/pineapple.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/pineapple.o asoc/pineapple.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/sun.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/sun.o asoc/sun.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/sun.o",
+      "elapsed_ms": 11,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/sun.c:7:10: fatal error: linux/clk.h: No such file or directory\n    7 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/sun.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/sun.o asoc/sun.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/waipio.o -n",
+      "elapsed_ms": 2,
+      "phase": "dry_run_object",
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/waipio.o asoc/waipio.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    },
+    {
+      "command": "make -C /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src O=/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out asoc/waipio.o",
+      "elapsed_ms": 11,
+      "phase": "execute_object",
+      "returncode": 2,
+      "stderr": "asoc/waipio.c:7:10: fatal error: linux/clk.h: No such file or directory\n    7 | #include <linux/clk.h>\n      |          ^~~~~~~~~~~~~\ncompilation terminated.\nmake: *** [<builtin>: asoc/waipio.o] Error 1\n",
+      "stdout": "make: Entering directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\ncc    -c -o asoc/waipio.o asoc/waipio.c\nmake: Leaving directory '/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src'\n",
+      "subsystem": "asoc_machine"
+    }
+  ],
+  "deterministic_fingerprint": "4864a31aaef4ab1aef625168bdf6d99c3f5fd0994e3353d3a75c580189f7e565",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://sandbox_patch_validation",
+    "artifact://downstream_to_upstream_patch",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "report_name": "subsystem_build_validation",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "command_count": 34,
+    "failure_count": 18,
+    "object_target_count": 16,
+    "subsystem_target_count": 1,
+    "success_count": 16
+  },
+  "target_id": "RB3Gen2"
+}

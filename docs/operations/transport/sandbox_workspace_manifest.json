@@ -1,0 +1,59 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "cleanup_trace": {
+    "cleanup_steps": [
+      {
+        "command": "git -C /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar worktree remove --force /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src",
+        "elapsed_ms": 20,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "",
+        "step": "git_worktree_remove"
+      },
+      {
+        "command": "rm -rf /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b",
+        "elapsed_ms": 0,
+        "returncode": 0,
+        "stderr": "",
+        "stdout": "",
+        "step": "sandbox_directory_remove"
+      }
+    ],
+    "workspace_mode": "git_worktree"
+  },
+  "deterministic_fingerprint": "b0a7afe476d167240573b9ff9725c82e34188f07612cd453737db1b1b4f41032",
+  "evidence_references": [
+    "registry://governance_state",
+    "registry://runtime_cognition",
+    "registry://topology_cognition",
+    "registry://sandbox_patch_validation",
+    "artifact://downstream_to_upstream_patch",
+    "artifact://aura_replay_determinism_report"
+  ],
+  "isolation_policy": {
+    "artifact_isolation": true,
+    "disposable_workspace": true,
+    "rollback_safe_execution": true,
+    "source_tree_immutable": true
+  },
+  "prepare_trace": [
+    {
+      "command": "git -C /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar worktree add --detach /local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src",
+      "elapsed_ms": 121,
+      "returncode": 0,
+      "stderr": "",
+      "stdout": "Preparing worktree (detached HEAD 4668917)\nHEAD is now at 4668917 Merge \"lpass-cdc: Correct the gain value as per HW requirements for hamoa for 2S battery\"\n",
+      "step": "git_worktree_add"
+    }
+  ],
+  "report_name": "sandbox_workspace_manifest",
+  "runtime_truth_precedence": true,
+  "sandbox_output_root": "/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/out",
+  "sandbox_root": "/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b",
+  "sandbox_source_root": "/local/mnt/workspace/nandam/tmp/aura_sandbox_patch_validation/sandbox_patch_validation_v1_7d0095e92aa99c8b/src",
+  "schema_version": "1.0",
+  "source_root": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar",
+  "target_id": "RB3Gen2",
+  "workspace_mode": "git_worktree"
+}

@@ -467,6 +467,11 @@ from aura_sdk.transport.build_execution_engine import (
     BuildExecutionRegistry,
     BuildExecutionResult,
 )
+from aura_sdk.transport.sandbox_patch_validation_engine import (
+    SandboxPatchValidationEngine,
+    SandboxPatchValidationRegistry,
+    SandboxPatchValidationResult,
+)
 
 __all__ = [
     "CommandClassification",
@@ -756,4 +761,7 @@ __all__ = [
     "BuildExecutionEngine",
     "BuildExecutionRegistry",
     "BuildExecutionResult",
+    "SandboxPatchValidationEngine",
+    "SandboxPatchValidationRegistry",
+    "SandboxPatchValidationResult",
 ]

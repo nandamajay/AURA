@@ -2312,6 +2312,78 @@ python3 -m pytest \
 - fail-closed on unsafe incremental rebuild conditions
 - deterministic replay lineage required for all build decisions
 
+## Real Patch Application + Sandbox Build Validation Layer
+
+This phase upgrades AURA from build cognition into real transformation
+execution governance using isolated patch-application sandboxes and real build
+validation commands.
+
+### Focus Coverage
+
+- isolated sandbox workspace creation with cleanup cognition
+- real patch dry-run/apply trace and lineage
+- subsystem + object-level sandbox build execution
+- modpost/linker closure governance
+- object rebuild lineage and symbol regression tracking
+- build fingerprint equivalence and transformation gating
+- deterministic rollback cognition
+- runtime promotion eligibility gating
+
+### Core Components
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/sandbox_patch_validation_engine.py`
+- Runner:
+  - `scripts/aura-sandbox-patch-validation.py`
+
+### Required Artifacts (Generated)
+
+- `sandbox_workspace_manifest.json`
+- `applied_patch_lineage.json`
+- `patch_application_trace.json`
+- `subsystem_build_validation.json`
+- `object_rebuild_lineage.json`
+- `modpost_validation_report.json`
+- `linker_closure_report.json`
+- `symbol_regression_report.json`
+- `build_fingerprint_diff.json`
+- `transformation_equivalence_report.json`
+- `runtime_promotion_eligibility.json`
+- `rollback_lineage_report.json`
+- `deterministic_patch_validation_replay.json`
+- `runtime_sensitive_patch_impact.json`
+- `sandbox_patch_validation_summary.json`
+- `governance_patch_validation_decision.json`
+
+### Run Sandbox Patch Validation
+
+```bash
+python3 scripts/aura-sandbox-patch-validation.py \
+  --output-dir /local/mnt/workspace/AURA_V1/docs/operations/transport \
+  --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
+  --target-id RB3Gen2 \
+  --source-root /local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar \
+  --patch-path /local/mnt/workspace/AURA_V1/docs/operations/transport/downstream_to_upstream.patch \
+  --session-id sandbox_patch_validation_session_v1 \
+  --lineage-id sandbox_patch_validation_v1
+```
+
+### Validation
+
+```bash
+python3 -m pytest \
+  workspace/aura-sdk/tests/test_sandbox_patch_validation_static.py -q
+```
+
+### Governance + Determinism Constraints
+
+- fail-closed if patch apply is partial/conflicted
+- fail-closed on unresolved compile/link/modpost closure
+- fail-closed on unstable runtime-sensitive patch impacts
+- fail-closed if rollback is unsafe/incomplete
+- fail-closed if runtime promotion eligibility cannot be proven
+- deterministic replay lineage required for patch execution governance
+
 ## Runtime Loop Automation (Three-Screen Validation)
 
 Loop wrappers:
