@@ -1,34 +1,66 @@
 {
   "advisory_only_behavior": true,
-  "classification": "FAIL_CLOSED",
-  "deterministic_fingerprint": "bfb059b2bdae9aaee30cf101561589b0cab9f20e5b8cd6a925b4b2353beab2cd",
-  "entries": [],
-  "evidence_references": [
-    "registry://governance_state",
-    "registry://runtime_evidence_acquisition",
-    "artifact://runtime_truth_graph",
-    "artifact://topology_runtime_graph",
-    "artifact://dts_topology_graph",
-    "artifact://upstream_translation_plan",
-    "artifact://api_replacement_map",
-    "artifact://runtime_equivalence_validation",
-    "artifact://ipcat_hardware_descriptor",
-    "artifact://aura_replay_determinism_report"
-  ],
-  "governance_gate": {
-    "requires_runtime_backed_evidence_confidence_above_threshold": true,
-    "runtime_backed_confidence_threshold": 0.72,
-    "transformations_allowed": false
+  "created_at": "2026-05-24T09:56:20.173718+00:00",
+  "deterministic_fingerprint": "e5b07aa883b07a9171a7e6418af5d8e645d8a53be0ec4c9357472fccd68af414",
+  "dimension_fingerprints": {
+    "backend_frontend_routing": "ac7351c14a6f5c0fceb612df6b351f4aaaa48d0890ee11d4a46a4a486f74773e",
+    "clock_activation_order": "20b39b45a9aec6460944557379a413fc1c7c7cff95d75a84d3d6baa2c8c0bbd5",
+    "dsp_sync_order": "14b7b54d9595bc1b56abb3f047aa2326025dcf48c14fb57de7fe9b35226eac7e",
+    "irq_sequence": "a39932ddcc7bc72505a2ccae683c663dd69eae95920a3e0f2133c44d3ae5889e",
+    "mailbox_sync_sequence": "14b7b54d9595bc1b56abb3f047aa2326025dcf48c14fb57de7fe9b35226eac7e",
+    "pcm_lifecycle_order": "d74eb78ba53468e808d5dbe6d70298d0417ce1dc2921ea8e5e39365e33e9e4aa",
+    "regulator_enable_order": "e1a73a9e4a8ad044e4227cab71bf8ca1927904f1836a0989dbc8b3374b2af28e",
+    "soundwire_activation_graph": "6fe79d9147843d237a499d4eff6aeddff22c5aa6ffb95f9c6da6cd0c0b8ffaf1"
   },
+  "dimensions": {
+    "backend_frontend_routing": [
+      "FE0->BE0",
+      "FE0->BE0",
+      "FE0->BE0",
+      "FE0->BE0"
+    ],
+    "clock_activation_order": [
+      "1.190: clock audio_core enabled",
+      "1.230: clk mi2s0 enabled delayed"
+    ],
+    "dsp_sync_order": [
+      "1.252: dsp mailbox tx graph_open",
+      "1.266: dsp mailbox rx graph_ack delayed"
+    ],
+    "irq_sequence": [
+      "1.285: irq 21 handled delayed",
+      "1.330: irq 21 complete"
+    ],
+    "mailbox_sync_sequence": [
+      "1.252: dsp mailbox tx graph_open",
+      "1.266: dsp mailbox rx graph_ack delayed"
+    ],
+    "pcm_lifecycle_order": [
+      "1.210: pcm open fe0",
+      "1.245: pcm start fe0->be0",
+      "1.310: pcm stop fe0"
+    ],
+    "regulator_enable_order": [
+      "1.180: regulator vdd_audio enabled",
+      "1.182: regulator vdd_codec enabled"
+    ],
+    "soundwire_activation_graph": [
+      "1.250: soundwire link swr0:master0 active",
+      "1.259: swr slave codec:wsa883x online delayed"
+    ]
+  },
+  "evidence_references": [
+    "artifact://runtime_divergence_report",
+    "artifact://runtime_confidence_report"
+  ],
+  "lineage_id": "runtime_equivalence_v1",
   "report_name": "runtime_equivalence_fingerprint",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
+  "session_id": "runtime_equivalence_session_v1",
   "summary": {
-    "candidate_count": 0,
-    "governed_reusable_count": 0,
-    "mean_runtime_backed_confidence": 0.0,
-    "quality_score": 0.326
+    "dimension_count": 8,
+    "event_count": 24
   },
-  "target_id": "RB3Gen2",
-  "transformations_require_runtime_backed_confidence_threshold": 0.72
+  "target_id": "RB3Gen2"
 }

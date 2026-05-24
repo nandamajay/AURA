@@ -1,33 +1,39 @@
 {
   "advisory_only_behavior": true,
   "classification": "FAIL_CLOSED",
-  "cross_platform_comparison": [],
-  "deterministic_fingerprint": "89c82980d3b6a188fe7907bd3f70ec3a5ae503ace02f60ed2e52a6895cb0e695",
-  "divergence_signals": {
-    "evidence_quality_score": 0.326,
-    "governed_reusable_count": 0,
-    "missing_domain_count": 1,
-    "non_equivalent_count": 0
-  },
-  "evidence_references": [
-    "registry://governance_state",
-    "registry://runtime_evidence_acquisition",
-    "artifact://runtime_truth_graph",
-    "artifact://topology_runtime_graph",
-    "artifact://dts_topology_graph",
-    "artifact://upstream_translation_plan",
-    "artifact://api_replacement_map",
-    "artifact://runtime_equivalence_validation",
-    "artifact://ipcat_hardware_descriptor",
-    "artifact://aura_replay_determinism_report"
+  "critical_divergences": [
+    "dsp_sequence_instability",
+    "irq_divergence",
+    "mailbox_ordering_divergence",
+    "pcm_transition_inconsistency",
+    "runtime_sensitive_region_instability",
+    "soundwire_topology_mismatch"
   ],
-  "fail_closed_justification": "evidence_quality_fail_closed",
+  "deterministic_fingerprint": "3635ba15896f9390bf278526d112b3273785d275c38bdd7e10509145ef6d3893",
+  "diverged_dimensions": [
+    "irq_divergence",
+    "lifecycle_drift",
+    "clock_mismatch",
+    "dsp_sequence_instability",
+    "mailbox_ordering_divergence",
+    "soundwire_topology_mismatch",
+    "pcm_transition_inconsistency",
+    "runtime_sensitive_region_instability"
+  ],
+  "evidence_references": [
+    "artifact://baseline_hardware_truth_graph",
+    "artifact://transformed_hardware_truth_graph"
+  ],
+  "reasons": [
+    "runtime_divergence_detected",
+    "runtime_sensitive_region_instability"
+  ],
   "report_name": "runtime_divergence_report",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
   "summary": {
-    "governance_ok": true,
-    "history_comparison_count": 0
+    "critical_divergence_count": 6,
+    "diverged_dimension_count": 8
   },
   "target_id": "RB3Gen2"
 }

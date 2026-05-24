@@ -1,0 +1,40 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "created_at": "2026-05-24T09:56:31.104415+00:00",
+  "deterministic_fingerprint": "eb739cc81ff3b160aa1692a4e47c50fe8d62a717ea7a37c43726084e4834a642",
+  "evidence_references": [
+    "artifact://runtime_equivalence_report",
+    "artifact://runtime_divergence_report",
+    "artifact://runtime_confidence_report",
+    "artifact://deterministic_runtime_replay",
+    "registry://governance_state"
+  ],
+  "fail_closed_reasons": [
+    "critical_runtime_divergence_detected",
+    "runtime_confidence_below_threshold",
+    "runtime_confidence_fail_closed",
+    "runtime_divergence_fail_closed",
+    "runtime_sensitive_region_instability"
+  ],
+  "lineage_id": "runtime_governance_v1",
+  "promotion_eligible": false,
+  "report_name": "runtime_governance_decision",
+  "runtime_inputs": {
+    "runtime_confidence_fingerprint": "3574a1f1271a7f6c99308f43b33579bd8a48ef929682e1855daca6abf1398159",
+    "runtime_divergence_fingerprint": "3635ba15896f9390bf278526d112b3273785d275c38bdd7e10509145ef6d3893",
+    "runtime_equivalence_fingerprint": "0ae036f228f76b32c324aa53e5ddc94721d6d232296aad883e17bad3b479a866",
+    "runtime_replay_fingerprint": "1012241f777f1e595d83e305b2bc2397f4f6396acaa267fd1b838abe9d805ce7"
+  },
+  "runtime_promotion_gate": {
+    "confidence_score": 0.0,
+    "confidence_threshold": 0.78,
+    "critical_divergence_count": 6,
+    "deterministic_replay_ready": true,
+    "runtime_sensitive_impact_count": 4
+  },
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_governance_session_v1",
+  "target_id": "RB3Gen2"
+}

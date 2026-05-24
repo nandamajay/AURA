@@ -225,6 +225,52 @@ python3 -m pytest \
 - immutable capture lineage chain and replay-safe session persistence
 - plugin adapter boundary preserved (`runtime/topology/semantic` adapters only)
 
+## Runtime Cognition + Live Evidence Governance (Offline-First)
+
+This phase extends AURA into runtime behavior reconstruction and governance
+gating using mocked/simulated traces first (no mandatory hardware dependency).
+
+### Runtime Cognition Components
+
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_trace_ingestion_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_hardware_truth_graph.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_equivalence_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_fingerprint_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_governance_engine.py`
+- `workspace/aura-sdk/src/aura_sdk/transport/runtime_replay_engine.py`
+
+### Runners
+
+- `scripts/aura-runtime-trace-ingestion.py`
+- `scripts/aura-runtime-equivalence.py`
+- `scripts/aura-runtime-governance.py`
+
+### Validation Suites
+
+- `workspace/aura-sdk/tests/test_runtime_trace_ingestion_static.py`
+- `workspace/aura-sdk/tests/test_runtime_equivalence_static.py`
+- `workspace/aura-sdk/tests/test_runtime_governance_static.py`
+- `workspace/aura-sdk/tests/test_runtime_replay_static.py`
+
+### Core Runtime Artifacts
+
+- `runtime_equivalence_fingerprint.json`
+- `runtime_divergence_report.json`
+- `hardware_truth_graph.json`
+- `ipc_topology_map.json`
+- `runtime_confidence_report.json`
+- `deterministic_runtime_replay.json`
+- `runtime_governance_decision.json`
+- `replay_consistency_report.json`
+
+### Runtime Governance Behavior
+
+- runtime-truth precedence and advisory-only reasoning
+- deterministic replay lineage persistence
+- fail-closed runtime promotion gating on low confidence or drift
+- runtime-sensitive instability blocks promotion by policy
+- plugin/runtime isolation preserved
+
 ## Portable Multi-Target Cognition Phase
 
 This phase introduces architecture hardening for cross-target portability while

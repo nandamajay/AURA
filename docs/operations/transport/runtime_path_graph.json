@@ -1,0 +1,58 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "PASS",
+  "deterministic_fingerprint": "dc358a39c992f358a804f652555a28ae580ceb8cf632cd23370fed01a93ac942",
+  "edges": [
+    {
+      "from": "FE0",
+      "path_type": "pcm_runtime_path",
+      "timestamp_ms": 1245.0,
+      "to": "BE0"
+    },
+    {
+      "from": "DAPM",
+      "message": "[1.205] DAPM route FE0->BE0 enable",
+      "path_type": "dapm_runtime_path",
+      "timestamp_ms": 1205.0,
+      "to": "ROUTE"
+    },
+    {
+      "from": "DAPM",
+      "message": "1.212: dapm widget RX_MACRO power_up",
+      "path_type": "dapm_runtime_path",
+      "timestamp_ms": 1212.0,
+      "to": "ROUTE"
+    },
+    {
+      "from": "DAPM",
+      "message": "1.248: dapm route enabled FE0->BE0",
+      "path_type": "dapm_runtime_path",
+      "timestamp_ms": 1248.0,
+      "to": "ROUTE"
+    },
+    {
+      "from": "DAPM",
+      "message": "asoc route FE0 -> BE0 active",
+      "path_type": "dapm_runtime_path",
+      "timestamp_ms": 1605.0,
+      "to": "ROUTE"
+    },
+    {
+      "from": "DAPM",
+      "message": "asoc widget RX_MACRO on",
+      "path_type": "dapm_runtime_path",
+      "timestamp_ms": 1610.0,
+      "to": "ROUTE"
+    }
+  ],
+  "evidence_references": [
+    "artifact://transformed_runtime_trace_ingestion"
+  ],
+  "report_name": "runtime_path_graph",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "summary": {
+    "path_edge_count": 6
+  },
+  "target_id": "RB3Gen2"
+}

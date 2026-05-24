@@ -1,0 +1,151 @@
+{
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "created_at": "2026-05-24T09:56:20.173434+00:00",
+  "deterministic_fingerprint": "0ae036f228f76b32c324aa53e5ddc94721d6d232296aad883e17bad3b479a866",
+  "dimensions": [
+    {
+      "added_items": [
+        "IRQ:1.285: irq 21 handled delayed",
+        "IRQ:1.330: irq 21 complete"
+      ],
+      "baseline_count": 2,
+      "classification": "DIVERGED",
+      "critical": true,
+      "difference_count": 4,
+      "dimension": "irq_divergence",
+      "drift_ratio": 2.0,
+      "missing_items": [
+        "IRQ:1.260: irq 21 handled",
+        "IRQ:1.300: irq 21 complete"
+      ],
+      "transformed_count": 2,
+      "weight": 0.14
+    },
+    {
+      "added_items": [
+        "PCM:1.245: pcm start fe0->be0"
+      ],
+      "baseline_count": 3,
+      "classification": "DIVERGED",
+      "critical": false,
+      "difference_count": 2,
+      "dimension": "lifecycle_drift",
+      "drift_ratio": 0.666667,
+      "missing_items": [
+        "PCM:1.230: pcm start fe0->be0"
+      ],
+      "transformed_count": 3,
+      "weight": 0.15
+    },
+    {
+      "added_items": [
+        "CLOCK:1.230: clk mi2s0 enabled delayed"
+      ],
+      "baseline_count": 2,
+      "classification": "DIVERGED",
+      "critical": false,
+      "difference_count": 2,
+      "dimension": "clock_mismatch",
+      "drift_ratio": 1.0,
+      "missing_items": [
+        "CLOCK:1.215: clk mi2s0 enabled"
+      ],
+      "transformed_count": 2,
+      "weight": 0.08
+    },
+    {
+      "added_items": [
+        "DSP:1.266: dsp mailbox rx graph_ack delayed"
+      ],
+      "baseline_count": 2,
+      "classification": "DIVERGED",
+      "critical": true,
+      "difference_count": 2,
+      "dimension": "dsp_sequence_instability",
+      "drift_ratio": 1.0,
+      "missing_items": [
+        "DSP:1.258: dsp mailbox rx graph_ack"
+      ],
+      "transformed_count": 2,
+      "weight": 0.14
+    },
+    {
+      "added_items": [
+        "1.266: dsp mailbox rx graph_ack delayed"
+      ],
+      "baseline_count": 2,
+      "classification": "DIVERGED",
+      "critical": true,
+      "difference_count": 2,
+      "dimension": "mailbox_ordering_divergence",
+      "drift_ratio": 1.0,
+      "missing_items": [
+        "1.258: dsp mailbox rx graph_ack"
+      ],
+      "transformed_count": 2,
+      "weight": 0.15
+    },
+    {
+      "added_items": [
+        "SOUNDWIRE:1.259: swr slave codec:wsa883x online delayed"
+      ],
+      "baseline_count": 2,
+      "classification": "DIVERGED",
+      "critical": true,
+      "difference_count": 2,
+      "dimension": "soundwire_topology_mismatch",
+      "drift_ratio": 1.0,
+      "missing_items": [
+        "SOUNDWIRE:1.255: swr slave codec:wsa883x online"
+      ],
+      "transformed_count": 2,
+      "weight": 0.11
+    },
+    {
+      "added_items": [
+        "PCM:1.245: pcm start fe0->be0"
+      ],
+      "baseline_count": 3,
+      "classification": "DIVERGED",
+      "critical": true,
+      "difference_count": 2,
+      "dimension": "pcm_transition_inconsistency",
+      "drift_ratio": 0.666667,
+      "missing_items": [
+        "PCM:1.230: pcm start fe0->be0"
+      ],
+      "transformed_count": 3,
+      "weight": 0.11
+    },
+    {
+      "added_items": [
+        "runtime_sensitive_delay_detected"
+      ],
+      "baseline_count": 0,
+      "classification": "DIVERGED",
+      "critical": true,
+      "difference_count": 4,
+      "dimension": "runtime_sensitive_region_instability",
+      "drift_ratio": 1.0,
+      "missing_items": [],
+      "transformed_count": 4,
+      "weight": 0.12
+    }
+  ],
+  "evidence_references": [
+    "artifact://baseline_hardware_truth_graph",
+    "artifact://transformed_hardware_truth_graph"
+  ],
+  "lineage_id": "runtime_equivalence_v1",
+  "report_name": "runtime_equivalence_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_equivalence_session_v1",
+  "summary": {
+    "confidence_score": 0.0,
+    "critical_divergence_count": 6,
+    "total_differences": 20
+  },
+  "target_id": "RB3Gen2"
+}

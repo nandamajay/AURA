@@ -1,28 +1,197 @@
 {
-  "artifact_paths": {
-    "dapm_transition_trace": "/local/mnt/workspace/AURA_V1/docs/operations/transport/dapm_transition_trace.json",
-    "deterministic_runtime_replay": "/local/mnt/workspace/AURA_V1/docs/operations/transport/deterministic_runtime_replay.json",
-    "dsp_sync_report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/dsp_sync_report.json",
-    "irq_timing_report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/irq_timing_report.json",
-    "pcm_lifecycle_trace": "/local/mnt/workspace/AURA_V1/docs/operations/transport/pcm_lifecycle_trace.json",
-    "runtime_confidence_score": "/local/mnt/workspace/AURA_V1/docs/operations/transport/runtime_confidence_score.json",
-    "runtime_drift_report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/runtime_drift_report.json",
-    "runtime_truth_graph": "/local/mnt/workspace/AURA_V1/docs/operations/transport/runtime_truth_graph.json",
-    "soundwire_runtime_graph": "/local/mnt/workspace/AURA_V1/docs/operations/transport/soundwire_runtime_graph.json"
+  "advisory_only_behavior": true,
+  "artifact_lineage": {
+    "hardware_truth_graph": "67fc976a78e30364b345b2c7d8450bf06a0f77e498d315625a93ef9d1d9f3c33",
+    "runtime_confidence_report": "3574a1f1271a7f6c99308f43b33579bd8a48ef929682e1855daca6abf1398159",
+    "runtime_divergence_report": "3635ba15896f9390bf278526d112b3273785d275c38bdd7e10509145ef6d3893",
+    "runtime_equivalence_fingerprint": "e5b07aa883b07a9171a7e6418af5d8e645d8a53be0ec4c9357472fccd68af414"
   },
   "classification": "PASS",
-  "deterministic_replay_fingerprint": "b3e0cc51b165560b81a2a8168fd3d7bee13186a63c039696f5b4d31455aedd89",
-  "evidence_references": [
-    "registry://runtime_cognition",
-    "registry://governance_state",
-    "artifact://runtime_source_correlation",
-    "artifact://topology_runtime_graph",
-    "offline://synthetic_runtime_sequences",
-    "offline://archived_runtime_lineage"
+  "created_at": "2026-05-24T09:56:20.173749+00:00",
+  "deterministic_fingerprint": "1012241f777f1e595d83e305b2bc2397f4f6396acaa267fd1b838abe9d805ce7",
+  "event_digest": [
+    {
+      "domain": "REGULATOR",
+      "event_id": "regulator:1",
+      "index": 1,
+      "message": "1.180: regulator vdd_audio enabled",
+      "timestamp_ms": 1180.0
+    },
+    {
+      "domain": "REGULATOR",
+      "event_id": "regulator:2",
+      "index": 2,
+      "message": "1.182: regulator vdd_codec enabled",
+      "timestamp_ms": 1182.0
+    },
+    {
+      "domain": "CLOCK",
+      "event_id": "clock:1",
+      "index": 3,
+      "message": "1.190: clock audio_core enabled",
+      "timestamp_ms": 1190.0
+    },
+    {
+      "domain": "GENERIC",
+      "event_id": "dmesg:1",
+      "index": 4,
+      "message": "[1.200] ALSA: qcom machine init",
+      "timestamp_ms": 1200.0
+    },
+    {
+      "domain": "DAPM",
+      "event_id": "dmesg:2",
+      "index": 5,
+      "message": "[1.205] DAPM route FE0->BE0 enable",
+      "timestamp_ms": 1205.0
+    },
+    {
+      "domain": "GENERIC",
+      "event_id": "dmesg:3",
+      "index": 6,
+      "message": "[1.207] codec wsa883x online",
+      "timestamp_ms": 1207.0
+    },
+    {
+      "domain": "PCM",
+      "event_id": "ftrace:1",
+      "index": 7,
+      "message": "1.210: pcm open FE0",
+      "timestamp_ms": 1210.0
+    },
+    {
+      "domain": "DAPM",
+      "event_id": "trace_cmd:1",
+      "index": 8,
+      "message": "1.212: dapm widget RX_MACRO power_up",
+      "timestamp_ms": 1212.0
+    },
+    {
+      "domain": "CLOCK",
+      "event_id": "clock:2",
+      "index": 9,
+      "message": "1.230: clk mi2s0 enabled delayed",
+      "timestamp_ms": 1230.0
+    },
+    {
+      "domain": "PCM",
+      "event_id": "ftrace:2",
+      "index": 10,
+      "message": "1.245: pcm start FE0->BE0",
+      "timestamp_ms": 1245.0
+    },
+    {
+      "domain": "DAPM",
+      "event_id": "trace_cmd:2",
+      "index": 11,
+      "message": "1.248: dapm route enabled FE0->BE0",
+      "timestamp_ms": 1248.0
+    },
+    {
+      "domain": "SOUNDWIRE",
+      "event_id": "soundwire:1",
+      "index": 12,
+      "message": "1.250: soundwire link swr0:master0 active",
+      "timestamp_ms": 1250.0
+    },
+    {
+      "domain": "DSP",
+      "event_id": "dsp_mailbox:1",
+      "index": 13,
+      "message": "1.252: dsp mailbox tx graph_open",
+      "timestamp_ms": 1252.0
+    },
+    {
+      "domain": "SOUNDWIRE",
+      "event_id": "soundwire:2",
+      "index": 14,
+      "message": "1.259: swr slave codec:wsa883x online delayed",
+      "timestamp_ms": 1259.0
+    },
+    {
+      "domain": "DSP",
+      "event_id": "dsp_mailbox:2",
+      "index": 15,
+      "message": "1.266: dsp mailbox rx graph_ack delayed",
+      "timestamp_ms": 1266.0
+    },
+    {
+      "domain": "IRQ",
+      "event_id": "irq:1",
+      "index": 16,
+      "message": "1.285: irq 21 handled delayed",
+      "timestamp_ms": 1285.0
+    },
+    {
+      "domain": "PCM",
+      "event_id": "ftrace:3",
+      "index": 17,
+      "message": "1.310: pcm stop FE0",
+      "timestamp_ms": 1310.0
+    },
+    {
+      "domain": "IRQ",
+      "event_id": "irq:2",
+      "index": 18,
+      "message": "1.330: irq 21 complete",
+      "timestamp_ms": 1330.0
+    },
+    {
+      "domain": "MIXER",
+      "event_id": "tinymix:1",
+      "index": 19,
+      "message": "WSA RX0 MUX=AIF1_PB",
+      "timestamp_ms": 1405.0
+    },
+    {
+      "domain": "MIXER",
+      "event_id": "tinymix:2",
+      "index": 20,
+      "message": "SpkrLeft DAC Switch=on",
+      "timestamp_ms": 1410.0
+    },
+    {
+      "domain": "KERNEL_STATE",
+      "event_id": "procfs:1",
+      "index": 21,
+      "message": "00-00: MultiMedia1 Playback",
+      "timestamp_ms": 1505.0
+    },
+    {
+      "domain": "KERNEL_STATE",
+      "event_id": "procfs:2",
+      "index": 22,
+      "message": "00-01: MultiMedia2 Capture",
+      "timestamp_ms": 1510.0
+    },
+    {
+      "domain": "DAPM",
+      "event_id": "debugfs:1",
+      "index": 23,
+      "message": "asoc route FE0 -> BE0 active",
+      "timestamp_ms": 1605.0
+    },
+    {
+      "domain": "DAPM",
+      "event_id": "debugfs:2",
+      "index": 24,
+      "message": "asoc widget RX_MACRO on",
+      "timestamp_ms": 1610.0
+    }
   ],
-  "lineage_id": "runtime_truth_cognition_offline_v1",
-  "offline_foundation_mode": true,
-  "replay_type": "runtime_truth_cognition",
-  "runtime_truth_fingerprint": "bfbee9797dcbb44d8564cbb205d8a1f0aba7c7e16eaa09f28309369ff0ca77e4",
-  "schema_version": "1.0"
+  "evidence_references": [
+    "artifact://runtime_divergence_report",
+    "artifact://runtime_confidence_report"
+  ],
+  "lineage_id": "runtime_equivalence_v1",
+  "replay_signal": {
+    "deterministic_event_ordering": true,
+    "event_count": 24,
+    "fingerprint": "e5b07aa883b07a9171a7e6418af5d8e645d8a53be0ec4c9357472fccd68af414"
+  },
+  "report_name": "deterministic_runtime_replay",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_equivalence_session_v1",
+  "target_id": "RB3Gen2"
 }

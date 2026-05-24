@@ -1,89 +1,37 @@
 {
-  "confidence_evolution": [
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 1,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 2,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 3,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 4,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 5,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 6,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 7,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 8,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 9,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    },
-    {
-      "evidence_confidence": 1.0,
-      "playback_confidence": 1.0,
-      "run_index": 10,
-      "runtime_confidence": 1.0,
-      "topology_confidence": 1.0,
-      "transport_confidence": 1.0
-    }
+  "advisory_only_behavior": true,
+  "classification": "FAIL_CLOSED",
+  "confidence_score": 0.0,
+  "confidence_threshold": 0.75,
+  "critical_divergences": [
+    "dsp_sequence_instability",
+    "irq_divergence",
+    "mailbox_ordering_divergence",
+    "pcm_transition_inconsistency",
+    "runtime_sensitive_region_instability",
+    "soundwire_topology_mismatch"
   ],
-  "evidence_confidence": 1.0,
-  "playback_confidence": 1.0,
-  "runtime_confidence": 1.0,
-  "topology_confidence": 1.0,
-  "transport_confidence": 1.0
+  "deterministic_fingerprint": "3574a1f1271a7f6c99308f43b33579bd8a48ef929682e1855daca6abf1398159",
+  "evidence_references": [
+    "artifact://baseline_hardware_truth_graph",
+    "artifact://transformed_hardware_truth_graph"
+  ],
+  "fail_closed_reasons": [
+    "runtime_confidence_below_threshold",
+    "critical_runtime_divergence_detected"
+  ],
+  "report_name": "runtime_confidence_report",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "target_id": "RB3Gen2",
+  "weights": {
+    "clock_mismatch": 0.08,
+    "dsp_sequence_instability": 0.14,
+    "irq_divergence": 0.14,
+    "lifecycle_drift": 0.15,
+    "mailbox_ordering_divergence": 0.15,
+    "pcm_transition_inconsistency": 0.11,
+    "runtime_sensitive_region_instability": 0.12,
+    "soundwire_topology_mismatch": 0.11
+  }
 }

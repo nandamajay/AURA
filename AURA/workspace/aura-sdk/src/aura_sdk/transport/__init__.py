@@ -426,6 +426,34 @@ from aura_sdk.transport.runtime_evidence_acquisition import (
     RuntimeEvidenceAcquisitionRegistry,
     RuntimeEvidenceAcquisitionResult,
 )
+from aura_sdk.transport.runtime_trace_ingestion_engine import (
+    RuntimeTraceIngestionEngine,
+    RuntimeTraceIngestionResult,
+    build_mock_runtime_trace_payloads,
+    save_runtime_trace_ingestion,
+)
+from aura_sdk.transport.runtime_hardware_truth_graph import (
+    RuntimeHardwareTruthGraphBuilder,
+    RuntimeHardwareTruthGraphResult,
+)
+from aura_sdk.transport.runtime_equivalence_engine import (
+    RuntimeEquivalenceEngine,
+    RuntimeEquivalenceResult,
+)
+from aura_sdk.transport.runtime_fingerprint_engine import (
+    RuntimeFingerprintEngine,
+    RuntimeFingerprintResult,
+)
+from aura_sdk.transport.runtime_governance_engine import (
+    RuntimeGovernanceEngine,
+    RuntimeGovernanceRegistry,
+    RuntimeGovernanceResult,
+)
+from aura_sdk.transport.runtime_replay_engine import (
+    RuntimeReplayEngine,
+    RuntimeReplayRegistry,
+    RuntimeReplayResult,
+)
 from aura_sdk.transport.upstream_acceptance_simulation import (
     UpstreamAcceptanceSimulationEngine,
     UpstreamAcceptanceSimulationRegistry,
@@ -736,6 +764,22 @@ __all__ = [
     "RuntimeEvidenceAcquisitionEngine",
     "RuntimeEvidenceAcquisitionRegistry",
     "RuntimeEvidenceAcquisitionResult",
+    "RuntimeTraceIngestionEngine",
+    "RuntimeTraceIngestionResult",
+    "build_mock_runtime_trace_payloads",
+    "save_runtime_trace_ingestion",
+    "RuntimeHardwareTruthGraphBuilder",
+    "RuntimeHardwareTruthGraphResult",
+    "RuntimeEquivalenceEngine",
+    "RuntimeEquivalenceResult",
+    "RuntimeFingerprintEngine",
+    "RuntimeFingerprintResult",
+    "RuntimeGovernanceEngine",
+    "RuntimeGovernanceRegistry",
+    "RuntimeGovernanceResult",
+    "RuntimeReplayEngine",
+    "RuntimeReplayRegistry",
+    "RuntimeReplayResult",
     "UpstreamAcceptanceSimulationEngine",
     "UpstreamAcceptanceSimulationRegistry",
     "UpstreamAcceptanceSimulationResult",

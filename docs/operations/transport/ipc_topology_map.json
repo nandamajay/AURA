@@ -1,66 +1,42 @@
 {
   "advisory_only_behavior": true,
   "classification": "PASS",
-  "deterministic_fingerprint": "03fbe17c9a8437c9e6bead68d6a230763bd9753fb5ef6fa59f7786dbb484fc6d",
-  "evidence_references": [
-    "registry://governance_state",
-    "registry://runtime_evidence_acquisition",
-    "artifact://runtime_truth_graph",
-    "artifact://topology_runtime_graph",
-    "artifact://dts_topology_graph",
-    "artifact://upstream_translation_plan",
-    "artifact://api_replacement_map",
-    "artifact://runtime_equivalence_validation",
-    "artifact://ipcat_hardware_descriptor",
-    "artifact://aura_replay_determinism_report"
-  ],
-  "ipc_nodes": [
-    "apr",
-    "glink",
-    "rpmsg"
-  ],
-  "ipc_paths": [
+  "deterministic_fingerprint": "5d27d76bfadd0d0eea7df05ca955ae8b3f4f0569e6a54405f5fb7fc1e6386bd0",
+  "dsp_sync_chain": [
     {
       "domain": "DSP",
-      "message": "clock vote for dsp_sync_report",
-      "path_id": "ipc_path:1",
-      "source": "clock_state",
-      "timestamp_ms": 1828000.0
+      "event_id": "dsp_mailbox:1",
+      "message": "1.252: dsp mailbox tx graph_open",
+      "source": "dsp_mailbox",
+      "timestamp_ms": 1252.0
     },
     {
       "domain": "DSP",
-      "message": "ipc mailbox latency 5.0",
-      "path_id": "ipc_path:2",
-      "source": "ipc_path",
-      "timestamp_ms": 2004000.0
+      "event_id": "dsp_mailbox:2",
+      "message": "1.266: dsp mailbox rx graph_ack delayed",
+      "source": "dsp_mailbox",
+      "timestamp_ms": 1266.0
     }
   ],
-  "ipcat_hardware_descriptor": {
-    "audio_subsystem": "qcom_audio",
-    "board": "",
-    "ip_blocks": [
-      "asoc",
-      "soundwire",
-      "dsp",
-      "irq",
-      "clock",
-      "regulator"
-    ],
-    "platform": "RB3Gen2",
-    "soc": ""
-  },
+  "evidence_references": [
+    "artifact://transformed_runtime_trace_ingestion"
+  ],
+  "ipc_channels": [
+    {
+      "mailbox_event": "1.252: dsp mailbox tx graph_open",
+      "timestamp_ms": 1252.0
+    },
+    {
+      "mailbox_event": "1.266: dsp mailbox rx graph_ack delayed",
+      "timestamp_ms": 1266.0
+    }
+  ],
   "report_name": "ipc_topology_map",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
   "summary": {
-    "ipc_event_count": 2,
-    "ipc_node_count": 3
+    "dsp_sync_count": 2,
+    "ipc_event_count": 2
   },
-  "target_id": "RB3Gen2",
-  "topology_awareness": {
-    "backend_frontend_mappings": [],
-    "dts_fingerprint": "b8b264307749e91cc5518258c0f074717a512f8942c4eb6a25b5ef9dcab98dac",
-    "soundwire_topology_markers": [],
-    "topology_fingerprint": "62ff1fe8e6265fbd478966faf9b63ee0204b3c44336ba6e2444a0757f78bddda"
-  }
+  "target_id": "RB3Gen2"
 }
