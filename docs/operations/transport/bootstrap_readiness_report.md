@@ -1,6 +1,6 @@
 # AURA Bootstrap Readiness Report
 
-Generated: 2026-05-24T12:16:19.084333+00:00
+Generated: 2026-05-24T12:50:39.576611+00:00
 
 - Readiness: **BLOCKED**
 - Environment status: `FAIL`

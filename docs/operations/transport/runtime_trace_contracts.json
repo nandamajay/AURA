@@ -1,0 +1,128 @@
+{
+  "generated_at": "2026-05-24T12:49:53.475767+00:00",
+  "lineage_policy": {
+    "immutable_capture": true,
+    "no_synthetic_payloads": true,
+    "replay_lineage_required": true
+  },
+  "schema_version": "1.0",
+  "streams": [
+    {
+      "allowed_sources": [
+        "dmesg",
+        "ftrace",
+        "trace-cmd",
+        "procfs",
+        "debugfs"
+      ],
+      "name": "alsa_traces",
+      "required_fields": [
+        "timestamp",
+        "source",
+        "event_type",
+        "pcm_id",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "mailbox",
+        "firmware_log",
+        "kernel_log"
+      ],
+      "name": "dsp_logs",
+      "required_fields": [
+        "timestamp",
+        "source",
+        "event_type",
+        "dsp_core",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "mailbox",
+        "ipc_router"
+      ],
+      "name": "ipc_mailbox_traces",
+      "required_fields": [
+        "timestamp",
+        "source",
+        "tx_id",
+        "rx_id",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "alsa",
+        "asoc"
+      ],
+      "name": "pcm_lifecycle_events",
+      "required_fields": [
+        "timestamp",
+        "stream",
+        "state_from",
+        "state_to",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "asoc",
+        "dapm",
+        "soundwire"
+      ],
+      "name": "fe_be_topology_events",
+      "required_fields": [
+        "timestamp",
+        "fe_id",
+        "be_id",
+        "transition",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "regulator_debugfs",
+        "kernel_log"
+      ],
+      "name": "regulator_events",
+      "required_fields": [
+        "timestamp",
+        "regulator",
+        "action",
+        "voltage_uV",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "clk_debugfs",
+        "kernel_log"
+      ],
+      "name": "clock_vote_traces",
+      "required_fields": [
+        "timestamp",
+        "clock_name",
+        "vote_hz",
+        "action",
+        "payload"
+      ]
+    },
+    {
+      "allowed_sources": [
+        "dsp_fw_log",
+        "kernel_log"
+      ],
+      "name": "firmware_runtime_events",
+      "required_fields": [
+        "timestamp",
+        "fw_component",
+        "event_type",
+        "state",
+        "payload"
+      ]
+    }
+  ]
+}

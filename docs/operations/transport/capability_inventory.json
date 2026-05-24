@@ -1,0 +1,63 @@
+{
+  "branch": "stabilization/p1-runtime-reliability",
+  "commit": "c0a6fccbe87d186eef770b6956ea946960e8b6f3",
+  "dashboard_runtime_modules": [
+    "AURA/dashboard/src/pages/RuntimeCognitionCenter.tsx",
+    "AURA/dashboard/src/runtime/contracts.ts",
+    "AURA/dashboard/src/runtime/adapters.ts",
+    "AURA/dashboard/src/runtime/useRuntimeQuery.ts"
+  ],
+  "equivalence_engines": [
+    "runtime_equivalence_engine.py",
+    "runtime_fingerprint_engine.py",
+    "incremental_equivalence_engine.py",
+    "upstream_equivalence_confidence.py"
+  ],
+  "generated_at": "2026-05-24T12:49:53.100218+00:00",
+  "governance_engines": [
+    "runtime_governance_engine.py",
+    "runtime_stability_gate.py",
+    "upstream_governance_gate.py",
+    "semantic_governance_boundary.py",
+    "governed_patchset_orchestration.py",
+    "real_patch_application_governed_build.py"
+  ],
+  "replay_engines": [
+    "runtime_replay_engine.py",
+    "deterministic_runtime_replay.py",
+    "deterministic_fusion_replay.py",
+    "engineering_session_replay.py",
+    "aura_event_replay_engine.py"
+  ],
+  "runtime_ingestion_engines": [
+    "runtime_trace_ingestion_engine.py",
+    "runtime_event_ingestion.py",
+    "runtime_evidence_ingestor.py",
+    "runtime_evidence_acquisition.py",
+    "dmesg_ingestor.py",
+    "ftrace_ingestor.py",
+    "tracecmd_ingestor.py",
+    "tinymix_state_ingestor.py",
+    "procfs_runtime_ingestor.py",
+    "debugfs_runtime_ingestor.py",
+    "soundwire_runtime_ingestor.py",
+    "dsp_mailbox_ingestor.py",
+    "irq_runtime_ingestor.py"
+  ],
+  "topology_reconstruction_systems": [
+    "runtime_hardware_truth_graph.py",
+    "soundwire_runtime_graph.py",
+    "topology_reconstruction_cognition.py",
+    "topology_runtime_correlator.py",
+    "topology_runtime_failure_mapper.py"
+  ],
+  "typed_dto_contracts": [
+    "AURA/services/core/src/core/contracts/transport_artifact_contracts.py",
+    "AURA/dashboard/src/runtime/contracts.ts"
+  ],
+  "validation_flows": [
+    "AURA/scripts/aura_validate.sh",
+    "AURA/scripts/aura_validation.py",
+    "AURA/scripts/runtime-verify.sh"
+  ]
+}
