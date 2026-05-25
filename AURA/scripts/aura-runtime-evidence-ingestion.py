@@ -459,6 +459,10 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
     if not modules_lines:
         modules_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("lsmod"))][:600]
 
+    interrupts_lines = _safe_read_lines(capture_root / "proc/interrupts", limit=1500)
+    if not interrupts_lines:
+        interrupts_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("cat /proc/interrupts"))][:1500]
+
     dts_compatible = [item for item in soc.split(",") if item.strip()] if soc else []
     sound_cards = _parse_sound_cards(cards_lines)
     pcm_devices = _parse_pcm_devices(pcm_lines)
@@ -543,6 +547,7 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
             "proc_asound": proc_asound_lines[:2000],
             "debug_asoc": debug_asoc_lines[:2500],
             "soundwire": soundwire_lines[:1200],
+            "interrupts": interrupts_lines[:1500],
             "modules": modules_lines[:600],
             "cards": cards_lines[:200],
             "pcm": pcm_lines[:300],
@@ -559,6 +564,7 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
     bridge_commands = _as_dict(_as_dict(runtime_discovery.get("bridge_evidence")).get("commands"))
     tools = {str(_as_dict(item).get("name", "")): _as_dict(item) for item in _as_list(toolchain.get("tools"))}
     soundwire_lines = _as_list(runtime_lines.get("soundwire"))
+    interrupts_lines = [str(line).strip() for line in _as_list(runtime_lines.get("interrupts")) if str(line).strip()]
 
     payloads = {
         "dmesg": {"lines": _as_list(runtime_lines.get("dmesg"))},
@@ -598,8 +604,13 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
     if tinymix_lines:
         payloads["tinymix_state"] = {"lines": tinymix_lines[:2500]}
 
-    irq_lines = _safe_read_lines(capture_root / "proc/interrupts", limit=600)
-    irq_lines = [line for line in irq_lines if any(token in line.lower() for token in ("snd", "audio", "wcd", "swr", "dsp", "apr", "q6"))]
+    irq_lines = [
+        line
+        for line in interrupts_lines
+        if any(token in line.lower() for token in ("snd", "audio", "wcd", "swr", "dsp", "apr", "q6", "lpass", "mi2s", "soundwire"))
+    ]
+    if not irq_lines:
+        irq_lines = [line for line in interrupts_lines if re.match(r"^\s*\d+\s*:", line)][:400]
     if irq_lines:
         payloads["irq_runtime"] = {"lines": irq_lines}
 
@@ -641,11 +652,28 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
             payloads["soundwire_runtime"] = {"lines": swr_lines[:1500]}
 
     if not _as_dict(payloads.get("irq_runtime")):
+        proc_interrupts = _as_dict(bridge_commands.get("cat /proc/interrupts"))
+        proc_interrupt_lines = [
+            line.strip()
+            for line in (str(proc_interrupts.get("stdout", "")) + "\n" + str(proc_interrupts.get("stderr", ""))).replace("\r", "").splitlines()
+            if line.strip()
+        ]
+        if proc_interrupt_lines:
+            irq_fallback = [
+                line
+                for line in proc_interrupt_lines
+                if any(token in line.lower() for token in ("snd", "audio", "wcd", "swr", "dsp", "apr", "q6", "lpass", "mi2s", "soundwire"))
+            ]
+            if not irq_fallback:
+                irq_fallback = [line for line in proc_interrupt_lines if re.match(r"^\s*\d+\s*:", line)][:400]
+        else:
+            irq_fallback = []
+
         irq_fallback = [
             str(line).strip()
             for line in _as_list(runtime_lines.get("dmesg"))
             if "irq" in str(line).lower() or "interrupt" in str(line).lower()
-        ]
+        ] if not irq_fallback else irq_fallback
         if not irq_fallback:
             for cmd_data in bridge_commands.values():
                 item = _as_dict(cmd_data)

@@ -201,6 +201,7 @@ allowlist = {
     "cat /proc/version",
     "cat /proc/asound/cards",
     "cat /proc/asound/pcm",
+    "cat /proc/interrupts",
     "cat /proc/cpuinfo",
     "uname -a",
     "dmesg",
