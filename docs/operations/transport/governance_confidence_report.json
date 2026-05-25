@@ -1,23 +1,29 @@
 {
   "classification": "FAIL_CLOSED",
   "confidence_dimensions": {
-    "activation_reproducibility": 1.0,
-    "parser_confidence": 1.0,
+    "activation_success_consistency": 0.0,
+    "causal_consistency": 1.0,
+    "parser_confidence_weighted": 1.0,
     "replay_determinism": 1.0,
-    "route_stability": 0.2,
+    "route_convergence": 0.0,
     "semantic_completeness": 1.0,
-    "topology_consistency": 0.25
+    "topology_stability": 0.3,
+    "transition_reproducibility": 1.0
   },
-  "deterministic_fingerprint": "b8b72f7bde11ecde3833d4c3af987c69987875a918a932645e3dcd850dce3a7a",
+  "deterministic_fingerprint": "5806e22e6189e1f0c05250078c253fd0ab664eab7768e852b0a7457818de3db1",
   "fail_closed_reasons": [
-    "route_stability_low",
+    "confidence_below_threshold",
+    "topology_stability_low",
+    "route_convergence_low",
+    "activation_consistency_low",
+    "runtime_instability_high",
     "topology_references_unknown_widgets",
     "topology_cycle_detected",
     "stream_conflict_detected",
     "missing_clock_dependency_callbacks"
   ],
   "lineage_id": "3694030b-f066-5b13-9761-3ec67137516a",
-  "overall_confidence_score": 0.7275,
+  "overall_confidence_score": 0.648,
   "report_name": "semantic_governance_confidence_report",
   "schema_version": "1.0"
 }

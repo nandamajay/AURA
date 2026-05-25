@@ -136,6 +136,12 @@ def test_semantic_scaling_deterministic_and_incremental(tmp_path: Path) -> None:
     assert one.activation_order_graph["edge_count"] > 0
     assert one.runtime_causality_graph["edge_count"] > 0
     assert one.power_sequence_graph["edge_count"] > 0
+    assert one.causal_event_chain_graph["edge_count"] > 0
+    assert one.trigger_dependency_graph["edge_count"] > 0
+    assert one.temporal_causality_report["classification"] == "PASS"
+    assert one.runtime_sequence_fingerprint["combined_sequence_fingerprint"]
+    assert one.failure_propagation_graph["classification"] == "PASS"
+    assert one.root_cause_inference_report["classification"] == "PASS"
     assert one.stream_intelligence_report["classification"] == "PASS"
     assert one.governance_confidence_report["overall_confidence_score"] >= 0.7
     assert two.incremental_ingestion_report["reparsed_file_count"] == 0
@@ -260,4 +266,9 @@ def test_semantic_scaling_fail_closed_missing_clock_dependency(tmp_path: Path) -
     )
     assert result.stream_intelligence_report["classification"] == "FAIL_CLOSED"
     assert "missing_clock_dependency_callbacks" in result.stream_intelligence_report["fail_closed_reasons"]
+    assert result.failure_propagation_graph["classification"] == "FAIL_CLOSED"
+    assert result.runtime_instability_report["classification"] == "FAIL_CLOSED"
+    assert result.root_cause_inference_report["classification"] == "FAIL_CLOSED"
+    causes = {row["cause"] for row in result.root_cause_inference_report["hypotheses"]}
+    assert "missing_sysclk_or_clock_dependency" in causes
     assert result.governance_confidence_report["classification"] == "FAIL_CLOSED"

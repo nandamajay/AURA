@@ -330,6 +330,16 @@ Core generated artifacts include:
 - `semantic_behavioral_replay_timeline.json`
 - `semantic_stream_intelligence_report.json`
 - `semantic_governance_confidence_report.json`
+- `semantic_causal_event_chain_graph.json`
+- `semantic_trigger_dependency_graph.json`
+- `semantic_failure_propagation_graph.json`
+- `semantic_failure_blast_radius_report.json`
+- `semantic_runtime_instability_score.json`
+- `semantic_temporal_causality_report.json`
+- `semantic_temporal_replay_divergence.json`
+- `semantic_runtime_sequence_fingerprint.json`
+- `semantic_root_cause_inference_report.json`
+- `semantic_causal_event_chains_report.json`
 - `semantic_topology_model.json`
 - `semantic_runtime_replay_simulation.json`
 - `semantic_simulation_transition_log.json`

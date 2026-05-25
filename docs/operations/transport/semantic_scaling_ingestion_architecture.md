@@ -7,6 +7,13 @@ driver samples to recursive Linux audio-tree discovery with deterministic,
 lineage-preserving artifact generation.
 The current phase adds behavioral runtime semantics on top of structural
 extraction.
+The causality evolution phase extends this into runtime causal reasoning:
+
+- causal event chains
+- failure propagation and blast-radius analysis
+- temporal replay causality and divergence detection
+- runtime instability scoring
+- preliminary root-cause inference
 
 ## Inputs
 
@@ -51,6 +58,9 @@ extraction.
 - activation order graph
 - runtime causality graph
 - power sequence graph
+- causal event chain graph
+- trigger dependency graph
+- failure propagation graph
 
 ## Topology + Replay
 
@@ -59,6 +69,9 @@ extraction.
 - DAPM behavioral model with activation timeline and power propagation edges.
 - Stream intelligence report (conflicts/dead routes/missing clocks/invalid paths).
 - Governance confidence report (semantic completeness + stability dimensions).
+- Temporal causality report + runtime sequence fingerprint.
+- Replay divergence report against prior deterministic sequence fingerprint.
+- Root-cause inference report derived from observed failures.
 - Mux conflict detection and invalid-state detection.
 - Fail-closed when:
   - unknown widget references exist

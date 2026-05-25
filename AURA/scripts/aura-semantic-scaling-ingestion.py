@@ -43,6 +43,15 @@ def _write_alias_artifacts(output_dir: Path, result: Any) -> dict[str, str]:
     power_sequence = _as_dict(result.power_sequence_graph)
     stream_intelligence = _as_dict(result.stream_intelligence_report)
     governance_confidence = _as_dict(result.governance_confidence_report)
+    causal_event_chains = _as_dict(result.causal_event_chains_report)
+    trigger_dependency = _as_dict(result.trigger_dependency_graph)
+    temporal_causality = _as_dict(result.temporal_causality_report)
+    temporal_divergence = _as_dict(result.temporal_replay_divergence)
+    runtime_sequence = _as_dict(result.runtime_sequence_fingerprint)
+    failure_propagation = _as_dict(result.failure_propagation_graph)
+    blast_radius = _as_dict(result.failure_blast_radius_report)
+    runtime_instability = _as_dict(result.runtime_instability_report)
+    root_cause = _as_dict(result.root_cause_inference_report)
 
     codec_graph = {
         "schema_version": "1.0",
@@ -164,6 +173,46 @@ def _write_alias_artifacts(output_dir: Path, result: Any) -> dict[str, str]:
         power_propagation_graph["fail_closed_reasons"] = ["no_power_sequence_edges"]
     power_propagation_graph["deterministic_fingerprint"] = stable_sha256(power_propagation_graph)
 
+    runtime_causality_chains = {
+        "schema_version": "1.0",
+        "report_name": "runtime_causality_chains",
+        "lineage_id": lineage_id,
+        "runtime_causality_chains": _as_list(causal_event_chains.get("runtime_causality_chains")),
+        "upstream_downstream_propagation_paths": _as_list(
+            causal_event_chains.get("upstream_downstream_propagation_paths")
+        ),
+        "classification": str(causal_event_chains.get("classification", "FAIL_CLOSED")),
+        "fail_closed_reasons": _as_list(causal_event_chains.get("fail_closed_reasons")),
+    }
+    runtime_causality_chains["deterministic_fingerprint"] = stable_sha256(runtime_causality_chains)
+
+    replay_divergence_summary = {
+        "schema_version": "1.0",
+        "report_name": "replay_divergence_summary",
+        "lineage_id": lineage_id,
+        "divergence_detected": bool(temporal_divergence.get("divergence_detected", False)),
+        "previous_sequence_fingerprint": str(temporal_divergence.get("previous_sequence_fingerprint", "")),
+        "current_sequence_fingerprint": str(temporal_divergence.get("current_sequence_fingerprint", "")),
+        "classification": str(temporal_divergence.get("classification", "FAIL_CLOSED")),
+        "fail_closed_reasons": _as_list(temporal_divergence.get("fail_closed_reasons")),
+    }
+    replay_divergence_summary["deterministic_fingerprint"] = stable_sha256(
+        replay_divergence_summary
+    )
+
+    blast_radius_analysis = {
+        "schema_version": "1.0",
+        "report_name": "blast_radius_analysis",
+        "lineage_id": lineage_id,
+        "impacted_callbacks": _as_list(blast_radius.get("impacted_callbacks")),
+        "impacted_route_count": int(blast_radius.get("impacted_route_count", 0)),
+        "impacted_subsystems": _as_list(blast_radius.get("impacted_subsystems")),
+        "impact_score": float(blast_radius.get("impact_score", 0.0)),
+        "classification": str(blast_radius.get("classification", "FAIL_CLOSED")),
+        "fail_closed_reasons": _as_list(blast_radius.get("fail_closed_reasons")),
+    }
+    blast_radius_analysis["deterministic_fingerprint"] = stable_sha256(blast_radius_analysis)
+
     mappings = {
         "codec_graph.json": codec_graph,
         "dapm_topology_graph.json": dapm_topology_graph,
@@ -177,6 +226,15 @@ def _write_alias_artifacts(output_dir: Path, result: Any) -> dict[str, str]:
         "power_propagation_graph.json": power_propagation_graph,
         "stream_intelligence_report.json": stream_intelligence,
         "governance_confidence_report.json": governance_confidence,
+        "runtime_causality_chains.json": runtime_causality_chains,
+        "trigger_dependency_graph.json": trigger_dependency,
+        "temporal_causality_report.json": temporal_causality,
+        "replay_divergence_summary.json": replay_divergence_summary,
+        "runtime_sequence_fingerprint.json": runtime_sequence,
+        "failure_propagation_graph.json": failure_propagation,
+        "blast_radius_analysis.json": blast_radius_analysis,
+        "runtime_instability_score.json": runtime_instability,
+        "root_cause_intelligence_report.json": root_cause,
     }
     written: dict[str, str] = {}
     for name, payload in mappings.items():
@@ -313,6 +371,36 @@ def main() -> int:
             ),
             "semantic_power_sequence_graph": str(
                 (output_dir / "semantic_power_sequence_graph.json").resolve()
+            ),
+            "semantic_causal_event_chain_graph": str(
+                (output_dir / "semantic_causal_event_chain_graph.json").resolve()
+            ),
+            "semantic_trigger_dependency_graph": str(
+                (output_dir / "semantic_trigger_dependency_graph.json").resolve()
+            ),
+            "semantic_failure_propagation_graph": str(
+                (output_dir / "semantic_failure_propagation_graph.json").resolve()
+            ),
+            "semantic_failure_blast_radius_report": str(
+                (output_dir / "semantic_failure_blast_radius_report.json").resolve()
+            ),
+            "semantic_runtime_instability_score": str(
+                (output_dir / "semantic_runtime_instability_score.json").resolve()
+            ),
+            "semantic_temporal_causality_report": str(
+                (output_dir / "semantic_temporal_causality_report.json").resolve()
+            ),
+            "semantic_temporal_replay_divergence": str(
+                (output_dir / "semantic_temporal_replay_divergence.json").resolve()
+            ),
+            "semantic_runtime_sequence_fingerprint": str(
+                (output_dir / "semantic_runtime_sequence_fingerprint.json").resolve()
+            ),
+            "semantic_root_cause_inference_report": str(
+                (output_dir / "semantic_root_cause_inference_report.json").resolve()
+            ),
+            "semantic_causal_event_chains_report": str(
+                (output_dir / "semantic_causal_event_chains_report.json").resolve()
             ),
             "semantic_dapm_behavioral_model": str(
                 (output_dir / "semantic_dapm_behavioral_model.json").resolve()

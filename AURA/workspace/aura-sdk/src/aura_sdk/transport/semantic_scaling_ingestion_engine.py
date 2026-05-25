@@ -499,6 +499,16 @@ class SemanticScalingResult:
     activation_order_graph: dict[str, Any]
     runtime_causality_graph: dict[str, Any]
     power_sequence_graph: dict[str, Any]
+    causal_event_chain_graph: dict[str, Any]
+    trigger_dependency_graph: dict[str, Any]
+    failure_propagation_graph: dict[str, Any]
+    failure_blast_radius_report: dict[str, Any]
+    runtime_instability_report: dict[str, Any]
+    temporal_causality_report: dict[str, Any]
+    temporal_replay_divergence: dict[str, Any]
+    runtime_sequence_fingerprint: dict[str, Any]
+    root_cause_inference_report: dict[str, Any]
+    causal_event_chains_report: dict[str, Any]
     dapm_behavioral_model: dict[str, Any]
     behavioral_replay_timeline: dict[str, Any]
     stream_intelligence_report: dict[str, Any]
@@ -594,6 +604,9 @@ class SemanticScalingIngestionEngine:
         activation_edges: list[dict[str, Any]] = []
         causality_edges: list[dict[str, Any]] = []
         power_edges: list[dict[str, Any]] = []
+        causal_chain_edges: list[dict[str, Any]] = []
+        trigger_dependency_edges: list[dict[str, Any]] = []
+        failure_edges: list[dict[str, Any]] = []
         dapm_timeline_events: list[dict[str, Any]] = []
 
         all_widgets: list[str] = []
@@ -605,6 +618,8 @@ class SemanticScalingIngestionEngine:
         all_activation_conditions: set[str] = set()
         all_runtime_sensitive_callbacks: set[str] = set()
         callback_dependency_rollup: dict[str, set[str]] = {}
+        callback_trigger_modes_rollup: dict[str, set[str]] = {}
+        callback_owner_subsystem: dict[str, set[str]] = {}
         include_name_to_file: dict[str, set[str]] = {}
         for rel in files:
             include_name_to_file.setdefault(Path(rel).name, set()).add(rel)
@@ -764,8 +779,12 @@ class SemanticScalingIngestionEngine:
                 )
                 callbacks_by_ops.setdefault(ops_name, {})[stage] = binding
                 dependency_tags = [str(tag) for tag in _as_list(binding.get("dependency_tags"))]
+                trigger_modes = [str(mode) for mode in _as_list(binding.get("trigger_modes"))]
                 if dependency_tags:
                     callback_dependency_rollup.setdefault(callback, set()).update(dependency_tags)
+                if trigger_modes:
+                    callback_trigger_modes_rollup.setdefault(callback, set()).update(trigger_modes)
+                callback_owner_subsystem.setdefault(callback, set()).add(subsystem)
                 for tag in dependency_tags:
                     causality_edges.append(
                         {
@@ -786,6 +805,26 @@ class SemanticScalingIngestionEngine:
                                 "evidence": {"file": rel},
                             }
                         )
+                for mode in trigger_modes:
+                    trigger_dependency_edges.append(
+                        {
+                            "edge_type": "trigger_mode",
+                            "source": callback,
+                            "target": f"trigger:{mode}",
+                            "attributes": {"stage": stage},
+                            "evidence": {"file": rel},
+                        }
+                    )
+                for tag in dependency_tags:
+                    trigger_dependency_edges.append(
+                        {
+                            "edge_type": "trigger_dependency",
+                            "source": callback,
+                            "target": f"dependency:{tag}",
+                            "attributes": {"stage": stage},
+                            "evidence": {"file": rel},
+                        }
+                    )
 
             for ops_name, stage_map in sorted(callbacks_by_ops.items()):
                 sequence = [stage for stage in _LIFECYCLE_ORDER if stage in stage_map]
@@ -855,6 +894,15 @@ class SemanticScalingIngestionEngine:
                         "evidence": {"derived_from": "dai_token_similarity"},
                     }
                 )
+                causal_chain_edges.append(
+                    {
+                        "edge_type": "fe_be_transition",
+                        "source": fe,
+                        "target": be,
+                        "attributes": {"relation": "frontend_to_backend"},
+                        "evidence": {"derived_from": "dai_token_similarity"},
+                    }
+                )
 
         playback_paths = _topology_paths(all_routes, mode="playback")
         capture_paths = _topology_paths(all_routes, mode="capture")
@@ -911,6 +959,15 @@ class SemanticScalingIngestionEngine:
                             "target": chain[i + 1],
                         }
                     )
+                    causal_chain_edges.append(
+                        {
+                            "edge_type": "route_activation",
+                            "source": chain[i],
+                            "target": chain[i + 1],
+                            "attributes": {"mode": mode, "step": step_idx},
+                            "evidence": {"derived_from": "playback_capture_path"},
+                        }
+                    )
         sink_to_controls: dict[str, set[str]] = {}
         for row in all_routes:
             if not row["control"]:
@@ -940,8 +997,22 @@ class SemanticScalingIngestionEngine:
                     "action": "callback_transition",
                     "stage": str(attrs.get("stage", "")),
                     "callback": str(attrs.get("callback", "")),
+                    "ops_name": str(attrs.get("ops_name", "")),
                     "source": str(edge.get("source", "")),
                     "target": str(edge.get("target", "")),
+                }
+            )
+            causal_chain_edges.append(
+                {
+                    "edge_type": "callback_transition",
+                    "source": str(attrs.get("callback", "")),
+                    "target": str(edge.get("target", "")),
+                    "attributes": {
+                        "stage": str(attrs.get("stage", "")),
+                        "ops_name": str(attrs.get("ops_name", "")),
+                        "step": step_idx,
+                    },
+                    "evidence": {"derived_from": "ops_callback_binding"},
                 }
             )
 
@@ -1108,42 +1179,520 @@ class SemanticScalingIngestionEngine:
         )
         simulation_replay["deterministic_fingerprint"] = stable_sha256(simulation_replay)
 
+        activation_pair_set = {
+            (
+                str(edge.get("source", "")),
+                str(edge.get("target", "")),
+            )
+            for edge in activation_edges
+            if str(edge.get("source", "")).strip() and str(edge.get("target", "")).strip()
+        }
+        race_prone_activation_pairs = sorted(
+            {
+                tuple(sorted((src, dst)))
+                for src, dst in activation_pair_set
+                if src != dst and (dst, src) in activation_pair_set
+            }
+        )
+        ops_stage_map: dict[str, set[str]] = {}
+        for event in lifecycle_events:
+            ops_name = str(_as_dict(event).get("ops_name", "")).strip()
+            stage = str(_as_dict(event).get("stage", "")).strip()
+            if ops_name and stage:
+                ops_stage_map.setdefault(ops_name, set()).add(stage)
+        partial_activation_states = sorted(
+            [
+                ops_name
+                for ops_name, stages in sorted(ops_stage_map.items())
+                if stages.intersection({"open", "startup", "hw_params", "prepare"})
+                and "trigger" not in stages
+            ]
+        )
+
+        for callback in missing_clock_callbacks:
+            failure_edges.append(
+                {
+                    "edge_type": "missing_clock_propagation",
+                    "source": "failure:missing_clock_dependency",
+                    "target": callback,
+                    "attributes": {"failure_kind": "clock"},
+                    "evidence": {"derived_from": "callback_dependency_rollup"},
+                }
+            )
+            failure_edges.append(
+                {
+                    "edge_type": "downstream_effect",
+                    "source": callback,
+                    "target": "runtime:route_activation_blocked",
+                    "attributes": {"failure_kind": "clock"},
+                    "evidence": {"derived_from": "stream_intelligence"},
+                }
+            )
+        for row in mux_conflicts:
+            sink = str(_as_dict(row).get("sink", "")).strip()
+            if not sink:
+                continue
+            failure_edges.append(
+                {
+                    "edge_type": "stream_conflict_propagation",
+                    "source": "failure:stream_conflict",
+                    "target": f"route_sink:{sink}",
+                    "attributes": {"controls": _as_list(_as_dict(row).get("controls"))},
+                    "evidence": {"derived_from": "mux_conflicts"},
+                }
+            )
+        for row in dead_routes:
+            src = str(_as_dict(row).get("source", ""))
+            sink = str(_as_dict(row).get("sink", ""))
+            failure_edges.append(
+                {
+                    "edge_type": "dead_path_propagation",
+                    "source": "failure:dead_dapm_path",
+                    "target": f"route:{src}->{sink}",
+                    "attributes": {"file": str(_as_dict(row).get("file", ""))},
+                    "evidence": {"derived_from": "path_reconstruction"},
+                }
+            )
+        for left, right in race_prone_activation_pairs:
+            failure_edges.append(
+                {
+                    "edge_type": "race_prone_activation",
+                    "source": "failure:race_prone_activation_order",
+                    "target": f"activation_pair:{left}<->{right}",
+                    "attributes": {"callbacks": [left, right]},
+                    "evidence": {"derived_from": "activation_order_graph"},
+                }
+            )
+        for callback in partial_activation_states:
+            failure_edges.append(
+                {
+                    "edge_type": "partial_activation_state",
+                    "source": "failure:partial_activation_state",
+                    "target": callback,
+                    "attributes": {"stages": sorted(ops_stage_map.get(callback, set()))},
+                    "evidence": {"derived_from": "callback_stage_map"},
+                }
+            )
+        if cycle_detected:
+            failure_edges.append(
+                {
+                    "edge_type": "recursive_route_loop",
+                    "source": "failure:recursive_route_loop",
+                    "target": "topology:route_graph",
+                    "attributes": {"cycle_detected": True},
+                    "evidence": {"derived_from": "route_cycle_detection"},
+                }
+            )
+        if invalid_routes:
+            failure_edges.append(
+                {
+                    "edge_type": "invalid_route_activation",
+                    "source": "failure:invalid_route_activation",
+                    "target": "topology:invalid_routes",
+                    "attributes": {"invalid_route_count": len(invalid_routes)},
+                    "evidence": {"derived_from": "invalid_routes"},
+                }
+            )
+
+        for edge in sorted(causality_edges, key=lambda row: (str(row.get("source", "")), str(row.get("target", ""))))[:8192]:
+            causal_chain_edges.append(
+                {
+                    "edge_type": "dependency_propagation",
+                    "source": str(edge.get("source", "")),
+                    "target": str(edge.get("target", "")),
+                    "attributes": _as_dict(edge.get("attributes")),
+                    "evidence": _as_dict(edge.get("evidence")),
+                }
+            )
+
+        ops_stage_order = {stage: idx for idx, stage in enumerate(_LIFECYCLE_ORDER)}
+        causal_chains = []
+        by_ops: dict[str, list[dict[str, Any]]] = {}
+        for item in lifecycle_events:
+            ops_name = str(_as_dict(item).get("ops_name", "")).strip() or "unknown_ops"
+            by_ops.setdefault(ops_name, []).append(_as_dict(item))
+        for ops_name, events in sorted(by_ops.items()):
+            ordered = sorted(
+                events,
+                key=lambda row: (
+                    ops_stage_order.get(str(row.get("stage", "")), 999),
+                    int(row.get("step", 0)),
+                ),
+            )
+            causal_chains.append(
+                {
+                    "chain_id": f"{ops_name}_lifecycle_chain",
+                    "ops_name": ops_name,
+                    "event_sequence": [
+                        {
+                            "stage": str(row.get("stage", "")),
+                            "callback": str(row.get("callback", "")),
+                            "from_state": str(row.get("source", "")),
+                            "to_state": str(row.get("target", "")),
+                            "order": int(row.get("step", 0)),
+                        }
+                        for row in ordered
+                    ],
+                }
+            )
+
+        propagation_paths = []
+        for callback, tags in sorted(callback_dependency_rollup.items()):
+            for tag in sorted(tags):
+                propagation_paths.append(
+                    {
+                        "source": callback,
+                        "through": f"dependency:{tag}",
+                        "target": "runtime:state_transition",
+                    }
+                )
+        trigger_dependency_graph = {
+            "schema_version": _SCHEMA_VERSION,
+            "graph_name": "semantic_trigger_dependency_graph",
+            "lineage_id": lineage_id,
+            "edge_count": len(trigger_dependency_edges),
+            "edges": sorted(
+                trigger_dependency_edges,
+                key=lambda row: (
+                    str(row.get("edge_type", "")),
+                    str(row.get("source", "")),
+                    str(row.get("target", "")),
+                ),
+            ),
+        }
+        trigger_dependency_graph["deterministic_fingerprint"] = stable_sha256(
+            trigger_dependency_graph
+        )
+
+        temporal_event_ordering = sorted(
+            [
+                {
+                    "order": int(_as_dict(row).get("step", 0)),
+                    "event_type": str(_as_dict(row).get("action", "")),
+                    "mode": str(_as_dict(row).get("mode", "")),
+                    "stage": str(_as_dict(row).get("stage", "")),
+                    "source": str(_as_dict(row).get("source", "")),
+                    "target": str(_as_dict(row).get("target", "")),
+                    "callback": str(_as_dict(row).get("callback", "")),
+                }
+                for row in [*transition_steps, *lifecycle_events]
+            ],
+            key=lambda row: (row["order"], row["event_type"], row["source"], row["target"]),
+        )
+        activation_latency_chains = [
+            {
+                "from_order": int(left.get("order", 0)),
+                "to_order": int(right.get("order", 0)),
+                "delta_steps": int(right.get("order", 0)) - int(left.get("order", 0)),
+                "from_event": str(left.get("event_type", "")),
+                "to_event": str(right.get("event_type", "")),
+            }
+            for left, right in zip(temporal_event_ordering, temporal_event_ordering[1:])
+        ]
+
+        route_sequence_fingerprint = stable_sha256(
+            {
+                "route_sequence": [
+                    {
+                        "mode": row.get("mode", ""),
+                        "source": row.get("source", ""),
+                        "target": row.get("target", ""),
+                    }
+                    for row in transition_steps
+                ]
+            }
+        )
+        lifecycle_sequence_fingerprint = stable_sha256(
+            {
+                "lifecycle_sequence": [
+                    {
+                        "stage": row.get("stage", ""),
+                        "callback": row.get("callback", ""),
+                        "source": row.get("source", ""),
+                        "target": row.get("target", ""),
+                    }
+                    for row in lifecycle_events
+                ]
+            }
+        )
+        combined_sequence_fingerprint = stable_sha256(
+            {
+                "route": route_sequence_fingerprint,
+                "lifecycle": lifecycle_sequence_fingerprint,
+                "temporal_event_count": len(temporal_event_ordering),
+            }
+        )
+
+        temporal_replay_divergence = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_temporal_replay_divergence",
+            "lineage_id": lineage_id,
+            "route_sequence_fingerprint": route_sequence_fingerprint,
+            "lifecycle_sequence_fingerprint": lifecycle_sequence_fingerprint,
+            "combined_sequence_fingerprint": combined_sequence_fingerprint,
+            "divergence_detected": False,
+            "classification": "PASS",
+            "fail_closed_reasons": [],
+        }
+        temporal_replay_divergence["deterministic_fingerprint"] = stable_sha256(
+            temporal_replay_divergence
+        )
+
+        runtime_sequence_fingerprint = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_runtime_sequence_fingerprint",
+            "lineage_id": lineage_id,
+            "route_sequence_fingerprint": route_sequence_fingerprint,
+            "lifecycle_sequence_fingerprint": lifecycle_sequence_fingerprint,
+            "combined_sequence_fingerprint": combined_sequence_fingerprint,
+            "temporal_event_count": len(temporal_event_ordering),
+            "classification": "PASS",
+        }
+        runtime_sequence_fingerprint["deterministic_fingerprint"] = stable_sha256(
+            runtime_sequence_fingerprint
+        )
+
+        causal_event_chains = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_causal_event_chains",
+            "lineage_id": lineage_id,
+            "runtime_causality_chains": causal_chains,
+            "upstream_downstream_propagation_paths": propagation_paths[:8192],
+            "trigger_dependency_graph": {
+                "edge_count": trigger_dependency_graph["edge_count"],
+                "fingerprint": trigger_dependency_graph["deterministic_fingerprint"],
+            },
+            "temporal_event_ordering": temporal_event_ordering[:8192],
+            "classification": "PASS" if causal_chains else "FAIL_CLOSED",
+            "fail_closed_reasons": [] if causal_chains else ["causal_event_chains_empty"],
+        }
+        causal_event_chains["deterministic_fingerprint"] = stable_sha256(causal_event_chains)
+
+        impacted_callbacks = set(missing_clock_callbacks).union(partial_activation_states)
+        impacted_callbacks.update({str(item.get("callback", "")) for item in lifecycle_events if str(item.get("callback", "")).strip()})
+        impacted_routes = {
+            f"{row.get('source','')}->{row.get('sink','')}"
+            for row in dead_routes
+        }
+        impacted_routes.update({f"{_as_dict(row).get('sink','')}" for row in mux_conflicts})
+        impacted_subsystems = set()
+        for callback in impacted_callbacks:
+            impacted_subsystems.update(callback_owner_subsystem.get(callback, set()))
+        for row in dead_routes:
+            file_path = str(_as_dict(row).get("file", ""))
+            if file_path:
+                impacted_subsystems.add(_file_subsystem(file_path))
+
+        failure_blast_radius_report = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_failure_blast_radius_report",
+            "lineage_id": lineage_id,
+            "impacted_callbacks": sorted(item for item in impacted_callbacks if item),
+            "impacted_route_count": len(impacted_routes),
+            "impacted_subsystems": sorted(item for item in impacted_subsystems if item),
+            "impact_score": round(
+                min(
+                    1.0,
+                    (
+                        len(impacted_callbacks) * 0.01
+                        + len(impacted_routes) * 0.02
+                        + len(impacted_subsystems) * 0.05
+                    ),
+                ),
+                6,
+            ),
+            "classification": "FAIL_CLOSED" if failure_edges else "PASS",
+            "fail_closed_reasons": ["failure_propagation_detected"] if failure_edges else [],
+        }
+        failure_blast_radius_report["deterministic_fingerprint"] = stable_sha256(
+            failure_blast_radius_report
+        )
+
+        runtime_instability_score = round(
+            min(
+                1.0,
+                (
+                    len(missing_clock_callbacks) * 0.3
+                    + len(mux_conflicts) * 0.08
+                    + len(dead_routes) * 0.01
+                    + (0.2 if cycle_detected else 0.0)
+                    + (0.15 if unknown_widgets else 0.0)
+                    + len(race_prone_activation_pairs) * 0.1
+                    + len(partial_activation_states) * 0.03
+                ),
+            ),
+            6,
+        )
+        runtime_instability_report = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_runtime_instability_score",
+            "lineage_id": lineage_id,
+            "runtime_instability_score": runtime_instability_score,
+            "stability_factors": {
+                "missing_clock_callbacks": len(missing_clock_callbacks),
+                "stream_conflicts": len(mux_conflicts),
+                "dead_routes": len(dead_routes),
+                "cycle_detected": bool(cycle_detected),
+                "unknown_widgets": len(unknown_widgets),
+                "race_prone_activation_pairs": len(race_prone_activation_pairs),
+                "partial_activation_states": len(partial_activation_states),
+            },
+            "classification": "FAIL_CLOSED" if runtime_instability_score >= 0.25 else "PASS",
+            "fail_closed_reasons": ["runtime_instability_above_threshold"]
+            if runtime_instability_score >= 0.25
+            else [],
+        }
+        runtime_instability_report["deterministic_fingerprint"] = stable_sha256(
+            runtime_instability_report
+        )
+
+        failure_propagation_graph = {
+            "schema_version": _SCHEMA_VERSION,
+            "graph_name": "semantic_failure_propagation_graph",
+            "lineage_id": lineage_id,
+            "edge_count": len(failure_edges),
+            "edges": sorted(
+                failure_edges,
+                key=lambda row: (
+                    str(row.get("edge_type", "")),
+                    str(row.get("source", "")),
+                    str(row.get("target", "")),
+                ),
+            ),
+            "classification": "FAIL_CLOSED" if failure_edges else "PASS",
+            "fail_closed_reasons": ["failure_propagation_detected"] if failure_edges else [],
+        }
+        failure_propagation_graph["deterministic_fingerprint"] = stable_sha256(
+            failure_propagation_graph
+        )
+
+        temporal_causality_report = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_temporal_causality_report",
+            "lineage_id": lineage_id,
+            "temporal_event_ordering": temporal_event_ordering[:8192],
+            "activation_latency_chains": activation_latency_chains[:8192],
+            "ordered_transition_count": len(temporal_event_ordering),
+            "classification": "PASS" if temporal_event_ordering else "FAIL_CLOSED",
+            "fail_closed_reasons": [] if temporal_event_ordering else ["temporal_event_ordering_empty"],
+        }
+        temporal_causality_report["deterministic_fingerprint"] = stable_sha256(
+            temporal_causality_report
+        )
+
+        root_cause_hypotheses = []
+        if missing_clock_callbacks:
+            root_cause_hypotheses.append(
+                {
+                    "cause": "missing_sysclk_or_clock_dependency",
+                    "evidence": {"callbacks": missing_clock_callbacks},
+                    "confidence": 0.84,
+                }
+            )
+        if mux_conflicts:
+            root_cause_hypotheses.append(
+                {
+                    "cause": "invalid_mux_path",
+                    "evidence": {"conflicts": mux_conflicts},
+                    "confidence": 0.8,
+                }
+            )
+        if unknown_widgets:
+            root_cause_hypotheses.append(
+                {
+                    "cause": "missing_or_mismatched_dapm_route",
+                    "evidence": {"unknown_widgets": unknown_widgets},
+                    "confidence": 0.86,
+                }
+            )
+        if cycle_detected:
+            root_cause_hypotheses.append(
+                {
+                    "cause": "recursive_activation_dependency",
+                    "evidence": {"cycle_detected": True},
+                    "confidence": 0.9,
+                }
+            )
+        if race_prone_activation_pairs:
+            root_cause_hypotheses.append(
+                {
+                    "cause": "unstable_trigger_ordering",
+                    "evidence": {"activation_pairs": race_prone_activation_pairs},
+                    "confidence": 0.74,
+                }
+            )
+        if partial_activation_states:
+            root_cause_hypotheses.append(
+                {
+                    "cause": "partial_activation_state",
+                    "evidence": {"callbacks": partial_activation_states},
+                    "confidence": 0.7,
+                }
+            )
+        root_cause_inference_report = {
+            "schema_version": _SCHEMA_VERSION,
+            "report_name": "semantic_root_cause_inference_report",
+            "lineage_id": lineage_id,
+            "hypotheses": root_cause_hypotheses,
+            "classification": "FAIL_CLOSED" if root_cause_hypotheses else "PASS",
+            "fail_closed_reasons": ["runtime_root_cause_hypotheses_detected"]
+            if root_cause_hypotheses
+            else [],
+        }
+        root_cause_inference_report["deterministic_fingerprint"] = stable_sha256(
+            root_cause_inference_report
+        )
+
         confidence_parts = {
             "semantic_completeness": round(
                 (
                     (1.0 if behavioral_edges else 0.0)
                     + (1.0 if activation_edges else 0.0)
-                    + (1.0 if all_routes else 0.0)
-                    + (1.0 if all_controls else 0.0)
+                    + (1.0 if causal_chain_edges else 0.0)
+                    + (1.0 if temporal_event_ordering else 0.0)
                     + (1.0 if (playback_paths or capture_paths) else 0.0)
                 )
                 / 5.0,
                 6,
             ),
-            "parser_confidence": 1.0,
-            "route_stability": round(
-                max(0.0, 1.0 - (0.3 if cycle_detected else 0.0) - (0.3 if unknown_widgets else 0.0) - (0.2 if mux_conflicts else 0.0)),
+            "parser_confidence_weighted": 1.0,
+            "transition_reproducibility": 1.0 if temporal_event_ordering else 0.3,
+            "causal_consistency": 1.0 if causal_chains else 0.3,
+            "topology_stability": round(
+                max(0.0, 1.0 - (0.35 if cycle_detected else 0.0) - (0.35 if unknown_widgets else 0.0)),
                 6,
             ),
-            "replay_determinism": 1.0,
-            "topology_consistency": 1.0 if not topology_fail_reasons else 0.25,
-            "activation_reproducibility": 1.0 if activation_edges else 0.4,
+            "replay_determinism": 1.0 if not temporal_replay_divergence["divergence_detected"] else 0.0,
+            "route_convergence": round(
+                max(0.0, 1.0 - min(1.0, len(dead_routes) / 100.0) - (0.25 if mux_conflicts else 0.0)),
+                6,
+            ),
+            "activation_success_consistency": round(
+                max(0.0, 1.0 - min(1.0, len(partial_activation_states) / 20.0) - (0.25 if race_prone_activation_pairs else 0.0)),
+                6,
+            ),
         }
         overall_confidence = round(
             (
-                confidence_parts["semantic_completeness"] * 0.2
-                + confidence_parts["parser_confidence"] * 0.15
-                + confidence_parts["route_stability"] * 0.2
-                + confidence_parts["replay_determinism"] * 0.15
-                + confidence_parts["topology_consistency"] * 0.15
-                + confidence_parts["activation_reproducibility"] * 0.15
+                confidence_parts["semantic_completeness"] * 0.14
+                + confidence_parts["parser_confidence_weighted"] * 0.08
+                + confidence_parts["transition_reproducibility"] * 0.13
+                + confidence_parts["causal_consistency"] * 0.13
+                + confidence_parts["topology_stability"] * 0.16
+                + confidence_parts["replay_determinism"] * 0.12
+                + confidence_parts["route_convergence"] * 0.12
+                + confidence_parts["activation_success_consistency"] * 0.12
             ),
             6,
         )
         confidence_fail_reasons = (
-            (["confidence_below_threshold"] if overall_confidence < 0.7 else [])
-            + (["semantic_incompleteness_detected"] if confidence_parts["semantic_completeness"] < 0.5 else [])
-            + (["route_stability_low"] if confidence_parts["route_stability"] < 0.5 else [])
+            (["confidence_below_threshold"] if overall_confidence < 0.75 else [])
+            + (["causal_consistency_low"] if confidence_parts["causal_consistency"] < 0.5 else [])
+            + (["topology_stability_low"] if confidence_parts["topology_stability"] < 0.5 else [])
+            + (["route_convergence_low"] if confidence_parts["route_convergence"] < 0.5 else [])
+            + (["activation_consistency_low"] if confidence_parts["activation_success_consistency"] < 0.5 else [])
+            + (["runtime_instability_high"] if runtime_instability_report["classification"] != "PASS" else [])
+            + (["temporal_replay_divergence_detected"] if temporal_replay_divergence["classification"] != "PASS" else [])
         )
         governance_confidence_report = {
             "schema_version": _SCHEMA_VERSION,
@@ -1229,6 +1778,18 @@ class SemanticScalingIngestionEngine:
             "power_sequence_graph": _graph_payload(
                 "semantic_power_sequence_graph", power_edges
             ),
+            "causal_event_chain_graph": _graph_payload(
+                "semantic_causal_event_chain_graph", causal_chain_edges
+            ),
+            "trigger_dependency_graph": trigger_dependency_graph,
+            "failure_propagation_graph": failure_propagation_graph,
+            "failure_blast_radius_report": failure_blast_radius_report,
+            "runtime_instability_report": runtime_instability_report,
+            "temporal_causality_report": temporal_causality_report,
+            "temporal_replay_divergence": temporal_replay_divergence,
+            "runtime_sequence_fingerprint": runtime_sequence_fingerprint,
+            "root_cause_inference_report": root_cause_inference_report,
+            "causal_event_chains_report": causal_event_chains,
             "dapm_behavioral_model": dapm_behavioral_model,
             "behavioral_replay_timeline": behavioral_replay_timeline,
             "stream_intelligence_report": stream_intelligence_report,
@@ -1291,6 +1852,16 @@ class SemanticScalingIngestionEngine:
                 activation_order_graph={},
                 runtime_causality_graph={},
                 power_sequence_graph={},
+                causal_event_chain_graph={},
+                trigger_dependency_graph={},
+                failure_propagation_graph={},
+                failure_blast_radius_report={},
+                runtime_instability_report={},
+                temporal_causality_report={},
+                temporal_replay_divergence={},
+                runtime_sequence_fingerprint={},
+                root_cause_inference_report={},
+                causal_event_chains_report={},
                 dapm_behavioral_model={},
                 behavioral_replay_timeline={},
                 stream_intelligence_report={},
@@ -1417,6 +1988,16 @@ class SemanticScalingIngestionEngine:
                 activation_order_graph={},
                 runtime_causality_graph={},
                 power_sequence_graph={},
+                causal_event_chain_graph={},
+                trigger_dependency_graph={},
+                failure_propagation_graph={},
+                failure_blast_radius_report={},
+                runtime_instability_report={},
+                temporal_causality_report={},
+                temporal_replay_divergence={},
+                runtime_sequence_fingerprint={},
+                root_cause_inference_report={},
+                causal_event_chains_report={},
                 dapm_behavioral_model={},
                 behavioral_replay_timeline={},
                 stream_intelligence_report={},
@@ -1476,6 +2057,45 @@ class SemanticScalingIngestionEngine:
 
         include_reverse_deps = self._build_include_reverse_deps(parsed_by_file, headers)
         graphs = self._build_graphs(parsed_by_file, root, lineage_id)
+        previous_sequence_fingerprint = str(previous_cache.get("runtime_sequence_fingerprint", "")).strip()
+        current_sequence_fingerprint = str(
+            _as_dict(graphs.get("runtime_sequence_fingerprint")).get("combined_sequence_fingerprint", "")
+        ).strip()
+        divergence_detected = bool(
+            previous_sequence_fingerprint
+            and current_sequence_fingerprint
+            and previous_sequence_fingerprint != current_sequence_fingerprint
+        )
+        if divergence_detected:
+            temporal_divergence = _as_dict(graphs.get("temporal_replay_divergence"))
+            temporal_divergence["previous_sequence_fingerprint"] = previous_sequence_fingerprint
+            temporal_divergence["current_sequence_fingerprint"] = current_sequence_fingerprint
+            temporal_divergence["divergence_detected"] = True
+            temporal_divergence["classification"] = "FAIL_CLOSED"
+            reasons = _as_list(temporal_divergence.get("fail_closed_reasons"))
+            if "temporal_replay_divergence_detected" not in reasons:
+                reasons.append("temporal_replay_divergence_detected")
+            temporal_divergence["fail_closed_reasons"] = reasons
+            temporal_divergence["deterministic_fingerprint"] = stable_sha256(temporal_divergence)
+            graphs["temporal_replay_divergence"] = temporal_divergence
+
+            simulation = _as_dict(graphs.get("simulation_replay"))
+            sim_reasons = _as_list(simulation.get("fail_closed_reasons"))
+            if "temporal_replay_divergence_detected" not in sim_reasons:
+                sim_reasons.append("temporal_replay_divergence_detected")
+            simulation["fail_closed_reasons"] = sim_reasons
+            simulation["classification"] = "FAIL_CLOSED"
+            simulation["deterministic_fingerprint"] = stable_sha256(simulation)
+            graphs["simulation_replay"] = simulation
+
+            governance = _as_dict(graphs.get("governance_confidence_report"))
+            gov_reasons = _as_list(governance.get("fail_closed_reasons"))
+            if "temporal_replay_divergence_detected" not in gov_reasons:
+                gov_reasons.append("temporal_replay_divergence_detected")
+            governance["fail_closed_reasons"] = gov_reasons
+            governance["classification"] = "FAIL_CLOSED"
+            governance["deterministic_fingerprint"] = stable_sha256(governance)
+            graphs["governance_confidence_report"] = governance
 
         codecs = sorted(
             {
@@ -1665,6 +2285,7 @@ class SemanticScalingIngestionEngine:
             ),
             "include_reverse_deps_count": len(include_reverse_deps),
             "parser_version_changed": parser_version_changed,
+            "temporal_replay_divergence_detected": divergence_detected,
             "parse_lineage": parse_lineage,
             "dependency_invalidation": {
                 "dependency_engine": "include_reverse_deps",
@@ -1683,6 +2304,9 @@ class SemanticScalingIngestionEngine:
             ) else [])
             + (["stream_intelligence_fail_closed"] if graphs["stream_intelligence_report"].get("classification") != "PASS" else [])
             + (["governance_confidence_fail_closed"] if graphs["governance_confidence_report"].get("classification") != "PASS" else [])
+            + (["runtime_instability_fail_closed"] if graphs["runtime_instability_report"].get("classification") != "PASS" else [])
+            + (["root_cause_inference_fail_closed"] if graphs["root_cause_inference_report"].get("classification") != "PASS" else [])
+            + (["temporal_replay_divergence_detected"] if graphs["temporal_replay_divergence"].get("classification") != "PASS" else [])
         )
 
         failure_diagnostics = {
@@ -1695,11 +2319,15 @@ class SemanticScalingIngestionEngine:
                 or graphs["simulation_replay"].get("classification") != "PASS"
                 or graphs["stream_intelligence_report"].get("classification") != "PASS"
                 or graphs["governance_confidence_report"].get("classification") != "PASS"
+                or graphs["runtime_instability_report"].get("classification") != "PASS"
+                or graphs["root_cause_inference_report"].get("classification") != "PASS"
+                or graphs["temporal_replay_divergence"].get("classification") != "PASS"
             )
             else "PASS",
             "parser_failures": [],
             "semantic_drift": [],
             "replay_mismatches": replay_mismatches,
+            "causal_failures": _as_list(_as_dict(graphs["root_cause_inference_report"]).get("hypotheses")),
             "semantic_completeness": {
                 "behavioral_state_edges": int(graphs["behavioral_state_graph"].get("edge_count", 0)),
                 "activation_order_edges": int(graphs["activation_order_graph"].get("edge_count", 0)),
@@ -1736,6 +2364,11 @@ class SemanticScalingIngestionEngine:
             },
             "parsed": parsed_by_file,
             "include_reverse_deps": include_reverse_deps,
+            "runtime_sequence_fingerprint": str(
+                _as_dict(graphs.get("runtime_sequence_fingerprint")).get(
+                    "combined_sequence_fingerprint", ""
+                )
+            ),
             "generated_at": _utc_now_iso(),
         }
         cache_state["deterministic_fingerprint"] = stable_sha256(
@@ -1744,6 +2377,7 @@ class SemanticScalingIngestionEngine:
                 "source_root": cache_state["source_root"],
                 "files": cache_state["files"],
                 "include_reverse_deps": cache_state["include_reverse_deps"],
+                "runtime_sequence_fingerprint": cache_state["runtime_sequence_fingerprint"],
             }
         )
 
@@ -1754,6 +2388,8 @@ class SemanticScalingIngestionEngine:
                 + [str(item) for item in _as_list(_as_dict(graphs["simulation_replay"]).get("fail_closed_reasons"))]
                 + [str(item) for item in _as_list(_as_dict(graphs["stream_intelligence_report"]).get("fail_closed_reasons"))]
                 + [str(item) for item in _as_list(_as_dict(graphs["governance_confidence_report"]).get("fail_closed_reasons"))]
+                + [str(item) for item in _as_list(_as_dict(graphs["root_cause_inference_report"]).get("fail_closed_reasons"))]
+                + [str(item) for item in _as_list(_as_dict(graphs["runtime_instability_report"]).get("fail_closed_reasons"))]
             )
         )
 
@@ -1768,6 +2404,9 @@ class SemanticScalingIngestionEngine:
                 or graphs["simulation_replay"].get("classification") != "PASS"
                 or graphs["stream_intelligence_report"].get("classification") != "PASS"
                 or graphs["governance_confidence_report"].get("classification") != "PASS"
+                or graphs["runtime_instability_report"].get("classification") != "PASS"
+                or graphs["root_cause_inference_report"].get("classification") != "PASS"
+                or graphs["temporal_replay_divergence"].get("classification") != "PASS"
             )
             else "PASS",
             "file_count": len(discovered),
@@ -1784,6 +2423,9 @@ class SemanticScalingIngestionEngine:
                 "activation_order": int(graphs["activation_order_graph"].get("edge_count", 0)),
                 "runtime_causality": int(graphs["runtime_causality_graph"].get("edge_count", 0)),
                 "power_sequence": int(graphs["power_sequence_graph"].get("edge_count", 0)),
+                "causal_event_chain": int(graphs["causal_event_chain_graph"].get("edge_count", 0)),
+                "trigger_dependency": int(graphs["trigger_dependency_graph"].get("edge_count", 0)),
+                "failure_propagation": int(graphs["failure_propagation_graph"].get("edge_count", 0)),
             },
             "topology_classification": graphs["topology_model"].get("classification", "UNKNOWN"),
             "simulation_classification": graphs["simulation_replay"].get("classification", "UNKNOWN"),
@@ -1793,8 +2435,20 @@ class SemanticScalingIngestionEngine:
             "governance_confidence_classification": graphs["governance_confidence_report"].get(
                 "classification", "UNKNOWN"
             ),
+            "runtime_instability_classification": graphs["runtime_instability_report"].get(
+                "classification", "UNKNOWN"
+            ),
+            "root_cause_classification": graphs["root_cause_inference_report"].get(
+                "classification", "UNKNOWN"
+            ),
             "overall_confidence_score": float(
                 _as_dict(graphs["governance_confidence_report"]).get("overall_confidence_score", 0.0)
+            ),
+            "runtime_instability_score": float(
+                _as_dict(graphs["runtime_instability_report"]).get("runtime_instability_score", 0.0)
+            ),
+            "temporal_replay_divergence": bool(
+                _as_dict(graphs["temporal_replay_divergence"]).get("divergence_detected", False)
             ),
             "fail_closed_reasons": summary_fail_reasons,
             "generated_at": _utc_now_iso(),
@@ -1818,6 +2472,16 @@ class SemanticScalingIngestionEngine:
         dump_canonical_json(out_dir / "semantic_activation_order_graph.json", graphs["activation_order_graph"])
         dump_canonical_json(out_dir / "semantic_runtime_causality_graph.json", graphs["runtime_causality_graph"])
         dump_canonical_json(out_dir / "semantic_power_sequence_graph.json", graphs["power_sequence_graph"])
+        dump_canonical_json(out_dir / "semantic_causal_event_chain_graph.json", graphs["causal_event_chain_graph"])
+        dump_canonical_json(out_dir / "semantic_trigger_dependency_graph.json", graphs["trigger_dependency_graph"])
+        dump_canonical_json(out_dir / "semantic_failure_propagation_graph.json", graphs["failure_propagation_graph"])
+        dump_canonical_json(out_dir / "semantic_failure_blast_radius_report.json", graphs["failure_blast_radius_report"])
+        dump_canonical_json(out_dir / "semantic_runtime_instability_score.json", graphs["runtime_instability_report"])
+        dump_canonical_json(out_dir / "semantic_temporal_causality_report.json", graphs["temporal_causality_report"])
+        dump_canonical_json(out_dir / "semantic_temporal_replay_divergence.json", graphs["temporal_replay_divergence"])
+        dump_canonical_json(out_dir / "semantic_runtime_sequence_fingerprint.json", graphs["runtime_sequence_fingerprint"])
+        dump_canonical_json(out_dir / "semantic_root_cause_inference_report.json", graphs["root_cause_inference_report"])
+        dump_canonical_json(out_dir / "semantic_causal_event_chains_report.json", graphs["causal_event_chains_report"])
         dump_canonical_json(out_dir / "semantic_dapm_behavioral_model.json", graphs["dapm_behavioral_model"])
         dump_canonical_json(out_dir / "semantic_behavioral_replay_timeline.json", graphs["behavioral_replay_timeline"])
         dump_canonical_json(out_dir / "semantic_stream_intelligence_report.json", graphs["stream_intelligence_report"])
@@ -1846,6 +2510,16 @@ class SemanticScalingIngestionEngine:
             activation_order_graph=graphs["activation_order_graph"],
             runtime_causality_graph=graphs["runtime_causality_graph"],
             power_sequence_graph=graphs["power_sequence_graph"],
+            causal_event_chain_graph=graphs["causal_event_chain_graph"],
+            trigger_dependency_graph=graphs["trigger_dependency_graph"],
+            failure_propagation_graph=graphs["failure_propagation_graph"],
+            failure_blast_radius_report=graphs["failure_blast_radius_report"],
+            runtime_instability_report=graphs["runtime_instability_report"],
+            temporal_causality_report=graphs["temporal_causality_report"],
+            temporal_replay_divergence=graphs["temporal_replay_divergence"],
+            runtime_sequence_fingerprint=graphs["runtime_sequence_fingerprint"],
+            root_cause_inference_report=graphs["root_cause_inference_report"],
+            causal_event_chains_report=graphs["causal_event_chains_report"],
             dapm_behavioral_model=graphs["dapm_behavioral_model"],
             behavioral_replay_timeline=graphs["behavioral_replay_timeline"],
             stream_intelligence_report=graphs["stream_intelligence_report"],
