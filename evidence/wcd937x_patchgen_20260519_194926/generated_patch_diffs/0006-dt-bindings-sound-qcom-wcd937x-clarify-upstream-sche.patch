@@ -1,0 +1,26 @@
+From 1723f46293e7542323eb2d27db02eccb7676f626 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Tue, 19 May 2026 19:50:35 +0530
+Subject: [PATCH 6/6] dt-bindings: sound: qcom,wcd937x: clarify upstream schema
+ boundary
+
+---
+ Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml
+index f94203798..101a6fce4 100644
+--- a/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml
++++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml
+@@ -12,6 +12,8 @@ maintainers:
+ description:
+   Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC.
+   It has RX and TX Soundwire slave devices.
++  Conversion note: downstream-only helper abstractions are not valid
++  DT binding interfaces; upstream schema remains the contract surface.
+ 
+ allOf:
+   - $ref: dai-common.yaml#
+-- 
+2.34.1
+

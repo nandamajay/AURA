@@ -1,0 +1,59 @@
+{
+  "classification": "PASS",
+  "deterministic_fingerprint": "4bb0cfc66275135f95c528d32ee4439d7d4582d8b1a3e9a54cdda9e1b5e556ff",
+  "model_schema": {
+    "additionalProperties": false,
+    "properties": {
+      "artifact_paths": {
+        "items": {
+          "type": "string"
+        },
+        "title": "Artifact Paths",
+        "type": "array"
+      },
+      "cache_key": {
+        "title": "Cache Key",
+        "type": "string"
+      },
+      "cache_valid": {
+        "default": false,
+        "title": "Cache Valid",
+        "type": "boolean"
+      },
+      "dependency_fingerprints": {
+        "additionalProperties": {
+          "type": "string"
+        },
+        "title": "Dependency Fingerprints",
+        "type": "object"
+      },
+      "lineage_id": {
+        "title": "Lineage Id",
+        "type": "string"
+      },
+      "producer": {
+        "title": "Producer",
+        "type": "string"
+      },
+      "report_name": {
+        "default": "deterministic_cache_schema",
+        "title": "Report Name",
+        "type": "string"
+      },
+      "schema_version": {
+        "default": "1.0",
+        "title": "Schema Version",
+        "type": "string"
+      }
+    },
+    "required": [
+      "cache_key",
+      "lineage_id",
+      "producer"
+    ],
+    "title": "DeterministicCacheSchema",
+    "type": "object"
+  },
+  "report_name": "runtime_deterministic_cache_schema",
+  "schema_version": "1.0"
+}

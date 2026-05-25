@@ -190,3 +190,22 @@ def test_governance_escalate_uses_schema_compliant_transition() -> None:
             assert events == ["approval.escalated"]
         finally:
             _close_client(client)
+
+
+def test_governance_evidence_summary_remains_fail_closed_with_partial_schema() -> None:
+    with TemporaryDirectory() as tmpdir:
+        db_path = Path(tmpdir) / "governance.db"
+        _create_schema(db_path)
+        _seed_approval(db_path, "approval-summary-1", status="pending")
+
+        client = _build_client(db_path)
+        try:
+            response = client.get("/governance/summary/evidence", params={"limit": 20})
+            assert response.status_code == 200
+            payload = response.json()
+            assert payload["classification"] == "FAIL_CLOSED"
+            assert isinstance(payload["fail_closed_reasons"], list)
+            assert payload["approvals"]["counts_by_status"]["pending"] >= 1
+            assert payload["audit_history"]["total_entries"] >= 0
+        finally:
+            _close_client(client)

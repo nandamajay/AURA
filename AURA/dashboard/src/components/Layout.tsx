@@ -1,8 +1,9 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, Outlet, useLocation, useNavigate } from 'react-router-dom'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { useAuthStore } from '../store/useAuthStore'
+import { clearRuntimeQueryCache } from '../runtime/useRuntimeQuery'
 import ChatPanel from './ChatPanel'
 import TeachingOverlay from './TeachingOverlay'
 import { DEFAULT_FLOWS, isFlowCompleted, markFlowCompleted } from '../teaching/TeachingEngine'
@@ -21,6 +22,7 @@ const NAV_ITEMS = [
   { path: '/approvals', label: 'Approval Operations', icon: 'APR' },
   { path: '/approval', label: 'Approval Operations', icon: 'APR' },
   { path: '/governance', label: 'Governance Command Center', icon: 'GOV' },
+  { path: '/runtime', label: 'Runtime Cognition Center', icon: 'RTC' },
 ]
 
 interface MeResponse {
@@ -32,7 +34,17 @@ interface MeResponse {
 function Layout() {
   const location = useLocation()
   const navigate = useNavigate()
-  const { token, user, setSession, clearSession } = useAuthStore()
+  const {
+    token,
+    user,
+    tokenExpiryEpoch,
+    refreshSupported,
+    missingTokenRequests,
+    lastAuthFailure,
+    lastContractViolation,
+    setSession,
+    clearSession,
+  } = useAuthStore()
 
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
@@ -43,6 +55,7 @@ function Layout() {
   const [agentCount, setAgentCount] = useState<number | null>(null)
   const [lastRefreshAt, setLastRefreshAt] = useState<number>(Date.now())
   const [teachingFlowId, setTeachingFlowId] = useState<string | null>(null)
+  const [nowMs, setNowMs] = useState<number>(Date.now())
 
   const currentNav = NAV_ITEMS.find((item) => item.path === location.pathname)
   const currentLabel = currentNav?.label || 'Unknown Page'
@@ -52,12 +65,21 @@ function Layout() {
   )
 
   useEffect(() => {
+    clearRuntimeQueryCache()
+  }, [token])
+
+  useEffect(() => {
+    const timer = window.setInterval(() => setNowMs(Date.now()), 30_000)
+    return () => window.clearInterval(timer)
+  }, [])
+
+  useEffect(() => {
     if (!token || user) {
       return
     }
     void (async () => {
       try {
-        const me = await apiRequest<MeResponse>(ENDPOINTS.me)
+        const me = await apiRequest<MeResponse>(API_ROUTES.auth.me())
         setSession(token, { id: me.id, email: me.email, role: me.role })
       } catch {
         clearSession()
@@ -77,7 +99,7 @@ function Layout() {
 
     async function refreshConnectionAndCounts() {
       try {
-        await apiRequest(ENDPOINTS.health, undefined, { includeAuth: false })
+        await apiRequest(API_ROUTES.health(), undefined, { includeAuth: false })
         if (!cancelled) {
           setBackendConnected(true)
         }
@@ -96,7 +118,7 @@ function Layout() {
       }
 
       try {
-        const running = await apiRequest<{ count: number }>(`${ENDPOINTS.agents}/running`)
+        const running = await apiRequest<{ count: number }>(API_ROUTES.agents.running())
         if (!cancelled) {
           setAgentCount(running.count ?? 0)
         }
@@ -131,7 +153,7 @@ function Layout() {
         access_token: string
         user: { id: string; email: string; role: string; display_name?: string }
       }>(
-        ENDPOINTS.login,
+        API_ROUTES.auth.login(),
         {
           method: 'POST',
           body: JSON.stringify({ email, password }),
@@ -151,7 +173,7 @@ function Layout() {
     setAuthBusy(true)
     setAuthError('')
     try {
-      await apiRequest(ENDPOINTS.logout, { method: 'POST' })
+      await apiRequest(API_ROUTES.auth.logout(), { method: 'POST' })
     } catch {
       // Token may be expired; local cleanup still required.
     } finally {
@@ -181,6 +203,9 @@ function Layout() {
     markFlowCompleted(flowId)
     setTeachingFlowId(null)
   }
+
+  const tokenExpiresAt = tokenExpiryEpoch ? tokenExpiryEpoch * 1000 : 0
+  const tokenExpired = tokenExpiresAt ? nowMs >= tokenExpiresAt : false
 
   return (
     <div style={{ display: 'flex', minHeight: '100vh', background: '#f1f5f9' }}>
@@ -330,6 +355,42 @@ function Layout() {
         {authError ? (
           <div style={{ padding: '0.4rem 1.5rem', color: '#b91c1c', fontSize: '0.85rem' }}>{authError}</div>
         ) : null}
+
+        <div
+          style={{
+            padding: '0.4rem 1.5rem',
+            borderBottom: '1px solid #e2e8f0',
+            background: '#f8fafc',
+            fontSize: '0.78rem',
+            color: '#334155',
+            display: 'flex',
+            gap: '1rem',
+            flexWrap: 'wrap',
+          }}
+        >
+          <span>auth_debug.user={user?.email || 'anonymous'}</span>
+          <span>auth_debug.role={user?.role || 'none'}</span>
+          <span>auth_debug.token_present={token ? 'true' : 'false'}</span>
+          <span>auth_debug.token_expired={tokenExpired ? 'true' : 'false'}</span>
+          <span>
+            auth_debug.token_expires_at=
+            {tokenExpiresAt ? new Date(tokenExpiresAt).toLocaleString() : 'unknown'}
+          </span>
+          <span>auth_debug.refresh_status={refreshSupported ? 'supported' : 'not_configured'}</span>
+          <span>auth_debug.missing_token_requests={missingTokenRequests}</span>
+          <span>
+            auth_debug.last_failed_auth=
+            {lastAuthFailure
+              ? `${lastAuthFailure.status} ${lastAuthFailure.url} @ ${new Date(lastAuthFailure.at).toLocaleTimeString()}`
+              : 'none'}
+          </span>
+          <span>
+            auth_debug.last_contract_violation=
+            {lastContractViolation
+              ? `${lastContractViolation.reason} ${lastContractViolation.url} -> ${lastContractViolation.normalized_to}`
+              : 'none'}
+          </span>
+        </div>
 
         <Outlet />
 

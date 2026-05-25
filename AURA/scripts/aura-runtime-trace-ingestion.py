@@ -20,6 +20,8 @@ from aura_sdk.transport.runtime_trace_ingestion_engine import (
     build_mock_runtime_trace_payloads,
     save_runtime_trace_ingestion,
 )
+from aura_sdk.transport.runtime_execution_contract import enforce_runtime_contract
+from aura_sdk.transport.deterministic_serialization import dump_canonical_json
 
 
 _SOURCE_FILES = {
@@ -67,15 +69,19 @@ def _load_fixture_payloads(fixture_dir: Path, *, variant: str) -> dict[str, dict
 
 
 def main() -> int:
+    enforce_runtime_contract("aura-runtime-trace-ingestion")
     parser = argparse.ArgumentParser(description="Run runtime trace ingestion cognition")
-    parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
+    parser.add_argument(
+        "--output-dir",
+        default=str((REPO_ROOT.parent / "docs" / "operations" / "transport").resolve()),
+    )
     parser.add_argument("--target-id", default="RB3Gen2")
     parser.add_argument("--session-id", default="runtime_trace_ingestion_session_v1")
     parser.add_argument("--lineage-id", default="runtime_trace_ingestion_v1")
     parser.add_argument("--variant", choices=["baseline", "transformed"], default="baseline")
     parser.add_argument(
         "--fixture-dir",
-        default="/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/tests/fixtures/runtime_cognition",
+        default=str((REPO_ROOT / "workspace" / "aura-sdk" / "tests" / "fixtures" / "runtime_cognition").resolve()),
     )
     args = parser.parse_args()
 
@@ -110,7 +116,7 @@ def main() -> int:
         "deterministic_fingerprint": str(result.get("deterministic_fingerprint", "")),
     }
     normalized_path = output_dir / f"normalized_runtime_events_{args.variant}.json"
-    normalized_path.write_text(json.dumps(normalized_payload, indent=2, sort_keys=True), encoding="utf-8")
+    dump_canonical_json(normalized_path, normalized_payload)
 
     summary = {
         "schema_version": "1.0",
@@ -129,7 +135,7 @@ def main() -> int:
         "generated_at_epoch": time.time(),
     }
     summary_path = output_dir / f"runtime_trace_ingestion_runner_summary_{args.variant}.json"
-    summary_path.write_text(json.dumps(summary, indent=2, sort_keys=True), encoding="utf-8")
+    dump_canonical_json(summary_path, summary)
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0
 

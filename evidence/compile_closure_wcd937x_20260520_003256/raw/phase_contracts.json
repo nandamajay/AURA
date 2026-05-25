@@ -1,0 +1,220 @@
+[
+  {
+    "phase": "PHASE 0 Environment Discovery",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.71,
+    "blocker_count": 0,
+    "advisory_count": 5,
+    "evidence_paths": [
+      "reports/environment_validation_report.md",
+      "raw/commands_executed.jsonl"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "PENDING_REVIEW",
+    "unresolved_assumptions": [
+      "tool availability can drift between runs"
+    ],
+    "dependency_risks": [
+      "runtime host dependencies"
+    ]
+  },
+  {
+    "phase": "PHASE 1 Source Intake + Lineage",
+    "phase_status": "PASSED",
+    "confidence_score": 0.93,
+    "blocker_count": 0,
+    "advisory_count": 0,
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/raw/source_intake_rows.json",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/raw/source_lineage_rows.json"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "PENDING",
+    "unresolved_assumptions": [],
+    "dependency_risks": [
+      "depends on preserved historical evidence"
+    ]
+  },
+  {
+    "phase": "PHASE 2 Semantic Mapping",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.74,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/reports/upstream_patch_series_plan.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "PENDING",
+    "unresolved_assumptions": [
+      "inferred mappings unresolved"
+    ],
+    "dependency_risks": [
+      "downstream abstraction parity unresolved"
+    ]
+  },
+  {
+    "phase": "PHASE 3 Patch Proposal Generation",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.76,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/generated_patch_diffs"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "PENDING",
+    "unresolved_assumptions": [
+      "patches are advisory proposals only"
+    ],
+    "dependency_risks": [
+      "maintainer-quality metadata pending"
+    ]
+  },
+  {
+    "phase": "PHASE 4 Patch Governance Review",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.81,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/reports/governance_decision_report.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "PENDING",
+    "unresolved_assumptions": [
+      "transformation governance decision pending"
+    ],
+    "dependency_risks": [
+      "operator decision required"
+    ]
+  },
+  {
+    "phase": "PHASE 5 Kernel Prepare Validation",
+    "phase_status": "BLOCKED",
+    "confidence_score": 0.2,
+    "blocker_count": 1,
+    "advisory_count": 0,
+    "evidence_paths": [
+      "reports/kernel_prepare_report.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "BLOCKED",
+    "unresolved_assumptions": [
+      "prepare execution blocked by mandatory escalation"
+    ],
+    "dependency_risks": [
+      "generated-config dependency"
+    ]
+  },
+  {
+    "phase": "PHASE 6 Compile Closure Validation",
+    "phase_status": "SKIPPED",
+    "confidence_score": 0.18,
+    "blocker_count": 0,
+    "advisory_count": 0,
+    "evidence_paths": [
+      "reports/compile_execution_report.md",
+      "reports/patch_application_report.md",
+      "reports/module_packaging_report.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "BLOCKED",
+    "unresolved_assumptions": [
+      "compile not attempted under governance block"
+    ],
+    "dependency_risks": [
+      "compile closure cannot be inferred without phase execution"
+    ]
+  },
+  {
+    "phase": "PHASE 7 Static Analysis Validation",
+    "phase_status": "SKIPPED",
+    "confidence_score": 0.2,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "evidence_paths": [
+      "reports/static_analysis_report.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "BLOCKED",
+    "unresolved_assumptions": [
+      "static scan skipped when prior phase blocked"
+    ],
+    "dependency_risks": [
+      "analysis tooling dependency"
+    ]
+  },
+  {
+    "phase": "PHASE 8 DT Schema Validation",
+    "phase_status": "SKIPPED",
+    "confidence_score": 0.2,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "evidence_paths": [
+      "reports/dt_validation_report.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "BLOCKED",
+    "unresolved_assumptions": [
+      "DT validation depends on dtschema tooling"
+    ],
+    "dependency_risks": [
+      "dt-doc-validate dependency"
+    ]
+  },
+  {
+    "phase": "PHASE 9 Runtime/Boot Validation",
+    "phase_status": "SKIPPED",
+    "confidence_score": 0.0,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "evidence_paths": [
+      "reports/compile_closure_status.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "BLOCKED",
+    "unresolved_assumptions": [
+      "runtime/boot requires compile closure"
+    ],
+    "dependency_risks": [
+      "compile artifacts unavailable"
+    ]
+  },
+  {
+    "phase": "PHASE 10 Upstream Readiness Classification",
+    "phase_status": "BLOCKED",
+    "confidence_score": 0.12,
+    "blocker_count": 1,
+    "advisory_count": 5,
+    "evidence_paths": [
+      "reports/compile_closure_status.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "BLOCKED",
+    "unresolved_assumptions": [
+      "human review required before any readiness claim"
+    ],
+    "dependency_risks": [
+      "unsafe merge conclusions prevented by governance block"
+    ]
+  },
+  {
+    "phase": "PHASE 11 Human Escalation Review",
+    "phase_status": "BLOCKED",
+    "confidence_score": 0.95,
+    "blocker_count": 1,
+    "advisory_count": 0,
+    "evidence_paths": [
+      "reports/human_escalation_review.md"
+    ],
+    "replayability_status": "REPLAYABLE",
+    "governance_state": "MANUAL_DECISION_REQUIRED",
+    "unresolved_assumptions": [
+      "human approval mandatory before destructive/upstream actions"
+    ],
+    "dependency_risks": [
+      "unsafe autonomy prohibited"
+    ]
+  }
+]

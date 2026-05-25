@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 
 type ChatMessageKind = 'system' | 'command' | 'response' | 'error'
 
@@ -35,6 +35,7 @@ export default function ChatPanel({ currentPath, currentPageLabel }: ChatPanelPr
     if (currentPath === '/agents') return 'Context: monitor active agents and process state.'
     if (currentPath === '/migration') return 'Context: submit migration tasks and monitor queue.'
     if (currentPath === '/simulation') return 'Context: run simulation scenarios and review findings.'
+    if (currentPath === '/runtime') return 'Context: inspect runtime governance, equivalence, topology, and replay lineage contracts.'
     if (currentPath === '/patches') return 'Context: inspect patch details and evidence.'
     if (currentPath === '/approvals' || currentPath === '/approval') {
       return 'Context: process approval actions and review queues.'
@@ -68,12 +69,12 @@ export default function ChatPanel({ currentPath, currentPageLabel }: ChatPanelPr
     setBusy(true)
     try {
       if (cmd === '/status') {
-        const data = await apiRequest<{ status: string; uptime_seconds?: number }>(ENDPOINTS.health, undefined, {
+        const data = await apiRequest<{ status: string; uptime_seconds?: number }>(API_ROUTES.health(), undefined, {
           includeAuth: false,
         })
         pushMessage('response', `core=${data.status} uptime=${Math.round(data.uptime_seconds || 0)}s`)
       } else if (cmd === '/agents') {
-        const data = await apiRequest<{ count: number }>(`${ENDPOINTS.agents}/running`)
+        const data = await apiRequest<{ count: number }>(API_ROUTES.agents.running())
         pushMessage('response', `running_agents=${data.count}`)
       } else if (cmd === '/queue') {
         const data = await apiRequest<{
@@ -81,7 +82,7 @@ export default function ChatPanel({ currentPath, currentPageLabel }: ChatPanelPr
           P1_normal: number
           P2_background: number
           running: number
-        }>(`${ENDPOINTS.tasks}/queue/stats`)
+        }>(API_ROUTES.tasks.queueStats())
         pushMessage(
           'response',
           `queue P0=${data.P0_critical} P1=${data.P1_normal} P2=${data.P2_background} running=${data.running}`,

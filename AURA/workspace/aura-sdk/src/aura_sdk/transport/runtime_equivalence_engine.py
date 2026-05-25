@@ -204,7 +204,16 @@ class RuntimeEquivalenceEngine:
             "advisory_only_behavior": True,
             "evidence_references": evidence,
         }
-        runtime_equivalence_report["deterministic_fingerprint"] = stable_fingerprint(runtime_equivalence_report)
+        runtime_equivalence_report["deterministic_fingerprint"] = stable_fingerprint(
+            {
+                "target_id": str(target_id),
+                "session_id": str(session_id),
+                "lineage_id": str(lineage_id),
+                "classification": runtime_equivalence_report["classification"],
+                "summary": runtime_equivalence_report["summary"],
+                "dimensions": runtime_equivalence_report["dimensions"],
+            }
+        )
 
         runtime_divergence_report = {
             "schema_version": "1.0",
@@ -228,7 +237,15 @@ class RuntimeEquivalenceEngine:
             "advisory_only_behavior": True,
             "evidence_references": evidence,
         }
-        runtime_divergence_report["deterministic_fingerprint"] = stable_fingerprint(runtime_divergence_report)
+        runtime_divergence_report["deterministic_fingerprint"] = stable_fingerprint(
+            {
+                "target_id": str(target_id),
+                "classification": runtime_divergence_report["classification"],
+                "critical_divergences": runtime_divergence_report["critical_divergences"],
+                "diverged_dimensions": runtime_divergence_report["diverged_dimensions"],
+                "summary": runtime_divergence_report["summary"],
+            }
+        )
 
         fail_reasons: list[str] = []
         if confidence_score < 0.75:
@@ -250,7 +267,16 @@ class RuntimeEquivalenceEngine:
             "advisory_only_behavior": True,
             "evidence_references": evidence,
         }
-        runtime_confidence_report["deterministic_fingerprint"] = stable_fingerprint(runtime_confidence_report)
+        runtime_confidence_report["deterministic_fingerprint"] = stable_fingerprint(
+            {
+                "target_id": str(target_id),
+                "classification": runtime_confidence_report["classification"],
+                "confidence_score": runtime_confidence_report["confidence_score"],
+                "confidence_threshold": runtime_confidence_report["confidence_threshold"],
+                "critical_divergences": runtime_confidence_report["critical_divergences"],
+                "weights": runtime_confidence_report["weights"],
+            }
+        )
 
         return RuntimeEquivalenceResult(
             runtime_equivalence_report=runtime_equivalence_report,

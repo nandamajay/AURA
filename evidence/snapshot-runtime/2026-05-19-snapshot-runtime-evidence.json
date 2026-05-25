@@ -1,0 +1,59 @@
+{
+  "checks": {
+    "detached_execution_blocked": true,
+    "reconstruct_trust_valid": true,
+    "snapshot_mutation_blocked": true,
+    "validation_drift_observed": true
+  },
+  "details": {
+    "detached_error": "detached_engineering_execution_forbidden:missing=intake_id,snapshot_id,provenance_lineage_hash",
+    "mutation_error": "engineering_snapshots are immutable: updates forbidden",
+    "reconstruct_hash": "51040dcdfb4b1b2302ff627098ca06a13b3d209c1f42860827ee83b68a5d5df3",
+    "validation_status_payload": "failed"
+  },
+  "phase": "snapshot-bound-engineering-workflow-runtime",
+  "runtime": {
+    "event_count": 17,
+    "governance_actions": [
+      {
+        "operation": "transformation_proposal",
+        "status": "requested"
+      },
+      {
+        "operation": "transformation_proposal",
+        "status": "approved"
+      },
+      {
+        "operation": "lineage_finalization",
+        "status": "requested"
+      },
+      {
+        "operation": "lineage_finalization",
+        "status": "approved"
+      }
+    ],
+    "governance_state": "approved",
+    "replay_trust_valid": 1,
+    "snapshot_id": "be8f0bb0f32785362ca075cd8886ae3b",
+    "task_id": "4a4d5066-42e0-45ba-8328-7ca5c10d15e5",
+    "validation_failed_tools": 4,
+    "validation_status": "failed",
+    "workflow_id": "0ae1d5c8affdf71bbe8e71000ce05045",
+    "workflow_state": "lineage_finalized"
+  },
+  "statuses": {
+    "bind_task": 200,
+    "create_workflow": 200,
+    "detached_execution": 400,
+    "freeze_snapshot": 200,
+    "governance_decision_lineage_finalization": 200,
+    "governance_decision_transformation": 200,
+    "governance_request_lineage_finalization": 200,
+    "governance_request_transformation": 200,
+    "lineage_finalize": 200,
+    "reconstruct": 200,
+    "transition_patch_analysis": 200,
+    "transition_transformation": 200,
+    "validation_run": 200
+  }
+}

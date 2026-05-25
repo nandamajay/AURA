@@ -3,22 +3,22 @@
     {
       "artifact": "replay_consistency_report.json",
       "risk": "LOW",
-      "sha256": "1f888c144a7f087945638d7671eeab0ec059cb494427f51ab0797fe2c5ebd2d9"
+      "sha256": "d4dc6fca6ba1312a230ff3d2e07950a72b243fb5c9223d742549cdf3abb3659d"
     },
     {
       "artifact": "runtime_governance_decision.json",
       "risk": "LOW",
-      "sha256": "fa33a85dfd92018e780c26bee5778e8f441e02d3066334b2c99e7a8fc8a88b46"
+      "sha256": "3cf30c82492459361d92051661192457da25c2d341f605e7695af68d01cb4ea5"
     },
     {
       "artifact": "runtime_replay_registry.json",
       "risk": "LOW",
-      "sha256": "33abb6eecfe2171e172fc24e81da8258a0003a1da9bdf1da643c45ef691b2aca"
+      "sha256": "561d48ffb416086d2c29a80ba9ef0fdeb00b220f7dcf52af6d80f65438e105f4"
     },
     {
       "artifact": "deterministic_runtime_replay.json",
       "risk": "LOW",
-      "sha256": "9a5a54506ff550c581fb44a6c8c868a990ebd96a40d2d53bd14ddbeb09ea8dde"
+      "sha256": "4bc043576fcc5efbd78ec3669acda54f951b98f0abea6ec7bc3df4a7abeb328b"
     },
     {
       "artifact": "aura_governance_state.json",
@@ -31,11 +31,11 @@
     "classification": "PASS",
     "consistency": {
       "deterministic_event_ordering": true,
-      "lineage_fingerprint": "2dd08240e2a6c87312c7fd2476f47cbd5910a0f3c259f830c0f32f3675bbc862",
-      "previous_lineage_fingerprint": "",
+      "lineage_fingerprint": "ee355cd31a86ea8da97f84feb009e5b50f7f32c65fbe7e27d9fb23b721178763",
+      "previous_lineage_fingerprint": "ee355cd31a86ea8da97f84feb009e5b50f7f32c65fbe7e27d9fb23b721178763",
       "replay_drift": false
     },
-    "deterministic_fingerprint": "add6c6afa500ae8ea38ffa0f846689de2fa9fa06031b92b4265ea349a7911f31",
+    "deterministic_fingerprint": "ed82ba4cc4c5780ad189d3f5ac2cbaaaff6d68a5ed3a4fd729b253945cbb282c",
     "evidence_references": [
       "artifact://deterministic_runtime_replay",
       "artifact://runtime_equivalence_fingerprint",
@@ -44,17 +44,28 @@
     "lineage_id": "runtime_governance_v1",
     "reasons": [],
     "report_name": "replay_consistency_report",
+    "runtime_execution_fingerprint": {
+      "dependency_hashes": {
+        "constraints_py312_sha256": "aceb2c2805f93b224f569a1a05def59afcb3790e248e21b7b415ab54c045608a",
+        "pip_freeze_sha256": "560402c6640024dd7d00b923a4fead61930a6e93af08bef8d2093fd2a5672c16"
+      },
+      "execution_container_hash": "sha256:1b8c7cc0efb7a4bb46662af10058b2e8a2e6b2452f333c7d2282f2c1e2ce0051",
+      "git_sha": "unknown",
+      "parser_version": "aura-runtime-parser-v1",
+      "python_version": "3.12.13",
+      "timestamp": "2026-05-25T05:49:11.422398+00:00"
+    },
     "runtime_truth_precedence": true,
     "schema_version": "1.0",
     "session_id": "runtime_governance_session_v1",
     "target_id": "RB3Gen2"
   },
-  "generated_at": "2026-05-24T12:50:39.426604+00:00",
+  "generated_at": "2026-05-25T05:49:12.761802+00:00",
   "registry": {
-    "deterministic_fingerprint": "0b9f3c411541e879adc317c5087d6e1b47ba8afc3c30aa1a441d9f365fc46360",
+    "deterministic_fingerprint": "2b3fe1da7ee6e13fef290aa58c3ad877fff9da474c119116b8c5ad210b91f05b",
     "deterministic_ready": true,
-    "generated_at": "2026-05-24T12:50:39.426573+00:00",
-    "history_count": 1,
+    "generated_at": "2026-05-25T05:49:12.761778+00:00",
+    "history_count": 8,
     "latest_lineage_id": "runtime_governance_v1",
     "latest_session_id": "runtime_governance_session_v1",
     "registry_exists": true,

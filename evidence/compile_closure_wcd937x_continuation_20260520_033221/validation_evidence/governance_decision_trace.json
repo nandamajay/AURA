@@ -1,0 +1,86 @@
+[
+  {
+    "timestamp": "2026-05-20T03:32:21.998389+00:00",
+    "event": "continuation_authorization",
+    "decision": "AUTHORIZED_CONTROLLED_PASS",
+    "details": {
+      "authorized": true,
+      "scope": "execute blocked phases sequentially with phase gates and evidence",
+      "restrictions": [
+        "phase-gated execution only",
+        "no auto-merge",
+        "no auto-submit",
+        "no governance bypass",
+        "advisory-only when closure not proven"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-05-20T03:32:22.555340+00:00",
+    "event": "high_risk_trigger_scan",
+    "decision": "ESCALATION_ACTIVE_CONTINUATION_ALLOWED",
+    "details": {
+      "trigger_count": 5,
+      "triggers": [
+        "DT ABI contract changes",
+        "MBHC semantic changes",
+        "SoundWire topology changes",
+        "calibration ownership changes",
+        "regulator sequencing changes"
+      ],
+      "operator_authorized_continuation": true,
+      "note": "high-risk classification remains; continuation limited to validation in isolated worktree"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T03:32:34.252001+00:00",
+    "event": "phase_gate",
+    "decision": "ALLOW",
+    "details": {
+      "phase": "PHASE 5 Kernel Prepare Validation",
+      "gate": "authorized + worktree_ready"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T03:32:41.504227+00:00",
+    "event": "phase_gate",
+    "decision": "ALLOW",
+    "details": {
+      "phase": "PHASE 6 Compile Closure Validation",
+      "gate": "phase5_passed"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T03:49:55.837776+00:00",
+    "event": "phase_gate",
+    "decision": "ALLOW",
+    "details": {
+      "phase": "PHASE 7 Static Analysis Validation",
+      "gate": "phase6_passed"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T03:50:13.802922+00:00",
+    "event": "phase_gate",
+    "decision": "ALLOW",
+    "details": {
+      "phase": "PHASE 8 DT Schema Validation",
+      "gate": "phase7_passed_or_advisory"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T03:50:14.172256+00:00",
+    "event": "phase11_escalation",
+    "decision": "MANUAL_REVIEW_REQUIRED",
+    "details": {
+      "reasons": [
+        "DT ABI contract changes",
+        "MBHC semantic changes",
+        "SoundWire topology changes",
+        "calibration ownership changes",
+        "regulator sequencing changes"
+      ],
+      "mandatory": true
+    }
+  }
+]

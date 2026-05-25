@@ -13,10 +13,10 @@ Usage: ./scripts/env-doctor.sh [--strict]
 Checks:
 - deterministic dependency prerequisites
 - docker/compose availability
-- Python 3.12 availability
+- container Python 3.12 runtime availability
 - .env safety and runtime key configuration
 - evidence/data directory presence
-- optional local import sanity when .venv exists
+- deterministic container import sanity
 USAGE
 }
 
@@ -110,11 +110,18 @@ else
   impact_note "single-command startup and CI/runtime parity cannot be validated"
 fi
 
-if command -v python3.12 >/dev/null 2>&1; then
-  pass "Python 3.12 available"
+if [[ -x "${ROOT_DIR}/scripts/aura_container_exec.sh" ]]; then
+  pass "Deterministic execution wrapper present"
 else
-  warn "Python 3.12 not found"
-  impact_note "local validation parity will drift from required runtime; containerized runtime remains available"
+  fail "Deterministic execution wrapper missing"
+  impact_note "container-authoritative Python 3.12 execution cannot be enforced"
+fi
+
+if "${ROOT_DIR}/scripts/aura_container_exec.sh" --no-tty -- "python --version" >/dev/null 2>&1; then
+  pass "Container Python runtime reachable"
+else
+  fail "Container Python runtime unavailable"
+  impact_note "runtime determinism cannot be guaranteed"
 fi
 
 if [[ -f "${ROOT_DIR}/constraints/py312.txt" ]]; then
@@ -188,20 +195,16 @@ for required_dir in "${EVIDENCE_DIR}" "${ROOT_DIR}/data" "${ROOT_DIR}/knowledge/
   fi
 done
 
-if [[ -x "${ROOT_DIR}/.venv/bin/python" ]]; then
-  if "${ROOT_DIR}/.venv/bin/python" - <<'PY' >/dev/null 2>&1
-import fastapi, aiosqlite, httpx
-print(fastapi.__version__)
-PY
-  then
-    pass ".venv has core validation dependencies"
-  else
-    warn ".venv exists but core imports failed; run ./scripts/env-sync.sh"
-    impact_note "local pytest and replay/governance checks may fail"
-  fi
+if "${ROOT_DIR}/scripts/aura_container_exec.sh" --no-tty -- "python - <<'PY'
+import importlib
+for mod in ('fastapi','uvicorn','jose','passlib','httpx'):
+    importlib.import_module(mod)
+print('ok')
+PY" >/dev/null 2>&1; then
+  pass "Container runtime has core validation dependencies"
 else
-  warn ".venv missing; run ./scripts/env-sync.sh for deterministic local validation"
-  impact_note "local CI parity checks will be unavailable"
+  fail "Container runtime missing required dependencies"
+  impact_note "governance/replay/runtime contract validation will fail"
 fi
 
 echo ""

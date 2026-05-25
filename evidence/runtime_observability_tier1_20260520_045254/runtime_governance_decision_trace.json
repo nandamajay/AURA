@@ -1,0 +1,102 @@
+[
+  {
+    "phase": "R1",
+    "gate": {
+      "phase": "R1",
+      "timestamp": "2026-05-20T04:52:55.010992Z",
+      "required_artifacts": [
+        "R1_ALSA_Runtime_Snapshot_Foundation/alsa_runtime_snapshot_report.md",
+        "R1_ALSA_Runtime_Snapshot_Foundation/alsa_component_inventory.json",
+        "R1_ALSA_Runtime_Snapshot_Foundation/dai_link_graph.json",
+        "R1_ALSA_Runtime_Snapshot_Foundation/pcm_runtime_matrix.md",
+        "R1_ALSA_Runtime_Snapshot_Foundation/runtime_capture_trace.json",
+        "R1_ALSA_Runtime_Snapshot_Foundation/runtime_observability_status.md",
+        "R1_ALSA_Runtime_Snapshot_Foundation/evidence_inventory.json",
+        "R1_ALSA_Runtime_Snapshot_Foundation/unresolved_runtime_risks.md"
+      ],
+      "missing_artifacts": [],
+      "unknowns_preserved": [
+        "UNKNOWN:/proc/asound_unavailable",
+        "UNKNOWN:/sys/kernel/debug/asoc_unavailable_or_unreadable",
+        "UNKNOWN:dai_link_inventory_not_observed"
+      ],
+      "confidence_classification": "LOW",
+      "decision": "ALLOW_NEXT_PHASE"
+    },
+    "unknowns": [
+      "UNKNOWN:/proc/asound_unavailable",
+      "UNKNOWN:/sys/kernel/debug/asoc_unavailable_or_unreadable",
+      "UNKNOWN:dai_link_inventory_not_observed"
+    ],
+    "confidence": "LOW"
+  },
+  {
+    "phase": "R2",
+    "gate": {
+      "phase": "R2",
+      "timestamp": "2026-05-20T04:52:55.126871Z",
+      "required_artifacts": [
+        "R2_DAPM_TINYMIX_State_Capture/tinymix_state_dump.txt",
+        "R2_DAPM_TINYMIX_State_Capture/dapm_widget_graph.json",
+        "R2_DAPM_TINYMIX_State_Capture/dapm_route_graph.json",
+        "R2_DAPM_TINYMIX_State_Capture/audio_route_activation_report.md",
+        "R2_DAPM_TINYMIX_State_Capture/mixer_control_diff_ready.json",
+        "R2_DAPM_TINYMIX_State_Capture/dapm_runtime_observability.md",
+        "R2_DAPM_TINYMIX_State_Capture/evidence_inventory.json",
+        "R2_DAPM_TINYMIX_State_Capture/unresolved_runtime_risks.md"
+      ],
+      "missing_artifacts": [],
+      "unknowns_preserved": [
+        "UNKNOWN:tinymix_output_unavailable",
+        "UNKNOWN:mixer_control_inventory_unavailable",
+        "UNKNOWN:dapm_widget_graph_unavailable",
+        "UNKNOWN:dapm_route_graph_unavailable"
+      ],
+      "confidence_classification": "LOW",
+      "decision": "ALLOW_NEXT_PHASE"
+    },
+    "unknowns": [
+      "UNKNOWN:tinymix_output_unavailable",
+      "UNKNOWN:mixer_control_inventory_unavailable",
+      "UNKNOWN:dapm_widget_graph_unavailable",
+      "UNKNOWN:dapm_route_graph_unavailable"
+    ],
+    "confidence": "LOW"
+  },
+  {
+    "phase": "R3",
+    "gate": {
+      "phase": "R3",
+      "timestamp": "2026-05-20T04:52:56.661225Z",
+      "required_artifacts": [
+        "R3_Codec_Register_Observability/codec_register_snapshot.json",
+        "R3_Codec_Register_Observability/runtime_register_transition_log.json",
+        "R3_Codec_Register_Observability/soundwire_runtime_state.md",
+        "R3_Codec_Register_Observability/regulator_runtime_sequence.md",
+        "R3_Codec_Register_Observability/mbhc_runtime_visibility.md",
+        "R3_Codec_Register_Observability/calibration_ownership_analysis.md",
+        "R3_Codec_Register_Observability/unresolved_runtime_unknowns.md",
+        "R3_Codec_Register_Observability/evidence_inventory.json",
+        "R3_Codec_Register_Observability/unresolved_runtime_risks.md"
+      ],
+      "missing_artifacts": [],
+      "unknowns_preserved": [
+        "UNKNOWN:codec_register_nodes_unavailable",
+        "UNKNOWN:soundwire_runtime_state_unavailable",
+        "UNKNOWN:regulator_runtime_summary_unavailable",
+        "UNKNOWN:mbhc_runtime_nodes_unavailable",
+        "UNKNOWN:calibration_runtime_visibility_unavailable"
+      ],
+      "confidence_classification": "LOW",
+      "decision": "ALLOW_NEXT_PHASE"
+    },
+    "unknowns": [
+      "UNKNOWN:codec_register_nodes_unavailable",
+      "UNKNOWN:soundwire_runtime_state_unavailable",
+      "UNKNOWN:regulator_runtime_summary_unavailable",
+      "UNKNOWN:mbhc_runtime_nodes_unavailable",
+      "UNKNOWN:calibration_runtime_visibility_unavailable"
+    ],
+    "confidence": "LOW"
+  }
+]

@@ -1,0 +1,223 @@
+{
+  "started_at": "2026-05-19T04:47:56.618420+00:00",
+  "calls": [
+    {
+      "label": "evidence_link:reports/WCD937x_bounded_conversion_study_index.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/WCD937x_bounded_conversion_study_index.md",
+        "evidence_content": "# WCD937x Bounded Conversion Study Index\n\nGenerated: `2026-05-19T04:47:28.334129+00:00`\n\n## Runtime IDs\n- intake_id: `6f817915bdc0cb628815128b1b03cc68`\n- source_snapshot_id: `517c16f93dee150474591fc0287d26e8`\n- engineering_snapshot_id: `6070de47ce135ad890e491ae85d9bff7`\n- workflow_id: `d285331f26c70c20ac81f9ed3b273279`\n- task_id: `cfec91e4-ec3a-4788-84c2-51f85d4639f6`\n\n## Deliverables\n- dependency graph report: `reports/dependency_graph_report.md`\n- downstream->upstream API mapping report: `reports/downstream_upstream_api_mapping_report.md`\n- semantic transformation plan: `reports/semantic_transformation_plan.md`\n- replay lineage report: `reports/replay_lineage_report.md`\n- validation evidence report: `reports/validation_evidence_report.md`\n- governance/audit summary: `reports/governance_audit_summary.md`\n- patch grouping proposal: `reports/patch_grouping_proposal.md`\n- bounded risk classification: `reports/bounded_risk_classification.md`\n- lifecycle report: `reports/engineering_workflow_lifecycle_report.md`\n\n## Raw Evidence\n- runtime lifecycle trace: `raw/runtime_lifecycle_trace.json`\n- validation runs rows: `raw/validation_runs_rows.json`\n- governance rows: `raw/governance_actions_rows.json`\n- audit rows: `raw/audit_ledger_rows.json`\n- workflow event rows: `raw/workflow_events_rows.json`\n- lineage rows: `raw/source_lineage_rows.json`\n\n## Snapshot Artifacts\n- source identity: `artifacts/source_identity.txt`\n- downstream snapshot hash manifest: `artifacts/downstream_snapshot_manifest.sha256`\n- upstream scope hash manifest: `artifacts/upstream_scope_manifest.sha256`\n- dependency graph: `artifacts/dependency_graph.json`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "86ca61baba67828dc258406e2c70904fff534743e20b1e62bc8c46e7cee46963"
+      }
+    },
+    {
+      "label": "evidence_link:reports/bounded_risk_classification.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/bounded_risk_classification.md",
+        "evidence_content": "# Bounded Risk Classification\n\n## Guaranteed (evidence-backed in this run)\n- Immutable source intake + canonical hash recorded (`b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284`).\n- Source snapshot + engineering snapshot frozen with hashes.\n- Detached engineering task creation rejection enforced.\n- Governance actions and audit ledger rows persisted.\n- Replay reconstruction for workflow succeeded (`402680bab41f15d7298db8fdbb1f1c999caeda77deb020b2590284d20892078c`).\n\n## Bounded\n- Downstream->upstream API mapping is advisory and based on static/source comparison.\n- Transformation plan is governance-approved but validation-complete status is not achieved.\n- Dependency graph covers discovered file/symbol/build edges in scoped snapshot; not whole BSP tree.\n- Compile and DT validation attempts were executed but environment gaps limit signal quality.\n\n## Non-guaranteed (in current environment)\n- Full sparse analysis (tool unavailable/permission issue).\n- Clang warning/build analysis (clang unavailable).\n- Full DT binding validation (`dt-doc-validate` missing).\n- End-to-end kernel compile success for touched subsystem (host/kernel env mismatch).\n- Upstream merge-readiness claim.\n\n## Truthfulness Guardrails Applied\n- no autonomous learning/self-training claim\n- no full-upstream-readiness claim\n- explicit failed validation status retained\n- operator-gated approval model preserved\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "95fb01acf5ec769a7bbdba2197e13a7b6e54b6f6084844eff91ee5ab651af6f4"
+      }
+    },
+    {
+      "label": "evidence_link:reports/dependency_graph_report.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/dependency_graph_report.md",
+        "evidence_content": "# WCD937x Dependency Graph Report\n\n## Snapshot Anchors\n- downstream_commit: `a89e32cf75ed4ef166c39caa1b39d8ec3818a633`\n- upstream_tag: `v6.18` (`7d0a66e4bb9081d75c82ec4957c50034cb0ea449`)\n- requested_path: `asoc/codecs/wcd9378/wcd937x.c` (not present)\n- resolved_path: `asoc/codecs/wcd937x/wcd937x.c`\n\n## Graph Summary\n- node_count: 101\n- edge_count: 190\n- downstream_nodes: 26\n- upstream_nodes: 13\n- external_nodes: 62\n- edge_type[build_ref]: 6\n- edge_type[include]: 155\n- edge_type[symbol_dep]: 19\n- edge_type[upstream_map]: 10\n\n## High-Risk Dependency Clusters\n- Qualcomm local power/pinctrl abstractions: `msm_cdc_*` APIs and headers.\n- SoundWire transport coupling: `swr_*` APIs and slave driver split (`wcd937x_slave.c`).\n- Non-upstream debug/calibration hooks: `qti-regmap-debugfs`, `wcdcal-hwdep`.\n- MBHC/CLSH helper coupling across shared downstream codec helpers.\n\n## Upstream Mapping Edges (selected)\n- `asoc/codecs/wcd937x/wcd937x.c` -> `sound/soc/codecs/wcd937x.c` (core codec logic refactor)\n- `asoc/codecs/wcd937x/wcd937x_slave.c` -> `sound/soc/codecs/wcd937x-sdw.c` (SoundWire transport split)\n- `asoc/codecs/wcd937x/wcd937x-mbhc.c` -> `sound/soc/codecs/wcd-mbhc-v2.c` (MBHC upstream framework alignment)\n- `asoc/codecs/wcd937x/internal.h` -> `sound/soc/codecs/wcd937x.h` (private state struct migration)\n- `asoc/codecs/wcd-clsh.c` -> `sound/soc/codecs/wcd-clsh-v2.c` (Class-H helper alignment)\n- `include/asoc/wcd-mbhc-v2.h` -> `sound/soc/codecs/wcd-mbhc-v2.h` (MBHC API surface mapping)\n- `asoc/codecs/Kbuild` -> `sound/soc/codecs/Kconfig` (build symbol integration)\n- `asoc/codecs/Makefile` -> `sound/soc/codecs/Makefile` (obj list integration)\n- `asoc/codecs/wcd937x/wcd937x.c` -> `Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml` (DT property compatibility)\n- `asoc/codecs/wcd937x/wcd937x_slave.c` -> `Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml` (SDW DT compatibility)\n\n## Artifact\n- Full graph JSON: `artifacts/dependency_graph.json`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "31cdbf05a2c08b70656c57b7a1fcdeb555ab63bd4dfc781ca08209105e9c1c9f"
+      }
+    },
+    {
+      "label": "evidence_link:reports/downstream_upstream_api_mapping_report.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/downstream_upstream_api_mapping_report.md",
+        "evidence_content": "# Downstream -> Upstream API Mapping Report (WCD937x)\n\n## Scope\n- Downstream source root: `asoc/codecs/wcd937x/` (+ helper modules under `asoc/codecs` and `include/asoc`)\n- Upstream baseline: `linux v6.18`\n- Upstream target paths: `sound/soc/codecs/wcd937x*`, `wcd-common*`, `wcd-mbhc-v2*`, `wcd-clsh-v2*`, DT bindings\n\n## Mapping Matrix\n| Downstream API/Pattern | Upstream-compatible target pattern | Transform action | Confidence |\n|---|---|---|---|\n| `msm_cdc_enable_ondemand_supply`, `msm_cdc_init_supplies` | regulator framework (`regulator_bulk_*`, `devm_regulator*`) | replace Qualcomm supply helper wrappers with regulator-managed supply lifecycle | bounded |\n| `msm_cdc_pinctrl_*` | gpio/pinctrl consumer (`gpiod_*`, standard pinctrl states) | migrate reset/sleep/active pin handling to upstream GPIO + pinctrl idioms | bounded |\n| `swr_*` (`soc/soundwire.h`) | SoundWire upstream (`linux/soundwire/sdw*.h`, `sdw_*`) | split transport control into upstream `wcd937x-sdw.c` style path | bounded |\n| `wcd_irq_*` helper | upstream IRQ handling with regmap/irqdomain patterns | align interrupt init/teardown to upstream helper usage | bounded |\n| `wcd_mbhc_*` via downstream helper | upstream `wcd-mbhc-v2` | port MBHC callbacks/data wiring to upstream v2 API layout | strong-bounded |\n| `wcd_clsh_*` helper | upstream `wcd-clsh-v2` | align class-H control state machine APIs | strong-bounded |\n| `wcdcal-hwdep` calibration hooks | no direct upstream equivalent | isolate as non-upstreamable/private calibration path; strip from upstream submission | guaranteed-remove |\n| `linux/qti-regmap-debugfs.h` and `devm_regmap_qti_debugfs_register` | upstream regmap/debugfs conventions (or remove) | remove vendor-specific debugfs registration from upstream patchset | guaranteed-remove |\n| Downstream Kbuild aggregation patterns | upstream `Kconfig` + `Makefile` (`SND_SOC_WCD937X`, `SND_SOC_WCD937X_SDW`) | map object layout/config symbols to existing upstream model | strong-bounded |\n| DT props `qcom,rx_swr_ch_map`, `qcom,tx_swr_ch_map` | `qcom,wcd937x*.yaml` constraints | verify/normalize property names and value shapes to upstream schema | bounded |\n\n## Non-upstreamable or High-friction Elements\n- Vendor debugfs (`qti-regmap-debugfs`) path.\n- Calibration hwdep (`wcdcal-*`) path.\n- Qualcomm-private helper layering (`msm_cdc_*`, bolero internal coupling).\n\n## Evidence\n- dependency graph JSON: `artifacts/dependency_graph.json`\n- pattern scan log: `logs/forbidden_pattern_scan.log`\n- include/symbol evidence: `logs/forbidden_pattern_scan.log`, `reports/dependency_graph_report.md`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "a11a7095ba8150c6ec0be382c6dce5bc547b3af8716b41521436f1aef269f4ed"
+      }
+    },
+    {
+      "label": "evidence_link:reports/engineering_workflow_lifecycle_report.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/engineering_workflow_lifecycle_report.md",
+        "evidence_content": "# Engineering Workflow Lifecycle Report\n\nGenerated: `2026-05-19T04:47:28.334129+00:00`\n\n## Runtime Anchors\n- intake_id: `6f817915bdc0cb628815128b1b03cc68`\n- source_snapshot_id: `517c16f93dee150474591fc0287d26e8`\n- engineering_snapshot_id: `6070de47ce135ad890e491ae85d9bff7`\n- workflow_id: `d285331f26c70c20ac81f9ed3b273279`\n- task_id: `cfec91e4-ec3a-4788-84c2-51f85d4639f6`\n\n## Required Lifecycle Realization\n- `source_intake`: completed via `/api/v1/provenance/sources/register`.\n- `snapshot_frozen`: completed via source snapshot + engineering snapshot freeze.\n- `dependency_discovery`: recorded in task replay execution step (`dependency_discovery`) and provenance stage `downstream_intake`.\n- `analysis`: recorded in task replay execution step (`analysis`) and engineering state `patch_analysis`.\n- `transform_planning`: recorded in task replay execution step (`transform_planning`) and engineering state `transformation_proposal`.\n- `validation`: completed via `/api/v1/engineering/workflows/{workflow_id}/validation/run` + provenance lineage stage `validation`.\n- `governance_review`: completed via governance request/decision rows (`transformation_proposal`).\n- `replay_finalization`: completed via engineering reconstruction + lineage finalization + provenance `replay_evidence` lineage.\n\n## Detached Execution Enforcement\n- probe endpoint: `POST /api/v1/tasks/`\n- input: `workflow_kind=engineering` without intake/snapshot/lineage/workflow IDs\n- result: **rejected** with `detached_engineering_execution_forbidden:missing=...`.\n\n## Evidence\n- raw runtime trace: `raw/runtime_lifecycle_trace.json`\n- workflow events: `raw/workflow_events_rows.json`\n- provenance lineage rows: `raw/source_lineage_rows.json`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "f2c02f6f8e5f3caa03b93f6884eb9b8b4217aa0b0389fc6ed094a084a6aabcbe"
+      }
+    },
+    {
+      "label": "evidence_link:reports/governance_audit_summary.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/governance_audit_summary.md",
+        "evidence_content": "# Governance and Audit Summary\n\n## Governance Actions\n- workflow_id: `d285331f26c70c20ac81f9ed3b273279`\n- total actions: `4`\n- id=1 operation=`transformation_proposal` status=`requested` reason=`operator_governance_review`\n- id=2 operation=`transformation_proposal` status=`approved` reason=`bounded_override_validation_tools_unavailable_for_full_signal`\n- id=3 operation=`lineage_finalization` status=`requested` reason=`freeze_replay_lineage`\n- id=4 operation=`lineage_finalization` status=`approved` reason=`lineage_finalization_approved`\n\n## Audit Ledger Chronology\n- total audit rows: `17`\n- first event: `config.changed` on `engineering_snapshot` `6070de47ce135ad890e491ae85d9bff7`\n- last event: `task.progress` on `engineering_workflow` `d285331f26c70c20ac81f9ed3b273279`\n\n## Key Governance Outcome\n- Transformation approved with explicit reason despite failed validation signal:\n  `bounded_override_validation_tools_unavailable_for_full_signal`\n- Lineage finalization separately requested and approved before finalization call.\n\n## Evidence\n- `raw/governance_actions_rows.json`\n- `raw/audit_ledger_rows.json`\n- `raw/runtime_lifecycle_trace.json`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "0dce48647a8d931b00e52d73c2d5e10f9123e28c39d0caa7ad4d6e42691f5fd2"
+      }
+    },
+    {
+      "label": "evidence_link:reports/patch_grouping_proposal.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/patch_grouping_proposal.md",
+        "evidence_content": "# Patch Grouping Proposal (Advisory)\n\n## Group 1: Build + Kconfig Alignment\n- target files: `sound/soc/codecs/Kconfig`, `sound/soc/codecs/Makefile`\n- intent: align symbol/build relationships for WCD937x + SDW split\n- risk: low-medium\n\n## Group 2: Core Codec Logic Port\n- target files: `sound/soc/codecs/wcd937x.c`, `sound/soc/codecs/wcd937x.h`\n- intent: migrate core controls, DAPM/event flow, runtime PM usage\n- risk: high\n\n## Group 3: SoundWire Transport Port\n- target files: `sound/soc/codecs/wcd937x-sdw.c`\n- intent: convert downstream `swr_*` coupling to upstream `sdw_*` model\n- risk: high\n\n## Group 4: MBHC and Class-H Integration\n- target files: `sound/soc/codecs/wcd-mbhc-v2.[ch]`, `sound/soc/codecs/wcd-clsh-v2.[ch]`, WCD937x integration call sites\n- intent: align MBHC/CLSH callbacks and state control\n- risk: high\n\n## Group 5: Power/Reset/Pinctrl Refactor\n- target files: WCD937x core + regulator/gpio call sites\n- intent: remove `msm_cdc_*` helper dependencies in favor of upstream frameworks\n- risk: high\n\n## Group 6: DT Binding and DTS Consumers\n- target files: `Documentation/devicetree/bindings/sound/qcom,wcd937x*.yaml` (+ affected DTS if required)\n- intent: reconcile channel map + property expectations with upstream schema\n- risk: medium-high\n\n## Group 7: Vendor Hook Removal / Isolation\n- remove or isolate: `qti-regmap-debugfs`, `wcdcal-hwdep` paths from upstream patchset\n- risk: medium (feature parity impact)\n\n## Group 8: Validation and Evidence Stitching\n- intent: ensure each patch group has replay/audit evidence, checkpatch/sparse/build evidence, and governance decision link\n- risk: medium\n\nOperator note: all groups are advisory; no final upstream submission should occur without operator approval + full validation pass.\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "4e82e2136cfcaa007b74d0121370487cf018b34972e3e99ac6fcdbce6be05017"
+      }
+    },
+    {
+      "label": "evidence_link:reports/replay_lineage_report.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/replay_lineage_report.md",
+        "evidence_content": "# Replay Lineage Report\n\n## Replay Anchors\n- intake_id: `6f817915bdc0cb628815128b1b03cc68`\n- workflow_id: `d285331f26c70c20ac81f9ed3b273279`\n- task_id: `cfec91e4-ec3a-4788-84c2-51f85d4639f6`\n- source reconstruction hash: `193efbb0b2d9858bc1093cbb561e8fb57ce83961d848db4937351c2862017d72`\n- workflow reconstruction hash: `402680bab41f15d7298db8fdbb1f1c999caeda77deb020b2590284d20892078c`\n- workflow trust_valid: `True`\n\n## Lineage Chain (source_lineage_entries)\n- `downstream_intake`: `0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793` <- `ROOT`\n- `patch_transform`: `3c4e28d4d7dac293b9fe33c26498e2c7dd4a0988739f50d27fa80f07caa1ab7d` <- `0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793`\n- `upstream_prep`: `3b587e61de10aef6b6bd60dea802cba5a55711215fd4e9736d58d4bf1f7a6cd8` <- `3c4e28d4d7dac293b9fe33c26498e2c7dd4a0988739f50d27fa80f07caa1ab7d`\n- `validation`: `234e878ff5ee4c8ad2a4dde4e7b22317bb27ae06b51b3349779b09f760714306` <- `3b587e61de10aef6b6bd60dea802cba5a55711215fd4e9736d58d4bf1f7a6cd8`\n- `approval`: `7adfc31ce69a9d5f4f4a6b4b7989c661e2a069dbab7d9698a4eda6df371b81ed` <- `234e878ff5ee4c8ad2a4dde4e7b22317bb27ae06b51b3349779b09f760714306`\n- `replay_evidence`: `f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42` <- `7adfc31ce69a9d5f4f4a6b4b7989c661e2a069dbab7d9698a4eda6df371b81ed`\n- `replay_evidence`: `4c4e0dd82fab6139bda8ed0d1952d79755e03c175fe390a9cc078200225668f8` <- `f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42`\n\n## Replay Reconstruction Result\n- engineering reconstruction: success (`trust_valid=true`, no failures)\n- provenance reconstruction: success\n- task replay integrity: verified during governance decision (`replay_integrity_ok=true`)\n\n## Notes\n- two `replay_evidence` lineage entries exist:\n1. workflow finalization payload from engineering router\n2. explicit reconstruction hash recording for study evidence linkage\n\n## Evidence Files\n- `raw/runtime_lifecycle_trace.json`\n- `raw/source_lineage_rows.json`\n- `raw/workflow_events_rows.json`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "df8391d337434ef14fa8ee53b98a2f1e3d6d5d6a7658eae99247d27e1c72e9ce"
+      }
+    },
+    {
+      "label": "evidence_link:reports/semantic_transformation_plan.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/semantic_transformation_plan.md",
+        "evidence_content": "# Semantic Transformation Plan (Bounded)\n\n## Objective\nTransform downstream WCD937x logic toward upstream-compatible implementation while preserving provenance, replay lineage, and operator governance.\n\n## Preconditions (immutable)\n- downstream commit: `a89e32cf75ed4ef166c39caa1b39d8ec3818a633`\n- upstream baseline: `v6.18` (`7d0a66e4bb9081d75c82ec4957c50034cb0ea449`)\n- source intake/workflow anchors: `6f817915bdc0cb628815128b1b03cc68` / `d285331f26c70c20ac81f9ed3b273279`\n\n## Planned Transformation Steps\n1. Normalize build wiring:\n- align downstream object grouping with upstream `SND_SOC_WCD937X` + `SND_SOC_WCD937X_SDW` split.\n\n2. Transport boundary conversion:\n- move downstream `swr_*` flows toward upstream `sdw_*` split (`wcd937x.c` vs `wcd937x-sdw.c`).\n\n3. Power/reset conversion:\n- replace `msm_cdc_*` supply/pinctrl helpers with regulator/gpiod/runtime PM flow.\n\n4. MBHC + CLSH alignment:\n- remap downstream helper callbacks to upstream `wcd-mbhc-v2` and `wcd-clsh-v2` idioms.\n\n5. Vendor hook removal:\n- remove `qti-regmap-debugfs` and `wcdcal-hwdep` from upstream-bound patch groups.\n\n6. DT/schema reconciliation:\n- validate/adjust codec and SoundWire bindings against `qcom,wcd937x*.yaml`.\n\n7. Validation + governance gating:\n- checkpatch/sparse/clang/build/DT checks before final governance approval.\n\n## Explicitly Deferred (not in this phase)\n- autonomous learning/self-training\n- auto-generated final upstream patch submission\n- hidden retries or auto-approval bypass\n\n## Current Outcome\n- Plan generated and governance-approved in bounded mode.\n- Validation status remains `failed` due missing toolchain components in execution environment.\n\n## Evidence\n- runtime lifecycle trace: `raw/runtime_lifecycle_trace.json`\n- validation runs DB export: `raw/validation_runs_rows.json`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "abf9eab97be337bf7b9d1ec9343e5580266bf1b45b50c96a7cd3f360670d9b6d"
+      }
+    },
+    {
+      "label": "evidence_link:reports/validation_evidence_report.md",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/evidence",
+      "status": 200,
+      "payload": {
+        "evidence_type": "report",
+        "evidence_ref": "reports/validation_evidence_report.md",
+        "evidence_content": "# Validation Evidence Report\n\n## Runtime Validation (AURA engineering endpoint)\n- workflow_id: `d285331f26c70c20ac81f9ed3b273279`\n- status: `failed`\n\n| Tool | Passed | Tool version | Findings |\n|---|---:|---|---|\n| checkpatch | 0 | `unavailable` | `[\"tool_unavailable:checkpatch\",\"version_drift:checkpatch:expected=checkpatch:observed=unavailable\"]` |\n| clang_build | 0 | `unavailable` | `[\"tool_unavailable:clang_build\",\"version_drift:clang_build:expected=clang:observed=unavailable\",\"clang_build_probe_failed:command_not_found:clang\"]` |\n| forbidden_path | 1 | `builtin-v1` | `[\"forbidden_path_check_passed\"]` |\n| lineage_integrity | 1 | `builtin-v1` | `[]` |\n| sparse | 0 | `unavailable` | `[\"tool_unavailable:sparse\",\"version_drift:sparse:expected=sparse:observed=unavailable\"]` |\n\n## External Validation Commands\n- checkpatch exit: `1`\n- sparse probe exit: `126`\n- clang probe exit: `127`\n- compile scope attempt 1 exit: `2`\n- compile scope attempt 2 exit: `2`\n- dt binding check exit: `2`\n- forbidden pattern scan exit: `0`\n\n## checkpatch Aggregate (downstream snapshot files)\n- aggregated errors: `14`\n- aggregated warnings: `44`\n- aggregated lines checked: `8452`\n\n## Observed Hard Failures / Gaps\n- sparse unavailable / not executable in environment.\n- clang not installed.\n- dt-binding check failed due missing `dt-doc-validate` (dtschema tooling).\n- direct compile scope attempt failed with missing kernel arch include (`asm/types.h`) in host setup.\n\n## Raw Logs\n- `logs/checkpatch.log`\n- `logs/sparse.log`\n- `logs/clang.log`\n- `logs/compile_scope.log`\n- `logs/compile_scope_retry.log`\n- `logs/dt_binding_check.log`\n- `logs/forbidden_pattern_scan.log`\n"
+      },
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "evidence_type": "report",
+        "evidence_hash": "70922e30a9781e92f9ca006dc3901c619467446a8130ed4b5ca67a04a7480b2b"
+      }
+    },
+    {
+      "label": "lineage_link:patch_transform",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "status": 200,
+      "payload": {
+        "stage": "patch_transform",
+        "payload": {
+          "semantic_plan_ref": "reports/semantic_transformation_plan.md",
+          "api_mapping_ref": "reports/downstream_upstream_api_mapping_report.md"
+        }
+      },
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "6cf1269963dbdaaf374b26e260fcbec2",
+        "lineage_stage": "patch_transform",
+        "lineage_hash": "fa5f7e1c29a3a6ae4cba7c95df44cf7109490b5f3e30f5acd57f540cc4a081be"
+      }
+    },
+    {
+      "label": "lineage_link:validation",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "status": 200,
+      "payload": {
+        "stage": "validation",
+        "payload": {
+          "validation_report_ref": "reports/validation_evidence_report.md",
+          "checkpatch_log_ref": "logs/checkpatch.log"
+        }
+      },
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "64c295e0096b15a9f896dbbf14269e49",
+        "lineage_stage": "validation",
+        "lineage_hash": "a3d64145f5c60f62ce17cd67bc9d76347a9ca74a11c141a20217d613b78693f4"
+      }
+    },
+    {
+      "label": "lineage_link:replay_evidence",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "status": 200,
+      "payload": {
+        "stage": "replay_evidence",
+        "payload": {
+          "replay_report_ref": "reports/replay_lineage_report.md",
+          "report_manifest_bundle_ref": "artifacts/report_manifest_bundle.sha256"
+        }
+      },
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "8e13ce3f0203ddb5a49e76c36fe5fb28",
+        "lineage_stage": "replay_evidence",
+        "lineage_hash": "e89eea7f786916615d9f706b2e4ac618815dd9597d9bf940f47eafa5a9c66c86"
+      }
+    }
+  ],
+  "finished_at": "2026-05-19T04:47:56.906116+00:00"
+}

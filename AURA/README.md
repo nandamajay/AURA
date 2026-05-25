@@ -73,7 +73,7 @@ curl http://localhost:8000/health/ready
 ## Development Commands
 
 ```bash
-# deterministic Python environment sync
+# deterministic runtime sync (container-authoritative Python 3.12)
 make env-sync
 
 # stabilization bootstrap / validation / startup
@@ -87,8 +87,14 @@ make dev
 # tests
 make test
 
-# parity checks (local py3.12 or docker fallback)
+# parity checks (container-authoritative Python 3.12)
 make ci-parity
+
+# unified deterministic runtime launcher
+./scripts/aura_runtime_launcher.sh --mode runtime-pipeline
+./scripts/aura_runtime_launcher.sh --mode semantic
+./scripts/aura_runtime_launcher.sh --mode simulation
+./scripts/aura_pytest.sh workspace/aura-sdk/tests/test_runtime_replay_static.py
 
 # lint
 make lint
@@ -105,10 +111,11 @@ contract/governance checks:
 
 - `scripts/aura_bootstrap.sh`
   - strict host diagnostics
-  - deterministic Python env sync (expects Python 3.12)
+  - deterministic runtime container verification (Python 3.12 authoritative)
   - deterministic dashboard dependency sync
   - optional validation execution
 - `scripts/aura_validate.sh`
+  - runs validator inside deterministic container runtime only
   - emits required reports to `docs/operations/transport/`:
     - `environment_validation_report.json`
     - `backend_runtime_validation.json`
@@ -122,6 +129,7 @@ contract/governance checks:
     - `runtime_contract_integrity.json`
     - `dto_alignment_report.json`
     - `transport_schema_validation.json`
+    - `runtime_execution_fingerprint_report.json`
 - `scripts/aura_start.sh`
   - unified backend-first startup sequencing
   - runtime verification before promotion
@@ -256,6 +264,26 @@ python3 -m pytest \
 - read-only ingestion only (no runtime mutation paths)
 - fail-closed on missing required evidence or governance violations
 - deterministic timestamp/event ordering normalization
+
+## Runtime Consolidation Mode
+
+Execution is container-authoritative (Python 3.12) for runtime ingestion,
+equivalence, replay/governance, semantic extraction, and simulation.
+
+- Unified launcher: `scripts/aura_runtime_launcher.sh`
+- Deterministic pytest wrapper: `scripts/aura_pytest.sh`
+- Consolidation contracts/orchestration runner:
+  - `scripts/aura-runtime-consolidation.py`
+  - emits:
+    - `runtime_stage_blueprint.json`
+    - `runtime_execution_order.json`
+    - `runtime_incremental_rebuild_plan.json`
+    - `runtime_replay_regeneration_triggers.json`
+    - `runtime_graph_invalidation_report.json`
+    - `runtime_ingestion_contract_catalog.json`
+    - `runtime_deterministic_cache_schema.json`
+    - `runtime_observability_report.json`
+    - `runtime_consolidation_summary.json`
 - immutable capture lineage chain and replay-safe session persistence
 - plugin adapter boundary preserved (`runtime/topology/semantic` adapters only)
 

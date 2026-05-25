@@ -1,4 +1,4 @@
-/** AURA Dashboard configuration — injected by nginx or fallback. */
+/** AURA dashboard API/WS contract registry with normalized route building. */
 
 declare global {
   interface Window {
@@ -9,31 +9,256 @@ declare global {
   }
 }
 
-const config = window.__AURA_CONFIG__ || {
+type RouteAction = 'approve' | 'reject'
+type QueryValue = string | number | boolean | undefined
+
+interface ResolvedApi {
+  origin: string
+  basePath: string
+  apiV1Prefix: string
+}
+
+const runtimeConfig = window.__AURA_CONFIG__ || {
   API_URL: 'http://localhost:8000',
   WS_URL: 'ws://localhost:8001/ws',
 }
 
-export const API_BASE = config.API_URL
-export const WS_URL = config.WS_URL.endsWith('/ws') ? config.WS_URL : `${config.WS_URL.replace(/\/$/, '')}/ws`
+function stripTrailingSlash(value: string): string {
+  return value.replace(/\/+$/, '')
+}
 
-// API endpoints
+function normalizePath(value: string): string {
+  if (!value) {
+    return ''
+  }
+  const normalized = value.replace(/\/{2,}/g, '/')
+  if (normalized === '/') {
+    return ''
+  }
+  return normalized.startsWith('/') ? normalized : `/${normalized}`
+}
+
+function resolveApi(rawBase: string): ResolvedApi {
+  const resolved = new URL(rawBase || '/', window.location.origin)
+  const path = normalizePath(stripTrailingSlash(resolved.pathname))
+
+  // Already pinned to /api/v1.
+  if (path.endsWith('/api/v1')) {
+    return {
+      origin: resolved.origin,
+      basePath: path,
+      apiV1Prefix: '',
+    }
+  }
+
+  // When API base is /api (nginx proxy mode), /api/v1 on UI maps to backend /api/v1.
+  if (path.endsWith('/api')) {
+    return {
+      origin: resolved.origin,
+      basePath: path,
+      apiV1Prefix: '/v1',
+    }
+  }
+
+  // Direct core mode (localhost:8000): backend already serves /api/v1 directly.
+  return {
+    origin: resolved.origin,
+    basePath: path,
+    apiV1Prefix: '/api/v1',
+  }
+}
+
+function joinUrl(origin: string, basePath: string, path: string): string {
+  return `${stripTrailingSlash(origin)}${normalizePath(basePath)}${normalizePath(path)}`
+}
+
+function normalizeDuplicateApiPrefix(url: string): string {
+  return url.replace(/\/api\/api\/v1(\/|$)/g, '/api/v1$1')
+}
+
+function buildWsAbsolute(rawWs: string): string {
+  const raw = (rawWs || '').trim()
+  if (raw.startsWith('ws://') || raw.startsWith('wss://')) {
+    return stripTrailingSlash(raw)
+  }
+  if (raw.startsWith('http://') || raw.startsWith('https://')) {
+    const parsed = new URL(raw)
+    const wsProto = parsed.protocol === 'https:' ? 'wss:' : 'ws:'
+    return `${wsProto}//${parsed.host}${normalizePath(stripTrailingSlash(parsed.pathname))}`
+  }
+
+  const wsProto = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
+  return `${wsProto}//${window.location.host}${normalizePath(raw || '/ws')}`
+}
+
+const resolvedApi = resolveApi(runtimeConfig.API_URL)
+
+function buildApi(path: string): string {
+  return normalizeDuplicateApiPrefix(joinUrl(resolvedApi.origin, resolvedApi.basePath, path))
+}
+
+function buildApiV1(path: string): string {
+  return buildApi(resolvedApi.apiV1Prefix ? `${resolvedApi.apiV1Prefix}${normalizePath(path)}` : normalizePath(path))
+}
+
+function encodePathSegment(value: string): string {
+  return encodeURIComponent(value.trim())
+}
+
+function withQuery(url: string, query: Record<string, QueryValue>): string {
+  const params = new URLSearchParams()
+  for (const [key, value] of Object.entries(query)) {
+    if (value === undefined) {
+      continue
+    }
+    params.set(key, String(value))
+  }
+  const suffix = params.toString()
+  if (!suffix) {
+    return url
+  }
+  return `${url}${url.includes('?') ? '&' : '?'}${suffix}`
+}
+
+export const API_BASE = buildApi('/')
+export const WS_URL = stripTrailingSlash(buildWsAbsolute(runtimeConfig.WS_URL || '/ws')).endsWith('/ws')
+  ? stripTrailingSlash(buildWsAbsolute(runtimeConfig.WS_URL || '/ws'))
+  : `${stripTrailingSlash(buildWsAbsolute(runtimeConfig.WS_URL || '/ws'))}/ws`
+
+export function wsUrlWithToken(token: string): string {
+  if (!token) {
+    return WS_URL
+  }
+  return withQuery(WS_URL, { token })
+}
+
+export const API_ROUTES = {
+  health: () => buildApi('/health/ready'),
+  runtimeOverview: () => buildApi('/health/runtime-overview'),
+  metrics: () => buildApi('/metrics'),
+  auth: {
+    login: () => buildApiV1('/auth/login'),
+    me: () => buildApiV1('/auth/me'),
+    logout: () => buildApiV1('/auth/logout'),
+  },
+  agents: {
+    root: () => buildApiV1('/agents'),
+    running: () => buildApiV1('/agents/running'),
+    watchdog: () => buildApiV1('/agents/watchdog'),
+    circuitBreakers: () => buildApiV1('/agents/circuit-breakers'),
+    spawn: (agentType: string) => buildApiV1(`/agents/${encodePathSegment(agentType)}/spawn`),
+    byId: (agentId: string) => buildApiV1(`/agents/${encodePathSegment(agentId)}`),
+  },
+  tasks: {
+    root: () => buildApiV1('/tasks'),
+    list: (page = 1, limit = 50) => withQuery(buildApiV1('/tasks'), { page, limit }),
+    queueStats: () => buildApiV1('/tasks/queue/stats'),
+    replayState: (taskId: string) => buildApiV1(`/tasks/${encodePathSegment(taskId)}/replay/state`),
+    replay: (taskId: string) => buildApiV1(`/tasks/${encodePathSegment(taskId)}/replay`),
+  },
+  patches: {
+    root: () => buildApiV1('/patches'),
+    list: (limit = 20) => withQuery(buildApiV1('/patches/'), { limit }),
+    byId: (patchId: string) => buildApiV1(`/patches/${encodePathSegment(patchId)}`),
+    diff: (patchId: string) => buildApiV1(`/patches/${encodePathSegment(patchId)}/diff`),
+    evidence: (patchId: string) => buildApiV1(`/patches/${encodePathSegment(patchId)}/evidence`),
+    submitApproval: (patchId: string) => buildApiV1(`/patches/${encodePathSegment(patchId)}/submit-approval`),
+  },
+  knowledge: {
+    root: () => buildApiV1('/knowledge'),
+    rules: (limit = 60) => withQuery(buildApiV1('/knowledge/rules'), { limit }),
+    search: (q: string, limit = 60) => withQuery(buildApiV1('/knowledge/search'), { q, limit }),
+    export: () => buildApiV1('/knowledge/export'),
+    evidenceReadBase: () => buildApiV1('/knowledge/evidence/read'),
+    evidenceIndex: (limit = 500, maxDepth = 4) =>
+      withQuery(buildApiV1('/knowledge/evidence/index'), { limit, max_depth: maxDepth }),
+    evidenceRead: (section: string, relativePath: string, maxBytes = 120_000) =>
+      withQuery(buildApiV1('/knowledge/evidence/read'), {
+        section,
+        relative_path: relativePath,
+        max_bytes: maxBytes,
+      }),
+  },
+  memory: {
+    root: () => buildApiV1('/memory'),
+    summary: () => buildApiV1('/memory/summary'),
+    decisions: (limit = 20) => withQuery(buildApiV1('/memory/decisions'), { limit }),
+    failures: (limit = 20) => withQuery(buildApiV1('/memory/failures'), { limit }),
+    replayIncidents: (limit = 20) => withQuery(buildApiV1('/memory/replay-incidents'), { limit }),
+    risks: (limit = 20) => withQuery(buildApiV1('/memory/risks'), { limit }),
+    debt: (limit = 20) => withQuery(buildApiV1('/memory/debt'), { limit }),
+    drift: (limit = 20) => withQuery(buildApiV1('/memory/drift'), { limit }),
+    opsIncidents: (limit = 30) => withQuery(buildApiV1('/memory/ops-incidents'), { limit }),
+    nondeterminismCheck: () => buildApiV1('/memory/validation/nondeterminism-check'),
+    learningTimeline: (limit = 200) => withQuery(buildApiV1('/memory/learning/timeline'), { limit }),
+    maintainerIntelligence: (limit = 200) =>
+      withQuery(buildApiV1('/memory/maintainer/intelligence'), { limit }),
+  },
+  charter: {
+    root: () => buildApiV1('/charter'),
+    checkAction: () => buildApiV1('/charter/check-action'),
+    enforce: () => buildApiV1('/charter/enforce'),
+    highRiskActions: () => buildApiV1('/charter/high-risk-actions'),
+    pendingApprovals: () => buildApiV1('/charter/approvals/pending'),
+    approvalAction: (requestId: string, action: RouteAction) =>
+      buildApiV1(`/charter/approvals/${encodePathSegment(requestId)}/${action}`),
+    failsafeReport: () => buildApiV1('/charter/failsafe/report'),
+    integrityReport: () => buildApiV1('/charter/integrity/report'),
+  },
+  governance: {
+    approvals: () => buildApiV1('/governance/approvals'),
+    approvalsList: (status = 'pending', limit = 50, page = 1) =>
+      withQuery(buildApiV1('/governance/approvals'), { status, limit, page }),
+    audit: () => buildApiV1('/governance/audit'),
+    auditList: (limit = 100, eventType?: string, targetType?: string) =>
+      withQuery(buildApiV1('/governance/audit'), { limit, event_type: eventType, target_type: targetType }),
+    approvalById: (approvalId: string) => buildApiV1(`/governance/approvals/${encodePathSegment(approvalId)}`),
+    evidenceSummary: () => buildApiV1('/governance/summary/evidence'),
+  },
+  simulation: {
+    root: () => buildApiV1('/simulation'),
+    scenarios: () => buildApiV1('/simulation/scenarios'),
+    byId: (simulationId: string) => buildApiV1(`/simulation/${encodePathSegment(simulationId)}`),
+  },
+  runtime: {
+    artifactsIndex: () => buildApiV1('/runtime/artifacts/index'),
+    artifactsIndexQuery: (limit = 50, page = 1) =>
+      withQuery(buildApiV1('/runtime/artifacts/index'), { limit, page }),
+    artifactsRead: () => buildApiV1('/runtime/artifacts/read'),
+    governanceSummary: () => buildApiV1('/runtime/governance/summary'),
+    topology: () => buildApiV1('/runtime/topology'),
+    topologyQuery: (section: string, limit = 120, page = 1) =>
+      withQuery(buildApiV1('/runtime/topology'), { section, limit, page }),
+    equivalence: () => buildApiV1('/runtime/equivalence'),
+    equivalenceQuery: (criticalOnly = false, limit = 80, page = 1) =>
+      withQuery(buildApiV1('/runtime/equivalence'), { critical_only: criticalOnly, limit, page }),
+    confidence: () => buildApiV1('/runtime/confidence'),
+  },
+} as const
+
+// Backward-compatible flat endpoint map for existing pages/components.
 export const ENDPOINTS = {
-  health: `${API_BASE}/health/ready`,
-  runtimeOverview: `${API_BASE}/health/runtime-overview`,
-  metrics: `${API_BASE}/metrics`,
-  login: `${API_BASE}/api/v1/auth/login`,
-  me: `${API_BASE}/api/v1/auth/me`,
-  logout: `${API_BASE}/api/v1/auth/logout`,
-  agents: `${API_BASE}/api/v1/agents`,
-  tasks: `${API_BASE}/api/v1/tasks`,
-  patches: `${API_BASE}/api/v1/patches`,
-  knowledge: `${API_BASE}/api/v1/knowledge`,
-  memory: `${API_BASE}/api/v1/memory`,
-  charter: `${API_BASE}/api/v1/charter`,
-  approvals: `${API_BASE}/api/v1/governance/approvals`,
-  audit: `${API_BASE}/api/v1/governance/audit`,
-  simulation: `${API_BASE}/api/v1/simulation`,
-  evidenceIndex: `${API_BASE}/api/v1/knowledge/evidence/index`,
-  evidenceRead: `${API_BASE}/api/v1/knowledge/evidence/read`,
+  health: API_ROUTES.health(),
+  runtimeOverview: API_ROUTES.runtimeOverview(),
+  metrics: API_ROUTES.metrics(),
+  login: API_ROUTES.auth.login(),
+  me: API_ROUTES.auth.me(),
+  logout: API_ROUTES.auth.logout(),
+  agents: API_ROUTES.agents.root(),
+  tasks: API_ROUTES.tasks.root(),
+  patches: API_ROUTES.patches.root(),
+  knowledge: API_ROUTES.knowledge.root(),
+  memory: API_ROUTES.memory.root(),
+  charter: API_ROUTES.charter.root(),
+  approvals: API_ROUTES.governance.approvals(),
+  audit: API_ROUTES.governance.audit(),
+  simulation: API_ROUTES.simulation.root(),
+  runtimeArtifactsIndex: API_ROUTES.runtime.artifactsIndex(),
+  runtimeArtifactsRead: API_ROUTES.runtime.artifactsRead(),
+  runtimeGovernanceSummary: API_ROUTES.runtime.governanceSummary(),
+  runtimeTopology: API_ROUTES.runtime.topology(),
+  runtimeEquivalence: API_ROUTES.runtime.equivalence(),
+  runtimeConfidence: API_ROUTES.runtime.confidence(),
+  evidenceIndex: API_ROUTES.knowledge.evidenceIndex(),
+  evidenceRead: API_ROUTES.knowledge.evidenceReadBase(),
 } as const

@@ -1,0 +1,220 @@
+{
+  "metadata": {
+    "generated_at": "2026-05-20T04:34:41.085484Z",
+    "mode": "AURA_SEMANTIC_RUNTIME_VALIDATION",
+    "truthfulness_policy": "fail_closed_on_semantic_ambiguity",
+    "compile_closure_reference": {
+      "closure_state": "CLOSED",
+      "phase10_status": "PASSED_WITH_ADVISORY",
+      "semantic_confidence_influence": "none"
+    },
+    "evidence_sources": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/artifacts/symbol_probe_downstream.json",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/artifacts/symbol_probe_upstream.json",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/artifacts/downstream_upstream_mapping.json",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/downstream_upstream_api_mapping_report.md",
+      "/local/mnt/workspace/AURA_V1/evidence/compile_closure_wcd937x_continuation_20260520_033221/reports/compile_execution_report.md",
+      "/local/mnt/workspace/AURA_V1/evidence/compile_closure_wcd937x_continuation_20260520_033221/logs/make_image_dtbs_modules_attempt_1.log",
+      "/local/mnt/workspace/AURA_V1/evidence/compile_closure_wcd937x_continuation_20260520_033221/reports/human_escalation_review.md"
+    ]
+  },
+  "targets": {
+    "soundwire_transport_topology": {
+      "structural_evidence": {
+        "downstream_swr_hits": 80,
+        "upstream_sdw_hits": 81,
+        "downstream_top_files": [
+          [
+            "asoc/codecs/wcd937x/wcd937x.c",
+            59
+          ],
+          [
+            "asoc/codecs/wcd937x/wcd937x_slave.c",
+            10
+          ],
+          [
+            "asoc/codecs/wcd937x/wcd937x.h",
+            7
+          ],
+          [
+            "asoc/codecs/wcd937x/internal.h",
+            4
+          ]
+        ],
+        "upstream_top_files": [
+          [
+            "sound/soc/codecs/wcd937x-sdw.c",
+            31
+          ],
+          [
+            "sound/soc/codecs/wcd937x.c",
+            30
+          ],
+          [
+            "sound/soc/codecs/wcd-common.c",
+            11
+          ],
+          [
+            "sound/soc/codecs/wcd-common.h",
+            8
+          ]
+        ]
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.26,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "SWR->SDW mapping is inferred structurally; no runtime topology trace or hardware verification."
+    },
+    "mbhc_semantic_behavior": {
+      "structural_evidence": {
+        "downstream_mbhc_hits": 87,
+        "upstream_mbhc_hits": 82,
+        "downstream_snd_jack_mentions": 4,
+        "upstream_snd_jack_mentions": 6
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.24,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "Jack/MBHC runtime behavior needs hardware event traces; callback parity cannot be inferred from symbol overlap."
+    },
+    "dapm_route_integrity": {
+      "structural_evidence": {
+        "downstream_dapm_mentions": 8,
+        "upstream_dapm_mentions": 8
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.21,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "Partial DAPM signal evidence exists, but no complete downstream route graph extraction in this run."
+    },
+    "alsa_control_surface": {
+      "structural_evidence": {
+        "upstream_controls_detected_from_source": true,
+        "downstream_controls_complete_inventory": false,
+        "inventory_status": "partial_only"
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.19,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "No full downstream ALSA control dump captured; control-name parity remains unproven."
+    },
+    "calibration_ownership_flow": {
+      "structural_evidence": {
+        "downstream_wcdcal_hits": 29,
+        "upstream_wcdcal_hits": 0,
+        "mapping_state": "unresolved"
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "not_established",
+      "confidence": 0.12,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "wcdcal ownership has no confirmed upstream equivalent; cannot assert semantic continuity."
+    },
+    "regulator_sequencing_behavior": {
+      "structural_evidence": {
+        "downstream_regulator_hits": 84,
+        "upstream_regulator_hits": 13
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.18,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "Regulator calls exist both sides but sequencing/timing parity is not proven without runtime traces."
+    },
+    "codec_probe_remove_lifecycle": {
+      "structural_evidence": {
+        "downstream_probe_remove_presence": true,
+        "upstream_probe_remove_presence": true
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.31,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified"
+      ],
+      "reason": "Lifecycle hooks are present structurally, but ordering equivalence and side-effects are unverified."
+    },
+    "runtime_pm_sequencing": {
+      "structural_evidence": {
+        "downstream_pm_runtime_hits": 4,
+        "upstream_pm_runtime_hits": 34
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "unknown",
+      "confidence": 0.22,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "PM transitions are present but no suspend/resume runtime trace comparison is available."
+    },
+    "downstream_abstraction_removal_impact": {
+      "structural_evidence": {
+        "msm_cdc_downstream_hits": 83,
+        "qti_debugfs_downstream_hits": 1,
+        "wcd_irq_downstream_hits": 41,
+        "upstream_equivalent_confirmed": false
+      },
+      "runtime_observability": "missing",
+      "equivalence_status": "not_established",
+      "confidence": 0.11,
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ],
+      "reason": "Wrapper removal has unresolved runtime ownership and callback implications."
+    }
+  },
+  "scoring": {
+    "semantic_confidence_score": 0.23,
+    "runtime_equivalence_score": 0.17,
+    "upstream_behavioral_readiness": "advisory_only",
+    "unresolved_runtime_risks": [
+      "soundwire_topology_semantics_unproven",
+      "mbhc_callback_semantics_unproven",
+      "regulator_timing_semantics_unproven",
+      "calibration_ownership_transition_unresolved",
+      "dt_abi_runtime_behavior_unproven",
+      "dapm_route_behavioral_parity_unproven",
+      "jack_detection_runtime_flow_unproven",
+      "runtime_pm_transition_parity_unproven",
+      "downstream_wrapper_removal_behavior_unproven"
+    ],
+    "classification": [
+      "advisory_only",
+      "runtime_unverified",
+      "escalation_required"
+    ]
+  }
+}

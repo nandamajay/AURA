@@ -1,7 +1,8 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS, WS_URL } from '../config'
+import { API_ROUTES, wsUrlWithToken } from '../config'
 import { useApiData } from '../hooks/useApiData'
+import { useAuthStore } from '../store/useAuthStore'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
 interface AgentCatalog {
@@ -168,6 +169,7 @@ function toCardStatus(raw: string): AgentCardStatus {
 }
 
 export default function LiveAgentObservability() {
+  const { token } = useAuthStore()
   const [agentType, setAgentType] = useState('learning')
   const [spawnResult, setSpawnResult] = useState<unknown>(null)
   const [spawnError, setSpawnError] = useState('')
@@ -181,11 +183,11 @@ export default function LiveAgentObservability() {
   const [focusedAgentId, setFocusedAgentId] = useState('')
   const wsRef = useRef<WebSocket | null>(null)
 
-  const { data: catalog } = useApiData<AgentCatalog>(ENDPOINTS.agents, { intervalMs: 20_000 })
-  const { data: running, reload: reloadRunning } = useApiData<RunningAgentsResponse>(`${ENDPOINTS.agents}/running`)
-  const { data: watchdog, reload: reloadWatchdog } = useApiData<WatchdogResponse>(`${ENDPOINTS.agents}/watchdog`)
-  const { data: breakers, reload: reloadBreakers } = useApiData(`${ENDPOINTS.agents}/circuit-breakers`)
-  const { data: runtimeOverview, reload: reloadRuntimeOverview } = useApiData<RuntimeOverview>(ENDPOINTS.runtimeOverview, {
+  const { data: catalog } = useApiData<AgentCatalog>(API_ROUTES.agents.root(), { intervalMs: 20_000 })
+  const { data: running, reload: reloadRunning } = useApiData<RunningAgentsResponse>(API_ROUTES.agents.running())
+  const { data: watchdog, reload: reloadWatchdog } = useApiData<WatchdogResponse>(API_ROUTES.agents.watchdog())
+  const { data: breakers, reload: reloadBreakers } = useApiData(API_ROUTES.agents.circuitBreakers())
+  const { data: runtimeOverview, reload: reloadRuntimeOverview } = useApiData<RuntimeOverview>(API_ROUTES.runtimeOverview(), {
     intervalMs: 12_000,
   })
 
@@ -214,6 +216,8 @@ export default function LiveAgentObservability() {
       isolation: isolation[domain],
     }))
   }, [runtimeOverview])
+
+  const wsEndpoint = useMemo(() => wsUrlWithToken(token), [token])
 
   useEffect(() => {
     if (!running && !watchdog) {
@@ -267,13 +271,19 @@ export default function LiveAgentObservability() {
   }, [running, watchdog])
 
   useEffect(() => {
-    const ws = new WebSocket(WS_URL)
+    const ws = new WebSocket(wsEndpoint)
     wsRef.current = ws
 
     ws.onopen = () => {
       setWsConnected(true)
       setWsError('')
-      ws.send(JSON.stringify({ action: 'subscribe', channels: WS_CHANNELS }))
+      ws.send(
+        JSON.stringify({
+          action: 'subscribe',
+          channels: WS_CHANNELS,
+          auth: token ? { type: 'bearer', token } : undefined,
+        }),
+      )
     }
 
     ws.onmessage = (message) => {
@@ -390,14 +400,17 @@ export default function LiveAgentObservability() {
       setWsError('WebSocket error. Live stream unavailable.')
     }
 
-    ws.onclose = () => {
+    ws.onclose = (event) => {
       setWsConnected(false)
+      if (!event.wasClean) {
+        setWsError(`WebSocket closed (${event.code}).`)
+      }
     }
 
     return () => {
       ws.close()
     }
-  }, [])
+  }, [token, wsEndpoint])
 
   async function refreshSnapshots() {
     await Promise.all([reloadRunning(), reloadWatchdog(), reloadBreakers(), reloadRuntimeOverview()])
@@ -410,7 +423,7 @@ export default function LiveAgentObservability() {
     setSpawning(true)
 
     try {
-      const result = await apiRequest(`${ENDPOINTS.agents}/${agentType}/spawn`, {
+      const result = await apiRequest(API_ROUTES.agents.spawn(agentType), {
         method: 'POST',
       })
       setSpawnResult(result)
@@ -424,7 +437,7 @@ export default function LiveAgentObservability() {
   async function killAgent(agentId: string) {
     setControlError('')
     try {
-      await apiRequest(`${ENDPOINTS.agents}/${agentId}`, { method: 'DELETE' })
+      await apiRequest(API_ROUTES.agents.byId(agentId), { method: 'DELETE' })
       setAgentCards((prev) => {
         const existing = prev[agentId]
         if (!existing) {
@@ -478,7 +491,8 @@ export default function LiveAgentObservability() {
 
         <SectionCard title="Stream Status">
           <MetaText>Socket: {wsConnected ? 'connected' : 'disconnected'}</MetaText>
-          <MetaText>URL: {WS_URL}</MetaText>
+          <MetaText>URL: {wsEndpoint}</MetaText>
+          <MetaText>auth_token_attached={token ? 'true' : 'false'}</MetaText>
           <MetaText>Channels: {WS_CHANNELS.join(', ')}</MetaText>
           {wsError ? <MetaText>{wsError}</MetaText> : null}
         </SectionCard>

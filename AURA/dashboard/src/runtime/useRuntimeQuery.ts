@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from 'react'
 import { apiRequest, toErrorMessage } from '../api/client'
+import { useAuthStore } from '../store/useAuthStore'
 
 interface RuntimeQueryOptions {
   intervalMs?: number
@@ -40,9 +41,10 @@ export function useRuntimeQuery<T = unknown>(
     includeAuth = true,
     init,
   } = options
+  const token = useAuthStore((state) => state.token)
 
   const [data, setData] = useState<T | null>(null)
-  const [loading, setLoading] = useState<boolean>(enabled)
+  const [loading, setLoading] = useState<boolean>(enabled && (!includeAuth || Boolean(token)))
   const [error, setError] = useState<string>('')
   const [lastUpdated, setLastUpdated] = useState<number>(0)
 
@@ -50,8 +52,15 @@ export function useRuntimeQuery<T = unknown>(
     if (!enabled) {
       return
     }
+    if (includeAuth && !token) {
+      setLoading(false)
+      setError('Authentication required')
+      setData(null)
+      return
+    }
 
-    const cacheKey = `${key}:${endpoint}:${includeAuth ? 'auth' : 'anon'}`
+    const authCacheScope = includeAuth ? `auth:${token.slice(-16)}` : 'anon'
+    const cacheKey = `${key}:${endpoint}:${authCacheScope}`
     const cached = runtimeCache.get(cacheKey)
     const now = Date.now()
     if (cached && cached.expiresAt > now) {
@@ -77,7 +86,7 @@ export function useRuntimeQuery<T = unknown>(
     } finally {
       setLoading(false)
     }
-  }, [enabled, endpoint, includeAuth, init, key, ttlMs])
+  }, [enabled, endpoint, includeAuth, init, key, token, ttlMs])
 
   useEffect(() => {
     void load()

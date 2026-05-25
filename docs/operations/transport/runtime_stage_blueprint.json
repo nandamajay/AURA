@@ -1,0 +1,70 @@
+{
+  "deterministic_fingerprint": "1460477478466a090dd93192257300abe8986bf9a9737f687a8774a0d136bdf2",
+  "generated_at": "2026-05-25T05:49:48.358000+00:00",
+  "report_name": "runtime_pipeline_stage_blueprint",
+  "schema_version": "1.0",
+  "stages": [
+    {
+      "dependencies": [
+        "runtime_trace_ingestion"
+      ],
+      "name": "runtime_equivalence",
+      "outputs": [
+        "runtime_equivalence_report.json",
+        "runtime_divergence_report.json",
+        "runtime_confidence_report.json",
+        "runtime_equivalence_fingerprint.json",
+        "deterministic_runtime_replay.json",
+        "hardware_truth_graph.json",
+        "ipc_topology_map.json"
+      ],
+      "runtime_sensitive": true
+    },
+    {
+      "dependencies": [
+        "runtime_equivalence"
+      ],
+      "name": "runtime_governance",
+      "outputs": [
+        "runtime_governance_decision.json",
+        "runtime_escalation_report.json",
+        "runtime_risk_report.json",
+        "runtime_replay_registry.json",
+        "replay_consistency_report.json"
+      ],
+      "runtime_sensitive": true
+    },
+    {
+      "dependencies": [],
+      "name": "runtime_trace_ingestion",
+      "outputs": [
+        "runtime_trace_ingestion_baseline.json",
+        "runtime_trace_ingestion_transformed.json"
+      ],
+      "runtime_sensitive": true
+    },
+    {
+      "dependencies": [
+        "runtime_governance"
+      ],
+      "name": "semantic_extraction",
+      "outputs": [
+        "semantic_entity_graph.json",
+        "semantic_relationship_map.json",
+        "semantic_ontology.json",
+        "semantic_confidence_report.json"
+      ],
+      "runtime_sensitive": false
+    },
+    {
+      "dependencies": [
+        "runtime_governance"
+      ],
+      "name": "simulation_governance",
+      "outputs": [
+        "runtime_promotion_eligibility.json"
+      ],
+      "runtime_sensitive": true
+    }
+  ]
+}

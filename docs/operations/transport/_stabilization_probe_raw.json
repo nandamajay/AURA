@@ -1,0 +1,1050 @@
+{
+  "auth_login": {
+    "ok": true,
+    "status": 200,
+    "latency_ms": 289.97,
+    "body": {
+      "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzOGU5MDI4NjU1NGM3NTYxZTg4MDUyODYwOTk5ODk4ZiIsImVtYWlsIjoibmFuZGFtQHF0aS5xdWFsY29tbS5jb20iLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3Nzk3MTc4ODYsImlhdCI6MTc3OTYzMTQ4Nn0.hYzBuLQailXIMn0-EEpuO2PSInHt8LIi-ubgPQ-6pT0",
+      "token_type": "bearer",
+      "user": {
+        "id": "38e90286554c7561e88052860999898f",
+        "email": "nandam@qti.qualcomm.com",
+        "role": "admin",
+        "display_name": "Administrator"
+      }
+    }
+  },
+  "auth_me_with_token": {
+    "ok": true,
+    "status": 200,
+    "latency_ms": 1.65,
+    "body": {
+      "id": "38e90286554c7561e88052860999898f",
+      "email": "nandam@qti.qualcomm.com",
+      "role": "admin"
+    }
+  },
+  "auth_me_without_token": {
+    "ok": false,
+    "status": 401,
+    "latency_ms": 1.13,
+    "body": {
+      "detail": "Authentication required"
+    }
+  },
+  "auth_me_with_invalid_token": {
+    "ok": false,
+    "status": 401,
+    "latency_ms": 1.08,
+    "body": {
+      "detail": "Invalid token"
+    }
+  },
+  "runtime_endpoints": {
+    "/api/v1/runtime/artifacts/index?limit=50": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 4.99,
+      "body": {
+        "artifacts": [
+          {
+            "metadata": {
+              "artifact_type": "runtime_equivalence_report",
+              "artifact_file": "runtime_equivalence_report.json",
+              "artifact_path": "/workspace/aura-repo/docs/operations/transport/runtime_equivalence_report.json",
+              "exists": true,
+              "size_bytes": 4030,
+              "modified_at": "2026-05-24T09:56:20.169866+00:00",
+              "report_name": "runtime_equivalence_report",
+              "schema_version": "1.0",
+              "target_id": "RB3Gen2",
+              "classification": "FAIL_CLOSED",
+              "lineage_id": "runtime_equivalence_v1",
+              "session_id": "runtime_equivalence_session_v1",
+              "created_at": "2026-05-24T09:56:20.173434+00:00",
+              "advisory_only_behavior": true,
+              "runtime_truth_precedence": true,
+              "deterministic_fingerprint": "0ae036f228f76b32c324aa53e5ddc94721d6d232296aad883e17bad3b479a866",
+              "replay_fingerprint": "0ae036f228f76b32c324aa53e5ddc94721d6d232296aad883e17bad3b479a866",
+              "evidence_references": [
+                "artifact://baseline_hardware_truth_graph",
+                "artifact://transformed_hardware_truth_graph"
+              ]
+            },
+            "validation": {
+              "valid": true,
+              "issues": [
+                {
+                  "code": "derived_replay_fingerprint",
+                  "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+                  "severity": "warning"
+                }
+              ]
+            }
+          },
+          {
+            "metadata": {
+              "artifact_type": "hardware_truth_graph",
+              "artifact_file": "hardware_truth_graph.json",
+              "artifact_path": "/workspace/aura-repo/docs/operations/transport/hardware_truth_graph.json",
+              "exists": true,
+              "size_bytes": 5571,
+              "modified_at": "2026-05-24T09:56:20.221865+00:00",
+              "report_name": "hardware_truth_graph",
+              "schema_version": "1.0",
+              "target_id": "RB3Gen2",
+              "classification": "PASS",
+              "lineage_id": "runtime_equivalence_v1_transformed",
+              "session_id": "runtime_equivalence_session_v1",
+              "created_at": "2026-05-24T09:56:20.173079+00:00",
+              "advisory_only_behavior": true,
+              "runtime_truth_precedence": true,
+              "deterministic_fingerprint": "67fc976a78e30364b345b2c7d8450bf06a0f77e498d315625a93ef9d1d9f3c33",
+              "replay_fingerprint": "67fc976a78e30364b345b2c7d8450bf06a0f77e498d315625a93ef9d1d9f3c33",
+              "evidence_references": [
+                "artifact://transformed_runtime_trace_ingestion"
+              ]
+            },
+            "validation": {
+              "valid": true,
+              "issues": [
+                {
+                  "code": "derived_replay_fingerprint",
+                  "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+                  "severity": "warning"
+                }
+              ]
+            }
+          },
+          {
+            "metadata": {
+              "artifact_type": "replay_consistency_report",
+              "artifact_file": "replay_consistency_report.json",
+              "artifact_path": "/workspace/aura-repo/docs/operations/transport/replay_consistency_report.json",
+              "exists": true,
+              "size_bytes": 806,
+              "modified_at": "2026-05-24T09:56:33.929618+00:00",
+              "report_name": "replay_consistency_report",
+              "schema_version": "1.0",
+              "target_id": "RB3Gen2",
+              "classification": "PASS",
+              "lineage_id": "runtime_governance_v1",
+              "session_id": "runtime_governance_session_v1",
+              "created_at": "2026-05-24T09:56:33.929618+00:00",
+              "advisory_only_behavior": true,
+              "runtime_truth_precedence": true,
+              "deterministic_fingerprint": "add6c6afa500ae8ea38ffa0f846689de2fa9fa06031b92b4265ea349a7911f31",
+              "replay_fingerprint": "2dd08240e2a6c87312c7fd2476f47cbd5910a0f3c259f830c0f32f3675bbc862",
+              "evidence_references": [
+                "artifact://deterministic_runtime_replay",
+                "artifact://runtime_equivalence_fingerprint",
+                "artifact://runtime_governance_decision"
+              ]
+            },
+            "validation": {
+              "valid": true,
+              "issues": [
+                {
+                  "code": "derived_created_at",
+                  "message": "created_at missing; derived from filesystem mtime.",
+                  "severity": "warning"
+                }
+              ]
+            }
+          },
+          {
+            "metadata": {
+              "artifact_type": "runtime_governance_decision",
+              "artifact_file": "runtime_governance_decision.json",
+              "artifact_path": "/workspace/aura-repo/docs/operations/transport/runtime_governance_decision.json",
+              "exists": true,
+              "size_bytes": 1624,
+              "modified_at": "2026-05-24T09:56:31.097669+00:00",
+              "report_name": "runtime_governance_decision",
+              "schema_version": "1.0",
+              "target_id": "RB3Gen2",
+              "classification": "FAIL_CLOSED",
+              "lineage_id": "runtime_governance_v1",
+              "session_id": "runtime_governance_session_v1",
+              "created_at": "2026-05-24T09:56:31.104415+00:00",
+              "advisory_only_behavior": true,
+              "runtime_truth_precedence": true,
+              "deterministic_fingerprint": "eb739cc81ff3b160aa1692a4e47c50fe8d62a717ea7a37c43726084e4834a642",
+              "replay_fingerprint": "1012241f777f1e595d83e305b2bc2397f4f6396acaa267fd1b838abe9d805ce7",
+              "evidence_references": [
+                "artifact://runtime_equivalence_report",
+                "artifact://runtime_divergence_report",
+                "artifact://runtime_confidence_report",
+                "artifact://deterministic_runtime_replay",
+                "registry://governance_state"
+              ]
+            },
+            "validation": {
+              "valid": true,
+              "issues": []
+            }
+          },
+          {
+            "metadata": {
+              "artifact_type": "transformation_confidence_report",
+              "artifact_file": "transformation_confidence_report.json",
+              "artifact_path": "/workspace/aura-repo/docs/operations/transport/transformation_confidence_report.json",
+              "exists": true,
+              "size_bytes": 983,
+              "modified_at": "2026-05-23T18:16:12.224742+00:00",
+              "report_name": "transformation_confidence_report",
+              "schema_version": "1.0",
+              "target_id": "RB3Gen2",
+              "classification": "FAIL_CLOSED",
+              "lineage_id": "",
+              "session_id": "",
+              "created_at": "2026-05-23T18:16:12.224742+00:00",
+              "advisory_only_behavior": true,
+              "runtime_truth_precedence": true,
+              "deterministic_fingerprint": "13825eccf2629373606f236d3071313c77c681e2a7c577d6ed2a9fa8ea783feb",
+              "replay_fingerprint": "13825eccf2629373606f236d3071313c77c681e2a7c577d6ed2a9fa8ea783feb",
+              "evidence_references": [
+                "registry://governance_state",
+                "registry://runtime_cognition",
+                "registry://topology_cognition",
+                "registry://real_source_tree_governed_conversion",
+                "source://downstream_audio_kernel_tree",
+                "artifact://aura_replay_determinism_report"
+              ]
+            },
+            "validation": {
+              "valid": true,
+              "issues": [
+                {
+                  "code": "missing_lineage_id",
+                  "message": "lineage_id missing; replay lineage traceability is reduced.",
+                  "severity": "warning"
+                },
+                {
+                  "code": "missing_session_id",
+                  "message": "session_id missing; session-scoped replay correlation is reduced.",
+                  "severity": "warning"
+                },
+                {
+                  "code": "derived_created_at",
+                  "message": "created_at missing; derived from filesystem mtime.",
+                  "severity": "warning"
+                },
+                {
+                  "code": "derived_replay_fingerprint",
+                  "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+                  "severity": "warning"
+                }
+              ]
+            }
+          }
+        ],
+        "pagination": {
+          "page": 1,
+          "limit": 50,
+          "total": 5
+        },
+        "generated_at": "2026-05-24T14:04:46.161252+00:00"
+      }
+    },
+    "/api/v1/runtime/governance/summary": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 4.55,
+      "body": {
+        "available": true,
+        "generated_at": "2026-05-24T14:04:46.165895+00:00",
+        "classification": "FAIL_CLOSED",
+        "promotion_eligible": false,
+        "confidence_score": 0.0,
+        "confidence_threshold": 0.78,
+        "critical_divergence_count": 6,
+        "runtime_sensitive_impact_count": 4,
+        "deterministic_replay_ready": true,
+        "fail_closed_reasons": [
+          "critical_runtime_divergence_detected",
+          "runtime_confidence_below_threshold",
+          "runtime_confidence_fail_closed",
+          "runtime_divergence_fail_closed",
+          "runtime_sensitive_region_instability"
+        ],
+        "lineage_consistency": {
+          "valid": true,
+          "issues": [
+            {
+              "code": "session_id_mismatch",
+              "message": "Cross-artifact session_id mismatch: ['runtime_equivalence_session_v1', 'runtime_governance_session_v1']",
+              "severity": "warning"
+            },
+            {
+              "code": "lineage_id_mismatch",
+              "message": "Cross-artifact lineage_id mismatch: ['runtime_equivalence_v1', 'runtime_equivalence_v1_transformed', 'runtime_governance_v1']",
+              "severity": "warning"
+            },
+            {
+              "code": "replay_fingerprint_drift",
+              "message": "Replay fingerprint differs across runtime artifacts.",
+              "severity": "warning"
+            }
+          ]
+        },
+        "replay_consistency": {
+          "report_name": "replay_consistency_report",
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2",
+          "advisory_only_behavior": true,
+          "runtime_truth_precedence": true,
+          "classification": "PASS",
+          "deterministic_fingerprint": "add6c6afa500ae8ea38ffa0f846689de2fa9fa06031b92b4265ea349a7911f31",
+          "evidence_references": [
+            "artifact://deterministic_runtime_replay",
+            "artifact://runtime_equivalence_fingerprint",
+            "artifact://runtime_governance_decision"
+          ],
+          "lineage_id": "runtime_governance_v1",
+          "session_id": "runtime_governance_session_v1",
+          "created_at": "",
+          "consistency": {
+            "deterministic_event_ordering": true,
+            "lineage_fingerprint": "2dd08240e2a6c87312c7fd2476f47cbd5910a0f3c259f830c0f32f3675bbc862",
+            "previous_lineage_fingerprint": "",
+            "replay_drift": false
+          },
+          "reasons": []
+        },
+        "metadata": {
+          "artifact_type": "runtime_governance_decision",
+          "artifact_file": "runtime_governance_decision.json",
+          "artifact_path": "/workspace/aura-repo/docs/operations/transport/runtime_governance_decision.json",
+          "exists": true,
+          "size_bytes": 1624,
+          "modified_at": "2026-05-24T09:56:31.097669+00:00",
+          "report_name": "runtime_governance_decision",
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2",
+          "classification": "FAIL_CLOSED",
+          "lineage_id": "runtime_governance_v1",
+          "session_id": "runtime_governance_session_v1",
+          "created_at": "2026-05-24T09:56:31.104415+00:00",
+          "advisory_only_behavior": true,
+          "runtime_truth_precedence": true,
+          "deterministic_fingerprint": "eb739cc81ff3b160aa1692a4e47c50fe8d62a717ea7a37c43726084e4834a642",
+          "replay_fingerprint": "1012241f777f1e595d83e305b2bc2397f4f6396acaa267fd1b838abe9d805ce7",
+          "evidence_references": [
+            "artifact://runtime_equivalence_report",
+            "artifact://runtime_divergence_report",
+            "artifact://runtime_confidence_report",
+            "artifact://deterministic_runtime_replay",
+            "registry://governance_state"
+          ]
+        },
+        "references": {
+          "governance": "/workspace/aura-repo/docs/operations/transport/runtime_governance_decision.json",
+          "replay": "/workspace/aura-repo/docs/operations/transport/replay_consistency_report.json"
+        }
+      }
+    },
+    "/api/v1/runtime/topology": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 3.67,
+      "body": {
+        "available": true,
+        "generated_at": "2026-05-24T14:04:46.169508+00:00",
+        "section": "clock_sequence",
+        "sections": [
+          "clock_sequence",
+          "codec_relationships",
+          "dapm_routes",
+          "dsp_events",
+          "fe_be_links",
+          "irq_ordering",
+          "mailbox_synchronization",
+          "pcm_lifecycle",
+          "regulator_sequence",
+          "soundwire_links"
+        ],
+        "events": [
+          {
+            "timestamp_ms": 1190.0,
+            "message": "1.190: clock audio_core enabled",
+            "domain": "CLOCK",
+            "event_id": "clock:1",
+            "source": "clock"
+          },
+          {
+            "timestamp_ms": 1230.0,
+            "message": "1.230: clk mi2s0 enabled delayed",
+            "domain": "CLOCK",
+            "event_id": "clock:2",
+            "source": "clock"
+          }
+        ],
+        "summary": {
+          "clock_event_count": 2,
+          "dapm_event_count": 5,
+          "dsp_event_count": 2,
+          "event_count": 24,
+          "fe_be_link_count": 4,
+          "irq_event_count": 2,
+          "pcm_event_count": 3,
+          "regulator_event_count": 2,
+          "soundwire_event_count": 2
+        },
+        "integrity": {
+          "valid": true,
+          "issues": [
+            {
+              "code": "derived_replay_fingerprint",
+              "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+              "severity": "warning"
+            }
+          ]
+        },
+        "metadata": {
+          "artifact_type": "hardware_truth_graph",
+          "artifact_file": "hardware_truth_graph.json",
+          "artifact_path": "/workspace/aura-repo/docs/operations/transport/hardware_truth_graph.json",
+          "exists": true,
+          "size_bytes": 5571,
+          "modified_at": "2026-05-24T09:56:20.221865+00:00",
+          "report_name": "hardware_truth_graph",
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2",
+          "classification": "PASS",
+          "lineage_id": "runtime_equivalence_v1_transformed",
+          "session_id": "runtime_equivalence_session_v1",
+          "created_at": "2026-05-24T09:56:20.173079+00:00",
+          "advisory_only_behavior": true,
+          "runtime_truth_precedence": true,
+          "deterministic_fingerprint": "67fc976a78e30364b345b2c7d8450bf06a0f77e498d315625a93ef9d1d9f3c33",
+          "replay_fingerprint": "67fc976a78e30364b345b2c7d8450bf06a0f77e498d315625a93ef9d1d9f3c33",
+          "evidence_references": [
+            "artifact://transformed_runtime_trace_ingestion"
+          ]
+        },
+        "pagination": {
+          "page": 1,
+          "limit": 60,
+          "total": 2
+        }
+      }
+    },
+    "/api/v1/runtime/equivalence": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 3.68,
+      "body": {
+        "available": true,
+        "generated_at": "2026-05-24T14:04:46.173384+00:00",
+        "dimensions": [
+          {
+            "dimension": "irq_divergence",
+            "classification": "DIVERGED",
+            "critical": true,
+            "difference_count": 4,
+            "drift_ratio": 2.0,
+            "baseline_count": 2,
+            "transformed_count": 2,
+            "weight": 0.14,
+            "added_items": [
+              "IRQ:1.285: irq 21 handled delayed",
+              "IRQ:1.330: irq 21 complete"
+            ],
+            "missing_items": [
+              "IRQ:1.260: irq 21 handled",
+              "IRQ:1.300: irq 21 complete"
+            ]
+          },
+          {
+            "dimension": "lifecycle_drift",
+            "classification": "DIVERGED",
+            "critical": false,
+            "difference_count": 2,
+            "drift_ratio": 0.666667,
+            "baseline_count": 3,
+            "transformed_count": 3,
+            "weight": 0.15,
+            "added_items": [
+              "PCM:1.245: pcm start fe0->be0"
+            ],
+            "missing_items": [
+              "PCM:1.230: pcm start fe0->be0"
+            ]
+          },
+          {
+            "dimension": "clock_mismatch",
+            "classification": "DIVERGED",
+            "critical": false,
+            "difference_count": 2,
+            "drift_ratio": 1.0,
+            "baseline_count": 2,
+            "transformed_count": 2,
+            "weight": 0.08,
+            "added_items": [
+              "CLOCK:1.230: clk mi2s0 enabled delayed"
+            ],
+            "missing_items": [
+              "CLOCK:1.215: clk mi2s0 enabled"
+            ]
+          },
+          {
+            "dimension": "dsp_sequence_instability",
+            "classification": "DIVERGED",
+            "critical": true,
+            "difference_count": 2,
+            "drift_ratio": 1.0,
+            "baseline_count": 2,
+            "transformed_count": 2,
+            "weight": 0.14,
+            "added_items": [
+              "DSP:1.266: dsp mailbox rx graph_ack delayed"
+            ],
+            "missing_items": [
+              "DSP:1.258: dsp mailbox rx graph_ack"
+            ]
+          },
+          {
+            "dimension": "mailbox_ordering_divergence",
+            "classification": "DIVERGED",
+            "critical": true,
+            "difference_count": 2,
+            "drift_ratio": 1.0,
+            "baseline_count": 2,
+            "transformed_count": 2,
+            "weight": 0.15,
+            "added_items": [
+              "1.266: dsp mailbox rx graph_ack delayed"
+            ],
+            "missing_items": [
+              "1.258: dsp mailbox rx graph_ack"
+            ]
+          },
+          {
+            "dimension": "soundwire_topology_mismatch",
+            "classification": "DIVERGED",
+            "critical": true,
+            "difference_count": 2,
+            "drift_ratio": 1.0,
+            "baseline_count": 2,
+            "transformed_count": 2,
+            "weight": 0.11,
+            "added_items": [
+              "SOUNDWIRE:1.259: swr slave codec:wsa883x online delayed"
+            ],
+            "missing_items": [
+              "SOUNDWIRE:1.255: swr slave codec:wsa883x online"
+            ]
+          },
+          {
+            "dimension": "pcm_transition_inconsistency",
+            "classification": "DIVERGED",
+            "critical": true,
+            "difference_count": 2,
+            "drift_ratio": 0.666667,
+            "baseline_count": 3,
+            "transformed_count": 3,
+            "weight": 0.11,
+            "added_items": [
+              "PCM:1.245: pcm start fe0->be0"
+            ],
+            "missing_items": [
+              "PCM:1.230: pcm start fe0->be0"
+            ]
+          },
+          {
+            "dimension": "runtime_sensitive_region_instability",
+            "classification": "DIVERGED",
+            "critical": true,
+            "difference_count": 4,
+            "drift_ratio": 1.0,
+            "baseline_count": 0,
+            "transformed_count": 4,
+            "weight": 0.12,
+            "added_items": [
+              "runtime_sensitive_delay_detected"
+            ],
+            "missing_items": []
+          }
+        ],
+        "summary": {
+          "confidence_score": 0.0,
+          "critical_divergence_count": 6,
+          "total_differences": 20
+        },
+        "unsafe_regions": [
+          "irq_divergence",
+          "dsp_sequence_instability",
+          "mailbox_ordering_divergence",
+          "soundwire_topology_mismatch",
+          "pcm_transition_inconsistency",
+          "runtime_sensitive_region_instability"
+        ],
+        "validation": {
+          "valid": true,
+          "issues": [
+            {
+              "code": "derived_replay_fingerprint",
+              "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+              "severity": "warning"
+            }
+          ]
+        },
+        "metadata": {
+          "artifact_type": "runtime_equivalence_report",
+          "artifact_file": "runtime_equivalence_report.json",
+          "artifact_path": "/workspace/aura-repo/docs/operations/transport/runtime_equivalence_report.json",
+          "exists": true,
+          "size_bytes": 4030,
+          "modified_at": "2026-05-24T09:56:20.169866+00:00",
+          "report_name": "runtime_equivalence_report",
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2",
+          "classification": "FAIL_CLOSED",
+          "lineage_id": "runtime_equivalence_v1",
+          "session_id": "runtime_equivalence_session_v1",
+          "created_at": "2026-05-24T09:56:20.173434+00:00",
+          "advisory_only_behavior": true,
+          "runtime_truth_precedence": true,
+          "deterministic_fingerprint": "0ae036f228f76b32c324aa53e5ddc94721d6d232296aad883e17bad3b479a866",
+          "replay_fingerprint": "0ae036f228f76b32c324aa53e5ddc94721d6d232296aad883e17bad3b479a866",
+          "evidence_references": [
+            "artifact://baseline_hardware_truth_graph",
+            "artifact://transformed_hardware_truth_graph"
+          ]
+        },
+        "pagination": {
+          "page": 1,
+          "limit": 50,
+          "total": 8
+        }
+      }
+    },
+    "/api/v1/runtime/confidence": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 5.25,
+      "body": {
+        "available": true,
+        "generated_at": "2026-05-24T14:04:46.178775+00:00",
+        "classification": "FAIL_CLOSED",
+        "runtime_confidence": 0.16,
+        "confidence_threshold": 0.72,
+        "confidence_delta_from_threshold": -0.56,
+        "governance_blocked": true,
+        "stale_state": false,
+        "stale_reason": "",
+        "drivers": {
+          "approved_transformations": 42,
+          "blocked_transformations": 799,
+          "compile_classification": "FAIL_CLOSED",
+          "missing_include_count": 1745,
+          "runtime_sensitive_region_count": 2126,
+          "symbol_lineage_consistent": true
+        },
+        "validation": {
+          "valid": false,
+          "issues": [
+            {
+              "code": "missing_lineage_id",
+              "message": "lineage_id missing; replay lineage traceability is reduced.",
+              "severity": "warning"
+            },
+            {
+              "code": "missing_session_id",
+              "message": "session_id missing; session-scoped replay correlation is reduced.",
+              "severity": "warning"
+            },
+            {
+              "code": "derived_created_at",
+              "message": "created_at missing; derived from filesystem mtime.",
+              "severity": "warning"
+            },
+            {
+              "code": "derived_replay_fingerprint",
+              "message": "No replay fingerprint found; using deterministic fingerprint as fallback.",
+              "severity": "warning"
+            },
+            {
+              "code": "governance_fail_closed",
+              "message": "Runtime governance is FAIL_CLOSED; confidence cannot promote runtime transitions.",
+              "severity": "error"
+            }
+          ]
+        },
+        "metadata": {
+          "artifact_type": "transformation_confidence_report",
+          "artifact_file": "transformation_confidence_report.json",
+          "artifact_path": "/workspace/aura-repo/docs/operations/transport/transformation_confidence_report.json",
+          "exists": true,
+          "size_bytes": 983,
+          "modified_at": "2026-05-23T18:16:12.224742+00:00",
+          "report_name": "transformation_confidence_report",
+          "schema_version": "1.0",
+          "target_id": "RB3Gen2",
+          "classification": "FAIL_CLOSED",
+          "lineage_id": "",
+          "session_id": "",
+          "created_at": "2026-05-23T18:16:12.224742+00:00",
+          "advisory_only_behavior": true,
+          "runtime_truth_precedence": true,
+          "deterministic_fingerprint": "13825eccf2629373606f236d3071313c77c681e2a7c577d6ed2a9fa8ea783feb",
+          "replay_fingerprint": "13825eccf2629373606f236d3071313c77c681e2a7c577d6ed2a9fa8ea783feb",
+          "evidence_references": [
+            "registry://governance_state",
+            "registry://runtime_cognition",
+            "registry://topology_cognition",
+            "registry://real_source_tree_governed_conversion",
+            "source://downstream_audio_kernel_tree",
+            "artifact://aura_replay_determinism_report"
+          ]
+        },
+        "references": {
+          "confidence": "/workspace/aura-repo/docs/operations/transport/transformation_confidence_report.json",
+          "governance": "/workspace/aura-repo/docs/operations/transport/runtime_governance_decision.json"
+        }
+      }
+    }
+  },
+  "knowledge_endpoints": {
+    "/api/v1/knowledge/evidence/index?limit=120&max_depth=4": {
+      "ok": false,
+      "status": null,
+      "error": "timed out",
+      "latency_ms": 20020.46,
+      "body": null
+    },
+    "/api/v1/knowledge/rules?limit=60": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 11381.42,
+      "body": {
+        "rules": [],
+        "page": 1,
+        "limit": 60,
+        "total": 0
+      }
+    },
+    "/api/v1/knowledge/search?q=audio&limit=20": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 18.94,
+      "body": {
+        "results": [],
+        "query": "audio",
+        "count": 0
+      }
+    }
+  },
+  "ops_endpoints": {
+    "/health/ready": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 25.96,
+      "body": {
+        "service": "aura-core",
+        "status": "healthy",
+        "version": "0.1.0",
+        "timestamp": "2026-05-24T14:05:17.625949Z",
+        "uptime_seconds": 307.3580656051636,
+        "components": [
+          {
+            "name": "sqlite",
+            "status": "healthy",
+            "latency_ms": 3,
+            "message": ""
+          },
+          {
+            "name": "llm-gateway",
+            "status": "healthy",
+            "latency_ms": 11,
+            "message": ""
+          },
+          {
+            "name": "ws-server",
+            "status": "healthy",
+            "latency_ms": 9,
+            "message": ""
+          }
+        ]
+      }
+    },
+    "/health/runtime-overview": {
+      "ok": false,
+      "status": 401,
+      "latency_ms": 1.2,
+      "body": {
+        "detail": "Authentication required"
+      }
+    },
+    "/api/v1/agents/running": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 1.27,
+      "body": {
+        "agents": [],
+        "count": 0
+      }
+    },
+    "/api/v1/agents/watchdog": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 1.12,
+      "body": {
+        "count": 0,
+        "max_watches": 50,
+        "states": {}
+      }
+    },
+    "/api/v1/governance/audit?limit=20": {
+      "ok": true,
+      "status": 200,
+      "latency_ms": 5.78,
+      "body": {
+        "entries": [
+          {
+            "id": 14996,
+            "timestamp": 1779631210,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"4c4c5092-8815-47a7-8a8f-49a1552b6c91\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"4c4c5092-8815-47a7-8a8f-49a1552b6c91\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T14:00:10.952517+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14995,
+            "timestamp": 1779630647,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"0b3e0d6f-4134-49bc-8763-1c756e434a1d\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"0b3e0d6f-4134-49bc-8763-1c756e434a1d\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T13:50:47.142862+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14994,
+            "timestamp": 1779630637,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"c90884e6-d2a4-40ec-baec-27ded97b8344\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"c90884e6-d2a4-40ec-baec-27ded97b8344\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T13:50:37.634117+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14993,
+            "timestamp": 1779630625,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"6f5898ca-48d7-417a-a724-523b0ff92340\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"6f5898ca-48d7-417a-a724-523b0ff92340\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T13:50:25.111765+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14992,
+            "timestamp": 1779630586,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"536de6fb-ecb4-4e4a-93b7-73b22a60fd94\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"536de6fb-ecb4-4e4a-93b7-73b22a60fd94\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T13:49:46.559579+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14991,
+            "timestamp": 1779630569,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"179c346b-566d-4375-8ea4-07ed87ca79b5\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"179c346b-566d-4375-8ea4-07ed87ca79b5\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T13:49:29.446677+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14990,
+            "timestamp": 1779630559,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"ebe4593f-2bf9-4666-8e9d-072ac35c4f41\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"ebe4593f-2bf9-4666-8e9d-072ac35c4f41\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T13:49:19.775021+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14989,
+            "timestamp": 1779620370,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"dce7e429-ded2-4be9-91a7-71984ea54274\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"dce7e429-ded2-4be9-91a7-71984ea54274\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:59:30.899153+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14988,
+            "timestamp": 1779620203,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"d9271b7f-25a7-4859-9d1d-2bc24f43a0d6\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"d9271b7f-25a7-4859-9d1d-2bc24f43a0d6\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:56:43.068517+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14987,
+            "timestamp": 1779620184,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"5f96ca3c-4605-40aa-81a5-ba504d25de43\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"5f96ca3c-4605-40aa-81a5-ba504d25de43\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:56:24.648425+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14986,
+            "timestamp": 1779620155,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"4db533fc-7575-4696-b592-5b1c2c70284e\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"4db533fc-7575-4696-b592-5b1c2c70284e\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:55:55.337462+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14985,
+            "timestamp": 1779620146,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"39a3f1a3-da7d-4866-a792-3909783277af\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"39a3f1a3-da7d-4866-a792-3909783277af\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:55:46.938406+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14984,
+            "timestamp": 1779620099,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"12d083fb-6eca-4780-bcee-c436adee3772\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"12d083fb-6eca-4780-bcee-c436adee3772\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:54:59.046445+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14983,
+            "timestamp": 1779620060,
+            "user_id": null,
+            "session_id": "core-startup",
+            "event_type": "service.started",
+            "target_type": "system",
+            "target_id": "core-startup",
+            "before_state": "{\"event_id\":\"8e1cd12b-e064-43cb-9d52-53344e2fd75e\",\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"trace_id\":\"core-startup\"}",
+            "after_state": "{\"event_id\":\"8e1cd12b-e064-43cb-9d52-53344e2fd75e\",\"event_type\":\"service.started\",\"payload\":{\"service\":\"aura-core\",\"version\":\"0.1.0\"},\"source\":{\"agent_id\":\"\",\"agent_type\":\"\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"\"},\"timestamp\":\"2026-05-24T10:54:20.831973+00:00\",\"trace_id\":\"core-startup\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14982,
+            "timestamp": 1779201123,
+            "user_id": null,
+            "session_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "event_type": "task.completed",
+            "target_type": "task",
+            "target_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "before_state": "{\"event_id\":\"e6ac11c7-b506-4328-a23f-96d1d730bd7e\",\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"}",
+            "after_state": "{\"event_id\":\"e6ac11c7-b506-4328-a23f-96d1d730bd7e\",\"event_type\":\"task.completed\",\"payload\":{\"agent_type\":\"patch_builder\",\"results\":{\"cover_letter_path\":\"/data/outputs/patch_builder/06f970ba-bcb8-4c26-a546-b1e33956f8e9/cover_letter.md\",\"file_count\":3,\"manifest_path\":\"/data/outputs/patch_builder/06f970ba-bcb8-4c26-a546-b1e33956f8e9/patch_manifest.json\",\"patch_title\":\"ALSA: qcom: deterministic upstream prep\",\"rule_hints_used\":0},\"status\":\"completed\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"timestamp\":\"2026-05-19T14:32:03.667952+00:00\",\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14981,
+            "timestamp": 1779201123,
+            "user_id": null,
+            "session_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "event_type": "agent.completed",
+            "target_type": "agent",
+            "target_id": "patch_builder-06f970ba",
+            "before_state": "{\"event_id\":\"6cfe3f35-7c33-4182-8f62-304b0f879065\",\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"}",
+            "after_state": "{\"event_id\":\"6cfe3f35-7c33-4182-8f62-304b0f879065\",\"event_type\":\"agent.completed\",\"payload\":{\"confidence\":0.0,\"exit_code\":0,\"usage\":{\"duration_ms\":10533,\"memory_mb\":55}},\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"timestamp\":\"2026-05-19T14:32:03.667913+00:00\",\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14980,
+            "timestamp": 1779201123,
+            "user_id": null,
+            "session_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "event_type": "task.progress",
+            "target_type": "task",
+            "target_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "before_state": "{\"event_id\":\"5d383aca-8896-4341-b8c2-79341d79a879\",\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"}",
+            "after_state": "{\"event_id\":\"5d383aca-8896-4341-b8c2-79341d79a879\",\"event_type\":\"task.progress\",\"payload\":{\"message\":\"Task completed successfully\",\"progress_percent\":100,\"status\":\"complete\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"timestamp\":\"2026-05-19T14:32:03.664388+00:00\",\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14979,
+            "timestamp": 1779201123,
+            "user_id": null,
+            "session_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "event_type": "task.progress",
+            "target_type": "task",
+            "target_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "before_state": "{\"event_id\":\"2d679927-d627-406b-aa63-458c219d3ac6\",\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"}",
+            "after_state": "{\"event_id\":\"2d679927-d627-406b-aa63-458c219d3ac6\",\"event_type\":\"task.progress\",\"payload\":{\"message\":\"Artifacts written: patch_manifest.json, cover_letter.md\",\"progress_percent\":95,\"status\":\"artifacts_written\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"timestamp\":\"2026-05-19T14:32:03.647500+00:00\",\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14978,
+            "timestamp": 1779201113,
+            "user_id": null,
+            "session_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "event_type": "agent.heartbeat",
+            "target_type": "agent",
+            "target_id": "patch_builder-06f970ba",
+            "before_state": "{\"event_id\":\"317cdc5a-a34f-4efe-b25c-7fd9b456bf05\",\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"}",
+            "after_state": "{\"event_id\":\"317cdc5a-a34f-4efe-b25c-7fd9b456bf05\",\"event_type\":\"agent.heartbeat\",\"payload\":{\"cpu_percent\":0.0,\"memory_mb\":54,\"timestamp\":1779201113.3864715},\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"timestamp\":\"2026-05-19T14:31:53.487679+00:00\",\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          },
+          {
+            "id": 14977,
+            "timestamp": 1779201113,
+            "user_id": null,
+            "session_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "event_type": "task.progress",
+            "target_type": "task",
+            "target_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "before_state": "{\"event_id\":\"bd06030f-d6e9-4654-8d3e-d12d053f2c4f\",\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"}",
+            "after_state": "{\"event_id\":\"bd06030f-d6e9-4654-8d3e-d12d053f2c4f\",\"event_type\":\"task.progress\",\"payload\":{\"message\":\"Manifest has 3 file entries and 4 validation steps\",\"progress_percent\":70,\"status\":\"manifest_built\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"source\":{\"agent_id\":\"patch_builder-06f970ba\",\"agent_type\":\"patch_builder\",\"service\":\"core\",\"subsystem\":\"S1\",\"task_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\"},\"timestamp\":\"2026-05-19T14:31:53.204194+00:00\",\"trace_id\":\"06f970ba-bcb8-4c26-a546-b1e33956f8e9\",\"version\":\"1.0\"}",
+            "chain_hash": "3333333333333333333333333333333333333333333333333333333333333333"
+          }
+        ],
+        "count": 20
+      }
+    }
+  }
+}

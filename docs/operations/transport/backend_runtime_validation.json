@@ -2,7 +2,7 @@
   "fastapi_live_probe": {
     "details": {
       "command": [
-        "/usr/bin/python3",
+        "/usr/local/bin/python",
         "-m",
         "uvicorn",
         "core.main:app",
@@ -13,29 +13,28 @@
         "--log-level",
         "warning"
       ],
-      "duration_seconds": 0.503891,
+      "duration_seconds": 2.694914,
       "last_error": "<urlopen error [Errno 111] Connection refused>",
-      "ready": false,
+      "ready": true,
       "ready_endpoint": "http://127.0.0.1:18780/health/live",
-      "returncode": 1,
-      "started": false,
-      "status": "FAIL",
-      "stderr_tail": "/usr/bin/python3: No module named uvicorn\n",
-      "stdout_tail": ""
+      "returncode": -15,
+      "started": true,
+      "status": "PASS",
+      "stderr_tail": "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field \"model_version\" has conflict with protected namespace \"model_\".\n\nYou may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.\n  warnings.warn(\n/usr/local/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field \"model_version_used\" has conflict with protected namespace \"model_\".\n\nYou may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.\n  warnings.warn(\n",
+      "stdout_tail": "Errno -2] Name or service not known\\\", \\\"event_type\\\": \\\"service.started\\\", \\\"channel\\\": \\\"system\\\", \\\"routed_channels\\\": [\\\"system\\\"], \\\"plugin_domain\\\": \\\"\\\", \\\"event\\\": \\\"event_forward_error\\\", \\\"logger\\\": \\\"core.events\\\", \\\"level\\\": \\\"warning\\\", \\\"timestamp\\\": \\\"2026-05-25T05:49:02.911244Z\\\"}\", \"module\": \"events\", \"function\": \"_forward_to_ws\", \"line\": 247}\n{\"timestamp\": 1779688143.086404, \"level\": \"INFO\", \"logger\": \"core.task_queue\", \"message\": \"{\\\"event\\\": \\\"task_queue_stopped\\\", \\\"logger\\\": \\\"core.task_queue\\\", \\\"level\\\": \\\"info\\\", \\\"timestamp\\\": \\\"2026-05-25T05:49:03.086308Z\\\"}\", \"module\": \"task_queue\", \"function\": \"stop\", \"line\": 112}\n{\"timestamp\": 1779688143.086722, \"level\": \"INFO\", \"logger\": \"core.events\", \"message\": \"{\\\"event\\\": \\\"event_bus_stopped\\\", \\\"logger\\\": \\\"core.events\\\", \\\"level\\\": \\\"info\\\", \\\"timestamp\\\": \\\"2026-05-25T05:49:03.086691Z\\\"}\", \"module\": \"events\", \"function\": \"stop_event_bus\", \"line\": 290}\n{\"timestamp\": 1779688143.0867932, \"level\": \"INFO\", \"logger\": \"core\", \"message\": \"{\\\"event\\\": \\\"core.shutdown\\\", \\\"logger\\\": \\\"core\\\", \\\"level\\\": \\\"info\\\", \\\"timestamp\\\": \\\"2026-05-25T05:49:03.086767Z\\\"}\", \"module\": \"lifespan\", \"function\": \"lifespan\", \"line\": 154}\n"
     },
-    "status": "BLOCKED_ENV"
+    "status": "PASS"
   },
   "fastapi_startup_probe": {
-    "returncode": 1,
-    "status": "BLOCKED_ENV",
-    "stderr": "Traceback (most recent call last):\n  File \"<string>\", line 1, in <module>\n  File \"/local/mnt/workspace/AURA_V1/AURA/services/core/src/core/main.py\", line 9, in <module>\n    from core.lifespan import lifespan, get_uptime\n  File \"/local/mnt/workspace/AURA_V1/AURA/services/core/src/core/lifespan.py\", line 11, in <module>\n    from aura_sdk.models.event import EventType\n  File \"/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src/aura_sdk/models/__init__.py\", line 3, in <module>\n    from aura_sdk.models.event import EventEnvelope, EventType, EventSource\n  File \"/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/src/aura_sdk/models/event.py\", line 4, in <module>\n    from enum import StrEnum\nImportError: cannot import name 'StrEnum' from 'enum' (/usr/lib/python3.10/enum.py)",
-    "stdout": ""
+    "returncode": 0,
+    "status": "PASS",
+    "stderr": "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field \"model_version\" has conflict with protected namespace \"model_\".\n\nYou may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.\n  warnings.warn(\n/usr/local/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field \"model_version_used\" has conflict with protected namespace \"model_\".\n\nYou may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.\n  warnings.warn(",
+    "stdout": "routes 125"
   },
-  "generated_at": "2026-05-24T12:50:39.576556+00:00",
+  "generated_at": "2026-05-25T05:49:13.178923+00:00",
   "governance_artifact_accessible": true,
-  "python312_available": false,
-  "python312_version": "[Errno 2] No such file or directory: 'python3.12'",
-  "python_current": "Python 3.10.12",
+  "python312_runtime": true,
+  "python_current": "Python 3.12.13",
   "replay_registry_accessible": true,
   "runtime_artifact_access": {
     "aura_governance_state.json": {
@@ -50,63 +49,71 @@
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "9a5a54506ff550c581fb44a6c8c868a990ebd96a40d2d53bd14ddbeb09ea8dde",
-      "size_bytes": 5223,
+      "sha256": "4bc043576fcc5efbd78ec3669acda54f951b98f0abea6ec7bc3df4a7abeb328b",
+      "size_bytes": 5761,
       "top_level_type": "dict"
     },
     "hardware_truth_graph.json": {
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "a8f1516701ecb55f3f294b6b989bbe8d6bfd693f3b8fea2405ef63143ef0dd89",
-      "size_bytes": 5571,
+      "sha256": "0853e11c8d59fd7320946cc1e81dc46e3aeab0cac34ee6dfa7f403ffd5503af5",
+      "size_bytes": 6109,
       "top_level_type": "dict"
     },
     "replay_consistency_report.json": {
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "1f888c144a7f087945638d7671eeab0ec059cb494427f51ab0797fe2c5ebd2d9",
-      "size_bytes": 806,
+      "sha256": "d4dc6fca6ba1312a230ff3d2e07950a72b243fb5c9223d742549cdf3abb3659d",
+      "size_bytes": 1408,
       "top_level_type": "dict"
     },
     "runtime_equivalence_report.json": {
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "f2f14cf723cc992bce33563812f2ade3608f89a927b87680252f5475dbb43f13",
-      "size_bytes": 4030,
+      "sha256": "0020560eba6fa9a51953d053ebb1731b7d4570aefdd78bdf11e126327951711e",
+      "size_bytes": 4568,
+      "top_level_type": "dict"
+    },
+    "runtime_execution_fingerprint_report.json": {
+      "error": null,
+      "exists": true,
+      "json_valid": true,
+      "sha256": "1417f8174af7e2f15ce19c5cc2eca07ec9b6ce1bd0b8a27f3e6d02f002b20eef",
+      "size_bytes": 101477,
       "top_level_type": "dict"
     },
     "runtime_governance_decision.json": {
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "fa33a85dfd92018e780c26bee5778e8f441e02d3066334b2c99e7a8fc8a88b46",
-      "size_bytes": 1624,
+      "sha256": "3cf30c82492459361d92051661192457da25c2d341f605e7695af68d01cb4ea5",
+      "size_bytes": 2162,
       "top_level_type": "dict"
     },
     "runtime_replay_registry.json": {
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "33abb6eecfe2171e172fc24e81da8258a0003a1da9bdf1da643c45ef691b2aca",
-      "size_bytes": 2112,
+      "sha256": "561d48ffb416086d2c29a80ba9ef0fdeb00b220f7dcf52af6d80f65438e105f4",
+      "size_bytes": 7236,
       "top_level_type": "dict"
     },
     "transformation_confidence_report.json": {
       "error": null,
       "exists": true,
       "json_valid": true,
-      "sha256": "7a8f6397d20401363d49dcea5d0acd615e5400bf5eb4c3ae254fdf066a14b9d6",
-      "size_bytes": 983,
+      "sha256": "7c8a0783173a1530a1b3d811a881d9173fdeff446f296ad17864b53033db6b93",
+      "size_bytes": 1521,
       "top_level_type": "dict"
     }
   },
   "runtime_contract_import": {
     "returncode": 0,
-    "status": "BLOCKED_ENV",
-    "stderr": "",
+    "status": "PASS",
+    "stderr": "/usr/local/lib/python3.12/site-packages/pydantic/_internal/_fields.py:161: UserWarning: Field \"model_version\" has conflict with protected namespace \"model_\".\n\nYou may be able to resolve this warning by setting `model_config['protected_namespaces'] = ()`.\n  warnings.warn(",
     "stdout": "contracts 5"
   },
   "runtime_endpoint_registration": {
@@ -155,5 +162,6 @@
     "runtime_router_mounted": true,
     "status": "PASS"
   },
-  "status": "BLOCKED_ENV"
+  "runtime_execution_fingerprint_accessible": true,
+  "status": "PASS"
 }

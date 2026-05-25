@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { DataPanel } from '../components/DataPanel'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
@@ -22,7 +22,7 @@ export default function ApprovalOperationsCenter() {
     }
     setError('')
     try {
-      const response = await apiRequest(`${ENDPOINTS.approvals}/${governanceId}`, {
+      const response = await apiRequest(API_ROUTES.governance.approvalById(governanceId), {
         method: 'POST',
         body: JSON.stringify({ action: governanceAction, comment: governanceComment }),
       })
@@ -39,8 +39,10 @@ export default function ApprovalOperationsCenter() {
     }
     setError('')
     try {
-      const endpoint = `${ENDPOINTS.charter}/approvals/${charterRequestId}/${charterAction}`
-      const response = await apiRequest(endpoint, { method: 'POST' })
+      const response = await apiRequest(
+        API_ROUTES.charter.approvalAction(charterRequestId, charterAction),
+        { method: 'POST' },
+      )
       setResult(response)
     } catch (err) {
       setError(toErrorMessage(err))
@@ -108,8 +110,13 @@ export default function ApprovalOperationsCenter() {
 
       <div style={{ marginTop: '1rem' }}>
         <Grid>
-          <DataPanel title="Governance Approvals" endpoint={`${ENDPOINTS.approvals}?status=pending&limit=50`} intervalMs={15_000} />
-          <DataPanel title="Charter Pending Approvals" endpoint={`${ENDPOINTS.charter}/approvals/pending`} intervalMs={15_000} />
+          <DataPanel
+            title="Governance Evidence Summary"
+            endpoint={API_ROUTES.governance.evidenceSummary()}
+            intervalMs={15_000}
+          />
+          <DataPanel title="Governance Approvals" endpoint={API_ROUTES.governance.approvalsList('pending', 50)} intervalMs={15_000} />
+          <DataPanel title="Charter Pending Approvals" endpoint={API_ROUTES.charter.pendingApprovals()} intervalMs={15_000} />
         </Grid>
       </div>
 

@@ -1,0 +1,1391 @@
+{
+  "started_at": "2026-05-19T04:43:59.731944+00:00",
+  "db_path": "/evidence/artifacts/wcd937x_study_runtime.db",
+  "seed_user": {
+    "id": "system",
+    "email": "system@aura.local"
+  },
+  "lifecycle": [
+    {
+      "stage": "source_intake",
+      "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+      "canonical_hash": "b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284"
+    },
+    {
+      "stage": "snapshot_frozen",
+      "source_snapshot_id": "517c16f93dee150474591fc0287d26e8",
+      "source_snapshot_hash": "7827fbe2ba144791910ff417e86d60a4bbb7d68da64ba3fadd9ddabb61ed2127"
+    }
+  ],
+  "calls": [
+    {
+      "label": "detached_task_rejection",
+      "method": "POST",
+      "path": "/api/v1/tasks/",
+      "payload": {
+        "agent_type": "patch_builder",
+        "priority": "P1",
+        "description": "detached should fail",
+        "input_data": {
+          "workflow_kind": "engineering"
+        }
+      },
+      "status_code": 400,
+      "body": {
+        "detail": "detached_engineering_execution_forbidden:missing=intake_id,snapshot_id,provenance_lineage_hash,workflow_id"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "source_intake",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/register",
+      "payload": {
+        "downstream_repo_url": "ssh://git-android-lv-drekar.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+        "downstream_ref_kind": "branch",
+        "downstream_ref": "audio-kernel-cmn.lnx.0.0",
+        "bsp_lineage": "audio-kernel-cmn.lnx.0.0",
+        "commit_anchors": [
+          "a89e32cf75ed4ef166c39caa1b39d8ec3818a633"
+        ],
+        "subsystem_name": "audio-qualcomm",
+        "subsystem_owner": "aura-audio",
+        "upstream_repo_url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+        "target_kernel": "linux",
+        "target_kernel_version": "6.18",
+        "maintainer_refs": [
+          "broonie@kernel.org",
+          "tiwai@suse.de"
+        ],
+        "patchset_lineage": [
+          "a89e32cf75ed4ef166c39caa1b39d8ec3818a633"
+        ]
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "canonical_hash": "b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284",
+        "status": "registered"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "source_validate",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/validate",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "valid": true,
+        "issues": [],
+        "trust_classification": "trusted"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "source_approve",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/approve",
+      "payload": {
+        "decision": "approve",
+        "comment": "bounded study approval"
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "decision": "approve",
+        "trust_classification": "trusted"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "lineage_downstream_intake",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "payload": {
+        "stage": "downstream_intake",
+        "payload": {
+          "source_identity_ref": "artifacts/source_identity.txt",
+          "downstream_snapshot_manifest_ref": "artifacts/downstream_snapshot_manifest.sha256",
+          "resolved_driver_path": "asoc/codecs/wcd937x/wcd937x.c",
+          "requested_path_missing": "asoc/codecs/wcd9378/wcd937x.c"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "a3d8b87409fda5d3921e5ff0aa047ff6",
+        "lineage_stage": "downstream_intake",
+        "lineage_hash": "0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "source_snapshot",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/snapshot",
+      "payload": {
+        "reason": "freeze_source_snapshot_for_wcd937x_study"
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "snapshot_id": "517c16f93dee150474591fc0287d26e8",
+        "snapshot_hash": "7827fbe2ba144791910ff417e86d60a4bbb7d68da64ba3fadd9ddabb61ed2127",
+        "replay_identifier": "source-intake:6f817915bdc0cb628815128b1b03cc68:events:5"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "engineering_snapshot_freeze",
+      "method": "POST",
+      "path": "/api/v1/engineering/snapshots/freeze",
+      "payload": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "source_snapshot_id": "517c16f93dee150474591fc0287d26e8",
+        "downstream_repo_url": "ssh://git-android-lv-drekar.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+        "downstream_ref_kind": "branch",
+        "downstream_ref": "audio-kernel-cmn.lnx.0.0",
+        "downstream_commit_sha": "a89e32cf75ed4ef166c39caa1b39d8ec3818a633",
+        "subsystem_classification": "audio-qualcomm",
+        "upstream_target_kernel_version": "6.18",
+        "upstream_target_branch": "torvalds/v6.18",
+        "maintainer_context": [
+          "broonie@kernel.org",
+          "tiwai@suse.de"
+        ],
+        "validation_profile_version": "wcd937x-bounded-v1",
+        "ruleset_version": "aura-engineering-rules-v1",
+        "validation_tool_versions": {
+          "checkpatch": "checkpatch",
+          "sparse": "sparse",
+          "clang_build": "clang"
+        },
+        "replay_runtime_version": "replay-v1",
+        "governance_policy_version": "gov-v1"
+      },
+      "status_code": 200,
+      "body": {
+        "snapshot_id": "6070de47ce135ad890e491ae85d9bff7",
+        "snapshot_hash": "9e1b4f18858a81691672ea0764c9a18f5e73c99ab45145fa0713520d63a3aca5",
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "status": "snapshot_frozen"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "workflow_create",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows",
+      "payload": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "snapshot_id": "6070de47ce135ad890e491ae85d9bff7",
+        "provenance_lineage_hash": ""
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "snapshot_id": "6070de47ce135ad890e491ae85d9bff7",
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "state": "snapshot_frozen",
+        "provenance_lineage_hash": "0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "workflow_task_bind",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/task",
+      "payload": {
+        "agent_type": "patch_builder",
+        "priority": "P1",
+        "description": "WCD937x downstream->upstream bounded transform planning",
+        "plugin_domain": "driver",
+        "input_data": {
+          "study": "wcd937x",
+          "resolved_driver_path": "asoc/codecs/wcd937x/wcd937x.c"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+        "state": "task_created",
+        "snapshot_id": "6070de47ce135ad890e491ae85d9bff7"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "transition_patch_analysis",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/transition",
+      "payload": {
+        "to_state": "patch_analysis",
+        "reason": "dependency_discovery+analysis_started"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "state": "patch_analysis"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "transition_transformation_proposal",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/transition",
+      "payload": {
+        "to_state": "transformation_proposal",
+        "reason": "transform_plan_drafted"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "state": "transformation_proposal"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "workflow_validation_run",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/validation/run",
+      "payload": {
+        "target_path": "sound/soc/codecs/wcd937x.c",
+        "patch_paths": [
+          "sound/soc/codecs/wcd937x.c",
+          "sound/soc/codecs/wcd937x-sdw.c",
+          "Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml"
+        ],
+        "build_probe_file": "/tmp/aura-wcd937x-study/linux-upstream-v6.18-1779164716/sound/soc/codecs/wcd937x.c"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "run_sequence": 1,
+        "validation_status": "failed",
+        "results": [
+          {
+            "tool_name": "checkpatch",
+            "tool_version": "unavailable",
+            "passed": false,
+            "findings": [
+              "tool_unavailable:checkpatch",
+              "version_drift:checkpatch:expected=checkpatch:observed=unavailable"
+            ],
+            "confidence": 0.4,
+            "output_hash": "409f04742fbd36e54b87c1da48c773c53ad7b0f5777743e549107d631cbe6aea"
+          },
+          {
+            "tool_name": "sparse",
+            "tool_version": "unavailable",
+            "passed": false,
+            "findings": [
+              "tool_unavailable:sparse",
+              "version_drift:sparse:expected=sparse:observed=unavailable"
+            ],
+            "confidence": 0.4,
+            "output_hash": "43751dfd7d1126519d60055c73adc32aec996bcd4a741cd6cdf444ebbe8c23c7"
+          },
+          {
+            "tool_name": "clang_build",
+            "tool_version": "unavailable",
+            "passed": false,
+            "findings": [
+              "tool_unavailable:clang_build",
+              "version_drift:clang_build:expected=clang:observed=unavailable",
+              "clang_build_probe_failed:command_not_found:clang"
+            ],
+            "confidence": 0.4,
+            "output_hash": "90d96166c0d6ade6fd0c1131a107629ed2aa5cab12c3c4265865561d75d9791f"
+          },
+          {
+            "tool_name": "forbidden_path",
+            "tool_version": "builtin-v1",
+            "passed": true,
+            "findings": [
+              "forbidden_path_check_passed"
+            ],
+            "confidence": 1.0,
+            "output_hash": "7fe3753942bcbbfbabe85d91fcabb1c8aacf4fb7cf5203415644ca2252b942ad"
+          },
+          {
+            "tool_name": "lineage_integrity",
+            "tool_version": "builtin-v1",
+            "passed": true,
+            "findings": [],
+            "confidence": 1.0,
+            "output_hash": "44e8251d6942cd797834d0042b7c32e561c1f018f3a235c9b0514455764f3c24"
+          }
+        ],
+        "state": "governance_review"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "lineage_patch_transform",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "payload": {
+        "stage": "patch_transform",
+        "payload": {
+          "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+          "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+          "semantic_plan_status": "drafted"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "0dfe520324250942b71ccb090bfec63e",
+        "lineage_stage": "patch_transform",
+        "lineage_hash": "3c4e28d4d7dac293b9fe33c26498e2c7dd4a0988739f50d27fa80f07caa1ab7d"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "lineage_upstream_prep",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "payload": {
+        "stage": "upstream_prep",
+        "payload": {
+          "upstream_target": "linux-v6.18",
+          "target_subsystem": "sound/soc/codecs"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "6c5a18bd5c4a9aea64cb4da9ff47fc30",
+        "lineage_stage": "upstream_prep",
+        "lineage_hash": "3b587e61de10aef6b6bd60dea802cba5a55711215fd4e9736d58d4bf1f7a6cd8"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "lineage_validation",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "payload": {
+        "stage": "validation",
+        "payload": {
+          "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+          "validation_status": "failed"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "b7f94229867948dd7e73559d99f128d6",
+        "lineage_stage": "validation",
+        "lineage_hash": "234e878ff5ee4c8ad2a4dde4e7b22317bb27ae06b51b3349779b09f760714306"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "governance_request_transformation",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/governance/request",
+      "payload": {
+        "operation": "transformation_proposal",
+        "reason": "operator_governance_review"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "action_id": 1,
+        "operation": "transformation_proposal",
+        "status": "requested"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    },
+    {
+      "label": "governance_decision_transformation",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/governance/decision",
+      "payload": {
+        "operation": "transformation_proposal",
+        "decision": "approve",
+        "reason": "bounded_override_validation_tools_unavailable_for_full_signal"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "state": "approved",
+        "decision": "approved",
+        "replay_integrity_ok": true
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "lineage_approval",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "payload": {
+        "stage": "approval",
+        "payload": {
+          "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+          "decision": "approved_with_bounded_validation_gap"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "c99552ceb7fea11d77c666a0ab91866e",
+        "lineage_stage": "approval",
+        "lineage_hash": "7adfc31ce69a9d5f4f4a6b4b7989c661e2a069dbab7d9698a4eda6df371b81ed"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "governance_request_lineage_finalization",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/governance/request",
+      "payload": {
+        "operation": "lineage_finalization",
+        "reason": "freeze_replay_lineage"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "action_id": 3,
+        "operation": "lineage_finalization",
+        "status": "requested"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "governance_decision_lineage_finalization",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/governance/decision",
+      "payload": {
+        "operation": "lineage_finalization",
+        "decision": "approve",
+        "reason": "lineage_finalization_approved"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "state": "approved",
+        "decision": "approved"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "workflow_lineage_finalize",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/lineage/finalize",
+      "payload": {},
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "state": "lineage_finalized",
+        "lineage_hash": "f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "engineering_reconstruct",
+      "method": "GET",
+      "path": "/api/v1/engineering/workflows/d285331f26c70c20ac81f9ed3b273279/reconstruct",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+        "trust_valid": true,
+        "failures": [],
+        "reconstruction_hash": "402680bab41f15d7298db8fdbb1f1c999caeda77deb020b2590284d20892078c",
+        "reconstruction": {
+          "workflow": {
+            "id": "d285331f26c70c20ac81f9ed3b273279",
+            "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+            "snapshot_id": "6070de47ce135ad890e491ae85d9bff7",
+            "provenance_lineage_hash": "0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793",
+            "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+            "state": "lineage_finalized",
+            "validation_status": "failed",
+            "governance_state": "approved",
+            "replay_trust_valid": 1,
+            "created_at": 1779165839,
+            "updated_at": 1779165840
+          },
+          "snapshot": {
+            "downstream": {
+              "commit_sha": "a89e32cf75ed4ef166c39caa1b39d8ec3818a633",
+              "ref": "audio-kernel-cmn.lnx.0.0",
+              "ref_kind": "branch",
+              "repo_url": "ssh://git-android-lv-drekar.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+              "subsystem_classification": "audio-qualcomm"
+            },
+            "provenance": {
+              "canonical_hash": "b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284",
+              "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+              "source_snapshot_id": "517c16f93dee150474591fc0287d26e8"
+            },
+            "system": {
+              "governance_policy_version": "gov-v1",
+              "replay_runtime_version": "replay-v1",
+              "ruleset_version": "aura-engineering-rules-v1",
+              "validation_tool_versions": {
+                "checkpatch": "checkpatch",
+                "clang_build": "clang",
+                "sparse": "sparse"
+              }
+            },
+            "upstream": {
+              "maintainer_context": [
+                "broonie@kernel.org",
+                "tiwai@suse.de"
+              ],
+              "target_branch_tree": "torvalds/v6.18",
+              "target_kernel_version": "6.18",
+              "validation_profile_version": "wcd937x-bounded-v1"
+            }
+          },
+          "events": [
+            {
+              "id": 1,
+              "event_type": "state_transition",
+              "from_state": "",
+              "to_state": "source_intake",
+              "payload": {
+                "reason": "workflow_created_from_snapshot"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "2f9ca85e4a41369f36a307ffe3c14476c5a36258d592e12371d17b302205ec72"
+            },
+            {
+              "id": 2,
+              "event_type": "state_transition",
+              "from_state": "source_intake",
+              "to_state": "snapshot_frozen",
+              "payload": {
+                "reason": "snapshot_root_confirmed",
+                "snapshot_id": "6070de47ce135ad890e491ae85d9bff7"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "58f05ee0999631b7f0b86186e801dab38d03ec0851e07a65f2211fa1f02e4bf8"
+            },
+            {
+              "id": 3,
+              "event_type": "state_transition",
+              "from_state": "snapshot_frozen",
+              "to_state": "task_created",
+              "payload": {
+                "agent_type": "patch_builder",
+                "reason": "snapshot_bound_task_created",
+                "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "c5447b4bf8fa129d177eaef74358d8916360898f7263b0df2c64f9faef9f66d8"
+            },
+            {
+              "id": 4,
+              "event_type": "task_bound",
+              "from_state": "snapshot_frozen",
+              "to_state": "task_created",
+              "payload": {
+                "agent_type": "patch_builder",
+                "priority": "P1",
+                "runtime_cell_scope": "domain:driver",
+                "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "a52f0a898c185465ad767594790bb1cb5d4879a5045c77f3aa428eb4d05c5368"
+            },
+            {
+              "id": 5,
+              "event_type": "state_transition",
+              "from_state": "task_created",
+              "to_state": "patch_analysis",
+              "payload": {
+                "reason": "dependency_discovery+analysis_started"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "3f9dea2e660d71e60198d05d9e1eded5f630caab69f52f6c83dad4534765cdc4"
+            },
+            {
+              "id": 6,
+              "event_type": "state_transition",
+              "from_state": "patch_analysis",
+              "to_state": "transformation_proposal",
+              "payload": {
+                "reason": "transform_plan_drafted"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "711077ed22d8b09dd33054a4c8287d27e512946b3e4c6f09e7295349e86a3540"
+            },
+            {
+              "id": 7,
+              "event_type": "state_transition",
+              "from_state": "transformation_proposal",
+              "to_state": "validation_running",
+              "payload": {
+                "reason": "validation_run_started"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "6bab803e0183ef7efb8c9184ca3c8df9ff932cf212489b96b692e2ade1c12bf7"
+            },
+            {
+              "id": 8,
+              "event_type": "validation_recorded",
+              "from_state": "validation_running",
+              "to_state": "validation_running",
+              "payload": {
+                "all_passed": false,
+                "run_sequence": 1,
+                "tools": [
+                  {
+                    "confidence": 0.4,
+                    "findings": [
+                      "tool_unavailable:checkpatch",
+                      "version_drift:checkpatch:expected=checkpatch:observed=unavailable"
+                    ],
+                    "passed": false,
+                    "tool_name": "checkpatch",
+                    "tool_version": "unavailable"
+                  },
+                  {
+                    "confidence": 0.4,
+                    "findings": [
+                      "tool_unavailable:sparse",
+                      "version_drift:sparse:expected=sparse:observed=unavailable"
+                    ],
+                    "passed": false,
+                    "tool_name": "sparse",
+                    "tool_version": "unavailable"
+                  },
+                  {
+                    "confidence": 0.4,
+                    "findings": [
+                      "tool_unavailable:clang_build",
+                      "version_drift:clang_build:expected=clang:observed=unavailable",
+                      "clang_build_probe_failed:command_not_found:clang"
+                    ],
+                    "passed": false,
+                    "tool_name": "clang_build",
+                    "tool_version": "unavailable"
+                  },
+                  {
+                    "confidence": 1.0,
+                    "findings": [
+                      "forbidden_path_check_passed"
+                    ],
+                    "passed": true,
+                    "tool_name": "forbidden_path",
+                    "tool_version": "builtin-v1"
+                  },
+                  {
+                    "confidence": 1.0,
+                    "findings": [],
+                    "passed": true,
+                    "tool_name": "lineage_integrity",
+                    "tool_version": "builtin-v1"
+                  }
+                ],
+                "validation_status": "failed"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "d9a203d65dc4ee1f43875288e98d6ca0b689b0a750ab0feb331269b7b6b77124"
+            },
+            {
+              "id": 9,
+              "event_type": "state_transition",
+              "from_state": "validation_running",
+              "to_state": "governance_review",
+              "payload": {
+                "reason": "validation_completed",
+                "run_sequence": 1,
+                "validation_status": "failed"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "2ca774fb177e94aad5f174d8ce431c50272e38bdc279dd9838a142544e1b4d29"
+            },
+            {
+              "id": 10,
+              "event_type": "governance_requested",
+              "from_state": "governance_review",
+              "to_state": "governance_review",
+              "payload": {
+                "action_id": 1,
+                "operation": "transformation_proposal",
+                "reason": "operator_governance_review"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "afc8fefde360a2ea2ef256f58b3a7f737d8b916a76837e55374ccde5194d0c91"
+            },
+            {
+              "id": 11,
+              "event_type": "governance_decided",
+              "from_state": "governance_review",
+              "to_state": "governance_review",
+              "payload": {
+                "decision": "approved",
+                "operation": "transformation_proposal",
+                "reason": "bounded_override_validation_tools_unavailable_for_full_signal"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "decdbf5b924fdccae5f3f4501a0cfa5115a5aa837b92481a8a418e8980db38af"
+            },
+            {
+              "id": 12,
+              "event_type": "state_transition",
+              "from_state": "governance_review",
+              "to_state": "replay_persisted",
+              "payload": {
+                "reason": "governance_approved_transformation"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "75695214474a50e0a0c5d01639f3b1fb2c3d7334a886e39c5551b6a0d3546980"
+            },
+            {
+              "id": 13,
+              "event_type": "state_transition",
+              "from_state": "replay_persisted",
+              "to_state": "approved",
+              "payload": {
+                "reason": "replay_verified_after_governance_approval"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "c5daaf3ab8d20d6bd101a5bc1b889bd45cf017c2debae7bbc59faa0ef5e2ac89"
+            },
+            {
+              "id": 14,
+              "event_type": "governance_requested",
+              "from_state": "governance_review",
+              "to_state": "governance_review",
+              "payload": {
+                "action_id": 3,
+                "operation": "lineage_finalization",
+                "reason": "freeze_replay_lineage"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "e4a29a921e1374b9b1c387a5ee3643688d246f2aaa29d8e3c83527997a04d017"
+            },
+            {
+              "id": 15,
+              "event_type": "governance_decided",
+              "from_state": "approved",
+              "to_state": "approved",
+              "payload": {
+                "decision": "approved",
+                "operation": "lineage_finalization",
+                "reason": "lineage_finalization_approved"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "7e5a81557606a0bb75b280761282d6097bdd187750f5ccabd468f7d7e6f60a09"
+            },
+            {
+              "id": 16,
+              "event_type": "lineage_finalized",
+              "from_state": "approved",
+              "to_state": "lineage_finalized",
+              "payload": {
+                "lineage_hash": "f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "a5a37770619c7d5baa72a673d1be7d248ea6c0a84d6fe0306255348f9813c16f"
+            },
+            {
+              "id": 17,
+              "event_type": "state_transition",
+              "from_state": "approved",
+              "to_state": "lineage_finalized",
+              "payload": {
+                "reason": "lineage_evidence_persisted"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "fea1205e172ee7abc3691c66de9a3b30a70cf0160d6da4f9fe7e9105e30a7cef"
+            }
+          ],
+          "validation_runs": [
+            {
+              "run_sequence": 1,
+              "tool_name": "checkpatch",
+              "tool_version": "unavailable",
+              "passed": false,
+              "findings": [
+                "tool_unavailable:checkpatch",
+                "version_drift:checkpatch:expected=checkpatch:observed=unavailable"
+              ],
+              "confidence": 0.4,
+              "output_hash": "409f04742fbd36e54b87c1da48c773c53ad7b0f5777743e549107d631cbe6aea",
+              "executed_at": 1779165840
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "clang_build",
+              "tool_version": "unavailable",
+              "passed": false,
+              "findings": [
+                "tool_unavailable:clang_build",
+                "version_drift:clang_build:expected=clang:observed=unavailable",
+                "clang_build_probe_failed:command_not_found:clang"
+              ],
+              "confidence": 0.4,
+              "output_hash": "90d96166c0d6ade6fd0c1131a107629ed2aa5cab12c3c4265865561d75d9791f",
+              "executed_at": 1779165840
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "forbidden_path",
+              "tool_version": "builtin-v1",
+              "passed": true,
+              "findings": [
+                "forbidden_path_check_passed"
+              ],
+              "confidence": 1.0,
+              "output_hash": "7fe3753942bcbbfbabe85d91fcabb1c8aacf4fb7cf5203415644ca2252b942ad",
+              "executed_at": 1779165840
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "lineage_integrity",
+              "tool_version": "builtin-v1",
+              "passed": true,
+              "findings": [],
+              "confidence": 1.0,
+              "output_hash": "44e8251d6942cd797834d0042b7c32e561c1f018f3a235c9b0514455764f3c24",
+              "executed_at": 1779165840
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "sparse",
+              "tool_version": "unavailable",
+              "passed": false,
+              "findings": [
+                "tool_unavailable:sparse",
+                "version_drift:sparse:expected=sparse:observed=unavailable"
+              ],
+              "confidence": 0.4,
+              "output_hash": "43751dfd7d1126519d60055c73adc32aec996bcd4a741cd6cdf444ebbe8c23c7",
+              "executed_at": 1779165840
+            }
+          ],
+          "governance_actions": [
+            {
+              "id": 1,
+              "operation": "transformation_proposal",
+              "status": "requested",
+              "reason": "operator_governance_review",
+              "requested_by": "system@aura.local",
+              "decided_by": "",
+              "created_at": 1779165840
+            },
+            {
+              "id": 2,
+              "operation": "transformation_proposal",
+              "status": "approved",
+              "reason": "bounded_override_validation_tools_unavailable_for_full_signal",
+              "requested_by": "system@aura.local",
+              "decided_by": "system@aura.local",
+              "created_at": 1779165840
+            },
+            {
+              "id": 3,
+              "operation": "lineage_finalization",
+              "status": "requested",
+              "reason": "freeze_replay_lineage",
+              "requested_by": "system@aura.local",
+              "decided_by": "",
+              "created_at": 1779165840
+            },
+            {
+              "id": 4,
+              "operation": "lineage_finalization",
+              "status": "approved",
+              "reason": "lineage_finalization_approved",
+              "requested_by": "system@aura.local",
+              "decided_by": "system@aura.local",
+              "created_at": 1779165840
+            }
+          ],
+          "evidence_links": [],
+          "task_replay": {
+            "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+            "integrity_ok": true,
+            "replay": {
+              "success": true,
+              "fidelity": "perfect",
+              "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+              "agent_type": "patch_builder",
+              "context": {
+                "seed": 42,
+                "temperature": 0.1,
+                "model": "bounded-study-v1"
+              },
+              "recording_state": "finalized",
+              "revision": 6,
+              "recorded_at": "2026-05-19T04:43:59+00:00",
+              "finalized_at": "2026-05-19T04:43:59+00:00",
+              "prompt_count": 1,
+              "response_count": 1,
+              "execution_steps": 3,
+              "output_keys": [
+                "status"
+              ],
+              "output_hash": "9ee5518984d11464e3a0ddc7ce2b36690483b8351d0157d3c90f572600945d73",
+              "snapshot_hash": "7d08a422b8950cbfb5ce633bc5905bcb0d212e68188c2b9c2ff884bda9820600",
+              "prompts": [
+                {
+                  "content": "Perform bounded WCD937x downstream-upstream transform planning",
+                  "role": "system"
+                }
+              ],
+              "responses": [
+                "analysis-complete"
+              ],
+              "execution": [
+                {
+                  "status": "completed",
+                  "step": "dependency_discovery"
+                },
+                {
+                  "status": "completed",
+                  "step": "analysis"
+                },
+                {
+                  "status": "completed",
+                  "step": "transform_planning"
+                }
+              ],
+              "output": {
+                "status": "advisory_plan_generated"
+              },
+              "replayed_at": "2026-05-19T04:44:00.291904+00:00"
+            }
+          }
+        }
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "lineage_replay_evidence",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/lineage",
+      "payload": {
+        "stage": "replay_evidence",
+        "payload": {
+          "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+          "workflow_reconstruction_hash": "402680bab41f15d7298db8fdbb1f1c999caeda77deb020b2590284d20892078c"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "lineage_id": "61c31120a44afd265df5273e0593a9c0",
+        "lineage_stage": "replay_evidence",
+        "lineage_hash": "4c4e0dd82fab6139bda8ed0d1952d79755e03c175fe390a9cc078200225668f8"
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "admin"
+      }
+    },
+    {
+      "label": "provenance_reconstruct",
+      "method": "GET",
+      "path": "/api/v1/provenance/sources/6f817915bdc0cb628815128b1b03cc68/reconstruct",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+        "reconstruction_hash": "193efbb0b2d9858bc1093cbb561e8fb57ce83961d848db4937351c2862017d72",
+        "reconstruction": {
+          "intake": {
+            "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+            "canonical_hash": "b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284",
+            "registered_by": "system@aura.local",
+            "registered_at": 1779165839,
+            "source": {
+              "bsp_lineage": "audio-kernel-cmn.lnx.0.0",
+              "commit_anchors": [
+                "a89e32cf75ed4ef166c39caa1b39d8ec3818a633"
+              ],
+              "downstream_ref": "audio-kernel-cmn.lnx.0.0",
+              "downstream_ref_kind": "branch",
+              "downstream_repo_url": "ssh://git-android-lv-drekar.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+              "maintainer_refs": [
+                "broonie@kernel.org",
+                "tiwai@suse.de"
+              ],
+              "patchset_lineage": [
+                "a89e32cf75ed4ef166c39caa1b39d8ec3818a633"
+              ],
+              "subsystem_name": "audio-qualcomm",
+              "subsystem_owner": "aura-audio",
+              "target_kernel": "linux",
+              "target_kernel_version": "6.18",
+              "upstream_repo_url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
+            }
+          },
+          "events": [
+            {
+              "id": 1,
+              "event_type": "registered",
+              "payload": {
+                "canonical_hash": "b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284",
+                "target_kernel": "linux"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "26af42306e91be88c745611cd4fe529f8accb1200597ba1ad075b3aa706c727d"
+            },
+            {
+              "id": 2,
+              "event_type": "validated",
+              "payload": {
+                "issues": [],
+                "valid": true
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "724de7a53ce72e10087c42ae075df0d251b6e058d016db5b98897e2e38923f61"
+            },
+            {
+              "id": 3,
+              "event_type": "classified",
+              "payload": {
+                "trust_classification": "trusted"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "23cee0c1d425425ff9b58434ff78e55d5929e2eea8ae1eac0b5e3393838dde7b"
+            },
+            {
+              "id": 4,
+              "event_type": "approved",
+              "payload": {
+                "comment": "bounded study approval",
+                "decision": "approve",
+                "trust_classification": "trusted"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "965da2fe7c848f5c4be94c3082e986a8f31fa720ca1eee16198ecc3603ca88fd"
+            },
+            {
+              "id": 5,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793",
+                "lineage_id": "a3d8b87409fda5d3921e5ff0aa047ff6",
+                "lineage_stage": "downstream_intake"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "9cec905aedde36d6c459868d4fa4fe34ef9aa53b2c85f39c3bf99c7f38ebe1e2"
+            },
+            {
+              "id": 6,
+              "event_type": "snapshot_created",
+              "payload": {
+                "replay_identifier": "source-intake:6f817915bdc0cb628815128b1b03cc68:events:5",
+                "snapshot_hash": "7827fbe2ba144791910ff417e86d60a4bbb7d68da64ba3fadd9ddabb61ed2127",
+                "snapshot_id": "517c16f93dee150474591fc0287d26e8"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165839,
+              "event_hash": "8da22afa4e73f55809b178e8e76cbe8b17eb6186d5c1ef19b914d562c627e16f"
+            },
+            {
+              "id": 7,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "3c4e28d4d7dac293b9fe33c26498e2c7dd4a0988739f50d27fa80f07caa1ab7d",
+                "lineage_id": "0dfe520324250942b71ccb090bfec63e",
+                "lineage_stage": "patch_transform"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "0ae2954a5de43fb595b8abd81ac5319284459b6bd4e0791c41a472613772d129"
+            },
+            {
+              "id": 8,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "3b587e61de10aef6b6bd60dea802cba5a55711215fd4e9736d58d4bf1f7a6cd8",
+                "lineage_id": "6c5a18bd5c4a9aea64cb4da9ff47fc30",
+                "lineage_stage": "upstream_prep"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "5611b8a2998208a234fab55cc7bb0a04dd85c294e4456b181fcfe3328e88731d"
+            },
+            {
+              "id": 9,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "234e878ff5ee4c8ad2a4dde4e7b22317bb27ae06b51b3349779b09f760714306",
+                "lineage_id": "b7f94229867948dd7e73559d99f128d6",
+                "lineage_stage": "validation"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "938f312cd7998f032c499fffb936ea5b84c0e4662743178caccebe71d099391b"
+            },
+            {
+              "id": 10,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "7adfc31ce69a9d5f4f4a6b4b7989c661e2a069dbab7d9698a4eda6df371b81ed",
+                "lineage_id": "c99552ceb7fea11d77c666a0ab91866e",
+                "lineage_stage": "approval"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "b0df5cc7903e5f5b2fb37be37070dcc20a3fffb4dbf9a5f0bcbb7d3220e4dea5"
+            },
+            {
+              "id": 11,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "4c4e0dd82fab6139bda8ed0d1952d79755e03c175fe390a9cc078200225668f8",
+                "lineage_id": "61c31120a44afd265df5273e0593a9c0",
+                "lineage_stage": "replay_evidence"
+              },
+              "actor": "system@aura.local",
+              "created_at": 1779165840,
+              "event_hash": "48de27501bee76c05f51713f8b8b9704f9cb887ff90b3c6f8a1f6becf0cd0f15"
+            }
+          ],
+          "lineage": [
+            {
+              "id": "a3d8b87409fda5d3921e5ff0aa047ff6",
+              "lineage_stage": "downstream_intake",
+              "parent_lineage_hash": null,
+              "payload": {
+                "downstream_snapshot_manifest_ref": "artifacts/downstream_snapshot_manifest.sha256",
+                "requested_path_missing": "asoc/codecs/wcd9378/wcd937x.c",
+                "resolved_driver_path": "asoc/codecs/wcd937x/wcd937x.c",
+                "source_identity_ref": "artifacts/source_identity.txt"
+              },
+              "lineage_hash": "0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793",
+              "created_by": "system@aura.local",
+              "created_at": 1779165839
+            },
+            {
+              "id": "0dfe520324250942b71ccb090bfec63e",
+              "lineage_stage": "patch_transform",
+              "parent_lineage_hash": "0e511dcbf873057abd1e420727f5d13cbb04ec0b1d939905bfb0de50b8459793",
+              "payload": {
+                "semantic_plan_status": "drafted",
+                "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+                "workflow_id": "d285331f26c70c20ac81f9ed3b273279"
+              },
+              "lineage_hash": "3c4e28d4d7dac293b9fe33c26498e2c7dd4a0988739f50d27fa80f07caa1ab7d",
+              "created_by": "system@aura.local",
+              "created_at": 1779165840
+            },
+            {
+              "id": "6c5a18bd5c4a9aea64cb4da9ff47fc30",
+              "lineage_stage": "upstream_prep",
+              "parent_lineage_hash": "3c4e28d4d7dac293b9fe33c26498e2c7dd4a0988739f50d27fa80f07caa1ab7d",
+              "payload": {
+                "target_subsystem": "sound/soc/codecs",
+                "upstream_target": "linux-v6.18"
+              },
+              "lineage_hash": "3b587e61de10aef6b6bd60dea802cba5a55711215fd4e9736d58d4bf1f7a6cd8",
+              "created_by": "system@aura.local",
+              "created_at": 1779165840
+            },
+            {
+              "id": "b7f94229867948dd7e73559d99f128d6",
+              "lineage_stage": "validation",
+              "parent_lineage_hash": "3b587e61de10aef6b6bd60dea802cba5a55711215fd4e9736d58d4bf1f7a6cd8",
+              "payload": {
+                "validation_status": "failed",
+                "workflow_id": "d285331f26c70c20ac81f9ed3b273279"
+              },
+              "lineage_hash": "234e878ff5ee4c8ad2a4dde4e7b22317bb27ae06b51b3349779b09f760714306",
+              "created_by": "system@aura.local",
+              "created_at": 1779165840
+            },
+            {
+              "id": "c99552ceb7fea11d77c666a0ab91866e",
+              "lineage_stage": "approval",
+              "parent_lineage_hash": "234e878ff5ee4c8ad2a4dde4e7b22317bb27ae06b51b3349779b09f760714306",
+              "payload": {
+                "decision": "approved_with_bounded_validation_gap",
+                "workflow_id": "d285331f26c70c20ac81f9ed3b273279"
+              },
+              "lineage_hash": "7adfc31ce69a9d5f4f4a6b4b7989c661e2a069dbab7d9698a4eda6df371b81ed",
+              "created_by": "system@aura.local",
+              "created_at": 1779165840
+            },
+            {
+              "id": "aee2cd1468800b0b3ed3918ec0afed25",
+              "lineage_stage": "replay_evidence",
+              "parent_lineage_hash": "7adfc31ce69a9d5f4f4a6b4b7989c661e2a069dbab7d9698a4eda6df371b81ed",
+              "payload": {
+                "replay_trust_valid": 1,
+                "snapshot_id": "6070de47ce135ad890e491ae85d9bff7",
+                "state": "approved",
+                "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+                "workflow_id": "d285331f26c70c20ac81f9ed3b273279"
+              },
+              "lineage_hash": "f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42",
+              "created_by": "system@aura.local",
+              "created_at": 1779165840
+            },
+            {
+              "id": "61c31120a44afd265df5273e0593a9c0",
+              "lineage_stage": "replay_evidence",
+              "parent_lineage_hash": "f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42",
+              "payload": {
+                "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+                "workflow_reconstruction_hash": "402680bab41f15d7298db8fdbb1f1c999caeda77deb020b2590284d20892078c"
+              },
+              "lineage_hash": "4c4e0dd82fab6139bda8ed0d1952d79755e03c175fe390a9cc078200225668f8",
+              "created_by": "system@aura.local",
+              "created_at": 1779165840
+            }
+          ],
+          "snapshots": [
+            {
+              "id": "517c16f93dee150474591fc0287d26e8",
+              "replay_identifier": "source-intake:6f817915bdc0cb628815128b1b03cc68:events:5",
+              "snapshot_hash": "7827fbe2ba144791910ff417e86d60a4bbb7d68da64ba3fadd9ddabb61ed2127",
+              "created_by": "system@aura.local",
+              "created_at": 1779165839
+            }
+          ]
+        }
+      },
+      "actor": {
+        "sub": "system",
+        "email": "system@aura.local",
+        "role": "reviewer"
+      }
+    }
+  ],
+  "detached_rejection": {
+    "status_code": 400,
+    "body": {
+      "detail": "detached_engineering_execution_forbidden:missing=intake_id,snapshot_id,provenance_lineage_hash,workflow_id"
+    }
+  },
+  "final": {
+    "intake_id": "6f817915bdc0cb628815128b1b03cc68",
+    "canonical_hash": "b334e703415d05923d7f6ecbad9a36d0cb88da92f1ece2737d4529639fb84284",
+    "trust_classification": "trusted",
+    "source_snapshot_id": "517c16f93dee150474591fc0287d26e8",
+    "source_snapshot_hash": "7827fbe2ba144791910ff417e86d60a4bbb7d68da64ba3fadd9ddabb61ed2127",
+    "engineering_snapshot_id": "6070de47ce135ad890e491ae85d9bff7",
+    "engineering_snapshot_hash": "9e1b4f18858a81691672ea0764c9a18f5e73c99ab45145fa0713520d63a3aca5",
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "task_id": "cfec91e4-ec3a-4788-84c2-51f85d4639f6",
+    "workflow_validation_status": "failed",
+    "workflow_trust_valid": true,
+    "workflow_reconstruction_hash": "402680bab41f15d7298db8fdbb1f1c999caeda77deb020b2590284d20892078c",
+    "source_reconstruction_hash": "193efbb0b2d9858bc1093cbb561e8fb57ce83961d848db4937351c2862017d72"
+  },
+  "finished_at": "2026-05-19T04:44:00.323716+00:00"
+}

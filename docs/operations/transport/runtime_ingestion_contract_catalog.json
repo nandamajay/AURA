@@ -1,0 +1,602 @@
+{
+  "classification": "PASS",
+  "contracts": {
+    "DeterministicCacheSchema": {
+      "additionalProperties": false,
+      "properties": {
+        "artifact_paths": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Artifact Paths",
+          "type": "array"
+        },
+        "cache_key": {
+          "title": "Cache Key",
+          "type": "string"
+        },
+        "cache_valid": {
+          "default": false,
+          "title": "Cache Valid",
+          "type": "boolean"
+        },
+        "dependency_fingerprints": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Dependency Fingerprints",
+          "type": "object"
+        },
+        "lineage_id": {
+          "title": "Lineage Id",
+          "type": "string"
+        },
+        "producer": {
+          "title": "Producer",
+          "type": "string"
+        },
+        "report_name": {
+          "default": "deterministic_cache_schema",
+          "title": "Report Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "cache_key",
+        "lineage_id",
+        "producer"
+      ],
+      "title": "DeterministicCacheSchema",
+      "type": "object"
+    },
+    "RuntimeEvidenceSchema": {
+      "$defs": {
+        "RuntimeEvidenceRecord": {
+          "additionalProperties": true,
+          "properties": {
+            "deterministic_fingerprint": {
+              "title": "Deterministic Fingerprint",
+              "type": "string"
+            },
+            "evidence_id": {
+              "title": "Evidence Id",
+              "type": "string"
+            },
+            "evidence_type": {
+              "title": "Evidence Type",
+              "type": "string"
+            },
+            "lineage_id": {
+              "title": "Lineage Id",
+              "type": "string"
+            },
+            "source_uri": {
+              "title": "Source Uri",
+              "type": "string"
+            }
+          },
+          "required": [
+            "evidence_id",
+            "evidence_type",
+            "source_uri",
+            "deterministic_fingerprint",
+            "lineage_id"
+          ],
+          "title": "RuntimeEvidenceRecord",
+          "type": "object"
+        },
+        "RuntimeLineageContract": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "title": "Created At",
+              "type": "string"
+            },
+            "lineage_id": {
+              "title": "Lineage Id",
+              "type": "string"
+            },
+            "parent_lineage_id": {
+              "default": "",
+              "title": "Parent Lineage Id",
+              "type": "string"
+            },
+            "session_id": {
+              "title": "Session Id",
+              "type": "string"
+            },
+            "target_id": {
+              "title": "Target Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lineage_id",
+            "session_id",
+            "target_id"
+          ],
+          "title": "RuntimeLineageContract",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "default": "PASS",
+          "enum": [
+            "PASS",
+            "FAIL_CLOSED"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "$ref": "#/$defs/RuntimeEvidenceRecord"
+          },
+          "title": "Evidence",
+          "type": "array"
+        },
+        "fail_closed_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fail Closed Reasons",
+          "type": "array"
+        },
+        "lineage": {
+          "$ref": "#/$defs/RuntimeLineageContract"
+        },
+        "report_name": {
+          "default": "runtime_evidence_schema",
+          "title": "Report Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lineage"
+      ],
+      "title": "RuntimeEvidenceSchema",
+      "type": "object"
+    },
+    "RuntimeGraphSchema": {
+      "$defs": {
+        "RuntimeGraphEdge": {
+          "additionalProperties": true,
+          "properties": {
+            "attributes": {
+              "title": "Attributes",
+              "type": "object"
+            },
+            "relation": {
+              "title": "Relation",
+              "type": "string"
+            },
+            "source_node_id": {
+              "title": "Source Node Id",
+              "type": "string"
+            },
+            "target_node_id": {
+              "title": "Target Node Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "source_node_id",
+            "target_node_id",
+            "relation"
+          ],
+          "title": "RuntimeGraphEdge",
+          "type": "object"
+        },
+        "RuntimeGraphNode": {
+          "additionalProperties": true,
+          "properties": {
+            "attributes": {
+              "title": "Attributes",
+              "type": "object"
+            },
+            "node_id": {
+              "title": "Node Id",
+              "type": "string"
+            },
+            "node_type": {
+              "title": "Node Type",
+              "type": "string"
+            }
+          },
+          "required": [
+            "node_id",
+            "node_type"
+          ],
+          "title": "RuntimeGraphNode",
+          "type": "object"
+        },
+        "RuntimeLineageContract": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "title": "Created At",
+              "type": "string"
+            },
+            "lineage_id": {
+              "title": "Lineage Id",
+              "type": "string"
+            },
+            "parent_lineage_id": {
+              "default": "",
+              "title": "Parent Lineage Id",
+              "type": "string"
+            },
+            "session_id": {
+              "title": "Session Id",
+              "type": "string"
+            },
+            "target_id": {
+              "title": "Target Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lineage_id",
+            "session_id",
+            "target_id"
+          ],
+          "title": "RuntimeLineageContract",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "enum": [
+            "PASS",
+            "FAIL_CLOSED"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "edges": {
+          "items": {
+            "$ref": "#/$defs/RuntimeGraphEdge"
+          },
+          "title": "Edges",
+          "type": "array"
+        },
+        "fail_closed_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fail Closed Reasons",
+          "type": "array"
+        },
+        "graph_name": {
+          "title": "Graph Name",
+          "type": "string"
+        },
+        "lineage": {
+          "$ref": "#/$defs/RuntimeLineageContract"
+        },
+        "nodes": {
+          "items": {
+            "$ref": "#/$defs/RuntimeGraphNode"
+          },
+          "title": "Nodes",
+          "type": "array"
+        }
+      },
+      "required": [
+        "graph_name",
+        "lineage",
+        "classification"
+      ],
+      "title": "RuntimeGraphSchema",
+      "type": "object"
+    },
+    "RuntimeParserInputContract": {
+      "$defs": {
+        "RuntimeLineageContract": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "title": "Created At",
+              "type": "string"
+            },
+            "lineage_id": {
+              "title": "Lineage Id",
+              "type": "string"
+            },
+            "parent_lineage_id": {
+              "default": "",
+              "title": "Parent Lineage Id",
+              "type": "string"
+            },
+            "session_id": {
+              "title": "Session Id",
+              "type": "string"
+            },
+            "target_id": {
+              "title": "Target Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lineage_id",
+            "session_id",
+            "target_id"
+          ],
+          "title": "RuntimeLineageContract",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "lineage": {
+          "$ref": "#/$defs/RuntimeLineageContract"
+        },
+        "parser_name": {
+          "title": "Parser Name",
+          "type": "string"
+        },
+        "parser_version": {
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "source_type": {
+          "enum": [
+            "dmesg",
+            "ftrace",
+            "trace_cmd",
+            "tinymix",
+            "procfs",
+            "debugfs",
+            "soundwire",
+            "dsp_mailbox",
+            "irq",
+            "clock",
+            "regulator"
+          ],
+          "title": "Source Type",
+          "type": "string"
+        },
+        "source_uri": {
+          "title": "Source Uri",
+          "type": "string"
+        }
+      },
+      "required": [
+        "parser_name",
+        "parser_version",
+        "source_type",
+        "source_uri",
+        "lineage"
+      ],
+      "title": "RuntimeParserInputContract",
+      "type": "object"
+    },
+    "RuntimeParserOutputContract": {
+      "$defs": {
+        "RuntimeLineageContract": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "title": "Created At",
+              "type": "string"
+            },
+            "lineage_id": {
+              "title": "Lineage Id",
+              "type": "string"
+            },
+            "parent_lineage_id": {
+              "default": "",
+              "title": "Parent Lineage Id",
+              "type": "string"
+            },
+            "session_id": {
+              "title": "Session Id",
+              "type": "string"
+            },
+            "target_id": {
+              "title": "Target Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lineage_id",
+            "session_id",
+            "target_id"
+          ],
+          "title": "RuntimeLineageContract",
+          "type": "object"
+        },
+        "RuntimeParserEvent": {
+          "additionalProperties": true,
+          "properties": {
+            "domain": {
+              "title": "Domain",
+              "type": "string"
+            },
+            "event_id": {
+              "title": "Event Id",
+              "type": "string"
+            },
+            "message": {
+              "title": "Message",
+              "type": "string"
+            },
+            "source": {
+              "title": "Source",
+              "type": "string"
+            },
+            "timestamp_ms": {
+              "title": "Timestamp Ms",
+              "type": "number"
+            }
+          },
+          "required": [
+            "event_id",
+            "timestamp_ms",
+            "domain",
+            "message",
+            "source"
+          ],
+          "title": "RuntimeParserEvent",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "events": {
+          "items": {
+            "$ref": "#/$defs/RuntimeParserEvent"
+          },
+          "title": "Events",
+          "type": "array"
+        },
+        "fail_closed_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fail Closed Reasons",
+          "type": "array"
+        },
+        "lineage": {
+          "$ref": "#/$defs/RuntimeLineageContract"
+        },
+        "parse_classification": {
+          "enum": [
+            "PASS",
+            "FAIL_CLOSED"
+          ],
+          "title": "Parse Classification",
+          "type": "string"
+        },
+        "parser_name": {
+          "title": "Parser Name",
+          "type": "string"
+        },
+        "parser_version": {
+          "title": "Parser Version",
+          "type": "string"
+        },
+        "source_type": {
+          "title": "Source Type",
+          "type": "string"
+        }
+      },
+      "required": [
+        "parser_name",
+        "parser_version",
+        "source_type",
+        "lineage",
+        "parse_classification"
+      ],
+      "title": "RuntimeParserOutputContract",
+      "type": "object"
+    },
+    "RuntimeReplaySchema": {
+      "$defs": {
+        "RuntimeLineageContract": {
+          "additionalProperties": false,
+          "properties": {
+            "created_at": {
+              "title": "Created At",
+              "type": "string"
+            },
+            "lineage_id": {
+              "title": "Lineage Id",
+              "type": "string"
+            },
+            "parent_lineage_id": {
+              "default": "",
+              "title": "Parent Lineage Id",
+              "type": "string"
+            },
+            "session_id": {
+              "title": "Session Id",
+              "type": "string"
+            },
+            "target_id": {
+              "title": "Target Id",
+              "type": "string"
+            }
+          },
+          "required": [
+            "lineage_id",
+            "session_id",
+            "target_id"
+          ],
+          "title": "RuntimeLineageContract",
+          "type": "object"
+        }
+      },
+      "additionalProperties": false,
+      "properties": {
+        "classification": {
+          "default": "FAIL_CLOSED",
+          "enum": [
+            "PASS",
+            "FAIL_CLOSED"
+          ],
+          "title": "Classification",
+          "type": "string"
+        },
+        "deterministic_ready": {
+          "default": false,
+          "title": "Deterministic Ready",
+          "type": "boolean"
+        },
+        "fail_closed_reasons": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Fail Closed Reasons",
+          "type": "array"
+        },
+        "lineage": {
+          "$ref": "#/$defs/RuntimeLineageContract"
+        },
+        "replay_fingerprint": {
+          "title": "Replay Fingerprint",
+          "type": "string"
+        },
+        "replay_inputs": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "title": "Replay Inputs",
+          "type": "object"
+        },
+        "report_name": {
+          "default": "runtime_replay_schema",
+          "title": "Report Name",
+          "type": "string"
+        },
+        "schema_version": {
+          "default": "1.0",
+          "title": "Schema Version",
+          "type": "string"
+        }
+      },
+      "required": [
+        "lineage",
+        "replay_fingerprint"
+      ],
+      "title": "RuntimeReplaySchema",
+      "type": "object"
+    }
+  },
+  "deterministic_fingerprint": "5c93184da4eca9296790051f4ffeddd9fa12acc05a097d4b7e4ab0fd4d8a6883",
+  "report_name": "runtime_ingestion_contract_catalog",
+  "schema_version": "1.0"
+}

@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-import hashlib
-import json
 from dataclasses import dataclass
 from typing import Any, Mapping
+
+from aura_sdk.transport.deterministic_serialization import stable_sha256
 
 
 @dataclass(frozen=True)
@@ -27,7 +27,7 @@ def _as_list(value: Any) -> list[Any]:
 
 
 def stable_fingerprint(payload: Mapping[str, Any]) -> str:
-    return hashlib.sha256(json.dumps(dict(payload), sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+    return stable_sha256(dict(payload))
 
 
 def build_vendor_dependency_fingerprint(

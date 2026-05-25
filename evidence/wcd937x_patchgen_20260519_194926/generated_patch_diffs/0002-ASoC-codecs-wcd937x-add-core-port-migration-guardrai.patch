@@ -1,0 +1,42 @@
+From c0a620ac4190246b02ff87625d4cc36104f7de9b Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Tue, 19 May 2026 19:50:11 +0530
+Subject: [PATCH 2/6] ASoC: codecs: wcd937x: add core-port migration guardrails
+
+---
+ sound/soc/codecs/wcd937x.c | 5 +++++
+ sound/soc/codecs/wcd937x.h | 2 ++
+ 2 files changed, 7 insertions(+)
+
+diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
+index 421ec7a2d..b12ba36c9 100644
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -72,6 +72,11 @@ enum {
+ };
+ 
+ struct wcd937x_priv {
++	/*
++	 * Downstream conversion note:
++	 *  - keep vendor calibration/debugfs hooks out of upstream core path
++	 *  - preserve deterministic replay checkpoints in userspace workflow
++	 */
+ 	struct sdw_slave *tx_sdw_dev;
+ 	struct wcd937x_sdw_priv *sdw_priv[NUM_CODEC_DAIS];
+ 	struct device *txdev;
+diff --git a/sound/soc/codecs/wcd937x.h b/sound/soc/codecs/wcd937x.h
+index 3d0ba3cc0..0f50726c8 100644
+--- a/sound/soc/codecs/wcd937x.h
++++ b/sound/soc/codecs/wcd937x.h
+@@ -5,6 +5,8 @@
+ #ifndef _WCD937X_REGISTERS_H
+ #define _WCD937X_REGISTERS_H
+ 
++/* Conversion anchor: maintain upstream-only API surface in this header. */
++
+ #include <linux/soundwire/sdw.h>
+ #include <linux/soundwire/sdw_type.h>
+ #include "wcd-common.h"
+-- 
+2.34.1
+

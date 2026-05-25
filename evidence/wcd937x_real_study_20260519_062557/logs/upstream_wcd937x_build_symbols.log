@@ -1,0 +1,10 @@
+sound/soc/codecs/Kconfig:301:	imply SND_SOC_WCD937X_SDW
+sound/soc/codecs/Kconfig:2323:config SND_SOC_WCD937X
+sound/soc/codecs/Kconfig:2324:	depends on SND_SOC_WCD937X_SDW
+sound/soc/codecs/Kconfig:2330:config SND_SOC_WCD937X_SDW
+sound/soc/codecs/Kconfig:2332:	select SND_SOC_WCD937X
+sound/soc/codecs/Makefile:352:snd-soc-wcd937x-y := wcd937x.o
+sound/soc/codecs/Makefile:353:snd-soc-wcd937x-sdw-y := wcd937x-sdw.o
+sound/soc/codecs/Makefile:784:obj-$(CONFIG_SND_SOC_WCD937X)	+= snd-soc-wcd937x.o
+sound/soc/codecs/Makefile:785:ifdef CONFIG_SND_SOC_WCD937X_SDW
+sound/soc/codecs/Makefile:787:obj-$(CONFIG_SND_SOC_WCD937X) += snd-soc-wcd937x-sdw.o

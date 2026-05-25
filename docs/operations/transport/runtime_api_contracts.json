@@ -1,0 +1,92 @@
+{
+  "phase": "contract-first-runtime-cognition-integration",
+  "generated_at": "2026-05-24T11:02:10Z",
+  "api_version": "v1",
+  "runtime_artifact_types": [
+    "runtime_equivalence_report",
+    "hardware_truth_graph",
+    "replay_consistency_report",
+    "runtime_governance_decision",
+    "transformation_confidence_report"
+  ],
+  "endpoints": [
+    {
+      "path": "/api/v1/runtime/artifacts/index",
+      "method": "GET",
+      "description": "Lists governed runtime artifacts from docs/operations/transport with typed metadata and contract validation state.",
+      "query": {
+        "page": "int>=1",
+        "limit": "int>=1",
+        "include_invalid": "bool",
+        "strict_validation": "bool"
+      },
+      "response_model": "RuntimeArtifactIndexResponse"
+    },
+    {
+      "path": "/api/v1/runtime/artifacts/read",
+      "method": "GET",
+      "description": "Reads one typed runtime artifact contract without exposing raw filesystem data to the UI.",
+      "query": {
+        "artifact_type": "RuntimeArtifactType",
+        "strict_validation": "bool"
+      },
+      "response_model": "RuntimeArtifactReadResponse"
+    },
+    {
+      "path": "/api/v1/runtime/governance/summary",
+      "method": "GET",
+      "description": "Governance-first runtime promotion summary with lineage consistency and replay consistency correlation.",
+      "query": {
+        "strict_validation": "bool"
+      },
+      "response_model": "RuntimeGovernanceSummaryResponse"
+    },
+    {
+      "path": "/api/v1/runtime/topology",
+      "method": "GET",
+      "description": "Typed topology view over hardware_truth_graph with section-level pagination and integrity status.",
+      "query": {
+        "section": "string",
+        "page": "int>=1",
+        "limit": "int>=1",
+        "strict_validation": "bool"
+      },
+      "response_model": "RuntimeTopologyResponse"
+    },
+    {
+      "path": "/api/v1/runtime/equivalence",
+      "method": "GET",
+      "description": "Typed runtime equivalence dimensions and unsafe-region extraction for governance workflow.",
+      "query": {
+        "critical_only": "bool",
+        "page": "int>=1",
+        "limit": "int>=1",
+        "strict_validation": "bool"
+      },
+      "response_model": "RuntimeEquivalenceResponse"
+    },
+    {
+      "path": "/api/v1/runtime/confidence",
+      "method": "GET",
+      "description": "Typed runtime confidence and governance gate correlation with stale-state detection.",
+      "query": {
+        "strict_validation": "bool"
+      },
+      "response_model": "RuntimeConfidenceResponse"
+    }
+  ],
+  "contract_models": {
+    "base": "BaseTransportArtifact",
+    "runtime_equivalence": "RuntimeEquivalenceReport",
+    "hardware_truth_graph": "HardwareTruthGraphReport",
+    "replay_consistency": "ReplayConsistencyReport",
+    "runtime_governance": "RuntimeGovernanceDecisionReport",
+    "transformation_confidence": "TransformationConfidenceReport"
+  },
+  "governance_properties": {
+    "advisory_only_behavior": true,
+    "runtime_truth_precedence": true,
+    "deterministic_replay_lineage_required": true,
+    "fail_closed_on_contract_errors": true
+  }
+}

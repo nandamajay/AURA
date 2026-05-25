@@ -1,0 +1,1798 @@
+{
+  "generated_at": "2026-05-18T16:36:06.408549+00:00",
+  "note": "Deterministic demo workload evidence artifact",
+  "replay": [
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "learning",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "learning",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 0,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 10,
+                "status": "rules_loaded"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 4000,
+                "message_count": 2
+              },
+              "seq": 5,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 166
+              },
+              "seq": 6,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 30,
+                "status": "discovery"
+              },
+              "seq": 7,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 8,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 9,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 10,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 11,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 12,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 13,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 14,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 15,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 16,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 17,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 18,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 19,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 60,
+                "status": "pattern_extraction"
+              },
+              "seq": 20,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 90,
+                "status": "writing"
+              },
+              "seq": 21,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 22,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 23,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 24,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 25,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 25,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:03+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "findings_path": "/data/outputs/learning/235a7e18-8262-432d-b5a8-a7e67aeb913a/findings.md",
+              "patterns_found": 6,
+              "upstreamed_drivers": [
+                "MOCK_RESPONSE",
+                "provider=qgenie",
+                "model=gpt-4o-2024-08-06",
+                "agent_type=learning",
+                "task_id=235a7e18-8262-432d-b5a8-a7e67aeb913a",
+                "echo=Discover upstreamed Qualcomm Audio drivers"
+              ]
+            },
+            "status": "success"
+          },
+          "output_hash": "4f47bd2f3683fde9ceb7a24ed43e4f473579101c28d6221ed62200944d5c241c",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 14,
+          "prompts": [
+            {
+              "content": "List upstreamed Qualcomm audio drivers in the Linux kernel. Return one driver per line, format: driver_name - subsystem.",
+              "role": "system"
+            },
+            {
+              "content": "Discover upstreamed Qualcomm Audio drivers",
+              "role": "user"
+            },
+            {
+              "content": "Analyze MOCK_RESPONSE and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze provider=qgenie and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze model=gpt-4o-2024-08-06 and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze agent_type=learning and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze task_id=235a7e18-8262-432d-b5a8-a7e67aeb913a and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze echo=Discover upstreamed Qualcomm Audio drivers and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            }
+          ],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.256004+00:00",
+          "response_count": 7,
+          "responses": [
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=235a7e18-8262-432d-b5a8-a7e67aeb913a\necho=Discover upstreamed Qualcomm Audio drivers",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns"
+          ],
+          "revision": 47,
+          "snapshot_hash": "e08f3a1d93fafe0fbf11a221d2dc4be6ccda928f39483b07d3ecbb3dee20b7a2",
+          "success": true,
+          "task_id": "235a7e18-8262-432d-b5a8-a7e67aeb913a"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "235a7e18-8262-432d-b5a8-a7e67aeb913a"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122163,
+        "integrity_ok": true,
+        "output_hash": "4f47bd2f3683fde9ceb7a24ed43e4f473579101c28d6221ed62200944d5c241c",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 47,
+        "snapshot_hash": "e08f3a1d93fafe0fbf11a221d2dc4be6ccda928f39483b07d3ecbb3dee20b7a2",
+        "task_id": "235a7e18-8262-432d-b5a8-a7e67aeb913a"
+      },
+      "task_id": "235a7e18-8262-432d-b5a8-a7e67aeb913a"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "validation",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "validation",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 5,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 20,
+                "status": "plan_ready"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 70,
+                "status": "validation_executed"
+              },
+              "seq": 5,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 95,
+                "status": "artifacts_written"
+              },
+              "seq": 6,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 7,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 8,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 9,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 10,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 10,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:04+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "attempts": 2,
+              "blocking_count": 1,
+              "has_blocking_issues": true,
+              "json_path": "/data/outputs/validation/f874ebf5-8553-411c-bc93-80727d0dcb61/validation_report.json",
+              "markdown_path": "/data/outputs/validation/f874ebf5-8553-411c-bc93-80727d0dcb61/validation_report.md",
+              "summary_status": "has_issues",
+              "target": "aura-core",
+              "total_tests": 20
+            },
+            "status": "success"
+          },
+          "output_hash": "a420d7a7fdf26d0e5211b82d702f0ccbc301c633ffcd8d72e040a3d41f504837",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 0,
+          "prompts": [],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.266160+00:00",
+          "response_count": 0,
+          "responses": [],
+          "revision": 11,
+          "snapshot_hash": "c1088d394a27998f728e0323b946045ecd38ce8133d4d7ba14467bebf67018d8",
+          "success": true,
+          "task_id": "f874ebf5-8553-411c-bc93-80727d0dcb61"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "f874ebf5-8553-411c-bc93-80727d0dcb61"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122164,
+        "integrity_ok": true,
+        "output_hash": "a420d7a7fdf26d0e5211b82d702f0ccbc301c633ffcd8d72e040a3d41f504837",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 11,
+        "snapshot_hash": "c1088d394a27998f728e0323b946045ecd38ce8133d4d7ba14467bebf67018d8",
+        "task_id": "f874ebf5-8553-411c-bc93-80727d0dcb61"
+      },
+      "task_id": "f874ebf5-8553-411c-bc93-80727d0dcb61"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "refactor",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "refactor",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 5,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 20,
+                "status": "context_loaded"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 55,
+                "status": "baseline_plan"
+              },
+              "seq": 5,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 700,
+                "message_count": 2
+              },
+              "seq": 6,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 364
+              },
+              "seq": 7,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 75,
+                "status": "enriched_plan"
+              },
+              "seq": 8,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 95,
+                "status": "artifacts_written"
+              },
+              "seq": 9,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 10,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 11,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 12,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 13,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 13,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:03+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "json_path": "/data/outputs/refactor/416dc4b5-0061-4c6c-937b-5db2ecf3b2b8/refactor_plan.json",
+              "report_path": "/data/outputs/refactor/416dc4b5-0061-4c6c-937b-5db2ecf3b2b8/refactor_plan.md",
+              "risk_level": "high",
+              "steps": 6,
+              "targets": 3
+            },
+            "status": "success"
+          },
+          "output_hash": "2850555f5f156ae56599f3b1c66c7e58244008343d3132b77e6e0f172112420e",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 2,
+          "prompts": [
+            {
+              "content": "Create concise Linux upstream refactor guidance. Return JSON only: {\"additional_steps\":[{\"title\":\"...\",\"goal\":\"...\",\"risk\":\"low|medium|high\",\"validation\":[\"...\"]}],\"review_notes\":[\"...\"]}",
+              "role": "system"
+            },
+            {
+              "content": "Targets: ['sound/soc/qcom/common.c', 'sound/soc/qcom/qdsp6/qdsp6.c', 'sound/soc/qcom/sm8250.c']\nConstraints: ['Keep changes incremental and reviewable', 'Prefer upstream kernel abstractions over vendor-only logic', 'Preserve deterministic behavior and auditable decisions']\nProvide up to 4 additional steps.",
+              "role": "user"
+            }
+          ],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.276640+00:00",
+          "response_count": 1,
+          "responses": [
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=refactor\ntask_id=416dc4b5-0061-4c6c-937b-5db2ecf3b2b8\necho=Targets: ['sound/soc/qcom/common.c', 'sound/soc/qcom/qdsp6/qdsp6.c', 'sound/soc/qcom/sm8250.c']\nConstraints: ['Keep changes incremental and reviewable', 'Prefer upstream kernel abstractions over vendor-only logic', 'Preserve deterministic b"
+          ],
+          "revision": 17,
+          "snapshot_hash": "c0c225eee357cd50bdd6481bdcb82532cf2ef5884d9944af20854c1b653600f8",
+          "success": true,
+          "task_id": "416dc4b5-0061-4c6c-937b-5db2ecf3b2b8"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "416dc4b5-0061-4c6c-937b-5db2ecf3b2b8"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122163,
+        "integrity_ok": true,
+        "output_hash": "2850555f5f156ae56599f3b1c66c7e58244008343d3132b77e6e0f172112420e",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 17,
+        "snapshot_hash": "c0c225eee357cd50bdd6481bdcb82532cf2ef5884d9944af20854c1b653600f8",
+        "task_id": "416dc4b5-0061-4c6c-937b-5db2ecf3b2b8"
+      },
+      "task_id": "416dc4b5-0061-4c6c-937b-5db2ecf3b2b8"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "simulation",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "simulation",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 5,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 20,
+                "status": "context_loaded"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 45,
+                "status": "history_loaded"
+              },
+              "seq": 5,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 70,
+                "status": "simulation_executed"
+              },
+              "seq": 6,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 350,
+                "message_count": 2
+              },
+              "seq": 7,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 366
+              },
+              "seq": 8,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 95,
+                "status": "artifacts_written"
+              },
+              "seq": 9,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 10,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 11,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 12,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 13,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 13,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:03+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "failed": 1,
+              "inconclusive": 0,
+              "json_path": "/data/outputs/simulation/3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8/simulation_report.json",
+              "markdown_path": "/data/outputs/simulation/3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8/simulation_report.md",
+              "overall_status": "failed",
+              "passed": 6,
+              "requested_simulations": 7
+            },
+            "status": "success"
+          },
+          "output_hash": "4b232e015e32cb156937c44735b0f9cccff370ed96c07ee61266ff8aebb3479b",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 2,
+          "prompts": [
+            {
+              "content": "Provide concise simulation follow-up actions. Return JSON only: {\"recommendations\":[\"...\"]}",
+              "role": "system"
+            },
+            {
+              "content": "{\"summary\": {\"requested\": 7, \"passed\": 6, \"failed\": 1, \"inconclusive\": 0, \"overall_status\": \"failed\", \"confidence_delta\": 0.19}, \"results\": [{\"simulation_type\": \"probe_flow\", \"status\": \"passed\", \"duration_ms\": 162, \"confidence_impact\": 0.03, \"findings\": {\"checks_executed\": [\"component_probe_order\", \"dependency_resolution\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.1, \"decision_signal\": 0.639, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"dapm\", \"status\": \"passed\", \"duration_ms\": 345, \"confidence_impact\": 0.04, \"findings\": {\"checks_executed\": [\"widget_route_graph\", \"power_state_transitions\"], \"historical_fail_ratio\": 0.5, \"adjusted_fail_ratio\": 0.23, \"decision_signal\": 0.742, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"pcm\", \"status\": \"passed\", \"duration_ms\": 232, \"confidence_impact\": 0.04, \"findings\": {\"checks_executed\": [\"hw_params_validation\", \"stream_start_stop_sequence\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.12, \"decision_signal\": 0.223, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"soundwire\", \"status\": \"passed\", \"duration_ms\": 349, \"confidence_impact\": 0.05, \"findings\": {\"checks_executed\": [\"link_enumeration\", \"slave_attach_detach\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.16, \"decision_signal\": 0.677, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"runtime_pm\", \"status\": \"passed\", \"duration_ms\": 156, \"confidence_impact\": 0.04, \"findings\": {\"checks_executed\": [\"suspend_resume_cycles\", \"clock_gating_balance\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.14, \"decision_signal\": 0.59, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"dsp\", \"status\": \"failed\", \"duration_ms\": 523, \"confidence_impact\": -0.06, \"findings\": {\"checks_executed\": [\"firmware_bootstrap\", \"command_channel_integrity\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.18, \"decision_signal\": 0.03, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": [\"DSP bootstrap timeout\", \"IPC command corruption risk\"]}, {\"simulation_type\": \"dma_irq\", \"status\": \"passed\", \"duration_ms\": 508, \"confidence_impact\": 0.05, \"findings\": {\"checks_executed\": [\"dma_descriptor_chain\", \"irq_ack_sequence\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.15, \"decision_signal\": 0.233, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}]}",
+              "role": "user"
+            }
+          ],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.305378+00:00",
+          "response_count": 1,
+          "responses": [
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=simulation\ntask_id=3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8\necho={\"summary\": {\"requested\": 7, \"passed\": 6, \"failed\": 1, \"inconclusive\": 0, \"overall_status\": \"failed\", \"confidence_delta\": 0.19}, \"results\": [{\"simulation_type\": \"probe_flow\", \"status\": \"passed\", \"duration_ms\": 162, \"confidence_impact\": 0.03"
+          ],
+          "revision": 17,
+          "snapshot_hash": "2a1493af19f6badade4a3bf5bd8d387d369d016286d042305ed8700b7b2376ce",
+          "success": true,
+          "task_id": "3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122163,
+        "integrity_ok": true,
+        "output_hash": "4b232e015e32cb156937c44735b0f9cccff370ed96c07ee61266ff8aebb3479b",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 17,
+        "snapshot_hash": "2a1493af19f6badade4a3bf5bd8d387d369d016286d042305ed8700b7b2376ce",
+        "task_id": "3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8"
+      },
+      "task_id": "3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "learning",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "learning",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 0,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 10,
+                "status": "rules_loaded"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 4000,
+                "message_count": 2
+              },
+              "seq": 5,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 166
+              },
+              "seq": 6,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 30,
+                "status": "discovery"
+              },
+              "seq": 7,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 8,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 9,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 10,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 11,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 12,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 13,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 14,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 15,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 16,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 17,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "max_tokens": 1000,
+                "message_count": 2
+              },
+              "seq": 18,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 140
+              },
+              "seq": 19,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 60,
+                "status": "pattern_extraction"
+              },
+              "seq": 20,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 90,
+                "status": "writing"
+              },
+              "seq": 21,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 22,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 23,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 24,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 25,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 25,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:03+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "findings_path": "/data/outputs/learning/c8b7dc8a-29f6-497e-90e9-48cf9d361267/findings.md",
+              "patterns_found": 6,
+              "upstreamed_drivers": [
+                "MOCK_RESPONSE",
+                "provider=qgenie",
+                "model=gpt-4o-2024-08-06",
+                "agent_type=learning",
+                "task_id=235a7e18-8262-432d-b5a8-a7e67aeb913a",
+                "echo=Discover upstreamed Qualcomm Audio drivers"
+              ]
+            },
+            "status": "success"
+          },
+          "output_hash": "fff0d7f0404690167db632202a6cbfcb7146b804c9d49e1308bd4cc147d6aded",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 14,
+          "prompts": [
+            {
+              "content": "List upstreamed Qualcomm audio drivers in the Linux kernel. Return one driver per line, format: driver_name - subsystem.",
+              "role": "system"
+            },
+            {
+              "content": "Discover upstreamed Qualcomm Audio drivers",
+              "role": "user"
+            },
+            {
+              "content": "Analyze MOCK_RESPONSE and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze provider=qgenie and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze model=gpt-4o-2024-08-06 and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze agent_type=learning and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze task_id=235a7e18-8262-432d-b5a8-a7e67aeb913a and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            },
+            {
+              "content": "Analyze echo=Discover upstreamed Qualcomm Audio drivers and extract key migration patterns for Qualcomm audio upstreaming.",
+              "role": "system"
+            },
+            {
+              "content": "Extract patterns",
+              "role": "user"
+            }
+          ],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.327708+00:00",
+          "response_count": 7,
+          "responses": [
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=235a7e18-8262-432d-b5a8-a7e67aeb913a\necho=Discover upstreamed Qualcomm Audio drivers",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns",
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=learning\ntask_id=c8b7dc8a-29f6-497e-90e9-48cf9d361267\necho=Extract patterns"
+          ],
+          "revision": 47,
+          "snapshot_hash": "3a479e37c9aada3e567a4d9abb833c88cc10ceecb0f959beece637e944bc10b0",
+          "success": true,
+          "task_id": "c8b7dc8a-29f6-497e-90e9-48cf9d361267"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "c8b7dc8a-29f6-497e-90e9-48cf9d361267"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122163,
+        "integrity_ok": true,
+        "output_hash": "fff0d7f0404690167db632202a6cbfcb7146b804c9d49e1308bd4cc147d6aded",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 47,
+        "snapshot_hash": "3a479e37c9aada3e567a4d9abb833c88cc10ceecb0f959beece637e944bc10b0",
+        "task_id": "c8b7dc8a-29f6-497e-90e9-48cf9d361267"
+      },
+      "task_id": "c8b7dc8a-29f6-497e-90e9-48cf9d361267"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "validation",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "validation",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 5,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 20,
+                "status": "plan_ready"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 70,
+                "status": "validation_executed"
+              },
+              "seq": 5,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 95,
+                "status": "artifacts_written"
+              },
+              "seq": 6,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 7,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 8,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 9,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 10,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 10,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:04+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "attempts": 2,
+              "blocking_count": 1,
+              "has_blocking_issues": true,
+              "json_path": "/data/outputs/validation/b66f77a3-d318-4565-aa2a-9c0e9a164b40/validation_report.json",
+              "markdown_path": "/data/outputs/validation/b66f77a3-d318-4565-aa2a-9c0e9a164b40/validation_report.md",
+              "summary_status": "has_issues",
+              "target": "aura-core",
+              "total_tests": 20
+            },
+            "status": "success"
+          },
+          "output_hash": "bd05cfc3d233fb7d4f3bd73c1b9e4a7607daf94f154ca4ae779d165f155e71dc",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 0,
+          "prompts": [],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.337995+00:00",
+          "response_count": 0,
+          "responses": [],
+          "revision": 11,
+          "snapshot_hash": "26ad8ad7e852c384c5786b0d2e91d0b0391a350a11ef4365176cda9ed98f931f",
+          "success": true,
+          "task_id": "b66f77a3-d318-4565-aa2a-9c0e9a164b40"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "b66f77a3-d318-4565-aa2a-9c0e9a164b40"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122164,
+        "integrity_ok": true,
+        "output_hash": "bd05cfc3d233fb7d4f3bd73c1b9e4a7607daf94f154ca4ae779d165f155e71dc",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 11,
+        "snapshot_hash": "26ad8ad7e852c384c5786b0d2e91d0b0391a350a11ef4365176cda9ed98f931f",
+        "task_id": "b66f77a3-d318-4565-aa2a-9c0e9a164b40"
+      },
+      "task_id": "b66f77a3-d318-4565-aa2a-9c0e9a164b40"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "refactor",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "refactor",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 5,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 20,
+                "status": "context_loaded"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 55,
+                "status": "baseline_plan"
+              },
+              "seq": 5,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 700,
+                "message_count": 2
+              },
+              "seq": 6,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 364
+              },
+              "seq": 7,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 75,
+                "status": "enriched_plan"
+              },
+              "seq": 8,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 95,
+                "status": "artifacts_written"
+              },
+              "seq": 9,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 10,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 11,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 12,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 13,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 13,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:03+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "json_path": "/data/outputs/refactor/dbeb6523-6768-40d3-a70e-baad0b471397/refactor_plan.json",
+              "report_path": "/data/outputs/refactor/dbeb6523-6768-40d3-a70e-baad0b471397/refactor_plan.md",
+              "risk_level": "high",
+              "steps": 6,
+              "targets": 3
+            },
+            "status": "success"
+          },
+          "output_hash": "fe48963e75ccd8cda61322d801f808c597b199b0fb999290c8ae382a4a3117d8",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 2,
+          "prompts": [
+            {
+              "content": "Create concise Linux upstream refactor guidance. Return JSON only: {\"additional_steps\":[{\"title\":\"...\",\"goal\":\"...\",\"risk\":\"low|medium|high\",\"validation\":[\"...\"]}],\"review_notes\":[\"...\"]}",
+              "role": "system"
+            },
+            {
+              "content": "Targets: ['sound/soc/qcom/common.c', 'sound/soc/qcom/qdsp6/qdsp6.c', 'sound/soc/qcom/sm8250.c']\nConstraints: ['Keep changes incremental and reviewable', 'Prefer upstream kernel abstractions over vendor-only logic', 'Preserve deterministic behavior and auditable decisions']\nProvide up to 4 additional steps.",
+              "role": "user"
+            }
+          ],
+          "recorded_at": "2026-05-18T16:36:02+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.347628+00:00",
+          "response_count": 1,
+          "responses": [
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=refactor\ntask_id=416dc4b5-0061-4c6c-937b-5db2ecf3b2b8\necho=Targets: ['sound/soc/qcom/common.c', 'sound/soc/qcom/qdsp6/qdsp6.c', 'sound/soc/qcom/sm8250.c']\nConstraints: ['Keep changes incremental and reviewable', 'Prefer upstream kernel abstractions over vendor-only logic', 'Preserve deterministic b"
+          ],
+          "revision": 17,
+          "snapshot_hash": "68785acc7f944d7d13879137655f1c2ef8acdfc09aa8a1b5fb75b3f76c3ba719",
+          "success": true,
+          "task_id": "dbeb6523-6768-40d3-a70e-baad0b471397"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "dbeb6523-6768-40d3-a70e-baad0b471397"
+      },
+      "state": {
+        "created_at": 1779122162,
+        "exists": true,
+        "finalized_at": 1779122163,
+        "integrity_ok": true,
+        "output_hash": "fe48963e75ccd8cda61322d801f808c597b199b0fb999290c8ae382a4a3117d8",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 17,
+        "snapshot_hash": "68785acc7f944d7d13879137655f1c2ef8acdfc09aa8a1b5fb75b3f76c3ba719",
+        "task_id": "dbeb6523-6768-40d3-a70e-baad0b471397"
+      },
+      "task_id": "dbeb6523-6768-40d3-a70e-baad0b471397"
+    },
+    {
+      "replay": {
+        "integrity_ok": true,
+        "replay": {
+          "agent_type": "simulation",
+          "context": {
+            "model": "gpt-4o-2024-08-06",
+            "seed": 42,
+            "temperature": 0.1
+          },
+          "execution": [
+            {
+              "details": {
+                "agent_type": "simulation",
+                "model_version": "gpt-4o-2024-08-06",
+                "seed": 42
+              },
+              "seq": 1,
+              "step": "task_started"
+            },
+            {
+              "details": {},
+              "seq": 2,
+              "step": "execute_begin"
+            },
+            {
+              "details": {
+                "progress_percent": 5,
+                "status": "starting"
+              },
+              "seq": 3,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 20,
+                "status": "context_loaded"
+              },
+              "seq": 4,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 45,
+                "status": "history_loaded"
+              },
+              "seq": 5,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "progress_percent": 70,
+                "status": "simulation_executed"
+              },
+              "seq": 6,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "max_tokens": 350,
+                "message_count": 2
+              },
+              "seq": 7,
+              "step": "llm_request"
+            },
+            {
+              "details": {
+                "response_chars": 366
+              },
+              "seq": 8,
+              "step": "llm_response"
+            },
+            {
+              "details": {
+                "progress_percent": 95,
+                "status": "artifacts_written"
+              },
+              "seq": 9,
+              "step": "task_progress"
+            },
+            {
+              "details": {},
+              "seq": 10,
+              "step": "execute_success"
+            },
+            {
+              "details": {
+                "progress_percent": 100,
+                "status": "complete"
+              },
+              "seq": 11,
+              "step": "task_progress"
+            },
+            {
+              "details": {
+                "exit_code": 0
+              },
+              "seq": 12,
+              "step": "task_result"
+            },
+            {
+              "details": {},
+              "seq": 13,
+              "step": "task_finished"
+            }
+          ],
+          "execution_steps": 13,
+          "fidelity": "perfect",
+          "finalized_at": "2026-05-18T16:36:03+00:00",
+          "output": {
+            "exit_code": 0,
+            "results": {
+              "failed": 1,
+              "inconclusive": 0,
+              "json_path": "/data/outputs/simulation/65d17992-407d-4523-ae55-0f2103f4cf94/simulation_report.json",
+              "markdown_path": "/data/outputs/simulation/65d17992-407d-4523-ae55-0f2103f4cf94/simulation_report.md",
+              "overall_status": "failed",
+              "passed": 6,
+              "requested_simulations": 7
+            },
+            "status": "success"
+          },
+          "output_hash": "38ae346496e6150d913042c8d100a73b4dfad36c9fe41a512cfd4a9e6d7a81db",
+          "output_keys": [
+            "exit_code",
+            "results",
+            "status"
+          ],
+          "prompt_count": 2,
+          "prompts": [
+            {
+              "content": "Provide concise simulation follow-up actions. Return JSON only: {\"recommendations\":[\"...\"]}",
+              "role": "system"
+            },
+            {
+              "content": "{\"summary\": {\"requested\": 7, \"passed\": 6, \"failed\": 1, \"inconclusive\": 0, \"overall_status\": \"failed\", \"confidence_delta\": 0.19}, \"results\": [{\"simulation_type\": \"probe_flow\", \"status\": \"passed\", \"duration_ms\": 162, \"confidence_impact\": 0.03, \"findings\": {\"checks_executed\": [\"component_probe_order\", \"dependency_resolution\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.1, \"decision_signal\": 0.639, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"dapm\", \"status\": \"passed\", \"duration_ms\": 345, \"confidence_impact\": 0.04, \"findings\": {\"checks_executed\": [\"widget_route_graph\", \"power_state_transitions\"], \"historical_fail_ratio\": 0.5, \"adjusted_fail_ratio\": 0.23, \"decision_signal\": 0.742, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"pcm\", \"status\": \"passed\", \"duration_ms\": 232, \"confidence_impact\": 0.04, \"findings\": {\"checks_executed\": [\"hw_params_validation\", \"stream_start_stop_sequence\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.12, \"decision_signal\": 0.223, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"soundwire\", \"status\": \"passed\", \"duration_ms\": 349, \"confidence_impact\": 0.05, \"findings\": {\"checks_executed\": [\"link_enumeration\", \"slave_attach_detach\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.16, \"decision_signal\": 0.677, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"runtime_pm\", \"status\": \"passed\", \"duration_ms\": 156, \"confidence_impact\": 0.04, \"findings\": {\"checks_executed\": [\"suspend_resume_cycles\", \"clock_gating_balance\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.14, \"decision_signal\": 0.59, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}, {\"simulation_type\": \"dsp\", \"status\": \"failed\", \"duration_ms\": 523, \"confidence_impact\": -0.06, \"findings\": {\"checks_executed\": [\"firmware_bootstrap\", \"command_channel_integrity\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.18, \"decision_signal\": 0.03, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": [\"DSP bootstrap timeout\", \"IPC command corruption risk\"]}, {\"simulation_type\": \"dma_irq\", \"status\": \"passed\", \"duration_ms\": 508, \"confidence_impact\": 0.05, \"findings\": {\"checks_executed\": [\"dma_descriptor_chain\", \"irq_ack_sequence\"], \"historical_fail_ratio\": 0.0, \"adjusted_fail_ratio\": 0.15, \"decision_signal\": 0.233, \"fidelity_mode\": \"state_machine\"}, \"failure_predictions\": []}]}",
+              "role": "user"
+            }
+          ],
+          "recorded_at": "2026-05-18T16:36:03+00:00",
+          "recording_state": "finalized",
+          "replayed_at": "2026-05-18T16:36:06.357169+00:00",
+          "response_count": 1,
+          "responses": [
+            "MOCK_RESPONSE\nprovider=qgenie\nmodel=gpt-4o-2024-08-06\nagent_type=simulation\ntask_id=3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8\necho={\"summary\": {\"requested\": 7, \"passed\": 6, \"failed\": 1, \"inconclusive\": 0, \"overall_status\": \"failed\", \"confidence_delta\": 0.19}, \"results\": [{\"simulation_type\": \"probe_flow\", \"status\": \"passed\", \"duration_ms\": 162, \"confidence_impact\": 0.03"
+          ],
+          "revision": 17,
+          "snapshot_hash": "0b6df0e2c4f3d6ec850f8bb3c446a857d2052918819444985c4350e53d9599f7",
+          "success": true,
+          "task_id": "65d17992-407d-4523-ae55-0f2103f4cf94"
+        },
+        "requested_by": "nandam@qti.qualcomm.com",
+        "task_id": "65d17992-407d-4523-ae55-0f2103f4cf94"
+      },
+      "state": {
+        "created_at": 1779122163,
+        "exists": true,
+        "finalized_at": 1779122163,
+        "integrity_ok": true,
+        "output_hash": "38ae346496e6150d913042c8d100a73b4dfad36c9fe41a512cfd4a9e6d7a81db",
+        "recording_state": "finalized",
+        "replayable": true,
+        "revision": 17,
+        "snapshot_hash": "0b6df0e2c4f3d6ec850f8bb3c446a857d2052918819444985c4350e53d9599f7",
+        "task_id": "65d17992-407d-4523-ae55-0f2103f4cf94"
+      },
+      "task_id": "65d17992-407d-4523-ae55-0f2103f4cf94"
+    }
+  ],
+  "runtime_overview": {
+    "agents": {
+      "circuit_breakers": {},
+      "running_count": 0,
+      "running_sample": [],
+      "watchdog_count": 0,
+      "watchdog_max_watches": 20
+    },
+    "classification": {
+      "determinism": "strong_bounded",
+      "operational": "bounded"
+    },
+    "generated_at": "2026-05-18T16:36:06.406802+00:00",
+    "governance": {
+      "approvals": {
+        "failed": 387,
+        "in_progress": 124,
+        "passed": 393,
+        "pending": 102
+      },
+      "audit_last_hour": 119
+    },
+    "pressure_alerts": [
+      {
+        "message": "mutable_replay_logs=18 (non-finalized traces are not deterministic replay artifacts)",
+        "severity": "info",
+        "surface": "replay"
+      }
+    ],
+    "queue": {
+      "P0_critical": 0,
+      "P1_normal": 0,
+      "P2_background": 0,
+      "completed_today": 946,
+      "domains_tracked": 4,
+      "failed_today": 0,
+      "fairness_overrides_total": 0,
+      "running": 0,
+      "starvation_events_total": 0
+    },
+    "queue_isolation": {
+      "dispatch_sequence": 8,
+      "p2_fairness_window": 3,
+      "p2_last_fair_dispatch_sequence": 0,
+      "p2_wait_override_seconds": 3.0,
+      "per_domain": {
+        "automation": {
+          "dispatches": 2,
+          "fairness_overrides": 0,
+          "last_queue_wait_ms": 229,
+          "starvation_events": 0
+        },
+        "driver": {
+          "dispatches": 2,
+          "fairness_overrides": 0,
+          "last_queue_wait_ms": 230,
+          "starvation_events": 0
+        },
+        "media": {
+          "dispatches": 2,
+          "fairness_overrides": 0,
+          "last_queue_wait_ms": 410,
+          "starvation_events": 0
+        },
+        "research": {
+          "dispatches": 2,
+          "fairness_overrides": 0,
+          "last_queue_wait_ms": 445,
+          "starvation_events": 0
+        }
+      },
+      "policy_version": "p2-isolation-v1",
+      "queue_depth": {
+        "P0_critical": 0,
+        "P1_normal": 0,
+        "P2_background": 0,
+        "running": 0
+      }
+    },
+    "replay": {
+      "finalized": 1354,
+      "mutable": 18
+    },
+    "requested_by": "nandam@qti.qualcomm.com",
+    "tasks": {
+      "domain_activity": {
+        "automation": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        },
+        "default": {
+          "completed": 112,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 112
+        },
+        "driver": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        },
+        "media": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        },
+        "research": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        }
+      },
+      "retry_pressure": {
+        "retry_pending_tasks": 0,
+        "tasks_with_retry_lineage": 0
+      },
+      "status_counts": {
+        "cancelled": 21,
+        "completed": 1097,
+        "failed": 2
+      }
+    },
+    "websocket": {
+      "available": true,
+      "payload": {
+        "buffer_counts_by_domain": {
+          "automation": 6,
+          "default": 95,
+          "driver": 6,
+          "media": 6,
+          "research": 6
+        },
+        "buffer_evictions_by_domain": {},
+        "buffer_evictions_total": 0,
+        "channel_broadcast_count": {
+          "agent.lifecycle": 32,
+          "system": 1,
+          "task.orchestration": 86,
+          "task.orchestration:automation": 6,
+          "task.orchestration:driver": 6,
+          "task.orchestration:media": 6,
+          "task.orchestration:research": 6
+        },
+        "domain_ingest_count": {
+          "automation": 6,
+          "default": 95,
+          "driver": 6,
+          "media": 6,
+          "research": 6
+        },
+        "domain_sse_delivery_count": {},
+        "domain_ws_delivery_count": {
+          "automation": 0,
+          "default": 0,
+          "driver": 0,
+          "media": 0,
+          "research": 0
+        },
+        "event_buffer_capacity": 1000,
+        "event_buffer_per_domain_max": 250,
+        "event_buffer_size": 119,
+        "event_ingest_sequence": 119,
+        "policy_version": "p2.1",
+        "retry_scope_sample": [],
+        "retry_scope_tracked": 0,
+        "sse_drop_by_domain": {},
+        "sse_drop_total": 0
+      }
+    }
+  },
+  "seed": 42,
+  "status": {
+    "final": {
+      "235a7e18-8262-432d-b5a8-a7e67aeb913a": "completed",
+      "3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8": "completed",
+      "416dc4b5-0061-4c6c-937b-5db2ecf3b2b8": "completed",
+      "65d17992-407d-4523-ae55-0f2103f4cf94": "completed",
+      "b66f77a3-d318-4565-aa2a-9c0e9a164b40": "completed",
+      "c8b7dc8a-29f6-497e-90e9-48cf9d361267": "completed",
+      "dbeb6523-6768-40d3-a70e-baad0b471397": "completed",
+      "f874ebf5-8553-411c-bc93-80727d0dcb61": "completed"
+    },
+    "timeline": [
+      {
+        "at": "2026-05-18T16:36:02.187829+00:00",
+        "counts": {
+          "queued": 8
+        }
+      },
+      {
+        "at": "2026-05-18T16:36:04.228618+00:00",
+        "counts": {
+          "running": 8
+        }
+      },
+      {
+        "at": "2026-05-18T16:36:06.247571+00:00",
+        "counts": {
+          "completed": 8
+        }
+      }
+    ]
+  },
+  "task_count": 8,
+  "task_ids": [
+    "235a7e18-8262-432d-b5a8-a7e67aeb913a",
+    "f874ebf5-8553-411c-bc93-80727d0dcb61",
+    "416dc4b5-0061-4c6c-937b-5db2ecf3b2b8",
+    "3a45e9d1-5179-4c6b-b8b9-14f5f53ebba8",
+    "c8b7dc8a-29f6-497e-90e9-48cf9d361267",
+    "b66f77a3-d318-4565-aa2a-9c0e9a164b40",
+    "dbeb6523-6768-40d3-a70e-baad0b471397",
+    "65d17992-407d-4523-ae55-0f2103f4cf94"
+  ]
+}

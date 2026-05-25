@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { useApiData } from '../hooks/useApiData'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
@@ -102,7 +102,7 @@ export default function SimulationControlCenter() {
   const [playing, setPlaying] = useState(false)
   const [speed, setSpeed] = useState(1)
 
-  const { data: scenarios } = useApiData<ScenariosResponse>(`${ENDPOINTS.simulation}/scenarios`, { intervalMs: 30_000 })
+  const { data: scenarios } = useApiData<ScenariosResponse>(API_ROUTES.simulation.scenarios(), { intervalMs: 30_000 })
 
   const scenarioList = scenarios?.scenarios || []
   const selectedScenario = scenarioList.find((scenario) => scenario.id === simulationType)
@@ -204,7 +204,7 @@ export default function SimulationControlCenter() {
     setStatusResult(null)
 
     try {
-      const result = await apiRequest<SimulationStartResponse>(ENDPOINTS.simulation, {
+      const result = await apiRequest<SimulationStartResponse>(API_ROUTES.simulation.root(), {
         method: 'POST',
         body: JSON.stringify({
           patch_id: patchId,
@@ -229,7 +229,7 @@ export default function SimulationControlCenter() {
     setError('')
     setStatusLoading(true)
     try {
-      const result = await apiRequest<SimulationStatusResponse>(`${ENDPOINTS.simulation}/${simulationId}`)
+      const result = await apiRequest<SimulationStatusResponse>(API_ROUTES.simulation.byId(simulationId))
       setStatusResult(result)
       if (result.status === 'running' || result.status === 'pending') {
         setPlaying(true)

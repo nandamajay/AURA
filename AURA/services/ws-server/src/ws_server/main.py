@@ -12,6 +12,7 @@ from fastapi.responses import StreamingResponse
 from pydantic import BaseModel, Field
 
 from aura_sdk.logging.logger import configure_logging, get_logger
+from aura_sdk.transport.runtime_execution_contract import resolve_runtime_contract
 from aura_sdk.bus.channels import ALL_CHANNELS
 from ws_server.connection_manager import ConnectionManager
 
@@ -242,6 +243,19 @@ def _queue_sse_event(event: dict) -> None:
 
 @app.on_event("startup")
 async def startup():
+    execution_contract = resolve_runtime_contract("ws-server")
+    logger.info(
+        "runtime_execution_contract",
+        classification=execution_contract.classification,
+        python_version=execution_contract.python_version,
+        containerized=execution_contract.containerized,
+        fail_closed_reasons=execution_contract.fail_closed_reasons,
+    )
+    if execution_contract.classification != "PASS":
+        raise RuntimeError(
+            "ws-server runtime execution contract failed: "
+            + ",".join(execution_contract.fail_closed_reasons)
+        )
     logger.info("ws_server.startup")
 
 

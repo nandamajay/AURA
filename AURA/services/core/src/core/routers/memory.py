@@ -1,11 +1,13 @@
 """Engineering Memory API — 10 ledgers and registers."""
 
+from datetime import datetime, timezone
 import sqlite3
 from typing import Any
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 from pydantic import BaseModel, ValidationError
 
+from aura_sdk.db.connection import get_db
 from aura_sdk.logging.logger import get_logger
 from aura_sdk.memory.models import (
     ArchitectureDrift,
@@ -63,6 +65,27 @@ def _validate_payload(model_cls, data: dict):
             errors=exc.errors(),
         )
         raise HTTPException(status_code=422, detail=exc.errors()) from exc
+
+
+def _now_iso() -> str:
+    return datetime.now(timezone.utc).isoformat()
+
+
+def _to_iso_epoch(value: Any) -> str:
+    if value in (None, "", 0):
+        return ""
+    try:
+        return datetime.fromtimestamp(float(value), tz=timezone.utc).isoformat()
+    except Exception:
+        return ""
+
+
+async def _table_exists(db, table_name: str) -> bool:
+    cursor = await db.execute(
+        "SELECT 1 FROM sqlite_master WHERE type = 'table' AND name = ?",
+        (table_name,),
+    )
+    return await cursor.fetchone() is not None
 
 
 # ── Summary ──
@@ -284,6 +307,277 @@ async def create_migration(
     record = _validate_payload(FutureMigration, data)
     id = await _persist_with_guard(store.create_migration(record))
     return {"migration_id": id, "status": "recorded"}
+
+
+# ── Learning / Maintainer Aggregates ──
+
+@router.get("/learning/timeline")
+async def learning_timeline(
+    limit: int = 200,
+    current_user: dict = Depends(get_current_user),
+):
+    """Cross-ledger learning timeline with deterministic ordering and evidence lineage."""
+    _ = current_user
+    safe_limit = max(1, min(limit, 1000))
+    generated_at = _now_iso()
+    fail_closed_reasons: list[str] = []
+    entries: list[dict[str, Any]] = []
+
+    async with get_db() as db:
+        queries = [
+            (
+                "engineering_decisions",
+                """SELECT decision_id AS id, created_at AS ts, subsystem, title AS summary
+                   FROM engineering_decisions
+                   ORDER BY created_at DESC
+                   LIMIT ?""",
+                "decision",
+            ),
+            (
+                "failure_investigations",
+                """SELECT failure_id AS id, created_at AS ts, subsystem, title AS summary, status, severity
+                   FROM failure_investigations
+                   ORDER BY created_at DESC
+                   LIMIT ?""",
+                "failure",
+            ),
+            (
+                "replay_incidents",
+                """SELECT incident_id AS id, created_at AS ts, task_id AS subsystem, description AS summary, status, severity
+                   FROM replay_incidents
+                   ORDER BY created_at DESC
+                   LIMIT ?""",
+                "replay_incident",
+            ),
+            (
+                "architecture_drift",
+                """SELECT drift_id AS id, introduced_at AS ts, subsystem, title AS summary, status
+                   FROM architecture_drift
+                   ORDER BY introduced_at DESC
+                   LIMIT ?""",
+                "architecture_drift",
+            ),
+            (
+                "technical_debt",
+                """SELECT debt_id AS id, created_at AS ts, subsystem, title AS summary, status, severity
+                   FROM technical_debt
+                   ORDER BY created_at DESC
+                   LIMIT ?""",
+                "technical_debt",
+            ),
+            (
+                "audit_ledger",
+                """SELECT CAST(id AS TEXT) AS id, timestamp AS ts, target_type AS subsystem,
+                          event_type AS summary
+                   FROM audit_ledger
+                   ORDER BY id DESC
+                   LIMIT ?""",
+                "audit_event",
+            ),
+        ]
+
+        for table_name, sql, kind in queries:
+            if not await _table_exists(db, table_name):
+                fail_closed_reasons.append(f"table_missing:{table_name}")
+                continue
+            cursor = await db.execute(sql, (safe_limit,))
+            rows = await cursor.fetchall()
+            for row in rows:
+                item = dict(row)
+                ts = item.get("ts", 0)
+                entries.append(
+                    {
+                        "kind": kind,
+                        "id": item.get("id", ""),
+                        "summary": item.get("summary", ""),
+                        "subsystem": item.get("subsystem", "") or "unknown",
+                        "status": item.get("status", ""),
+                        "severity": item.get("severity", ""),
+                        "timestamp": int(ts or 0),
+                        "timestamp_iso": _to_iso_epoch(ts),
+                        "evidence": {
+                            "table": table_name,
+                            "record_id": item.get("id", ""),
+                        },
+                    }
+                )
+
+    entries.sort(key=lambda item: (int(item.get("timestamp") or 0), str(item.get("id") or "")), reverse=True)
+    entries = entries[:safe_limit]
+
+    classification = "PASS" if not fail_closed_reasons else "FAIL_CLOSED"
+    if classification == "FAIL_CLOSED":
+        logger.warning(
+            "learning_timeline_fail_closed",
+            fail_closed_reasons=fail_closed_reasons,
+        )
+
+    return {
+        "generated_at": generated_at,
+        "classification": classification,
+        "fail_closed_reasons": sorted(set(fail_closed_reasons)),
+        "limit": safe_limit,
+        "count": len(entries),
+        "entries": entries,
+    }
+
+
+@router.get("/maintainer/intelligence")
+async def maintainer_intelligence(
+    limit: int = 200,
+    current_user: dict = Depends(get_current_user),
+):
+    """Maintainer-facing evidence aggregate for escalations, regressions, and debt drift."""
+    _ = current_user
+    safe_limit = max(1, min(limit, 500))
+    generated_at = _now_iso()
+    fail_closed_reasons: list[str] = []
+
+    governance_escalations = 0
+    rejected_patch_events = 0
+    rejected_approval_events = 0
+    replay_open_incidents = 0
+    open_failures = 0
+    unresolved_drift = 0
+    debt_hotspots: list[dict[str, Any]] = []
+    regression_history: list[dict[str, Any]] = []
+    replay_failure_clusters: list[dict[str, Any]] = []
+    recent_timeline: list[dict[str, Any]] = []
+
+    async with get_db() as db:
+        if await _table_exists(db, "audit_ledger"):
+            escalation_cursor = await db.execute(
+                """SELECT COUNT(*) AS count
+                   FROM audit_ledger
+                   WHERE event_type IN ('approval.escalated', 'governance.escalation_triggered')"""
+            )
+            escalation_row = await escalation_cursor.fetchone()
+            governance_escalations = int(escalation_row["count"]) if escalation_row else 0
+
+            rejected_patch_cursor = await db.execute(
+                "SELECT COUNT(*) AS count FROM audit_ledger WHERE event_type = 'patch.rejected'"
+            )
+            rejected_patch_row = await rejected_patch_cursor.fetchone()
+            rejected_patch_events = int(rejected_patch_row["count"]) if rejected_patch_row else 0
+
+            rejected_approval_cursor = await db.execute(
+                "SELECT COUNT(*) AS count FROM audit_ledger WHERE event_type = 'approval.rejected'"
+            )
+            rejected_approval_row = await rejected_approval_cursor.fetchone()
+            rejected_approval_events = int(rejected_approval_row["count"]) if rejected_approval_row else 0
+
+            timeline_cursor = await db.execute(
+                """SELECT id, timestamp, event_type, target_type, target_id
+                   FROM audit_ledger
+                   WHERE event_type IN (
+                        'approval.escalated', 'approval.rejected', 'patch.rejected',
+                        'task.failed', 'agent.failed', 'agent.timeout', 'sim.failed'
+                   )
+                   ORDER BY id DESC
+                   LIMIT ?""",
+                (safe_limit,),
+            )
+            recent_timeline = [dict(row) for row in await timeline_cursor.fetchall()]
+        else:
+            fail_closed_reasons.append("table_missing:audit_ledger")
+
+        if await _table_exists(db, "replay_incidents"):
+            open_cursor = await db.execute(
+                "SELECT COUNT(*) AS count FROM replay_incidents WHERE status NOT IN ('resolved', 'closed')"
+            )
+            open_row = await open_cursor.fetchone()
+            replay_open_incidents = int(open_row["count"]) if open_row else 0
+
+            cluster_cursor = await db.execute(
+                """SELECT COALESCE(divergence_cause, 'unknown') AS divergence_cause,
+                          COUNT(*) AS count
+                   FROM replay_incidents
+                   GROUP BY COALESCE(divergence_cause, 'unknown')
+                   ORDER BY count DESC
+                   LIMIT 12"""
+            )
+            replay_failure_clusters = [dict(row) for row in await cluster_cursor.fetchall()]
+        else:
+            fail_closed_reasons.append("table_missing:replay_incidents")
+
+        if await _table_exists(db, "failure_investigations"):
+            open_failure_cursor = await db.execute(
+                "SELECT COUNT(*) AS count FROM failure_investigations WHERE status NOT IN ('resolved', 'closed')"
+            )
+            open_failure_row = await open_failure_cursor.fetchone()
+            open_failures = int(open_failure_row["count"]) if open_failure_row else 0
+
+            regression_cursor = await db.execute(
+                """SELECT failure_id, title, subsystem, status, severity, created_at
+                   FROM failure_investigations
+                   ORDER BY created_at DESC
+                   LIMIT ?""",
+                (safe_limit,),
+            )
+            regression_history = [dict(row) for row in await regression_cursor.fetchall()]
+        else:
+            fail_closed_reasons.append("table_missing:failure_investigations")
+
+        if await _table_exists(db, "architecture_drift"):
+            drift_cursor = await db.execute(
+                "SELECT COUNT(*) AS count FROM architecture_drift WHERE status NOT IN ('resolved', 'closed')"
+            )
+            drift_row = await drift_cursor.fetchone()
+            unresolved_drift = int(drift_row["count"]) if drift_row else 0
+        else:
+            fail_closed_reasons.append("table_missing:architecture_drift")
+
+        if await _table_exists(db, "technical_debt"):
+            debt_cursor = await db.execute(
+                """SELECT COALESCE(subsystem, 'unknown') AS subsystem, COUNT(*) AS count
+                   FROM technical_debt
+                   WHERE status NOT IN ('resolved', 'closed')
+                   GROUP BY COALESCE(subsystem, 'unknown')
+                   ORDER BY count DESC
+                   LIMIT 20"""
+            )
+            debt_hotspots = [dict(row) for row in await debt_cursor.fetchall()]
+        else:
+            fail_closed_reasons.append("table_missing:technical_debt")
+
+    risk_score = (
+        governance_escalations
+        + rejected_patch_events
+        + rejected_approval_events
+        + replay_open_incidents
+        + open_failures
+        + unresolved_drift
+    )
+    classification = "PASS" if not fail_closed_reasons else "FAIL_CLOSED"
+    if classification == "FAIL_CLOSED":
+        logger.warning(
+            "maintainer_intelligence_fail_closed",
+            fail_closed_reasons=fail_closed_reasons,
+        )
+
+    return {
+        "generated_at": generated_at,
+        "classification": classification,
+        "fail_closed_reasons": sorted(set(fail_closed_reasons)),
+        "lineage": {
+            "source": "sqlite",
+            "limit": safe_limit,
+            "generated_at": generated_at,
+        },
+        "signals": {
+            "governance_escalations": governance_escalations,
+            "rejected_patch_events": rejected_patch_events,
+            "rejected_approval_events": rejected_approval_events,
+            "replay_open_incidents": replay_open_incidents,
+            "open_failures": open_failures,
+            "unresolved_drift": unresolved_drift,
+            "risk_score": risk_score,
+        },
+        "debt_hotspots": debt_hotspots,
+        "regression_history": regression_history[:safe_limit],
+        "replay_failure_clusters": replay_failure_clusters,
+        "recent_governance_timeline": recent_timeline[:safe_limit],
+    }
 
 
 # ── Adversarial Validation ──

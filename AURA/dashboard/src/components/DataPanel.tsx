@@ -13,6 +13,7 @@ export function DataPanel({
   includeAuth?: boolean
 }) {
   const { data, loading, error, lastUpdated, reload } = useApiData(endpoint, { intervalMs, includeAuth })
+  const sourceHint = includeAuth ? 'authenticated endpoint' : 'public endpoint'
 
   return (
     <SectionCard
@@ -25,8 +26,17 @@ export function DataPanel({
     >
       <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
         <MetaText>Endpoint: {endpoint}</MetaText>
+        <MetaText>Source: {sourceHint}</MetaText>
         {error ? <ErrorText message={error} /> : null}
-        {data ? <JsonBlock data={data} /> : <MetaText>{loading ? 'Loading...' : 'No data yet'}</MetaText>}
+        {data ? (
+          <JsonBlock data={data} />
+        ) : (
+          <MetaText>
+            {loading
+              ? 'Loading live backend evidence...'
+              : 'No payload returned from backend. This panel is evidence-backed and does not synthesize placeholder values.'}
+          </MetaText>
+        )}
         <MetaText>Last update: {formatTimestamp(lastUpdated)}</MetaText>
       </div>
     </SectionCard>

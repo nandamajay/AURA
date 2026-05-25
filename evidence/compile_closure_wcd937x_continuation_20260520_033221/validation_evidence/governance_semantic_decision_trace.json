@@ -1,0 +1,79 @@
+[
+  {
+    "timestamp": "2026-05-20T04:34:41.085808Z",
+    "event": "semantic_runtime_mode_entered",
+    "decision": "STRICT_TRUTHFULNESS_CONSTRAINTS_ENABLED",
+    "details": {
+      "rule": "compile_closure_must_not_increase_semantic_confidence",
+      "runtime_equivalence_claims": "prohibited_without_runtime_evidence"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T04:34:41.085812Z",
+    "event": "phase_a_structural_runtime_mapping",
+    "decision": "PARTIAL_STRUCTURAL_ALIGNMENT_ONLY",
+    "details": {
+      "soundwire": "SWR->SDW inferred, not behaviorally proven",
+      "mbhc": "symbol overlap present, callback behavior unverified",
+      "probe_remove": "hooks present both sides"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T04:34:41.085813Z",
+    "event": "phase_b_behavioral_semantic_analysis",
+    "decision": "FAIL_CLOSED_ON_MISSING_RUNTIME_OBSERVABILITY",
+    "details": {
+      "unknown_behaviors_preserved": [
+        "soundwire_topology_runtime_parity",
+        "mbhc_runtime_parity",
+        "regulator_timing_parity",
+        "calibration_ownership_parity",
+        "jack_detection_parity"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-05-20T04:34:41.085814Z",
+    "event": "phase_c_alsa_surface_comparison",
+    "decision": "PARTIAL_ONLY",
+    "details": {
+      "upstream_surface_from_source": true,
+      "downstream_full_surface_available": false,
+      "parity_claim": "not_allowed"
+    }
+  },
+  {
+    "timestamp": "2026-05-20T04:34:41.085816Z",
+    "event": "phase_d_runtime_risk_classification",
+    "decision": "RUNTIME_UNVERIFIED_WITH_ESCALATION",
+    "details": {
+      "high_risk_zones": [
+        "soundwire_topology_semantics_unproven",
+        "mbhc_callback_semantics_unproven",
+        "regulator_timing_semantics_unproven",
+        "calibration_ownership_transition_unresolved",
+        "dt_abi_runtime_behavior_unproven",
+        "dapm_route_behavioral_parity_unproven",
+        "jack_detection_runtime_flow_unproven",
+        "runtime_pm_transition_parity_unproven",
+        "downstream_wrapper_removal_behavior_unproven"
+      ],
+      "classification": [
+        "advisory_only",
+        "runtime_unverified",
+        "escalation_required"
+      ]
+    }
+  },
+  {
+    "timestamp": "2026-05-20T04:34:41.085817Z",
+    "event": "phase_e_governance_scoring",
+    "decision": "MERGE_READINESS_PROHIBITED",
+    "details": {
+      "semantic_confidence_score": 0.23,
+      "runtime_equivalence_score": 0.17,
+      "upstream_behavioral_readiness": "advisory_only",
+      "governance_state": "MANUAL_DECISION_REQUIRED"
+    }
+  }
+]

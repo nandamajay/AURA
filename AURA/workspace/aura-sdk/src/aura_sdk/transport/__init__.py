@@ -150,6 +150,40 @@ from aura_sdk.transport.semantic_fingerprint import (
     build_vendor_dependency_fingerprint,
     stable_fingerprint,
 )
+from aura_sdk.transport.deterministic_serialization import (
+    canonical_json,
+    canonicalize,
+    deterministic_uuid,
+    dump_canonical_json,
+    normalize_path,
+    normalize_timestamp,
+    stable_sha256,
+)
+from aura_sdk.transport.runtime_execution_contract import (
+    RuntimeExecutionContract,
+    enforce_runtime_contract,
+    resolve_runtime_contract,
+)
+from aura_sdk.transport.runtime_ingestion_contracts import (
+    DeterministicCacheSchema,
+    RuntimeEvidenceSchema,
+    RuntimeGraphSchema,
+    RuntimeLineageContract,
+    RuntimeParserInputContract,
+    RuntimeParserOutputContract,
+    RuntimeReplaySchema,
+    build_lineage,
+    replay_fingerprint_from_inputs,
+)
+from aura_sdk.transport.runtime_pipeline_orchestrator import (
+    RuntimePipelineOrchestrator,
+    RuntimePipelineStage,
+    build_default_runtime_orchestrator,
+)
+from aura_sdk.transport.runtime_observability import (
+    RuntimeObservation,
+    RuntimeObservabilityCollector,
+)
 from aura_sdk.transport.semantic_registry import SemanticCognitionRegistry
 from aura_sdk.transport.semantic_html_parser import (
     SemanticHtmlParseResult,
@@ -639,6 +673,30 @@ __all__ = [
     "SemanticFingerprintResult",
     "build_vendor_dependency_fingerprint",
     "stable_fingerprint",
+    "canonicalize",
+    "canonical_json",
+    "stable_sha256",
+    "normalize_timestamp",
+    "normalize_path",
+    "deterministic_uuid",
+    "dump_canonical_json",
+    "RuntimeExecutionContract",
+    "resolve_runtime_contract",
+    "enforce_runtime_contract",
+    "RuntimeLineageContract",
+    "RuntimeParserInputContract",
+    "RuntimeParserOutputContract",
+    "RuntimeGraphSchema",
+    "RuntimeEvidenceSchema",
+    "RuntimeReplaySchema",
+    "DeterministicCacheSchema",
+    "build_lineage",
+    "replay_fingerprint_from_inputs",
+    "RuntimePipelineStage",
+    "RuntimePipelineOrchestrator",
+    "build_default_runtime_orchestrator",
+    "RuntimeObservation",
+    "RuntimeObservabilityCollector",
     "EvidenceCorrelationResult",
     "correlate_evidence",
     "CausalLineageResult",

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -16,8 +17,10 @@ if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 from aura_sdk.transport.cognitive_persistence import AURACognitionRegistry
+from aura_sdk.transport.runtime_execution_contract import enforce_runtime_contract
 from aura_sdk.transport.runtime_governance_engine import RuntimeGovernanceEngine, RuntimeGovernanceRegistry
 from aura_sdk.transport.runtime_replay_engine import RuntimeReplayEngine, RuntimeReplayRegistry
+from aura_sdk.transport.deterministic_serialization import dump_canonical_json
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -45,8 +48,24 @@ def _read_json(path: Path) -> dict[str, Any]:
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    dump_canonical_json(path, payload)
+
+
+def _stamp_runtime_execution_fingerprint(output_dir: Path) -> None:
+    script = REPO_ROOT / "scripts" / "runtime_execution_fingerprint.py"
+    subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            "--output-dir",
+            str(output_dir),
+            "--repo-root",
+            str(REPO_ROOT),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
 
 
 def _runtime_sensitive_impact_count(
@@ -66,11 +85,15 @@ def _runtime_sensitive_impact_count(
 
 
 def main() -> int:
+    enforce_runtime_contract("aura-runtime-governance")
     parser = argparse.ArgumentParser(description="Run runtime governance cognition")
-    parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
+    parser.add_argument(
+        "--output-dir",
+        default=str((REPO_ROOT.parent / "docs" / "operations" / "transport").resolve()),
+    )
     parser.add_argument(
         "--registry-path",
-        default="/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json",
+        default=str((REPO_ROOT.parent / "docs" / "operations" / "transport" / "aura_cognition_registry.json").resolve()),
     )
     parser.add_argument("--target-id", default="RB3Gen2")
     parser.add_argument("--session-id", default="runtime_governance_session_v1")
@@ -185,6 +208,7 @@ def main() -> int:
         "generated_at_epoch": time.time(),
     }
     _write_json(output_dir / "runtime_governance_runner_summary.json", summary)
+    _stamp_runtime_execution_fingerprint(output_dir)
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0
 

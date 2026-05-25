@@ -1,5 +1,5 @@
 import EndpointGridPage from '../components/EndpointGridPage'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 
 export default function MaintainerIntelligenceCenter() {
   return (
@@ -7,10 +7,11 @@ export default function MaintainerIntelligenceCenter() {
       title="Maintainer Intelligence Center"
       subtitle="Review decision context, known risks, and governance boundaries before submissions."
       panels={[
-        { title: 'Known Risks', endpoint: `${ENDPOINTS.memory}/risks?limit=20`, intervalMs: 30_000 },
-        { title: 'Technical Debt', endpoint: `${ENDPOINTS.memory}/debt?limit=20`, intervalMs: 30_000 },
-        { title: 'Governance High-Risk Actions', endpoint: `${ENDPOINTS.charter}/high-risk-actions` },
-        { title: 'Architecture Drift', endpoint: `${ENDPOINTS.memory}/drift?limit=20` },
+        { title: 'Maintainer Intelligence', endpoint: API_ROUTES.memory.maintainerIntelligence(200), intervalMs: 30_000 },
+        { title: 'Known Risks', endpoint: API_ROUTES.memory.risks(20), intervalMs: 30_000 },
+        { title: 'Technical Debt', endpoint: API_ROUTES.memory.debt(20), intervalMs: 30_000 },
+        { title: 'Governance High-Risk Actions', endpoint: API_ROUTES.charter.highRiskActions() },
+        { title: 'Architecture Drift', endpoint: API_ROUTES.memory.drift(20) },
       ]}
     />
   )

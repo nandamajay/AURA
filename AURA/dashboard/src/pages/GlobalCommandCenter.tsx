@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { useApiData } from '../hooks/useApiData'
 import { Grid, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
@@ -91,6 +91,10 @@ function sumValues(value: Record<string, number> | undefined): number {
   return Object.values(value).reduce((acc, item) => acc + item, 0)
 }
 
+function formatMetric(value: number | undefined): string {
+  return typeof value === 'number' && Number.isFinite(value) ? String(value) : 'n/a'
+}
+
 function statusTone(value: string): string {
   if (value === 'stable' || value === 'strong') {
     return '#166534'
@@ -101,8 +105,12 @@ function statusTone(value: string): string {
   return '#991b1b'
 }
 
+function isPositive(value: number | undefined): boolean {
+  return typeof value === 'number' && value > 0
+}
+
 function GlobalCommandCenter() {
-  const { data, loading, error, lastUpdated } = useApiData<RuntimeOverview>(ENDPOINTS.runtimeOverview, {
+  const { data, loading, error, lastUpdated } = useApiData<RuntimeOverview>(API_ROUTES.runtimeOverview(), {
     intervalMs: 10_000,
   })
 
@@ -112,9 +120,9 @@ function GlobalCommandCenter() {
   const retry = data?.tasks?.retry_pressure
   const domainActivity = data?.tasks?.domain_activity || {}
 
-  const totalActive = (queue?.P0_critical || 0) + (queue?.P1_normal || 0) + (queue?.P2_background || 0)
-  const wsDrops = websocket?.sse_drop_total || 0
-  const bufferEvictions = websocket?.buffer_evictions_total || 0
+  const totalActive = queue ? queue.P0_critical + queue.P1_normal + queue.P2_background : null
+  const wsDrops = websocket?.sse_drop_total
+  const bufferEvictions = websocket?.buffer_evictions_total
   const domainRows = Object.entries(domainActivity).sort((a, b) => b[1].total - a[1].total)
 
   return (
@@ -139,32 +147,32 @@ function GlobalCommandCenter() {
         />
         <StatusTile
           title="Queue Pressure"
-          value={`${totalActive} queued`}
-          detail={`P0=${queue?.P0_critical || 0}, P1=${queue?.P1_normal || 0}, P2=${queue?.P2_background || 0}`}
+          value={totalActive === null ? 'n/a' : `${totalActive} queued`}
+          detail={`P0=${formatMetric(queue?.P0_critical)}, P1=${formatMetric(queue?.P1_normal)}, P2=${formatMetric(queue?.P2_background)}`}
           tone={(queue?.starvation_events_total || 0) > 0 ? '#92400e' : '#0f766e'}
         />
         <StatusTile
           title="Replay Health"
-          value={`finalized ${replay?.finalized || 0}`}
-          detail={`mutable ${replay?.mutable || 0} (non-finalized traces)`}
+          value={`finalized ${formatMetric(replay?.finalized)}`}
+          detail={`mutable ${formatMetric(replay?.mutable)} (non-finalized traces)`}
           tone={(replay?.mutable || 0) > 0 ? '#92400e' : '#0f766e'}
         />
         <StatusTile
           title="Retry Activity"
-          value={`${retry?.retry_pending_tasks || 0} pending`}
-          detail={`lineage-bearing tasks ${retry?.tasks_with_retry_lineage || 0}`}
+          value={`${formatMetric(retry?.retry_pending_tasks)} pending`}
+          detail={`lineage-bearing tasks ${formatMetric(retry?.tasks_with_retry_lineage)}`}
           tone={(retry?.retry_pending_tasks || 0) > 0 ? '#92400e' : '#0f766e'}
         />
         <StatusTile
           title="Websocket/SSE"
           value={data?.websocket?.available ? 'available' : 'unavailable'}
-          detail={`drops ${wsDrops} | evictions ${bufferEvictions}`}
-          tone={!data?.websocket?.available ? '#991b1b' : wsDrops > 0 || bufferEvictions > 0 ? '#92400e' : '#0f766e'}
+          detail={`drops ${formatMetric(wsDrops)} | evictions ${formatMetric(bufferEvictions)}`}
+          tone={!data?.websocket?.available ? '#991b1b' : isPositive(wsDrops) || isPositive(bufferEvictions) ? '#92400e' : '#0f766e'}
         />
         <StatusTile
           title="Governance Flow"
-          value={`${data?.governance?.approvals?.pending || 0} pending`}
-          detail={`audit writes (1h) ${data?.governance?.audit_last_hour || 0}`}
+          value={`${formatMetric(data?.governance?.approvals?.pending)} pending`}
+          detail={`audit writes (1h) ${formatMetric(data?.governance?.audit_last_hour)}`}
           tone={(data?.governance?.approvals?.pending || 0) > 0 ? '#92400e' : '#0f766e'}
         />
         <StatusTile
@@ -250,6 +258,7 @@ function GlobalCommandCenter() {
           <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
             <QuickLink to="/debug" label="Replay Explorer" />
             <QuickLink to="/governance" label="Governance Timeline" />
+            <QuickLink to="/runtime" label="Runtime Cognition" />
             <QuickLink to="/agents" label="Domain Observability" />
             <QuickLink to="/learning" label="Failure / Memory Ledgers" />
             <QuickLink to="/knowledge" label="Knowledge Context" />

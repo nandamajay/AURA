@@ -196,7 +196,18 @@ class RuntimeGovernanceEngine:
             "advisory_only_behavior": True,
             "evidence_references": evidence,
         }
-        runtime_governance_decision["deterministic_fingerprint"] = stable_fingerprint(runtime_governance_decision)
+        runtime_governance_decision["deterministic_fingerprint"] = stable_fingerprint(
+            {
+                "target_id": str(target_id),
+                "session_id": str(session_id),
+                "lineage_id": str(lineage_id),
+                "classification": runtime_governance_decision["classification"],
+                "promotion_eligible": runtime_governance_decision["promotion_eligible"],
+                "fail_closed_reasons": runtime_governance_decision["fail_closed_reasons"],
+                "runtime_promotion_gate": runtime_governance_decision["runtime_promotion_gate"],
+                "runtime_inputs": runtime_governance_decision["runtime_inputs"],
+            }
+        )
 
         return RuntimeGovernanceResult(
             runtime_governance_decision=runtime_governance_decision,

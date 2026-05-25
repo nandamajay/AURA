@@ -1,0 +1,272 @@
+[
+  {
+    "phase": "PHASE 0 Environment Discovery",
+    "timestamp": "2026-05-20T03:32:22.550112+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.72,
+    "blocker_count": 0,
+    "advisory_count": 5,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "environment_checked": true
+    },
+    "evidence_paths": [
+      "reports/environment_validation_report.md",
+      "raw/commands_executed.jsonl"
+    ],
+    "unresolved_assumptions": [
+      "tool availability can drift between runs"
+    ],
+    "dependency_risks": [
+      "runtime host dependency drift"
+    ]
+  },
+  {
+    "phase": "PHASE 1 Source Intake + Lineage",
+    "timestamp": "2026-05-20T03:32:22.550356+00:00",
+    "phase_status": "PASSED",
+    "confidence_score": 0.93,
+    "blocker_count": 0,
+    "advisory_count": 0,
+    "governance_state": "PENDING",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "prereq_all_present": true
+    },
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/raw/source_intake_rows.json",
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/raw/source_lineage_rows.json"
+    ],
+    "unresolved_assumptions": [],
+    "dependency_risks": [
+      "depends on preserved historical evidence"
+    ]
+  },
+  {
+    "phase": "PHASE 2 Semantic Mapping",
+    "timestamp": "2026-05-20T03:32:22.550364+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.75,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "governance_state": "PENDING",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "mapping_report_present": true
+    },
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/reports/upstream_patch_series_plan.md"
+    ],
+    "unresolved_assumptions": [
+      "inferred mappings unresolved"
+    ],
+    "dependency_risks": [
+      "downstream abstraction parity unresolved"
+    ]
+  },
+  {
+    "phase": "PHASE 3 Patch Proposal Generation",
+    "timestamp": "2026-05-20T03:32:22.550368+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.77,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "governance_state": "PENDING",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "patch_dir_present": true
+    },
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/generated_patch_diffs"
+    ],
+    "unresolved_assumptions": [
+      "patches are advisory proposals only"
+    ],
+    "dependency_risks": [
+      "maintainer quality metadata pending"
+    ]
+  },
+  {
+    "phase": "PHASE 4 Patch Governance Review",
+    "timestamp": "2026-05-20T03:32:22.550371+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.82,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "governance_state": "PENDING",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "governance_report_present": true
+    },
+    "evidence_paths": [
+      "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/reports/governance_decision_report.md"
+    ],
+    "unresolved_assumptions": [
+      "operator approval gates remain active"
+    ],
+    "dependency_risks": [
+      "high-risk audio changes require manual review"
+    ]
+  },
+  {
+    "phase": "PHASE 5 Kernel Prepare Validation",
+    "timestamp": "2026-05-20T03:32:41.504216+00:00",
+    "phase_status": "PASSED",
+    "confidence_score": 0.9,
+    "blocker_count": 0,
+    "advisory_count": 0,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "gate_ok": true,
+      "worktree_add_exit": 0
+    },
+    "evidence_paths": [
+      "reports/kernel_prepare_report.md"
+    ],
+    "unresolved_assumptions": [
+      "kernel prepare must succeed before compile closure"
+    ],
+    "dependency_risks": [
+      "generated-config dependency"
+    ]
+  },
+  {
+    "phase": "PHASE 6 Compile Closure Validation",
+    "timestamp": "2026-05-20T03:49:55.837764+00:00",
+    "phase_status": "PASSED",
+    "confidence_score": 0.9,
+    "blocker_count": 0,
+    "advisory_count": 0,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "gate_ok": true,
+      "patch_apply_status": "PASSED",
+      "compile_status": "PASSED",
+      "module_status": "PASSED"
+    },
+    "evidence_paths": [
+      "reports/patch_application_report.md",
+      "reports/compile_execution_report.md",
+      "reports/module_packaging_report.md"
+    ],
+    "unresolved_assumptions": [
+      "compile closure requires successful patch apply, compile, and module packaging"
+    ],
+    "dependency_risks": [
+      "cross-toolchain/config mismatch risk"
+    ]
+  },
+  {
+    "phase": "PHASE 7 Static Analysis Validation",
+    "timestamp": "2026-05-20T03:50:13.802907+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.55,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "gate_ok": true
+    },
+    "evidence_paths": [
+      "reports/static_analysis_report.md"
+    ],
+    "unresolved_assumptions": [
+      "static analysis is advisory unless governance policy upgrades severity"
+    ],
+    "dependency_risks": [
+      "tooling availability can downgrade confidence"
+    ]
+  },
+  {
+    "phase": "PHASE 8 DT Schema Validation",
+    "timestamp": "2026-05-20T03:50:14.171879+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.6,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "gate_ok": true
+    },
+    "evidence_paths": [
+      "reports/dt_validation_report.md"
+    ],
+    "unresolved_assumptions": [
+      "DT validation requires dtschema tooling"
+    ],
+    "dependency_risks": [
+      "dt-doc-validate dependency"
+    ]
+  },
+  {
+    "phase": "PHASE 9 Runtime/Boot Validation",
+    "timestamp": "2026-05-20T03:50:14.172001+00:00",
+    "phase_status": "SKIPPED",
+    "confidence_score": 0.0,
+    "blocker_count": 0,
+    "advisory_count": 1,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "requires_runtime_target": true
+    },
+    "evidence_paths": [
+      "reports/compile_closure_status.md"
+    ],
+    "unresolved_assumptions": [
+      "runtime/boot validation out of current bounded compile scope"
+    ],
+    "dependency_risks": [
+      "compile artifacts and target runtime environment required"
+    ]
+  },
+  {
+    "phase": "PHASE 10 Upstream Readiness Classification",
+    "timestamp": "2026-05-20T03:50:14.172134+00:00",
+    "phase_status": "PASSED_WITH_ADVISORY",
+    "confidence_score": 0.82,
+    "blocker_count": 0,
+    "advisory_count": 5,
+    "governance_state": "CONTROLLED_CONTINUATION",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "closure_state": "CLOSED"
+    },
+    "evidence_paths": [
+      "reports/compile_closure_status.md"
+    ],
+    "unresolved_assumptions": [
+      "human review remains mandatory before any readiness claim"
+    ],
+    "dependency_risks": [
+      "unsafe merge conclusions must be prevented"
+    ]
+  },
+  {
+    "phase": "PHASE 11 Human Escalation Review",
+    "timestamp": "2026-05-20T03:50:14.172248+00:00",
+    "phase_status": "BLOCKED",
+    "confidence_score": 0.95,
+    "blocker_count": 1,
+    "advisory_count": 0,
+    "governance_state": "MANUAL_DECISION_REQUIRED",
+    "replayability_status": "REPLAYABLE",
+    "gate_checks": {
+      "mandatory_escalation": true
+    },
+    "evidence_paths": [
+      "reports/human_escalation_review.md"
+    ],
+    "unresolved_assumptions": [
+      "human approval mandatory before destructive/upstream actions"
+    ],
+    "dependency_risks": [
+      "unsafe autonomy prohibited"
+    ]
+  }
+]

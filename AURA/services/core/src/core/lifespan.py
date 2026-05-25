@@ -10,7 +10,9 @@ from aura_sdk.db.connection import init_db
 from aura_sdk.logging.logger import configure_logging, get_logger
 from aura_sdk.models.event import EventType
 from aura_sdk.replay import TaskRecorder
+from aura_sdk.transport.runtime_execution_contract import resolve_runtime_contract
 from core.config import Config
+from core.contracts.transport_artifact_contracts import runtime_environment_diagnostics
 from core.events import publish_event, start_event_bus, stop_event_bus
 from core.services.agent_runtime import AgentRuntimeManager
 from core.services.circuit_breaker import CircuitBreakerManager
@@ -42,6 +44,21 @@ async def lifespan(app: FastAPI):
     for err in errors:
         logger.warning("config_issue", error=err)
 
+    execution_contract = resolve_runtime_contract("core-service")
+    app.state.runtime_execution_contract = execution_contract.as_dict()
+    logger.info(
+        "runtime_execution_contract",
+        classification=execution_contract.classification,
+        python_version=execution_contract.python_version,
+        containerized=execution_contract.containerized,
+        fail_closed_reasons=execution_contract.fail_closed_reasons,
+    )
+    if execution_contract.classification != "PASS":
+        raise RuntimeError(
+            "core-service runtime execution contract failed: "
+            + ",".join(execution_contract.fail_closed_reasons)
+        )
+
     # Initialize database
     try:
         migration_count = await init_db(Config.SQLITE_PATH)
@@ -49,6 +66,22 @@ async def lifespan(app: FastAPI):
     except Exception as e:
         logger.error("db_init_failed", error=str(e))
         raise
+
+    runtime_env = runtime_environment_diagnostics(sqlite_path=Config.SQLITE_PATH)
+    app.state.runtime_environment = runtime_env.model_dump(mode="json")
+    logger.info(
+        "runtime_environment_validated",
+        classification=runtime_env.classification,
+        repo_root=runtime_env.repo_root,
+        transport_root_exists=runtime_env.transport_root_exists,
+        evidence_root_exists=runtime_env.evidence_root_exists,
+        replay_store_exists=runtime_env.replay_store_exists,
+    )
+    if runtime_env.classification == "FAIL_CLOSED":
+        logger.warning(
+            "runtime_environment_fail_closed",
+            fail_closed_reasons=runtime_env.fail_closed_reasons,
+        )
 
     # Bootstrap admin user if no users exist
     await _bootstrap_admin()

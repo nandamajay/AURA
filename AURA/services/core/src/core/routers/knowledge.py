@@ -2,7 +2,6 @@
 
 import csv
 import io
-import os
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -12,6 +11,7 @@ from pydantic import BaseModel
 
 from aura_sdk.db.connection import get_db
 from aura_sdk.logging.logger import get_logger
+from core.contracts.transport_artifact_contracts import resolve_repo_root
 from core.routers.auth import get_current_user
 
 logger = get_logger("core.knowledge")
@@ -38,20 +38,14 @@ _EVIDENCE_MAX_BYTES = 400_000
 
 
 def _resolve_repo_root() -> Path:
-    configured = (Path(__file__).resolve().parents[6] / ".").resolve()
-    env_root = Path(os.environ.get("AURA_REPO_ROOT", str(configured))).resolve()
-    if (env_root / "evidence").exists():
-        return env_root
-
-    for parent in Path(__file__).resolve().parents:
-        if (parent / "evidence").exists():
-            return parent
-    return env_root
+    """Resolve repository root without brittle fixed parent-index assumptions."""
+    return resolve_repo_root()
 
 
 def _evidence_sections(repo_root: Path) -> dict[str, Path]:
     mapping = {
         "runtime_evidence": repo_root / "evidence",
+        "transport_artifacts": repo_root / "docs" / "operations" / "transport",
         "architecture_consolidation": repo_root / "docs" / "architecture-consolidation",
         "p1_docs": repo_root / "p1",
         "p2_docs": repo_root / "p2",
@@ -137,8 +131,19 @@ async def evidence_index(
     if limit < 1 or limit > 2000:
         raise HTTPException(status_code=400, detail="limit must be between 1 and 2000")
 
-    repo_root = _resolve_repo_root()
-    sections = _evidence_sections(repo_root)
+    try:
+        repo_root = _resolve_repo_root()
+        sections = _evidence_sections(repo_root)
+    except Exception as exc:
+        logger.exception("evidence_index_failed", error=str(exc))
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "code": "evidence_index_unavailable",
+                "message": str(exc),
+                "classification": "FAIL_CLOSED",
+            },
+        ) from exc
     if not sections:
         return {"repo_root": str(repo_root), "sections": {}}
 
@@ -172,11 +177,24 @@ async def evidence_read(
             status_code=400,
             detail=f"max_bytes must be between 1 and {_EVIDENCE_MAX_BYTES}",
         )
-    repo_root = _resolve_repo_root()
-    sections = _evidence_sections(repo_root)
-    file_path = _resolve_section_file(
-        sections=sections, section=section.strip(), relative_path=relative_path.strip()
-    )
+    try:
+        repo_root = _resolve_repo_root()
+        sections = _evidence_sections(repo_root)
+        file_path = _resolve_section_file(
+            sections=sections, section=section.strip(), relative_path=relative_path.strip()
+        )
+    except HTTPException:
+        raise
+    except Exception as exc:
+        logger.exception("evidence_read_failed", error=str(exc))
+        raise HTTPException(
+            status_code=503,
+            detail={
+                "code": "evidence_read_unavailable",
+                "message": str(exc),
+                "classification": "FAIL_CLOSED",
+            },
+        ) from exc
     file_size = int(file_path.stat().st_size)
     raw = file_path.read_bytes()
     truncated = len(raw) > max_bytes

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { useApiData } from '../hooks/useApiData'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
@@ -12,7 +12,7 @@ export default function PatchReviewWarRoom() {
   const [actionResult, setActionResult] = useState<unknown>(null)
   const [error, setError] = useState('')
 
-  const { data: patches, error: patchesError } = useApiData(`${ENDPOINTS.patches}/?limit=20`, {
+  const { data: patches, error: patchesError } = useApiData(API_ROUTES.patches.list(20), {
     intervalMs: 30_000,
   })
 
@@ -24,9 +24,9 @@ export default function PatchReviewWarRoom() {
     setActionResult(null)
     try {
       const [detailRes, diffRes, evidenceRes] = await Promise.all([
-        apiRequest(`${ENDPOINTS.patches}/${patchId}`),
-        apiRequest(`${ENDPOINTS.patches}/${patchId}/diff`),
-        apiRequest(`${ENDPOINTS.patches}/${patchId}/evidence`),
+        apiRequest(API_ROUTES.patches.byId(patchId)),
+        apiRequest(API_ROUTES.patches.diff(patchId)),
+        apiRequest(API_ROUTES.patches.evidence(patchId)),
       ])
       setDetail(detailRes)
       setDiff(diffRes)
@@ -42,7 +42,7 @@ export default function PatchReviewWarRoom() {
     }
     setError('')
     try {
-      const result = await apiRequest(`${ENDPOINTS.patches}/${patchId}/submit-approval`, {
+      const result = await apiRequest(API_ROUTES.patches.submitApproval(patchId), {
         method: 'POST',
       })
       setActionResult(result)

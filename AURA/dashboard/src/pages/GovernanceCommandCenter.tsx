@@ -1,9 +1,10 @@
-import { useEffect, useMemo, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { DataPanel } from '../components/DataPanel'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
+import { useRuntimeQuery } from '../runtime/useRuntimeQuery'
 
 interface AuditEntry {
   id: number
@@ -122,13 +123,15 @@ export default function GovernanceCommandCenter() {
   const [result, setResult] = useState<Record<string, unknown> | null>(null)
   const [error, setError] = useState('')
 
-  const [auditEntries, setAuditEntries] = useState<AuditEntry[]>([])
-  const [auditError, setAuditError] = useState('')
-  const [auditLoading, setAuditLoading] = useState(false)
-  const [auditLastUpdated, setAuditLastUpdated] = useState(0)
   const [userFilter, setUserFilter] = useState('all')
   const [eventFilter, setEventFilter] = useState('all')
   const [searchTarget, setSearchTarget] = useState('')
+  const { data: auditData, error: auditError, loading: auditLoading, lastUpdated: auditLastUpdated } = useRuntimeQuery<AuditResponse>(
+    'governance-audit',
+    API_ROUTES.governance.auditList(300),
+    { intervalMs: 15_000, ttlMs: 3_000 },
+  )
+  const auditEntries = auditData?.entries || []
 
   const timelineStats = useMemo<TimelineStats>(() => {
     const stats: TimelineStats = {
@@ -173,46 +176,12 @@ export default function GovernanceCommandCenter() {
     })
   }, [auditEntries, eventFilter, searchTarget, userFilter])
 
-  useEffect(() => {
-    let cancelled = false
-
-    async function loadAudit() {
-      setAuditLoading(true)
-      try {
-        const response = await apiRequest<AuditResponse>(`${ENDPOINTS.audit}?limit=300`)
-        if (!cancelled) {
-          setAuditEntries(response.entries || [])
-          setAuditError('')
-          setAuditLastUpdated(Date.now())
-        }
-      } catch (err) {
-        if (!cancelled) {
-          setAuditError(toErrorMessage(err))
-        }
-      } finally {
-        if (!cancelled) {
-          setAuditLoading(false)
-        }
-      }
-    }
-
-    void loadAudit()
-    const timer = window.setInterval(() => {
-      void loadAudit()
-    }, 15_000)
-
-    return () => {
-      cancelled = true
-      window.clearInterval(timer)
-    }
-  }, [])
-
   async function checkAction(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
     setError('')
     setResult(null)
     try {
-      const response = await apiRequest<Record<string, unknown>>(`${ENDPOINTS.charter}/check-action`, {
+      const response = await apiRequest<Record<string, unknown>>(API_ROUTES.charter.checkAction(), {
         method: 'POST',
         body: JSON.stringify({
           action: actionName,
@@ -363,10 +332,11 @@ export default function GovernanceCommandCenter() {
 
       <div style={{ marginTop: '1rem' }}>
         <Grid>
-          <DataPanel title="Governance Approvals" endpoint={`${ENDPOINTS.approvals}?status=pending&limit=50`} intervalMs={20_000} />
-          <DataPanel title="Charter Pending Approvals" endpoint={`${ENDPOINTS.charter}/approvals/pending`} intervalMs={20_000} />
-          <DataPanel title="Fail-Safe Report" endpoint={`${ENDPOINTS.charter}/failsafe/report`} intervalMs={20_000} />
-          <DataPanel title="Integrity Report" endpoint={`${ENDPOINTS.charter}/integrity/report`} intervalMs={20_000} />
+          <DataPanel title="Governance Evidence Summary" endpoint={API_ROUTES.governance.evidenceSummary()} intervalMs={20_000} />
+          <DataPanel title="Governance Approvals" endpoint={API_ROUTES.governance.approvalsList('pending', 50)} intervalMs={20_000} />
+          <DataPanel title="Charter Pending Approvals" endpoint={API_ROUTES.charter.pendingApprovals()} intervalMs={20_000} />
+          <DataPanel title="Fail-Safe Report" endpoint={API_ROUTES.charter.failsafeReport()} intervalMs={20_000} />
+          <DataPanel title="Integrity Report" endpoint={API_ROUTES.charter.integrityReport()} intervalMs={20_000} />
         </Grid>
       </div>
     </PageContainer>

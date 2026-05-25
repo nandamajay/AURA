@@ -12,6 +12,7 @@ import DebuggingCenter from './pages/DebuggingCenter'
 import SimulationControlCenter from './pages/SimulationControlCenter'
 import ApprovalOperationsCenter from './pages/ApprovalOperationsCenter'
 import GovernanceCommandCenter from './pages/GovernanceCommandCenter'
+import RuntimeCognitionCenter from './pages/RuntimeCognitionCenter'
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/approvals" element={<ApprovalOperationsCenter />} />
         <Route path="/approval" element={<ApprovalOperationsCenter />} />
         <Route path="/governance" element={<GovernanceCommandCenter />} />
+        <Route path="/runtime" element={<RuntimeCognitionCenter />} />
 
         {/* Backward compatibility with older nav links */}
         <Route path="/tasks" element={<DriverMigrationCenter />} />

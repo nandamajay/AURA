@@ -10,7 +10,9 @@ from pathlib import Path
 from typing import Any
 
 from aura_sdk.transport.cognitive_persistence import AURACognitionRegistry
+from aura_sdk.transport.deterministic_serialization import dump_canonical_json
 from aura_sdk.transport.plugins import TargetPluginLoader
+from aura_sdk.transport.runtime_execution_contract import enforce_runtime_contract
 from aura_sdk.transport.upstream_acceptance_simulation import (
     UpstreamAcceptanceSimulationEngine,
     UpstreamAcceptanceSimulationRegistry,
@@ -56,6 +58,7 @@ def _load_generated_patch(output_dir: Path) -> dict[str, Any]:
 
 
 def main() -> int:
+    enforce_runtime_contract("aura-upstream-acceptance-simulation")
     parser = argparse.ArgumentParser(description="Generate upstream acceptance simulation artifacts")
     parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
     parser.add_argument(
@@ -217,10 +220,7 @@ def main() -> int:
         "generated_at_epoch": time.time(),
     }
 
-    (output_dir / "upstream_acceptance_simulation_summary.json").write_text(
-        json.dumps(summary, indent=2, sort_keys=True),
-        encoding="utf-8",
-    )
+    dump_canonical_json(output_dir / "upstream_acceptance_simulation_summary.json", summary)
 
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0

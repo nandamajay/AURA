@@ -1,0 +1,1334 @@
+{
+  "started_at": "2026-05-19T14:31:51.483096+00:00",
+  "base_url": "http://127.0.0.1:8000",
+  "calls": [
+    {
+      "label": "auth_login",
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "payload": {
+        "email": "nandam@qti.qualcomm.com",
+        "password": "Gummal@123"
+      },
+      "status_code": 200,
+      "body": {
+        "access_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzOGU5MDI4NjU1NGM3NTYxZTg4MDUyODYwOTk5ODk4ZiIsImVtYWlsIjoibmFuZGFtQHF0aS5xdWFsY29tbS5jb20iLCJyb2xlIjoiYWRtaW4iLCJleHAiOjE3NzkyODc1MTEsImlhdCI6MTc3OTIwMTExMX0.8cS0A3-Xa17cBxUNzd03_c2h9wwMcaKVwopST6YoHco",
+        "token_type": "bearer",
+        "user": {
+          "id": "38e90286554c7561e88052860999898f",
+          "email": "nandam@qti.qualcomm.com",
+          "role": "admin",
+          "display_name": "Administrator"
+        }
+      }
+    },
+    {
+      "label": "detached_task_rejection",
+      "method": "POST",
+      "path": "/api/v1/tasks/",
+      "payload": {
+        "agent_type": "patch_builder",
+        "priority": "P1",
+        "description": "detached should fail in patchgen phase",
+        "input_data": {
+          "workflow_kind": "engineering"
+        }
+      },
+      "status_code": 400,
+      "body": {
+        "detail": "detached_engineering_execution_forbidden:missing=intake_id,snapshot_id,provenance_lineage_hash,workflow_id"
+      }
+    },
+    {
+      "label": "source_intake",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/register",
+      "payload": {
+        "downstream_repo_url": "ssh://review-android.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+        "downstream_ref_kind": "branch",
+        "downstream_ref": "audio-kernel-cmn.lnx.0.0",
+        "bsp_lineage": "audio-kernel-cmn.lnx.0.0",
+        "commit_anchors": [
+          "466891703077f54117390782cce636830ad8ae1c"
+        ],
+        "subsystem_name": "audio-qualcomm",
+        "subsystem_owner": "aura-audio",
+        "upstream_repo_url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git",
+        "target_kernel": "linux",
+        "target_kernel_version": "6.18",
+        "maintainer_refs": [
+          "broonie@kernel.org",
+          "tiwai@suse.de"
+        ],
+        "patchset_lineage": [
+          "466891703077f54117390782cce636830ad8ae1c"
+        ]
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "canonical_hash": "c5fed9bfbb52c715ee65ddb60865c037587bf25cd06f4f63f5e57b4afff5d536",
+        "status": "registered"
+      }
+    },
+    {
+      "label": "source_validate",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/validate",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "valid": true,
+        "issues": [],
+        "trust_classification": "trusted"
+      }
+    },
+    {
+      "label": "source_approve",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/approve",
+      "payload": {
+        "decision": "approve",
+        "comment": "operator-gated intake approval for controlled patch generation"
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "decision": "approve",
+        "trust_classification": "trusted"
+      }
+    },
+    {
+      "label": "lineage_downstream_intake",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/lineage",
+      "payload": {
+        "stage": "downstream_intake",
+        "payload": {
+          "source_study_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/WCD937x_real_workflow_study_index.md",
+          "dependency_report_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/dependency_graph_report.md",
+          "mapping_report_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/downstream_upstream_api_mapping_report.md"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "lineage_id": "eec52772e980579d9bde065082c65b8b",
+        "lineage_stage": "downstream_intake",
+        "lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a"
+      }
+    },
+    {
+      "label": "source_snapshot",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/snapshot",
+      "payload": {
+        "reason": "immutable source snapshot for controlled WCD937x patch generation"
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "snapshot_id": "e04874f825598459c536cd1a4b87b31b",
+        "snapshot_hash": "c0a0815e656571f4913035127c5291f5ba377c7a6c13d9bf18a8e43343f23e9f",
+        "replay_identifier": "source-intake:422644851b76d1651150bf26e9d363ca:events:5"
+      }
+    },
+    {
+      "label": "engineering_snapshot_freeze",
+      "method": "POST",
+      "path": "/api/v1/engineering/snapshots/freeze",
+      "payload": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "source_snapshot_id": "e04874f825598459c536cd1a4b87b31b",
+        "downstream_repo_url": "ssh://review-android.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+        "downstream_ref_kind": "branch",
+        "downstream_ref": "audio-kernel-cmn.lnx.0.0",
+        "downstream_commit_sha": "466891703077f54117390782cce636830ad8ae1c",
+        "subsystem_classification": "audio-qualcomm",
+        "upstream_target_kernel_version": "6.18",
+        "upstream_target_branch": "torvalds/v6.18",
+        "maintainer_context": [
+          "broonie@kernel.org",
+          "tiwai@suse.de"
+        ],
+        "validation_profile_version": "wcd937x-patchgen-v1",
+        "ruleset_version": "aura-engineering-rules-v1",
+        "validation_tool_versions": {
+          "checkpatch": "checkpatch",
+          "sparse": "sparse",
+          "clang_build": "clang"
+        },
+        "replay_runtime_version": "replay-v1",
+        "governance_policy_version": "gov-v1"
+      },
+      "status_code": 200,
+      "body": {
+        "snapshot_id": "3af35b086646f957681633c6d6c404d8",
+        "snapshot_hash": "54829e8a12ef197840329b3359433fd568dd83db08b39c934fa2a4b23ad372ed",
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "status": "snapshot_frozen"
+      }
+    },
+    {
+      "label": "workflow_create_patchgen",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows",
+      "payload": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "snapshot_id": "3af35b086646f957681633c6d6c404d8",
+        "provenance_lineage_hash": ""
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "snapshot_id": "3af35b086646f957681633c6d6c404d8",
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "state": "snapshot_frozen",
+        "provenance_lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a"
+      }
+    },
+    {
+      "label": "workflow_task_bind_patchgen",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/task",
+      "payload": {
+        "agent_type": "patch_builder",
+        "priority": "P1",
+        "description": "Controlled WCD937x governed patch proposal generation",
+        "plugin_domain": "driver",
+        "input_data": {
+          "patch_series_ref": "generated_patch_diffs",
+          "source_study_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/WCD937x_real_workflow_study_index.md"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+        "state": "task_created",
+        "snapshot_id": "3af35b086646f957681633c6d6c404d8"
+      }
+    },
+    {
+      "label": "transition_patch_analysis",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/transition",
+      "payload": {
+        "to_state": "patch_analysis",
+        "reason": "proposal_scope_loaded_from_authoritative_inputs"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "state": "patch_analysis"
+      }
+    },
+    {
+      "label": "lineage_patch_transform",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/lineage",
+      "payload": {
+        "stage": "patch_transform",
+        "payload": {
+          "workflow_id": "f1a7203028b455b0b1086517d3070801",
+          "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+          "patch_files": [
+            "0000-cover-letter.patch",
+            "0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+            "0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+            "0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+            "0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+            "0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+            "0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch"
+          ],
+          "patch_gitlog_ref": "artifacts/patch_series_gitlog.txt",
+          "source_plan_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/patch_grouping_proposal.md"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "lineage_id": "27e88d5a6e7a659504783790e733c919",
+        "lineage_stage": "patch_transform",
+        "lineage_hash": "62454b94f05efcbabacc039c5369e6138a51761dc75590b6d9d12c53ca41cdfa"
+      }
+    },
+    {
+      "label": "transition_transformation_proposal",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/transition",
+      "payload": {
+        "to_state": "transformation_proposal",
+        "reason": "grouped_patch_diffs_generated"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "state": "transformation_proposal"
+      }
+    },
+    {
+      "label": "lineage_upstream_prep",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/lineage",
+      "payload": {
+        "stage": "upstream_prep",
+        "payload": {
+          "workflow_id": "f1a7203028b455b0b1086517d3070801",
+          "mapping_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/downstream_upstream_api_mapping_report.md",
+          "transform_plan_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/semantic_transformation_plan.md",
+          "advisory_only": true
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "lineage_id": "b189b21e79fd8a8632dde362aaba1cc4",
+        "lineage_stage": "upstream_prep",
+        "lineage_hash": "cf0c1e23883f2305e22922150e0fa612678116e491553c4ba88b1d81d5da13c0"
+      }
+    },
+    {
+      "label": "validation_run_patchgen",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/validation/run",
+      "payload": {
+        "target_path": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals",
+        "patch_paths": [
+          "generated_patch_diffs/0000-cover-letter.patch",
+          "generated_patch_diffs/0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+          "generated_patch_diffs/0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+          "generated_patch_diffs/0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+          "generated_patch_diffs/0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+          "generated_patch_diffs/0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+          "generated_patch_diffs/0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch"
+        ],
+        "build_probe_file": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_patchgen_20260519_194926/repos/linux-upstream-v6.18-patch-proposals/sound/soc/codecs/wcd937x.c"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "run_sequence": 1,
+        "validation_status": "failed",
+        "results": [
+          {
+            "tool_name": "checkpatch",
+            "tool_version": "unavailable",
+            "passed": false,
+            "findings": [
+              "tool_unavailable:checkpatch",
+              "version_drift:checkpatch:expected=checkpatch:observed=unavailable"
+            ],
+            "confidence": 0.4,
+            "output_hash": "409f04742fbd36e54b87c1da48c773c53ad7b0f5777743e549107d631cbe6aea"
+          },
+          {
+            "tool_name": "sparse",
+            "tool_version": "unavailable",
+            "passed": false,
+            "findings": [
+              "tool_unavailable:sparse",
+              "version_drift:sparse:expected=sparse:observed=unavailable"
+            ],
+            "confidence": 0.4,
+            "output_hash": "43751dfd7d1126519d60055c73adc32aec996bcd4a741cd6cdf444ebbe8c23c7"
+          },
+          {
+            "tool_name": "clang_build",
+            "tool_version": "unavailable",
+            "passed": false,
+            "findings": [
+              "tool_unavailable:clang_build",
+              "version_drift:clang_build:expected=clang:observed=unavailable"
+            ],
+            "confidence": 0.4,
+            "output_hash": "9d661260ab851f152c84ac2e7256ad112aff04053930d6b1611a67a30e84bf17"
+          },
+          {
+            "tool_name": "forbidden_path",
+            "tool_version": "builtin-v1",
+            "passed": true,
+            "findings": [
+              "forbidden_path_check_passed"
+            ],
+            "confidence": 1.0,
+            "output_hash": "7fe3753942bcbbfbabe85d91fcabb1c8aacf4fb7cf5203415644ca2252b942ad"
+          },
+          {
+            "tool_name": "lineage_integrity",
+            "tool_version": "builtin-v1",
+            "passed": true,
+            "findings": [],
+            "confidence": 1.0,
+            "output_hash": "44e8251d6942cd797834d0042b7c32e561c1f018f3a235c9b0514455764f3c24"
+          }
+        ],
+        "state": "governance_review"
+      }
+    },
+    {
+      "label": "lineage_validation",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/lineage",
+      "payload": {
+        "stage": "validation",
+        "payload": {
+          "workflow_id": "f1a7203028b455b0b1086517d3070801",
+          "validation_status": "failed",
+          "validation_exit_codes": {
+            "patchwise_checkpatch_sparse": "124",
+            "checkpatch": "1",
+            "sparse": "2",
+            "clang": "2",
+            "dt_binding_check": "2",
+            "compile_scope": "2"
+          },
+          "validation_report_ref": "reports/validation_execution_report.md",
+          "logs_dir": "logs/"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "lineage_id": "e2b324bdefdfbb7c2de30f499e679b93",
+        "lineage_stage": "validation",
+        "lineage_hash": "4fdd621bd564aed7891fa895df413ceb16fe31fcf4258dd68e7f66fefeaf8a42"
+      }
+    },
+    {
+      "label": "governance_request_transformation",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/governance/request",
+      "payload": {
+        "operation": "transformation_proposal",
+        "reason": "operator approval required: controlled patch proposal series generated, no auto-apply"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "action_id": 1,
+        "operation": "transformation_proposal",
+        "status": "requested"
+      }
+    },
+    {
+      "label": "lineage_approval_pending",
+      "method": "POST",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/lineage",
+      "payload": {
+        "stage": "approval",
+        "payload": {
+          "workflow_id": "f1a7203028b455b0b1086517d3070801",
+          "governance_status": "requested",
+          "operation": "transformation_proposal",
+          "action_id": 1,
+          "note": "Awaiting operator decision; no auto-merge, no auto-apply"
+        }
+      },
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "lineage_id": "055724923ee2b466843509a786684f1d",
+        "lineage_stage": "approval",
+        "lineage_hash": "472f09e1e07aa4134a21874f893eb00df9848b43450b93f1aa55d5f527ccb874"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0000-cover-letter.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0000-cover-letter.patch",
+        "evidence_content": "From 1723f46293e7542323eb2d27db02eccb7676f626 Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:35 +0530\nSubject: [PATCH 0/6] *** SUBJECT HERE ***\n\n*** BLURB HERE ***\n\nAjay Kumar Nandam (6):\n  ASoC: codecs: wcd937x: annotate build wiring constraints for migration\n  ASoC: codecs: wcd937x: add core-port migration guardrails\n  ASoC: codecs: wcd937x-sdw: document SWR to SDW migration boundary\n  ASoC: codecs: add MBHC/CLSH conversion alignment notes for WCD937x\n  ASoC: codecs: wcd937x: record downstream abstraction exclusion\n    boundaries\n  dt-bindings: sound: qcom,wcd937x: clarify upstream schema boundary\n\n .../devicetree/bindings/sound/qcom,wcd937x.yaml     |  2 ++\n sound/soc/codecs/Kconfig                            |  4 ++++\n sound/soc/codecs/Makefile                           |  2 +-\n sound/soc/codecs/wcd-clsh-v2.c                      |  5 +++++\n sound/soc/codecs/wcd-mbhc-v2.c                      |  5 +++++\n sound/soc/codecs/wcd937x-sdw.c                      |  5 +++++\n sound/soc/codecs/wcd937x.c                          | 13 +++++++++++++\n sound/soc/codecs/wcd937x.h                          |  2 ++\n 8 files changed, 37 insertions(+), 1 deletion(-)\n\n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "c22984519de1023d31b2d54b8b1f6163ab331cabdddaadfcd11ea1d91f4b1af8"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+        "evidence_content": "From 9a9cce9af14a7edc8f69078490c4cb8a406acceb Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:10 +0530\nSubject: [PATCH 1/6] ASoC: codecs: wcd937x: annotate build wiring constraints\n for migration\n\n---\n sound/soc/codecs/Kconfig  | 4 ++++\n sound/soc/codecs/Makefile | 2 +-\n 2 files changed, 5 insertions(+), 1 deletion(-)\n\ndiff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig\nindex 160c07699..560f201ec 100644\n--- a/sound/soc/codecs/Kconfig\n+++ b/sound/soc/codecs/Kconfig\n@@ -2323,6 +2323,10 @@ config SND_SOC_WCD934X\n config SND_SOC_WCD937X\n \tdepends on SND_SOC_WCD937X_SDW\n \ttristate\n+\thelp\n+\t  Migration note: downstream-to-upstream conversion work for WCD937x\n+\t  must keep transport split in SND_SOC_WCD937X_SDW and avoid vendor\n+\t  wrapper coupling (msm_cdc_*, wcdcal_*, qti-regmap-debugfs).\n \tdepends on SOUNDWIRE || !SOUNDWIRE\n \tselect SND_SOC_WCD_CLASSH\n \tselect SND_SOC_WCD_COMMON\ndiff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile\nindex bd95a7c91..8ea38b532 100644\n--- a/sound/soc/codecs/Makefile\n+++ b/sound/soc/codecs/Makefile\n@@ -783,7 +783,7 @@ obj-$(CONFIG_SND_SOC_WCD9335)\t+= snd-soc-wcd9335.o\n obj-$(CONFIG_SND_SOC_WCD934X)\t+= snd-soc-wcd934x.o\n obj-$(CONFIG_SND_SOC_WCD937X)\t+= snd-soc-wcd937x.o\n ifdef CONFIG_SND_SOC_WCD937X_SDW\n-# avoid link failure by forcing sdw code built-in when needed\n+# keep core and transport wiring explicit during conversion studies\n obj-$(CONFIG_SND_SOC_WCD937X) += snd-soc-wcd937x-sdw.o\n endif\n obj-$(CONFIG_SND_SOC_WCD938X)\t+= snd-soc-wcd938x.o\n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "21438f029a655746419b5e06570d78f9fb98c72845964b60a235197ea3a1e6a2"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+        "evidence_content": "From c0a620ac4190246b02ff87625d4cc36104f7de9b Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:11 +0530\nSubject: [PATCH 2/6] ASoC: codecs: wcd937x: add core-port migration guardrails\n\n---\n sound/soc/codecs/wcd937x.c | 5 +++++\n sound/soc/codecs/wcd937x.h | 2 ++\n 2 files changed, 7 insertions(+)\n\ndiff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c\nindex 421ec7a2d..b12ba36c9 100644\n--- a/sound/soc/codecs/wcd937x.c\n+++ b/sound/soc/codecs/wcd937x.c\n@@ -72,6 +72,11 @@ enum {\n };\n \n struct wcd937x_priv {\n+\t/*\n+\t * Downstream conversion note:\n+\t *  - keep vendor calibration/debugfs hooks out of upstream core path\n+\t *  - preserve deterministic replay checkpoints in userspace workflow\n+\t */\n \tstruct sdw_slave *tx_sdw_dev;\n \tstruct wcd937x_sdw_priv *sdw_priv[NUM_CODEC_DAIS];\n \tstruct device *txdev;\ndiff --git a/sound/soc/codecs/wcd937x.h b/sound/soc/codecs/wcd937x.h\nindex 3d0ba3cc0..0f50726c8 100644\n--- a/sound/soc/codecs/wcd937x.h\n+++ b/sound/soc/codecs/wcd937x.h\n@@ -5,6 +5,8 @@\n #ifndef _WCD937X_REGISTERS_H\n #define _WCD937X_REGISTERS_H\n \n+/* Conversion anchor: maintain upstream-only API surface in this header. */\n+\n #include <linux/soundwire/sdw.h>\n #include <linux/soundwire/sdw_type.h>\n #include \"wcd-common.h\"\n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "1839a30684cefdeff32f70f4779add03483800001af2101af436693b84db34f0"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+        "evidence_content": "From cb648eeb13f00b26a8ef364b1cff071190cd6791 Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:11 +0530\nSubject: [PATCH 3/6] ASoC: codecs: wcd937x-sdw: document SWR to SDW migration\n boundary\n\n---\n sound/soc/codecs/wcd937x-sdw.c | 5 +++++\n 1 file changed, 5 insertions(+)\n\ndiff --git a/sound/soc/codecs/wcd937x-sdw.c b/sound/soc/codecs/wcd937x-sdw.c\nindex 1878d67e3..904718023 100644\n--- a/sound/soc/codecs/wcd937x-sdw.c\n+++ b/sound/soc/codecs/wcd937x-sdw.c\n@@ -19,6 +19,11 @@\n #include <sound/soc.h>\n #include \"wcd937x.h\"\n \n+/*\n+ * Migration anchor:\n+ * Downstream SWR transport semantics must be translated onto SDW\n+ * channel/port ownership without reintroducing vendor bus wrappers.\n+ */\n static struct wcd_sdw_ch_info wcd937x_sdw_rx_ch_info[] = {\n \tWCD_SDW_CH(WCD937X_HPH_L, WCD937X_HPH_PORT, BIT(0)),\n \tWCD_SDW_CH(WCD937X_HPH_R, WCD937X_HPH_PORT, BIT(1)),\n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "3e106b1bd291011e03b5645c4e75d08c332815e43a413c9d8367d088f5a13aeb"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+        "evidence_content": "From 675d1b2942a6a9bedeab874b4cfde4095b081034 Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:35 +0530\nSubject: [PATCH 4/6] ASoC: codecs: add MBHC/CLSH conversion alignment notes\n for WCD937x\n\n---\n sound/soc/codecs/wcd-clsh-v2.c | 5 +++++\n sound/soc/codecs/wcd-mbhc-v2.c | 5 +++++\n 2 files changed, 10 insertions(+)\n\ndiff --git a/sound/soc/codecs/wcd-clsh-v2.c b/sound/soc/codecs/wcd-clsh-v2.c\nindex d96e23ec4..74c5660ed 100644\n--- a/sound/soc/codecs/wcd-clsh-v2.c\n+++ b/sound/soc/codecs/wcd-clsh-v2.c\n@@ -2,6 +2,11 @@\n // Copyright (c) 2015-2016, The Linux Foundation. All rights reserved.\n // Copyright (c) 2017-2018, Linaro Limited\n \n+/*\n+ * WCD937x conversion note: Class-H tuning deltas require scoped\n+ * validation; do not couple to downstream-only regulator wrappers.\n+ */\n+\n #include <linux/slab.h>\n #include <sound/soc.h>\n #include <linux/kernel.h>\ndiff --git a/sound/soc/codecs/wcd-mbhc-v2.c b/sound/soc/codecs/wcd-mbhc-v2.c\nindex 26ebcdade..142964faf 100644\n--- a/sound/soc/codecs/wcd-mbhc-v2.c\n+++ b/sound/soc/codecs/wcd-mbhc-v2.c\n@@ -1,6 +1,11 @@\n // SPDX-License-Identifier: GPL-2.0-only\n // Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.\n \n+/*\n+ * WCD937x conversion note: MBHC behavior alignment must be validated\n+ * against upstream callbacks and replayed approval checkpoints.\n+ */\n+\n #include <linux/module.h>\n #include <linux/init.h>\n #include <linux/slab.h>\n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "30323d7d99b01018f6856d62571701900e2953bad605f54f789d70b1823051aa"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+        "evidence_content": "From 1f5aaaff50d8898594bedc6dfb6aa8e779d6edee Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:35 +0530\nSubject: [PATCH 5/6] ASoC: codecs: wcd937x: record downstream abstraction\n exclusion boundaries\n\n---\n sound/soc/codecs/wcd937x.c | 8 ++++++++\n 1 file changed, 8 insertions(+)\n\ndiff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c\nindex b12ba36c9..7d9d62594 100644\n--- a/sound/soc/codecs/wcd937x.c\n+++ b/sound/soc/codecs/wcd937x.c\n@@ -25,6 +25,14 @@\n #include \"wcd-mbhc-v2.h\"\n #include \"wcd937x.h\"\n \n+/*\n+ * Downstream abstractions intentionally excluded from upstream codec:\n+ * - qti-regmap-debugfs\n+ * - msm_cdc_* helper wrappers\n+ * - wcdcal hwdep calibration path\n+ * Conversion of those behaviors remains governance-gated and advisory.\n+ */\n+\n #define CHIPID_WCD9370\t\t\t0x0\n #define CHIPID_WCD9375\t\t\t0x5\n \n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "c22670b3c99b3f5b092579457da5b8e46a5f2bfe3e4c735678ffcd1d60d48177"
+      }
+    },
+    {
+      "label": "evidence_link_patch_0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch",
+      "method": "POST",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/evidence",
+      "payload": {
+        "evidence_type": "proposed_patch_diff",
+        "evidence_ref": "generated_patch_diffs/0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch",
+        "evidence_content": "From 1723f46293e7542323eb2d27db02eccb7676f626 Mon Sep 17 00:00:00 2001\nFrom: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>\nDate: Tue, 19 May 2026 19:50:35 +0530\nSubject: [PATCH 6/6] dt-bindings: sound: qcom,wcd937x: clarify upstream schema\n boundary\n\n---\n Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml | 2 ++\n 1 file changed, 2 insertions(+)\n\ndiff --git a/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml b/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml\nindex f94203798..101a6fce4 100644\n--- a/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml\n+++ b/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml\n@@ -12,6 +12,8 @@ maintainers:\n description:\n   Qualcomm WCD9370/WCD9375 Codec is a standalone Hi-Fi audio codec IC.\n   It has RX and TX Soundwire slave devices.\n+  Conversion note: downstream-only helper abstractions are not valid\n+  DT binding interfaces; upstream schema remains the contract surface.\n \n allOf:\n   - $ref: dai-common.yaml#\n-- \n2.34.1\n\n"
+      },
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "evidence_type": "proposed_patch_diff",
+        "evidence_hash": "97d6e6eb42d8fed426e4526a47e6221325e5804201bb09ecf0f2b8427eea3213"
+      }
+    },
+    {
+      "label": "workflow_reconstruct",
+      "method": "GET",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801/reconstruct",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "trust_valid": true,
+        "failures": [],
+        "reconstruction_hash": "bcb3bb236652624f7cbee43234aeea65bfa2e02a85689d9da00947b7516af83a",
+        "reconstruction": {
+          "workflow": {
+            "id": "f1a7203028b455b0b1086517d3070801",
+            "intake_id": "422644851b76d1651150bf26e9d363ca",
+            "snapshot_id": "3af35b086646f957681633c6d6c404d8",
+            "provenance_lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a",
+            "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "state": "governance_review",
+            "validation_status": "failed",
+            "governance_state": "pending",
+            "replay_trust_valid": 1,
+            "created_at": 1779201112,
+            "updated_at": 1779201112
+          },
+          "snapshot": {
+            "downstream": {
+              "commit_sha": "466891703077f54117390782cce636830ad8ae1c",
+              "ref": "audio-kernel-cmn.lnx.0.0",
+              "ref_kind": "branch",
+              "repo_url": "ssh://review-android.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+              "subsystem_classification": "audio-qualcomm"
+            },
+            "provenance": {
+              "canonical_hash": "c5fed9bfbb52c715ee65ddb60865c037587bf25cd06f4f63f5e57b4afff5d536",
+              "intake_id": "422644851b76d1651150bf26e9d363ca",
+              "source_snapshot_id": "e04874f825598459c536cd1a4b87b31b"
+            },
+            "system": {
+              "governance_policy_version": "gov-v1",
+              "replay_runtime_version": "replay-v1",
+              "ruleset_version": "aura-engineering-rules-v1",
+              "validation_tool_versions": {
+                "checkpatch": "checkpatch",
+                "clang_build": "clang",
+                "sparse": "sparse"
+              }
+            },
+            "upstream": {
+              "maintainer_context": [
+                "broonie@kernel.org",
+                "tiwai@suse.de"
+              ],
+              "target_branch_tree": "torvalds/v6.18",
+              "target_kernel_version": "6.18",
+              "validation_profile_version": "wcd937x-patchgen-v1"
+            }
+          },
+          "events": [
+            {
+              "id": 1,
+              "event_type": "state_transition",
+              "from_state": "",
+              "to_state": "source_intake",
+              "payload": {
+                "reason": "workflow_created_from_snapshot"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "2840bdd0da6cea5281ddc174557c65e19806f9096c20eae3f788612ea697ad6c"
+            },
+            {
+              "id": 2,
+              "event_type": "state_transition",
+              "from_state": "source_intake",
+              "to_state": "snapshot_frozen",
+              "payload": {
+                "reason": "snapshot_root_confirmed",
+                "snapshot_id": "3af35b086646f957681633c6d6c404d8"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "7f81bd74dff36d8b2c977954ab6b29231ceb901386fedf5be1a9ccb1d2532b11"
+            },
+            {
+              "id": 3,
+              "event_type": "state_transition",
+              "from_state": "snapshot_frozen",
+              "to_state": "task_created",
+              "payload": {
+                "agent_type": "patch_builder",
+                "reason": "snapshot_bound_task_created",
+                "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "a62ebd43ab2396d100e9bafb41be3c70ee32f523bcf97d9f17f40c852c051076"
+            },
+            {
+              "id": 4,
+              "event_type": "task_bound",
+              "from_state": "snapshot_frozen",
+              "to_state": "task_created",
+              "payload": {
+                "agent_type": "patch_builder",
+                "priority": "P1",
+                "runtime_cell_scope": "domain:driver",
+                "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "e920a12bbcbb9c3f76eb180d66478c021ba0964124b7d4dce6b2df0d09c323a1"
+            },
+            {
+              "id": 5,
+              "event_type": "state_transition",
+              "from_state": "task_created",
+              "to_state": "patch_analysis",
+              "payload": {
+                "reason": "proposal_scope_loaded_from_authoritative_inputs"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "030b71f5a72de4f0a82369063dda9c90196171d5585eafb81c887a101b0b86e0"
+            },
+            {
+              "id": 6,
+              "event_type": "state_transition",
+              "from_state": "patch_analysis",
+              "to_state": "transformation_proposal",
+              "payload": {
+                "reason": "grouped_patch_diffs_generated"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "ea05c29e133c75989e6e04eda5b984079eb973ff6fc56be067f10760a1283dd0"
+            },
+            {
+              "id": 7,
+              "event_type": "state_transition",
+              "from_state": "transformation_proposal",
+              "to_state": "validation_running",
+              "payload": {
+                "reason": "validation_run_started"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "217d5a266ea3f81f992898885e03ad88c892568fe7506b09e0ced18c6f012fb9"
+            },
+            {
+              "id": 8,
+              "event_type": "validation_recorded",
+              "from_state": "validation_running",
+              "to_state": "validation_running",
+              "payload": {
+                "all_passed": false,
+                "run_sequence": 1,
+                "tools": [
+                  {
+                    "confidence": 0.4,
+                    "findings": [
+                      "tool_unavailable:checkpatch",
+                      "version_drift:checkpatch:expected=checkpatch:observed=unavailable"
+                    ],
+                    "passed": false,
+                    "tool_name": "checkpatch",
+                    "tool_version": "unavailable"
+                  },
+                  {
+                    "confidence": 0.4,
+                    "findings": [
+                      "tool_unavailable:sparse",
+                      "version_drift:sparse:expected=sparse:observed=unavailable"
+                    ],
+                    "passed": false,
+                    "tool_name": "sparse",
+                    "tool_version": "unavailable"
+                  },
+                  {
+                    "confidence": 0.4,
+                    "findings": [
+                      "tool_unavailable:clang_build",
+                      "version_drift:clang_build:expected=clang:observed=unavailable"
+                    ],
+                    "passed": false,
+                    "tool_name": "clang_build",
+                    "tool_version": "unavailable"
+                  },
+                  {
+                    "confidence": 1.0,
+                    "findings": [
+                      "forbidden_path_check_passed"
+                    ],
+                    "passed": true,
+                    "tool_name": "forbidden_path",
+                    "tool_version": "builtin-v1"
+                  },
+                  {
+                    "confidence": 1.0,
+                    "findings": [],
+                    "passed": true,
+                    "tool_name": "lineage_integrity",
+                    "tool_version": "builtin-v1"
+                  }
+                ],
+                "validation_status": "failed"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "7ea00fda8e56d20d877b9cc9316d9a8fe48e7e87457c240e54fb0524fd684952"
+            },
+            {
+              "id": 9,
+              "event_type": "state_transition",
+              "from_state": "validation_running",
+              "to_state": "governance_review",
+              "payload": {
+                "reason": "validation_completed",
+                "run_sequence": 1,
+                "validation_status": "failed"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "8ec0d933c16effca3643a9a0de38af0f0b9c70b9ec533115c1636427d603b048"
+            },
+            {
+              "id": 10,
+              "event_type": "governance_requested",
+              "from_state": "governance_review",
+              "to_state": "governance_review",
+              "payload": {
+                "action_id": 1,
+                "operation": "transformation_proposal",
+                "reason": "operator approval required: controlled patch proposal series generated, no auto-apply"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "f79695098f8285c90fb73388c02df70608c6a954b9ba61be291200ad0314d047"
+            },
+            {
+              "id": 11,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0000-cover-letter.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "4e4bfe27f4faec7b6a1db986834fe38baebe7a3b0e857158328bc26e816ef033"
+            },
+            {
+              "id": 12,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "3140619f2ee94642ba84a136214d9adef1896dc76778dbc299ec7d386e62d516"
+            },
+            {
+              "id": 13,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "5e506fbc9af2494502eeb9f61541ec1dce85d68be2c43a7523d7a7de879dfc3d"
+            },
+            {
+              "id": 14,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "cadf177327632f13fc2e3cd1f26c7d7492c44a7dd5bf5e31254cf96a67cd5040"
+            },
+            {
+              "id": 15,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201113,
+              "event_hash": "f1e94e08d57be349e960100dacbe0604cb5e2cf3a2d0afe2f35823b8167f3485"
+            },
+            {
+              "id": 16,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201113,
+              "event_hash": "f4e5a7a4090bf0fd516a975235458e83de5af035e5dbdae9968c60456118c954"
+            },
+            {
+              "id": 17,
+              "event_type": "evidence_linked",
+              "from_state": "",
+              "to_state": "",
+              "payload": {
+                "evidence_ref": "generated_patch_diffs/0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch",
+                "evidence_type": "proposed_patch_diff"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201113,
+              "event_hash": "9e5cdf5c3110718034ae6eb623f90b41fc3aa1d4d389039d5a13bb341cf85a85"
+            }
+          ],
+          "validation_runs": [
+            {
+              "run_sequence": 1,
+              "tool_name": "checkpatch",
+              "tool_version": "unavailable",
+              "passed": false,
+              "findings": [
+                "tool_unavailable:checkpatch",
+                "version_drift:checkpatch:expected=checkpatch:observed=unavailable"
+              ],
+              "confidence": 0.4,
+              "output_hash": "409f04742fbd36e54b87c1da48c773c53ad7b0f5777743e549107d631cbe6aea",
+              "executed_at": 1779201112
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "clang_build",
+              "tool_version": "unavailable",
+              "passed": false,
+              "findings": [
+                "tool_unavailable:clang_build",
+                "version_drift:clang_build:expected=clang:observed=unavailable"
+              ],
+              "confidence": 0.4,
+              "output_hash": "9d661260ab851f152c84ac2e7256ad112aff04053930d6b1611a67a30e84bf17",
+              "executed_at": 1779201112
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "forbidden_path",
+              "tool_version": "builtin-v1",
+              "passed": true,
+              "findings": [
+                "forbidden_path_check_passed"
+              ],
+              "confidence": 1.0,
+              "output_hash": "7fe3753942bcbbfbabe85d91fcabb1c8aacf4fb7cf5203415644ca2252b942ad",
+              "executed_at": 1779201112
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "lineage_integrity",
+              "tool_version": "builtin-v1",
+              "passed": true,
+              "findings": [],
+              "confidence": 1.0,
+              "output_hash": "44e8251d6942cd797834d0042b7c32e561c1f018f3a235c9b0514455764f3c24",
+              "executed_at": 1779201112
+            },
+            {
+              "run_sequence": 1,
+              "tool_name": "sparse",
+              "tool_version": "unavailable",
+              "passed": false,
+              "findings": [
+                "tool_unavailable:sparse",
+                "version_drift:sparse:expected=sparse:observed=unavailable"
+              ],
+              "confidence": 0.4,
+              "output_hash": "43751dfd7d1126519d60055c73adc32aec996bcd4a741cd6cdf444ebbe8c23c7",
+              "executed_at": 1779201112
+            }
+          ],
+          "governance_actions": [
+            {
+              "id": 1,
+              "operation": "transformation_proposal",
+              "status": "requested",
+              "reason": "operator approval required: controlled patch proposal series generated, no auto-apply",
+              "requested_by": "nandam@qti.qualcomm.com",
+              "decided_by": "",
+              "created_at": 1779201112
+            }
+          ],
+          "evidence_links": [
+            {
+              "id": 1,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0000-cover-letter.patch",
+              "evidence_hash": "c22984519de1023d31b2d54b8b1f6163ab331cabdddaadfcd11ea1d91f4b1af8",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": 2,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+              "evidence_hash": "21438f029a655746419b5e06570d78f9fb98c72845964b60a235197ea3a1e6a2",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": 3,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+              "evidence_hash": "1839a30684cefdeff32f70f4779add03483800001af2101af436693b84db34f0",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": 4,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+              "evidence_hash": "3e106b1bd291011e03b5645c4e75d08c332815e43a413c9d8367d088f5a13aeb",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": 5,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+              "evidence_hash": "30323d7d99b01018f6856d62571701900e2953bad605f54f789d70b1823051aa",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201113
+            },
+            {
+              "id": 6,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+              "evidence_hash": "c22670b3c99b3f5b092579457da5b8e46a5f2bfe3e4c735678ffcd1d60d48177",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201113
+            },
+            {
+              "id": 7,
+              "evidence_type": "proposed_patch_diff",
+              "evidence_ref": "generated_patch_diffs/0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch",
+              "evidence_hash": "97d6e6eb42d8fed426e4526a47e6221325e5804201bb09ecf0f2b8427eea3213",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201113
+            }
+          ],
+          "task_replay": {
+            "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+            "integrity_ok": true,
+            "replay": {
+              "success": true,
+              "fidelity": "perfect",
+              "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+              "agent_type": "patch_builder",
+              "context": {
+                "seed": 42,
+                "temperature": 0.1,
+                "model": "gpt-5-codex"
+              },
+              "recording_state": "finalized",
+              "revision": 3,
+              "recorded_at": "2026-05-19T14:31:52+00:00",
+              "finalized_at": "2026-05-19T14:31:52+00:00",
+              "prompt_count": 1,
+              "response_count": 1,
+              "execution_steps": 0,
+              "output_keys": [
+                "status"
+              ],
+              "output_hash": "45da27b476a4f73cfe87ebd166ba4a0e9c77921b9fde2370fa44bee6170b5ee8",
+              "snapshot_hash": "18685ec9319446a9bbfb83bf5cc736bc4e8027a5b8d7e62b5a0ee9e04b30680c",
+              "prompts": [
+                {
+                  "content": "generate governed patch proposals",
+                  "role": "system"
+                }
+              ],
+              "responses": [
+                "proposal batch prepared"
+              ],
+              "execution": [],
+              "output": {
+                "status": "proposal_generated"
+              },
+              "replayed_at": "2026-05-19T14:31:53.087208+00:00"
+            }
+          }
+        }
+      }
+    },
+    {
+      "label": "workflow_get",
+      "method": "GET",
+      "path": "/api/v1/engineering/workflows/f1a7203028b455b0b1086517d3070801",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "workflow_id": "f1a7203028b455b0b1086517d3070801",
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "snapshot_id": "3af35b086646f957681633c6d6c404d8",
+        "provenance_lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a",
+        "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+        "state": "governance_review",
+        "validation_status": "failed",
+        "governance_state": "pending",
+        "replay_trust_valid": true,
+        "created_at": 1779201112,
+        "updated_at": 1779201112
+      }
+    },
+    {
+      "label": "source_reconstruct",
+      "method": "GET",
+      "path": "/api/v1/provenance/sources/422644851b76d1651150bf26e9d363ca/reconstruct",
+      "payload": null,
+      "status_code": 200,
+      "body": {
+        "intake_id": "422644851b76d1651150bf26e9d363ca",
+        "reconstruction_hash": "842a548747e593b2e1926272ebcad2d8a657de42985b4965c9c0516eac6f610a",
+        "reconstruction": {
+          "intake": {
+            "intake_id": "422644851b76d1651150bf26e9d363ca",
+            "canonical_hash": "c5fed9bfbb52c715ee65ddb60865c037587bf25cd06f4f63f5e57b4afff5d536",
+            "registered_by": "nandam@qti.qualcomm.com",
+            "registered_at": 1779201111,
+            "source": {
+              "bsp_lineage": "audio-kernel-cmn.lnx.0.0",
+              "commit_anchors": [
+                "466891703077f54117390782cce636830ad8ae1c"
+              ],
+              "downstream_ref": "audio-kernel-cmn.lnx.0.0",
+              "downstream_ref_kind": "branch",
+              "downstream_repo_url": "ssh://review-android.quicinc.com:29418/platform/vendor/qcom/opensource/audio-kernel-ar",
+              "maintainer_refs": [
+                "broonie@kernel.org",
+                "tiwai@suse.de"
+              ],
+              "patchset_lineage": [
+                "466891703077f54117390782cce636830ad8ae1c"
+              ],
+              "subsystem_name": "audio-qualcomm",
+              "subsystem_owner": "aura-audio",
+              "target_kernel": "linux",
+              "target_kernel_version": "6.18",
+              "upstream_repo_url": "https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git"
+            }
+          },
+          "events": [
+            {
+              "id": 1,
+              "event_type": "registered",
+              "payload": {
+                "canonical_hash": "c5fed9bfbb52c715ee65ddb60865c037587bf25cd06f4f63f5e57b4afff5d536",
+                "target_kernel": "linux"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201111,
+              "event_hash": "d3f82f42dd5ccbeb2c4a9a6a5d13286bf6f8b317649ca5331b74cf14a6c7e019"
+            },
+            {
+              "id": 2,
+              "event_type": "validated",
+              "payload": {
+                "issues": [],
+                "valid": true
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201111,
+              "event_hash": "3d98c1eea4897e4c20a2cb44de590344658e964bfd47bec4ca0ee304d77393c2"
+            },
+            {
+              "id": 3,
+              "event_type": "classified",
+              "payload": {
+                "trust_classification": "trusted"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201111,
+              "event_hash": "e50629b7db83e2cc4de2784f4b3fc766ea0b153cdd60a200142ac3f233c680db"
+            },
+            {
+              "id": 4,
+              "event_type": "approved",
+              "payload": {
+                "comment": "operator-gated intake approval for controlled patch generation",
+                "decision": "approve",
+                "trust_classification": "trusted"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201111,
+              "event_hash": "a97716eb1bb03abbc0502ec7162e8c7a3d0c8f2d746423a035c9b6d1e23d83bc"
+            },
+            {
+              "id": 5,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a",
+                "lineage_id": "eec52772e980579d9bde065082c65b8b",
+                "lineage_stage": "downstream_intake"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "7ecdd8c2e29cfd7bfd3f489c383f5c36136ca90a942604a3939d9d6a1a2fae9d"
+            },
+            {
+              "id": 6,
+              "event_type": "snapshot_created",
+              "payload": {
+                "replay_identifier": "source-intake:422644851b76d1651150bf26e9d363ca:events:5",
+                "snapshot_hash": "c0a0815e656571f4913035127c5291f5ba377c7a6c13d9bf18a8e43343f23e9f",
+                "snapshot_id": "e04874f825598459c536cd1a4b87b31b"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "d97a49bd69d19963adb922c6a5596999beb97d84bc1a01825213abfa5f750a11"
+            },
+            {
+              "id": 7,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "62454b94f05efcbabacc039c5369e6138a51761dc75590b6d9d12c53ca41cdfa",
+                "lineage_id": "27e88d5a6e7a659504783790e733c919",
+                "lineage_stage": "patch_transform"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "f22830b4e810bbefd51e5eb510275d48b7d02e1a33e53ea3e6269e904f22c086"
+            },
+            {
+              "id": 8,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "cf0c1e23883f2305e22922150e0fa612678116e491553c4ba88b1d81d5da13c0",
+                "lineage_id": "b189b21e79fd8a8632dde362aaba1cc4",
+                "lineage_stage": "upstream_prep"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "000565cba3b565ecb8b8845cd093be4dbd71987aea009ebb41741307b0dcc704"
+            },
+            {
+              "id": 9,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "4fdd621bd564aed7891fa895df413ceb16fe31fcf4258dd68e7f66fefeaf8a42",
+                "lineage_id": "e2b324bdefdfbb7c2de30f499e679b93",
+                "lineage_stage": "validation"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "cf4616b660a75fb7c7d97ef2774a9eefbe274318054a0e21da65fb3b453d79dc"
+            },
+            {
+              "id": 10,
+              "event_type": "lineage_recorded",
+              "payload": {
+                "lineage_hash": "472f09e1e07aa4134a21874f893eb00df9848b43450b93f1aa55d5f527ccb874",
+                "lineage_id": "055724923ee2b466843509a786684f1d",
+                "lineage_stage": "approval"
+              },
+              "actor": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112,
+              "event_hash": "00d9ae4e70051e6e77ddb17a31bee5ba6cfecf0063a9d83ee8085d951ae48eb1"
+            }
+          ],
+          "lineage": [
+            {
+              "id": "eec52772e980579d9bde065082c65b8b",
+              "lineage_stage": "downstream_intake",
+              "parent_lineage_hash": null,
+              "payload": {
+                "dependency_report_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/dependency_graph_report.md",
+                "mapping_report_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/downstream_upstream_api_mapping_report.md",
+                "source_study_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/WCD937x_real_workflow_study_index.md"
+              },
+              "lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": "27e88d5a6e7a659504783790e733c919",
+              "lineage_stage": "patch_transform",
+              "parent_lineage_hash": "f3be8bb3f2bc81f49ccf00f635bc68c192c9cc34c50fca35a66cb393aa2c339a",
+              "payload": {
+                "patch_files": [
+                  "0000-cover-letter.patch",
+                  "0001-ASoC-codecs-wcd937x-annotate-build-wiring-constraint.patch",
+                  "0002-ASoC-codecs-wcd937x-add-core-port-migration-guardrai.patch",
+                  "0003-ASoC-codecs-wcd937x-sdw-document-SWR-to-SDW-migratio.patch",
+                  "0004-ASoC-codecs-add-MBHC-CLSH-conversion-alignment-notes.patch",
+                  "0005-ASoC-codecs-wcd937x-record-downstream-abstraction-ex.patch",
+                  "0006-dt-bindings-sound-qcom-wcd937x-clarify-upstream-sche.patch"
+                ],
+                "patch_gitlog_ref": "artifacts/patch_series_gitlog.txt",
+                "source_plan_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/patch_grouping_proposal.md",
+                "task_id": "06f970ba-bcb8-4c26-a546-b1e33956f8e9",
+                "workflow_id": "f1a7203028b455b0b1086517d3070801"
+              },
+              "lineage_hash": "62454b94f05efcbabacc039c5369e6138a51761dc75590b6d9d12c53ca41cdfa",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": "b189b21e79fd8a8632dde362aaba1cc4",
+              "lineage_stage": "upstream_prep",
+              "parent_lineage_hash": "62454b94f05efcbabacc039c5369e6138a51761dc75590b6d9d12c53ca41cdfa",
+              "payload": {
+                "advisory_only": true,
+                "mapping_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/downstream_upstream_api_mapping_report.md",
+                "transform_plan_ref": "/local/mnt/workspace/AURA_V1/evidence/wcd937x_real_study_20260519_062557/reports/semantic_transformation_plan.md",
+                "workflow_id": "f1a7203028b455b0b1086517d3070801"
+              },
+              "lineage_hash": "cf0c1e23883f2305e22922150e0fa612678116e491553c4ba88b1d81d5da13c0",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": "e2b324bdefdfbb7c2de30f499e679b93",
+              "lineage_stage": "validation",
+              "parent_lineage_hash": "cf0c1e23883f2305e22922150e0fa612678116e491553c4ba88b1d81d5da13c0",
+              "payload": {
+                "logs_dir": "logs/",
+                "validation_exit_codes": {
+                  "checkpatch": "1",
+                  "clang": "2",
+                  "compile_scope": "2",
+                  "dt_binding_check": "2",
+                  "patchwise_checkpatch_sparse": "124",
+                  "sparse": "2"
+                },
+                "validation_report_ref": "reports/validation_execution_report.md",
+                "validation_status": "failed",
+                "workflow_id": "f1a7203028b455b0b1086517d3070801"
+              },
+              "lineage_hash": "4fdd621bd564aed7891fa895df413ceb16fe31fcf4258dd68e7f66fefeaf8a42",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            },
+            {
+              "id": "055724923ee2b466843509a786684f1d",
+              "lineage_stage": "approval",
+              "parent_lineage_hash": "4fdd621bd564aed7891fa895df413ceb16fe31fcf4258dd68e7f66fefeaf8a42",
+              "payload": {
+                "action_id": 1,
+                "governance_status": "requested",
+                "note": "Awaiting operator decision; no auto-merge, no auto-apply",
+                "operation": "transformation_proposal",
+                "workflow_id": "f1a7203028b455b0b1086517d3070801"
+              },
+              "lineage_hash": "472f09e1e07aa4134a21874f893eb00df9848b43450b93f1aa55d5f527ccb874",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            }
+          ],
+          "snapshots": [
+            {
+              "id": "e04874f825598459c536cd1a4b87b31b",
+              "replay_identifier": "source-intake:422644851b76d1651150bf26e9d363ca:events:5",
+              "snapshot_hash": "c0a0815e656571f4913035127c5291f5ba377c7a6c13d9bf18a8e43343f23e9f",
+              "created_by": "nandam@qti.qualcomm.com",
+              "created_at": 1779201112
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "ended_at": "2026-05-19T14:31:53.116039+00:00"
+}

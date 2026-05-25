@@ -18,6 +18,7 @@ from core.routers import (
     memory,
     patches,
     provenance,
+    runtime,
     simulation,
     tasks,
 )
@@ -48,6 +49,7 @@ app.include_router(tasks.router, prefix="/api/v1/tasks", tags=["tasks"])
 app.include_router(patches.router, prefix="/api/v1/patches", tags=["patches"])
 app.include_router(knowledge.router, prefix="/api/v1/knowledge", tags=["knowledge"])
 app.include_router(governance.router, prefix="/api/v1/governance", tags=["governance"])
+app.include_router(runtime.router, prefix="/api/v1/runtime", tags=["runtime"])
 app.include_router(engineering.router, prefix="/api/v1/engineering", tags=["engineering"])
 app.include_router(simulation.router, prefix="/api/v1/simulation", tags=["simulation"])
 app.include_router(memory.router, prefix="/api/v1/memory", tags=["memory"])

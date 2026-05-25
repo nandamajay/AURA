@@ -1,0 +1,32 @@
+From 1f5aaaff50d8898594bedc6dfb6aa8e779d6edee Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Tue, 19 May 2026 19:50:35 +0530
+Subject: [PATCH 5/6] ASoC: codecs: wcd937x: record downstream abstraction
+ exclusion boundaries
+
+---
+ sound/soc/codecs/wcd937x.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/sound/soc/codecs/wcd937x.c b/sound/soc/codecs/wcd937x.c
+index b12ba36c9..7d9d62594 100644
+--- a/sound/soc/codecs/wcd937x.c
++++ b/sound/soc/codecs/wcd937x.c
+@@ -25,6 +25,14 @@
+ #include "wcd-mbhc-v2.h"
+ #include "wcd937x.h"
+ 
++/*
++ * Downstream abstractions intentionally excluded from upstream codec:
++ * - qti-regmap-debugfs
++ * - msm_cdc_* helper wrappers
++ * - wcdcal hwdep calibration path
++ * Conversion of those behaviors remains governance-gated and advisory.
++ */
++
+ #define CHIPID_WCD9370			0x0
+ #define CHIPID_WCD9375			0x5
+ 
+-- 
+2.34.1
+

@@ -15,7 +15,9 @@ from pathlib import Path
 from typing import Any
 
 from aura_sdk.transport.cognitive_persistence import AURACognitionRegistry
+from aura_sdk.transport.deterministic_serialization import dump_canonical_json
 from aura_sdk.transport.plugins import TargetPluginLoader
+from aura_sdk.transport.runtime_execution_contract import enforce_runtime_contract
 from aura_sdk.transport.semantic_confidence_engine import build_semantic_confidence_report
 from aura_sdk.transport.semantic_entity_extractor import extract_semantic_entities
 from aura_sdk.transport.semantic_equivalence_mapper import build_semantic_equivalence_map
@@ -76,6 +78,7 @@ def _derive_runtime_evidence(registry_payload: dict[str, Any]) -> dict[str, Any]
 
 
 def main() -> int:
+    enforce_runtime_contract("aura-kernel-semantic-knowledge-layer")
     parser = argparse.ArgumentParser(description="Generate Kernel Semantic Knowledge Layer artifacts")
     parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
     parser.add_argument(
@@ -310,10 +313,7 @@ def main() -> int:
         "replay_compatibility": replay_compatibility.semantic_replay_compatibility,
     }
 
-    (output_dir / "kernel_semantic_knowledge_layer_summary.json").write_text(
-        json.dumps(summary, indent=2, sort_keys=True),
-        encoding="utf-8",
-    )
+    dump_canonical_json(output_dir / "kernel_semantic_knowledge_layer_summary.json", summary)
 
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0

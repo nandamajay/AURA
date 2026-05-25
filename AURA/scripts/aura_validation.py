@@ -81,6 +81,14 @@ def status_for(ok: bool, blocked: bool = False) -> str:
     return "PASS" if ok else "FAIL"
 
 
+def _python_version_tuple(raw: str) -> tuple[int, int, int]:
+    text = raw.strip()
+    match = re.search(r"(\d+)\.(\d+)\.(\d+)", text)
+    if not match:
+        return (0, 0, 0)
+    return (int(match.group(1)), int(match.group(2)), int(match.group(3)))
+
+
 def sha256_file(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as handle:
@@ -382,26 +390,26 @@ def run() -> int:
         "transformation_confidence_report.json",
         "runtime_replay_registry.json",
         "deterministic_runtime_replay.json",
+        "runtime_execution_fingerprint_report.json",
         "aura_governance_state.json",
     ]
 
     python_current = run_cmd([sys.executable, "--version"])
-    python312 = run_cmd(["python3.12", "--version"], timeout=15)
-    has_python312 = python312.ok
+    python_current_text = python_current.stdout.strip() or python_current.stderr.strip()
+    python_current_tuple = _python_version_tuple(python_current_text)
+    python312_runtime = python_current_tuple >= (3, 12, 0)
 
     local_probe = python_import_probe(
         sys.executable,
         ["fastapi", "uvicorn", "jose", "passlib", "httpx"],
         env=python_env,
     )
-    py312_probe: dict[str, Any] = {"skipped": True}
-    if has_python312:
-        py312_probe = python_import_probe(
-            "python3.12",
-            ["fastapi", "uvicorn", "jose", "passlib", "httpx"],
-            env=python_env,
-        )
-        py312_probe["skipped"] = False
+    py312_probe: dict[str, Any] = {
+        "skipped": False,
+        "python_bin": sys.executable,
+        "result": local_probe["result"],
+        "parsed": local_probe["parsed"],
+    }
 
     pip_check = run_cmd([sys.executable, "-m", "pip", "check"], timeout=180)
     core_import = run_cmd(
@@ -424,7 +432,7 @@ def run() -> int:
         env=python_env,
     )
     startup_probe = probe_fastapi_startup(
-        "python3.12" if has_python312 else sys.executable,
+        sys.executable,
         env=python_env,
     )
 
@@ -433,6 +441,18 @@ def run() -> int:
 
     dashboard_npm_ls = run_cmd(["npm", "ls", "--depth=0"], cwd=aura_root / "dashboard", timeout=180)
     dashboard_build = run_cmd(["npm", "run", "build"], cwd=aura_root / "dashboard", timeout=420)
+    fingerprint_stamping = run_cmd(
+        [
+            sys.executable,
+            str(aura_root / "scripts" / "runtime_execution_fingerprint.py"),
+            "--output-dir",
+            str(transport_dir),
+            "--repo-root",
+            str(aura_root),
+        ],
+        env=python_env,
+        timeout=180,
+    )
 
     runtime_artifact_checks: dict[str, dict[str, Any]] = {}
     for name in artifact_names:
@@ -647,10 +667,8 @@ def run() -> int:
             "stderr_tail": local_probe["result"].stderr[-1200:],
         },
         "py312_import_probe": {
-            "status": "SKIPPED" if py312_probe.get("skipped", True) else status_for(
-                bool(as_dict(py312_probe.get("parsed")).get("ok", False))
-            ),
-            "python": "python3.12",
+            "status": status_for(bool(as_dict(py312_probe.get("parsed")).get("ok", False))),
+            "python": str(py312_probe.get("python_bin", sys.executable)),
             "missing": as_dict(py312_probe.get("parsed")).get("missing", []),
             "stderr_tail": py312_probe.get("result", CmdResult([], 0, "", "", 0)).stderr[-1200:]
             if isinstance(py312_probe.get("result"), CmdResult)
@@ -662,30 +680,35 @@ def run() -> int:
             "stdout_tail": dashboard_npm_ls.stdout[-1200:],
             "stderr_tail": dashboard_npm_ls.stderr[-1200:],
         },
+        "runtime_fingerprint_stamping": {
+            "status": status_for(fingerprint_stamping.ok),
+            "returncode": fingerprint_stamping.returncode,
+            "stdout_tail": fingerprint_stamping.stdout[-1200:],
+            "stderr_tail": fingerprint_stamping.stderr[-1200:],
+        },
     }
     if dependency_integrity_report["missing_required_pins"]:
         dependency_integrity_report["status"] = "FAIL"
-    if not pip_check.ok or not dashboard_npm_ls.ok:
+    if not pip_check.ok or not dashboard_npm_ls.ok or not fingerprint_stamping.ok:
         dependency_integrity_report["status"] = "FAIL"
 
     backend_runtime_validation = {
         "generated_at": now_iso(),
         "status": "PASS",
-        "python_current": python_current.stdout.strip() or python_current.stderr.strip(),
-        "python312_available": has_python312,
-        "python312_version": python312.stdout.strip() or python312.stderr.strip(),
+        "python_current": python_current_text,
+        "python312_runtime": python312_runtime,
         "fastapi_startup_probe": {
-            "status": status_for(core_import.ok, blocked=(not has_python312)),
+            "status": status_for(core_import.ok, blocked=(not python312_runtime)),
             "returncode": core_import.returncode,
             "stdout": core_import.stdout.strip(),
             "stderr": core_import.stderr.strip(),
         },
         "fastapi_live_probe": {
-            "status": status_for(startup_probe["status"] == "PASS", blocked=(not has_python312)),
+            "status": status_for(startup_probe["status"] == "PASS", blocked=(not python312_runtime)),
             "details": startup_probe,
         },
         "runtime_contract_import": {
-            "status": status_for(contract_import.ok, blocked=(not has_python312)),
+            "status": status_for(contract_import.ok, blocked=(not python312_runtime)),
             "returncode": contract_import.returncode,
             "stdout": contract_import.stdout.strip(),
             "stderr": contract_import.stderr.strip(),
@@ -698,8 +721,11 @@ def run() -> int:
         "governance_artifact_accessible": runtime_artifact_checks.get(
             "runtime_governance_decision.json", {}
         ).get("exists", False),
+        "runtime_execution_fingerprint_accessible": runtime_artifact_checks.get(
+            "runtime_execution_fingerprint_report.json", {}
+        ).get("exists", False),
     }
-    if not has_python312:
+    if not python312_runtime:
         backend_runtime_validation["status"] = "BLOCKED_ENV"
     elif (
         not core_import.ok
@@ -708,6 +734,7 @@ def run() -> int:
         or startup_probe["status"] != "PASS"
         or not backend_runtime_validation["replay_registry_accessible"]
         or not backend_runtime_validation["governance_artifact_accessible"]
+        or not backend_runtime_validation["runtime_execution_fingerprint_accessible"]
     ):
         backend_runtime_validation["status"] = "FAIL"
 
@@ -727,9 +754,9 @@ def run() -> int:
         "generated_at": now_iso(),
         "status": "PASS",
         "python": {
-            "current": python_current.stdout.strip() or python_current.stderr.strip(),
-            "python312_available": has_python312,
-            "python312_version": python312.stdout.strip() or python312.stderr.strip(),
+            "current": python_current_text,
+            "runtime_python_version_tuple": list(python_current_tuple),
+            "python312_runtime": python312_runtime,
             "requires_python": ">=3.12",
         },
         "backend_runtime_validation_status": backend_runtime_validation["status"],
@@ -739,7 +766,7 @@ def run() -> int:
         "replay_integrity_status": replay_integrity_report["status"],
         "blockers": [],
     }
-    if not has_python312:
+    if not python312_runtime:
         environment_validation_report["blockers"].append("python3.12_not_available")
     if backend_runtime_validation["status"] in {"FAIL", "BLOCKED_ENV"}:
         environment_validation_report["blockers"].append("backend_runtime_not_ready")

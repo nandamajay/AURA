@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { useApiData } from '../hooks/useApiData'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
@@ -41,17 +41,17 @@ export default function DriverMigrationCenter() {
     data: queueStats,
     error: queueError,
     reload: reloadQueue,
-  } = useApiData(`${ENDPOINTS.tasks}/queue/stats`, {
+  } = useApiData(API_ROUTES.tasks.queueStats(), {
     intervalMs: 10_000,
   })
   const {
     data: tasks,
     error: tasksError,
     reload: reloadTasks,
-  } = useApiData<TaskListResponse>(ENDPOINTS.tasks, {
+  } = useApiData<TaskListResponse>(API_ROUTES.tasks.list(), {
     intervalMs: 10_000,
   })
-  const { data: agents } = useApiData<AgentCatalog>(ENDPOINTS.agents, {
+  const { data: agents } = useApiData<AgentCatalog>(API_ROUTES.agents.root(), {
     intervalMs: 20_000,
   })
 
@@ -170,7 +170,7 @@ export default function DriverMigrationCenter() {
           downstream_driver_path: downstreamPath.trim(),
         },
       }
-      const result = await apiRequest(ENDPOINTS.tasks, {
+      const result = await apiRequest(API_ROUTES.tasks.root(), {
         method: 'POST',
         body: JSON.stringify(payload),
       })

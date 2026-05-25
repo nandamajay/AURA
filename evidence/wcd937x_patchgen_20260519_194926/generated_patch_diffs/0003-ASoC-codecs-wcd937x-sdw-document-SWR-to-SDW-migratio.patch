@@ -1,0 +1,29 @@
+From cb648eeb13f00b26a8ef364b1cff071190cd6791 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Tue, 19 May 2026 19:50:11 +0530
+Subject: [PATCH 3/6] ASoC: codecs: wcd937x-sdw: document SWR to SDW migration
+ boundary
+
+---
+ sound/soc/codecs/wcd937x-sdw.c | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/sound/soc/codecs/wcd937x-sdw.c b/sound/soc/codecs/wcd937x-sdw.c
+index 1878d67e3..904718023 100644
+--- a/sound/soc/codecs/wcd937x-sdw.c
++++ b/sound/soc/codecs/wcd937x-sdw.c
+@@ -19,6 +19,11 @@
+ #include <sound/soc.h>
+ #include "wcd937x.h"
+ 
++/*
++ * Migration anchor:
++ * Downstream SWR transport semantics must be translated onto SDW
++ * channel/port ownership without reintroducing vendor bus wrappers.
++ */
+ static struct wcd_sdw_ch_info wcd937x_sdw_rx_ch_info[] = {
+ 	WCD_SDW_CH(WCD937X_HPH_L, WCD937X_HPH_PORT, BIT(0)),
+ 	WCD_SDW_CH(WCD937X_HPH_R, WCD937X_HPH_PORT, BIT(1)),
+-- 
+2.34.1
+

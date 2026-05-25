@@ -1,0 +1,270 @@
+# forbidden downstream pattern scan
+## pattern: msm_cdc_
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:2172:		ret = msm_cdc_enable_ondemand_supply(wcd937x->dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3198:		ret = msm_cdc_disable_ondemand_supply(wcd937x->dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3238:	value = msm_cdc_pinctrl_get_state(wcd937x->rst_np);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3242:	rc = msm_cdc_pinctrl_select_sleep_state(wcd937x->rst_np);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3251:	rc = msm_cdc_pinctrl_select_active_state(wcd937x->rst_np);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3340:	rc = msm_cdc_pinctrl_select_sleep_state(wcd937x->rst_np);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3372:	msm_cdc_get_power_supplies(dev, &pdata->regulator,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3434:	ret = msm_cdc_init_supplies(dev, &wcd937x->supplies,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3470:	ret = msm_cdc_enable_static_supplies(dev, wcd937x->supplies,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:31:extern int msm_cdc_get_power_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:34:extern bool msm_cdc_is_ondemand_supply(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:38:extern bool msm_cdc_supply_supports_retention_mode(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:42:extern bool msm_cdc_check_supply_vote(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:46:extern int msm_cdc_disable_ondemand_supply(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:50:extern int msm_cdc_enable_ondemand_supply(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:54:extern int msm_cdc_disable_static_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:58:extern int msm_cdc_release_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:62:extern int msm_cdc_enable_static_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:66:extern int msm_cdc_set_supplies_lpm_mode(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:71:extern int msm_cdc_init_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:75:extern int msm_cdc_init_supplies_v2(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:80:int msm_cdc_init_wcd_supply(struct device_node *np, const char *name,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:82:int msm_cdc_enable_wcd_supply(struct cdc_wcd_supply *cdc_supply, bool enable);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-supply.h:83:extern int msm_cdc_set_supply_min_voltage(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:12:extern int msm_cdc_pinctrl_select_sleep_state(struct device_node *np);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:13:extern int msm_cdc_pinctrl_select_active_state(struct device_node *np);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:14:extern int msm_cdc_pinctrl_select_alt_active_state(struct device_node *np);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:15:extern int msm_cdc_pinctrl_get_state(struct device_node *np);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:16:extern int msm_cdc_get_gpio_state(struct device_node *np);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:17:extern int msm_cdc_pinctrl_set_wakeup_capable(struct device_node *np,
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:19:int msm_cdc_pinctrl_drv_init(void);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:20:void msm_cdc_pinctrl_drv_exit(void);
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:23:int msm_cdc_pinctrl_select_sleep_state(struct device_node *np)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:27:int msm_cdc_pinctrl_select_active_state(struct device_node *np)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:31:int msm_cdc_pinctrl_select_alt_active_state(struct device_node *np)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:35:int msm_cdc_get_gpio_state(struct device_node *np)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:39:int msm_cdc_pinctrl_drv_init(void)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:43:void msm_cdc_pinctrl_drv_exit(void)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:46:int msm_cdc_pinctrl_get_state(struct device_node *np)
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/msm-cdc-pinctrl.h:50:static int msm_cdc_pinctrl_set_wakeup_capable(struct device_node *np,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:19:static int msm_cdc_dt_parse_vreg_info(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:98:static int msm_cdc_parse_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:118:		rc = msm_cdc_dt_parse_vreg_info(dev, &cdc_reg[idx], name,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:131:static int msm_cdc_check_supply_param(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:150: * msm_cdc_is_ondemand_supply:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:161:bool msm_cdc_is_ondemand_supply(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:176:	ret = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:188:EXPORT_SYMBOL(msm_cdc_is_ondemand_supply);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:191: * msm_cdc_supply_supports_retention_mode:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:206:bool msm_cdc_supply_supports_retention_mode(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:220:	ret = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:232:EXPORT_SYMBOL(msm_cdc_supply_supports_retention_mode);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:235: * msm_cdc_check_supply_vote:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:247:bool msm_cdc_check_supply_vote(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:263:	ret = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:276:EXPORT_SYMBOL(msm_cdc_check_supply_vote);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:279: * msm_cdc_set_supply_min_voltage:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:291:int msm_cdc_set_supply_min_voltage(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:305:	rc = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:322:EXPORT_SYMBOL(msm_cdc_set_supply_min_voltage);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:325: * msm_cdc_disable_ondemand_supply:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:336:int msm_cdc_disable_ondemand_supply(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:350:	rc = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:374:EXPORT_SYMBOL(msm_cdc_disable_ondemand_supply);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:377: * msm_cdc_enable_ondemand_supply:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:388:int msm_cdc_enable_ondemand_supply(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:402:	rc = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:425:EXPORT_SYMBOL(msm_cdc_enable_ondemand_supply);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:428: * msm_cdc_set_supplies_lpm_mode:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:440:int msm_cdc_set_supplies_lpm_mode(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:454:	rc = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:478:EXPORT_SYMBOL(msm_cdc_set_supplies_lpm_mode);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:481: * msm_cdc_disable_static_supplies:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:491:int msm_cdc_disable_static_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:504:	rc = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:525:EXPORT_SYMBOL(msm_cdc_disable_static_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:528: * msm_cdc_release_supplies:
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:538:int msm_cdc_release_supplies(struct device *dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:552:	rc = msm_cdc_check_supply_param(dev, cdc_vreg, num_supplies);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-supply.c:556:	msm_cdc_disable_static_supplies(dev, supplies, cdc_vreg,
+
+## pattern: qti-regmap-debugfs
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:31:#include <linux/qti-regmap-debugfs.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:31:#include <linux/qti-regmap-debugfs.h>
+
+## pattern: wcdcal-
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:21:#include <asoc/wcdcal-hwdep.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-mbhc.c:20:#include <asoc/wcdcal-hwdep.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/include/asoc/wcd-mbhc-v2.h:13:#include "wcdcal-hwdep.h"
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcdcal-hwdep.c:15:#include <asoc/wcdcal-hwdep.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd-mbhc-v2.c:31:#include <asoc/wcdcal-hwdep.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:173:	WCD9XXX_OBJS += wcdcal-hwdep.o
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:21:#include <asoc/wcdcal-hwdep.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-mbhc.c:20:#include <asoc/wcdcal-hwdep.h>
+
+## pattern: asoc/bolero-slave-internal.h
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:30:#include "asoc/bolero-slave-internal.h"
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:30:#include "asoc/bolero-slave-internal.h"
+
+## pattern: swr_
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:29:	struct swr_device *swr_slave;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:70:static bool is_swr_slv_reg_readable(int reg)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:100:static ssize_t wcd937x_swrslave_reg_show(struct swr_device *pdev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:113:		if (!is_swr_slv_reg_readable(i))
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:115:		swr_read(pdev, pdev->dev_num, i, &reg_val, 1);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:137:	struct swr_device *pdev;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:156:	struct swr_device *pdev = NULL;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:166:	wcd937x_slave = swr_get_dev_data(pdev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:186:	struct swr_device *pdev = NULL;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:196:	wcd937x_slave = swr_get_dev_data(pdev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:214:	swr_read(pdev, pdev->dev_num, param[0], &wcd937x_slave->read_data, 1);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:229:	struct swr_device *pdev;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:250:	swr_write(pdev, pdev->dev_num, param[0], &param[1]);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:282:	struct swr_device *pdev = to_swr_device(dev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:295:	swr_set_dev_data(pdev, wcd937x_slave);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:297:	wcd937x_slave->swr_slave = pdev;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:331:        	ret = swr_get_logical_dev_num(pdev, pdev->addr, &devnum);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:337:		swr_remove_device(pdev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:349:	struct swr_device *pdev = to_swr_device(dev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:356:	wcd937x_slave = swr_get_dev_data(pdev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:367:	swr_set_dev_data(pdev, NULL);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:370:static const struct swr_device_id wcd937x_swr_id[] = {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:375:static const struct of_device_id wcd937x_swr_dt_match[] = {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:387:static int wcd937x_swr_up(struct swr_device *pdev)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:392:static int wcd937x_swr_down(struct swr_device *pdev)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:397:static int wcd937x_swr_reset(struct swr_device *pdev)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:402:static int wcd937x_swr_probe(struct swr_device *pdev)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:407:static int wcd937x_swr_remove(struct swr_device *pdev)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:413:static struct swr_driver wcd937x_slave_driver = {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:417:		.of_match_table = wcd937x_swr_dt_match,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:419:	.probe = wcd937x_swr_probe,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:420:	.remove = wcd937x_swr_remove,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:421:	.id_table = wcd937x_swr_id,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:422:	.device_up = wcd937x_swr_up,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:423:	.device_down = wcd937x_swr_down,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:424:	.reset_device = wcd937x_swr_reset,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:429:	return swr_driver_register(&wcd937x_slave_driver);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:434:	swr_driver_unregister(&wcd937x_slave_driver);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:16:struct wcd937x_swr_slave_ch_map {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:21:static const struct wcd937x_swr_slave_ch_map wcd937x_swr_slv_tx_ch_idx[] = {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:34:static int wcd937x_swr_master_ch_map[] = {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:61:		if (ch == wcd937x_swr_master_ch_map[i])
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:68:	return wcd937x_swr_master_ch_map[idx];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:76:		if (ch == wcd937x_swr_slv_tx_ch_idx[i].ch_type)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.h:77:			return wcd937x_swr_slv_tx_ch_idx[i].index;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:150:	wcd937x->tx_swr_dev->slave_irq_pending =
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:238:	if (!wcd937x || !wcd937x->rx_swr_dev) {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:243:	return wcd937x->rx_swr_dev->dev_num;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:304:	struct swr_port_params (*map)[SWR_UC_MAX][SWR_NUM_PORTS];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:305:	struct swr_dev_frame_config (*map_uc)[SWR_UC_MAX];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:311:		map_uc = &wcd937x->swr_tx_port_params;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:475:		ret = swr_connect_port(wcd937x->tx_swr_dev, &port_id,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:479:		ret = swr_disconnect_port(wcd937x->tx_swr_dev, &port_id,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:504:		ret = swr_connect_port(wcd937x->rx_swr_dev, &port_id,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:508:		ret = swr_disconnect_port(wcd937x->rx_swr_dev, &port_id,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:873:		ret = swr_slvdev_datapath_control(wcd937x->rx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:874:				    wcd937x->rx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:972:		ret = swr_slvdev_datapath_control(wcd937x->rx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:973:				    wcd937x->rx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1071:		ret = swr_slvdev_datapath_control(wcd937x->rx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1072:			    wcd937x->rx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1125:		ret = swr_slvdev_datapath_control(wcd937x->rx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1126:			    wcd937x->rx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1219:		ret = swr_slvdev_datapath_control(
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1220:				wcd937x->rx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1221:				wcd937x->rx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1376:		ret = swr_slvdev_datapath_control(wcd937x->tx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1377:		    wcd937x->tx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1483:static int wcd937x_tx_swr_ctrl(struct snd_soc_dapm_widget *w,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1511:		ret = swr_slvdev_datapath_control(wcd937x->tx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1512:		    wcd937x->tx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1570:		ret = swr_slvdev_datapath_control(wcd937x->tx_swr_dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1571:		    wcd937x->tx_swr_dev->dev_num,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1799:static int wcd937x_get_logical_addr(struct swr_device *swr_dev)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1806:		ret = swr_get_logical_dev_num(swr_dev, swr_dev->addr, &devnum);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1808:			dev_err(&swr_dev->dev,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1810:				__func__, devnum, swr_dev->addr);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1815:	swr_dev->dev_num = devnum;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1874:		wcd937x_get_logical_addr(wcd937x->tx_swr_dev);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:1875:		wcd937x_get_logical_addr(wcd937x->rx_swr_dev);
+
+## pattern: SWR_
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:14:#define SWR_MAX_RETRY 5
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:19:#define SWR_SLV_MAX_REG_ADDR    0x2009
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:20:#define SWR_SLV_START_REG_ADDR  0x40
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:21:#define SWR_SLV_MAX_BUF_LEN     20
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:23:#define SWR_SLV_RD_BUF_LEN      8
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:24:#define SWR_SLV_WR_BUF_LEN      32
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:25:#define SWR_SLV_MAX_DEVICES     2
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:106:	char tmp_buf[SWR_SLV_MAX_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:111:	for (i = (((int) *ppos/BYTES_PER_LINE) + SWR_SLV_START_REG_ADDR);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:112:		i <= SWR_SLV_MAX_REG_ADDR; i++) {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:130:	*ppos = SWR_SLV_MAX_REG_ADDR * BYTES_PER_LINE;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:155:	char lbuf[SWR_SLV_RD_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:183:	char lbuf[SWR_SLV_WR_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:212:	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) && (rc == 0)))
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:226:	char lbuf[SWR_SLV_WR_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:247:	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) &&
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:283:	int retry = SWR_MAX_RETRY;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:304:	struct swr_port_params (*map)[SWR_UC_MAX][SWR_NUM_PORTS];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:305:	struct swr_dev_frame_config (*map_uc)[SWR_UC_MAX];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:325:	max_uc = map_size / (SWR_NUM_PORTS * SWR_PORT_PARAMS * sizeof(u32));
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:327:	if (max_uc != SWR_UC_MAX) {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:340:				SWR_NUM_PORTS * SWR_PORT_PARAMS * max_uc);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:348:		for (j = 0; j < SWR_NUM_PORTS; j++) {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:349:			cnt = (i * SWR_NUM_PORTS + j) * SWR_PORT_PARAMS;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:3529:	swr_init_port_params(wcd937x->tx_swr_dev, SWR_NUM_PORTS,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:243:	[WCD937X_REG(WCD937X_DIGITAL_SWR_RST_EN)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:312:	[WCD937X_REG(WCD937X_DIGITAL_CDC_SWR_CLH)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:313:	[WCD937X_REG(WCD937X_DIGITAL_SWR_CLH_BYP)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:357:	[WCD937X_REG(WCD937X_DIGITAL_SWR_DAC_TEST)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:358:	[WCD937X_REG(WCD937X_DIGITAL_SWR_HM_TEST_RX_0)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:359:	[WCD937X_REG(WCD937X_DIGITAL_SWR_HM_TEST_TX_0)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:360:	[WCD937X_REG(WCD937X_DIGITAL_SWR_HM_TEST_RX_1)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:361:	[WCD937X_REG(WCD937X_DIGITAL_SWR_HM_TEST_TX_1)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-tables.c:362:	[WCD937X_REG(WCD937X_DIGITAL_SWR_HM_TEST)] = RD_WR_REG,
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:247:	{ WCD937X_DIGITAL_SWR_RST_EN,             0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:316:	{ WCD937X_DIGITAL_CDC_SWR_CLH,            0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:317:	{ WCD937X_DIGITAL_SWR_CLH_BYP,            0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:361:	{ WCD937X_DIGITAL_SWR_DAC_TEST,           0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:362:	{ WCD937X_DIGITAL_SWR_HM_TEST_RX_0,       0x40 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:363:	{ WCD937X_DIGITAL_SWR_HM_TEST_TX_0,       0x40 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:364:	{ WCD937X_DIGITAL_SWR_HM_TEST_RX_1,       0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:365:	{ WCD937X_DIGITAL_SWR_HM_TEST_TX_1,       0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-regmap.c:366:	{ WCD937X_DIGITAL_SWR_HM_TEST,            0x00 },
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:255:#define WCD937X_DIGITAL_SWR_RST_EN                  (WCD937X_BASE_ADDRESS+0x40A)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:324:#define WCD937X_DIGITAL_CDC_SWR_CLH                 (WCD937X_BASE_ADDRESS+0x451)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:325:#define WCD937X_DIGITAL_SWR_CLH_BYP                 (WCD937X_BASE_ADDRESS+0x452)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:369:#define WCD937X_DIGITAL_SWR_DAC_TEST                (WCD937X_BASE_ADDRESS+0x484)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:370:#define WCD937X_DIGITAL_SWR_HM_TEST_RX_0            (WCD937X_BASE_ADDRESS+0x485)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:371:#define WCD937X_DIGITAL_SWR_HM_TEST_TX_0            (WCD937X_BASE_ADDRESS+0x491)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:372:#define WCD937X_DIGITAL_SWR_HM_TEST_RX_1            (WCD937X_BASE_ADDRESS+0x492)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:373:#define WCD937X_DIGITAL_SWR_HM_TEST_TX_1            (WCD937X_BASE_ADDRESS+0x493)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x-registers.h:374:#define WCD937X_DIGITAL_SWR_HM_TEST                 (WCD937X_BASE_ADDRESS+0x494)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/internal.h:23:#define SWR_NUM_PORTS 4
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/internal.h:80:	struct swr_port_params tx_port_params[SWR_UC_MAX][SWR_NUM_PORTS];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/internal.h:81:	struct swr_dev_frame_config swr_tx_port_params[SWR_UC_MAX];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:189:ifdef CONFIG_SND_SOC_SWR_DMIC
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:190:       SWR_DMIC_OBJS += swr-dmic.o
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:238:ifdef CONFIG_SND_SWR_HAPTICS
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:239:	SWR_HAP_OBJS += swr-haptics.o
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:243:	LPASS_BT_SWR_OBJS += lpass-bt-swr.o
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:307:obj-$(CONFIG_SND_SOC_SWR_DMIC) += swr_dmic_dlkm.o
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:308:swr_dmic_dlkm-y := $(SWR_DMIC_OBJS)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:331:obj-$(CONFIG_SND_SWR_HAPTICS) += swr_haptics_dlkm.o
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:332:swr_haptics_dlkm-y := $(SWR_HAP_OBJS)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/Kbuild:335:lpass_bt_swr_dlkm-y := $(LPASS_BT_SWR_OBJS)
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:14:#define SWR_MAX_RETRY 5
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:19:#define SWR_SLV_MAX_REG_ADDR    0x2009
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:20:#define SWR_SLV_START_REG_ADDR  0x40
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:21:#define SWR_SLV_MAX_BUF_LEN     20
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:23:#define SWR_SLV_RD_BUF_LEN      8
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:24:#define SWR_SLV_WR_BUF_LEN      32
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:25:#define SWR_SLV_MAX_DEVICES     2
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:106:	char tmp_buf[SWR_SLV_MAX_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:111:	for (i = (((int) *ppos/BYTES_PER_LINE) + SWR_SLV_START_REG_ADDR);
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:112:		i <= SWR_SLV_MAX_REG_ADDR; i++) {
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:130:	*ppos = SWR_SLV_MAX_REG_ADDR * BYTES_PER_LINE;
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:155:	char lbuf[SWR_SLV_RD_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:183:	char lbuf[SWR_SLV_WR_BUF_LEN];
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:212:	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) && (rc == 0)))
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x_slave.c:226:	char lbuf[SWR_SLV_WR_BUF_LEN];
+
+## pattern: linux/version.h
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:25:#include <linux/version.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/msm-cdc-pinctrl.c:20:#include <linux/version.h>
+/tmp/aura-wcd937x-study/snapshots/downstream/asoc/codecs/wcd937x/wcd937x.c:25:#include <linux/version.h>
+

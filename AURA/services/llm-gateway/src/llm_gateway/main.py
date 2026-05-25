@@ -8,6 +8,7 @@ import httpx
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, Field
 from aura_sdk.logging.logger import configure_logging, get_logger
+from aura_sdk.transport.runtime_execution_contract import resolve_runtime_contract
 from llm_gateway.budget import TokenBudgetManager
 from llm_gateway.cache import ResponseCache
 from llm_gateway.config import Config
@@ -42,6 +43,19 @@ class CompletionRequest(BaseModel):
 
 @app.on_event("startup")
 async def startup():
+    execution_contract = resolve_runtime_contract("llm-gateway")
+    logger.info(
+        "runtime_execution_contract",
+        classification=execution_contract.classification,
+        python_version=execution_contract.python_version,
+        containerized=execution_contract.containerized,
+        fail_closed_reasons=execution_contract.fail_closed_reasons,
+    )
+    if execution_contract.classification != "PASS":
+        raise RuntimeError(
+            "llm-gateway runtime execution contract failed: "
+            + ",".join(execution_contract.fail_closed_reasons)
+        )
     logger.info(
         "llm_gateway.startup",
         provider=Config.LLM_PROVIDER,

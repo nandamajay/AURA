@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react'
 import * as d3 from 'd3'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { useApiData } from '../hooks/useApiData'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
 
@@ -26,7 +26,25 @@ interface SearchResponse {
 }
 
 type GraphLayout = 'force' | 'radial'
-type GraphNodeType = 'rule' | 'category' | 'evidence' | 'subsystem'
+type GraphNodeType = 'rule' | 'category' | 'evidence' | 'subsystem' | 'section'
+
+interface EvidenceFile {
+  path: string
+  name: string
+  extension: string
+  size_bytes: number
+  modified_at: string
+}
+
+interface EvidenceSection {
+  root: string
+  files: EvidenceFile[]
+}
+
+interface EvidenceIndexResponse {
+  generated_at: string
+  sections: Record<string, EvidenceSection>
+}
 
 interface GraphNode extends d3.SimulationNodeDatum {
   id: string
@@ -52,6 +70,7 @@ const NODE_COLORS: Record<GraphNodeType, string> = {
   category: '#475569',
   evidence: '#0f766e',
   subsystem: '#92400e',
+  section: '#6d28d9',
 }
 
 function endpointId(value: string | GraphNode): string {
@@ -76,7 +95,7 @@ function parseSourceRefs(raw: string | null | undefined): string[] {
     .filter(Boolean)
 }
 
-function buildGraph(rules: RuleRecord[]): GraphData {
+function buildGraph(rules: RuleRecord[], evidenceSections: Record<string, EvidenceSection>): GraphData {
   const nodes = new Map<string, GraphNode>()
   const links: GraphLink[] = []
 
@@ -147,6 +166,40 @@ function buildGraph(rules: RuleRecord[]): GraphData {
     })
   }
 
+  for (const [sectionName, sectionData] of Object.entries(evidenceSections)) {
+    const sectionId = `section:${sectionName}`
+    ensureNode({
+      id: sectionId,
+      label: sectionName,
+      nodeType: 'section',
+      meta: {
+        root: sectionData.root,
+        file_count: sectionData.files.length,
+      },
+    })
+
+    sectionData.files.slice(0, 40).forEach((file, index) => {
+      const fileId = `evidence:${sectionName}:${index}:${file.path}`
+      ensureNode({
+        id: fileId,
+        label: file.name,
+        nodeType: 'evidence',
+        meta: {
+          path: file.path,
+          extension: file.extension,
+          size_bytes: file.size_bytes,
+          modified_at: file.modified_at,
+        },
+      })
+      links.push({
+        source: sectionId,
+        target: fileId,
+        relation: 'depends_on',
+        detail: file.path,
+      })
+    })
+  }
+
   return {
     nodes: Array.from(nodes.values()),
     links,
@@ -168,7 +221,10 @@ export default function KnowledgeGraphCenter() {
   const [selectedNodeId, setSelectedNodeId] = useState('')
   const [selectedLinkId, setSelectedLinkId] = useState('')
 
-  const { data: rulesData } = useApiData<RulesResponse>(`${ENDPOINTS.knowledge}/rules?limit=60`, { intervalMs: 30_000 })
+  const { data: rulesData } = useApiData<RulesResponse>(API_ROUTES.knowledge.rules(60), { intervalMs: 30_000 })
+  const { data: evidenceData } = useApiData<EvidenceIndexResponse>(API_ROUTES.knowledge.evidenceIndex(120, 4), {
+    intervalMs: 45_000,
+  })
 
   const activeRules = useMemo(() => {
     if (searchResult?.results?.length) {
@@ -177,7 +233,12 @@ export default function KnowledgeGraphCenter() {
     return rulesData?.rules || []
   }, [rulesData?.rules, searchResult?.results])
 
-  const graphData = useMemo(() => buildGraph(activeRules), [activeRules])
+  const evidenceSections = evidenceData?.sections || {}
+  const evidenceFileCount = useMemo(() => {
+    return Object.values(evidenceSections).reduce((acc, section) => acc + (section.files?.length || 0), 0)
+  }, [evidenceSections])
+
+  const graphData = useMemo(() => buildGraph(activeRules, evidenceSections), [activeRules, evidenceSections])
 
   const selectedNode = useMemo(() => graphData.nodes.find((node) => node.id === selectedNodeId) || null, [graphData.nodes, selectedNodeId])
   const selectedLink = useMemo(() => {
@@ -290,6 +351,7 @@ export default function KnowledgeGraphCenter() {
         category: [],
         rule: [],
         evidence: [],
+        section: [],
       }
       nodes.forEach((node) => groups[node.nodeType].push(node))
 
@@ -300,6 +362,7 @@ export default function KnowledgeGraphCenter() {
         category: 170,
         rule: 260,
         evidence: 340,
+        section: 420,
       }
 
       ;(Object.keys(groups) as GraphNodeType[]).forEach((type) => {
@@ -361,10 +424,10 @@ export default function KnowledgeGraphCenter() {
 
   async function runSearch(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault()
-    setSearching(true)
-    setSearchError('')
-    try {
-      const endpoint = `${ENDPOINTS.knowledge}/search?q=${encodeURIComponent(query)}&limit=60`
+      setSearching(true)
+      setSearchError('')
+      try {
+      const endpoint = API_ROUTES.knowledge.search(query, 60)
       const result = await apiRequest<SearchResponse>(endpoint)
       setSearchResult(result)
     } catch (error) {
@@ -379,7 +442,7 @@ export default function KnowledgeGraphCenter() {
     setExporting(true)
     setExportError('')
     try {
-      const result = await apiRequest(`${ENDPOINTS.knowledge}/export`, {
+      const result = await apiRequest(API_ROUTES.knowledge.export(), {
         method: 'POST',
         body: JSON.stringify({ format: 'json' }),
       })
@@ -429,7 +492,9 @@ export default function KnowledgeGraphCenter() {
                 Search results: {searchResult.count} rule(s), graph nodes={graphData.nodes.length}, edges={graphData.links.length}
               </MetaText>
             ) : (
-              <MetaText>Using live rules dataset for graph.</MetaText>
+              <MetaText>
+                Using live rules dataset and evidence index. rules={activeRules.length} | evidence_files={evidenceFileCount}
+              </MetaText>
             )}
           </div>
         </SectionCard>
@@ -459,6 +524,11 @@ export default function KnowledgeGraphCenter() {
               Nodes={graphData.nodes.length} | Links={graphData.links.length}
             </MetaText>
           </div>
+          {graphData.nodes.length === 0 ? (
+            <MetaText>
+              No graph entities available from live rules/evidence sources. This page does not synthesize placeholder graph data.
+            </MetaText>
+          ) : null}
           <svg ref={svgRef} />
         </SectionCard>
       </div>

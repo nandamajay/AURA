@@ -1,0 +1,283 @@
+{
+  "core_ready": {
+    "components": [
+      {
+        "latency_ms": 3,
+        "message": "",
+        "name": "sqlite",
+        "status": "healthy"
+      },
+      {
+        "latency_ms": 11,
+        "message": "",
+        "name": "llm-gateway",
+        "status": "healthy"
+      },
+      {
+        "latency_ms": 11,
+        "message": "",
+        "name": "ws-server",
+        "status": "healthy"
+      }
+    ],
+    "service": "aura-core",
+    "status": "healthy",
+    "timestamp": "2026-05-18T16:33:45.316500Z",
+    "uptime_seconds": 16358.842658758163,
+    "version": "0.1.0"
+  },
+  "generated_at": "2026-05-18T16:33:45.362543+00:00",
+  "llm_health": {
+    "mock_mode": false,
+    "provider": "qgenie",
+    "service": "llm-gateway",
+    "status": "healthy",
+    "version": "0.1.0"
+  },
+  "migration_count": 19,
+  "runtime_overview": {
+    "agents": {
+      "circuit_breakers": {},
+      "running_count": 0,
+      "running_sample": [],
+      "watchdog_count": 0,
+      "watchdog_max_watches": 50
+    },
+    "classification": {
+      "determinism": "strong_bounded",
+      "operational": "bounded"
+    },
+    "generated_at": "2026-05-18T16:33:45.278385+00:00",
+    "governance": {
+      "approvals": {
+        "failed": 387,
+        "in_progress": 124,
+        "passed": 393,
+        "pending": 102
+      },
+      "audit_last_hour": 0
+    },
+    "pressure_alerts": [
+      {
+        "message": "buffer_evictions_total=13318",
+        "severity": "bounded",
+        "surface": "replay_buffer"
+      },
+      {
+        "message": "mutable_replay_logs=18 (non-finalized traces are not deterministic replay artifacts)",
+        "severity": "info",
+        "surface": "replay"
+      }
+    ],
+    "queue": {
+      "P0_critical": 0,
+      "P1_normal": 0,
+      "P2_background": 0,
+      "completed_today": 938,
+      "domains_tracked": 0,
+      "failed_today": 0,
+      "fairness_overrides_total": 0,
+      "running": 0,
+      "starvation_events_total": 0
+    },
+    "queue_isolation": {
+      "dispatch_sequence": 0,
+      "p2_fairness_window": 3,
+      "p2_last_fair_dispatch_sequence": 0,
+      "p2_wait_override_seconds": 3.0,
+      "per_domain": {},
+      "policy_version": "p2-isolation-v1",
+      "queue_depth": {
+        "P0_critical": 0,
+        "P1_normal": 0,
+        "P2_background": 0,
+        "running": 0
+      }
+    },
+    "replay": {
+      "finalized": 1346,
+      "mutable": 18
+    },
+    "requested_by": "nandam@qti.qualcomm.com",
+    "tasks": {
+      "domain_activity": {
+        "automation": {
+          "completed": 70,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 70
+        },
+        "default": {
+          "completed": 120,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 120
+        },
+        "driver": {
+          "completed": 70,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 70
+        },
+        "media": {
+          "completed": 70,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 70
+        },
+        "research": {
+          "completed": 70,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 70
+        }
+      },
+      "retry_pressure": {
+        "retry_pending_tasks": 0,
+        "tasks_with_retry_lineage": 0
+      },
+      "status_counts": {
+        "cancelled": 21,
+        "completed": 1089,
+        "failed": 2
+      }
+    },
+    "websocket": {
+      "available": true,
+      "payload": {
+        "buffer_counts_by_domain": {
+          "automation": 249,
+          "default": 5,
+          "driver": 248,
+          "media": 249,
+          "research": 249
+        },
+        "buffer_evictions_by_domain": {
+          "automation": 636,
+          "default": 10773,
+          "driver": 637,
+          "media": 636,
+          "research": 636
+        },
+        "buffer_evictions_total": 13318,
+        "channel_broadcast_count": {
+          "agent.lifecycle": 1008,
+          "system": 10730,
+          "system:automation": 759,
+          "system:driver": 759,
+          "system:media": 759,
+          "system:research": 759,
+          "task.orchestration": 2580,
+          "task.orchestration:automation": 126,
+          "task.orchestration:default": 252,
+          "task.orchestration:driver": 126,
+          "task.orchestration:media": 126,
+          "task.orchestration:research": 126
+        },
+        "domain_ingest_count": {
+          "automation": 885,
+          "default": 10778,
+          "driver": 885,
+          "media": 885,
+          "research": 885
+        },
+        "domain_sse_delivery_count": {
+          "automation": 759,
+          "default": 9234,
+          "driver": 759,
+          "media": 759,
+          "research": 759
+        },
+        "domain_ws_delivery_count": {
+          "automation": 0,
+          "default": 72745,
+          "driver": 0,
+          "media": 0,
+          "research": 0
+        },
+        "event_buffer_capacity": 1000,
+        "event_buffer_per_domain_max": 250,
+        "event_buffer_size": 1000,
+        "event_ingest_sequence": 14437,
+        "policy_version": "p2.1",
+        "retry_scope_sample": [
+          [
+            "system:retry:driver:plugin-coexist-20260518T105558Z-18hs10::driver-op:domain:driver:run:plugin-coexist-20260518T105558Z-18hs10:op:driver-op",
+            3
+          ],
+          [
+            "system:retry:media:plugin-coexist-20260518T105558Z-18hs10::media-op:domain:media:run:plugin-coexist-20260518T105558Z-18hs10:op:media-op",
+            3
+          ],
+          [
+            "system:retry:automation:plugin-coexist-20260518T105558Z-18hs10::automation-op:domain:automation:run:plugin-coexist-20260518T105558Z-18hs10:op:automation-op",
+            3
+          ],
+          [
+            "system:retry:research:plugin-coexist-20260518T105558Z-18hs10::research-op:domain:research:run:plugin-coexist-20260518T105558Z-18hs10:op:research-op",
+            3
+          ],
+          [
+            "system:retry:::evt-endurance-soak-20260518T105755Z-9rx5e1-r1:R1:",
+            3
+          ],
+          [
+            "system:retry:::evt-endurance-soak-20260518T105755Z-9rx5e1-r2:R1:",
+            3
+          ],
+          [
+            "system:retry:::evt-endurance-soak-20260518T105755Z-9rx5e1-r3:R1:",
+            3
+          ],
+          [
+            "system:retry:driver:plugin-coexist-20260518T111058Z-rh8w9n::driver-op:domain:driver:run:plugin-coexist-20260518T111058Z-rh8w9n:op:driver-op",
+            3
+          ],
+          [
+            "system:retry:media:plugin-coexist-20260518T111058Z-rh8w9n::media-op:domain:media:run:plugin-coexist-20260518T111058Z-rh8w9n:op:media-op",
+            3
+          ],
+          [
+            "system:retry:automation:plugin-coexist-20260518T111058Z-rh8w9n::automation-op:domain:automation:run:plugin-coexist-20260518T111058Z-rh8w9n:op:automation-op",
+            3
+          ],
+          [
+            "system:retry:research:plugin-coexist-20260518T111058Z-rh8w9n::research-op:domain:research:run:plugin-coexist-20260518T111058Z-rh8w9n:op:research-op",
+            3
+          ],
+          [
+            "system:retry:driver:plugin-coexist-20260518T111458Z-zj26wp::driver-op:domain:driver:run:plugin-coexist-20260518T111458Z-zj26wp:op:driver-op",
+            3
+          ],
+          [
+            "system:retry:media:plugin-coexist-20260518T111458Z-zj26wp::media-op:domain:media:run:plugin-coexist-20260518T111458Z-zj26wp:op:media-op",
+            3
+          ],
+          [
+            "system:retry:automation:plugin-coexist-20260518T111458Z-zj26wp::automation-op:domain:automation:run:plugin-coexist-20260518T111458Z-zj26wp:op:automation-op",
+            3
+          ],
+          [
+            "system:retry:research:plugin-coexist-20260518T111458Z-zj26wp::research-op:domain:research:run:plugin-coexist-20260518T111458Z-zj26wp:op:research-op",
+            3
+          ]
+        ],
+        "retry_scope_tracked": 15,
+        "sse_drop_by_domain": {},
+        "sse_drop_total": 0
+      }
+    }
+  },
+  "status": "pass",
+  "ws_health": {
+    "connections": 0,
+    "service": "ws-server",
+    "status": "healthy",
+    "version": "0.1.0"
+  }
+}

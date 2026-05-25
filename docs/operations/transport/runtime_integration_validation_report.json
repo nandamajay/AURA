@@ -1,0 +1,59 @@
+{
+  "generated_at": "2026-05-24T11:02:10Z",
+  "phase": "contract-first-runtime-cognition-integration",
+  "results": {
+    "frontend_build": {
+      "status": "PASS",
+      "command": "cd AURA/dashboard && npm run build",
+      "notes": "TypeScript + Vite production build completed."
+    },
+    "runtime_contract_static_tests": {
+      "status": "PASS",
+      "command": "cd AURA/services/core && PYTHONPATH=src python -m pytest -q tests/test_runtime_contracts_static.py",
+      "notes": "4 tests passed (contract parsing, fail-closed missing artifacts, mismatch detection, lineage validation)."
+    },
+    "runtime_contract_parsing": {
+      "status": "PASS_WITH_WARNINGS",
+      "command": "PYTHONPATH=AURA/services/core/src python contract parsing scripts",
+      "notes": "All five artifacts parsed as valid; lineage/session/replay drift warnings surfaced where metadata differs."
+    },
+    "runtime_endpoint_wiring": {
+      "status": "PASS",
+      "command": "AST validation of AURA/services/core/src/core/routers/runtime.py and core/main.py",
+      "notes": "6 runtime endpoints declared and /api/v1/runtime router mount confirmed."
+    },
+    "runtime_endpoint_contract_match": {
+      "status": "PASS",
+      "command": "frontend ENDPOINTS runtime path mapping vs backend route inventory",
+      "notes": "All runtime endpoint constants in dashboard config are covered by backend routes."
+    },
+    "backend_full_startup": {
+      "status": "BLOCKED_ENV",
+      "command": "PYTHONPATH=... python -m uvicorn core.main:app",
+      "notes": "Host uses Python 3.10 while aura-core requires >=3.12; runtime deps also missing in this environment."
+    }
+  },
+  "contract_coverage": {
+    "artifacts": [
+      "runtime_equivalence_report",
+      "hardware_truth_graph",
+      "replay_consistency_report",
+      "runtime_governance_decision",
+      "transformation_confidence_report"
+    ],
+    "api_endpoints": [
+      "/api/v1/runtime/artifacts/index",
+      "/api/v1/runtime/artifacts/read",
+      "/api/v1/runtime/governance/summary",
+      "/api/v1/runtime/topology",
+      "/api/v1/runtime/equivalence",
+      "/api/v1/runtime/confidence"
+    ]
+  },
+  "governance_state": {
+    "advisory_only_behavior": true,
+    "runtime_truth_precedence": true,
+    "fail_closed_enforced": true,
+    "deterministic_replay_lineage_exposed": true
+  }
+}

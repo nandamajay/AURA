@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import subprocess
 import sys
 import time
 from pathlib import Path
@@ -16,9 +17,11 @@ if str(SRC_DIR) not in sys.path:
     sys.path.insert(0, str(SRC_DIR))
 
 from aura_sdk.transport.runtime_equivalence_engine import RuntimeEquivalenceEngine
+from aura_sdk.transport.runtime_execution_contract import enforce_runtime_contract
 from aura_sdk.transport.runtime_fingerprint_engine import RuntimeFingerprintEngine
 from aura_sdk.transport.runtime_hardware_truth_graph import RuntimeHardwareTruthGraphBuilder
 from aura_sdk.transport.runtime_trace_ingestion_engine import RuntimeTraceIngestionEngine, build_mock_runtime_trace_payloads
+from aura_sdk.transport.deterministic_serialization import dump_canonical_json
 
 
 _SOURCE_FILES = {
@@ -66,19 +69,39 @@ def _load_fixture_payloads(fixture_dir: Path, *, variant: str) -> dict[str, dict
 
 
 def _write_json(path: Path, payload: dict[str, Any]) -> None:
-    path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, indent=2, sort_keys=True), encoding="utf-8")
+    dump_canonical_json(path, payload)
+
+
+def _stamp_runtime_execution_fingerprint(output_dir: Path) -> None:
+    script = REPO_ROOT / "scripts" / "runtime_execution_fingerprint.py"
+    subprocess.run(
+        [
+            sys.executable,
+            str(script),
+            "--output-dir",
+            str(output_dir),
+            "--repo-root",
+            str(REPO_ROOT),
+        ],
+        check=True,
+        capture_output=True,
+        text=True,
+    )
 
 
 def main() -> int:
+    enforce_runtime_contract("aura-runtime-equivalence")
     parser = argparse.ArgumentParser(description="Run runtime equivalence cognition")
-    parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
+    parser.add_argument(
+        "--output-dir",
+        default=str((REPO_ROOT.parent / "docs" / "operations" / "transport").resolve()),
+    )
     parser.add_argument("--target-id", default="RB3Gen2")
     parser.add_argument("--session-id", default="runtime_equivalence_session_v1")
     parser.add_argument("--lineage-id", default="runtime_equivalence_v1")
     parser.add_argument(
         "--fixture-dir",
-        default="/local/mnt/workspace/AURA_V1/AURA/workspace/aura-sdk/tests/fixtures/runtime_cognition",
+        default=str((REPO_ROOT / "workspace" / "aura-sdk" / "tests" / "fixtures" / "runtime_cognition").resolve()),
     )
     args = parser.parse_args()
 
@@ -163,6 +186,7 @@ def main() -> int:
     _write_json(output_dir / "runtime_path_graph.json", transformed_graphs.runtime_path_graph)
     _write_json(output_dir / "runtime_equivalence_fingerprint.json", fingerprints.runtime_equivalence_fingerprint)
     _write_json(output_dir / "deterministic_runtime_replay.json", fingerprints.deterministic_runtime_replay)
+    _stamp_runtime_execution_fingerprint(output_dir)
 
     summary = {
         "schema_version": "1.0",

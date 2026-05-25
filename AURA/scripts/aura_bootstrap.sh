@@ -1,24 +1,25 @@
 #!/usr/bin/env bash
-# Deterministic environment bootstrap for runtime/governance stabilization.
+# Deterministic environment bootstrap (container-authoritative execution).
 
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-PYTHON_BIN="python3.12"
-RUN_ENV_SYNC=1
+WRAPPER="${ROOT_DIR}/scripts/aura_container_exec.sh"
 RUN_FRONTEND_SYNC=1
 RUN_VALIDATION=1
 STRICT_DOCTOR=1
+BUILD_IMAGE=1
 
 usage() {
   cat <<USAGE
 Usage: ./scripts/aura_bootstrap.sh [options]
 
 Options:
-  --python <bin>          Python binary for env sync (default: python3.12)
-  --skip-env-sync         Skip deterministic Python env sync
+  --python <bin>          Deprecated; host python is not used for execution
+  --skip-env-sync         Deprecated; no-op for compatibility
   --skip-frontend-sync    Skip dashboard npm ci
   --skip-validate         Skip stabilization validation run
+  --no-image-build        Skip deterministic runtime image rebuild
   --no-strict-doctor      Run env-doctor in non-strict mode
   --help                  Show this message
 USAGE
@@ -26,12 +27,16 @@ USAGE
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --no-image-build)
+      BUILD_IMAGE=0
+      shift
+      ;;
     --python)
-      PYTHON_BIN="$2"
+      echo "[WARN] --python is ignored. Container Python 3.12 is authoritative."
       shift 2
       ;;
     --skip-env-sync)
-      RUN_ENV_SYNC=0
+      echo "[WARN] --skip-env-sync is deprecated and ignored."
       shift
       ;;
     --skip-frontend-sync)
@@ -65,15 +70,17 @@ else
   "${ROOT_DIR}/scripts/env-doctor.sh"
 fi
 
-if [[ "${RUN_ENV_SYNC}" -eq 1 ]]; then
-  if ! command -v "${PYTHON_BIN}" >/dev/null 2>&1; then
-    echo "[FAIL] Required python runtime missing: ${PYTHON_BIN}" >&2
-    echo "       expected: Python >=3.12 for backend/runtime contract stabilization" >&2
-    exit 1
-  fi
-  echo "[INFO] Syncing deterministic Python environment with ${PYTHON_BIN}"
-  "${ROOT_DIR}/scripts/env-sync.sh" --python "${PYTHON_BIN}"
+if [[ ! -x "${WRAPPER}" ]]; then
+  echo "[FAIL] Missing deterministic wrapper: ${WRAPPER}" >&2
+  exit 1
 fi
+
+WRAPPER_ARGS=()
+if [[ "${BUILD_IMAGE}" -eq 1 ]]; then
+  WRAPPER_ARGS+=(--build)
+fi
+echo "[INFO] Verifying deterministic runtime container (Python 3.12)"
+"${WRAPPER}" "${WRAPPER_ARGS[@]}" -- "python --version"
 
 if [[ "${RUN_FRONTEND_SYNC}" -eq 1 ]]; then
   echo "[INFO] Installing deterministic dashboard dependencies"

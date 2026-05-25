@@ -1,0 +1,42 @@
+From 9a9cce9af14a7edc8f69078490c4cb8a406acceb Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Tue, 19 May 2026 19:50:10 +0530
+Subject: [PATCH 1/6] ASoC: codecs: wcd937x: annotate build wiring constraints
+ for migration
+
+---
+ sound/soc/codecs/Kconfig  | 4 ++++
+ sound/soc/codecs/Makefile | 2 +-
+ 2 files changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index 160c07699..560f201ec 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -2323,6 +2323,10 @@ config SND_SOC_WCD934X
+ config SND_SOC_WCD937X
+ 	depends on SND_SOC_WCD937X_SDW
+ 	tristate
++	help
++	  Migration note: downstream-to-upstream conversion work for WCD937x
++	  must keep transport split in SND_SOC_WCD937X_SDW and avoid vendor
++	  wrapper coupling (msm_cdc_*, wcdcal_*, qti-regmap-debugfs).
+ 	depends on SOUNDWIRE || !SOUNDWIRE
+ 	select SND_SOC_WCD_CLASSH
+ 	select SND_SOC_WCD_COMMON
+diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+index bd95a7c91..8ea38b532 100644
+--- a/sound/soc/codecs/Makefile
++++ b/sound/soc/codecs/Makefile
+@@ -783,7 +783,7 @@ obj-$(CONFIG_SND_SOC_WCD9335)	+= snd-soc-wcd9335.o
+ obj-$(CONFIG_SND_SOC_WCD934X)	+= snd-soc-wcd934x.o
+ obj-$(CONFIG_SND_SOC_WCD937X)	+= snd-soc-wcd937x.o
+ ifdef CONFIG_SND_SOC_WCD937X_SDW
+-# avoid link failure by forcing sdw code built-in when needed
++# keep core and transport wiring explicit during conversion studies
+ obj-$(CONFIG_SND_SOC_WCD937X) += snd-soc-wcd937x-sdw.o
+ endif
+ obj-$(CONFIG_SND_SOC_WCD938X)	+= snd-soc-wcd938x.o
+-- 
+2.34.1
+

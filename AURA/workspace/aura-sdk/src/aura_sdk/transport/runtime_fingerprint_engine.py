@@ -178,7 +178,17 @@ class RuntimeFingerprintEngine:
             "advisory_only_behavior": True,
             "evidence_references": evidence,
         }
-        deterministic_runtime_replay["deterministic_fingerprint"] = stable_fingerprint(deterministic_runtime_replay)
+        deterministic_runtime_replay["deterministic_fingerprint"] = stable_fingerprint(
+            {
+                "target_id": str(target_id),
+                "session_id": str(session_id),
+                "lineage_id": str(lineage_id),
+                "classification": deterministic_runtime_replay["classification"],
+                "replay_signal": deterministic_runtime_replay["replay_signal"],
+                "artifact_lineage": deterministic_runtime_replay["artifact_lineage"],
+                "event_digest": deterministic_runtime_replay["event_digest"],
+            }
+        )
 
         return RuntimeFingerprintResult(
             runtime_equivalence_fingerprint=runtime_equivalence_fingerprint,

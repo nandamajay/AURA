@@ -14,11 +14,15 @@ from pathlib import Path
 from typing import Any
 
 from aura_sdk.transport.cognitive_persistence import AURACognitionRegistry
+from aura_sdk.transport.runtime_execution_contract import enforce_runtime_contract
+from aura_sdk.transport.deterministic_serialization import dump_canonical_json
 from aura_sdk.transport.plugins import TargetPluginLoader
 from aura_sdk.transport.real_downstream_conversion_planner import (
     RealDownstreamConversionPlanner,
     RealDownstreamConversionRegistry,
 )
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
 
 
 def _as_dict(value: Any) -> dict[str, Any]:
@@ -43,6 +47,10 @@ def _read_json(path: Path) -> dict[str, Any]:
     if isinstance(payload, dict):
         return payload
     return {}
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    dump_canonical_json(path, payload)
 
 
 def _derive_runtime_evidence(registry_payload: dict[str, Any]) -> dict[str, Any]:
@@ -71,25 +79,39 @@ def _derive_runtime_evidence(registry_payload: dict[str, Any]) -> dict[str, Any]
 
 
 def main() -> int:
+    enforce_runtime_contract("aura-real-downstream-ingestion")
     parser = argparse.ArgumentParser(description="Generate real downstream ingestion cognition artifacts")
-    parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
+    parser.add_argument(
+        "--output-dir",
+        default=str((REPO_ROOT.parent / "docs" / "operations" / "transport").resolve()),
+    )
     parser.add_argument(
         "--registry-path",
-        default="/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json",
+        default=str((REPO_ROOT.parent / "docs" / "operations" / "transport" / "aura_cognition_registry.json").resolve()),
     )
     parser.add_argument("--target-id", default="RB3Gen2")
     parser.add_argument(
         "--downstream-root",
-        default=(
-            "/local/mnt/workspace/AURA_V1/evidence/"
-            "wcd937x_real_study_20260519_062557/repos/downstream-audio-kernel-ar"
+        default=str(
+            (
+                REPO_ROOT.parent
+                / "evidence"
+                / "wcd937x_real_study_20260519_062557"
+                / "repos"
+                / "downstream-audio-kernel-ar"
+            ).resolve()
         ),
     )
     parser.add_argument(
         "--upstream-root",
-        default=(
-            "/local/mnt/workspace/AURA_V1/evidence/"
-            "wcd937x_real_study_20260519_062557/repos/linux-upstream-v6.18"
+        default=str(
+            (
+                REPO_ROOT.parent
+                / "evidence"
+                / "wcd937x_real_study_20260519_062557"
+                / "repos"
+                / "linux-upstream-v6.18"
+            ).resolve()
         ),
     )
     parser.add_argument("--lineage-id", default="real_downstream_ingestion_v1")
@@ -159,6 +181,30 @@ def main() -> int:
     persisted = store.persist(result.conversion_bundle)
     replay = store.replay(lineage_id=str(args.lineage_id))
 
+    artifacts = _as_dict(result.conversion_bundle.get("artifacts"))
+    downstream_graph = _as_dict(artifacts.get("downstream_driver_graph"))
+    derived = _as_dict(downstream_graph.get("derived"))
+
+    derived_outputs = {
+        "codec_graph.json": _as_dict(derived.get("codec_graph")),
+        "dapm_topology_graph.json": _as_dict(derived.get("dapm_topology_graph")),
+        "control_relationships.json": _as_dict(derived.get("control_relationships")),
+        "macro_dependencies.json": _as_dict(derived.get("macro_dependencies")),
+        "call_graph.json": _as_dict(derived.get("call_graph")),
+        "stream_routing.json": _as_dict(derived.get("stream_routing")),
+        "subsystem_lineage.json": {"entries": _as_list(derived.get("subsystem_lineage"))},
+    }
+    for name, payload in derived_outputs.items():
+        data = dict(payload) if isinstance(payload, dict) else {}
+        if not data:
+            data = {
+                "schema_version": "1.0",
+                "classification": "FAIL_CLOSED",
+                "reason": "derived_runtime_ingestion_payload_unavailable",
+                "source_artifact": "downstream_driver_graph.json",
+            }
+        _write_json(output_dir / name, data)
+
     summary = {
         "schema_version": "1.0",
         "phase": "REAL_DOWNSTREAM_INGESTION_COGNITION",
@@ -173,16 +219,20 @@ def main() -> int:
             "migration_risk_report": str((output_dir / "migration_risk_report.json").resolve()),
             "deterministic_conversion_plan": str((output_dir / "deterministic_conversion_plan.json").resolve()),
             "governance_conversion_boundaries": str((output_dir / "governance_conversion_boundaries.json").resolve()),
+            "codec_graph": str((output_dir / "codec_graph.json").resolve()),
+            "dapm_topology_graph": str((output_dir / "dapm_topology_graph.json").resolve()),
+            "control_relationships": str((output_dir / "control_relationships.json").resolve()),
+            "macro_dependencies": str((output_dir / "macro_dependencies.json").resolve()),
+            "call_graph": str((output_dir / "call_graph.json").resolve()),
+            "stream_routing": str((output_dir / "stream_routing.json").resolve()),
+            "subsystem_lineage": str((output_dir / "subsystem_lineage.json").resolve()),
         },
         "persisted": persisted,
         "replay": replay,
         "generated_at_epoch": time.time(),
     }
 
-    (output_dir / "real_downstream_ingestion_summary.json").write_text(
-        json.dumps(summary, indent=2, sort_keys=True),
-        encoding="utf-8",
-    )
+    dump_canonical_json(output_dir / "real_downstream_ingestion_summary.json", summary)
 
     print(json.dumps(summary, indent=2, sort_keys=True))
     return 0

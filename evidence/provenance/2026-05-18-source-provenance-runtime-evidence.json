@@ -1,0 +1,64 @@
+{
+  "phase": "engineering-source-intake-provenance-runtime",
+  "runtime": {
+    "bounded_intake": {
+      "audit_rows": [
+        {
+          "after_state": {
+            "before_trust_classification": "bounded-trust",
+            "reason": "manual provenance verification",
+            "trust_classification": "trusted"
+          },
+          "event_type": "config.changed"
+        }
+      ],
+      "override_status": 200,
+      "register_status": 200,
+      "trust_classification": "bounded-trust",
+      "validate_status": 200
+    },
+    "trusted_intake": {
+      "approve_status": 200,
+      "duplicate_status": 409,
+      "event_types": [
+        "registered",
+        "validated",
+        "classified",
+        "approved",
+        "snapshot_created",
+        "retry_recorded",
+        "retry_recorded",
+        "rebase_recorded"
+      ],
+      "rebase_status": 200,
+      "reconstruction_hash_1": "809ff82d7c9c056bea901aba94e4f40d698d6fda2fe0f440fd58574bb0c8e88c",
+      "reconstruction_hash_2": "809ff82d7c9c056bea901aba94e4f40d698d6fda2fe0f440fd58574bb0c8e88c",
+      "reconstruction_hash_equal": true,
+      "register_status": 200,
+      "retry_statuses": [
+        200,
+        200
+      ],
+      "snapshot_status": 200,
+      "trust_classification": "trusted",
+      "validate_status": 200
+    },
+    "untrusted_intake": {
+      "approver_approve_status": 200,
+      "event_types": [
+        "registered",
+        "validated",
+        "classified",
+        "approval_requested",
+        "approved"
+      ],
+      "issues": [
+        "invalid_url:downstream_repo_url"
+      ],
+      "register_status": 200,
+      "reviewer_approve_status": 403,
+      "trust_classification": "untrusted/manual-review-required",
+      "validate_status": 200
+    }
+  }
+}

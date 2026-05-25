@@ -1,0 +1,172 @@
+[
+  {
+    "id": 1,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": null,
+    "to_state": "source_intake",
+    "event_payload": "{\"reason\":\"workflow_created_from_snapshot\"}",
+    "event_hash": "2f9ca85e4a41369f36a307ffe3c14476c5a36258d592e12371d17b302205ec72",
+    "created_at": 1779165839
+  },
+  {
+    "id": 2,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "source_intake",
+    "to_state": "snapshot_frozen",
+    "event_payload": "{\"reason\":\"snapshot_root_confirmed\",\"snapshot_id\":\"6070de47ce135ad890e491ae85d9bff7\"}",
+    "event_hash": "58f05ee0999631b7f0b86186e801dab38d03ec0851e07a65f2211fa1f02e4bf8",
+    "created_at": 1779165839
+  },
+  {
+    "id": 3,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "snapshot_frozen",
+    "to_state": "task_created",
+    "event_payload": "{\"agent_type\":\"patch_builder\",\"reason\":\"snapshot_bound_task_created\",\"task_id\":\"cfec91e4-ec3a-4788-84c2-51f85d4639f6\"}",
+    "event_hash": "c5447b4bf8fa129d177eaef74358d8916360898f7263b0df2c64f9faef9f66d8",
+    "created_at": 1779165839
+  },
+  {
+    "id": 4,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "task_bound",
+    "from_state": "snapshot_frozen",
+    "to_state": "task_created",
+    "event_payload": "{\"agent_type\":\"patch_builder\",\"priority\":\"P1\",\"runtime_cell_scope\":\"domain:driver\",\"task_id\":\"cfec91e4-ec3a-4788-84c2-51f85d4639f6\"}",
+    "event_hash": "a52f0a898c185465ad767594790bb1cb5d4879a5045c77f3aa428eb4d05c5368",
+    "created_at": 1779165839
+  },
+  {
+    "id": 5,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "task_created",
+    "to_state": "patch_analysis",
+    "event_payload": "{\"reason\":\"dependency_discovery+analysis_started\"}",
+    "event_hash": "3f9dea2e660d71e60198d05d9e1eded5f630caab69f52f6c83dad4534765cdc4",
+    "created_at": 1779165839
+  },
+  {
+    "id": 6,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "patch_analysis",
+    "to_state": "transformation_proposal",
+    "event_payload": "{\"reason\":\"transform_plan_drafted\"}",
+    "event_hash": "711077ed22d8b09dd33054a4c8287d27e512946b3e4c6f09e7295349e86a3540",
+    "created_at": 1779165839
+  },
+  {
+    "id": 7,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "transformation_proposal",
+    "to_state": "validation_running",
+    "event_payload": "{\"reason\":\"validation_run_started\"}",
+    "event_hash": "6bab803e0183ef7efb8c9184ca3c8df9ff932cf212489b96b692e2ade1c12bf7",
+    "created_at": 1779165840
+  },
+  {
+    "id": 8,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "validation_recorded",
+    "from_state": "validation_running",
+    "to_state": "validation_running",
+    "event_payload": "{\"all_passed\":false,\"run_sequence\":1,\"tools\":[{\"confidence\":0.4,\"findings\":[\"tool_unavailable:checkpatch\",\"version_drift:checkpatch:expected=checkpatch:observed=unavailable\"],\"passed\":false,\"tool_name\":\"checkpatch\",\"tool_version\":\"unavailable\"},{\"confidence\":0.4,\"findings\":[\"tool_unavailable:sparse\",\"version_drift:sparse:expected=sparse:observed=unavailable\"],\"passed\":false,\"tool_name\":\"sparse\",\"tool_version\":\"unavailable\"},{\"confidence\":0.4,\"findings\":[\"tool_unavailable:clang_build\",\"version_drift:clang_build:expected=clang:observed=unavailable\",\"clang_build_probe_failed:command_not_found:clang\"],\"passed\":false,\"tool_name\":\"clang_build\",\"tool_version\":\"unavailable\"},{\"confidence\":1.0,\"findings\":[\"forbidden_path_check_passed\"],\"passed\":true,\"tool_name\":\"forbidden_path\",\"tool_version\":\"builtin-v1\"},{\"confidence\":1.0,\"findings\":[],\"passed\":true,\"tool_name\":\"lineage_integrity\",\"tool_version\":\"builtin-v1\"}],\"validation_status\":\"failed\"}",
+    "event_hash": "d9a203d65dc4ee1f43875288e98d6ca0b689b0a750ab0feb331269b7b6b77124",
+    "created_at": 1779165840
+  },
+  {
+    "id": 9,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "validation_running",
+    "to_state": "governance_review",
+    "event_payload": "{\"reason\":\"validation_completed\",\"run_sequence\":1,\"validation_status\":\"failed\"}",
+    "event_hash": "2ca774fb177e94aad5f174d8ce431c50272e38bdc279dd9838a142544e1b4d29",
+    "created_at": 1779165840
+  },
+  {
+    "id": 10,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "governance_requested",
+    "from_state": "governance_review",
+    "to_state": "governance_review",
+    "event_payload": "{\"action_id\":1,\"operation\":\"transformation_proposal\",\"reason\":\"operator_governance_review\"}",
+    "event_hash": "afc8fefde360a2ea2ef256f58b3a7f737d8b916a76837e55374ccde5194d0c91",
+    "created_at": 1779165840
+  },
+  {
+    "id": 11,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "governance_decided",
+    "from_state": "governance_review",
+    "to_state": "governance_review",
+    "event_payload": "{\"decision\":\"approved\",\"operation\":\"transformation_proposal\",\"reason\":\"bounded_override_validation_tools_unavailable_for_full_signal\"}",
+    "event_hash": "decdbf5b924fdccae5f3f4501a0cfa5115a5aa837b92481a8a418e8980db38af",
+    "created_at": 1779165840
+  },
+  {
+    "id": 12,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "governance_review",
+    "to_state": "replay_persisted",
+    "event_payload": "{\"reason\":\"governance_approved_transformation\"}",
+    "event_hash": "75695214474a50e0a0c5d01639f3b1fb2c3d7334a886e39c5551b6a0d3546980",
+    "created_at": 1779165840
+  },
+  {
+    "id": 13,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "replay_persisted",
+    "to_state": "approved",
+    "event_payload": "{\"reason\":\"replay_verified_after_governance_approval\"}",
+    "event_hash": "c5daaf3ab8d20d6bd101a5bc1b889bd45cf017c2debae7bbc59faa0ef5e2ac89",
+    "created_at": 1779165840
+  },
+  {
+    "id": 14,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "governance_requested",
+    "from_state": "governance_review",
+    "to_state": "governance_review",
+    "event_payload": "{\"action_id\":3,\"operation\":\"lineage_finalization\",\"reason\":\"freeze_replay_lineage\"}",
+    "event_hash": "e4a29a921e1374b9b1c387a5ee3643688d246f2aaa29d8e3c83527997a04d017",
+    "created_at": 1779165840
+  },
+  {
+    "id": 15,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "governance_decided",
+    "from_state": "approved",
+    "to_state": "approved",
+    "event_payload": "{\"decision\":\"approved\",\"operation\":\"lineage_finalization\",\"reason\":\"lineage_finalization_approved\"}",
+    "event_hash": "7e5a81557606a0bb75b280761282d6097bdd187750f5ccabd468f7d7e6f60a09",
+    "created_at": 1779165840
+  },
+  {
+    "id": 16,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "lineage_finalized",
+    "from_state": "approved",
+    "to_state": "lineage_finalized",
+    "event_payload": "{\"lineage_hash\":\"f6d1ac2497e3217443e4fff0dcc6d2a3f686521ee7d4787ccf1b275488910f42\"}",
+    "event_hash": "a5a37770619c7d5baa72a673d1be7d248ea6c0a84d6fe0306255348f9813c16f",
+    "created_at": 1779165840
+  },
+  {
+    "id": 17,
+    "workflow_id": "d285331f26c70c20ac81f9ed3b273279",
+    "event_type": "state_transition",
+    "from_state": "approved",
+    "to_state": "lineage_finalized",
+    "event_payload": "{\"reason\":\"lineage_evidence_persisted\"}",
+    "event_hash": "fea1205e172ee7abc3691c66de9a3b30a70cf0160d6da4f9fe7e9105e30a7cef",
+    "created_at": 1779165840
+  }
+]

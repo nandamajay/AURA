@@ -1,9 +1,10 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { apiRequest, toErrorMessage } from '../api/client'
-import { ENDPOINTS } from '../config'
+import { API_ROUTES } from '../config'
 import { DataPanel } from '../components/DataPanel'
 import { Grid, JsonBlock, MetaText, PageContainer, PageHeader, SectionCard } from '../components/PagePrimitives'
+import { useRuntimeQuery } from '../runtime/useRuntimeQuery'
 
 interface ReplayPrompt {
   role?: string
@@ -132,13 +133,21 @@ export default function DebuggingCenter() {
   const [replayState, setReplayState] = useState<ReplayStateResponse | null>(null)
   const [replayResult, setReplayResult] = useState<ReplayResponse | null>(null)
 
-  const [evidenceIndex, setEvidenceIndex] = useState<EvidenceIndexResponse | null>(null)
-  const [evidenceError, setEvidenceError] = useState('')
-  const [evidenceLoading, setEvidenceLoading] = useState(false)
+  const [evidenceReadError, setEvidenceReadError] = useState('')
   const [selectedSection, setSelectedSection] = useState('')
   const [selectedPath, setSelectedPath] = useState('')
   const [evidenceRead, setEvidenceRead] = useState<EvidenceReadResponse | null>(null)
   const [evidenceFilter, setEvidenceFilter] = useState('')
+  const {
+    data: evidenceIndex,
+    error: evidenceIndexError,
+    loading: evidenceLoading,
+    reload: reloadEvidenceIndex,
+  } = useRuntimeQuery<EvidenceIndexResponse>(
+    'debug-evidence-index',
+    API_ROUTES.knowledge.evidenceIndex(),
+    { intervalMs: 60_000, ttlMs: 10_000 },
+  )
 
   const [determinismCode, setDeterminismCode] = useState('')
   const [determinismResult, setDeterminismResult] = useState<NondeterminismResult | null>(null)
@@ -250,10 +259,14 @@ export default function DebuggingCenter() {
   }, [taskHint])
 
   useEffect(() => {
-    void loadEvidenceIndex()
-    // load once for evidence navigation baseline
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+    if (!evidenceIndex) {
+      return
+    }
+    const sections = Object.keys(evidenceIndex.sections || {})
+    if (sections.length && !selectedSection) {
+      setSelectedSection(sections[0])
+    }
+  }, [evidenceIndex, selectedSection])
 
   async function loadReplay(taskIdOverride?: string) {
     const taskId = (taskIdOverride || replayTaskId).trim()
@@ -266,10 +279,10 @@ export default function DebuggingCenter() {
     setReplayResult(null)
     setReplayState(null)
     try {
-      const state = await apiRequest<ReplayStateResponse>(`${ENDPOINTS.tasks}/${encodeURIComponent(taskId)}/replay/state`)
+      const state = await apiRequest<ReplayStateResponse>(API_ROUTES.tasks.replayState(taskId))
       setReplayState(state)
       if (state.replayable) {
-        const result = await apiRequest<ReplayResponse>(`${ENDPOINTS.tasks}/${encodeURIComponent(taskId)}/replay`)
+        const result = await apiRequest<ReplayResponse>(API_ROUTES.tasks.replay(taskId))
         setReplayResult(result)
       }
     } catch (error) {
@@ -279,32 +292,15 @@ export default function DebuggingCenter() {
     }
   }
 
-  async function loadEvidenceIndex() {
-    setEvidenceLoading(true)
-    setEvidenceError('')
-    try {
-      const response = await apiRequest<EvidenceIndexResponse>(ENDPOINTS.evidenceIndex)
-      setEvidenceIndex(response)
-      const sections = Object.keys(response.sections || {})
-      if (sections.length && !selectedSection) {
-        setSelectedSection(sections[0])
-      }
-    } catch (error) {
-      setEvidenceError(toErrorMessage(error))
-    } finally {
-      setEvidenceLoading(false)
-    }
-  }
-
   async function loadEvidenceFile(section: string, path: string) {
-    setEvidenceError('')
+    setEvidenceReadError('')
     setEvidenceRead(null)
     setSelectedPath(path)
     try {
-      const response = await apiRequest<EvidenceReadResponse>(ENDPOINTS.evidenceRead + `?section=${encodeURIComponent(section)}&relative_path=${encodeURIComponent(path)}&max_bytes=120000`)
+      const response = await apiRequest<EvidenceReadResponse>(API_ROUTES.knowledge.evidenceRead(section, path, 120_000))
       setEvidenceRead(response)
     } catch (error) {
-      setEvidenceError(toErrorMessage(error))
+      setEvidenceReadError(toErrorMessage(error))
     }
   }
 
@@ -316,7 +312,7 @@ export default function DebuggingCenter() {
     setDeterminismBusy(true)
     setDeterminismError('')
     try {
-      const response = await apiRequest<NondeterminismResult>(`${ENDPOINTS.memory}/validation/nondeterminism-check`, {
+      const response = await apiRequest<NondeterminismResult>(API_ROUTES.memory.nondeterminismCheck(), {
         method: 'POST',
         body: JSON.stringify({ source_code: determinismCode }),
       })
@@ -441,7 +437,7 @@ export default function DebuggingCenter() {
 
           <SectionCard title="Evidence Browser">
             <div style={{ display: 'flex', gap: '0.45rem', flexWrap: 'wrap' }}>
-              <button style={buttonStyle} onClick={() => void loadEvidenceIndex()} disabled={evidenceLoading}>
+              <button style={buttonStyle} onClick={() => void reloadEvidenceIndex()} disabled={evidenceLoading}>
                 {evidenceLoading ? 'Loading…' : 'Load Evidence Index'}
               </button>
               <input
@@ -460,7 +456,8 @@ export default function DebuggingCenter() {
                 </select>
               ) : null}
             </div>
-            {evidenceError ? <MetaText>{evidenceError}</MetaText> : null}
+            {evidenceIndexError ? <MetaText>{evidenceIndexError}</MetaText> : null}
+            {evidenceReadError ? <MetaText>{evidenceReadError}</MetaText> : null}
             <div style={{ marginTop: '0.6rem', display: 'grid', gap: '0.35rem', maxHeight: '200px', overflowY: 'auto' }}>
               {evidenceFiles.slice(0, 120).map((file) => (
                 <button
@@ -496,9 +493,9 @@ export default function DebuggingCenter() {
 
       <div style={{ marginTop: '1rem' }}>
         <Grid>
-          <DataPanel title="Audit Ledger" endpoint={`${ENDPOINTS.audit}?limit=30`} intervalMs={15_000} />
-          <DataPanel title="Replay Incidents" endpoint={`${ENDPOINTS.memory}/replay-incidents?limit=30`} intervalMs={15_000} />
-          <DataPanel title="Ops Incidents" endpoint={`${ENDPOINTS.memory}/ops-incidents?limit=30`} intervalMs={15_000} />
+          <DataPanel title="Audit Ledger" endpoint={API_ROUTES.governance.auditList(30)} intervalMs={15_000} />
+          <DataPanel title="Replay Incidents" endpoint={API_ROUTES.memory.replayIncidents(30)} intervalMs={15_000} />
+          <DataPanel title="Ops Incidents" endpoint={API_ROUTES.memory.opsIncidents(30)} intervalMs={15_000} />
         </Grid>
       </div>
     </PageContainer>

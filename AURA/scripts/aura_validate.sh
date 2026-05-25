@@ -1,21 +1,27 @@
 #!/usr/bin/env bash
-# Unified stabilization validation runner.
+# Unified stabilization validation runner (container-authoritative Python 3.12).
 
 set -euo pipefail
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-VALIDATOR="${ROOT_DIR}/scripts/aura_validation.py"
-PYTHON_BIN=""
+WRAPPER="${ROOT_DIR}/scripts/aura_container_exec.sh"
+BUILD_IMAGE=1
+VALIDATOR_ARGS=()
 
 usage() {
   cat <<USAGE
-Usage: ./scripts/aura_validate.sh [--python <bin>]
+Usage: ./scripts/aura_validate.sh [options] [-- <validator args>]
 
-Runs:
+Runs (inside deterministic Python 3.12 container):
 - environment validation
 - runtime contract validation
 - replay integrity hardening checks
 - dashboard build validation
+
+Options:
+  --no-image-build      Do not rebuild container image before run
+  --python <bin>        Deprecated; host python is not used
+  --help                Show this message
 
 Artifacts:
 - docs/operations/transport/*.json
@@ -24,37 +30,45 @@ USAGE
 
 while [[ $# -gt 0 ]]; do
   case "$1" in
+    --no-image-build)
+      BUILD_IMAGE=0
+      shift
+      ;;
     --python)
-      PYTHON_BIN="$2"
+      echo "[WARN] --python is ignored. Validation always runs in container Python 3.12."
       shift 2
       ;;
     --help)
       usage
       exit 0
       ;;
+    --)
+      shift
+      while [[ $# -gt 0 ]]; do
+        VALIDATOR_ARGS+=("$1")
+        shift
+      done
+      ;;
     *)
-      echo "Unknown argument: $1" >&2
-      usage
-      exit 2
+      VALIDATOR_ARGS+=("$1")
+      shift
       ;;
   esac
 done
 
-if [[ -z "${PYTHON_BIN}" ]]; then
-  if [[ -x "${ROOT_DIR}/.venv/bin/python" ]]; then
-    PYTHON_BIN="${ROOT_DIR}/.venv/bin/python"
-  elif command -v python3.12 >/dev/null 2>&1; then
-    PYTHON_BIN="python3.12"
-  elif command -v python3 >/dev/null 2>&1; then
-    PYTHON_BIN="python3"
-    echo "[WARN] python3.12 unavailable; running validator with ${PYTHON_BIN} for diagnostics only."
-  else
-    echo "[FAIL] No Python runtime available for validation." >&2
-    exit 1
-  fi
+if [[ ! -x "${WRAPPER}" ]]; then
+  echo "[FAIL] Missing deterministic wrapper: ${WRAPPER}" >&2
+  exit 1
 fi
 
-echo "[INFO] validator python: ${PYTHON_BIN}"
-"${PYTHON_BIN}" "${VALIDATOR}"
+VALIDATOR_CMD=(python scripts/aura_validation.py "${VALIDATOR_ARGS[@]}")
+printf -v QUOTED_CMD '%q ' "${VALIDATOR_CMD[@]}"
 
+WRAPPER_ARGS=()
+if [[ "${BUILD_IMAGE}" -eq 1 ]]; then
+  WRAPPER_ARGS+=(--build)
+fi
+
+echo "[INFO] validator runtime: container python3.12"
+"${WRAPPER}" "${WRAPPER_ARGS[@]}" -- "${QUOTED_CMD% }"
 echo "[INFO] reports written under: ${ROOT_DIR}/../docs/operations/transport"

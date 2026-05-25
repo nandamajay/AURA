@@ -29,6 +29,35 @@ _PROPRIETARY_HOOK_RE = re.compile(
     r"\b(?:vendor_hook_[A-Za-z0-9_]+|msm_audio_[A-Za-z0-9_]+|qcom_snd_[A-Za-z0-9_]+|"
     r"apr_[A-Za-z0-9_]+|gpr_[A-Za-z0-9_]+|audio_prm_[A-Za-z0-9_]+)\b"
 )
+_DAPM_ROUTE_ENTRY_RE = re.compile(r'\{\s*"([^"]+)"\s*,\s*(?:"([^"]*)"|NULL)\s*,\s*"([^"]+)"\s*\}')
+_CODEC_COMPONENT_RE = re.compile(
+    r"\b(?:const\s+)?struct\s+snd_soc_component_driver\s+([A-Za-z_][A-Za-z0-9_]*)"
+)
+_CONTROL_MACRO_RE = re.compile(
+    r"\bSOC_[A-Z0-9_]+\s*\(\s*\"([^\"]+)\"",
+)
+_DEFINE_RE = re.compile(r"^\s*#\s*define\s+([A-Z][A-Z0-9_]+)\b", re.MULTILINE)
+_UPPER_TOKEN_RE = re.compile(r"\b([A-Z][A-Z0-9_]{2,})\b")
+_FUNC_DEF_RE = re.compile(
+    r"^\s*(?:static\s+)?(?:inline\s+)?(?:const\s+)?(?:unsigned\s+)?(?:int|void|bool|long|short|size_t|ssize_t|u8|u16|u32|u64|s8|s16|s32|s64|struct\s+[A-Za-z_][A-Za-z0-9_]*\s*\*?)\s+([A-Za-z_][A-Za-z0-9_]*)\s*\([^;]*\)\s*\{",
+    re.MULTILINE,
+)
+_FUNC_CALL_RE = re.compile(r"\b([A-Za-z_][A-Za-z0-9_]*)\s*\(")
+_CALL_SKIP = {
+    "if",
+    "for",
+    "while",
+    "switch",
+    "return",
+    "sizeof",
+    "likely",
+    "unlikely",
+}
+_AUDIO_PRIORITY_ROOTS = (
+    "sound/soc/qcom",
+    "sound/soc/codecs",
+    "techpack/audio",
+)
 
 
 @dataclass(frozen=True)
@@ -71,16 +100,44 @@ def _dedupe_sorted(items: Iterable[str]) -> list[str]:
 
 def _iter_source_files(root: Path, max_files: int) -> list[Path]:
     files: list[Path] = []
-    for path in root.rglob("*"):
-        if len(files) >= max_files:
-            break
+    seen: set[str] = set()
+
+    def _accept(path: Path) -> bool:
         if not path.is_file():
-            continue
+            return False
         if path.suffix.lower() not in _ALLOWED_EXTENSIONS:
-            continue
+            return False
         if any(part in _IGNORED_DIR_NAMES for part in path.parts):
+            return False
+        return True
+
+    for rel in _AUDIO_PRIORITY_ROOTS:
+        priority_root = (root / rel).resolve()
+        if not priority_root.exists() or not priority_root.is_dir():
             continue
-        files.append(path)
+        for path in priority_root.rglob("*.c"):
+            if len(files) >= max_files:
+                break
+            if not _accept(path):
+                continue
+            key = str(path.resolve())
+            if key in seen:
+                continue
+            seen.add(key)
+            files.append(path)
+
+    if len(files) < max_files:
+        for path in root.rglob("*"):
+            if len(files) >= max_files:
+                break
+            if not _accept(path):
+                continue
+            key = str(path.resolve())
+            if key in seen:
+                continue
+            seen.add(key)
+            files.append(path)
+
     files.sort(key=lambda p: str(p))
     return files
 
@@ -194,6 +251,46 @@ def _infer_fe_be_links(fe_links: list[str], be_links: list[str]) -> list[dict[st
     return inferred
 
 
+def _relative_subsystem(path: Path) -> str:
+    raw = path.as_posix()
+    if raw.startswith("sound/soc/qcom/"):
+        return "sound/soc/qcom"
+    if raw.startswith("sound/soc/codecs/"):
+        return "sound/soc/codecs"
+    if raw.startswith("techpack/audio/"):
+        return "techpack/audio"
+    parts = [part for part in raw.split("/") if part]
+    return "/".join(parts[:3]) if parts else "unknown"
+
+
+def _function_call_edges(text: str, rel_path: str) -> list[dict[str, str]]:
+    defs = [str(item) for item in _FUNC_DEF_RE.findall(text)]
+    calls = [str(item) for item in _FUNC_CALL_RE.findall(text)]
+    calls = [
+        call
+        for call in calls
+        if call not in _CALL_SKIP and not call.startswith("SND_SOC_")
+    ]
+    edges: list[dict[str, str]] = []
+    unique_calls = _dedupe_sorted(calls)[:120]
+    if defs:
+        for func in defs[:80]:
+            for call in unique_calls[:40]:
+                if call == func:
+                    continue
+                edges.append(
+                    {
+                        "from": func,
+                        "to": call,
+                        "file": rel_path,
+                    }
+                )
+    else:
+        for call in unique_calls[:40]:
+            edges.append({"from": rel_path, "to": call, "file": rel_path})
+    return edges[:800]
+
+
 def ingest_downstream_driver_tree(
     *,
     target_id: str,
@@ -231,6 +328,13 @@ def ingest_downstream_driver_tree(
     all_pcm_paths: list[str] = []
     all_vendor_extensions: list[str] = []
     all_hooks: list[str] = []
+    codec_components: list[str] = []
+    control_names: list[str] = []
+    dapm_routes: list[dict[str, str]] = []
+    call_edges: list[dict[str, str]] = []
+    subsystem_files: dict[str, int] = {}
+    macro_definitions: dict[str, int] = {}
+    macro_usages: dict[str, int] = {}
 
     dependency_clocks = False
     dependency_regulators = False
@@ -245,6 +349,9 @@ def ingest_downstream_driver_tree(
         if not text:
             continue
         extracted = _extract_from_text(text)
+        rel = str(path.relative_to(source_root))
+        subsystem = _relative_subsystem(Path(rel))
+        subsystem_files[subsystem] = int(subsystem_files.get(subsystem, 0)) + 1
 
         all_ops.extend(extracted.ops_structures)
         all_dai_links.extend(extracted.dai_links)
@@ -252,6 +359,30 @@ def ingest_downstream_driver_tree(
         all_pcm_paths.extend(extracted.pcm_paths)
         all_vendor_extensions.extend(extracted.vendor_extensions)
         all_hooks.extend(extracted.proprietary_runtime_hooks)
+        codec_components.extend(str(item) for item in _CODEC_COMPONENT_RE.findall(text))
+        control_names.extend(str(item).strip() for item in _CONTROL_MACRO_RE.findall(text) if str(item).strip())
+        call_edges.extend(_function_call_edges(text, rel))
+
+        for sink, control, source in _DAPM_ROUTE_ENTRY_RE.findall(text):
+            sink_name = str(sink).strip()
+            source_name = str(source).strip()
+            if not sink_name or not source_name:
+                continue
+            dapm_routes.append(
+                {
+                    "source": source_name,
+                    "sink": sink_name,
+                    "control": str(control or "").strip(),
+                    "file": rel,
+                }
+            )
+
+        for macro in _DEFINE_RE.findall(text):
+            token = str(macro).strip()
+            if token:
+                macro_definitions[token] = int(macro_definitions.get(token, 0)) + 1
+        for token in _UPPER_TOKEN_RE.findall(text):
+            macro_usages[token] = int(macro_usages.get(token, 0)) + 1
 
         dependency_clocks = dependency_clocks or extracted.dependency_clocks
         dependency_regulators = dependency_regulators or extracted.dependency_regulators
@@ -259,7 +390,6 @@ def ingest_downstream_driver_tree(
         dependency_soundwire = dependency_soundwire or extracted.dependency_soundwire
         timing_dependencies = timing_dependencies or extracted.timing_dependencies
 
-        rel = str(path.relative_to(source_root))
         file_summary = {
             "file": rel,
             "ops_structures": len(extracted.ops_structures),
@@ -267,6 +397,8 @@ def ingest_downstream_driver_tree(
             "routes": len(extracted.routing_structures),
             "pcm_strings": len(extracted.pcm_paths),
             "vendor_tokens": len(extracted.vendor_extensions),
+            "codec_components": len(_CODEC_COMPONENT_RE.findall(text)),
+            "controls": len(_CONTROL_MACRO_RE.findall(text)),
         }
         if any(file_summary[key] > 0 for key in ("ops_structures", "dai_links", "routes", "pcm_strings", "vendor_tokens")):
             scanned_file_summaries.append(file_summary)
@@ -280,6 +412,60 @@ def ingest_downstream_driver_tree(
 
     fe_links, be_links = _split_fe_be(dai_links)
     inferred_links = _infer_fe_be_links(fe_links, be_links)
+    codec_nodes = _dedupe_sorted(codec_components)
+    control_list = _dedupe_sorted(control_names)
+    route_edges = [
+        row
+        for row in dapm_routes
+        if isinstance(row, dict) and str(_as_dict(row).get("source", "")).strip() and str(_as_dict(row).get("sink", "")).strip()
+    ][:2000]
+    subsystem_lineage = [
+        {"subsystem": key, "file_count": int(value)}
+        for key, value in sorted(subsystem_files.items(), key=lambda item: item[0])
+    ]
+    macro_dependency_entries: list[dict[str, Any]] = []
+    for macro, define_count in sorted(macro_definitions.items()):
+        usage_count = int(macro_usages.get(macro, 0))
+        macro_dependency_entries.append(
+            {
+                "macro": macro,
+                "defined_count": int(define_count),
+                "usage_count": usage_count,
+                "dependency_strength": round(min(1.0, usage_count / max(1, define_count * 8)), 4),
+            }
+        )
+    macro_dependency_entries = macro_dependency_entries[:2500]
+
+    codec_graph_nodes = sorted(set(codec_nodes + [token for token in vendor_extensions if token.startswith("wcd")]))
+    codec_graph_edges: list[dict[str, Any]] = []
+    for fe_be in inferred_links[:400]:
+        fe = str(_as_dict(fe_be).get("frontend", "")).strip()
+        for be in _as_list(_as_dict(fe_be).get("backend_candidates"))[:3]:
+            backend = str(be).strip()
+            if fe and backend:
+                codec_graph_edges.append(
+                    {
+                        "from": fe,
+                        "to": backend,
+                        "edge_type": "stream_to_backend",
+                    }
+                )
+    for node in codec_graph_nodes[:120]:
+        codec_graph_edges.append(
+            {
+                "from": "codec",
+                "to": node,
+                "edge_type": "codec_component",
+            }
+        )
+
+    stream_routing = {
+        "fe_links": fe_links,
+        "be_links": be_links,
+        "inferred_fe_be_links": inferred_links,
+        "pcm_paths": pcm_paths,
+        "route_edges": route_edges[:800],
+    }
 
     confidence = 0.0
     confidence += 0.2 if ops_structures else 0.0
@@ -323,6 +509,45 @@ def ingest_downstream_driver_tree(
                 "timing_dependencies": timing_dependencies,
             },
         },
+        "derived": {
+            "codec_graph": {
+                "nodes": codec_graph_nodes[:500],
+                "edges": codec_graph_edges[:1600],
+                "deterministic_fingerprint": stable_fingerprint(
+                    {
+                        "nodes": codec_graph_nodes[:500],
+                        "edges": codec_graph_edges[:1600],
+                    }
+                ),
+            },
+            "dapm_topology_graph": {
+                "route_edges": route_edges[:1600],
+                "widget_names": _dedupe_sorted(
+                    [str(_as_dict(row).get("source", "")) for row in route_edges]
+                    + [str(_as_dict(row).get("sink", "")) for row in route_edges]
+                )[:1600],
+                "deterministic_fingerprint": stable_fingerprint(
+                    {
+                        "route_edges": route_edges[:1600],
+                    }
+                ),
+            },
+            "control_relationships": {
+                "controls": control_list[:2000],
+                "control_count": len(control_list),
+            },
+            "macro_dependencies": {
+                "entries": macro_dependency_entries,
+                "entry_count": len(macro_dependency_entries),
+            },
+            "call_graph": {
+                "edges": call_edges[:5000],
+                "edge_count": min(len(call_edges), 5000),
+                "truncated": len(call_edges) > 5000,
+            },
+            "stream_routing": stream_routing,
+            "subsystem_lineage": subsystem_lineage,
+        },
         "evidence_references": [str(item) for item in (evidence_references or []) if str(item).strip()],
     }
 
@@ -338,6 +563,10 @@ def ingest_downstream_driver_tree(
             "vendor_extensions": vendor_extensions,
             "proprietary_runtime_hooks": proprietary_runtime_hooks,
             "dependencies": graph["extracted"]["dependencies"],
+            "codec_graph": _as_dict(_as_dict(graph.get("derived")).get("codec_graph")),
+            "dapm_topology_graph": _as_dict(_as_dict(graph.get("derived")).get("dapm_topology_graph")),
+            "stream_routing": _as_dict(_as_dict(graph.get("derived")).get("stream_routing")),
+            "subsystem_lineage": _as_list(_as_dict(graph.get("derived")).get("subsystem_lineage")),
             "classification": graph["classification"],
         }
     )

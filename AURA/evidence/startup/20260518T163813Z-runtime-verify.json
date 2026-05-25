@@ -1,0 +1,200 @@
+{
+  "core_ready": {
+    "components": [
+      {
+        "latency_ms": 3,
+        "message": "",
+        "name": "sqlite",
+        "status": "healthy"
+      },
+      {
+        "latency_ms": 11,
+        "message": "",
+        "name": "llm-gateway",
+        "status": "healthy"
+      },
+      {
+        "latency_ms": 10,
+        "message": "",
+        "name": "ws-server",
+        "status": "healthy"
+      }
+    ],
+    "service": "aura-core",
+    "status": "healthy",
+    "timestamp": "2026-05-18T16:38:13.266839Z",
+    "uptime_seconds": 5.164275646209717,
+    "version": "0.1.0"
+  },
+  "generated_at": "2026-05-18T16:38:13.312695+00:00",
+  "llm_health": {
+    "mock_mode": false,
+    "provider": "qgenie",
+    "service": "llm-gateway",
+    "status": "healthy",
+    "version": "0.1.0"
+  },
+  "migration_count": 19,
+  "runtime_overview": {
+    "agents": {
+      "circuit_breakers": {},
+      "running_count": 0,
+      "running_sample": [],
+      "watchdog_count": 0,
+      "watchdog_max_watches": 50
+    },
+    "classification": {
+      "determinism": "strong_bounded",
+      "operational": "bounded"
+    },
+    "generated_at": "2026-05-18T16:38:13.231438+00:00",
+    "governance": {
+      "approvals": {
+        "failed": 387,
+        "in_progress": 124,
+        "passed": 393,
+        "pending": 102
+      },
+      "audit_last_hour": 120
+    },
+    "pressure_alerts": [
+      {
+        "message": "mutable_replay_logs=18 (non-finalized traces are not deterministic replay artifacts)",
+        "severity": "info",
+        "surface": "replay"
+      }
+    ],
+    "queue": {
+      "P0_critical": 0,
+      "P1_normal": 0,
+      "P2_background": 0,
+      "completed_today": 946,
+      "domains_tracked": 0,
+      "failed_today": 0,
+      "fairness_overrides_total": 0,
+      "running": 0,
+      "starvation_events_total": 0
+    },
+    "queue_isolation": {
+      "dispatch_sequence": 0,
+      "p2_fairness_window": 3,
+      "p2_last_fair_dispatch_sequence": 0,
+      "p2_wait_override_seconds": 3.0,
+      "per_domain": {},
+      "policy_version": "p2-isolation-v1",
+      "queue_depth": {
+        "P0_critical": 0,
+        "P1_normal": 0,
+        "P2_background": 0,
+        "running": 0
+      }
+    },
+    "replay": {
+      "finalized": 1354,
+      "mutable": 18
+    },
+    "requested_by": "nandam@qti.qualcomm.com",
+    "tasks": {
+      "domain_activity": {
+        "automation": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        },
+        "default": {
+          "completed": 112,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 112
+        },
+        "driver": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        },
+        "media": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        },
+        "research": {
+          "completed": 72,
+          "failed": 0,
+          "queued": 0,
+          "running": 0,
+          "total": 72
+        }
+      },
+      "retry_pressure": {
+        "retry_pending_tasks": 0,
+        "tasks_with_retry_lineage": 0
+      },
+      "status_counts": {
+        "cancelled": 21,
+        "completed": 1097,
+        "failed": 2
+      }
+    },
+    "websocket": {
+      "available": true,
+      "payload": {
+        "buffer_counts_by_domain": {
+          "automation": 6,
+          "default": 96,
+          "driver": 6,
+          "media": 6,
+          "research": 6
+        },
+        "buffer_evictions_by_domain": {},
+        "buffer_evictions_total": 0,
+        "channel_broadcast_count": {
+          "agent.lifecycle": 32,
+          "system": 2,
+          "task.orchestration": 86,
+          "task.orchestration:automation": 6,
+          "task.orchestration:driver": 6,
+          "task.orchestration:media": 6,
+          "task.orchestration:research": 6
+        },
+        "domain_ingest_count": {
+          "automation": 6,
+          "default": 96,
+          "driver": 6,
+          "media": 6,
+          "research": 6
+        },
+        "domain_sse_delivery_count": {},
+        "domain_ws_delivery_count": {
+          "automation": 0,
+          "default": 0,
+          "driver": 0,
+          "media": 0,
+          "research": 0
+        },
+        "event_buffer_capacity": 1000,
+        "event_buffer_per_domain_max": 250,
+        "event_buffer_size": 120,
+        "event_ingest_sequence": 120,
+        "policy_version": "p2.1",
+        "retry_scope_sample": [],
+        "retry_scope_tracked": 0,
+        "sse_drop_by_domain": {},
+        "sse_drop_total": 0
+      }
+    }
+  },
+  "status": "pass",
+  "ws_health": {
+    "connections": 0,
+    "service": "ws-server",
+    "status": "healthy",
+    "version": "0.1.0"
+  }
+}
