@@ -13,6 +13,10 @@ The layer is designed to ingest real engineering runtime evidence while keeping:
 - plugin isolation boundaries
 - advisory-only cognition behavior
 
+This phase now includes hardware self-discovery and toolchain introspection so
+runtime ingestion can bootstrap from physical Linux audio targets without static
+board profiles.
+
 ## Architecture Overview
 
 `runtime_evidence_ingestor.py` is the phase orchestrator.
@@ -55,6 +59,8 @@ Runner:
 5. Session-level artifacts are generated.
 6. Registry persistence writes immutable lineage records.
 7. Deterministic replay payload is regenerated from persisted lineage.
+8. Hardware topology, component lineage, mixer dependency inference, and
+   playback observability timelines are generated from ingested evidence.
 
 ## Normalization Model
 
@@ -69,6 +75,14 @@ The normalized runtime event schema includes:
 - `soundwire_entity`
 - `correlated_domains`
 
+Additional runtime discovery model includes:
+
+- SoC / kernel / board metadata
+- sound cards / PCM devices / FE-BE references
+- codec / amplifier / SoundWire/Slimbus entities
+- source-path availability and ingestibility
+- runtime toolchain availability and install recommendations
+
 This produces deterministic cross-source correlation and stable replay
 fingerprints.
 
@@ -81,6 +95,16 @@ fingerprints.
 - `dsp_runtime_trace.json`
 - `soundwire_runtime_trace.json`
 - `pcm_runtime_state.json`
+- `runtime_discovery_report.json`
+- `runtime_toolchain_discovery.json`
+- `hardware_topology_graph.json`
+- `audio_component_lineage_map.json`
+- `runtime_evidence_snapshots.json`
+- `inferred_playback_route_graph.json`
+- `inferred_capture_route_graph.json`
+- `mixer_dependency_report.json`
+- `real_playback_observability_timeline.json`
+- `offline_runtime_replay_foundation.json`
 - `runtime_capture_fingerprint.json`
 - `deterministic_runtime_session_replay.json`
 - `runtime_evidence_ingestion_summary.json`
@@ -132,7 +156,8 @@ python3 AURA/scripts/aura-runtime-evidence-ingestion.py \
   --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
   --target-id RB3Gen2 \
   --session-id runtime_session_v1 \
-  --lineage-id runtime_evidence_ingestion_v1
+  --lineage-id runtime_evidence_ingestion_v1 \
+  --capture-root /
 ```
 
 ## Validation

@@ -222,6 +222,8 @@ preserving deterministic replay, plugin isolation, and fail-closed governance.
 - SoundWire runtime dumps
 - DSP mailbox logs
 - IRQ timing traces
+- hardware self-discovery sources (`/proc/asound`, `/sys/kernel/debug/asoc`, `/sys/bus/soundwire`, DTS, uname/modules)
+- runtime toolchain discovery (`tinymix`, `tinyplay`, `tinycap`, `amixer`, `alsactl`, `trace-cmd`, `perf`, `arecord`, `aplay`)
 
 ### Generated Artifacts
 
@@ -232,6 +234,16 @@ preserving deterministic replay, plugin isolation, and fail-closed governance.
 - `dsp_runtime_trace.json`
 - `soundwire_runtime_trace.json`
 - `pcm_runtime_state.json`
+- `runtime_discovery_report.json`
+- `runtime_toolchain_discovery.json`
+- `hardware_topology_graph.json`
+- `audio_component_lineage_map.json`
+- `runtime_evidence_snapshots.json`
+- `inferred_playback_route_graph.json`
+- `inferred_capture_route_graph.json`
+- `mixer_dependency_report.json`
+- `real_playback_observability_timeline.json`
+- `offline_runtime_replay_foundation.json`
 - `runtime_capture_fingerprint.json`
 - `deterministic_runtime_session_replay.json`
 - `runtime_evidence_ingestion_summary.json`
@@ -245,7 +257,8 @@ python3 scripts/aura-runtime-evidence-ingestion.py \
   --registry-path /local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json \
   --target-id RB3Gen2 \
   --session-id runtime_session_v1 \
-  --lineage-id runtime_evidence_ingestion_v1
+  --lineage-id runtime_evidence_ingestion_v1 \
+  --capture-root /
 ```
 
 ### Validation

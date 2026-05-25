@@ -97,6 +97,44 @@ def _governance() -> dict:
     }
 
 
+def _runtime_discovery_state() -> dict:
+    return {
+        "kernel": {"release": "6.8.0", "version": "#1 SMP", "machine": "aarch64"},
+        "soc": "qcom,sm8450",
+        "board_model": "qcom-audio-dev-board",
+        "dts_compatible": ["qcom,sm8450", "qcom,audio-ref"],
+        "components": {
+            "sound_cards": ["msm-audio-q6:SoC Audio"],
+            "pcm_devices": ["00-00:MultiMedia1 Playback", "00-01:MultiMedia2 Capture"],
+            "dai_links": ["FE0", "BE0", "multimedia1"],
+            "fe_dais": ["FE0", "multimedia1"],
+            "be_dais": ["BE0"],
+            "codecs": ["wcd938x", "wsa883x"],
+            "amplifiers": ["wsa883x"],
+            "soundwire_devices": ["swrm_master_0", "soundwire_slave_1"],
+            "slimbus_devices": [],
+            "dapm_widgets": ["RX_MACRO", "TX_MACRO"],
+            "routing_paths": ["FE0->BE0"],
+        },
+        "source_availability": [
+            {"source": "proc_asound", "path": "/proc/asound", "available": True, "sample_count": 12},
+            {"source": "debug_asoc", "path": "/sys/kernel/debug/asoc", "available": True, "sample_count": 24},
+            {"source": "soundwire_sysbus", "path": "/sys/bus/soundwire", "available": True, "sample_count": 8},
+        ],
+    }
+
+
+def _toolchain_discovery_state() -> dict:
+    return {
+        "tools": [
+            {"name": "tinymix", "available": True, "path": "/usr/bin/tinymix", "importance": "critical"},
+            {"name": "amixer", "available": True, "path": "/usr/bin/amixer", "importance": "critical"},
+            {"name": "trace-cmd", "available": False, "path": "", "importance": "critical", "install_recommendation": "install trace-cmd"},
+            {"name": "aplay", "available": True, "path": "/usr/bin/aplay", "importance": "critical"},
+        ]
+    }
+
+
 def test_runtime_evidence_ingestion_deterministic(tmp_path: Path) -> None:
     engine = RuntimeEvidenceIngestor(_loader(tmp_path))
 
@@ -111,6 +149,8 @@ def test_runtime_evidence_ingestion_deterministic(tmp_path: Path) -> None:
         "plugin_capability_state": {"supported": True, "capabilities": {"supports_amixer": "SUPPORTED"}},
         "evidence_references": ["test://runtime_evidence/determinism"],
         "previous_session_history": [],
+        "runtime_discovery_state": _runtime_discovery_state(),
+        "toolchain_discovery_state": _toolchain_discovery_state(),
     }
 
     first = engine.analyze(**args).runtime_evidence_bundle
@@ -128,6 +168,12 @@ def test_runtime_evidence_ingestion_deterministic(tmp_path: Path) -> None:
     assert int(correlation_summary["domain_count"]) >= 1
     assert int(correlation_summary["linked_event_count"]) >= 1
 
+    artifacts = first["artifacts"]
+    assert artifacts["runtime_discovery_report"]["summary"]["detected_component_count"] >= 1
+    assert artifacts["hardware_topology_graph"]["summary"]["component_node_count"] >= 1
+    assert artifacts["audio_component_lineage_map"]["summary"]["component_count"] >= 1
+    assert "runtime_sequence_fingerprint" in artifacts["offline_runtime_replay_foundation"]
+
 
 def test_runtime_evidence_registry_replay_stable(tmp_path: Path) -> None:
     engine = RuntimeEvidenceIngestor(_loader(tmp_path))
@@ -143,6 +189,8 @@ def test_runtime_evidence_registry_replay_stable(tmp_path: Path) -> None:
         plugin_capability_state={"supported": True, "capabilities": {"supports_amixer": "SUPPORTED"}},
         evidence_references=["test://runtime_evidence/replay"],
         previous_session_history=[],
+        runtime_discovery_state=_runtime_discovery_state(),
+        toolchain_discovery_state=_toolchain_discovery_state(),
     ).runtime_evidence_bundle
 
     registry = RuntimeSessionRegistry(
@@ -164,6 +212,16 @@ def test_runtime_evidence_registry_replay_stable(tmp_path: Path) -> None:
     assert (tmp_path / "ops" / "dsp_runtime_trace.json").exists()
     assert (tmp_path / "ops" / "soundwire_runtime_trace.json").exists()
     assert (tmp_path / "ops" / "pcm_runtime_state.json").exists()
+    assert (tmp_path / "ops" / "runtime_discovery_report.json").exists()
+    assert (tmp_path / "ops" / "runtime_toolchain_discovery.json").exists()
+    assert (tmp_path / "ops" / "hardware_topology_graph.json").exists()
+    assert (tmp_path / "ops" / "audio_component_lineage_map.json").exists()
+    assert (tmp_path / "ops" / "runtime_evidence_snapshots.json").exists()
+    assert (tmp_path / "ops" / "inferred_playback_route_graph.json").exists()
+    assert (tmp_path / "ops" / "inferred_capture_route_graph.json").exists()
+    assert (tmp_path / "ops" / "mixer_dependency_report.json").exists()
+    assert (tmp_path / "ops" / "real_playback_observability_timeline.json").exists()
+    assert (tmp_path / "ops" / "offline_runtime_replay_foundation.json").exists()
     assert (tmp_path / "ops" / "runtime_capture_fingerprint.json").exists()
     assert (tmp_path / "ops" / "deterministic_runtime_session_replay.json").exists()
 
@@ -184,6 +242,8 @@ def test_runtime_evidence_fail_closed_on_missing_evidence(tmp_path: Path) -> Non
         plugin_capability_state={"supported": True, "capabilities": {"supports_amixer": "SUPPORTED"}},
         evidence_references=["test://runtime_evidence/missing"],
         previous_session_history=[],
+        runtime_discovery_state=_runtime_discovery_state(),
+        toolchain_discovery_state=_toolchain_discovery_state(),
     ).runtime_evidence_bundle
 
     assert bundle["classification"] == "FAIL_CLOSED"
@@ -206,6 +266,8 @@ def test_runtime_evidence_fail_closed_on_governance_violation(tmp_path: Path) ->
         plugin_capability_state={"supported": True, "capabilities": {"supports_amixer": "SUPPORTED"}},
         evidence_references=["test://runtime_evidence/governance"],
         previous_session_history=[],
+        runtime_discovery_state=_runtime_discovery_state(),
+        toolchain_discovery_state=_toolchain_discovery_state(),
     ).runtime_evidence_bundle
 
     assert bundle["classification"] == "FAIL_CLOSED"

@@ -48,6 +48,16 @@ class RuntimeSessionRegistry:
             "dsp_runtime_trace": self._output_dir / "dsp_runtime_trace.json",
             "soundwire_runtime_trace": self._output_dir / "soundwire_runtime_trace.json",
             "pcm_runtime_state": self._output_dir / "pcm_runtime_state.json",
+            "runtime_discovery_report": self._output_dir / "runtime_discovery_report.json",
+            "runtime_toolchain_discovery": self._output_dir / "runtime_toolchain_discovery.json",
+            "hardware_topology_graph": self._output_dir / "hardware_topology_graph.json",
+            "audio_component_lineage_map": self._output_dir / "audio_component_lineage_map.json",
+            "runtime_evidence_snapshots": self._output_dir / "runtime_evidence_snapshots.json",
+            "inferred_playback_route_graph": self._output_dir / "inferred_playback_route_graph.json",
+            "inferred_capture_route_graph": self._output_dir / "inferred_capture_route_graph.json",
+            "mixer_dependency_report": self._output_dir / "mixer_dependency_report.json",
+            "real_playback_observability_timeline": self._output_dir / "real_playback_observability_timeline.json",
+            "offline_runtime_replay_foundation": self._output_dir / "offline_runtime_replay_foundation.json",
             "runtime_capture_fingerprint": self._output_dir / "runtime_capture_fingerprint.json",
             "deterministic_runtime_session_replay": self._output_dir / "deterministic_runtime_session_replay.json",
         }
@@ -72,6 +82,15 @@ class RuntimeSessionRegistry:
             "session_id": str(payload.get("session_id", "")),
             "classification": str(payload.get("classification", "UNKNOWN")),
             "runtime_evidence_ingestion_fingerprint": str(payload.get("runtime_evidence_ingestion_fingerprint", "")),
+            "runtime_sequence_fingerprint": str(
+                _as_dict(artifacts.get("offline_runtime_replay_foundation")).get("runtime_sequence_fingerprint", "")
+            ),
+            "normalized_event_count": int(
+                _as_dict(_as_dict(artifacts.get("normalized_runtime_evidence")).get("summary")).get(
+                    "normalized_event_count", 0
+                )
+                or 0
+            ),
             "artifact_paths": {name: str(path.resolve()) for name, path in paths.items()},
             "evidence_references": [str(item) for item in _as_list(payload.get("evidence_references")) if str(item).strip()],
         }
@@ -144,6 +163,8 @@ class RuntimeSessionRegistry:
             "session_id": str(_as_dict(selected).get("session_id", "")),
             "classification": str(_as_dict(selected).get("classification", "UNKNOWN")),
             "runtime_evidence_ingestion_fingerprint": str(_as_dict(selected).get("runtime_evidence_ingestion_fingerprint", "")),
+            "runtime_sequence_fingerprint": str(_as_dict(selected).get("runtime_sequence_fingerprint", "")),
+            "normalized_event_count": int(_as_dict(selected).get("normalized_event_count", 0) or 0),
             "artifact_paths": _as_dict(selected).get("artifact_paths", {}),
             "evidence_references": _as_list(_as_dict(selected).get("evidence_references", [])),
             "deterministic_replay_fingerprint": stable_fingerprint(
@@ -152,6 +173,8 @@ class RuntimeSessionRegistry:
                     "session_id": str(_as_dict(selected).get("session_id", "")),
                     "classification": str(_as_dict(selected).get("classification", "UNKNOWN")),
                     "runtime_evidence_ingestion_fingerprint": str(_as_dict(selected).get("runtime_evidence_ingestion_fingerprint", "")),
+                    "runtime_sequence_fingerprint": str(_as_dict(selected).get("runtime_sequence_fingerprint", "")),
+                    "normalized_event_count": int(_as_dict(selected).get("normalized_event_count", 0) or 0),
                     "artifact_paths": _as_dict(selected).get("artifact_paths", {}),
                 }
             ),

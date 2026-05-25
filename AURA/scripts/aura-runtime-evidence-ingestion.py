@@ -5,9 +5,13 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
+import re
+import shutil
+import subprocess
 import time
 from pathlib import Path
-from typing import Any
+from typing import Any, Mapping
 
 from aura_sdk.transport.cognitive_persistence import AURACognitionRegistry
 from aura_sdk.transport.plugins import TargetPluginLoader
@@ -66,19 +70,361 @@ def _find_payload(output_dir: Path, candidates: list[str]) -> dict[str, Any]:
     return {}
 
 
-def _load_source_payloads(output_dir: Path) -> dict[str, Any]:
-    payloads = {
-        "dmesg": _find_payload(output_dir, ["runtime_dmesg.log", "dmesg.log", "kernel.log"]),
-        "ftrace": _find_payload(output_dir, ["runtime_ftrace.log", "ftrace.log"]),
-        "trace_cmd": _find_payload(output_dir, ["trace_cmd.json", "runtime_trace_cmd.json", "trace_cmd.log"]),
-        "perf": _find_payload(output_dir, ["perf_trace.json", "perf_trace.log", "runtime_perf.log"]),
-        "tinymix_state": _find_payload(output_dir, ["tinymix_dump.txt", "tinyalsa_dump.txt", "tinymix_state.log"]),
-        "procfs_runtime": _find_payload(output_dir, ["procfs_sysfs_runtime.txt", "runtime_procfs_sysfs.txt", "alsa_procfs_state.txt"]),
-        "debugfs_runtime": _find_payload(output_dir, ["debugfs_runtime.txt", "runtime_debugfs.txt", "asoc_debugfs.txt"]),
-        "soundwire_runtime": _find_payload(output_dir, ["soundwire_debugfs.txt", "runtime_soundwire_debugfs.txt", "soundwire_runtime.log"]),
-        "dsp_mailbox": _find_payload(output_dir, ["mailbox_trace.log", "dsp_response.log", "runtime_dsp_response.log"]),
-        "irq_runtime": _find_payload(output_dir, ["irq_trace.log", "runtime_irq.log", "irq_timing_trace.log"]),
+_CARD_LINE_RE = re.compile(r"^\s*\d+\s+\[(.+?)\]\s*:\s*(.+)$")
+_PCM_LINE_RE = re.compile(r"^\s*([0-9]+-[0-9]+)\s*:\s*(.+)$")
+
+
+def _run_command(cmd: list[str], timeout_s: float = 3.0) -> list[str]:
+    try:
+        proc = subprocess.run(
+            cmd,
+            check=False,
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            text=True,
+            timeout=timeout_s,
+        )
+    except Exception:
+        return []
+    output = proc.stdout if proc.stdout.strip() else proc.stderr
+    return [line.strip() for line in output.splitlines() if line.strip()]
+
+
+def _safe_read_lines(path: Path, limit: int = 400, max_bytes: int = 256 * 1024) -> list[str]:
+    if not path.exists():
+        return []
+    try:
+        raw = path.read_bytes()[:max_bytes]
+    except Exception:
+        return []
+    text = raw.decode("utf-8", errors="ignore")
+    return [line.strip() for line in text.splitlines()[:limit] if line.strip()]
+
+
+def _read_device_tree_value(path: Path) -> str:
+    if not path.exists():
+        return ""
+    try:
+        raw = path.read_bytes()
+    except Exception:
+        return ""
+    text = raw.decode("utf-8", errors="ignore").replace("\x00", ",").strip(" ,\n\t")
+    return text
+
+
+def _collect_tree_lines(root: Path, *, max_files: int = 80, max_lines_per_file: int = 20) -> tuple[list[str], list[dict[str, Any]]]:
+    if not root.exists():
+        return [], []
+    files = []
+    for path in sorted(root.rglob("*")):
+        if len(files) >= max_files:
+            break
+        if not path.is_file():
+            continue
+        if path.is_symlink():
+            continue
+        files.append(path)
+
+    combined_lines: list[str] = []
+    samples: list[dict[str, Any]] = []
+    for path in files:
+        rel = str(path)
+        lines = _safe_read_lines(path, limit=max_lines_per_file)
+        if not lines:
+            continue
+        samples.append(
+            {
+                "path": rel,
+                "sample_count": len(lines),
+            }
+        )
+        for line in lines:
+            combined_lines.append(f"{rel}: {line}")
+
+    return combined_lines, samples
+
+
+def _discover_toolchain(capture_root: Path) -> dict[str, Any]:
+    tool_meta = [
+        ("tinymix", "critical", "install tinyalsa"),
+        ("tinyplay", "recommended", "install tinyalsa"),
+        ("tinycap", "recommended", "install tinyalsa"),
+        ("amixer", "critical", "install alsa-utils"),
+        ("alsactl", "recommended", "install alsa-utils"),
+        ("trace-cmd", "critical", "install trace-cmd"),
+        ("perf", "optional", "install linux-tools package"),
+        ("arecord", "critical", "install alsa-utils"),
+        ("aplay", "critical", "install alsa-utils"),
+    ]
+
+    tools = []
+    for name, importance, recommendation in tool_meta:
+        path = shutil.which(name)
+        tools.append(
+            {
+                "name": name,
+                "available": bool(path),
+                "path": path or "",
+                "importance": importance,
+                "install_recommendation": recommendation if not path else "",
+            }
+        )
+
+    tracing_path = capture_root / "sys/kernel/tracing"
+    debug_tracing_path = capture_root / "sys/kernel/debug/tracing"
+    tools.append(
+        {
+            "name": "ftrace/debugfs",
+            "available": tracing_path.exists() or debug_tracing_path.exists(),
+            "path": str(tracing_path if tracing_path.exists() else debug_tracing_path),
+            "importance": "critical",
+            "install_recommendation": "mount tracefs/debugfs and enable tracing support",
+        }
+    )
+
+    return {"tools": tools}
+
+
+def _parse_sound_cards(lines: list[str]) -> list[str]:
+    cards = []
+    for line in lines:
+        match = _CARD_LINE_RE.match(line)
+        if not match:
+            continue
+        cards.append(f"{match.group(1).strip()}:{match.group(2).strip()}")
+    return sorted(set(cards))
+
+
+def _parse_pcm_devices(lines: list[str]) -> list[str]:
+    devices = []
+    for line in lines:
+        match = _PCM_LINE_RE.match(line)
+        if not match:
+            continue
+        devices.append(f"{match.group(1).strip()}:{match.group(2).strip()}")
+    return sorted(set(devices))
+
+
+def _extract_component_tokens(lines: list[str], pattern: re.Pattern[str]) -> list[str]:
+    out = []
+    for line in lines:
+        for match in pattern.findall(line):
+            token = str(match).strip()
+            if token:
+                out.append(token)
+    return sorted(set(out))
+
+
+def _discover_runtime_environment(capture_root: Path, output_dir: Path) -> dict[str, Any]:
+    kernel_uname = os.uname()
+    soc = _read_device_tree_value(capture_root / "proc/device-tree/compatible")
+    board_model = _read_device_tree_value(capture_root / "proc/device-tree/model")
+
+    proc_asound_root = capture_root / "proc/asound"
+    proc_asound_lines, proc_asound_samples = _collect_tree_lines(proc_asound_root, max_files=120, max_lines_per_file=25)
+    cards_lines = _safe_read_lines(proc_asound_root / "cards", limit=200)
+    pcm_lines = _safe_read_lines(proc_asound_root / "pcm", limit=300)
+
+    debug_asoc_root = capture_root / "sys/kernel/debug/asoc"
+    debug_asoc_lines, debug_asoc_samples = _collect_tree_lines(debug_asoc_root, max_files=140, max_lines_per_file=25)
+
+    soundwire_root = capture_root / "sys/bus/soundwire"
+    soundwire_lines, soundwire_samples = _collect_tree_lines(soundwire_root, max_files=80, max_lines_per_file=20)
+
+    dmesg_lines = _run_command(["dmesg", "--color=never"], timeout_s=4.0)
+    if not dmesg_lines:
+        dmesg_lines = _load_lines(output_dir / "runtime_dmesg.log", limit=1800)
+
+    modules_lines = _safe_read_lines(capture_root / "proc/modules", limit=600)
+    if not modules_lines:
+        modules_lines = _run_command(["lsmod"], timeout_s=2.0)
+
+    dts_compatible = [item for item in soc.split(",") if item.strip()] if soc else []
+    sound_cards = _parse_sound_cards(cards_lines)
+    pcm_devices = _parse_pcm_devices(pcm_lines)
+
+    codec_pattern = re.compile(r"\b(?:wcd[0-9a-z_]+|wsa[0-9a-z_]+|codec[0-9a-z_./-]*)\b", re.IGNORECASE)
+    amp_pattern = re.compile(r"\b(?:tas[0-9a-z_]+|max[0-9a-z_]+|amp(?:lifier)?[0-9a-z_./-]*)\b", re.IGNORECASE)
+    dai_pattern = re.compile(r"\b(?:fe[0-9]+|be[0-9]+|multimedia[0-9]+|mi2s[0-9a-z_]*)\b", re.IGNORECASE)
+    swr_pattern = re.compile(r"\b(?:swr[0-9a-z_:-]+|soundwire[0-9a-z_:-]+)\b", re.IGNORECASE)
+    slimbus_pattern = re.compile(r"\bslim(?:bus)?[0-9a-z_:-]*\b", re.IGNORECASE)
+    dapm_pattern = re.compile(r"\b(?:dapm|widget|mixer|mux|route)\b.*", re.IGNORECASE)
+
+    combined_component_lines = proc_asound_lines + debug_asoc_lines + soundwire_lines + dmesg_lines
+    codecs = _extract_component_tokens(combined_component_lines, codec_pattern)
+    amplifiers = _extract_component_tokens(combined_component_lines, amp_pattern)
+    dai_links = _extract_component_tokens(combined_component_lines, dai_pattern)
+    soundwire_devices = _extract_component_tokens(combined_component_lines, swr_pattern)
+    slimbus_devices = _extract_component_tokens(combined_component_lines, slimbus_pattern)
+    dapm_widgets = _extract_component_tokens(debug_asoc_lines, dapm_pattern)
+    routing_paths = [line for line in debug_asoc_lines if "->" in line][:500]
+
+    fe_dais = sorted(set([item for item in dai_links if item.lower().startswith(("fe", "multimedia"))]))
+    be_dais = sorted(set([item for item in dai_links if item.lower().startswith("be")]))
+
+    availability = [
+        {
+            "source": "proc_asound",
+            "path": str(proc_asound_root),
+            "available": proc_asound_root.exists(),
+            "sample_count": len(proc_asound_lines),
+        },
+        {
+            "source": "debug_asoc",
+            "path": str(debug_asoc_root),
+            "available": debug_asoc_root.exists(),
+            "sample_count": len(debug_asoc_lines),
+        },
+        {
+            "source": "soundwire_sysbus",
+            "path": str(soundwire_root),
+            "available": soundwire_root.exists(),
+            "sample_count": len(soundwire_lines),
+        },
+        {
+            "source": "dmesg",
+            "path": "dmesg",
+            "available": bool(dmesg_lines),
+            "sample_count": len(dmesg_lines),
+        },
+    ]
+
+    return {
+        "kernel": {
+            "release": kernel_uname.release,
+            "version": kernel_uname.version,
+            "machine": kernel_uname.machine,
+        },
+        "soc": dts_compatible[0] if dts_compatible else "",
+        "board_model": board_model,
+        "dts_compatible": dts_compatible[:20],
+        "components": {
+            "sound_cards": sound_cards,
+            "pcm_devices": pcm_devices,
+            "dai_links": dai_links[:400],
+            "fe_dais": fe_dais[:200],
+            "be_dais": be_dais[:200],
+            "codecs": codecs[:200],
+            "amplifiers": amplifiers[:200],
+            "soundwire_devices": soundwire_devices[:200],
+            "slimbus_devices": slimbus_devices[:200],
+            "dapm_widgets": dapm_widgets[:400],
+            "routing_paths": routing_paths[:600],
+        },
+        "source_availability": availability,
+        "raw_samples": {
+            "proc_asound": proc_asound_samples[:120],
+            "debug_asoc": debug_asoc_samples[:140],
+            "soundwire": soundwire_samples[:80],
+            "modules_sample": modules_lines[:120],
+        },
+        "runtime_lines": {
+            "dmesg": dmesg_lines[:2000],
+            "proc_asound": proc_asound_lines[:2000],
+            "debug_asoc": debug_asoc_lines[:2500],
+            "soundwire": soundwire_lines[:1200],
+            "modules": modules_lines[:600],
+            "cards": cards_lines[:200],
+            "pcm": pcm_lines[:300],
+        },
     }
+
+
+def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: dict[str, Any], capture_root: Path) -> dict[str, Any]:
+    runtime_lines = _as_dict(runtime_discovery.get("runtime_lines"))
+    tools = {str(_as_dict(item).get("name", "")): _as_dict(item) for item in _as_list(toolchain.get("tools"))}
+
+    payloads = {
+        "dmesg": {"lines": _as_list(runtime_lines.get("dmesg"))},
+        "ftrace": {},
+        "trace_cmd": {},
+        "perf": {},
+        "tinymix_state": {},
+        "procfs_runtime": {"lines": _as_list(runtime_lines.get("proc_asound"))},
+        "debugfs_runtime": {"lines": _as_list(runtime_lines.get("debug_asoc"))},
+        "soundwire_runtime": {"lines": _as_list(runtime_lines.get("soundwire"))},
+        "dsp_mailbox": {},
+        "irq_runtime": {},
+    }
+
+    trace_path = capture_root / "sys/kernel/tracing/trace"
+    if not trace_path.exists():
+        trace_path = capture_root / "sys/kernel/debug/tracing/trace"
+    trace_lines = _safe_read_lines(trace_path, limit=2000)
+    if trace_lines:
+        payloads["ftrace"] = {"lines": trace_lines}
+
+    if bool(_as_dict(tools.get("trace-cmd")).get("available", False)):
+        trace_cmd_lines = _run_command(["trace-cmd", "report"], timeout_s=2.0)
+        if trace_cmd_lines:
+            payloads["trace_cmd"] = {"lines": trace_cmd_lines[:2000]}
+
+    if bool(_as_dict(tools.get("perf")).get("available", False)):
+        perf_lines = _run_command(["perf", "list"], timeout_s=2.0)
+        if perf_lines:
+            payloads["perf"] = {"lines": perf_lines[:1000]}
+
+    tinymix_lines: list[str] = []
+    if bool(_as_dict(tools.get("tinymix")).get("available", False)):
+        tinymix_lines = _run_command(["tinymix"], timeout_s=3.0)
+    if not tinymix_lines and bool(_as_dict(tools.get("amixer")).get("available", False)):
+        tinymix_lines = _run_command(["amixer", "-c", "0", "scontents"], timeout_s=3.0)
+    if tinymix_lines:
+        payloads["tinymix_state"] = {"lines": tinymix_lines[:2500]}
+
+    irq_lines = _safe_read_lines(capture_root / "proc/interrupts", limit=600)
+    irq_lines = [line for line in irq_lines if any(token in line.lower() for token in ("snd", "audio", "wcd", "swr", "dsp", "apr", "q6"))]
+    if irq_lines:
+        payloads["irq_runtime"] = {"lines": irq_lines}
+
+    mailbox_lines = [
+        line
+        for line in _as_list(runtime_lines.get("dmesg"))
+        if any(token in str(line).lower() for token in ("mailbox", "apr", "adsp", "dsp", "glink", "rpmsg"))
+    ]
+    mailbox_lines.extend(
+        [
+            line
+            for line in _as_list(runtime_lines.get("debug_asoc"))
+            if any(token in str(line).lower() for token in ("mailbox", "apr", "adsp", "dsp"))
+        ]
+    )
+    if mailbox_lines:
+        payloads["dsp_mailbox"] = {"lines": mailbox_lines[:1500]}
+
+    return payloads
+
+
+def _load_source_payloads(output_dir: Path, live_payloads: Mapping[str, Any] | None = None) -> dict[str, Any]:
+    payloads = {
+        "dmesg": _as_dict(_as_dict(live_payloads).get("dmesg")) if live_payloads else {},
+        "ftrace": _as_dict(_as_dict(live_payloads).get("ftrace")) if live_payloads else {},
+        "trace_cmd": _as_dict(_as_dict(live_payloads).get("trace_cmd")) if live_payloads else {},
+        "perf": _as_dict(_as_dict(live_payloads).get("perf")) if live_payloads else {},
+        "tinymix_state": _as_dict(_as_dict(live_payloads).get("tinymix_state")) if live_payloads else {},
+        "procfs_runtime": _as_dict(_as_dict(live_payloads).get("procfs_runtime")) if live_payloads else {},
+        "debugfs_runtime": _as_dict(_as_dict(live_payloads).get("debugfs_runtime")) if live_payloads else {},
+        "soundwire_runtime": _as_dict(_as_dict(live_payloads).get("soundwire_runtime")) if live_payloads else {},
+        "dsp_mailbox": _as_dict(_as_dict(live_payloads).get("dsp_mailbox")) if live_payloads else {},
+        "irq_runtime": _as_dict(_as_dict(live_payloads).get("irq_runtime")) if live_payloads else {},
+    }
+
+    file_fallbacks = {
+        "dmesg": ["runtime_dmesg.log", "dmesg.log", "kernel.log"],
+        "ftrace": ["runtime_ftrace.log", "ftrace.log"],
+        "trace_cmd": ["trace_cmd.json", "runtime_trace_cmd.json", "trace_cmd.log"],
+        "perf": ["perf_trace.json", "perf_trace.log", "runtime_perf.log"],
+        "tinymix_state": ["tinymix_dump.txt", "tinyalsa_dump.txt", "tinymix_state.log"],
+        "procfs_runtime": ["procfs_sysfs_runtime.txt", "runtime_procfs_sysfs.txt", "alsa_procfs_state.txt"],
+        "debugfs_runtime": ["debugfs_runtime.txt", "runtime_debugfs.txt", "asoc_debugfs.txt"],
+        "soundwire_runtime": ["soundwire_debugfs.txt", "runtime_soundwire_debugfs.txt", "soundwire_runtime.log"],
+        "dsp_mailbox": ["mailbox_trace.log", "dsp_response.log", "runtime_dsp_response.log"],
+        "irq_runtime": ["irq_trace.log", "runtime_irq.log", "irq_timing_trace.log"],
+    }
+    for source, candidates in sorted(file_fallbacks.items()):
+        if _as_dict(payloads.get(source)):
+            continue
+        payloads[source] = _find_payload(output_dir, candidates)
 
     # Deterministic offline fallback sources from already generated artifacts.
     if not _as_dict(payloads.get("ftrace")):
@@ -205,10 +551,13 @@ def main() -> int:
     parser.add_argument("--session-id", default="runtime_session_v1")
     parser.add_argument("--lineage-id", default="runtime_evidence_ingestion_v1")
     parser.add_argument("--plugin-registry", default="")
+    parser.add_argument("--capture-root", default="/")
+    parser.add_argument("--disable-live-discovery", action="store_true")
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    capture_root = Path(args.capture_root)
 
     cognition_registry = AURACognitionRegistry(args.registry_path)
     registry_payload = cognition_registry.load()
@@ -245,7 +594,15 @@ def main() -> int:
         if isinstance(row, dict)
     ]
 
-    source_payloads = _load_source_payloads(output_dir)
+    runtime_discovery_state = {}
+    toolchain_discovery_state = {}
+    live_payloads = {}
+    if not args.disable_live_discovery:
+        runtime_discovery_state = _discover_runtime_environment(capture_root, output_dir)
+        toolchain_discovery_state = _discover_toolchain(capture_root)
+        live_payloads = _build_live_source_payloads(runtime_discovery_state, toolchain_discovery_state, capture_root)
+
+    source_payloads = _load_source_payloads(output_dir, live_payloads=live_payloads)
     domain_artifacts = _load_domain_artifacts(output_dir)
 
     loader = (
@@ -275,8 +632,12 @@ def main() -> int:
             "artifact://patch_runtime_lineage",
             "artifact://structural_graph",
             "artifact://semantic_ontology",
+            "runtime://hardware_self_discovery",
+            "runtime://toolchain_discovery",
         ],
         previous_session_history=previous_session_history,
+        runtime_discovery_state=runtime_discovery_state,
+        toolchain_discovery_state=toolchain_discovery_state,
     )
 
     store = RuntimeSessionRegistry(
@@ -304,11 +665,29 @@ def main() -> int:
             "dsp_runtime_trace": str((output_dir / "dsp_runtime_trace.json").resolve()),
             "soundwire_runtime_trace": str((output_dir / "soundwire_runtime_trace.json").resolve()),
             "pcm_runtime_state": str((output_dir / "pcm_runtime_state.json").resolve()),
+            "runtime_discovery_report": str((output_dir / "runtime_discovery_report.json").resolve()),
+            "runtime_toolchain_discovery": str((output_dir / "runtime_toolchain_discovery.json").resolve()),
+            "hardware_topology_graph": str((output_dir / "hardware_topology_graph.json").resolve()),
+            "audio_component_lineage_map": str((output_dir / "audio_component_lineage_map.json").resolve()),
+            "runtime_evidence_snapshots": str((output_dir / "runtime_evidence_snapshots.json").resolve()),
+            "inferred_playback_route_graph": str((output_dir / "inferred_playback_route_graph.json").resolve()),
+            "inferred_capture_route_graph": str((output_dir / "inferred_capture_route_graph.json").resolve()),
+            "mixer_dependency_report": str((output_dir / "mixer_dependency_report.json").resolve()),
+            "real_playback_observability_timeline": str(
+                (output_dir / "real_playback_observability_timeline.json").resolve()
+            ),
+            "offline_runtime_replay_foundation": str((output_dir / "offline_runtime_replay_foundation.json").resolve()),
             "runtime_capture_fingerprint": str((output_dir / "runtime_capture_fingerprint.json").resolve()),
             "deterministic_runtime_session_replay": str(
                 (output_dir / "deterministic_runtime_session_replay.json").resolve()
             ),
         },
+        "runtime_discovery_summary": _as_dict(
+            _as_dict(result.runtime_evidence_bundle.get("artifacts")).get("runtime_discovery_report")
+        ).get("summary", {}),
+        "toolchain_summary": _as_dict(
+            _as_dict(result.runtime_evidence_bundle.get("artifacts")).get("runtime_toolchain_discovery")
+        ).get("summary", {}),
         "persisted": persisted,
         "replay": replay,
         "generated_at_epoch": time.time(),
