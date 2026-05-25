@@ -37,6 +37,10 @@ def _default_registry_path() -> str:
     return str((_repo_root() / "docs/operations/transport/aura_cognition_registry.json").resolve())
 
 
+def _default_bridge_root() -> str:
+    return str((_repo_root() / "bridge").resolve())
+
+
 def _as_dict(value: Any) -> dict[str, Any]:
     if isinstance(value, dict):
         return value
@@ -162,7 +166,8 @@ def _collect_tree_lines(root: Path, *, max_files: int = 80, max_lines_per_file: 
     return combined_lines, samples
 
 
-def _discover_toolchain(capture_root: Path) -> dict[str, Any]:
+def _discover_toolchain(capture_root: Path, bridge_root: Path, output_dir: Path) -> dict[str, Any]:
+    bridge_state = _bridge_evidence(bridge_root, output_dir)
     tool_meta = [
         ("tinymix", "critical", "install tinyalsa"),
         ("tinyplay", "recommended", "install tinyalsa"),
@@ -176,31 +181,64 @@ def _discover_toolchain(capture_root: Path) -> dict[str, Any]:
     ]
 
     tools = []
+    in_container = str(os.getenv("AURA_RUNTIME_EXECUTION_MODE", "")).strip().lower() == "container"
     for name, importance, recommendation in tool_meta:
         path = shutil.which(name)
+        bridge_status, bridge_reason = _tool_status_from_bridge(name, bridge_state)
+
+        if bridge_status == "AVAILABLE":
+            status = "AVAILABLE"
+            available = True
+            source = bridge_reason
+        elif bridge_status == "MISSING":
+            status = "MISSING"
+            available = False
+            source = bridge_reason
+        elif not in_container and path:
+            status = "AVAILABLE"
+            available = True
+            source = "local_runtime_binary"
+        elif not in_container and not path:
+            status = "MISSING"
+            available = False
+            source = "local_runtime_binary_missing"
+        else:
+            status = "UNKNOWN"
+            available = False
+            source = bridge_reason if bridge_reason else "container_runtime_no_board_evidence"
+
         tools.append(
             {
                 "name": name,
-                "available": bool(path),
+                "status": status,
+                "available": available,
                 "path": path or "",
                 "importance": importance,
-                "install_recommendation": recommendation if not path else "",
+                "evidence_source": source,
+                "install_recommendation": recommendation if status == "MISSING" else "",
             }
         )
 
     tracing_path = capture_root / "sys/kernel/tracing"
     debug_tracing_path = capture_root / "sys/kernel/debug/tracing"
+    trace_available = tracing_path.exists() or debug_tracing_path.exists()
+    trace_status = "AVAILABLE" if trace_available else ("MISSING" if not in_container else "UNKNOWN")
     tools.append(
         {
             "name": "ftrace/debugfs",
-            "available": tracing_path.exists() or debug_tracing_path.exists(),
+            "status": trace_status,
+            "available": trace_available,
             "path": str(tracing_path if tracing_path.exists() else debug_tracing_path),
             "importance": "critical",
-            "install_recommendation": "mount tracefs/debugfs and enable tracing support",
+            "evidence_source": "local_sysfs",
+            "install_recommendation": "mount tracefs/debugfs and enable tracing support" if trace_status == "MISSING" else "",
         }
     )
 
-    return {"tools": tools}
+    return {
+        "tools": tools,
+        "bridge_command_evidence_count": len(_as_dict(bridge_state.get("commands"))),
+    }
 
 
 def _parse_sound_cards(lines: list[str]) -> list[str]:
@@ -233,8 +271,133 @@ def _extract_component_tokens(lines: list[str], pattern: re.Pattern[str]) -> lis
     return sorted(set(out))
 
 
-def _discover_runtime_environment(capture_root: Path, output_dir: Path) -> dict[str, Any]:
+def _bridge_response_paths(bridge_root: Path, output_dir: Path, max_files: int = 320) -> list[Path]:
+    candidates: dict[str, Path] = {}
+    for root in (bridge_root / "responses", output_dir):
+        if not root.exists():
+            continue
+        pattern = "*.json" if root == (bridge_root / "responses") else "bridge_response_*.json"
+        for path in root.glob(pattern):
+            if not path.is_file():
+                continue
+            candidates[str(path.resolve())] = path
+
+    ordered = sorted(candidates.values(), key=lambda p: p.stat().st_mtime, reverse=True)
+    return ordered[:max_files]
+
+
+def _bridge_evidence(bridge_root: Path, output_dir: Path) -> dict[str, Any]:
+    entries: dict[str, dict[str, Any]] = {}
+    lines_by_command: dict[str, list[str]] = {}
+    all_lines: list[str] = []
+
+    for path in _bridge_response_paths(bridge_root, output_dir):
+        payload = _read_json(path)
+        if not payload:
+            continue
+        for trace in _as_list(payload.get("executor_command_trace")):
+            item = _as_dict(trace)
+            cmd = str(item.get("normalized_command", "")).strip()
+            if not cmd:
+                continue
+
+            status = str(item.get("execution_status", "")).strip().lower()
+            stdout = str(item.get("stdout", ""))
+            stderr = str(item.get("stderr", ""))
+            exit_code = int(item.get("exit_code", -9999) or -9999)
+            out_lines = [line.strip() for line in stdout.replace("\r", "").splitlines() if line.strip()]
+            err_lines = [line.strip() for line in stderr.replace("\r", "").splitlines() if line.strip()]
+            command_lines = out_lines + err_lines
+
+            previous = _as_dict(entries.get(cmd))
+            prev_rank = int(previous.get("rank", -1) or -1)
+            rank = 3 if status in {"executed", "success", "completed"} else 2 if "not found" in stdout.lower() or "not found" in stderr.lower() else 1 if status == "timeout" else 0
+            if rank >= prev_rank:
+                entries[cmd] = {
+                    "command": cmd,
+                    "status": status,
+                    "exit_code": exit_code,
+                    "stdout": stdout,
+                    "stderr": stderr,
+                    "path": str(path),
+                    "rank": rank,
+                }
+
+            existing = lines_by_command.setdefault(cmd, [])
+            for line in command_lines:
+                if len(existing) >= 2400:
+                    break
+                existing.append(line)
+            for line in command_lines:
+                if len(all_lines) >= 8000:
+                    break
+                all_lines.append(line)
+
+    return {
+        "commands": {cmd: {k: v for k, v in data.items() if k != "rank"} for cmd, data in sorted(entries.items())},
+        "lines_by_command": {cmd: lines[:2400] for cmd, lines in sorted(lines_by_command.items())},
+        "all_lines": all_lines[:8000],
+    }
+
+
+def _tool_status_from_bridge(tool_name: str, bridge_state: Mapping[str, Any]) -> tuple[str, str]:
+    commands = _as_dict(bridge_state.get("commands"))
+    all_lines = [str(line).lower() for line in _as_list(bridge_state.get("all_lines"))]
+
+    if tool_name in {"amixer", "tinymix"}:
+        cmd = _as_dict(commands.get(tool_name))
+        if cmd:
+            stdout = str(cmd.get("stdout", "")).lower()
+            stderr = str(cmd.get("stderr", "")).lower()
+            status = str(cmd.get("status", "")).lower()
+            if "not found" in stdout or "not found" in stderr:
+                return "MISSING", f"bridge:{tool_name}:not_found"
+            if status in {"executed", "success", "completed"}:
+                return "AVAILABLE", f"bridge:{tool_name}:executed"
+            if status == "timeout":
+                return "UNKNOWN", f"bridge:{tool_name}:timeout"
+            return "UNKNOWN", f"bridge:{tool_name}:{status or 'unknown'}"
+
+    if tool_name in {"aplay", "arecord"}:
+        usage_marker = f"usage: {tool_name}"
+        if any(usage_marker in line for line in all_lines):
+            return "AVAILABLE", f"bridge:{tool_name}:usage_banner"
+        for cmd in commands.values():
+            item = _as_dict(cmd)
+            invoc = str(item.get("command", "")).lower() + " " + str(item.get("stdout", "")).lower() + " " + str(item.get("stderr", "")).lower()
+            if f"{tool_name} " in invoc:
+                if "not found" in invoc:
+                    return "MISSING", f"bridge:{tool_name}:not_found"
+                if str(item.get("status", "")).lower() in {"executed", "failed", "success", "completed"}:
+                    return "AVAILABLE", f"bridge:{tool_name}:invocation_seen"
+
+    if tool_name == "trace-cmd":
+        cmd = _as_dict(commands.get("trace-cmd report"))
+        if cmd:
+            status = str(cmd.get("status", "")).lower()
+            if status in {"executed", "success", "completed"}:
+                return "AVAILABLE", "bridge:trace-cmd:executed"
+            return "UNKNOWN", f"bridge:trace-cmd:{status or 'unknown'}"
+
+    if tool_name == "perf":
+        for cmd_name, cmd in commands.items():
+            if not str(cmd_name).startswith("perf"):
+                continue
+            item = _as_dict(cmd)
+            status = str(item.get("status", "")).lower()
+            if status in {"executed", "success", "completed"}:
+                return "AVAILABLE", "bridge:perf:executed"
+            if "not found" in str(item.get("stdout", "")).lower() or "not found" in str(item.get("stderr", "")).lower():
+                return "MISSING", "bridge:perf:not_found"
+        return "UNKNOWN", "bridge:perf:no_signal"
+
+    return "UNKNOWN", f"bridge:{tool_name}:no_signal"
+
+
+def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_root: Path) -> dict[str, Any]:
     kernel_uname = os.uname()
+    bridge_state = _bridge_evidence(bridge_root, output_dir)
+    bridge_lines_by_command = _as_dict(bridge_state.get("lines_by_command"))
     soc = _read_device_tree_value(capture_root / "proc/device-tree/compatible")
     board_model = _read_device_tree_value(capture_root / "proc/device-tree/model")
 
@@ -242,9 +405,19 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path) -> dict[
     proc_asound_lines, proc_asound_samples = _collect_tree_lines(proc_asound_root, max_files=120, max_lines_per_file=25)
     cards_lines = _safe_read_lines(proc_asound_root / "cards", limit=200)
     pcm_lines = _safe_read_lines(proc_asound_root / "pcm", limit=300)
+    if not cards_lines:
+        cards_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("cat /proc/asound/cards"))][:220]
+    if not pcm_lines:
+        pcm_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("cat /proc/asound/pcm"))][:340]
+    if not proc_asound_lines:
+        proc_asound_lines = cards_lines + pcm_lines
 
     debug_asoc_root = capture_root / "sys/kernel/debug/asoc"
     debug_asoc_lines, debug_asoc_samples = _collect_tree_lines(debug_asoc_root, max_files=140, max_lines_per_file=25)
+    if not debug_asoc_lines:
+        debug_asoc_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("ls /sys/kernel/debug/asoc"))]
+    if not debug_asoc_lines:
+        debug_asoc_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("cat /sys/kernel/debug/asoc/*/dapm"))]
 
     soundwire_root = capture_root / "sys/bus/soundwire"
     soundwire_lines, soundwire_samples = _collect_tree_lines(soundwire_root, max_files=80, max_lines_per_file=20)
@@ -252,10 +425,16 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path) -> dict[
     dmesg_lines = _run_command(["dmesg", "--color=never"], timeout_s=4.0)
     if not dmesg_lines:
         dmesg_lines = _load_lines(output_dir / "runtime_dmesg.log", limit=1800)
+    if not dmesg_lines:
+        dmesg_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("dmesg"))][:2000]
+    if not dmesg_lines:
+        dmesg_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("dmesg | tail -200"))][:2000]
 
     modules_lines = _safe_read_lines(capture_root / "proc/modules", limit=600)
     if not modules_lines:
         modules_lines = _run_command(["lsmod"], timeout_s=2.0)
+    if not modules_lines:
+        modules_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("lsmod"))][:600]
 
     dts_compatible = [item for item in soc.split(",") if item.strip()] if soc else []
     sound_cards = _parse_sound_cards(cards_lines)
@@ -284,13 +463,13 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path) -> dict[
         {
             "source": "proc_asound",
             "path": str(proc_asound_root),
-            "available": proc_asound_root.exists(),
+            "available": proc_asound_root.exists() or bool(cards_lines) or bool(pcm_lines),
             "sample_count": len(proc_asound_lines),
         },
         {
             "source": "debug_asoc",
             "path": str(debug_asoc_root),
-            "available": debug_asoc_root.exists(),
+            "available": debug_asoc_root.exists() or bool(debug_asoc_lines),
             "sample_count": len(debug_asoc_lines),
         },
         {
@@ -344,6 +523,10 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path) -> dict[
             "modules": modules_lines[:600],
             "cards": cards_lines[:200],
             "pcm": pcm_lines[:300],
+        },
+        "bridge_evidence": {
+            "command_count": len(_as_dict(bridge_state.get("commands"))),
+            "commands": _as_dict(bridge_state.get("commands")),
         },
     }
 
@@ -570,12 +753,14 @@ def main() -> int:
     parser.add_argument("--lineage-id", default="runtime_evidence_ingestion_v1")
     parser.add_argument("--plugin-registry", default="")
     parser.add_argument("--capture-root", default="/")
+    parser.add_argument("--bridge-root", default=_default_bridge_root())
     parser.add_argument("--disable-live-discovery", action="store_true")
     args = parser.parse_args()
 
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     capture_root = Path(args.capture_root)
+    bridge_root = Path(args.bridge_root)
 
     cognition_registry = AURACognitionRegistry(args.registry_path)
     registry_payload = cognition_registry.load()
@@ -616,8 +801,8 @@ def main() -> int:
     toolchain_discovery_state = {}
     live_payloads = {}
     if not args.disable_live_discovery:
-        runtime_discovery_state = _discover_runtime_environment(capture_root, output_dir)
-        toolchain_discovery_state = _discover_toolchain(capture_root)
+        runtime_discovery_state = _discover_runtime_environment(capture_root, output_dir, bridge_root)
+        toolchain_discovery_state = _discover_toolchain(capture_root, bridge_root, output_dir)
         live_payloads = _build_live_source_payloads(runtime_discovery_state, toolchain_discovery_state, capture_root)
 
     source_payloads = _load_source_payloads(output_dir, live_payloads=live_payloads)

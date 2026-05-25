@@ -1,104 +1,125 @@
 {
-  "deterministic_fingerprint": "0604bd2d2b06d4877b7d539182c50450060f1b15c92a302d0e01a42e9d2fe572",
+  "deterministic_fingerprint": "e93971b513afd0ca1c084ae94860e3f8473d9aa6632abb3799c9e4b0e142b441",
   "governance_policy": {
     "missing_tools_advisory_only": true,
     "missing_tools_fail_closed": false
   },
-  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
-  "missing_critical_tools": [
-    "amixer",
-    "aplay",
-    "arecord",
-    "tinymix",
-    "trace-cmd"
-  ],
-  "missing_recommended_tools": [
-    "alsactl",
-    "tinycap",
-    "tinyplay"
-  ],
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v3",
+  "missing_critical_tools": [],
+  "missing_recommended_tools": [],
   "read_only_ingestion": true,
   "report_name": "runtime_toolchain_discovery",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "runtime_session_real_hw_ingest_v2",
+  "session_id": "runtime_session_real_hw_ingest_v3",
   "summary": {
-    "available_tool_count": 1,
-    "missing_critical_tool_count": 5,
-    "missing_recommended_tool_count": 3,
-    "tool_count": 10
+    "available_tool_count": 2,
+    "missing_critical_tool_count": 0,
+    "missing_recommended_tool_count": 0,
+    "tool_count": 10,
+    "unknown_tool_count": 8
   },
   "target_id": "RB3Gen2",
   "tools": [
     {
       "available": false,
+      "evidence_source": "bridge:alsactl:no_signal",
       "importance": "recommended",
-      "install_recommendation": "install alsa-utils",
+      "install_recommendation": "",
       "name": "alsactl",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     },
     {
       "available": false,
+      "evidence_source": "bridge:amixer:timeout",
       "importance": "critical",
-      "install_recommendation": "install alsa-utils",
+      "install_recommendation": "",
       "name": "amixer",
-      "path": ""
-    },
-    {
-      "available": false,
-      "importance": "critical",
-      "install_recommendation": "install alsa-utils",
-      "name": "aplay",
-      "path": ""
-    },
-    {
-      "available": false,
-      "importance": "critical",
-      "install_recommendation": "install alsa-utils",
-      "name": "arecord",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     },
     {
       "available": true,
+      "evidence_source": "bridge:aplay:invocation_seen",
       "importance": "critical",
-      "install_recommendation": "mount tracefs/debugfs and enable tracing support",
+      "install_recommendation": "",
+      "name": "aplay",
+      "path": "",
+      "status": "AVAILABLE"
+    },
+    {
+      "available": false,
+      "evidence_source": "bridge:arecord:no_signal",
+      "importance": "critical",
+      "install_recommendation": "",
+      "name": "arecord",
+      "path": "",
+      "status": "UNKNOWN"
+    },
+    {
+      "available": true,
+      "evidence_source": "local_sysfs",
+      "importance": "critical",
+      "install_recommendation": "",
       "name": "ftrace/debugfs",
-      "path": "/sys/kernel/tracing"
+      "path": "/sys/kernel/tracing",
+      "status": "AVAILABLE"
     },
     {
       "available": false,
+      "evidence_source": "bridge:perf:no_signal",
       "importance": "optional",
-      "install_recommendation": "install linux-tools package",
+      "install_recommendation": "",
       "name": "perf",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     },
     {
       "available": false,
+      "evidence_source": "bridge:tinycap:no_signal",
       "importance": "recommended",
-      "install_recommendation": "install tinyalsa",
+      "install_recommendation": "",
       "name": "tinycap",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     },
     {
       "available": false,
+      "evidence_source": "bridge:tinymix:no_signal",
       "importance": "critical",
-      "install_recommendation": "install tinyalsa",
+      "install_recommendation": "",
       "name": "tinymix",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     },
     {
       "available": false,
+      "evidence_source": "bridge:tinyplay:no_signal",
       "importance": "recommended",
-      "install_recommendation": "install tinyalsa",
+      "install_recommendation": "",
       "name": "tinyplay",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     },
     {
       "available": false,
+      "evidence_source": "bridge:trace-cmd:no_signal",
       "importance": "critical",
-      "install_recommendation": "install trace-cmd",
+      "install_recommendation": "",
       "name": "trace-cmd",
-      "path": ""
+      "path": "",
+      "status": "UNKNOWN"
     }
+  ],
+  "unknown_tools": [
+    "alsactl",
+    "amixer",
+    "arecord",
+    "perf",
+    "tinycap",
+    "tinymix",
+    "tinyplay",
+    "trace-cmd"
   ]
 }

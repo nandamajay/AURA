@@ -735,12 +735,17 @@ def _build_runtime_toolchain_discovery(
     tools = []
     for row in _as_list(toolchain.get("tools")):
         item = _as_dict(row)
+        status = str(item.get("status", "")).strip().upper()
+        if not status:
+            status = "AVAILABLE" if bool(item.get("available", False)) else "MISSING"
         tools.append(
             {
                 "name": str(item.get("name", "")).strip(),
-                "available": bool(item.get("available", False)),
+                "status": status,
+                "available": bool(item.get("available", False)) or status == "AVAILABLE",
                 "path": str(item.get("path", "")).strip(),
                 "importance": str(item.get("importance", "optional")).strip().lower() or "optional",
+                "evidence_source": str(item.get("evidence_source", "")).strip(),
                 "install_recommendation": str(item.get("install_recommendation", "")).strip(),
             }
         )
@@ -749,13 +754,14 @@ def _build_runtime_toolchain_discovery(
     missing_critical = [
         item
         for item in tools
-        if not bool(item.get("available", False)) and str(item.get("importance", "optional")) == "critical"
+        if str(item.get("status", "UNKNOWN")) == "MISSING" and str(item.get("importance", "optional")) == "critical"
     ]
     missing_recommended = [
         item
         for item in tools
-        if not bool(item.get("available", False)) and str(item.get("importance", "optional")) == "recommended"
+        if str(item.get("status", "UNKNOWN")) == "MISSING" and str(item.get("importance", "optional")) == "recommended"
     ]
+    unknown_tools = [item for item in tools if str(item.get("status", "UNKNOWN")) == "UNKNOWN"]
 
     payload = {
         "schema_version": "1.0",
@@ -766,12 +772,14 @@ def _build_runtime_toolchain_discovery(
         "tools": tools,
         "summary": {
             "tool_count": len(tools),
-            "available_tool_count": len([item for item in tools if bool(item.get("available", False))]),
+            "available_tool_count": len([item for item in tools if str(item.get("status", "")) == "AVAILABLE"]),
             "missing_critical_tool_count": len(missing_critical),
             "missing_recommended_tool_count": len(missing_recommended),
+            "unknown_tool_count": len(unknown_tools),
         },
         "missing_critical_tools": [str(item.get("name", "")) for item in missing_critical],
         "missing_recommended_tools": [str(item.get("name", "")) for item in missing_recommended],
+        "unknown_tools": [str(item.get("name", "")) for item in unknown_tools],
         "governance_policy": {
             "missing_tools_fail_closed": False,
             "missing_tools_advisory_only": True,

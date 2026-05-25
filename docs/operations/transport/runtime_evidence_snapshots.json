@@ -1,21 +1,47 @@
 {
-  "deterministic_fingerprint": "ec7555dcb4d8296163a2e8d6e1a24b47a36bfd906d734f85e12afd38721293f6",
-  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
+  "deterministic_fingerprint": "9574d3d320e44119fcbedc15ec2c9b8d4943fb04163d1a0f349e7f1d718d400a",
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v3",
   "read_only_ingestion": true,
   "report_name": "runtime_evidence_snapshots",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "runtime_session_real_hw_ingest_v2",
+  "session_id": "runtime_session_real_hw_ingest_v3",
   "snapshots": [
     {
-      "event_count": 0,
-      "first_timestamp_ms": null,
-      "last_timestamp_ms": null,
-      "sample_events": [],
-      "snapshot_id": "debugfs_runtime:0",
+      "event_count": 6,
+      "first_timestamp_ms": 1004.5,
+      "last_timestamp_ms": 1027.0,
+      "sample_events": [
+        {
+          "event_id": "debugfs:1",
+          "message": "cat: read error: Is a directory",
+          "timestamp_ms": 1004.5
+        },
+        {
+          "event_id": "debugfs:2",
+          "message": "cat: read error: Is a directory",
+          "timestamp_ms": 1009.0
+        },
+        {
+          "event_id": "debugfs:3",
+          "message": "cat: read error: Is a directory",
+          "timestamp_ms": 1013.5
+        },
+        {
+          "event_id": "debugfs:4",
+          "message": "cat: read error: Is a directory",
+          "timestamp_ms": 1018.0
+        },
+        {
+          "event_id": "debugfs:5",
+          "message": "cat: read error: Is a directory",
+          "timestamp_ms": 1022.5
+        }
+      ],
+      "snapshot_id": "debugfs_runtime:6",
       "source": "debugfs_runtime",
-      "source_classification": "MISSING",
-      "source_fingerprint": "de95e91848fea3d81f669316d70f2ee9c4be453e6ac88de40d60ff76029929ac"
+      "source_classification": "PRESENT",
+      "source_fingerprint": "fc1076a60f35416fd5b431f303a88e541cbfbca9750e73b61f0d27616b21f9c0"
     },
     {
       "event_count": 1,
@@ -117,14 +143,40 @@
       "source_fingerprint": "01015c63bfe1b6be8d1ca89b00f475ffb2e88a53d6dc4a19b6b2103f7b2c833a"
     },
     {
-      "event_count": 0,
-      "first_timestamp_ms": null,
-      "last_timestamp_ms": null,
-      "sample_events": [],
-      "snapshot_id": "procfs_runtime:0",
+      "event_count": 448,
+      "first_timestamp_ms": 1004.0,
+      "last_timestamp_ms": 2792.0,
+      "sample_events": [
+        {
+          "event_id": "procfs:1",
+          "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+          "timestamp_ms": 1004.0
+        },
+        {
+          "event_id": "procfs:2",
+          "message": "QCS6490-RB3Gen2",
+          "timestamp_ms": 1008.0
+        },
+        {
+          "event_id": "procfs:3",
+          "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+          "timestamp_ms": 1012.0
+        },
+        {
+          "event_id": "procfs:4",
+          "message": "QCS6490-RB3Gen2",
+          "timestamp_ms": 1016.0
+        },
+        {
+          "event_id": "procfs:5",
+          "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+          "timestamp_ms": 1020.0
+        }
+      ],
+      "snapshot_id": "procfs_runtime:448",
       "source": "procfs_runtime",
-      "source_classification": "MISSING",
-      "source_fingerprint": "e9fed476af819c551c2b98d5bc03027430808c2af40aa2e86ac365352ef80e45"
+      "source_classification": "PRESENT",
+      "source_fingerprint": "818fe46637a160b13737eb10f5de48c31453dce0f0176c86a4a20dd66a557f4d"
     },
     {
       "event_count": 0,
@@ -190,9 +242,9 @@
     }
   ],
   "summary": {
-    "present_snapshot_count": 6,
+    "present_snapshot_count": 8,
     "snapshot_count": 10,
-    "timeline_event_count": 41
+    "timeline_event_count": 160
   },
   "target_id": "RB3Gen2",
   "timeline_digest": [
@@ -209,10 +261,22 @@
       "timestamp_ms": 1004.0
     },
     {
+      "event_id": "procfs:1",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1004.0
+    },
+    {
       "event_id": "dsp_mailbox:1",
       "message": "dsp latency 5.0",
       "subsystem": "DSP",
       "timestamp_ms": 1004.1
+    },
+    {
+      "event_id": "debugfs:1",
+      "message": "cat: read error: Is a directory",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1004.5
     },
     {
       "event_id": "tinymix:2",
@@ -233,6 +297,18 @@
       "timestamp_ms": 1008.0
     },
     {
+      "event_id": "procfs:2",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1008.0
+    },
+    {
+      "event_id": "debugfs:2",
+      "message": "cat: read error: Is a directory",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1009.0
+    },
+    {
       "event_id": "tinymix:3",
       "message": "cat /sys/kernel/debug/asoc/*/dapm:0.99",
       "subsystem": "DAPM",
@@ -245,10 +321,22 @@
       "timestamp_ms": 1010.0
     },
     {
+      "event_id": "procfs:3",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1012.0
+    },
+    {
       "event_id": "tinymix:4",
       "message": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite:1.0",
       "subsystem": "ALSA_PCM",
       "timestamp_ms": 1012.0
+    },
+    {
+      "event_id": "debugfs:3",
+      "message": "cat: read error: Is a directory",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1013.5
     },
     {
       "event_id": "ftrace:2",
@@ -263,6 +351,18 @@
       "timestamp_ms": 1015.0
     },
     {
+      "event_id": "procfs:4",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1016.0
+    },
+    {
+      "event_id": "debugfs:4",
+      "message": "cat: read error: Is a directory",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1018.0
+    },
+    {
       "event_id": "tinymix:6",
       "message": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB:0.0",
       "subsystem": "MIXER",
@@ -275,10 +375,28 @@
       "timestamp_ms": 1020.0
     },
     {
+      "event_id": "procfs:5",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1020.0
+    },
+    {
       "event_id": "tinymix:7",
       "message": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0:0.0",
       "subsystem": "MIXER",
       "timestamp_ms": 1021.0
+    },
+    {
+      "event_id": "debugfs:5",
+      "message": "cat: read error: Is a directory",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1022.5
+    },
+    {
+      "event_id": "procfs:6",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1024.0
     },
     {
       "event_id": "tinymix:8",
@@ -293,10 +411,22 @@
       "timestamp_ms": 1025.0
     },
     {
+      "event_id": "debugfs:6",
+      "message": "cat: read error: Is a directory",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1027.0
+    },
+    {
       "event_id": "tinymix:9",
       "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0:0.96",
       "subsystem": "MIXER",
       "timestamp_ms": 1027.0
+    },
+    {
+      "event_id": "procfs:7",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1028.0
     },
     {
       "event_id": "tinymix:10",
@@ -305,10 +435,22 @@
       "timestamp_ms": 1030.0
     },
     {
+      "event_id": "procfs:8",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1032.0
+    },
+    {
       "event_id": "tinymix:11",
       "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1:0.93",
       "subsystem": "MIXER",
       "timestamp_ms": 1033.0
+    },
+    {
+      "event_id": "procfs:9",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1036.0
     },
     {
       "event_id": "tinymix:12",
@@ -323,16 +465,34 @@
       "timestamp_ms": 1039.0
     },
     {
+      "event_id": "procfs:10",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1040.0
+    },
+    {
       "event_id": "tinymix:14",
       "message": "AURA_AMIXER_NAME_SET V1NBX1JYMCBEaWdpdGFsIFZvbHVtZQ 85:0.78",
       "subsystem": "ALSA_PCM",
       "timestamp_ms": 1042.0
     },
     {
+      "event_id": "procfs:11",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1044.0
+    },
+    {
       "event_id": "tinymix:15",
       "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0:0.96",
       "subsystem": "MIXER",
       "timestamp_ms": 1045.0
+    },
+    {
+      "event_id": "procfs:12",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1048.0
     },
     {
       "event_id": "tinymix:16",
@@ -347,16 +507,34 @@
       "timestamp_ms": 1051.0
     },
     {
+      "event_id": "procfs:13",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1052.0
+    },
+    {
       "event_id": "tinymix:18",
       "message": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1:0.0",
       "subsystem": "MIXER",
       "timestamp_ms": 1054.0
     },
     {
+      "event_id": "procfs:14",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1056.0
+    },
+    {
       "event_id": "tinymix:19",
       "message": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1:0.93",
       "subsystem": "MIXER",
       "timestamp_ms": 1057.0
+    },
+    {
+      "event_id": "procfs:15",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1060.0
     },
     {
       "event_id": "tinymix:20",
@@ -371,16 +549,34 @@
       "timestamp_ms": 1063.0
     },
     {
+      "event_id": "procfs:16",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1064.0
+    },
+    {
       "event_id": "tinymix:22",
       "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1:0.93",
       "subsystem": "MIXER",
       "timestamp_ms": 1066.0
     },
     {
+      "event_id": "procfs:17",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1068.0
+    },
+    {
       "event_id": "tinymix:23",
       "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0:0.96",
       "subsystem": "MIXER",
       "timestamp_ms": 1069.0
+    },
+    {
+      "event_id": "procfs:18",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1072.0
     },
     {
       "event_id": "tinymix:24",
@@ -395,16 +591,34 @@
       "timestamp_ms": 1075.0
     },
     {
+      "event_id": "procfs:19",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1076.0
+    },
+    {
       "event_id": "tinymix:26",
       "message": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/speaker_validation.wav:1.0",
       "subsystem": "ALSA_PCM",
       "timestamp_ms": 1078.0
     },
     {
+      "event_id": "procfs:20",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1080.0
+    },
+    {
       "event_id": "tinymix:27",
       "message": "cat /proc/asound/cards:0.0",
       "subsystem": "MIXER",
       "timestamp_ms": 1081.0
+    },
+    {
+      "event_id": "procfs:21",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1084.0
     },
     {
       "event_id": "tinymix:28",
@@ -419,10 +633,160 @@
       "timestamp_ms": 1087.0
     },
     {
+      "event_id": "procfs:22",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1088.0
+    },
+    {
       "event_id": "tinymix:30",
       "message": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav:1.0",
       "subsystem": "MIXER",
       "timestamp_ms": 1090.0
+    },
+    {
+      "event_id": "procfs:23",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1092.0
+    },
+    {
+      "event_id": "procfs:24",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1096.0
+    },
+    {
+      "event_id": "procfs:25",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1100.0
+    },
+    {
+      "event_id": "procfs:26",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1104.0
+    },
+    {
+      "event_id": "procfs:27",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1108.0
+    },
+    {
+      "event_id": "procfs:28",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1112.0
+    },
+    {
+      "event_id": "procfs:29",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1116.0
+    },
+    {
+      "event_id": "procfs:30",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1120.0
+    },
+    {
+      "event_id": "procfs:31",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1124.0
+    },
+    {
+      "event_id": "procfs:32",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1128.0
+    },
+    {
+      "event_id": "procfs:33",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1132.0
+    },
+    {
+      "event_id": "procfs:34",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1136.0
+    },
+    {
+      "event_id": "procfs:35",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1140.0
+    },
+    {
+      "event_id": "procfs:36",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1144.0
+    },
+    {
+      "event_id": "procfs:37",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1148.0
+    },
+    {
+      "event_id": "procfs:38",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1152.0
+    },
+    {
+      "event_id": "procfs:39",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1156.0
+    },
+    {
+      "event_id": "procfs:40",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1160.0
+    },
+    {
+      "event_id": "procfs:41",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1164.0
+    },
+    {
+      "event_id": "procfs:42",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1168.0
+    },
+    {
+      "event_id": "procfs:43",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1172.0
+    },
+    {
+      "event_id": "procfs:44",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1176.0
+    },
+    {
+      "event_id": "procfs:45",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1180.0
+    },
+    {
+      "event_id": "procfs:46",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1184.0
     },
     {
       "event_id": "ftrace:5",
@@ -431,16 +795,418 @@
       "timestamp_ms": 1185.0
     },
     {
+      "event_id": "procfs:47",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1188.0
+    },
+    {
       "event_id": "tracecmd:1",
       "message": "STATE",
       "subsystem": "DAPM",
       "timestamp_ms": 1190.0
     },
     {
+      "event_id": "procfs:48",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1192.0
+    },
+    {
+      "event_id": "procfs:49",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1196.0
+    },
+    {
+      "event_id": "procfs:50",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1200.0
+    },
+    {
+      "event_id": "procfs:51",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1204.0
+    },
+    {
+      "event_id": "procfs:52",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1208.0
+    },
+    {
       "event_id": "ftrace:6",
       "message": "1.210: pcm STATE",
       "subsystem": "ALSA_PCM",
       "timestamp_ms": 1210.0
+    },
+    {
+      "event_id": "procfs:53",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1212.0
+    },
+    {
+      "event_id": "procfs:54",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1216.0
+    },
+    {
+      "event_id": "procfs:55",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1220.0
+    },
+    {
+      "event_id": "procfs:56",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1224.0
+    },
+    {
+      "event_id": "procfs:57",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1228.0
+    },
+    {
+      "event_id": "procfs:58",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1232.0
+    },
+    {
+      "event_id": "procfs:59",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1236.0
+    },
+    {
+      "event_id": "procfs:60",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1240.0
+    },
+    {
+      "event_id": "procfs:61",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1244.0
+    },
+    {
+      "event_id": "procfs:62",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1248.0
+    },
+    {
+      "event_id": "procfs:63",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1252.0
+    },
+    {
+      "event_id": "procfs:64",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1256.0
+    },
+    {
+      "event_id": "procfs:65",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1260.0
+    },
+    {
+      "event_id": "procfs:66",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1264.0
+    },
+    {
+      "event_id": "procfs:67",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1268.0
+    },
+    {
+      "event_id": "procfs:68",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1272.0
+    },
+    {
+      "event_id": "procfs:69",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1276.0
+    },
+    {
+      "event_id": "procfs:70",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1280.0
+    },
+    {
+      "event_id": "procfs:71",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1284.0
+    },
+    {
+      "event_id": "procfs:72",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1288.0
+    },
+    {
+      "event_id": "procfs:73",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1292.0
+    },
+    {
+      "event_id": "procfs:74",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1296.0
+    },
+    {
+      "event_id": "procfs:75",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1300.0
+    },
+    {
+      "event_id": "procfs:76",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1304.0
+    },
+    {
+      "event_id": "procfs:77",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1308.0
+    },
+    {
+      "event_id": "procfs:78",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1312.0
+    },
+    {
+      "event_id": "procfs:79",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1316.0
+    },
+    {
+      "event_id": "procfs:80",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1320.0
+    },
+    {
+      "event_id": "procfs:81",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1324.0
+    },
+    {
+      "event_id": "procfs:82",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1328.0
+    },
+    {
+      "event_id": "procfs:83",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1332.0
+    },
+    {
+      "event_id": "procfs:84",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1336.0
+    },
+    {
+      "event_id": "procfs:85",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1340.0
+    },
+    {
+      "event_id": "procfs:86",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1344.0
+    },
+    {
+      "event_id": "procfs:87",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1348.0
+    },
+    {
+      "event_id": "procfs:88",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1352.0
+    },
+    {
+      "event_id": "procfs:89",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1356.0
+    },
+    {
+      "event_id": "procfs:90",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1360.0
+    },
+    {
+      "event_id": "procfs:91",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1364.0
+    },
+    {
+      "event_id": "procfs:92",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1368.0
+    },
+    {
+      "event_id": "procfs:93",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1372.0
+    },
+    {
+      "event_id": "procfs:94",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1376.0
+    },
+    {
+      "event_id": "procfs:95",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1380.0
+    },
+    {
+      "event_id": "procfs:96",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1384.0
+    },
+    {
+      "event_id": "procfs:97",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1388.0
+    },
+    {
+      "event_id": "procfs:98",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1392.0
+    },
+    {
+      "event_id": "procfs:99",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1396.0
+    },
+    {
+      "event_id": "procfs:100",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1400.0
+    },
+    {
+      "event_id": "procfs:101",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1404.0
+    },
+    {
+      "event_id": "procfs:102",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1408.0
+    },
+    {
+      "event_id": "procfs:103",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1412.0
+    },
+    {
+      "event_id": "procfs:104",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1416.0
+    },
+    {
+      "event_id": "procfs:105",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1420.0
+    },
+    {
+      "event_id": "procfs:106",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1424.0
+    },
+    {
+      "event_id": "procfs:107",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1428.0
+    },
+    {
+      "event_id": "procfs:108",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1432.0
+    },
+    {
+      "event_id": "procfs:109",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1436.0
+    },
+    {
+      "event_id": "procfs:110",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1440.0
+    },
+    {
+      "event_id": "procfs:111",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1444.0
+    },
+    {
+      "event_id": "procfs:112",
+      "message": "QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1448.0
+    },
+    {
+      "event_id": "procfs:113",
+      "message": "0 [QCS6490RB3Gen2 ]: qcs6490 - QCS6490-RB3Gen2",
+      "subsystem": "KERNEL_STATE",
+      "timestamp_ms": 1452.0
     }
   ]
 }

@@ -3,22 +3,39 @@
     "amplifiers": [],
     "be_dais": [],
     "codecs": [],
-    "dai_links": [],
+    "dai_links": [
+      "MultiMedia1",
+      "MultiMedia2",
+      "MultiMedia3",
+      "MultiMedia4"
+    ],
     "dapm_widgets": [],
-    "fe_dais": [],
-    "pcm_devices": [],
+    "fe_dais": [
+      "MultiMedia1",
+      "MultiMedia2",
+      "MultiMedia3",
+      "MultiMedia4"
+    ],
+    "pcm_devices": [
+      "00-00:MultiMedia1 Playback (*) :  : playback 1",
+      "00-01:MultiMedia2 Capture (*) :  : capture 1",
+      "00-02:MultiMedia3 Playback (*) :  : playback 1",
+      "00-03:MultiMedia4 Playback (*) :  : playback 1"
+    ],
     "routing_paths": [],
     "slimbus_devices": [],
-    "sound_cards": [],
+    "sound_cards": [
+      "QCS6490RB3Gen2:qcs6490 - QCS6490-RB3Gen2"
+    ],
     "soundwire_devices": []
   },
-  "deterministic_fingerprint": "572cab73a69863272c3bf7911579004b1eabfb7a6a4b2d0389d8c8bcf18437c5",
+  "deterministic_fingerprint": "0f932399d2ba20d8638c7719b9cca538cb4f0a6e1469af0194220c8b9e4036f8",
   "kernel": {
     "machine": "x86_64",
     "release": "5.15.0-164-generic",
     "version": "#174-Ubuntu SMP Fri Nov 14 20:25:16 UTC 2025"
   },
-  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v3",
   "platform": {
     "board_model": "",
     "dts_compatible": [],
@@ -28,12 +45,12 @@
   "report_name": "runtime_discovery_report",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "runtime_session_real_hw_ingest_v2",
+  "session_id": "runtime_session_real_hw_ingest_v3",
   "source_availability": [
     {
-      "available": false,
+      "available": true,
       "path": "/sys/kernel/debug/asoc",
-      "sample_count": 0,
+      "sample_count": 6,
       "source": "debug_asoc"
     },
     {
@@ -43,9 +60,9 @@
       "source": "dmesg"
     },
     {
-      "available": false,
+      "available": true,
       "path": "/proc/asound",
-      "sample_count": 0,
+      "sample_count": 448,
       "source": "proc_asound"
     },
     {
@@ -56,9 +73,9 @@
     }
   ],
   "summary": {
-    "available_source_count": 1,
+    "available_source_count": 3,
     "component_category_count": 11,
-    "detected_component_count": 0,
+    "detected_component_count": 13,
     "source_count": 4
   },
   "target_id": "RB3Gen2"
