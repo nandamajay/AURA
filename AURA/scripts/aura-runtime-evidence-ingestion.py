@@ -53,6 +53,13 @@ def _as_list(value: Any) -> list[Any]:
     return []
 
 
+def _path_exists(path: Path) -> bool:
+    try:
+        return path.exists()
+    except Exception:
+        return False
+
+
 def _read_json(path: Path) -> dict[str, Any]:
     if not path.exists():
         return {}
@@ -113,7 +120,10 @@ def _run_command(cmd: list[str], timeout_s: float = 3.0) -> list[str]:
 
 
 def _safe_read_lines(path: Path, limit: int = 400, max_bytes: int = 256 * 1024) -> list[str]:
-    if not path.exists():
+    try:
+        if not path.exists():
+            return []
+    except Exception:
         return []
     try:
         raw = path.read_bytes()[:max_bytes]
@@ -135,17 +145,30 @@ def _read_device_tree_value(path: Path) -> str:
 
 
 def _collect_tree_lines(root: Path, *, max_files: int = 80, max_lines_per_file: int = 20) -> tuple[list[str], list[dict[str, Any]]]:
-    if not root.exists():
+    try:
+        if not root.exists():
+            return [], []
+    except Exception:
         return [], []
+
     files = []
-    for path in sorted(root.rglob("*")):
-        if len(files) >= max_files:
-            break
-        if not path.is_file():
-            continue
-        if path.is_symlink():
-            continue
-        files.append(path)
+    try:
+        for dirpath, dirnames, filenames in os.walk(root, topdown=True, followlinks=False):
+            dirnames.sort()
+            for filename in sorted(filenames):
+                if len(files) >= max_files:
+                    break
+                path = Path(dirpath) / filename
+                try:
+                    if path.is_symlink() or not path.is_file():
+                        continue
+                except Exception:
+                    continue
+                files.append(path)
+            if len(files) >= max_files:
+                break
+    except Exception:
+        return [], []
 
     combined_lines: list[str] = []
     samples: list[dict[str, Any]] = []
@@ -221,14 +244,14 @@ def _discover_toolchain(capture_root: Path, bridge_root: Path, output_dir: Path)
 
     tracing_path = capture_root / "sys/kernel/tracing"
     debug_tracing_path = capture_root / "sys/kernel/debug/tracing"
-    trace_available = tracing_path.exists() or debug_tracing_path.exists()
+    trace_available = _path_exists(tracing_path) or _path_exists(debug_tracing_path)
     trace_status = "AVAILABLE" if trace_available else ("MISSING" if not in_container else "UNKNOWN")
     tools.append(
         {
             "name": "ftrace/debugfs",
             "status": trace_status,
             "available": trace_available,
-            "path": str(tracing_path if tracing_path.exists() else debug_tracing_path),
+            "path": str(tracing_path if _path_exists(tracing_path) else debug_tracing_path),
             "importance": "critical",
             "evidence_source": "local_sysfs",
             "install_recommendation": "mount tracefs/debugfs and enable tracing support" if trace_status == "MISSING" else "",
@@ -274,7 +297,7 @@ def _extract_component_tokens(lines: list[str], pattern: re.Pattern[str]) -> lis
 def _bridge_response_paths(bridge_root: Path, output_dir: Path, max_files: int = 320) -> list[Path]:
     candidates: dict[str, Path] = {}
     for root in (bridge_root / "responses", output_dir):
-        if not root.exists():
+        if not _path_exists(root):
             continue
         pattern = "*.json" if root == (bridge_root / "responses") else "bridge_response_*.json"
         for path in root.glob(pattern):
@@ -463,19 +486,19 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
         {
             "source": "proc_asound",
             "path": str(proc_asound_root),
-            "available": proc_asound_root.exists() or bool(cards_lines) or bool(pcm_lines),
+            "available": _path_exists(proc_asound_root) or bool(cards_lines) or bool(pcm_lines),
             "sample_count": len(proc_asound_lines),
         },
         {
             "source": "debug_asoc",
             "path": str(debug_asoc_root),
-            "available": debug_asoc_root.exists() or bool(debug_asoc_lines),
+            "available": _path_exists(debug_asoc_root) or bool(debug_asoc_lines),
             "sample_count": len(debug_asoc_lines),
         },
         {
             "source": "soundwire_sysbus",
             "path": str(soundwire_root),
-            "available": soundwire_root.exists(),
+            "available": _path_exists(soundwire_root),
             "sample_count": len(soundwire_lines),
         },
         {
@@ -533,7 +556,9 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
 
 def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: dict[str, Any], capture_root: Path) -> dict[str, Any]:
     runtime_lines = _as_dict(runtime_discovery.get("runtime_lines"))
+    bridge_commands = _as_dict(_as_dict(runtime_discovery.get("bridge_evidence")).get("commands"))
     tools = {str(_as_dict(item).get("name", "")): _as_dict(item) for item in _as_list(toolchain.get("tools"))}
+    soundwire_lines = _as_list(runtime_lines.get("soundwire"))
 
     payloads = {
         "dmesg": {"lines": _as_list(runtime_lines.get("dmesg"))},
@@ -543,13 +568,13 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
         "tinymix_state": {},
         "procfs_runtime": {"lines": _as_list(runtime_lines.get("proc_asound"))},
         "debugfs_runtime": {"lines": _as_list(runtime_lines.get("debug_asoc"))},
-        "soundwire_runtime": {"lines": _as_list(runtime_lines.get("soundwire"))},
+        "soundwire_runtime": {"lines": soundwire_lines} if soundwire_lines else {},
         "dsp_mailbox": {},
         "irq_runtime": {},
     }
 
     trace_path = capture_root / "sys/kernel/tracing/trace"
-    if not trace_path.exists():
+    if not _path_exists(trace_path):
         trace_path = capture_root / "sys/kernel/debug/tracing/trace"
     trace_lines = _safe_read_lines(trace_path, limit=2000)
     if trace_lines:
@@ -592,6 +617,45 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
     )
     if mailbox_lines:
         payloads["dsp_mailbox"] = {"lines": mailbox_lines[:1500]}
+
+    if not _as_dict(payloads.get("soundwire_runtime")):
+        swr_lines = []
+        for source in ("debug_asoc", "proc_asound", "dmesg"):
+            for line in _as_list(runtime_lines.get(source)):
+                text = str(line).strip()
+                low = text.lower()
+                if "soundwire" in low or "swr" in low or "slimbus" in low:
+                    swr_lines.append(text)
+        if not swr_lines:
+            for cmd_data in bridge_commands.values():
+                item = _as_dict(cmd_data)
+                blob = (str(item.get("stdout", "")) + "\n" + str(item.get("stderr", ""))).replace("\r", "")
+                for line in blob.splitlines():
+                    text = line.strip()
+                    low = text.lower()
+                    if not text:
+                        continue
+                    if "soundwire" in low or "swr" in low or "slimbus" in low:
+                        swr_lines.append(text)
+        if swr_lines:
+            payloads["soundwire_runtime"] = {"lines": swr_lines[:1500]}
+
+    if not _as_dict(payloads.get("irq_runtime")):
+        irq_fallback = [
+            str(line).strip()
+            for line in _as_list(runtime_lines.get("dmesg"))
+            if "irq" in str(line).lower() or "interrupt" in str(line).lower()
+        ]
+        if not irq_fallback:
+            for cmd_data in bridge_commands.values():
+                item = _as_dict(cmd_data)
+                blob = (str(item.get("stdout", "")) + "\n" + str(item.get("stderr", ""))).replace("\r", "")
+                for line in blob.splitlines():
+                    text = line.strip()
+                    if text and ("irq" in text.lower() or "interrupt" in text.lower()):
+                        irq_fallback.append(text)
+        if irq_fallback:
+            payloads["irq_runtime"] = {"lines": irq_fallback[:1000]}
 
     return payloads
 
