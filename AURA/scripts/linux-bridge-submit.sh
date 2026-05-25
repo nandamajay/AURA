@@ -202,6 +202,7 @@ allowlist = {
     "cat /proc/asound/cards",
     "cat /proc/asound/pcm",
     "cat /proc/interrupts",
+    "cat /proc/interrupts | head -200",
     "cat /proc/cpuinfo",
     "uname -a",
     "dmesg",

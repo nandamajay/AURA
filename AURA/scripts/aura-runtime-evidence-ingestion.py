@@ -461,7 +461,11 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
 
     interrupts_lines = _safe_read_lines(capture_root / "proc/interrupts", limit=1500)
     if not interrupts_lines:
-        interrupts_lines = [str(line) for line in _as_list(bridge_lines_by_command.get("cat /proc/interrupts"))][:1500]
+        bridge_interrupt_lines: list[str] = []
+        for cmd, lines in bridge_lines_by_command.items():
+            if str(cmd).strip().startswith("cat /proc/interrupts"):
+                bridge_interrupt_lines.extend([str(line) for line in _as_list(lines)])
+        interrupts_lines = bridge_interrupt_lines[:1500]
 
     dts_compatible = [item for item in soc.split(",") if item.strip()] if soc else []
     sound_cards = _parse_sound_cards(cards_lines)
@@ -653,6 +657,11 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
 
     if not _as_dict(payloads.get("irq_runtime")):
         proc_interrupts = _as_dict(bridge_commands.get("cat /proc/interrupts"))
+        if not proc_interrupts:
+            for cmd, data in bridge_commands.items():
+                if str(cmd).strip().startswith("cat /proc/interrupts"):
+                    proc_interrupts = _as_dict(data)
+                    break
         proc_interrupt_lines = [
             line.strip()
             for line in (str(proc_interrupts.get("stdout", "")) + "\n" + str(proc_interrupts.get("stderr", ""))).replace("\r", "").splitlines()
