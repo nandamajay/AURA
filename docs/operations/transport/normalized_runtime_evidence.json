@@ -1,6 +1,6 @@
 {
   "classification": "FAIL_CLOSED",
-  "deterministic_fingerprint": "e8b29c99fb7eb0f7833831f92ab88a40353d44d90bce2caf4ef344615bd65cc7",
+  "deterministic_fingerprint": "fd33dc09b922a87c3ec213a0c26c69b85c175e0f6a96c37a13aebaa8fdd35f97",
   "domain_correlation": {
     "correlated_events": [
       {
@@ -144,6 +144,15 @@
         "subsystem_id": "alsa_pcm"
       },
       {
+        "event_id": "debugfs:3",
+        "linked_domains": [
+          "runtime_truth_graph",
+          "semantic_ontology"
+        ],
+        "source_key": "debugfs_runtime",
+        "subsystem_id": "kernel_state"
+      },
+      {
         "event_id": "ftrace:2",
         "linked_domains": [
           "runtime_truth_graph",
@@ -172,6 +181,15 @@
           "semantic_ontology"
         ],
         "source_key": "procfs_runtime",
+        "subsystem_id": "kernel_state"
+      },
+      {
+        "event_id": "debugfs:4",
+        "linked_domains": [
+          "runtime_truth_graph",
+          "semantic_ontology"
+        ],
+        "source_key": "debugfs_runtime",
         "subsystem_id": "kernel_state"
       },
       {
@@ -217,6 +235,15 @@
         "subsystem_id": "mixer"
       },
       {
+        "event_id": "debugfs:5",
+        "linked_domains": [
+          "runtime_truth_graph",
+          "semantic_ontology"
+        ],
+        "source_key": "debugfs_runtime",
+        "subsystem_id": "kernel_state"
+      },
+      {
         "event_id": "procfs:6",
         "linked_domains": [
           "runtime_truth_graph",
@@ -246,6 +273,15 @@
         ],
         "source_key": "ftrace",
         "subsystem_id": "alsa_pcm"
+      },
+      {
+        "event_id": "debugfs:6",
+        "linked_domains": [
+          "runtime_truth_graph",
+          "semantic_ontology"
+        ],
+        "source_key": "debugfs_runtime",
+        "subsystem_id": "kernel_state"
       },
       {
         "event_id": "tinymix:9",
@@ -4514,12 +4550,12 @@
       "domain_hit_counts": {
         "migration_lineage": 1,
         "patch_lineage": 1,
-        "runtime_truth_graph": 491,
-        "semantic_ontology": 491,
+        "runtime_truth_graph": 495,
+        "semantic_ontology": 495,
         "structural_cognition": 38,
         "topology_cognition": 38
       },
-      "linked_event_count": 491,
+      "linked_event_count": 495,
       "present_domains": [
         "migration_lineage",
         "patch_lineage",
@@ -4546,7 +4582,7 @@
     "runtime://toolchain_discovery"
   ],
   "immutable_evidence_history": true,
-  "lineage_id": "runtime_evidence_ingestion_real_hw_v6",
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v3",
   "normalized_events": [
     {
       "be_reference": "",
@@ -4673,12 +4709,12 @@
       "event_id": "debugfs:1",
       "event_type": "debugfs_runtime_state",
       "fe_reference": "",
-      "message": "QCS6490-RB3Gen2  components       dais",
+      "message": "cat: read error: Is a directory",
       "raw": {
         "event_id": "debugfs:1",
         "event_type": "debugfs_runtime_state",
-        "message": "QCS6490-RB3Gen2  components       dais",
-        "raw": "QCS6490-RB3Gen2  components       dais",
+        "message": "cat: read error: Is a directory",
+        "raw": "cat: read error: Is a directory",
         "source": "debugfs_state",
         "timestamp_ms": 1004.5
       },
@@ -4814,12 +4850,12 @@
       "event_id": "debugfs:2",
       "event_type": "debugfs_runtime_state",
       "fe_reference": "",
-      "message": "QCS6490-RB3Gen2  components       dais",
+      "message": "cat: read error: Is a directory",
       "raw": {
         "event_id": "debugfs:2",
         "event_type": "debugfs_runtime_state",
-        "message": "QCS6490-RB3Gen2  components       dais",
-        "raw": "QCS6490-RB3Gen2  components       dais",
+        "message": "cat: read error: Is a directory",
+        "raw": "cat: read error: Is a directory",
         "source": "debugfs_state",
         "timestamp_ms": 1009.0
       },
@@ -4949,6 +4985,33 @@
       "be_reference": "",
       "correlated_domains": [
         "runtime_truth_graph",
+        "semantic_ontology"
+      ],
+      "dpcm_lifecycle_state": "UNKNOWN",
+      "dsp_lineage_id": "",
+      "event_id": "debugfs:3",
+      "event_type": "debugfs_runtime_state",
+      "fe_reference": "",
+      "message": "cat: read error: Is a directory",
+      "raw": {
+        "event_id": "debugfs:3",
+        "event_type": "debugfs_runtime_state",
+        "message": "cat: read error: Is a directory",
+        "raw": "cat: read error: Is a directory",
+        "source": "debugfs_state",
+        "timestamp_ms": 1013.5
+      },
+      "soundwire_entity": "",
+      "source": "debugfs_state",
+      "source_key": "debugfs_runtime",
+      "subsystem": "KERNEL_STATE",
+      "subsystem_id": "kernel_state",
+      "timestamp_ms": 1013.5
+    },
+    {
+      "be_reference": "",
+      "correlated_domains": [
+        "runtime_truth_graph",
         "semantic_ontology",
         "structural_cognition",
         "topology_cognition"
@@ -5030,6 +5093,33 @@
       "subsystem": "KERNEL_STATE",
       "subsystem_id": "kernel_state",
       "timestamp_ms": 1016.0
+    },
+    {
+      "be_reference": "",
+      "correlated_domains": [
+        "runtime_truth_graph",
+        "semantic_ontology"
+      ],
+      "dpcm_lifecycle_state": "UNKNOWN",
+      "dsp_lineage_id": "",
+      "event_id": "debugfs:4",
+      "event_type": "debugfs_runtime_state",
+      "fe_reference": "",
+      "message": "cat: read error: Is a directory",
+      "raw": {
+        "event_id": "debugfs:4",
+        "event_type": "debugfs_runtime_state",
+        "message": "cat: read error: Is a directory",
+        "raw": "cat: read error: Is a directory",
+        "source": "debugfs_state",
+        "timestamp_ms": 1018.0
+      },
+      "soundwire_entity": "",
+      "source": "debugfs_state",
+      "source_key": "debugfs_runtime",
+      "subsystem": "KERNEL_STATE",
+      "subsystem_id": "kernel_state",
+      "timestamp_ms": 1018.0
     },
     {
       "be_reference": "",
@@ -5154,6 +5244,33 @@
       ],
       "dpcm_lifecycle_state": "UNKNOWN",
       "dsp_lineage_id": "",
+      "event_id": "debugfs:5",
+      "event_type": "debugfs_runtime_state",
+      "fe_reference": "",
+      "message": "cat: read error: Is a directory",
+      "raw": {
+        "event_id": "debugfs:5",
+        "event_type": "debugfs_runtime_state",
+        "message": "cat: read error: Is a directory",
+        "raw": "cat: read error: Is a directory",
+        "source": "debugfs_state",
+        "timestamp_ms": 1022.5
+      },
+      "soundwire_entity": "",
+      "source": "debugfs_state",
+      "source_key": "debugfs_runtime",
+      "subsystem": "KERNEL_STATE",
+      "subsystem_id": "kernel_state",
+      "timestamp_ms": 1022.5
+    },
+    {
+      "be_reference": "",
+      "correlated_domains": [
+        "runtime_truth_graph",
+        "semantic_ontology"
+      ],
+      "dpcm_lifecycle_state": "UNKNOWN",
+      "dsp_lineage_id": "",
       "event_id": "procfs:6",
       "event_type": "procfs_runtime_state",
       "fe_reference": "",
@@ -5231,6 +5348,33 @@
       "subsystem": "ALSA_PCM",
       "subsystem_id": "alsa_pcm",
       "timestamp_ms": 1025.0
+    },
+    {
+      "be_reference": "",
+      "correlated_domains": [
+        "runtime_truth_graph",
+        "semantic_ontology"
+      ],
+      "dpcm_lifecycle_state": "UNKNOWN",
+      "dsp_lineage_id": "",
+      "event_id": "debugfs:6",
+      "event_type": "debugfs_runtime_state",
+      "fe_reference": "",
+      "message": "cat: read error: Is a directory",
+      "raw": {
+        "event_id": "debugfs:6",
+        "event_type": "debugfs_runtime_state",
+        "message": "cat: read error: Is a directory",
+        "raw": "cat: read error: Is a directory",
+        "source": "debugfs_state",
+        "timestamp_ms": 1027.0
+      },
+      "soundwire_entity": "",
+      "source": "debugfs_state",
+      "source_key": "debugfs_runtime",
+      "subsystem": "KERNEL_STATE",
+      "subsystem_id": "kernel_state",
+      "timestamp_ms": 1027.0
     },
     {
       "be_reference": "",
@@ -18342,11 +18486,11 @@
   "report_name": "normalized_runtime_evidence",
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "runtime_session_real_hw_ingest_v6",
+  "session_id": "runtime_session_real_hw_ingest_v3",
   "source_status": {
     "debugfs_runtime": {
       "classification": "PRESENT",
-      "event_count": 2
+      "event_count": 6
     },
     "dmesg": {
       "classification": "PRESENT",
@@ -18396,7 +18540,7 @@
       "soundwire_runtime",
       "irq_runtime"
     ],
-    "normalized_event_count": 491,
+    "normalized_event_count": 495,
     "required_source_count": 10,
     "timestamp_order_score": 1.0
   },
