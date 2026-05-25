@@ -1,0 +1,483 @@
+{
+  "after_snapshot": {
+    "commands": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "head -n 200 /proc/interrupts",
+      "dmesg | tail -200",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "amixer",
+      "tinymix"
+    ],
+    "request_id": "9bb24ca7-39fb-40b4-a0a9-de9520d52c96"
+  },
+  "before_snapshot": {
+    "commands": [
+      "cat /proc/asound/cards",
+      "cat /proc/asound/pcm",
+      "head -n 200 /proc/interrupts",
+      "dmesg | tail -200",
+      "cat /sys/kernel/debug/asoc/*/dapm",
+      "amixer",
+      "tinymix"
+    ],
+    "request_id": "c04cd276-0a0d-4380-8bf4-11bdf91dc8cf"
+  },
+  "dapm_delta": {
+    "changes": [],
+    "summary": {
+      "after_on_count": 0,
+      "before_on_count": 0,
+      "change_count": 0,
+      "oscillation_detected": false
+    }
+  },
+  "deterministic_fingerprint": "0d4c221c2e54be802b5367712d7d18ef1c3522f45dc36eca7140ea6143c91635",
+  "dmesg_delta": {
+    "lines": [],
+    "summary": {
+      "hw_params_mentions": 0,
+      "line_count": 0,
+      "pcm_mentions": 0,
+      "prepare_mentions": 0,
+      "soundwire_mentions": 0,
+      "trigger_mentions": 0
+    }
+  },
+  "during_window": {
+    "note": "during metrics are derived from governed playback command trace window",
+    "playback_trace": {
+      "cleanup_command": "AURA_ADB_RM /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+      "cleanup_request": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_87861cc1-d8cc-493d-a50b-bf9b131299ad.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_87861cc1-d8cc-493d-a50b-bf9b131299ad.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_87861cc1-d8cc-493d-a50b-bf9b131299ad.json",
+        "request_id": "87861cc1-d8cc-493d-a50b-bf9b131299ad",
+        "request_sequence": 365,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_87861cc1-d8cc-493d-a50b-bf9b131299ad.json"
+      },
+      "execution_status": "failed",
+      "exit_code": 32,
+      "finished_at": "2026-05-25T14:38:49.3632194Z",
+      "playback_attempt_count": 8,
+      "playback_attempts": [
+        {
+          "exit_code": 32,
+          "playback_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "plughw:0,0",
+          "summary": {
+            "classification": "ADVISORY_ONLY",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_805b8634-10cc-4539-8943-c5d6724d11cf.json",
+            "reason": "nonzero_exit_code",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_805b8634-10cc-4539-8943-c5d6724d11cf.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_805b8634-10cc-4539-8943-c5d6724d11cf.json",
+            "request_id": "805b8634-10cc-4539-8943-c5d6724d11cf",
+            "request_sequence": 357,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_805b8634-10cc-4539-8943-c5d6724d11cf.json"
+          }
+        },
+        {
+          "exit_code": 32,
+          "playback_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "hw:0,0",
+          "summary": {
+            "classification": "ADVISORY_ONLY",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.json",
+            "reason": "nonzero_exit_code",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.json",
+            "request_id": "ea615bae-a96e-4dd1-bff5-46f5c7e48f7a",
+            "request_sequence": 358,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.json"
+          }
+        },
+        {
+          "exit_code": 32,
+          "playback_command": "AURA_PLAYBACK_APLAY plughw:0,2 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "plughw:0,2",
+          "summary": {
+            "classification": "ADVISORY_ONLY",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_e25b774c-4c89-469f-85d5-0b8027eee325.json",
+            "reason": "nonzero_exit_code",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_e25b774c-4c89-469f-85d5-0b8027eee325.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_e25b774c-4c89-469f-85d5-0b8027eee325.json",
+            "request_id": "e25b774c-4c89-469f-85d5-0b8027eee325",
+            "request_sequence": 359,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_e25b774c-4c89-469f-85d5-0b8027eee325.json"
+          }
+        },
+        {
+          "exit_code": 32,
+          "playback_command": "AURA_PLAYBACK_APLAY hw:0,2 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "hw:0,2",
+          "summary": {
+            "classification": "ADVISORY_ONLY",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_93bc96c8-2aa8-4ddb-af75-6521f08a175c.json",
+            "reason": "nonzero_exit_code",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_93bc96c8-2aa8-4ddb-af75-6521f08a175c.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_93bc96c8-2aa8-4ddb-af75-6521f08a175c.json",
+            "request_id": "93bc96c8-2aa8-4ddb-af75-6521f08a175c",
+            "request_sequence": 360,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_93bc96c8-2aa8-4ddb-af75-6521f08a175c.json"
+          }
+        },
+        {
+          "exit_code": 32,
+          "playback_command": "AURA_PLAYBACK_APLAY plughw:0,3 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "plughw:0,3",
+          "summary": {
+            "classification": "ADVISORY_ONLY",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_2da7f1be-3401-41db-bd1d-0b9f897319b8.json",
+            "reason": "nonzero_exit_code",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_2da7f1be-3401-41db-bd1d-0b9f897319b8.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_2da7f1be-3401-41db-bd1d-0b9f897319b8.json",
+            "request_id": "2da7f1be-3401-41db-bd1d-0b9f897319b8",
+            "request_sequence": 361,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_2da7f1be-3401-41db-bd1d-0b9f897319b8.json"
+          }
+        },
+        {
+          "exit_code": 32,
+          "playback_command": "AURA_PLAYBACK_APLAY hw:0,3 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "hw:0,3",
+          "summary": {
+            "classification": "ADVISORY_ONLY",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+            "reason": "nonzero_exit_code",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+            "request_id": "35a26b6d-7fbb-419b-9af2-0b9d1f5175b3",
+            "request_sequence": 362,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json"
+          }
+        },
+        {
+          "exit_code": -1,
+          "playback_command": "AURA_PLAYBACK_APLAY default /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "default",
+          "summary": {
+            "classification": "INVALID",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_f068ec99-a74b-440f-bfd1-0fa112b33a7c.json",
+            "reason": "executor_command_trace_length_mismatch",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_f068ec99-a74b-440f-bfd1-0fa112b33a7c.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_f068ec99-a74b-440f-bfd1-0fa112b33a7c.json",
+            "request_id": "f068ec99-a74b-440f-bfd1-0fa112b33a7c",
+            "request_sequence": 363,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_f068ec99-a74b-440f-bfd1-0fa112b33a7c.json"
+          }
+        },
+        {
+          "exit_code": -1,
+          "playback_command": "AURA_PLAYBACK_APLAY sysdefault /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+          "playback_device": "sysdefault",
+          "summary": {
+            "classification": "INVALID",
+            "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_3745758c-b1f1-496c-9a21-a4d15208447d.json",
+            "reason": "executor_command_trace_length_mismatch",
+            "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_3745758c-b1f1-496c-9a21-a4d15208447d.md",
+            "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_3745758c-b1f1-496c-9a21-a4d15208447d.json",
+            "request_id": "3745758c-b1f1-496c-9a21-a4d15208447d",
+            "request_sequence": 364,
+            "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_3745758c-b1f1-496c-9a21-a4d15208447d.json"
+          }
+        }
+      ],
+      "playback_command": "AURA_PLAYBACK_APLAY hw:0,3 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+      "playback_request": {
+        "classification": "ADVISORY_ONLY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+        "reason": "nonzero_exit_code",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+        "request_id": "35a26b6d-7fbb-419b-9af2-0b9d1f5175b3",
+        "request_sequence": 362,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json"
+      },
+      "push_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/golden_runtime_session_v1.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+      "push_request": {
+        "classification": "CAPTURE_READY",
+        "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.json",
+        "reason": "response_validated",
+        "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.md",
+        "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.json",
+        "request_id": "8ae0e421-764d-4ea6-ac17-d8660b2a79a8",
+        "request_sequence": 356,
+        "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.json"
+      },
+      "started_at": "2026-05-25T14:38:49.1969041Z",
+      "stderr": "",
+      "stdout_sample": [
+        "aplay: main:831: audio open error: Invalid argument"
+      ]
+    }
+  },
+  "irq_delta": {
+    "audio_rows": [],
+    "rows": [
+      {
+        "after_total": 203003,
+        "audio_related": false,
+        "before_total": 201283,
+        "delta": 1720,
+        "irq_id": "108",
+        "label": "GICv3 38 Level arch_mem_timer"
+      },
+      {
+        "after_total": 45004,
+        "audio_related": false,
+        "before_total": 43425,
+        "delta": 1579,
+        "irq_id": "11",
+        "label": "GICv3 27 Level arch_timer"
+      },
+      {
+        "after_total": 11745,
+        "audio_related": false,
+        "before_total": 10587,
+        "delta": 1158,
+        "irq_id": "14",
+        "label": "GICv3 37 Level 18200000.rsc"
+      },
+      {
+        "after_total": 229,
+        "audio_related": false,
+        "before_total": 226,
+        "delta": 3,
+        "irq_id": "161",
+        "label": "GICv3 113 Level 9091000.pmu"
+      },
+      {
+        "after_total": 191,
+        "audio_related": false,
+        "before_total": 189,
+        "delta": 2,
+        "irq_id": "172",
+        "label": "GICv3 613 Level 90b6400.pmu"
+      },
+      {
+        "after_total": 27621,
+        "audio_related": false,
+        "before_total": 22909,
+        "delta": 4712,
+        "irq_id": "220",
+        "label": "GICv3 165 Level dwc3"
+      },
+      {
+        "after_total": 5413,
+        "audio_related": false,
+        "before_total": 5350,
+        "delta": 63,
+        "irq_id": "IPI0",
+        "label": "Rescheduling interrupts"
+      },
+      {
+        "after_total": 106964,
+        "audio_related": false,
+        "before_total": 95427,
+        "delta": 11537,
+        "irq_id": "IPI1",
+        "label": "Function call interrupts"
+      },
+      {
+        "after_total": 32355,
+        "audio_related": false,
+        "before_total": 31791,
+        "delta": 564,
+        "irq_id": "IPI4",
+        "label": "Timer broadcast interrupts"
+      },
+      {
+        "after_total": 11142,
+        "audio_related": false,
+        "before_total": 9983,
+        "delta": 1159,
+        "irq_id": "IPI5",
+        "label": "IRQ work interrupts"
+      }
+    ],
+    "summary": {
+      "audio_delta_count": 0,
+      "irq_active": false,
+      "total_delta_count": 10
+    }
+  },
+  "mixer_mutation": {
+    "amixer": {
+      "changed_line_count": 0,
+      "changed_lines_sample": []
+    },
+    "tinymix": {
+      "changed_line_count": 0,
+      "changed_lines_sample": []
+    }
+  },
+  "playback_execution": {
+    "cleanup_command": "AURA_ADB_RM /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+    "cleanup_request": {
+      "classification": "CAPTURE_READY",
+      "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_87861cc1-d8cc-493d-a50b-bf9b131299ad.json",
+      "reason": "response_validated",
+      "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_87861cc1-d8cc-493d-a50b-bf9b131299ad.md",
+      "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_87861cc1-d8cc-493d-a50b-bf9b131299ad.json",
+      "request_id": "87861cc1-d8cc-493d-a50b-bf9b131299ad",
+      "request_sequence": 365,
+      "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_87861cc1-d8cc-493d-a50b-bf9b131299ad.json"
+    },
+    "execution_status": "failed",
+    "exit_code": 32,
+    "finished_at": "2026-05-25T14:38:49.3632194Z",
+    "playback_attempt_count": 8,
+    "playback_attempts": [
+      {
+        "exit_code": 32,
+        "playback_command": "AURA_PLAYBACK_APLAY plughw:0,0 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "plughw:0,0",
+        "summary": {
+          "classification": "ADVISORY_ONLY",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_805b8634-10cc-4539-8943-c5d6724d11cf.json",
+          "reason": "nonzero_exit_code",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_805b8634-10cc-4539-8943-c5d6724d11cf.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_805b8634-10cc-4539-8943-c5d6724d11cf.json",
+          "request_id": "805b8634-10cc-4539-8943-c5d6724d11cf",
+          "request_sequence": 357,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_805b8634-10cc-4539-8943-c5d6724d11cf.json"
+        }
+      },
+      {
+        "exit_code": 32,
+        "playback_command": "AURA_PLAYBACK_APLAY hw:0,0 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "hw:0,0",
+        "summary": {
+          "classification": "ADVISORY_ONLY",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.json",
+          "reason": "nonzero_exit_code",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.json",
+          "request_id": "ea615bae-a96e-4dd1-bff5-46f5c7e48f7a",
+          "request_sequence": 358,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_ea615bae-a96e-4dd1-bff5-46f5c7e48f7a.json"
+        }
+      },
+      {
+        "exit_code": 32,
+        "playback_command": "AURA_PLAYBACK_APLAY plughw:0,2 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "plughw:0,2",
+        "summary": {
+          "classification": "ADVISORY_ONLY",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_e25b774c-4c89-469f-85d5-0b8027eee325.json",
+          "reason": "nonzero_exit_code",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_e25b774c-4c89-469f-85d5-0b8027eee325.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_e25b774c-4c89-469f-85d5-0b8027eee325.json",
+          "request_id": "e25b774c-4c89-469f-85d5-0b8027eee325",
+          "request_sequence": 359,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_e25b774c-4c89-469f-85d5-0b8027eee325.json"
+        }
+      },
+      {
+        "exit_code": 32,
+        "playback_command": "AURA_PLAYBACK_APLAY hw:0,2 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "hw:0,2",
+        "summary": {
+          "classification": "ADVISORY_ONLY",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_93bc96c8-2aa8-4ddb-af75-6521f08a175c.json",
+          "reason": "nonzero_exit_code",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_93bc96c8-2aa8-4ddb-af75-6521f08a175c.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_93bc96c8-2aa8-4ddb-af75-6521f08a175c.json",
+          "request_id": "93bc96c8-2aa8-4ddb-af75-6521f08a175c",
+          "request_sequence": 360,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_93bc96c8-2aa8-4ddb-af75-6521f08a175c.json"
+        }
+      },
+      {
+        "exit_code": 32,
+        "playback_command": "AURA_PLAYBACK_APLAY plughw:0,3 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "plughw:0,3",
+        "summary": {
+          "classification": "ADVISORY_ONLY",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_2da7f1be-3401-41db-bd1d-0b9f897319b8.json",
+          "reason": "nonzero_exit_code",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_2da7f1be-3401-41db-bd1d-0b9f897319b8.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_2da7f1be-3401-41db-bd1d-0b9f897319b8.json",
+          "request_id": "2da7f1be-3401-41db-bd1d-0b9f897319b8",
+          "request_sequence": 361,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_2da7f1be-3401-41db-bd1d-0b9f897319b8.json"
+        }
+      },
+      {
+        "exit_code": 32,
+        "playback_command": "AURA_PLAYBACK_APLAY hw:0,3 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "hw:0,3",
+        "summary": {
+          "classification": "ADVISORY_ONLY",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+          "reason": "nonzero_exit_code",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+          "request_id": "35a26b6d-7fbb-419b-9af2-0b9d1f5175b3",
+          "request_sequence": 362,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json"
+        }
+      },
+      {
+        "exit_code": -1,
+        "playback_command": "AURA_PLAYBACK_APLAY default /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "default",
+        "summary": {
+          "classification": "INVALID",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_f068ec99-a74b-440f-bfd1-0fa112b33a7c.json",
+          "reason": "executor_command_trace_length_mismatch",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_f068ec99-a74b-440f-bfd1-0fa112b33a7c.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_f068ec99-a74b-440f-bfd1-0fa112b33a7c.json",
+          "request_id": "f068ec99-a74b-440f-bfd1-0fa112b33a7c",
+          "request_sequence": 363,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_f068ec99-a74b-440f-bfd1-0fa112b33a7c.json"
+        }
+      },
+      {
+        "exit_code": -1,
+        "playback_command": "AURA_PLAYBACK_APLAY sysdefault /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+        "playback_device": "sysdefault",
+        "summary": {
+          "classification": "INVALID",
+          "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_3745758c-b1f1-496c-9a21-a4d15208447d.json",
+          "reason": "executor_command_trace_length_mismatch",
+          "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_3745758c-b1f1-496c-9a21-a4d15208447d.md",
+          "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_3745758c-b1f1-496c-9a21-a4d15208447d.json",
+          "request_id": "3745758c-b1f1-496c-9a21-a4d15208447d",
+          "request_sequence": 364,
+          "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_3745758c-b1f1-496c-9a21-a4d15208447d.json"
+        }
+      }
+    ],
+    "playback_command": "AURA_PLAYBACK_APLAY hw:0,3 /data/local/tmp/aura/audio/golden_runtime_session_v1.wav",
+    "playback_request": {
+      "classification": "ADVISORY_ONLY",
+      "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+      "reason": "nonzero_exit_code",
+      "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.md",
+      "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json",
+      "request_id": "35a26b6d-7fbb-419b-9af2-0b9d1f5175b3",
+      "request_sequence": 362,
+      "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_35a26b6d-7fbb-419b-9af2-0b9d1f5175b3.json"
+    },
+    "push_command": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/golden_runtime_session_v1.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite",
+    "push_request": {
+      "classification": "CAPTURE_READY",
+      "lineage": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_lineage_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.json",
+      "reason": "response_validated",
+      "report": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_execution_report_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.md",
+      "request": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_request_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.json",
+      "request_id": "8ae0e421-764d-4ea6-ac17-d8660b2a79a8",
+      "request_sequence": 356,
+      "response": "/local/mnt/workspace/AURA_V1/docs/operations/transport/bridge_response_8ae0e421-764d-4ea6-ac17-d8660b2a79a8.json"
+    },
+    "started_at": "2026-05-25T14:38:49.1969041Z",
+    "stderr": "",
+    "stdout_sample": [
+      "aplay: main:831: audio open error: Invalid argument"
+    ]
+  },
+  "session_id": "GOLDEN_RUNTIME_SESSION_V1"
+}

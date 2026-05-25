@@ -287,7 +287,7 @@ for original in sys.argv[1:]:
             print(json.dumps({"ok": False, "reason": "playback_aplay_format_invalid"}))
             raise SystemExit(0)
         alsa_device, target_path = parts[1], parts[2]
-        if not re.fullmatch(r"(hw|plughw):\d+,\d+", alsa_device):
+        if not re.fullmatch(r"(?:(?:hw|plughw):\d+,\d+|default|sysdefault(?:[:][A-Za-z0-9_,.-]+)?)", alsa_device):
             print(json.dumps({"ok": False, "reason": "playback_aplay_device_invalid"}))
             raise SystemExit(0)
         if not re.fullmatch(r"/data/local/tmp/aura/audio/[A-Za-z0-9._/-]+", target_path):

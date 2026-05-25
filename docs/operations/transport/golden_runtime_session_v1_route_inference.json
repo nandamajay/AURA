@@ -1,0 +1,459 @@
+{
+  "dependency_graph": {
+    "edges": [
+      {
+        "from": "pcm:speaker",
+        "relation": "requires",
+        "to": "mixer:inferred"
+      },
+      {
+        "from": "mixer:inferred",
+        "relation": "activates",
+        "to": "dapm:widgets"
+      },
+      {
+        "from": "dapm:widgets",
+        "relation": "propagates_to",
+        "to": "soundwire:runtime"
+      }
+    ],
+    "nodes": [
+      {
+        "id": "pcm:speaker",
+        "kind": "pcm",
+        "label": "hw:0,0"
+      },
+      {
+        "id": "mixer:inferred",
+        "kind": "mixer",
+        "label": "inferred_controls"
+      },
+      {
+        "id": "dapm:widgets",
+        "kind": "dapm",
+        "label": "runtime_widgets"
+      },
+      {
+        "id": "soundwire:runtime",
+        "kind": "runtime",
+        "label": "soundwire_or_swr"
+      }
+    ]
+  },
+  "deterministic_fingerprint": "efa2cea15eff10bfe915699a8d37f3ad2a8a0dfada45315a400beaeddbae3c28",
+  "headphone_route": {
+    "alsa_device": "hw:0,0",
+    "interface": "",
+    "name": "MultiMedia1 Playback (*)",
+    "pcm_id": "00-00",
+    "streams": 1
+  },
+  "mixer_inference": {
+    "headphone_amixer_controls": [
+      "DISPLAY_PORT_RX_0 Audio Mixer MultiMedia4",
+      "SECONDARY_MI2S_RX Audio Mixer MultiMedia3",
+      "SpkrLeft DAC",
+      "SpkrRight DAC",
+      "VA DEC0 MUX",
+      "VA DEC1 MUX",
+      "VA DEC2 MUX",
+      "VA DEC3 MUX",
+      "VA DMIC MUX0",
+      "VA DMIC MUX1",
+      "VA DMIC MUX2",
+      "VA DMIC MUX3",
+      "WSA RX0 MUX",
+      "WSA RX1 MUX",
+      "WSA RX_MIX EC0_MUX",
+      "WSA RX_MIX EC1_MUX",
+      "WSA RX_MIX0 MUX",
+      "WSA RX_MIX1 MUX",
+      "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+      "WSA_RX0 Digital",
+      "WSA_RX0 Digital Mute",
+      "WSA_RX0 EC_HQ",
+      "WSA_RX0 INP0",
+      "WSA_RX0 INP1",
+      "WSA_RX0 INP2",
+      "WSA_RX0 INT0 SIDETONE MIX",
+      "WSA_RX0 MIX INP",
+      "WSA_RX0_MIX Digital",
+      "WSA_RX0_MIX Digital Mute",
+      "WSA_RX1 Digital",
+      "WSA_RX1 Digital Mute",
+      "WSA_RX1 EC_HQ",
+      "WSA_RX1 INP0",
+      "WSA_RX1 INP1",
+      "WSA_RX1 INP2",
+      "WSA_RX1 MIX INP",
+      "WSA_RX1_MIX Digital",
+      "WSA_RX1_MIX Digital Mute"
+    ],
+    "headphone_tinymix_controls": [],
+    "inferred_activation_recipe": [
+      {
+        "control_name": "DISPLAY_PORT_RX_0 Audio Mixer MultiMedia4",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "EAR SPKR PA Gain",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SECONDARY_MI2S_RX Audio Mixer MultiMedia3",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft BOOST",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft COMP",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft COMP Offset",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft DAC",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft PA",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft VISENSE",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrLeft WSA MODE",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight BOOST",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight COMP",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight COMP Offset",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight DAC",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight PA",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight VISENSE",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "SpkrRight WSA MODE",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DEC0 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DEC1 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DEC2 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DEC3 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DMIC MUX0",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DMIC MUX1",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DMIC MUX2",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "VA DMIC MUX3",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA RX0 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA RX1 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA RX_MIX EC0_MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA RX_MIX EC1_MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA RX_MIX0 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA RX_MIX1 MUX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_AIF_VI Mixer WSA_SPKR_VI_1",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_AIF_VI Mixer WSA_SPKR_VI_2",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_COMP1",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_COMP2",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 Digital",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 Digital Mute",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 EC_HQ",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 INP0",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 INP1",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 INP2",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 INT0 SIDETONE MIX",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0 MIX INP",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0_MIX Digital",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX0_MIX Digital Mute",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 Digital",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 Digital Mute",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 EC_HQ",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 INP0",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 INP1",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 INP2",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1 MIX INP",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1_MIX Digital",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_RX1_MIX Digital Mute",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_Softclip0 Enable",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      },
+      {
+        "control_name": "WSA_Softclip1 Enable",
+        "reason": "speaker_keyword_match",
+        "source": "amixer"
+      }
+    ],
+    "speaker_amixer_controls": [
+      "DISPLAY_PORT_RX_0 Audio Mixer MultiMedia4",
+      "EAR SPKR PA Gain",
+      "SECONDARY_MI2S_RX Audio Mixer MultiMedia3",
+      "SpkrLeft BOOST",
+      "SpkrLeft COMP",
+      "SpkrLeft COMP Offset",
+      "SpkrLeft DAC",
+      "SpkrLeft PA",
+      "SpkrLeft VISENSE",
+      "SpkrLeft WSA MODE",
+      "SpkrRight BOOST",
+      "SpkrRight COMP",
+      "SpkrRight COMP Offset",
+      "SpkrRight DAC",
+      "SpkrRight PA",
+      "SpkrRight VISENSE",
+      "SpkrRight WSA MODE",
+      "VA DEC0 MUX",
+      "VA DEC1 MUX",
+      "VA DEC2 MUX",
+      "VA DEC3 MUX",
+      "VA DMIC MUX0",
+      "VA DMIC MUX1",
+      "VA DMIC MUX2",
+      "VA DMIC MUX3",
+      "WSA RX0 MUX",
+      "WSA RX1 MUX",
+      "WSA RX_MIX EC0_MUX",
+      "WSA RX_MIX EC1_MUX",
+      "WSA RX_MIX0 MUX",
+      "WSA RX_MIX1 MUX",
+      "WSA_AIF_VI Mixer WSA_SPKR_VI_1",
+      "WSA_AIF_VI Mixer WSA_SPKR_VI_2",
+      "WSA_CODEC_DMA_RX_0 Audio Mixer MultiMedia1",
+      "WSA_COMP1",
+      "WSA_COMP2",
+      "WSA_RX0 Digital",
+      "WSA_RX0 Digital Mute",
+      "WSA_RX0 EC_HQ",
+      "WSA_RX0 INP0",
+      "WSA_RX0 INP1",
+      "WSA_RX0 INP2",
+      "WSA_RX0 INT0 SIDETONE MIX",
+      "WSA_RX0 MIX INP",
+      "WSA_RX0_MIX Digital",
+      "WSA_RX0_MIX Digital Mute",
+      "WSA_RX1 Digital",
+      "WSA_RX1 Digital Mute",
+      "WSA_RX1 EC_HQ",
+      "WSA_RX1 INP0",
+      "WSA_RX1 INP1",
+      "WSA_RX1 INP2",
+      "WSA_RX1 MIX INP",
+      "WSA_RX1_MIX Digital",
+      "WSA_RX1_MIX Digital Mute",
+      "WSA_Softclip0 Enable",
+      "WSA_Softclip1 Enable"
+    ],
+    "speaker_tinymix_controls": []
+  },
+  "route_confidence": {
+    "confidence": "MEDIUM",
+    "confidence_score": 0.75,
+    "factors": {
+      "dapm_widgets_discovered": false,
+      "mixer_dependencies_discovered": true,
+      "soundwire_or_debugfs_present": true,
+      "speaker_pcm_discovered": true
+    }
+  },
+  "session_id": "GOLDEN_RUNTIME_SESSION_V1",
+  "speaker_route": {
+    "alsa_device": "hw:0,0",
+    "interface": "",
+    "name": "MultiMedia1 Playback (*)",
+    "pcm_id": "00-00",
+    "streams": 1
+  }
+}
