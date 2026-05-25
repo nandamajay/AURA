@@ -93,6 +93,21 @@ function Normalize-CanonicalCommand {
     return (($trimmed -split "\s+" | Where-Object { $_ -ne "" }) -join " ")
 }
 
+function Get-TaskTextOrEmpty {
+    param(
+        [Parameter(Mandatory = $true)]$Task,
+        [int]$WaitMilliseconds = 1500
+    )
+    try {
+        [void]$Task.Wait($WaitMilliseconds)
+        if ($Task.IsCompletedSuccessfully) {
+            return [string]$Task.Result
+        }
+    } catch {
+    }
+    return ""
+}
+
 function Test-ForbiddenCommand {
     param([string]$Command)
     $lowered = $Command.ToLowerInvariant()
@@ -234,23 +249,32 @@ function Invoke-AdbCli {
     $proc = New-Object System.Diagnostics.Process
     $proc.StartInfo = $psi
     [void]$proc.Start()
+    $stdoutTask = $proc.StandardOutput.ReadToEndAsync()
+    $stderrTask = $proc.StandardError.ReadToEndAsync()
     $finished = $proc.WaitForExit($TimeoutSeconds * 1000)
     if (-not $finished) {
         try { $proc.Kill() } catch {}
         try { $proc.WaitForExit() } catch {}
+        $stdout = Get-TaskTextOrEmpty -Task $stdoutTask
+        $stderr = Get-TaskTextOrEmpty -Task $stderrTask
+        if ([string]::IsNullOrWhiteSpace($stderr)) {
+            $stderr = "command_timeout"
+        }
         return @{
             status = "timeout"
             exit_code = -1
-            stdout = ""
-            stderr = "command_timeout"
+            stdout = $stdout
+            stderr = $stderr
             invocation = "$AdbPath $($Arguments -join ' ')"
         }
     }
+    $stdout = Get-TaskTextOrEmpty -Task $stdoutTask
+    $stderr = Get-TaskTextOrEmpty -Task $stderrTask
     return @{
         status = $(if ($proc.ExitCode -eq 0) { "executed" } else { "failed" })
         exit_code = $proc.ExitCode
-        stdout = $proc.StandardOutput.ReadToEnd()
-        stderr = $proc.StandardError.ReadToEnd()
+        stdout = $stdout
+        stderr = $stderr
         invocation = "$AdbPath $($Arguments -join ' ')"
     }
 }
@@ -796,13 +820,18 @@ function Invoke-BoundedCommand {
     $proc = New-Object System.Diagnostics.Process
     $proc.StartInfo = $psi
     [void]$proc.Start()
+    $stdoutTask = $proc.StandardOutput.ReadToEndAsync()
+    $stderrTask = $proc.StandardError.ReadToEndAsync()
 
     $finishedInTime = $proc.WaitForExit($TimeoutSeconds * 1000)
     if (-not $finishedInTime) {
         try { $proc.Kill() } catch {}
         try { $proc.WaitForExit() } catch {}
-        $stdout = ""
-        $stderr = "command_timeout"
+        $stdout = Get-TaskTextOrEmpty -Task $stdoutTask
+        $stderr = Get-TaskTextOrEmpty -Task $stderrTask
+        if ([string]::IsNullOrWhiteSpace($stderr)) {
+            $stderr = "command_timeout"
+        }
         $finishedAt = (Get-Date).ToUniversalTime().ToString("o")
         if ($LiveTrace) {
             Write-Host "[TARGET][STATUS] command_status=timeout exit_code=-1"
@@ -820,8 +849,8 @@ function Invoke-BoundedCommand {
         }
     }
 
-    $stdout = $proc.StandardOutput.ReadToEnd()
-    $stderr = $proc.StandardError.ReadToEnd()
+    $stdout = Get-TaskTextOrEmpty -Task $stdoutTask
+    $stderr = Get-TaskTextOrEmpty -Task $stderrTask
     $exitCode = $proc.ExitCode
     $status = if ($exitCode -eq 0) { "executed" } else { "failed" }
     $combinedText = (($stdout ?? "") + "`n" + ($stderr ?? "")).ToLowerInvariant()
