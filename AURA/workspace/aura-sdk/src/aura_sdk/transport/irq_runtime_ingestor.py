@@ -10,6 +10,10 @@ from aura_sdk.transport.semantic_fingerprint import stable_fingerprint
 
 
 _IRQ_RE = re.compile(r"\birq\b|\binterrupt\b", re.IGNORECASE)
+_IRQ_LINE_RE = re.compile(
+    r"^\s*(?:\d+|IPI\d+|Err|HI|TIMER|NET_TX|NET_RX|BLOCK|IRQ_POLL|TASKLET|SCHED|HRTIMER|RCU)\s*:",
+    re.IGNORECASE,
+)
 _TS_RE = re.compile(r"^\s*(\d+(?:\.\d+)?)")
 
 
@@ -50,7 +54,7 @@ def ingest_irq_runtime(payload: Mapping[str, Any]) -> IrqRuntimeIngestionResult:
     events: list[dict[str, Any]] = []
     for idx, line in enumerate(lines, start=1):
         text = line.strip()
-        if not _IRQ_RE.search(text):
+        if not (_IRQ_RE.search(text) or _IRQ_LINE_RE.search(text)):
             continue
         events.append(
             {
