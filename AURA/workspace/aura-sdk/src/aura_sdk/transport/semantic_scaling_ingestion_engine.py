@@ -367,6 +367,8 @@ class SemanticScalingIngestionEngine:
         frontend_dais: set[str] = set()
         backend_dais: set[str] = set()
         include_name_to_file: dict[str, set[str]] = {}
+        for rel in files:
+            include_name_to_file.setdefault(Path(rel).name, set()).add(rel)
 
         for rel in files:
             parsed = _as_dict(parsed_by_file[rel])
@@ -379,8 +381,6 @@ class SemanticScalingIngestionEngine:
                     "evidence": {"file": rel},
                 }
             )
-
-            include_name_to_file.setdefault(Path(rel).name, set()).add(rel)
 
             for include in _as_list(parsed.get("includes")):
                 include_token = str(include)
@@ -426,14 +426,16 @@ class SemanticScalingIngestionEngine:
 
             funcs = _as_list(parsed.get("function_defs"))
             calls = _as_list(parsed.get("function_calls"))
-            for src in funcs[:120]:
-                for dst in calls[:160]:
-                    if str(src) == str(dst):
+            if funcs:
+                bounded_calls = [str(item) for item in calls[:1024] if str(item).strip()]
+                for idx, dst in enumerate(bounded_calls):
+                    src = str(funcs[idx % len(funcs)])
+                    if src == dst:
                         continue
                     call_edges.append(
                         {
                             "edge_type": "calls",
-                            "source": str(src),
+                            "source": src,
                             "target": str(dst),
                             "evidence": {"file": rel},
                         }
@@ -488,20 +490,35 @@ class SemanticScalingIngestionEngine:
             for name in _dedupe_sorted(all_controls)
         }
         widgets_sorted = _dedupe_sorted(all_widgets)
+        widget_tokens_map: dict[str, set[str]] = {
+            widget: {token for token in re.split(r"[^a-z0-9]+", widget.lower()) if token}
+            for widget in widgets_sorted
+        }
+        widget_index: dict[str, set[str]] = {}
+        for widget, tokens in sorted(widget_tokens_map.items()):
+            for token in sorted(tokens):
+                widget_index.setdefault(token, set()).add(widget)
+
         for control_name, tokens in sorted(control_tokens.items()):
-            for widget in widgets_sorted:
-                widget_tokens = {token for token in re.split(r"[^a-z0-9]+", widget.lower()) if token}
-                if not tokens or not widget_tokens:
-                    continue
-                if tokens.intersection(widget_tokens):
-                    control_edges.append(
-                        {
-                            "edge_type": "control_affects_widget",
-                            "source": control_name,
-                            "target": widget,
-                            "evidence": {"derived_from": "token_intersection"},
-                        }
-                    )
+            if not tokens:
+                continue
+            candidates: set[str] = set()
+            for token in sorted(tokens):
+                candidates.update(widget_index.get(token, set()))
+            scored: list[tuple[int, str]] = []
+            for widget in sorted(candidates):
+                overlap = len(tokens.intersection(widget_tokens_map.get(widget, set())))
+                if overlap > 0:
+                    scored.append((-overlap, widget))
+            for _, widget in sorted(scored)[:8]:
+                control_edges.append(
+                    {
+                        "edge_type": "control_affects_widget",
+                        "source": control_name,
+                        "target": widget,
+                        "evidence": {"derived_from": "token_intersection"},
+                    }
+                )
 
         fe_sorted = sorted(frontend_dais)
         be_sorted = sorted(backend_dais)
@@ -736,6 +753,118 @@ class SemanticScalingIngestionEngine:
         file_hashes = {rel: _sha256_file((root / rel).resolve()) for rel in discovered}
         corpus_fingerprint = stable_sha256({"files": sorted(file_hashes.items())})
         lineage_id = deterministic_uuid(f"semantic_scaling:{normalize_path(root)}:{corpus_fingerprint}")
+
+        if not discovered:
+            failure_diagnostics = {
+                "schema_version": _SCHEMA_VERSION,
+                "report_name": "semantic_failure_diagnostics",
+                "lineage_id": lineage_id,
+                "classification": "FAIL_CLOSED",
+                "fail_closed_reasons": ["no_eligible_source_files_discovered"],
+                "source_root": normalize_path(root),
+                "discovery_patterns": list(_DISCOVERY_PATTERNS),
+                "generated_at": _utc_now_iso(),
+            }
+            failure_diagnostics["deterministic_fingerprint"] = stable_sha256(failure_diagnostics)
+            cache_state = {
+                "schema_version": _SCHEMA_VERSION,
+                "report_name": "semantic_cache_state",
+                "parser_version": self._parser_version,
+                "lineage_id": lineage_id,
+                "source_root": normalize_path(root),
+                "files": {},
+                "parsed": {},
+                "include_reverse_deps": {},
+                "generated_at": _utc_now_iso(),
+            }
+            cache_state["deterministic_fingerprint"] = stable_sha256(cache_state)
+            summary = {
+                "schema_version": _SCHEMA_VERSION,
+                "report_name": "semantic_scaling_summary",
+                "lineage_id": lineage_id,
+                "classification": "FAIL_CLOSED",
+                "file_count": 0,
+                "changed_file_count": 0,
+                "reparsed_file_count": 0,
+                "reused_file_count": 0,
+                "cache_reuse_ratio": 0.0,
+                "edge_counts": {"include": 0, "call": 0, "macro": 0, "dapm": 0},
+                "topology_classification": "FAIL_CLOSED",
+                "simulation_classification": "FAIL_CLOSED",
+                "fail_closed_reasons": ["no_eligible_source_files_discovered"],
+                "generated_at": _utc_now_iso(),
+            }
+            summary["deterministic_fingerprint"] = stable_sha256(summary)
+            discovery_registry = {
+                "schema_version": _SCHEMA_VERSION,
+                "report_name": "semantic_driver_discovery_registry",
+                "parser_version": self._parser_version,
+                "lineage_id": lineage_id,
+                "source_root": normalize_path(root),
+                "discovery_patterns": list(_DISCOVERY_PATTERNS),
+                "file_count": 0,
+                "files": [],
+                "subsystem_groups": {},
+                "registry": {},
+                "evidence_references": evidence,
+                "generated_at": _utc_now_iso(),
+                "classification": "FAIL_CLOSED",
+                "fail_closed_reasons": ["no_eligible_source_files_discovered"],
+            }
+            discovery_registry["deterministic_fingerprint"] = stable_sha256(discovery_registry)
+            incremental_ingestion_report = {
+                "schema_version": _SCHEMA_VERSION,
+                "report_name": "semantic_incremental_ingestion_report",
+                "parser_version": self._parser_version,
+                "lineage_id": lineage_id,
+                "classification": "FAIL_CLOSED",
+                "fail_closed_reasons": ["no_eligible_source_files_discovered"],
+                "changed_files": [],
+                "removed_files": [],
+                "header_invalidation_dependents": [],
+                "reparsed_files": [],
+                "reused_files": [],
+                "reused_file_count": 0,
+                "reparsed_file_count": 0,
+                "cache_reuse_ratio": 0.0,
+                "include_reverse_deps_count": 0,
+                "parse_lineage": {},
+                "dependency_invalidation": {
+                    "dependency_engine": "include_reverse_deps",
+                    "graph_invalidation": [],
+                },
+                "generated_at": _utc_now_iso(),
+            }
+            incremental_ingestion_report["deterministic_fingerprint"] = stable_sha256(
+                incremental_ingestion_report
+            )
+
+            dump_canonical_json(out_dir / "semantic_driver_discovery_registry.json", discovery_registry)
+            dump_canonical_json(out_dir / "semantic_incremental_ingestion_report.json", incremental_ingestion_report)
+            dump_canonical_json(out_dir / "semantic_failure_diagnostics.json", failure_diagnostics)
+            dump_canonical_json(cache_path, cache_state)
+            dump_canonical_json(out_dir / "semantic_scaling_summary.json", summary)
+
+            return SemanticScalingResult(
+                discovery_registry=discovery_registry,
+                incremental_ingestion_report=incremental_ingestion_report,
+                include_dependency_graph={},
+                function_call_graph={},
+                macro_lineage_graph={},
+                dapm_route_graph={},
+                clock_dependency_graph={},
+                control_propagation_graph={},
+                subsystem_ownership_graph={},
+                stream_path_relationships={},
+                backend_frontend_dai_graph={},
+                inter_driver_dependency_graph={},
+                topology_model={},
+                simulation_replay={},
+                transition_log={},
+                failure_diagnostics=failure_diagnostics,
+                cache_state=cache_state,
+                summary=summary,
+            )
 
         previous_cache = {}
         if cache_path.exists():

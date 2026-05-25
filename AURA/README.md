@@ -93,6 +93,7 @@ make ci-parity
 # unified deterministic runtime launcher
 ./scripts/aura_runtime_launcher.sh --mode runtime-pipeline
 ./scripts/aura_runtime_launcher.sh --mode semantic
+./scripts/aura_runtime_launcher.sh --mode semantic-scaling
 ./scripts/aura_runtime_launcher.sh --mode simulation
 ./scripts/aura_pytest.sh workspace/aura-sdk/tests/test_runtime_replay_static.py
 
@@ -286,6 +287,44 @@ equivalence, replay/governance, semantic extraction, and simulation.
     - `runtime_consolidation_summary.json`
 - immutable capture lineage chain and replay-safe session persistence
 - plugin adapter boundary preserved (`runtime/topology/semantic` adapters only)
+
+## Large-Scale Semantic Ingestion Expansion
+
+Deterministic, source-derived ingestion for Linux audio trees with incremental
+cache reuse and fail-closed topology/simulation governance.
+
+- Engine:
+  - `workspace/aura-sdk/src/aura_sdk/transport/semantic_scaling_ingestion_engine.py`
+- Runner:
+  - `scripts/aura-semantic-scaling-ingestion.py`
+- Static validation:
+  - `workspace/aura-sdk/tests/test_semantic_scaling_ingestion_static.py`
+
+Run:
+
+```bash
+./scripts/aura_runtime_launcher.sh --mode semantic-scaling
+```
+
+Core generated artifacts include:
+
+- `semantic_driver_discovery_registry.json`
+- `semantic_incremental_ingestion_report.json`
+- `semantic_include_dependency_graph.json`
+- `semantic_function_call_graph.json`
+- `semantic_macro_lineage_graph.json`
+- `semantic_dapm_route_graph.json`
+- `semantic_clock_dependency_graph.json`
+- `semantic_control_propagation_graph.json`
+- `semantic_subsystem_ownership_graph.json`
+- `semantic_stream_path_relationships.json`
+- `semantic_backend_frontend_dai_graph.json`
+- `semantic_inter_driver_dependency_graph.json`
+- `semantic_topology_model.json`
+- `semantic_runtime_replay_simulation.json`
+- `semantic_simulation_transition_log.json`
+- `semantic_failure_diagnostics.json`
+- `semantic_scaling_summary.json`
 
 ## Runtime Cognition + Live Evidence Governance (Offline-First)
 

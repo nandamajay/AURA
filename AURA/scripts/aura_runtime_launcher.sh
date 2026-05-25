@@ -20,6 +20,8 @@ Modes:
   --mode runtime-pipeline
                         Run runtime ingestion -> equivalence -> governance
   --mode semantic       Run semantic extraction script
+  --mode semantic-scaling
+                        Run large-scale semantic ingestion expansion script
   --mode simulation     Run upstream acceptance simulation script
 
 Options:
@@ -108,6 +110,9 @@ case "${MODE}" in
     ;;
   semantic)
     run_wrapped "python scripts/aura-kernel-semantic-knowledge-layer.py"
+    ;;
+  semantic-scaling)
+    run_wrapped "python scripts/aura-semantic-scaling-ingestion.py"
     ;;
   simulation)
     run_wrapped "python scripts/aura-upstream-acceptance-simulation.py"

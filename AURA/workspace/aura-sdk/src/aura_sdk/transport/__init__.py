@@ -230,6 +230,10 @@ from aura_sdk.transport.semantic_traceability_engine import (
     SemanticTraceabilityResult,
     build_semantic_traceability_graph,
 )
+from aura_sdk.transport.semantic_scaling_ingestion_engine import (
+    SemanticScalingIngestionEngine,
+    SemanticScalingResult,
+)
 from aura_sdk.transport.evidence_correlation import (
     EvidenceCorrelationResult,
     correlate_evidence,
