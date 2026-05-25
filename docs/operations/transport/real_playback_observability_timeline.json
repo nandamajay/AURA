@@ -1,0 +1,296 @@
+{
+  "deterministic_fingerprint": "21b8223acad998fd22482c678209efaa6802d473641d457d996b51085cc1f1b6",
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
+  "read_only_ingestion": true,
+  "report_name": "real_playback_observability_timeline",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_session_real_hw_ingest_v2",
+  "summary": {
+    "event_count": 30,
+    "missing_critical_lifecycle_states": [],
+    "missing_required_lifecycle_states": [
+      "OPEN",
+      "STOP"
+    ],
+    "observed_lifecycle_states": [
+      "CLOSE",
+      "PREPARE",
+      "START"
+    ],
+    "runtime_sensitive_event_count": 4
+  },
+  "target_id": "RB3Gen2",
+  "timeline": [
+    {
+      "be_reference": "",
+      "event_id": "tinymix:1",
+      "fe_reference": "",
+      "message": "cat /proc/asound/cards:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1003.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "dsp_mailbox:1",
+      "fe_reference": "",
+      "message": "dsp latency 5.0",
+      "stage": "DSP_SYNC",
+      "subsystem": "DSP",
+      "timestamp_ms": 1004.1
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:3",
+      "fe_reference": "",
+      "message": "cat /sys/kernel/debug/asoc/*/dapm:0.99",
+      "stage": "DAPM_TRANSITION",
+      "subsystem": "DAPM",
+      "timestamp_ms": 1009.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "ftrace:1",
+      "fe_reference": "",
+      "message": "1.010: pcm PREPARE",
+      "stage": "PREPARE",
+      "subsystem": "ALSA_PCM",
+      "timestamp_ms": 1010.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "ftrace:2",
+      "fe_reference": "",
+      "message": "1.015: pcm START",
+      "stage": "START",
+      "subsystem": "ALSA_PCM",
+      "timestamp_ms": 1015.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:5",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgUEEgVm9sdW1l 20:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1015.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:6",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBIFJYMCBNVVg AIF1_PB:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1018.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "ftrace:3",
+      "fe_reference": "",
+      "message": "1.020: pcm DRAIN_STOP",
+      "stage": "DRAIN",
+      "subsystem": "ALSA_PCM",
+      "timestamp_ms": 1020.0
+    },
+    {
+      "be_reference": "BE0",
+      "event_id": "tinymix:7",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBX1JYMCBJTlAw RX0:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1021.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:8",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBX0NPTVAxIFN3aXRjaA 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1024.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "ftrace:4",
+      "fe_reference": "",
+      "message": "1.025: pcm CLOSE",
+      "stage": "CLOSE",
+      "subsystem": "ALSA_PCM",
+      "timestamp_ms": 1025.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:9",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgV1NBIE1PREU 0:0.96",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1027.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:10",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQ09NUCBTd2l0Y2g 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1030.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:11",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgQk9PU1QgU3dpdGNo 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1033.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:12",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgREFDIFN3aXRjaA 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1036.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:13",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrckxlZnQgVklTRU5TRSBTd2l0Y2g 0:0.96",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1039.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:15",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFdTQSBNT0RF 0:0.96",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1045.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:16",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFBBIFZvbHVtZQ 20:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1048.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:17",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBIFJYMSBNVVg AIF1_PB:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1051.0
+    },
+    {
+      "be_reference": "BE1",
+      "event_id": "tinymix:18",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBX1JYMSBJTlAw RX1:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1054.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:19",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBX0NPTVAyIFN3aXRjaA 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1057.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:20",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IENPTVAgU3dpdGNo 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1060.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:21",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IEJPT1NUIFN3aXRjaA 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1063.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:22",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IERBQyBTd2l0Y2g 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1066.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:23",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET U3BrclJpZ2h0IFZJU0VOU0UgU3dpdGNo 0:0.96",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1069.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:25",
+      "fe_reference": "",
+      "message": "AURA_AMIXER_NAME_SET V1NBX0NPREVDX0RNQV9SWF8wIEF1ZGlvIE1peGVyIE11bHRpTWVkaWEx 1:0.93",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1075.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:27",
+      "fe_reference": "",
+      "message": "cat /proc/asound/cards:0.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1081.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:29",
+      "fe_reference": "",
+      "message": "cat /sys/kernel/debug/asoc/*/dapm:0.99",
+      "stage": "DAPM_TRANSITION",
+      "subsystem": "DAPM",
+      "timestamp_ms": 1087.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tinymix:30",
+      "fe_reference": "",
+      "message": "AURA_ADB_RM /data/local/tmp/aura/audio/speaker_validation.wav:1.0",
+      "stage": "MIXER_STATE",
+      "subsystem": "MIXER",
+      "timestamp_ms": 1090.0
+    },
+    {
+      "be_reference": "",
+      "event_id": "tracecmd:1",
+      "fe_reference": "",
+      "message": "STATE",
+      "stage": "DAPM_TRANSITION",
+      "subsystem": "DAPM",
+      "timestamp_ms": 1190.0
+    }
+  ]
+}

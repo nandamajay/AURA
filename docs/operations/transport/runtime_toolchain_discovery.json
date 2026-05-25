@@ -1,0 +1,104 @@
+{
+  "deterministic_fingerprint": "0604bd2d2b06d4877b7d539182c50450060f1b15c92a302d0e01a42e9d2fe572",
+  "governance_policy": {
+    "missing_tools_advisory_only": true,
+    "missing_tools_fail_closed": false
+  },
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
+  "missing_critical_tools": [
+    "amixer",
+    "aplay",
+    "arecord",
+    "tinymix",
+    "trace-cmd"
+  ],
+  "missing_recommended_tools": [
+    "alsactl",
+    "tinycap",
+    "tinyplay"
+  ],
+  "read_only_ingestion": true,
+  "report_name": "runtime_toolchain_discovery",
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_session_real_hw_ingest_v2",
+  "summary": {
+    "available_tool_count": 1,
+    "missing_critical_tool_count": 5,
+    "missing_recommended_tool_count": 3,
+    "tool_count": 10
+  },
+  "target_id": "RB3Gen2",
+  "tools": [
+    {
+      "available": false,
+      "importance": "recommended",
+      "install_recommendation": "install alsa-utils",
+      "name": "alsactl",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "critical",
+      "install_recommendation": "install alsa-utils",
+      "name": "amixer",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "critical",
+      "install_recommendation": "install alsa-utils",
+      "name": "aplay",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "critical",
+      "install_recommendation": "install alsa-utils",
+      "name": "arecord",
+      "path": ""
+    },
+    {
+      "available": true,
+      "importance": "critical",
+      "install_recommendation": "mount tracefs/debugfs and enable tracing support",
+      "name": "ftrace/debugfs",
+      "path": "/sys/kernel/tracing"
+    },
+    {
+      "available": false,
+      "importance": "optional",
+      "install_recommendation": "install linux-tools package",
+      "name": "perf",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "recommended",
+      "install_recommendation": "install tinyalsa",
+      "name": "tinycap",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "critical",
+      "install_recommendation": "install tinyalsa",
+      "name": "tinymix",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "recommended",
+      "install_recommendation": "install tinyalsa",
+      "name": "tinyplay",
+      "path": ""
+    },
+    {
+      "available": false,
+      "importance": "critical",
+      "install_recommendation": "install trace-cmd",
+      "name": "trace-cmd",
+      "path": ""
+    }
+  ]
+}

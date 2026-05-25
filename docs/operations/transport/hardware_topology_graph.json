@@ -1,0 +1,146 @@
+{
+  "deterministic_fingerprint": "9cfa560d4d720a99bc9d0b49413054cbe87fd8717d83c0f650a7705fb44851b9",
+  "edges": [
+    {
+      "event_id": "tinymix:7",
+      "from": "target:rb3gen2",
+      "relation": "observes_be",
+      "to": "be_dai:be0"
+    },
+    {
+      "event_id": "tinymix:18",
+      "from": "target:rb3gen2",
+      "relation": "observes_be",
+      "to": "be_dai:be1"
+    },
+    {
+      "from": "target:rb3gen2",
+      "relation": "runs_kernel",
+      "to": "kernel:5.15.0-164-generic"
+    }
+  ],
+  "graph_name": "hardware_topology_graph",
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
+  "nodes": [
+    {
+      "evidence_sources": [
+        "tinymix_state"
+      ],
+      "id": "be_dai:be0",
+      "kind": "be_dai",
+      "label": "BE0"
+    },
+    {
+      "evidence_sources": [
+        "tinymix_state"
+      ],
+      "id": "be_dai:be1",
+      "kind": "be_dai",
+      "label": "BE1"
+    },
+    {
+      "evidence_sources": [
+        "debugfs_runtime"
+      ],
+      "id": "evidence_source:debugfs_runtime",
+      "kind": "evidence_source",
+      "label": "debugfs_runtime"
+    },
+    {
+      "evidence_sources": [
+        "dmesg"
+      ],
+      "id": "evidence_source:dmesg",
+      "kind": "evidence_source",
+      "label": "dmesg"
+    },
+    {
+      "evidence_sources": [
+        "dsp_mailbox"
+      ],
+      "id": "evidence_source:dsp_mailbox",
+      "kind": "evidence_source",
+      "label": "dsp_mailbox"
+    },
+    {
+      "evidence_sources": [
+        "ftrace"
+      ],
+      "id": "evidence_source:ftrace",
+      "kind": "evidence_source",
+      "label": "ftrace"
+    },
+    {
+      "evidence_sources": [
+        "irq_runtime"
+      ],
+      "id": "evidence_source:irq_runtime",
+      "kind": "evidence_source",
+      "label": "irq_runtime"
+    },
+    {
+      "evidence_sources": [
+        "perf"
+      ],
+      "id": "evidence_source:perf",
+      "kind": "evidence_source",
+      "label": "perf"
+    },
+    {
+      "evidence_sources": [
+        "procfs_runtime"
+      ],
+      "id": "evidence_source:procfs_runtime",
+      "kind": "evidence_source",
+      "label": "procfs_runtime"
+    },
+    {
+      "evidence_sources": [
+        "soundwire_runtime"
+      ],
+      "id": "evidence_source:soundwire_runtime",
+      "kind": "evidence_source",
+      "label": "soundwire_runtime"
+    },
+    {
+      "evidence_sources": [
+        "tinymix_state"
+      ],
+      "id": "evidence_source:tinymix_state",
+      "kind": "evidence_source",
+      "label": "tinymix_state"
+    },
+    {
+      "evidence_sources": [
+        "trace_cmd"
+      ],
+      "id": "evidence_source:trace_cmd",
+      "kind": "evidence_source",
+      "label": "trace_cmd"
+    },
+    {
+      "evidence_sources": [
+        "uname"
+      ],
+      "id": "kernel:5.15.0-164-generic",
+      "kind": "kernel",
+      "label": "5.15.0-164-generic"
+    },
+    {
+      "evidence_sources": [],
+      "id": "target:rb3gen2",
+      "kind": "target",
+      "label": "RB3Gen2"
+    }
+  ],
+  "read_only_ingestion": true,
+  "runtime_truth_precedence": true,
+  "schema_version": "1.0",
+  "session_id": "runtime_session_real_hw_ingest_v2",
+  "summary": {
+    "component_node_count": 2,
+    "edge_count": 3,
+    "node_count": 14
+  },
+  "target_id": "RB3Gen2"
+}

@@ -19,6 +19,24 @@ from aura_sdk.transport.runtime_evidence_ingestor import RuntimeEvidenceIngestor
 from aura_sdk.transport.runtime_session_registry import RuntimeSessionRegistry
 
 
+def _repo_root() -> Path:
+    env_root = str(os.getenv("AURA_REPO_ROOT", "")).strip()
+    if env_root:
+        path = Path(env_root)
+        if path.exists():
+            return path
+    here = Path(__file__).resolve()
+    return here.parents[2]
+
+
+def _default_output_dir() -> str:
+    return str((_repo_root() / "docs/operations/transport").resolve())
+
+
+def _default_registry_path() -> str:
+    return str((_repo_root() / "docs/operations/transport/aura_cognition_registry.json").resolve())
+
+
 def _as_dict(value: Any) -> dict[str, Any]:
     if isinstance(value, dict):
         return value
@@ -542,10 +560,10 @@ def _load_domain_artifacts(output_dir: Path) -> dict[str, Any]:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description="Generate runtime evidence ingestion artifacts")
-    parser.add_argument("--output-dir", default="/local/mnt/workspace/AURA_V1/docs/operations/transport")
+    parser.add_argument("--output-dir", default=_default_output_dir())
     parser.add_argument(
         "--registry-path",
-        default="/local/mnt/workspace/AURA_V1/docs/operations/transport/aura_cognition_registry.json",
+        default=_default_registry_path(),
     )
     parser.add_argument("--target-id", default="RB3Gen2")
     parser.add_argument("--session-id", default="runtime_session_v1")

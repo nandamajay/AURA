@@ -1,39 +1,10 @@
 {
-  "deterministic_fingerprint": "09a0abb5d3bb92bdf143f48e85dedb33d3996a28e8a55169b7cc442b96b55757",
+  "deterministic_fingerprint": "44cb0cd417d9aedf0eabe76b13c4fa62f612676d73e3c188d583c74fe29f3ccc",
   "read_only_ingestion": true,
   "report_name": "pcm_runtime_state",
-  "runtime_execution_fingerprint": {
-    "dependency_hashes": {
-      "constraints_py312_sha256": "aceb2c2805f93b224f569a1a05def59afcb3790e248e21b7b415ab54c045608a",
-      "pip_freeze_sha256": "560402c6640024dd7d00b923a4fead61930a6e93af08bef8d2093fd2a5672c16"
-    },
-    "execution_container_hash": "sha256:1b8c7cc0efb7a4bb46662af10058b2e8a2e6b2452f333c7d2282f2c1e2ce0051",
-    "git_sha": "unknown",
-    "parser_version": "aura-runtime-parser-v1",
-    "python_version": "3.12.13",
-    "timestamp": "2026-05-25T05:49:11.422398+00:00"
-  },
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
   "states": [
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "procfs:1",
-      "fe_reference": "",
-      "message": "procfs route {'backend': 'ext_disp_be_dai_link', 'frontend': 'msm_bolero_fe_dai_links', 'normalized': 'FE:MSM_BOLERO_FE_DAI_LINKS->BE:EXT_DISP_BE_DAI_LINK'}",
-      "source": "alsa_procfs_state",
-      "timestamp_ms": 1004.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "debugfs:1",
-      "fe_reference": "",
-      "message": "fe:msm_bolero_fe_dai_links->be:ext_disp_be_dai_link",
-      "source": "debugfs_state",
-      "timestamp_ms": 1004.5
-    },
     {
       "be_reference": "",
       "dpcm_lifecycle_state": "UNKNOWN",
@@ -48,27 +19,9 @@
       "dpcm_lifecycle_state": "UNKNOWN",
       "event_id": "dmesg:1",
       "fe_reference": "",
-      "message": "Missing expected sequence steps: collect_runtime_evidence, apply_route_translation, validate_pcm_activation, validate_replay_compatibility, finalize_governed_plan",
+      "message": "dmesg: read kernel buffer failed: Operation not permitted",
       "source": "dmesg",
       "timestamp_ms": 1007.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "procfs:2",
-      "fe_reference": "",
-      "message": "procfs route {'backend': 'ext_disp_be_dai_link', 'frontend': 'msm_common_misc_fe_dai_links', 'normalized': 'FE:MSM_COMMON_MISC_FE_DAI_LINKS->BE:EXT_DISP_BE_DAI_LINK'}",
-      "source": "alsa_procfs_state",
-      "timestamp_ms": 1008.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "debugfs:2",
-      "fe_reference": "",
-      "message": "fe:msm_common_misc_fe_dai_links->be:ext_disp_be_dai_link",
-      "source": "debugfs_state",
-      "timestamp_ms": 1009.0
     },
     {
       "be_reference": "",
@@ -91,29 +44,11 @@
     {
       "be_reference": "",
       "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "procfs:3",
-      "fe_reference": "",
-      "message": "procfs route {'backend': 'msm_stub_be_dai_links', 'frontend': 'msm_stub_fe_dai_links', 'normalized': 'FE:MSM_STUB_FE_DAI_LINKS->BE:MSM_STUB_BE_DAI_LINKS'}",
-      "source": "alsa_procfs_state",
-      "timestamp_ms": 1012.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
       "event_id": "tinymix:4",
       "fe_reference": "",
       "message": "AURA_ADB_PUSH assets/rb3gen2/speaker_validation_48k_stereo.wav /data/local/tmp/aura/audio/speaker_validation.wav e0c6006d5079742706256bec88ab547dc54322e5246154f163034d83602d9122 allow_overwrite:1.0",
       "source": "tinyalsa_tinymix_snapshots",
       "timestamp_ms": 1012.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "debugfs:3",
-      "fe_reference": "",
-      "message": "fe:msm_stub_fe_dai_links->be:msm_stub_be_dai_links",
-      "source": "debugfs_state",
-      "timestamp_ms": 1013.5
     },
     {
       "be_reference": "",
@@ -123,24 +58,6 @@
       "message": "1.015: pcm START",
       "source": "ftrace",
       "timestamp_ms": 1015.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "procfs:4",
-      "fe_reference": "",
-      "message": "procfs route {'backend': 'msm_tavil_be_dai_links', 'frontend': 'msm_tavil_fe_dai_links', 'normalized': 'FE:MSM_TAVIL_FE_DAI_LINKS->BE:MSM_TAVIL_BE_DAI_LINKS'}",
-      "source": "alsa_procfs_state",
-      "timestamp_ms": 1016.0
-    },
-    {
-      "be_reference": "",
-      "dpcm_lifecycle_state": "UNKNOWN",
-      "event_id": "debugfs:4",
-      "fe_reference": "",
-      "message": "fe:msm_tavil_fe_dai_links->be:msm_tavil_be_dai_links",
-      "source": "debugfs_state",
-      "timestamp_ms": 1018.0
     },
     {
       "be_reference": "",
@@ -234,8 +151,8 @@
     }
   ],
   "summary": {
-    "active_duration_ms": 206.0,
-    "event_count": 24,
+    "active_duration_ms": 204.0,
+    "event_count": 16,
     "observed_lifecycle_states": [
       "CLOSE",
       "DRAIN",

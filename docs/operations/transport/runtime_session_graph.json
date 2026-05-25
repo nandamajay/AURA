@@ -1,146 +1,136 @@
 {
   "classification": "FAIL_CLOSED",
-  "deterministic_fingerprint": "9e644ba1cc1ee84d05f03b97de0c0d748135e1ac2a82fe9205c6f4cd0a7e9c1c",
+  "deterministic_fingerprint": "01dfd4bdd68b8f03ca1d1089d555de4cf5ae390408708ab238471a8dc764c295",
   "edges": [
     {
       "from": "target:RB3Gen2",
       "relation": "captures",
-      "to": "session:runtime_session_v1"
+      "to": "session:runtime_session_real_hw_ingest_v2"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "tracked_by",
-      "to": "lineage:runtime_evidence_ingestion_v1"
+      "to": "lineage:runtime_evidence_ingestion_real_hw_v2"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:debugfs_runtime"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:dmesg"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:dsp_mailbox"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:ftrace"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:irq_runtime"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:perf"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:procfs_runtime"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:soundwire_runtime"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:tinymix_state"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "ingested",
       "to": "source:trace_cmd"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "observed",
       "to": "subsystem:alsa_pcm"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "observed",
       "to": "subsystem:dapm"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "observed",
       "to": "subsystem:dsp"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "observed",
       "to": "subsystem:generic"
     },
     {
-      "from": "session:runtime_session_v1",
-      "relation": "observed",
-      "to": "subsystem:kernel_log"
-    },
-    {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "observed",
       "to": "subsystem:mixer"
     },
     {
-      "from": "session:runtime_session_v1",
-      "relation": "observed",
-      "to": "subsystem:soundwire"
-    },
-    {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "correlated",
       "to": "domain:migration_lineage"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "correlated",
       "to": "domain:patch_lineage"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "correlated",
       "to": "domain:runtime_truth_graph"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "correlated",
       "to": "domain:semantic_ontology"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "correlated",
       "to": "domain:structural_cognition"
     },
     {
-      "from": "session:runtime_session_v1",
+      "from": "session:runtime_session_real_hw_ingest_v2",
       "relation": "correlated",
       "to": "domain:topology_cognition"
     }
   ],
   "graph_name": "runtime_session_graph",
-  "lineage_id": "runtime_evidence_ingestion_v1",
+  "lineage_id": "runtime_evidence_ingestion_real_hw_v2",
   "nodes": [
     {
       "id": "target:RB3Gen2",
       "kind": "target"
     },
     {
-      "id": "session:runtime_session_v1",
+      "id": "session:runtime_session_real_hw_ingest_v2",
       "kind": "runtime_session"
     },
     {
-      "id": "lineage:runtime_evidence_ingestion_v1",
+      "id": "lineage:runtime_evidence_ingestion_real_hw_v2",
       "kind": "lineage"
     },
     {
@@ -200,15 +190,7 @@
       "kind": "runtime_subsystem"
     },
     {
-      "id": "subsystem:kernel_log",
-      "kind": "runtime_subsystem"
-    },
-    {
       "id": "subsystem:mixer",
-      "kind": "runtime_subsystem"
-    },
-    {
-      "id": "subsystem:soundwire",
       "kind": "runtime_subsystem"
     },
     {
@@ -239,11 +221,11 @@
   "read_only_ingestion": true,
   "runtime_truth_precedence": true,
   "schema_version": "1.0",
-  "session_id": "runtime_session_v1",
+  "session_id": "runtime_session_real_hw_ingest_v2",
   "summary": {
     "domain_count": 6,
     "source_count": 10,
-    "subsystem_count": 7
+    "subsystem_count": 5
   },
   "target_id": "RB3Gen2"
 }
