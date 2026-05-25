@@ -468,6 +468,15 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
                 bridge_interrupt_lines.extend([str(line) for line in _as_list(lines)])
         interrupts_lines = bridge_interrupt_lines[:1500]
 
+    softirq_lines = _safe_read_lines(capture_root / "proc/softirqs", limit=1000)
+    if not softirq_lines:
+        bridge_softirq_lines: list[str] = []
+        for cmd, lines in bridge_lines_by_command.items():
+            normalized = str(cmd).strip()
+            if "/proc/softirqs" in normalized:
+                bridge_softirq_lines.extend([str(line) for line in _as_list(lines)])
+        softirq_lines = bridge_softirq_lines[:1000]
+
     dts_compatible = [item for item in soc.split(",") if item.strip()] if soc else []
     sound_cards = _parse_sound_cards(cards_lines)
     pcm_devices = _parse_pcm_devices(pcm_lines)
@@ -553,6 +562,7 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
             "debug_asoc": debug_asoc_lines[:2500],
             "soundwire": soundwire_lines[:1200],
             "interrupts": interrupts_lines[:1500],
+            "softirqs": softirq_lines[:1000],
             "modules": modules_lines[:600],
             "cards": cards_lines[:200],
             "pcm": pcm_lines[:300],
@@ -570,6 +580,7 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
     tools = {str(_as_dict(item).get("name", "")): _as_dict(item) for item in _as_list(toolchain.get("tools"))}
     soundwire_lines = _as_list(runtime_lines.get("soundwire"))
     interrupts_lines = [str(line).strip() for line in _as_list(runtime_lines.get("interrupts")) if str(line).strip()]
+    softirq_lines = [str(line).strip() for line in _as_list(runtime_lines.get("softirqs")) if str(line).strip()]
 
     payloads = {
         "dmesg": {"lines": _as_list(runtime_lines.get("dmesg"))},
@@ -616,6 +627,10 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
     ]
     if not irq_lines:
         irq_lines = [line for line in interrupts_lines if re.match(r"^\s*\d+\s*:", line)][:400]
+    if not irq_lines and softirq_lines:
+        irq_lines = [line for line in softirq_lines if re.search(r"\b(?:HI|TIMER|NET_TX|NET_RX|BLOCK|IRQ_POLL|TASKLET|SCHED|HRTIMER|RCU)\b", line)]
+        if not irq_lines:
+            irq_lines = softirq_lines[:400]
     if irq_lines:
         payloads["irq_runtime"] = {"lines": irq_lines}
 
@@ -679,6 +694,22 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
                 irq_fallback = [line for line in proc_interrupt_lines if re.match(r"^\s*\d+\s*:", line)][:400]
         else:
             irq_fallback = []
+
+        if not irq_fallback:
+            proc_softirqs = _as_dict(bridge_commands.get("cat /proc/softirqs"))
+            proc_softirq_lines = [
+                line.strip()
+                for line in (str(proc_softirqs.get("stdout", "")) + "\n" + str(proc_softirqs.get("stderr", ""))).replace("\r", "").splitlines()
+                if line.strip()
+            ]
+            if proc_softirq_lines:
+                irq_fallback = [
+                    line
+                    for line in proc_softirq_lines
+                    if re.search(r"\b(?:HI|TIMER|NET_TX|NET_RX|BLOCK|IRQ_POLL|TASKLET|SCHED|HRTIMER|RCU)\b", line)
+                ]
+                if not irq_fallback:
+                    irq_fallback = proc_softirq_lines[:400]
 
         irq_fallback = [
             str(line).strip()

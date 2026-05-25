@@ -40,6 +40,7 @@ $AllowedCommands = @(
     "cat /proc/interrupts | head -200",
     "cat /proc/interrupts | head -n 200",
     "head -n 200 /proc/interrupts",
+    "cat /proc/softirqs",
     "cat /proc/cpuinfo",
     "uname -a",
     "dmesg",
