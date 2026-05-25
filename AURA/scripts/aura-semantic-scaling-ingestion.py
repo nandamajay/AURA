@@ -38,6 +38,11 @@ def _write_alias_artifacts(output_dir: Path, result: Any) -> dict[str, str]:
     lineage_id = str(discovery.get("lineage_id", "semantic_scaling_unknown"))
     topology = _as_dict(result.topology_model)
     stream_paths = _as_dict(result.stream_path_relationships)
+    behavioral_timeline = _as_dict(result.behavioral_replay_timeline)
+    behavioral_state = _as_dict(result.behavioral_state_graph)
+    power_sequence = _as_dict(result.power_sequence_graph)
+    stream_intelligence = _as_dict(result.stream_intelligence_report)
+    governance_confidence = _as_dict(result.governance_confidence_report)
 
     codec_graph = {
         "schema_version": "1.0",
@@ -127,6 +132,38 @@ def _write_alias_artifacts(output_dir: Path, result: Any) -> dict[str, str]:
         subsystem_lineage["fail_closed_reasons"] = ["no_subsystem_groups_discovered"]
     subsystem_lineage["deterministic_fingerprint"] = stable_sha256(subsystem_lineage)
 
+    activation_timelines = {
+        "schema_version": "1.0",
+        "report_name": "activation_timelines",
+        "lineage_id": lineage_id,
+        "events": _as_list(behavioral_timeline.get("route_transition_events"))
+        + _as_list(behavioral_timeline.get("lifecycle_transition_events")),
+        "classification": str(behavioral_timeline.get("classification", "FAIL_CLOSED")),
+    }
+    activation_timelines["deterministic_fingerprint"] = stable_sha256(activation_timelines)
+
+    state_transition_graph = {
+        "schema_version": "1.0",
+        "graph_name": "state_transition_graph",
+        "lineage_id": lineage_id,
+        "edges": _as_list(behavioral_state.get("edges")),
+        "classification": "PASS" if _as_list(behavioral_state.get("edges")) else "FAIL_CLOSED",
+    }
+    if state_transition_graph["classification"] != "PASS":
+        state_transition_graph["fail_closed_reasons"] = ["no_state_transition_edges"]
+    state_transition_graph["deterministic_fingerprint"] = stable_sha256(state_transition_graph)
+
+    power_propagation_graph = {
+        "schema_version": "1.0",
+        "graph_name": "power_propagation_graph",
+        "lineage_id": lineage_id,
+        "edges": _as_list(power_sequence.get("edges")),
+        "classification": "PASS" if _as_list(power_sequence.get("edges")) else "FAIL_CLOSED",
+    }
+    if power_propagation_graph["classification"] != "PASS":
+        power_propagation_graph["fail_closed_reasons"] = ["no_power_sequence_edges"]
+    power_propagation_graph["deterministic_fingerprint"] = stable_sha256(power_propagation_graph)
+
     mappings = {
         "codec_graph.json": codec_graph,
         "dapm_topology_graph.json": dapm_topology_graph,
@@ -135,6 +172,11 @@ def _write_alias_artifacts(output_dir: Path, result: Any) -> dict[str, str]:
         "call_graph.json": call_graph,
         "stream_routing.json": stream_routing,
         "subsystem_lineage.json": subsystem_lineage,
+        "activation_timelines.json": activation_timelines,
+        "state_transition_graph.json": state_transition_graph,
+        "power_propagation_graph.json": power_propagation_graph,
+        "stream_intelligence_report.json": stream_intelligence,
+        "governance_confidence_report.json": governance_confidence,
     }
     written: dict[str, str] = {}
     for name, payload in mappings.items():
@@ -259,6 +301,30 @@ def main() -> int:
             ),
             "semantic_inter_driver_dependency_graph": str(
                 (output_dir / "semantic_inter_driver_dependency_graph.json").resolve()
+            ),
+            "semantic_behavioral_state_graph": str(
+                (output_dir / "semantic_behavioral_state_graph.json").resolve()
+            ),
+            "semantic_activation_order_graph": str(
+                (output_dir / "semantic_activation_order_graph.json").resolve()
+            ),
+            "semantic_runtime_causality_graph": str(
+                (output_dir / "semantic_runtime_causality_graph.json").resolve()
+            ),
+            "semantic_power_sequence_graph": str(
+                (output_dir / "semantic_power_sequence_graph.json").resolve()
+            ),
+            "semantic_dapm_behavioral_model": str(
+                (output_dir / "semantic_dapm_behavioral_model.json").resolve()
+            ),
+            "semantic_behavioral_replay_timeline": str(
+                (output_dir / "semantic_behavioral_replay_timeline.json").resolve()
+            ),
+            "semantic_stream_intelligence_report": str(
+                (output_dir / "semantic_stream_intelligence_report.json").resolve()
+            ),
+            "semantic_governance_confidence_report": str(
+                (output_dir / "semantic_governance_confidence_report.json").resolve()
             ),
             "semantic_topology_model": str((output_dir / "semantic_topology_model.json").resolve()),
             "semantic_runtime_replay_simulation": str(

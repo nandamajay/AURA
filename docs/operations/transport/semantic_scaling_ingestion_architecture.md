@@ -5,6 +5,8 @@
 `semantic_scaling_ingestion_engine.py` expands AURA ingestion from handcrafted
 driver samples to recursive Linux audio-tree discovery with deterministic,
 lineage-preserving artifact generation.
+The current phase adds behavioral runtime semantics on top of structural
+extraction.
 
 ## Inputs
 
@@ -26,6 +28,12 @@ lineage-preserving artifact generation.
    - header reverse-dependency invalidation
 4. Async parsing with bounded workers (results normalized and sorted).
 5. Typed graph generation with deterministic fingerprints.
+6. Behavioral parsing for:
+   - `snd_soc_dai_ops`
+   - `snd_pcm_ops`
+   - DAPM event-driven transitions
+   - stream lifecycle callbacks (`open/startup/hw_params/prepare/trigger/...`)
+   - runtime dependency tags (clock/regulator/pm/dsp/soundwire/mailbox/irq)
 
 ## Graph Outputs
 
@@ -39,11 +47,18 @@ lineage-preserving artifact generation.
 - FE/BE DAI graph
 - inter-driver dependency graph
 - stream path relationships
+- behavioral state graph
+- activation order graph
+- runtime causality graph
+- power sequence graph
 
 ## Topology + Replay
 
 - Topology model reconstruction from parsed widgets/routes.
-- Replay simulation with transition logs.
+- Replay simulation with transition logs and callback lifecycle transitions.
+- DAPM behavioral model with activation timeline and power propagation edges.
+- Stream intelligence report (conflicts/dead routes/missing clocks/invalid paths).
+- Governance confidence report (semantic completeness + stability dimensions).
 - Mux conflict detection and invalid-state detection.
 - Fail-closed when:
   - unknown widget references exist
@@ -54,6 +69,7 @@ lineage-preserving artifact generation.
 
 - Empty discovery is fail-closed (`no_eligible_source_files_discovered`).
 - Runtime simulation/topology instability escalates fail-closed.
+- Stream intelligence and confidence governance also fail-close promotion.
 - Failure diagnostics are always persisted.
 
 ## Runner
@@ -69,6 +85,11 @@ lineage-preserving artifact generation.
   - `call_graph.json`
   - `stream_routing.json`
   - `subsystem_lineage.json`
+  - `activation_timelines.json`
+  - `state_transition_graph.json`
+  - `power_propagation_graph.json`
+  - `stream_intelligence_report.json`
+  - `governance_confidence_report.json`
 
 ## Deterministic Replay Guarantees
 

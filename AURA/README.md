@@ -291,7 +291,9 @@ equivalence, replay/governance, semantic extraction, and simulation.
 ## Large-Scale Semantic Ingestion Expansion
 
 Deterministic, source-derived ingestion for Linux audio trees with incremental
-cache reuse and fail-closed topology/simulation governance.
+cache reuse and fail-closed topology/simulation governance. The current layer
+also extracts behavioral ALSA semantics (DAI/PCM ops callbacks, lifecycle
+transitions, DAPM activation/power sequencing, and runtime causality edges).
 
 - Engine:
   - `workspace/aura-sdk/src/aura_sdk/transport/semantic_scaling_ingestion_engine.py`
@@ -320,6 +322,14 @@ Core generated artifacts include:
 - `semantic_stream_path_relationships.json`
 - `semantic_backend_frontend_dai_graph.json`
 - `semantic_inter_driver_dependency_graph.json`
+- `semantic_behavioral_state_graph.json`
+- `semantic_activation_order_graph.json`
+- `semantic_runtime_causality_graph.json`
+- `semantic_power_sequence_graph.json`
+- `semantic_dapm_behavioral_model.json`
+- `semantic_behavioral_replay_timeline.json`
+- `semantic_stream_intelligence_report.json`
+- `semantic_governance_confidence_report.json`
 - `semantic_topology_model.json`
 - `semantic_runtime_replay_simulation.json`
 - `semantic_simulation_transition_log.json`

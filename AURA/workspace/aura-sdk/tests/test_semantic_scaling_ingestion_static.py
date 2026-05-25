@@ -32,6 +32,26 @@ def _build_source_tree(root: Path) -> None:
     (root / "sound/soc/qcom/msm-machine.c").write_text(
         """
         #include <sound/qcom-audio.h>
+        static int msm_startup(void *substream) { return 0; }
+        static int msm_hw_params(void *substream, void *params) { devm_clk_get(0, "rx"); return 0; }
+        static int msm_prepare(void *substream) { clk_prepare_enable(0); return 0; }
+        static int msm_trigger(void *substream, int cmd) {
+          if (cmd == SNDRV_PCM_TRIGGER_START) return 0;
+          if (cmd == SNDRV_PCM_TRIGGER_STOP) return 0;
+          return 0;
+        }
+        static int msm_set_fmt(void *dai, unsigned int fmt) { return 0; }
+        static int msm_set_sysclk(void *dai, int clk_id, unsigned int freq, int dir) { clk_get(0, "rx"); return 0; }
+        static void msm_shutdown(void *substream) { }
+        static struct snd_soc_dai_ops msm_test_dai_ops = {
+          .startup = msm_startup,
+          .hw_params = msm_hw_params,
+          .prepare = msm_prepare,
+          .trigger = msm_trigger,
+          .set_fmt = msm_set_fmt,
+          .set_sysclk = msm_set_sysclk,
+          .shutdown = msm_shutdown,
+        };
         static const struct snd_soc_dapm_widget msm_widgets[] = {
           SND_SOC_DAPM_AIF_IN("MultiMedia1 Playback", NULL, 0, 0, 0),
           SND_SOC_DAPM_SPK("RX_AIF", NULL),
@@ -60,6 +80,22 @@ def _build_source_tree(root: Path) -> None:
     (root / "techpack/audio/tx-path.c").write_text(
         """
         #include <sound/qcom-audio.h>
+        static int tx_open(void *substream) { return 0; }
+        static int tx_hw_params(void *substream, void *params) { devm_clk_get(0, "tx"); return 0; }
+        static int tx_prepare(void *substream) { clk_prepare_enable(0); return 0; }
+        static int tx_trigger(void *substream, int cmd) {
+          if (cmd == SNDRV_PCM_TRIGGER_START) return 0;
+          if (cmd == SNDRV_PCM_TRIGGER_STOP) return 0;
+          return 0;
+        }
+        static int tx_close(void *substream) { return 0; }
+        static struct snd_pcm_ops tx_pcm_ops = {
+          .open = tx_open,
+          .hw_params = tx_hw_params,
+          .prepare = tx_prepare,
+          .trigger = tx_trigger,
+          .close = tx_close,
+        };
         static int tx_capture_enable(void) { return QCOM_AUDIO_ROUTE_ID; }
         """,
         encoding="utf-8",
@@ -96,6 +132,12 @@ def test_semantic_scaling_deterministic_and_incremental(tmp_path: Path) -> None:
     assert one.include_dependency_graph["deterministic_fingerprint"] == two.include_dependency_graph["deterministic_fingerprint"]
     assert one.function_call_graph["deterministic_fingerprint"] == two.function_call_graph["deterministic_fingerprint"]
     assert one.topology_model["deterministic_fingerprint"] == two.topology_model["deterministic_fingerprint"]
+    assert one.behavioral_state_graph["edge_count"] > 0
+    assert one.activation_order_graph["edge_count"] > 0
+    assert one.runtime_causality_graph["edge_count"] > 0
+    assert one.power_sequence_graph["edge_count"] > 0
+    assert one.stream_intelligence_report["classification"] == "PASS"
+    assert one.governance_confidence_report["overall_confidence_score"] >= 0.7
     assert two.incremental_ingestion_report["reparsed_file_count"] == 0
     assert two.incremental_ingestion_report["reused_file_count"] == len(two.discovery_registry["files"])
 
@@ -180,3 +222,42 @@ def test_semantic_scaling_fail_closed_unknown_topology_widget(tmp_path: Path) ->
     assert result.topology_model["classification"] == "FAIL_CLOSED"
     assert "topology_references_unknown_widgets" in result.topology_model["fail_closed_reasons"]
     assert result.summary["classification"] == "FAIL_CLOSED"
+
+
+def test_semantic_scaling_fail_closed_missing_clock_dependency(tmp_path: Path) -> None:
+    source_root = tmp_path / "linux"
+    (source_root / "sound/soc/qcom").mkdir(parents=True, exist_ok=True)
+    (source_root / "include/sound").mkdir(parents=True, exist_ok=True)
+    (source_root / "include/sound/min.h").write_text("#define X 1\n", encoding="utf-8")
+    (source_root / "sound/soc/qcom/missing-clock.c").write_text(
+        """
+        #include <sound/min.h>
+        static int no_clk_startup(void *substream) { return 0; }
+        static int no_clk_hw_params(void *substream, void *params) { return 0; }
+        static int no_clk_trigger(void *substream, int cmd) { return 0; }
+        static struct snd_pcm_ops no_clk_ops = {
+          .startup = no_clk_startup,
+          .hw_params = no_clk_hw_params,
+          .trigger = no_clk_trigger,
+        };
+        static const struct snd_soc_dapm_widget msm_widgets[] = {
+          SND_SOC_DAPM_AIF_IN("Capture", NULL, 0, 0, 0),
+          SND_SOC_DAPM_SPK("TX_AIF", NULL),
+        };
+        static const struct snd_soc_dapm_route msm_routes[] = {
+          { "TX_AIF", NULL, "Capture" },
+        };
+        """,
+        encoding="utf-8",
+    )
+    out = tmp_path / "out"
+    result = asyncio.run(
+        SemanticScalingIngestionEngine().run(
+            source_root=source_root,
+            output_dir=out,
+            workers=1,
+        )
+    )
+    assert result.stream_intelligence_report["classification"] == "FAIL_CLOSED"
+    assert "missing_clock_dependency_callbacks" in result.stream_intelligence_report["fail_closed_reasons"]
+    assert result.governance_confidence_report["classification"] == "FAIL_CLOSED"
