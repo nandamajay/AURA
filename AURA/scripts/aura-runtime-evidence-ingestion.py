@@ -463,7 +463,8 @@ def _discover_runtime_environment(capture_root: Path, output_dir: Path, bridge_r
     if not interrupts_lines:
         bridge_interrupt_lines: list[str] = []
         for cmd, lines in bridge_lines_by_command.items():
-            if str(cmd).strip().startswith("cat /proc/interrupts"):
+            normalized = str(cmd).strip()
+            if "/proc/interrupts" in normalized:
                 bridge_interrupt_lines.extend([str(line) for line in _as_list(lines)])
         interrupts_lines = bridge_interrupt_lines[:1500]
 
@@ -659,7 +660,8 @@ def _build_live_source_payloads(runtime_discovery: dict[str, Any], toolchain: di
         proc_interrupts = _as_dict(bridge_commands.get("cat /proc/interrupts"))
         if not proc_interrupts:
             for cmd, data in bridge_commands.items():
-                if str(cmd).strip().startswith("cat /proc/interrupts"):
+                normalized = str(cmd).strip()
+                if "/proc/interrupts" in normalized:
                     proc_interrupts = _as_dict(data)
                     break
         proc_interrupt_lines = [
