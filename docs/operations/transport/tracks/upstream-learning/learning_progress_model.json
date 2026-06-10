@@ -1,0 +1,262 @@
+{
+  "artifact_name": "LEARNING_PROGRESS_MODEL",
+  "schema_version": "1.0",
+  "classification": "PASS",
+  "mode": "DISCOVERY_ONLY",
+  "stage_transition_policy": {
+    "allow_stage_skip": false,
+    "fail_closed_on_missing_required_evidence": true,
+    "advisory_only_terminal_stage": true
+  },
+  "global_constraints": [
+    "No patch generation.",
+    "No driver conversion.",
+    "No upstream readiness certification.",
+    "No runtime-certification replacement.",
+    "No duplicate ontology/governance/confidence/registry/dashboard systems."
+  ],
+  "stages": [
+    {
+      "order": 1,
+      "stage_id": "DISCOVERED",
+      "goal": "Define learning target and scope boundaries.",
+      "entry_criteria": [
+        "Target subsystem and repository scope declared."
+      ],
+      "required_evidence_types": [
+        "source_locator",
+        "scope_declaration"
+      ],
+      "exit_criteria": [
+        "At least one candidate already-upstreamed Qualcomm audio target identified."
+      ],
+      "fail_closed_conditions": [
+        "Target scope undefined."
+      ]
+    },
+    {
+      "order": 2,
+      "stage_id": "INDEXED",
+      "goal": "Index source corpus and file families.",
+      "entry_criteria": [
+        "DISCOVERED completed."
+      ],
+      "required_evidence_types": [
+        "driver_file_index",
+        "dts_index",
+        "yaml_index",
+        "kconfig_index",
+        "makefile_index"
+      ],
+      "exit_criteria": [
+        "Index coverage for declared scope is complete."
+      ],
+      "fail_closed_conditions": [
+        "Missing core file family index for declared scope."
+      ]
+    },
+    {
+      "order": 3,
+      "stage_id": "STATIC_ANALYZED",
+      "goal": "Extract static structure and symbol relationships.",
+      "entry_criteria": [
+        "INDEXED completed."
+      ],
+      "required_evidence_types": [
+        "driver_structure_map",
+        "symbol_relationship_map"
+      ],
+      "exit_criteria": [
+        "Static structure relationships captured with evidence references."
+      ],
+      "fail_closed_conditions": [
+        "Symbol relationships reported without source evidence."
+      ]
+    },
+    {
+      "order": 4,
+      "stage_id": "HISTORY_ANALYZED",
+      "goal": "Capture review history and maintainer feedback patterns.",
+      "entry_criteria": [
+        "STATIC_ANALYZED completed."
+      ],
+      "required_evidence_types": [
+        "review_thread_references",
+        "maintainer_feedback_patterns"
+      ],
+      "exit_criteria": [
+        "History signals linked to studied scope."
+      ],
+      "fail_closed_conditions": [
+        "History claims without references."
+      ]
+    },
+    {
+      "order": 5,
+      "stage_id": "DTS_ANALYZED",
+      "goal": "Extract device-tree topology semantics.",
+      "entry_criteria": [
+        "INDEXED completed."
+      ],
+      "required_evidence_types": [
+        "dts_topology_map",
+        "dtsi_include_map"
+      ],
+      "exit_criteria": [
+        "DTS semantic entities mapped to shared ontology terms."
+      ],
+      "fail_closed_conditions": [
+        "DTS semantics not ontology-aligned."
+      ]
+    },
+    {
+      "order": 6,
+      "stage_id": "YAML_ANALYZED",
+      "goal": "Extract binding constraints and schema semantics.",
+      "entry_criteria": [
+        "INDEXED completed."
+      ],
+      "required_evidence_types": [
+        "yaml_binding_constraints",
+        "schema_entity_map"
+      ],
+      "exit_criteria": [
+        "YAML semantics connected to DTS and driver structure."
+      ],
+      "fail_closed_conditions": [
+        "Schema interpretation lacks direct binding evidence."
+      ]
+    },
+    {
+      "order": 7,
+      "stage_id": "KCONFIG_ANALYZED",
+      "goal": "Extract compile-time feature and dependency semantics.",
+      "entry_criteria": [
+        "INDEXED completed."
+      ],
+      "required_evidence_types": [
+        "kconfig_dependency_graph",
+        "feature_gate_map"
+      ],
+      "exit_criteria": [
+        "Compile-time constraints linked to studied subsystem behavior."
+      ],
+      "fail_closed_conditions": [
+        "Feature dependency assertions without Kconfig evidence."
+      ]
+    },
+    {
+      "order": 8,
+      "stage_id": "MAKEFILE_ANALYZED",
+      "goal": "Extract build integration and object composition semantics.",
+      "entry_criteria": [
+        "INDEXED completed."
+      ],
+      "required_evidence_types": [
+        "makefile_object_map",
+        "build_integration_rules"
+      ],
+      "exit_criteria": [
+        "Build composition is mapped into subsystem understanding."
+      ],
+      "fail_closed_conditions": [
+        "Build structure claims without Makefile evidence."
+      ]
+    },
+    {
+      "order": 9,
+      "stage_id": "RUNTIME_CORRELATED",
+      "goal": "Correlate learned static semantics with Track A runtime truth.",
+      "entry_criteria": [
+        "DTS_ANALYZED, YAML_ANALYZED, KCONFIG_ANALYZED, and MAKEFILE_ANALYZED completed."
+      ],
+      "required_evidence_types": [
+        "runtime_artifact_references",
+        "semantic_runtime_alignment_map"
+      ],
+      "exit_criteria": [
+        "At least one runtime-backed semantic correlation established."
+      ],
+      "fail_closed_conditions": [
+        "Runtime correlation attempted with no Track A evidence references."
+      ]
+    },
+    {
+      "order": 10,
+      "stage_id": "SEMANTIC_MODEL_BUILT",
+      "goal": "Build advisory semantic model aligned to shared ontology.",
+      "entry_criteria": [
+        "RUNTIME_CORRELATED completed."
+      ],
+      "required_evidence_types": [
+        "ontology_aligned_semantic_map",
+        "confidence_inputs"
+      ],
+      "exit_criteria": [
+        "Semantic model contains evidence references and confidence accounting."
+      ],
+      "fail_closed_conditions": [
+        "Semantic model introduces new ontology instead of reusing shared ontology."
+      ]
+    },
+    {
+      "order": 11,
+      "stage_id": "UPSTREAM_PATTERN_EXTRACTED",
+      "goal": "Extract candidate reusable framework and review patterns.",
+      "entry_criteria": [
+        "SEMANTIC_MODEL_BUILT completed."
+      ],
+      "required_evidence_types": [
+        "pattern_catalog",
+        "pattern_to_evidence_links"
+      ],
+      "exit_criteria": [
+        "Candidate patterns are explicitly tagged as reusable or unverified."
+      ],
+      "fail_closed_conditions": [
+        "Pattern extraction without evidence links."
+      ]
+    },
+    {
+      "order": 12,
+      "stage_id": "CROSS_PLATFORM_VALIDATED",
+      "goal": "Validate that extracted patterns are reusable across multiple already-upstreamed Qualcomm platforms.",
+      "entry_criteria": [
+        "UPSTREAM_PATTERN_EXTRACTED completed."
+      ],
+      "required_evidence_types": [
+        "platform_comparison_matrix",
+        "pattern_occurrence_map",
+        "board_specificity_assessment"
+      ],
+      "exit_criteria": [
+        "Each promoted pattern is observed across at least 2 already-upstreamed Qualcomm platforms.",
+        "Promoted patterns are classified reusable rather than board-specific."
+      ],
+      "fail_closed_conditions": [
+        "Pattern appears on only one platform.",
+        "Pattern remains board-specific but is marked reusable.",
+        "Cross-platform evidence references missing."
+      ]
+    },
+    {
+      "order": 13,
+      "stage_id": "CERTIFIED_UNDERSTOOD_ADVISORY",
+      "goal": "Publish advisory-only understanding completion for learning progress.",
+      "entry_criteria": [
+        "CROSS_PLATFORM_VALIDATED completed."
+      ],
+      "required_evidence_types": [
+        "advisory_understanding_summary",
+        "deterministic_lineage_references"
+      ],
+      "exit_criteria": [
+        "Understanding is certified as advisory only.",
+        "No patch generation, conversion, or submission action is triggered."
+      ],
+      "fail_closed_conditions": [
+        "Any delivery or conversion action attempted from this stage."
+      ]
+    }
+  ]
+}
