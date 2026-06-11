@@ -321,6 +321,23 @@ class AuraFacade:
             raise RuntimeError("learn requires <platform>")
 
         track_b = self._load_track_b_control_plane()
+        readiness = track_b.get("readiness", {})
+        go_no_go = str(readiness.get("go_no_go", "")).strip().upper()
+        if go_no_go != "GO_DISCOVERY_ONLY":
+            raise RuntimeError(
+                f"learn fail-closed: readiness go/no-go prohibits discovery (go_no_go={go_no_go!r})"
+            )
+        scope_mode = str(readiness.get("scope_mode", "")).strip().upper()
+        if scope_mode != "DISCOVERY_ONLY":
+            raise RuntimeError(
+                f"learn fail-closed: unsupported readiness scope_mode for Track B discovery ({scope_mode!r})"
+            )
+        hard_blockers = readiness.get("hard_blockers", [])
+        if isinstance(hard_blockers, list) and hard_blockers:
+            raise RuntimeError(
+                f"learn fail-closed: readiness has hard blockers: {hard_blockers}"
+            )
+
         auth = self._login()
 
         input_data = {
@@ -330,10 +347,15 @@ class AuraFacade:
             "workflow_kind": "track_b_discovery",
             "platform": platform,
             "track_b_stage": "DISCOVERED",
+            "track_b_initial_stage": "DISCOVERED",
+            "track_b_target_stage": "STATIC_ANALYZED",
+            "stage_execution_mode": "m2_deterministic",
             "control_plane_assets": track_b["asset_paths"],
             "control_plane_sha256": track_b["asset_fingerprints"],
             "shared_core_references": track_b["shared_core_references"],
             "forbidden_actions": track_b["forbidden_actions"],
+            "track_b_readiness": readiness,
+            "track_b_hard_blockers": hard_blockers if isinstance(hard_blockers, list) else [],
         }
         payload = {
             "agent_type": "learning",
@@ -845,12 +867,22 @@ class AuraFacade:
 
         boundary = _read_json(files["track_boundary_report.json"])
         readiness = _read_json(files["readiness_assessment.json"])
+        hard_blockers = readiness.get("hard_blockers", [])
+        if not isinstance(hard_blockers, list):
+            hard_blockers = []
+        readiness_payload = {
+            "go_no_go": str(readiness.get("go_no_go", "")).strip().upper(),
+            "scope_mode": str(readiness.get("scope_mode", "")).strip().upper(),
+            "hard_blockers": [str(item).strip() for item in hard_blockers if str(item).strip()],
+            "classification": str(readiness.get("classification", "")).strip(),
+        }
 
         return {
             "asset_paths": {name: str(path) for name, path in files.items()},
             "asset_fingerprints": {name: _sha256_file(path) for name, path in files.items()},
             "shared_core_references": boundary.get("shared_core_references", {}),
             "forbidden_actions": readiness.get("forbidden_actions", []),
+            "readiness": readiness_payload,
         }
 
     def _load_track_boundary(self) -> dict[str, Any]:

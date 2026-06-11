@@ -1,111 +1,65 @@
-"""Learning Agent — discovers upstreamed drivers and extracts patterns."""
+"""Learning Agent — deterministic Track B stage execution."""
 
+from __future__ import annotations
+
+import json
 from pathlib import Path
+from typing import Any
+
 from aura_agents.base import BaseAgent
+from aura_agents.track_b_stage_execution import TrackBStageExecutor
 
 
 class LearningAgent(BaseAgent):
-    """Discovers upstreamed Qualcomm Audio drivers and extracts migration patterns."""
+    """Executes deterministic discovery stages for Track B."""
 
     AGENT_TYPE = "learning"
     DEFAULT_TIMEOUT = 600  # 10 minutes
 
-    async def execute(self) -> dict:
-        await self._send_progress(0, "starting", "Loading rules...")
+    async def execute(self) -> dict[str, Any]:
+        await self._send_progress(5, "starting", "Loading Track B stage execution context")
+        context = self._load_context()
+        context.setdefault("task_id", self.task_id)
+        context.setdefault("workflow_kind", "track_b_discovery")
 
-        # Load rules
-        rules = self._load_rules()
-        await self._send_progress(10, "rules_loaded", f"Loaded {len(rules)} rules")
+        await self._send_progress(20, "context_loaded", "Running deterministic stage state machine")
+        executor = TrackBStageExecutor(output_dir=Path(self.output_dir))
+        result = executor.execute(context=context)
 
-        # Phase 1: Discover upstreamed drivers
-        upstreamed = await self._discover_upstreamed()
-        await self._send_progress(30, "discovery", f"Found {len(upstreamed)} upstreamed drivers")
-
-        # Phase 2: Extract patterns
-        patterns = await self._extract_patterns(upstreamed)
-        await self._send_progress(60, "pattern_extraction", f"Extracted {len(patterns)} patterns")
-
-        # Phase 3: Write findings
-        findings_path = self.output_dir / "findings.md"
-        self._write_findings(findings_path, patterns)
-        await self._send_progress(90, "writing", f"Findings written to {findings_path}")
+        await self._send_progress(
+            85,
+            "stages_completed",
+            f"Reached terminal stage {result['terminal_stage']} with {len(result['transitions'])} transition(s)",
+        )
+        await self._send_progress(
+            95,
+            "artifacts_written",
+            f"Execution artifact: {result['execution_artifact_path']}",
+        )
 
         return {
-            "patterns_found": len(patterns),
-            "upstreamed_drivers": upstreamed,
-            "findings_path": str(findings_path),
+            "classification": result["classification"],
+            "initial_stage": result["initial_stage"],
+            "target_stage": result["target_stage"],
+            "terminal_stage": result["terminal_stage"],
+            "transitions": result["transitions"],
+            "stage_confidence": result["stage_confidence"],
+            "execution_artifact_path": result["execution_artifact_path"],
+            "artifact_manifest_path": result["artifact_manifest_path"],
+            "stage_artifacts": result["stage_artifacts"],
         }
 
-    def _load_rules(self) -> list[dict]:
-        """Load migration rules from the rules directory."""
-        import yaml, json, os
-        rules = []
-        rules_dir = Path(self.rules_path)
-        if rules_dir.exists():
-            for f in rules_dir.iterdir():
-                if f.suffix in ('.yaml', '.yml'):
-                    try:
-                        with open(f) as fh:
-                            data = yaml.safe_load(fh)
-                            if data and isinstance(data, dict):
-                                rules.extend(data.get("rules", []))
-                    except Exception:
-                        pass
-                elif f.suffix == '.json':
-                    try:
-                        with open(f) as fh:
-                            data = json.load(fh)
-                            if isinstance(data, list):
-                                rules.extend(data)
-                            elif isinstance(data, dict):
-                                rules.extend(data.get("rules", []))
-                    except Exception:
-                        pass
-        return rules
-
-    async def _discover_upstreamed(self) -> list[str]:
-        """Discover upstreamed Qualcomm Audio drivers."""
-        # Query LLM for upstreamed driver list
+    def _load_context(self) -> dict[str, Any]:
+        raw = getattr(self, "input_json", "")
+        if not raw:
+            return {}
         try:
-            resp = await self.call_llm([
-                {"role": "system", "content": "List upstreamed Qualcomm audio drivers in the Linux kernel. Return one driver per line, format: driver_name - subsystem."},
-                {"role": "user", "content": "Discover upstreamed Qualcomm Audio drivers"},
-            ])
-            return [line.strip() for line in resp.split('\n') if line.strip()]
-        except Exception as e:
-            return [f"Error discovering drivers: {e}"]
-
-    async def _extract_patterns(self, upstreamed: list[str]) -> list[dict]:
-        """Extract migration patterns from upstreamed drivers."""
-        patterns = []
-        for driver in upstreamed[:20]:  # Limit to first 20
-            try:
-                resp = await self.call_llm([
-                    {"role": "system", "content": f"Analyze {driver} and extract key migration patterns for Qualcomm audio upstreaming."},
-                    {"role": "user", "content": "Extract patterns"},
-                ], max_tokens=1000)
-                patterns.append({
-                    "driver": driver,
-                    "pattern": resp[:500],  # Truncate
-                    "confidence": 0.8,
-                })
-            except Exception:
-                patterns.append({
-                    "driver": driver,
-                    "pattern": "Pattern extraction failed",
-                    "confidence": 0.0,
-                })
-        return patterns
-
-    def _write_findings(self, path: Path, patterns: list[dict]) -> None:
-        """Write findings to markdown file."""
-        with open(path, "w") as f:
-            f.write("# AURA Learning Agent — Findings\n\n")
-            f.write(f"## Patterns Found: {len(patterns)}\n\n")
-            for p in patterns:
-                f.write(f"### {p['driver']}\n")
-                f.write(f"- Pattern: {p['pattern'][:200]}\n")
-                f.write(f"- Confidence: {p['confidence']}\n\n")
+            parsed = json.loads(raw)
+            if isinstance(parsed, dict):
+                return parsed
+        except Exception:
+            pass
+        return {}
 
 
 if __name__ == "__main__":
