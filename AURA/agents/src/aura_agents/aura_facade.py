@@ -346,6 +346,7 @@ class AuraFacade:
             "mode": "discovery_only",
             "workflow_kind": "track_b_discovery",
             "platform": platform,
+            "repository_root": str(self._cfg.workspace_root),
             "track_b_stage": "DISCOVERED",
             "track_b_initial_stage": "DISCOVERED",
             "track_b_target_stage": "STATIC_ANALYZED",

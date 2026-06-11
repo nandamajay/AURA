@@ -116,11 +116,17 @@ def test_track_b_stage_execution_success_path(tmp_path):
     assert execution_payload["classification"] == "PASS"
     assert execution_payload["terminal_stage"] == "STATIC_ANALYZED"
 
+    discovered_payload = json.loads((output_dir / "track_b_discovered.json").read_text(encoding="utf-8"))
+    inventory = discovered_payload["discovery_inventory"]
+    assert inventory["all_files"]
+    assert inventory["counts"]["all_files"] == len(inventory["all_files"])
+    assert inventory["file_families"]["config_files"]
+
     indexed_payload = json.loads((output_dir / "track_b_indexed.json").read_text(encoding="utf-8"))
     assert indexed_payload["counts"]["driver_files"] >= 1
     assert indexed_payload["counts"]["dts_files"] >= 1
     assert indexed_payload["counts"]["yaml_files"] >= 1
-    assert indexed_payload["counts"]["kconfig_files"] >= 1
+    assert indexed_payload["counts"]["config_files"] >= 1
     assert indexed_payload["counts"]["makefile_files"] >= 1
 
     static_payload = json.loads((output_dir / "track_b_static_analyzed.json").read_text(encoding="utf-8"))
@@ -155,6 +161,59 @@ def test_track_b_stage_execution_fail_closed_on_control_plane_hash_mismatch(tmp_
     payload = json.loads((output_dir / "track_b_stage_execution.json").read_text(encoding="utf-8"))
     assert payload["classification"] == "FAIL_CLOSED"
     assert any("sha256 mismatch" in reason for reason in payload["fail_closed_reasons"])
+
+
+def test_track_b_stage_execution_fail_closed_when_repository_root_missing(tmp_path):
+    context = _context(tmp_path)
+    context.pop("repository_root", None)
+    output_dir = tmp_path / "out"
+    executor = TrackBStageExecutor(output_dir=output_dir)
+
+    with pytest.raises(RuntimeError, match="fail-closed"):
+        executor.execute(context=context)
+
+    payload = json.loads((output_dir / "track_b_stage_execution.json").read_text(encoding="utf-8"))
+    assert payload["classification"] == "FAIL_CLOSED"
+    assert any("repository_root is required" in reason for reason in payload["fail_closed_reasons"])
+
+
+def test_track_b_discovered_enforces_include_and_exclude_patterns(tmp_path):
+    context = _context(tmp_path)
+    repo_root = Path(str(context["repository_root"]))
+    _write(repo_root / "sound/soc/qcom/ignored.txt", "ignore me\n")
+    _write(repo_root / "sound/soc/qcom/skip/hidden.c", "int hidden(void) { return 0; }\n")
+    _write(repo_root / "sound/soc/qcom/keep/visible.c", "int visible(void) { return 0; }\n")
+
+    context["source_roots"] = ["sound/soc/qcom"]
+    context["include_patterns"] = ["*.c", "*.h", "Kconfig", "Makefile"]
+    context["exclude_patterns"] = ["skip", "skip/*", "*/skip/*", "*.txt"]
+    context["track_b_target_stage"] = "DISCOVERED"
+
+    output_dir = tmp_path / "out"
+    result = TrackBStageExecutor(output_dir=output_dir).execute(context=context)
+    assert result["classification"] == "PASS"
+
+    discovered_payload = json.loads((output_dir / "track_b_discovered.json").read_text(encoding="utf-8"))
+    all_files = discovered_payload["discovery_inventory"]["all_files"]
+    assert "sound/soc/qcom/keep/visible.c" in all_files
+    assert "sound/soc/qcom/ignored.txt" not in all_files
+    assert "sound/soc/qcom/skip/hidden.c" not in all_files
+
+
+def test_track_b_discovered_uses_declared_source_roots_only(tmp_path):
+    context = _context(tmp_path)
+    repo_root = Path(str(context["repository_root"]))
+    _write(repo_root / "unscoped/extra.c", "int extra(void) { return 0; }\n")
+    context["source_roots"] = ["sound/soc/qcom"]
+    context["include_patterns"] = ["*.c", "*.h", "Kconfig", "Makefile"]
+    context["exclude_patterns"] = []
+    context["track_b_target_stage"] = "DISCOVERED"
+
+    output_dir = tmp_path / "out"
+    TrackBStageExecutor(output_dir=output_dir).execute(context=context)
+    discovered_payload = json.loads((output_dir / "track_b_discovered.json").read_text(encoding="utf-8"))
+    all_files = discovered_payload["discovery_inventory"]["all_files"]
+    assert "unscoped/extra.c" not in all_files
 
 
 def test_track_b_stage_execution_is_deterministic(tmp_path):
