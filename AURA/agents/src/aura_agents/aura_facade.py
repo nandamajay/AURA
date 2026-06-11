@@ -20,6 +20,7 @@ import httpx
 
 TERMINAL_TASK_STATES = {"completed", "failed", "cancelled", "timed_out"}
 ACTIVE_TASK_STATES = {"created", "queued", "started", "running"}
+REQUIRED_SESSION_IDENTITY_FIELDS = ("track", "ownership", "session_kind")
 
 
 def _utc_now_iso() -> str:
@@ -101,6 +102,143 @@ class AuraFacade:
         if command == "shutdown":
             return self.shutdown(args)
         raise RuntimeError(f"Unsupported command: {command}")
+
+    @staticmethod
+    def _normalize_identity_filters(
+        *,
+        track: str = "",
+        ownership: str = "",
+        session_kind: str = "",
+        platform: str = "",
+    ) -> dict[str, str]:
+        return {
+            "track": str(track or "").strip().upper(),
+            "ownership": str(ownership or "").strip().lower(),
+            "session_kind": str(session_kind or "").strip().lower(),
+            "platform": str(platform or "").strip().lower(),
+        }
+
+    @staticmethod
+    def _identity_matches(identity: dict[str, str], filters: dict[str, str]) -> bool:
+        for key, expected in filters.items():
+            if not expected:
+                continue
+            if identity.get(key, "") != expected:
+                return False
+        return True
+
+    @staticmethod
+    def _require_identity_filters(
+        *,
+        filters: dict[str, str],
+        command: str,
+        required_fields: tuple[str, ...],
+    ) -> None:
+        missing = [name for name in required_fields if not str(filters.get(name, "")).strip()]
+        if missing:
+            raise RuntimeError(
+                f"{command} fail-closed: missing explicit identity filters: {', '.join(missing)}"
+            )
+
+    def _task_identity(self, task: dict[str, Any]) -> dict[str, str]:
+        input_data = task.get("input_data", {})
+        if not isinstance(input_data, dict):
+            input_data = {}
+        return self._normalize_identity_filters(
+            track=str(input_data.get("track", "")),
+            ownership=str(input_data.get("ownership", "")),
+            session_kind=str(input_data.get("workflow_kind", "")),
+            platform=str(input_data.get("platform", "")),
+        )
+
+    def _assert_identity_metadata(
+        self,
+        *,
+        task: dict[str, Any],
+        context: str,
+    ) -> dict[str, str]:
+        identity = self._task_identity(task)
+        missing = [name for name in REQUIRED_SESSION_IDENTITY_FIELDS if not identity.get(name, "")]
+        if missing:
+            raise RuntimeError(
+                f"{context} fail-closed: task missing ownership/session identity metadata: "
+                f"{', '.join(missing)}"
+            )
+        return identity
+
+    def _resolve_session_task(
+        self,
+        *,
+        token: str,
+        task_id: str,
+        filters: dict[str, str],
+        limit: int,
+        command: str,
+    ) -> dict[str, Any]:
+        normalized_task_id = str(task_id or "").strip()
+        if normalized_task_id:
+            detail = self._api_json(
+                method="GET",
+                path=f"/api/v1/tasks/{normalized_task_id}",
+                token=token,
+            )
+            identity = self._assert_identity_metadata(task=detail, context=command)
+            if not self._identity_matches(identity, filters):
+                raise RuntimeError(
+                    f"{command} fail-closed: explicit identity filters mismatch task_id={normalized_task_id}"
+                )
+            return detail
+
+        self._require_identity_filters(
+            filters=filters,
+            command=command,
+            required_fields=REQUIRED_SESSION_IDENTITY_FIELDS,
+        )
+        listing = self._api_json(
+            method="GET",
+            path="/api/v1/tasks/",
+            token=token,
+            params={"page": 1, "limit": int(limit)},
+        )
+        tasks = listing.get("tasks", [])
+        if not isinstance(tasks, list):
+            tasks = []
+
+        matches: list[dict[str, Any]] = []
+        for task in tasks:
+            if not isinstance(task, dict):
+                continue
+            identity = self._task_identity(task)
+            if any(not identity.get(name, "") for name in REQUIRED_SESSION_IDENTITY_FIELDS):
+                continue
+            if self._identity_matches(identity, filters):
+                matches.append(task)
+
+        if not matches:
+            raise RuntimeError(
+                f"{command} fail-closed: no session matches explicit ownership/session identity filters"
+            )
+        if len(matches) > 1:
+            ids = [str(item.get("id", "")) for item in matches]
+            raise RuntimeError(
+                f"{command} fail-closed: ambiguous session identity matches multiple tasks: {ids}"
+            )
+
+        resolved_task_id = str(matches[0].get("id", "")).strip()
+        if not resolved_task_id:
+            raise RuntimeError(f"{command} fail-closed: resolved task missing id")
+
+        detail = self._api_json(
+            method="GET",
+            path=f"/api/v1/tasks/{resolved_task_id}",
+            token=token,
+        )
+        detail_identity = self._assert_identity_metadata(task=detail, context=command)
+        if not self._identity_matches(detail_identity, filters):
+            raise RuntimeError(
+                f"{command} fail-closed: resolved task identity drift detected for task_id={resolved_task_id}"
+            )
+        return detail
 
     def start(self, args: argparse.Namespace) -> dict[str, Any]:
         start_script = self._cfg.aura_root / "scripts" / "aura_start.sh"
@@ -249,37 +387,22 @@ class AuraFacade:
 
     def resume(self, args: argparse.Namespace) -> dict[str, Any]:
         auth = self._login()
-        task_id = str(args.task_id or "").strip()
-
-        if not task_id:
-            listing = self._api_json(
-                method="GET",
-                path="/api/v1/tasks/",
-                token=auth["token"],
-                params={"agent_type": "learning", "page": 1, "limit": int(args.limit)},
-            )
-            tasks = listing.get("tasks", [])
-            if not isinstance(tasks, list) or not tasks:
-                checkpoint = self._latest_cli_checkpoint()
-                if checkpoint is None:
-                    raise RuntimeError("No learning task found to resume")
-                return {
-                    "classification": "ADVISORY_ONLY",
-                    "command": "resume",
-                    "mode": "checkpoint_only",
-                    "checkpoint": checkpoint,
-                }
-            latest = tasks[0] if isinstance(tasks[0], dict) else {}
-            task_id = str(latest.get("id") or "").strip()
-
-        if not task_id:
-            raise RuntimeError("Unable to resolve resume task_id")
-
-        detail = self._api_json(
-            method="GET",
-            path=f"/api/v1/tasks/{task_id}",
-            token=auth["token"],
+        filters = self._normalize_identity_filters(
+            track=str(args.track or ""),
+            ownership=str(args.ownership or ""),
+            session_kind=str(args.session_kind or ""),
+            platform=str(args.platform or ""),
         )
+        detail = self._resolve_session_task(
+            token=auth["token"],
+            task_id=str(args.task_id or ""),
+            filters=filters,
+            limit=int(args.limit),
+            command="resume",
+        )
+        task_id = str(detail.get("id") or args.task_id or "").strip()
+        if not task_id:
+            raise RuntimeError("resume fail-closed: resolved session has empty task id")
         replay_state = self._api_json(
             method="GET",
             path=f"/api/v1/tasks/{task_id}/replay/state",
@@ -394,6 +517,10 @@ class AuraFacade:
 
     def shutdown(self, args: argparse.Namespace) -> dict[str, Any]:
         auth = self._login()
+        scope = str(args.scope or "session").strip().lower()
+        if scope not in {"session", "track", "all"}:
+            raise RuntimeError(f"shutdown fail-closed: unsupported scope '{scope}'")
+
         killed_agents: list[str] = []
 
         running = self._api_json(
@@ -401,9 +528,89 @@ class AuraFacade:
             path="/api/v1/agents/running",
             token=auth["token"],
         )
-        for item in running.get("agents", []) if isinstance(running.get("agents"), list) else []:
-            if not isinstance(item, dict):
-                continue
+        running_agents = running.get("agents", [])
+        if not isinstance(running_agents, list):
+            running_agents = []
+
+        target_agents: list[dict[str, Any]] = []
+        scoped_task_ids: list[str] = []
+        track_filters = self._normalize_identity_filters(
+            track=str(args.track or ""),
+            ownership=str(args.ownership or ""),
+            session_kind=str(args.session_kind or ""),
+            platform=str(args.platform or ""),
+        )
+
+        if scope == "all":
+            role = str(auth.get("role", "")).strip().lower()
+            if role != "admin":
+                raise RuntimeError("shutdown --scope all fail-closed: admin role required")
+            target_agents = [agent for agent in running_agents if isinstance(agent, dict)]
+        elif scope == "session":
+            detail = self._resolve_session_task(
+                token=auth["token"],
+                task_id=str(args.task_id or ""),
+                filters=track_filters,
+                limit=int(args.limit),
+                command="shutdown --scope session",
+            )
+            session_task_id = str(detail.get("id") or args.task_id or "").strip()
+            if not session_task_id:
+                raise RuntimeError("shutdown --scope session fail-closed: resolved task id missing")
+            scoped_task_ids.append(session_task_id)
+            target_agents = [
+                agent
+                for agent in running_agents
+                if isinstance(agent, dict) and str(agent.get("task_id") or "").strip() == session_task_id
+            ]
+        else:  # scope == "track"
+            self._require_identity_filters(
+                filters=track_filters,
+                command="shutdown --scope track",
+                required_fields=("track", "ownership"),
+            )
+            for agent in running_agents:
+                if not isinstance(agent, dict):
+                    continue
+                task_id = str(agent.get("task_id") or "").strip()
+                if not task_id:
+                    continue
+                detail = self._api_json(
+                    method="GET",
+                    path=f"/api/v1/tasks/{task_id}",
+                    token=auth["token"],
+                )
+                try:
+                    identity = self._assert_identity_metadata(
+                        task=detail,
+                        context=f"shutdown --scope track task_id={task_id}",
+                    )
+                except RuntimeError:
+                    continue
+                if self._identity_matches(identity, track_filters):
+                    target_agents.append(agent)
+                    scoped_task_ids.append(task_id)
+
+        if not target_agents:
+            advisory = {
+                "classification": "ADVISORY_ONLY",
+                "command": "shutdown",
+                "scope": scope,
+                "reason": "no_running_agents_match_scope",
+                "stopped_at": _utc_now_iso(),
+                "killed_agents": [],
+                "services_stopped": False,
+                "scoped_task_ids": sorted(set(scoped_task_ids)),
+            }
+            advisory_checkpoint = self._record_checkpoint(
+                command_name="shutdown",
+                payload=advisory,
+                status="completed",
+            )
+            advisory["checkpoint_id"] = advisory_checkpoint
+            return advisory
+
+        for item in target_agents:
             agent_id = str(item.get("agent_id") or "").strip()
             if not agent_id:
                 continue
@@ -414,41 +621,50 @@ class AuraFacade:
             )
             killed_agents.append(agent_id)
 
-        compose_cmd = [
-            "docker",
-            "compose",
-            "stop",
-            "aura-dashboard",
-            "aura-core",
-            "ws-server",
-            "llm-gateway",
-        ]
-        run = self._shell_runner(compose_cmd, cwd=self._cfg.aura_root)
-        if run.returncode != 0:
-            failure = {
-                "classification": "FAIL_CLOSED",
-                "reason": "docker_compose_stop_failed",
-                "exit_code": run.returncode,
-                "stdout": _trim(run.stdout),
-                "stderr": _trim(run.stderr),
-                "killed_agents": killed_agents,
-            }
-            checkpoint_id = self._record_checkpoint(
-                command_name="shutdown",
-                payload=failure,
-                status="failed",
-            )
-            raise RuntimeError(
-                f"Shutdown failed (checkpoint={checkpoint_id}): "
-                f"exit={run.returncode} stderr={_trim(run.stderr, 320)}"
-            )
+        compose_exit_code: int | None = None
+        services_stopped = False
+        if scope == "all":
+            compose_cmd = [
+                "docker",
+                "compose",
+                "stop",
+                "aura-dashboard",
+                "aura-core",
+                "ws-server",
+                "llm-gateway",
+            ]
+            run = self._shell_runner(compose_cmd, cwd=self._cfg.aura_root)
+            compose_exit_code = int(run.returncode)
+            if run.returncode != 0:
+                failure = {
+                    "classification": "FAIL_CLOSED",
+                    "reason": "docker_compose_stop_failed",
+                    "scope": scope,
+                    "exit_code": run.returncode,
+                    "stdout": _trim(run.stdout),
+                    "stderr": _trim(run.stderr),
+                    "killed_agents": killed_agents,
+                }
+                checkpoint_id = self._record_checkpoint(
+                    command_name="shutdown",
+                    payload=failure,
+                    status="failed",
+                )
+                raise RuntimeError(
+                    f"Shutdown failed (checkpoint={checkpoint_id}): "
+                    f"exit={run.returncode} stderr={_trim(run.stderr, 320)}"
+                )
+            services_stopped = True
 
         result = {
             "classification": "PASS",
             "command": "shutdown",
+            "scope": scope,
             "stopped_at": _utc_now_iso(),
             "killed_agents": killed_agents,
-            "compose_exit_code": run.returncode,
+            "services_stopped": services_stopped,
+            "compose_exit_code": compose_exit_code,
+            "scoped_task_ids": sorted(set(scoped_task_ids)),
         }
         checkpoint_id = self._record_checkpoint(
             command_name="shutdown",
@@ -583,7 +799,11 @@ class AuraFacade:
         token = str(body.get("access_token") or "").strip()
         if not token:
             raise RuntimeError("Authentication succeeded but no access_token returned")
-        return {"token": token, "email": email}
+        user = body.get("user", {})
+        role = ""
+        if isinstance(user, dict):
+            role = str(user.get("role") or "").strip().lower()
+        return {"token": token, "email": email, "role": role}
 
     def _api_json(
         self,
@@ -714,13 +934,33 @@ def build_parser() -> argparse.ArgumentParser:
 
     resume = sub.add_parser("resume", help="Resume latest or selected learning session.")
     resume.add_argument("--task-id", default="", help="Explicit learning task id to resume.")
+    resume.add_argument("--track", default="", help="Track filter (required unless --task-id is provided).")
+    resume.add_argument("--ownership", default="", help="Ownership filter (required unless --task-id is provided).")
+    resume.add_argument(
+        "--session-kind",
+        default="",
+        help="Session kind filter mapped to task input_data.workflow_kind.",
+    )
+    resume.add_argument("--platform", default="", help="Optional platform filter for session identity.")
     resume.add_argument("--include-replay", action="store_true", help="Include replay payload when available.")
     resume.add_argument("--limit", type=int, default=20, help="Task lookup window for latest resume.")
 
     status = sub.add_parser("status", help="Show runtime health, active sessions, and ownership state.")
     status.add_argument("--limit", type=int, default=20, help="Number of latest learning tasks to show.")
 
-    sub.add_parser("shutdown", help="Gracefully stop agents and runtime services.")
+    shutdown = sub.add_parser("shutdown", help="Gracefully stop scoped agents and optional services.")
+    shutdown.add_argument(
+        "--scope",
+        default="session",
+        choices=["session", "track", "all"],
+        help="Shutdown scope: session, track, or all (admin-only).",
+    )
+    shutdown.add_argument("--task-id", default="", help="Session task id for --scope session.")
+    shutdown.add_argument("--track", default="", help="Track filter for scoped shutdown.")
+    shutdown.add_argument("--ownership", default="", help="Ownership filter for scoped shutdown.")
+    shutdown.add_argument("--session-kind", default="", help="Optional workflow/session kind filter.")
+    shutdown.add_argument("--platform", default="", help="Optional platform filter.")
+    shutdown.add_argument("--limit", type=int, default=200, help="Task lookup window for session resolution.")
     return parser
 
 
