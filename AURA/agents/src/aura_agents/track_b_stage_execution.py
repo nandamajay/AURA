@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import fnmatch
 import hashlib
+import json
 import os
 import re
 from pathlib import Path
@@ -169,6 +170,12 @@ def _matches_any_pattern(*, relative_path: str, basename: str, patterns: list[st
 
 def _file_fingerprint(values: list[str]) -> str:
     return hashlib.sha256("\n".join(values).encode("utf-8")).hexdigest()
+
+
+def _canonical_value_sha256(value: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(value, sort_keys=True, separators=(",", ":"), ensure_ascii=True).encode("utf-8")
+    ).hexdigest()
 
 
 def _classify_file(relative_path: str, basename: str, rules: dict[str, list[str]]) -> set[str]:
@@ -409,6 +416,7 @@ def _validate_indexed_schema(payload: dict[str, Any]) -> list[str]:
     families = payload.get("file_families")
     counts = payload.get("counts")
     fingerprints = payload.get("fingerprints")
+    analysis_inputs = payload.get("analysis_inputs")
     evidence = payload.get("evidence")
 
     if not isinstance(families, dict):
@@ -436,6 +444,112 @@ def _validate_indexed_schema(payload: dict[str, Any]) -> list[str]:
     discovered_hash = str(payload.get("discovered_artifact_sha256") or "").strip()
     if not discovered_hash:
         errors.append("discovered_artifact_sha256 must be non-empty")
+    repository_root = str(payload.get("repository_root") or "").strip()
+    if not repository_root:
+        errors.append("repository_root must be non-empty")
+
+    if not isinstance(analysis_inputs, dict):
+        errors.append("analysis_inputs must be an object")
+        analysis_inputs = {}
+
+    source_records = analysis_inputs.get("source_records", [])
+    input_counts = analysis_inputs.get("counts", {})
+    input_fingerprints = analysis_inputs.get("fingerprints", {})
+    if not isinstance(source_records, list) or not source_records:
+        errors.append("analysis_inputs.source_records must be a non-empty list")
+        source_records = []
+    if not isinstance(input_counts, dict):
+        errors.append("analysis_inputs.counts must be an object")
+        input_counts = {}
+    if not isinstance(input_fingerprints, dict):
+        errors.append("analysis_inputs.fingerprints must be an object")
+        input_fingerprints = {}
+
+    include_directive_count = 0
+    function_symbol_count = 0
+    struct_symbol_count = 0
+    unique_function_symbols: set[str] = set()
+    unique_struct_symbols: set[str] = set()
+    for index, record in enumerate(source_records):
+        if not isinstance(record, dict):
+            errors.append(f"analysis_inputs.source_records[{index}] must be an object")
+            continue
+
+        source_path = str(record.get("source_path") or "").strip()
+        if not source_path:
+            errors.append(f"analysis_inputs.source_records[{index}].source_path must be non-empty")
+        file_sha256 = str(record.get("file_sha256") or "").strip()
+        if not file_sha256:
+            errors.append(f"analysis_inputs.source_records[{index}].file_sha256 must be non-empty")
+        line_count = record.get("line_count")
+        if not isinstance(line_count, int) or line_count < 0:
+            errors.append(f"analysis_inputs.source_records[{index}].line_count must be a non-negative integer")
+
+        source_kind = str(record.get("source_kind") or "").strip().lower()
+        if source_kind not in {"source", "header"}:
+            errors.append(f"analysis_inputs.source_records[{index}].source_kind must be source|header")
+
+        include_directives = record.get("include_directives", [])
+        if not isinstance(include_directives, list):
+            errors.append(f"analysis_inputs.source_records[{index}].include_directives must be a list")
+            include_directives = []
+        include_directive_count += len(include_directives)
+        for include_index, include in enumerate(include_directives):
+            if not isinstance(include, dict):
+                errors.append(
+                    f"analysis_inputs.source_records[{index}].include_directives[{include_index}] must be an object"
+                )
+                continue
+            include_header = str(include.get("included_header") or "").strip()
+            include_style = str(include.get("include_style") or "").strip().lower()
+            if not include_header:
+                errors.append(
+                    f"analysis_inputs.source_records[{index}].include_directives[{include_index}].included_header must be non-empty"
+                )
+            if include_style not in {"quote", "angle"}:
+                errors.append(
+                    f"analysis_inputs.source_records[{index}].include_directives[{include_index}].include_style must be quote|angle"
+                )
+
+        functions = record.get("functions", [])
+        if not isinstance(functions, list):
+            errors.append(f"analysis_inputs.source_records[{index}].functions must be a list")
+            functions = []
+        function_symbol_count += len(functions)
+        for symbol in functions:
+            text = str(symbol).strip()
+            if text:
+                unique_function_symbols.add(text)
+
+        structs = record.get("structs", [])
+        if not isinstance(structs, list):
+            errors.append(f"analysis_inputs.source_records[{index}].structs must be a list")
+            structs = []
+        struct_symbol_count += len(structs)
+        for symbol in structs:
+            text = str(symbol).strip()
+            if text:
+                unique_struct_symbols.add(text)
+
+    if input_counts.get("source_records") != len(source_records):
+        errors.append("analysis_inputs.counts.source_records must equal len(source_records)")
+    if input_counts.get("include_directives") != include_directive_count:
+        errors.append("analysis_inputs.counts.include_directives must equal total include_directives")
+    if input_counts.get("function_symbols") != function_symbol_count:
+        errors.append("analysis_inputs.counts.function_symbols must equal total functions")
+    if input_counts.get("struct_symbols") != struct_symbol_count:
+        errors.append("analysis_inputs.counts.struct_symbols must equal total structs")
+    if input_counts.get("unique_function_symbols") != len(unique_function_symbols):
+        errors.append("analysis_inputs.counts.unique_function_symbols must equal unique function symbol count")
+    if input_counts.get("unique_struct_symbols") != len(unique_struct_symbols):
+        errors.append("analysis_inputs.counts.unique_struct_symbols must equal unique struct symbol count")
+
+    expected_source_hash = _canonical_value_sha256(source_records)
+    observed_source_hash = str(input_fingerprints.get("source_records") or "").strip()
+    if not observed_source_hash:
+        errors.append("analysis_inputs.fingerprints.source_records must be non-empty")
+    elif observed_source_hash != expected_source_hash:
+        errors.append("analysis_inputs.fingerprints.source_records mismatch")
 
     if not isinstance(evidence, dict):
         errors.append("evidence must be an object")
@@ -450,6 +564,7 @@ def _validate_indexed_schema(payload: dict[str, Any]) -> list[str]:
                 "yaml_index",
                 "config_index",
                 "makefile_index",
+                "static_input_index",
             }
             if required != {str(item).strip() for item in satisfied}:
                 errors.append("indexed evidence set must contain all required evidence types")
@@ -477,6 +592,114 @@ def _validate_static_schema(payload: dict[str, Any]) -> list[str]:
     if not isinstance(relationships, list) or not relationships:
         errors.append("symbol_relationship_map must be a non-empty list")
 
+    symbol_inventory = payload.get("symbol_inventory", [])
+    function_inventory = payload.get("function_inventory", [])
+    struct_inventory = payload.get("struct_inventory", [])
+    include_relationships = payload.get("include_relationships", [])
+    source_header_relationships = payload.get("source_header_relationships", [])
+    dependency_graph_metadata = payload.get("dependency_graph_metadata", {})
+
+    if not isinstance(symbol_inventory, list):
+        errors.append("symbol_inventory must be a list")
+        symbol_inventory = []
+    if not isinstance(function_inventory, list):
+        errors.append("function_inventory must be a list")
+        function_inventory = []
+    if not isinstance(struct_inventory, list):
+        errors.append("struct_inventory must be a list")
+        struct_inventory = []
+    if not isinstance(include_relationships, list):
+        errors.append("include_relationships must be a list")
+        include_relationships = []
+    if not isinstance(source_header_relationships, list):
+        errors.append("source_header_relationships must be a list")
+        source_header_relationships = []
+    if not isinstance(dependency_graph_metadata, dict):
+        errors.append("dependency_graph_metadata must be an object")
+        dependency_graph_metadata = {}
+
+    for index, symbol in enumerate(symbol_inventory):
+        if not isinstance(symbol, dict):
+            errors.append(f"symbol_inventory[{index}] must be an object")
+            continue
+        if str(symbol.get("source_path") or "").strip() == "":
+            errors.append(f"symbol_inventory[{index}].source_path must be non-empty")
+        if str(symbol.get("symbol_name") or "").strip() == "":
+            errors.append(f"symbol_inventory[{index}].symbol_name must be non-empty")
+        if str(symbol.get("symbol_kind") or "").strip().lower() not in {"function", "struct"}:
+            errors.append(f"symbol_inventory[{index}].symbol_kind must be function|struct")
+
+    for index, symbol in enumerate(function_inventory):
+        if not isinstance(symbol, dict):
+            errors.append(f"function_inventory[{index}] must be an object")
+            continue
+        if str(symbol.get("source_path") or "").strip() == "":
+            errors.append(f"function_inventory[{index}].source_path must be non-empty")
+        if str(symbol.get("symbol_name") or "").strip() == "":
+            errors.append(f"function_inventory[{index}].symbol_name must be non-empty")
+
+    for index, symbol in enumerate(struct_inventory):
+        if not isinstance(symbol, dict):
+            errors.append(f"struct_inventory[{index}] must be an object")
+            continue
+        if str(symbol.get("source_path") or "").strip() == "":
+            errors.append(f"struct_inventory[{index}].source_path must be non-empty")
+        if str(symbol.get("symbol_name") or "").strip() == "":
+            errors.append(f"struct_inventory[{index}].symbol_name must be non-empty")
+
+    for index, rel in enumerate(include_relationships):
+        if not isinstance(rel, dict):
+            errors.append(f"include_relationships[{index}] must be an object")
+            continue
+        if str(rel.get("source_path") or "").strip() == "":
+            errors.append(f"include_relationships[{index}].source_path must be non-empty")
+        if str(rel.get("included_header") or "").strip() == "":
+            errors.append(f"include_relationships[{index}].included_header must be non-empty")
+        if str(rel.get("include_style") or "").strip().lower() not in {"quote", "angle"}:
+            errors.append(f"include_relationships[{index}].include_style must be quote|angle")
+
+    for index, rel in enumerate(source_header_relationships):
+        if not isinstance(rel, dict):
+            errors.append(f"source_header_relationships[{index}] must be an object")
+            continue
+        if str(rel.get("source_path") or "").strip() == "":
+            errors.append(f"source_header_relationships[{index}].source_path must be non-empty")
+        if str(rel.get("header_path") or "").strip() == "":
+            errors.append(f"source_header_relationships[{index}].header_path must be non-empty")
+        if str(rel.get("include_style") or "").strip().lower() not in {"quote", "angle"}:
+            errors.append(f"source_header_relationships[{index}].include_style must be quote|angle")
+
+    node_count = dependency_graph_metadata.get("node_count")
+    edge_count = dependency_graph_metadata.get("edge_count")
+    include_edge_count = dependency_graph_metadata.get("include_edge_count")
+    source_header_edge_count = dependency_graph_metadata.get("source_header_edge_count")
+    symbol_count = dependency_graph_metadata.get("symbol_count")
+    function_count = dependency_graph_metadata.get("function_count")
+    struct_count = dependency_graph_metadata.get("struct_count")
+    if not isinstance(node_count, int) or node_count != len(nodes):
+        errors.append("dependency_graph_metadata.node_count must equal len(driver_structure_map.nodes)")
+    if not isinstance(edge_count, int) or edge_count != len(edges):
+        errors.append("dependency_graph_metadata.edge_count must equal len(driver_structure_map.edges)")
+    if not isinstance(include_edge_count, int) or include_edge_count != len(include_relationships):
+        errors.append("dependency_graph_metadata.include_edge_count must equal len(include_relationships)")
+    if not isinstance(source_header_edge_count, int) or source_header_edge_count != len(source_header_relationships):
+        errors.append(
+            "dependency_graph_metadata.source_header_edge_count must equal len(source_header_relationships)"
+        )
+    if not isinstance(symbol_count, int) or symbol_count != len(symbol_inventory):
+        errors.append("dependency_graph_metadata.symbol_count must equal len(symbol_inventory)")
+    if not isinstance(function_count, int) or function_count != len(function_inventory):
+        errors.append("dependency_graph_metadata.function_count must equal len(function_inventory)")
+    if not isinstance(struct_count, int) or struct_count != len(struct_inventory):
+        errors.append("dependency_graph_metadata.struct_count must equal len(struct_inventory)")
+
+    graph_fingerprint = str(dependency_graph_metadata.get("graph_fingerprint") or "").strip()
+    if not graph_fingerprint:
+        errors.append("dependency_graph_metadata.graph_fingerprint must be non-empty")
+    indexed_input_fingerprint = str(dependency_graph_metadata.get("indexed_input_fingerprint") or "").strip()
+    if not indexed_input_fingerprint:
+        errors.append("dependency_graph_metadata.indexed_input_fingerprint must be non-empty")
+
     indexed_hash = str(payload.get("indexed_artifact_sha256") or "").strip()
     if not indexed_hash:
         errors.append("indexed_artifact_sha256 must be non-empty")
@@ -486,9 +709,16 @@ def _validate_static_schema(payload: dict[str, Any]) -> list[str]:
         errors.append("evidence must be an object")
     else:
         satisfied = evidence.get("required_evidence_types_satisfied", [])
-        required = {"driver_structure_map", "symbol_relationship_map"}
+        required = {
+            "symbol_inventory",
+            "function_inventory",
+            "struct_inventory",
+            "include_relationships",
+            "source_header_relationships",
+            "dependency_graph_metadata",
+        }
         if not isinstance(satisfied, list) or required != {str(item).strip() for item in satisfied}:
-            errors.append("static evidence set must contain driver_structure_map and symbol_relationship_map")
+            errors.append("static evidence set must contain all required static analysis evidence types")
     return errors
 
 
@@ -588,13 +818,30 @@ def _build_indexed(context: dict[str, Any], stage_payloads: dict[str, dict[str, 
     repository_root = str(inventory.get("repository_root") or "").strip()
     if not repository_root:
         raise RuntimeError("discovered discovery_inventory.repository_root missing")
+    repo_root = Path(repository_root).resolve()
 
     normalized_families: dict[str, list[str]] = {}
     for key in CLASSIFICATION_KEYS:
         normalized_families[key] = _normalize_string_list(families.get(key))
 
+    source_records = _build_indexed_source_records(
+        repository_root=repo_root,
+        driver_files=normalized_families["driver_files"],
+    )
+
     counts = {key: len(values) for key, values in normalized_families.items()}
     fingerprints = {key: _file_fingerprint(values) for key, values in normalized_families.items()}
+    analysis_input_counts = {
+        "source_records": len(source_records),
+        "include_directives": sum(len(item["include_directives"]) for item in source_records),
+        "function_symbols": sum(len(item["functions"]) for item in source_records),
+        "struct_symbols": sum(len(item["structs"]) for item in source_records),
+        "unique_function_symbols": len(
+            {symbol for item in source_records for symbol in item.get("functions", [])}
+        ),
+        "unique_struct_symbols": len({symbol for item in source_records for symbol in item.get("structs", [])}),
+    }
+    analysis_input_fingerprints = {"source_records": _canonical_value_sha256(source_records)}
 
     satisfied = []
     if normalized_families["driver_files"]:
@@ -607,6 +854,8 @@ def _build_indexed(context: dict[str, Any], stage_payloads: dict[str, dict[str, 
         satisfied.append("config_index")
     if normalized_families["makefile_files"]:
         satisfied.append("makefile_index")
+    if source_records:
+        satisfied.append("static_input_index")
 
     return {
         "artifact_name": "TRACK_B_STAGE_INDEXED",
@@ -617,6 +866,11 @@ def _build_indexed(context: dict[str, Any], stage_payloads: dict[str, dict[str, 
         "file_families": normalized_families,
         "counts": counts,
         "fingerprints": fingerprints,
+        "analysis_inputs": {
+            "source_records": source_records,
+            "counts": analysis_input_counts,
+            "fingerprints": analysis_input_fingerprints,
+        },
         "discovered_artifact_sha256": canonical_json_sha256(discovered),
         "evidence": {
             "required_evidence_types_satisfied": sorted(satisfied),
@@ -625,73 +879,355 @@ def _build_indexed(context: dict[str, Any], stage_payloads: dict[str, dict[str, 
     }
 
 
-_INCLUDE_RE = re.compile(r'^\s*#include\s+[<"]([^">]+)[">]\s*$')
+_INCLUDE_RE = re.compile(r'^\s*#include\s*([<"])\s*([^">]+)\s*[">]\s*$')
 _FUNC_RE = re.compile(
     r"^\s*(?:static\s+)?[A-Za-z_][\w\s\*]*?\s+([A-Za-z_]\w*)\s*\([^;{}]*\)\s*\{"
 )
+_STRUCT_RE = re.compile(r"\bstruct\s+([A-Za-z_]\w*)\b")
 
 
-def _read_lines(path: Path) -> list[str]:
+def _read_lines_fail_closed(path: Path) -> list[str]:
     try:
         return path.read_text(encoding="utf-8", errors="ignore").splitlines()
-    except Exception:
-        return []
+    except Exception as exc:
+        raise RuntimeError(f"failed to read indexed source file: {path}") from exc
+
+
+def _normalized_rel_path(path_text: str) -> str:
+    return str(Path(path_text).as_posix()).replace("\\", "/")
+
+
+def _extract_indexed_source_record(*, source_path: str, file_path: Path) -> dict[str, Any]:
+    lines = _read_lines_fail_closed(file_path)
+    include_directives: list[dict[str, str]] = []
+    function_symbols: set[str] = set()
+    struct_symbols: set[str] = set()
+
+    for line in lines:
+        include_match = _INCLUDE_RE.match(line)
+        if include_match:
+            style = "quote" if include_match.group(1) == '"' else "angle"
+            header = _normalized_rel_path(include_match.group(2).strip())
+            if header:
+                include_directives.append(
+                    {
+                        "included_header": header,
+                        "include_style": style,
+                    }
+                )
+
+        func_match = _FUNC_RE.match(line)
+        if func_match:
+            symbol_name = str(func_match.group(1) or "").strip()
+            if symbol_name:
+                function_symbols.add(symbol_name)
+
+        for struct_match in _STRUCT_RE.findall(line):
+            symbol_name = str(struct_match or "").strip()
+            if symbol_name:
+                struct_symbols.add(symbol_name)
+
+    include_directives = sorted(
+        include_directives,
+        key=lambda item: (str(item.get("included_header")), str(item.get("include_style"))),
+    )
+    source_kind = "header" if source_path.endswith(".h") else "source"
+    return {
+        "source_path": source_path,
+        "source_kind": source_kind,
+        "file_sha256": _sha256_file(file_path),
+        "line_count": len(lines),
+        "include_directives": include_directives,
+        "functions": sorted(function_symbols),
+        "structs": sorted(struct_symbols),
+    }
+
+
+def _build_indexed_source_records(*, repository_root: Path, driver_files: list[str]) -> list[dict[str, Any]]:
+    source_records: list[dict[str, Any]] = []
+    for rel in driver_files:
+        rel_path = _normalized_rel_path(rel)
+        file_path = (repository_root / rel_path).resolve()
+        try:
+            file_path.relative_to(repository_root)
+        except ValueError as exc:
+            raise RuntimeError(f"indexed driver file escapes repository_root: {rel_path}") from exc
+        if not file_path.exists() or not file_path.is_file():
+            raise RuntimeError(f"indexed driver file missing on filesystem: {rel_path}")
+        source_records.append(
+            _extract_indexed_source_record(
+                source_path=rel_path,
+                file_path=file_path,
+            )
+        )
+    return sorted(source_records, key=lambda item: str(item.get("source_path")))
+
+
+def _sorted_unique_dicts(
+    items: list[dict[str, Any]],
+    *,
+    key_fn,
+) -> list[dict[str, Any]]:
+    by_key: dict[tuple[Any, ...], dict[str, Any]] = {}
+    for item in items:
+        key = key_fn(item)
+        by_key[key] = item
+    return [by_key[key] for key in sorted(by_key.keys())]
+
+
+def _resolve_header_path_from_index(
+    *,
+    source_path: str,
+    included_header: str,
+    header_file_set: set[str],
+    header_basename_index: dict[str, list[str]],
+) -> str:
+    normalized_header = _normalized_rel_path(included_header).lstrip("./")
+    if not normalized_header:
+        return ""
+
+    candidates: set[str] = set()
+    if normalized_header in header_file_set:
+        candidates.add(normalized_header)
+
+    source_parent = str(Path(source_path).parent.as_posix())
+    local_candidate = normalized_header
+    if source_parent and source_parent != ".":
+        local_candidate = _normalized_rel_path(str(Path(source_parent) / normalized_header))
+    if local_candidate in header_file_set:
+        candidates.add(local_candidate)
+
+    base_name = str(Path(normalized_header).name)
+    if base_name in header_basename_index:
+        for candidate in header_basename_index[base_name]:
+            candidates.add(candidate)
+
+    if not candidates:
+        return ""
+    return sorted(candidates)[0]
 
 
 def _build_static_analyzed(context: dict[str, Any], stage_payloads: dict[str, dict[str, Any]]) -> dict[str, Any]:
     _ = context
     indexed = _safe_dict(stage_payloads.get("INDEXED"))
     families = _safe_dict(indexed.get("file_families"))
-    repository_root = str(indexed.get("repository_root") or "").strip()
-    if not repository_root:
-        raise RuntimeError("indexed repository_root missing")
-    repo_root = Path(repository_root).resolve()
-    driver_files = _normalize_string_list(families.get("driver_files"))
+    analysis_inputs = _safe_dict(indexed.get("analysis_inputs"))
+    source_records = analysis_inputs.get("source_records", [])
+    if not isinstance(source_records, list) or not source_records:
+        raise RuntimeError("indexed analysis_inputs.source_records missing")
 
     nodes: dict[str, dict[str, Any]] = {}
     edges: list[dict[str, Any]] = []
-    relationships: list[dict[str, Any]] = []
+    symbol_inventory: list[dict[str, str]] = []
+    function_inventory: list[dict[str, str]] = []
+    struct_inventory: list[dict[str, str]] = []
+    include_relationships: list[dict[str, str]] = []
+    source_header_relationships: list[dict[str, str]] = []
+    relationships: list[dict[str, str]] = []
 
-    for rel in driver_files:
-        file_node_id = f"file:{rel}"
-        nodes[file_node_id] = {"node_id": file_node_id, "node_type": "driver_file", "path": rel}
-        lines = _read_lines(repo_root / rel)
-        for line in lines:
-            include_match = _INCLUDE_RE.match(line)
-            if include_match:
-                header = include_match.group(1).strip()
-                include_node = f"include:{header}"
+    driver_files = _normalize_string_list(families.get("driver_files"))
+    header_files = sorted([path for path in driver_files if path.endswith(".h")])
+    header_file_set = set(header_files)
+    header_basename_index: dict[str, list[str]] = {}
+    for header_path in header_files:
+        base_name = str(Path(header_path).name)
+        header_basename_index.setdefault(base_name, []).append(header_path)
+    for base_name in list(header_basename_index.keys()):
+        header_basename_index[base_name] = sorted(set(header_basename_index[base_name]))
+
+    for raw_record in sorted(source_records, key=lambda item: str(_safe_dict(item).get("source_path"))):
+        record = _safe_dict(raw_record)
+        source_path = str(record.get("source_path") or "").strip()
+        if not source_path:
+            raise RuntimeError("indexed source record missing source_path")
+        source_kind = str(record.get("source_kind") or "").strip().lower()
+        if source_kind not in {"source", "header"}:
+            raise RuntimeError(f"indexed source record has invalid source_kind: {source_kind!r}")
+        include_directives = record.get("include_directives", [])
+        if not isinstance(include_directives, list):
+            raise RuntimeError("indexed source record include_directives must be a list")
+
+        file_node_id = f"file:{source_path}"
+        nodes[file_node_id] = {
+            "node_id": file_node_id,
+            "node_type": "driver_file" if source_kind == "source" else "header_file",
+            "path": source_path,
+        }
+
+        for include in include_directives:
+            if not isinstance(include, dict):
+                raise RuntimeError("indexed include directive must be an object")
+            included_header = str(include.get("included_header") or "").strip()
+            include_style = str(include.get("include_style") or "").strip().lower()
+            if not included_header:
+                raise RuntimeError("indexed include directive missing included_header")
+            if include_style not in {"quote", "angle"}:
+                raise RuntimeError("indexed include directive has invalid include_style")
+
+            include_relationships.append(
+                {
+                    "source_path": source_path,
+                    "included_header": included_header,
+                    "include_style": include_style,
+                }
+            )
+            include_node_id = f"include:{included_header}"
+            nodes.setdefault(
+                include_node_id,
+                {
+                    "node_id": include_node_id,
+                    "node_type": "include_header",
+                    "header": included_header,
+                },
+            )
+            edges.append(
+                {
+                    "source_node_id": file_node_id,
+                    "target_node_id": include_node_id,
+                    "relation": "includes",
+                    "include_style": include_style,
+                }
+            )
+
+            resolved_header = _resolve_header_path_from_index(
+                source_path=source_path,
+                included_header=included_header,
+                header_file_set=header_file_set,
+                header_basename_index=header_basename_index,
+            )
+            if resolved_header:
+                source_header_relationships.append(
+                    {
+                        "source_path": source_path,
+                        "header_path": resolved_header,
+                        "include_style": include_style,
+                    }
+                )
+                header_node_id = f"file:{resolved_header}"
                 nodes.setdefault(
-                    include_node,
-                    {"node_id": include_node, "node_type": "include_header", "header": header},
+                    header_node_id,
+                    {
+                        "node_id": header_node_id,
+                        "node_type": "header_file",
+                        "path": resolved_header,
+                    },
                 )
                 edges.append(
                     {
                         "source_node_id": file_node_id,
-                        "target_node_id": include_node,
-                        "relation": "includes",
+                        "target_node_id": header_node_id,
+                        "relation": "source_header_link",
+                        "include_style": include_style,
                     }
                 )
 
-            func_match = _FUNC_RE.match(line)
-            if func_match:
-                relationships.append({"file": rel, "symbol": func_match.group(1), "relation": "defines"})
+        for symbol in _normalize_string_list(record.get("functions")):
+            function_inventory.append({"source_path": source_path, "symbol_name": symbol})
+            symbol_inventory.append(
+                {
+                    "source_path": source_path,
+                    "symbol_name": symbol,
+                    "symbol_kind": "function",
+                }
+            )
+            relationships.append(
+                {
+                    "file": source_path,
+                    "symbol": symbol,
+                    "relation": "defines",
+                    "symbol_kind": "function",
+                }
+            )
+
+        for symbol in _normalize_string_list(record.get("structs")):
+            struct_inventory.append({"source_path": source_path, "symbol_name": symbol})
+            symbol_inventory.append(
+                {
+                    "source_path": source_path,
+                    "symbol_name": symbol,
+                    "symbol_kind": "struct",
+                }
+            )
+            relationships.append(
+                {
+                    "file": source_path,
+                    "symbol": symbol,
+                    "relation": "defines",
+                    "symbol_kind": "struct",
+                }
+            )
 
     structure_map = {
-        "nodes": sorted(nodes.values(), key=lambda item: (str(item.get("node_type")), str(item.get("node_id")))),
-        "edges": sorted(
+        "nodes": _sorted_unique_dicts(
+            list(nodes.values()),
+            key_fn=lambda item: (str(item.get("node_type")), str(item.get("node_id"))),
+        ),
+        "edges": _sorted_unique_dicts(
             edges,
-            key=lambda item: (
+            key_fn=lambda item: (
                 str(item.get("source_node_id")),
                 str(item.get("target_node_id")),
                 str(item.get("relation")),
+                str(item.get("include_style")),
             ),
         ),
     }
-    relationships = sorted(
-        relationships,
-        key=lambda item: (str(item.get("file")), str(item.get("symbol")), str(item.get("relation"))),
+    symbol_inventory = _sorted_unique_dicts(
+        symbol_inventory,
+        key_fn=lambda item: (str(item.get("source_path")), str(item.get("symbol_name")), str(item.get("symbol_kind"))),
     )
+    function_inventory = _sorted_unique_dicts(
+        function_inventory,
+        key_fn=lambda item: (str(item.get("source_path")), str(item.get("symbol_name"))),
+    )
+    struct_inventory = _sorted_unique_dicts(
+        struct_inventory,
+        key_fn=lambda item: (str(item.get("source_path")), str(item.get("symbol_name"))),
+    )
+    include_relationships = _sorted_unique_dicts(
+        include_relationships,
+        key_fn=lambda item: (
+            str(item.get("source_path")),
+            str(item.get("included_header")),
+            str(item.get("include_style")),
+        ),
+    )
+    source_header_relationships = _sorted_unique_dicts(
+        source_header_relationships,
+        key_fn=lambda item: (
+            str(item.get("source_path")),
+            str(item.get("header_path")),
+            str(item.get("include_style")),
+        ),
+    )
+    relationships = _sorted_unique_dicts(
+        relationships,
+        key_fn=lambda item: (
+            str(item.get("file")),
+            str(item.get("symbol")),
+            str(item.get("relation")),
+            str(item.get("symbol_kind")),
+        ),
+    )
+    dependency_graph_metadata = {
+        "node_count": len(structure_map["nodes"]),
+        "edge_count": len(structure_map["edges"]),
+        "include_edge_count": len(include_relationships),
+        "source_header_edge_count": len(source_header_relationships),
+        "symbol_count": len(symbol_inventory),
+        "function_count": len(function_inventory),
+        "struct_count": len(struct_inventory),
+        "indexed_input_fingerprint": str(
+            _safe_dict(analysis_inputs.get("fingerprints")).get("source_records")
+            or _canonical_value_sha256(source_records)
+        ).strip(),
+        "graph_fingerprint": _canonical_value_sha256(
+            {
+                "nodes": structure_map["nodes"],
+                "edges": structure_map["edges"],
+            }
+        ),
+    }
 
     return {
         "artifact_name": "TRACK_B_STAGE_STATIC_ANALYZED",
@@ -700,16 +1236,29 @@ def _build_static_analyzed(context: dict[str, Any], stage_payloads: dict[str, di
         "stage_id": "STATIC_ANALYZED",
         "driver_structure_map": structure_map,
         "symbol_relationship_map": relationships,
+        "symbol_inventory": symbol_inventory,
+        "function_inventory": function_inventory,
+        "struct_inventory": struct_inventory,
+        "include_relationships": include_relationships,
+        "source_header_relationships": source_header_relationships,
+        "dependency_graph_metadata": dependency_graph_metadata,
         "indexed_artifact_sha256": canonical_json_sha256(indexed),
         "evidence": {
-            "required_evidence_types_satisfied": ["driver_structure_map", "symbol_relationship_map"],
+            "required_evidence_types_satisfied": [
+                "symbol_inventory",
+                "function_inventory",
+                "struct_inventory",
+                "include_relationships",
+                "source_header_relationships",
+                "dependency_graph_metadata",
+            ],
         },
         "fail_closed_reasons": [],
     }
 
 
 class TrackBStageExecutor:
-    """M3 deterministic Track B stage execution: DISCOVERED -> INDEXED -> STATIC_ANALYZED."""
+    """M4 deterministic Track B stage execution: DISCOVERED -> INDEXED -> STATIC_ANALYZED."""
 
     def __init__(self, *, output_dir: Path):
         self._output_dir = output_dir
@@ -760,6 +1309,7 @@ class TrackBStageExecutor:
                     "yaml_index",
                     "config_index",
                     "makefile_index",
+                    "static_input_index",
                 ),
                 build=_build_indexed,
                 validate=_validate_indexed_schema,
@@ -768,7 +1318,14 @@ class TrackBStageExecutor:
                 stage_id="STATIC_ANALYZED",
                 artifact_name="TRACK_B_STAGE_STATIC_ANALYZED",
                 artifact_filename="track_b_static_analyzed.json",
-                required_evidence_types=("driver_structure_map", "symbol_relationship_map"),
+                required_evidence_types=(
+                    "symbol_inventory",
+                    "function_inventory",
+                    "struct_inventory",
+                    "include_relationships",
+                    "source_header_relationships",
+                    "dependency_graph_metadata",
+                ),
                 build=_build_static_analyzed,
                 validate=_validate_static_schema,
             ),

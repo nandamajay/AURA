@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from aura_agents.track_b_stage_execution import TrackBStageExecutor
+from aura_agents.track_b_stage_execution import TrackBStageExecutor, _build_static_analyzed
 
 
 def _write(path: Path, content: str) -> None:
@@ -61,6 +61,7 @@ static int qcom_audio_probe(void) {
 """.strip()
         + "\n",
     )
+    _write(repo_root / "sound/soc/qcom/test_internal.h", "struct qcom_audio_ctx { int id; };\n")
     _write(
         repo_root / "arch/arm64/boot/dts/qcom/test-board.dts",
         "/dts-v1/;\n/ { model = \"Test\"; };\n",
@@ -128,10 +129,24 @@ def test_track_b_stage_execution_success_path(tmp_path):
     assert indexed_payload["counts"]["yaml_files"] >= 1
     assert indexed_payload["counts"]["config_files"] >= 1
     assert indexed_payload["counts"]["makefile_files"] >= 1
+    assert indexed_payload["analysis_inputs"]["source_records"]
+    assert indexed_payload["analysis_inputs"]["counts"]["source_records"] == len(
+        indexed_payload["analysis_inputs"]["source_records"]
+    )
+    assert indexed_payload["analysis_inputs"]["fingerprints"]["source_records"]
 
     static_payload = json.loads((output_dir / "track_b_static_analyzed.json").read_text(encoding="utf-8"))
     assert static_payload["driver_structure_map"]["nodes"]
     assert static_payload["symbol_relationship_map"]
+    assert static_payload["symbol_inventory"]
+    assert static_payload["function_inventory"]
+    assert static_payload["include_relationships"]
+    assert static_payload["source_header_relationships"]
+    metadata = static_payload["dependency_graph_metadata"]
+    assert metadata["node_count"] == len(static_payload["driver_structure_map"]["nodes"])
+    assert metadata["edge_count"] == len(static_payload["driver_structure_map"]["edges"])
+    assert metadata["graph_fingerprint"]
+    assert metadata["indexed_input_fingerprint"]
 
 
 def test_track_b_stage_execution_fail_closed_on_transition_order(tmp_path):
@@ -233,3 +248,62 @@ def test_track_b_stage_execution_is_deterministic(tmp_path):
     a_map = {item["name"]: item["sha256"] for item in a_manifest["artifacts"]}
     b_map = {item["name"]: item["sha256"] for item in b_manifest["artifacts"]}
     assert a_map == b_map
+
+
+def test_track_b_static_analyzed_consumes_indexed_payload_only():
+    indexed_payload = {
+        "artifact_name": "TRACK_B_STAGE_INDEXED",
+        "schema_version": "1.0",
+        "classification": "PASS",
+        "stage_id": "INDEXED",
+        "repository_root": "",
+        "file_families": {
+            "driver_files": [
+                "sound/soc/qcom/test_machine.c",
+                "sound/soc/qcom/test_internal.h",
+            ],
+            "dts_files": ["arch/arm64/boot/dts/qcom/test-board.dts"],
+            "yaml_files": ["Documentation/devicetree/bindings/sound/test-audio.yaml"],
+            "config_files": ["sound/soc/qcom/Kconfig"],
+            "makefile_files": ["sound/soc/qcom/Makefile"],
+        },
+        "analysis_inputs": {
+            "source_records": [
+                {
+                    "source_path": "sound/soc/qcom/test_machine.c",
+                    "source_kind": "source",
+                    "file_sha256": "a" * 64,
+                    "line_count": 5,
+                    "include_directives": [
+                        {
+                            "included_header": "test_internal.h",
+                            "include_style": "quote",
+                        }
+                    ],
+                    "functions": ["qcom_audio_probe"],
+                    "structs": ["qcom_audio_ctx"],
+                },
+                {
+                    "source_path": "sound/soc/qcom/test_internal.h",
+                    "source_kind": "header",
+                    "file_sha256": "b" * 64,
+                    "line_count": 2,
+                    "include_directives": [],
+                    "functions": [],
+                    "structs": ["qcom_audio_ctx"],
+                },
+            ],
+            "counts": {},
+            "fingerprints": {
+                "source_records": "c" * 64,
+            },
+        },
+    }
+
+    payload = _build_static_analyzed(context={}, stage_payloads={"INDEXED": indexed_payload})
+    assert payload["classification"] == "PASS"
+    assert payload["stage_id"] == "STATIC_ANALYZED"
+    assert payload["function_inventory"]
+    assert payload["struct_inventory"]
+    assert payload["include_relationships"]
+    assert payload["source_header_relationships"]
