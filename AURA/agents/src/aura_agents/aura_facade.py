@@ -580,13 +580,10 @@ class AuraFacade:
                     path=f"/api/v1/tasks/{task_id}",
                     token=auth["token"],
                 )
-                try:
-                    identity = self._assert_identity_metadata(
-                        task=detail,
-                        context=f"shutdown --scope track task_id={task_id}",
-                    )
-                except RuntimeError:
-                    continue
+                identity = self._assert_identity_metadata(
+                    task=detail,
+                    context=f"shutdown --scope track task_id={task_id}",
+                )
                 if self._identity_matches(identity, track_filters):
                     target_agents.append(agent)
                     scoped_task_ids.append(task_id)

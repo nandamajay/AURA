@@ -430,6 +430,49 @@ def test_shutdown_scope_track_kills_only_matching_ownership(tmp_path, monkeypatc
     assert deleted == ["agent-1"]
 
 
+def test_shutdown_scope_track_fail_closed_on_identity_validation_error(tmp_path, monkeypatch):
+    facade, shell_calls = _make_facade(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        facade,
+        "_login",
+        lambda: {"token": "tok", "email": "admin@aura.local", "role": "admin"},
+    )
+    deleted: list[str] = []
+
+    def _api_json(*, method, path, token, params=None, json_body=None):
+        _ = token, params, json_body
+        if method == "GET" and path == "/api/v1/agents/running":
+            return {"agents": [{"agent_id": "agent-1", "task_id": "task-invalid"}]}
+        if method == "GET" and path == "/api/v1/tasks/task-invalid":
+            # workflow_kind missing -> identity validation must fail closed
+            return {
+                "id": "task-invalid",
+                "input_data": {
+                    "track": "B",
+                    "ownership": "track_b",
+                },
+            }
+        if method == "DELETE" and path.startswith("/api/v1/agents/"):
+            deleted.append(path.split("/")[-1])
+            return {"status": "killed"}
+        raise AssertionError(f"Unexpected {method} {path}")
+
+    monkeypatch.setattr(facade, "_api_json", _api_json)
+
+    with pytest.raises(RuntimeError, match="shutdown --scope track task_id=task-invalid"):
+        facade.shutdown(
+            _shutdown_args(
+                scope="track",
+                track="B",
+                ownership="track_b",
+            )
+        )
+
+    # Fail-closed means no termination side effects occurred.
+    assert deleted == []
+    assert shell_calls == []
+
+
 def test_shutdown_scope_all_stops_services_for_admin(tmp_path, monkeypatch):
     facade, shell_calls = _make_facade(tmp_path, monkeypatch)
     monkeypatch.setattr(
