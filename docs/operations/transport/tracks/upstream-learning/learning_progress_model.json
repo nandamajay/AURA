@@ -25,7 +25,9 @@
       ],
       "required_evidence_types": [
         "source_locator",
-        "scope_declaration"
+        "corpus_declaration",
+        "repository_provenance",
+        "discovery_inventory"
       ],
       "exit_criteria": [
         "At least one candidate already-upstreamed Qualcomm audio target identified."
@@ -42,11 +44,13 @@
         "DISCOVERED completed."
       ],
       "required_evidence_types": [
-        "driver_file_index",
-        "dts_index",
-        "yaml_index",
-        "kconfig_index",
-        "makefile_index"
+        "dual_corpus_index",
+        "downstream_upstream_relationship_index",
+        "dts_relationship_index",
+        "yaml_relationship_index",
+        "kconfig_relationship_index",
+        "makefile_relationship_index",
+        "static_input_index"
       ],
       "exit_criteria": [
         "Index coverage for declared scope is complete."
@@ -63,8 +67,10 @@
         "INDEXED completed."
       ],
       "required_evidence_types": [
-        "driver_structure_map",
-        "symbol_relationship_map"
+        "comparison_signals",
+        "deterministic_deltas",
+        "downstream_upstream_comparison",
+        "indexed_lineage"
       ],
       "exit_criteria": [
         "Static structure relationships captured with evidence references."

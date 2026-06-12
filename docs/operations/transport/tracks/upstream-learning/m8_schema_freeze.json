@@ -1,0 +1,142 @@
+{
+  "artifact_name": "M8_SCHEMA_FREEZE",
+  "schema_version": "1.0",
+  "status": "FROZEN",
+  "frozen_for_release": "M8",
+  "frozen_on_utc": "2026-06-12T20:45:00Z",
+  "frozen_artifacts": [
+    {
+      "artifact_name": "TRACK_B_EQUIVALENCE_MAP",
+      "artifact_file": "track_b_equivalence_map.json",
+      "schema_version": "1.0",
+      "required_fields": [
+        "artifact_name",
+        "schema_version",
+        "classification",
+        "stage_id",
+        "upstreaming_request",
+        "corpora",
+        "downstream_anchor",
+        "candidate_mappings",
+        "ranking_policy",
+        "lineage",
+        "evidence",
+        "fail_closed_reasons"
+      ]
+    },
+    {
+      "artifact_name": "TRACK_B_DEPENDENCY_MATRIX",
+      "artifact_file": "track_b_dependency_matrix.json",
+      "schema_version": "1.0",
+      "required_fields": [
+        "artifact_name",
+        "schema_version",
+        "classification",
+        "stage_id",
+        "dependency_records",
+        "lineage",
+        "evidence",
+        "fail_closed_reasons"
+      ]
+    },
+    {
+      "artifact_name": "TRACK_B_CONFLICT_LEDGER",
+      "artifact_file": "track_b_conflict_ledger.json",
+      "schema_version": "1.0",
+      "required_fields": [
+        "artifact_name",
+        "schema_version",
+        "classification",
+        "stage_id",
+        "conflicts",
+        "unresolved_conflict_count",
+        "resolved_conflict_count",
+        "resolution_policy",
+        "lineage",
+        "evidence",
+        "fail_closed_reasons"
+      ]
+    },
+    {
+      "artifact_name": "TRACK_B_EQUIVALENCE_DECISION",
+      "artifact_file": "track_b_equivalence_decision.json",
+      "schema_version": "1.0",
+      "required_fields": [
+        "artifact_name",
+        "schema_version",
+        "classification",
+        "stage_id",
+        "decision_state",
+        "selected_candidate",
+        "mandatory_checks",
+        "complexity",
+        "lineage",
+        "evidence",
+        "fail_closed_reasons"
+      ]
+    },
+    {
+      "artifact_name": "TRACK_B_UPSTREAMING_REPORT",
+      "artifact_file": "track_b_upstreaming_report.json",
+      "schema_version": "1.0",
+      "required_fields": [
+        "artifact_name",
+        "schema_version",
+        "classification",
+        "stage_id",
+        "downstream_component",
+        "decision_state",
+        "upstream_equivalents",
+        "required_patches",
+        "risk_assessment",
+        "dependency_summary",
+        "architectural_differences",
+        "caller_callee_chain",
+        "lineage",
+        "evidence",
+        "fail_closed_reasons"
+      ]
+    },
+    {
+      "artifact_name": "TRACK_B_UPSTREAMING_READINESS",
+      "artifact_file": "track_b_upstreaming_readiness.json",
+      "schema_version": "1.0",
+      "required_fields": [
+        "artifact_name",
+        "schema_version",
+        "classification",
+        "stage_id",
+        "decision_state",
+        "readiness_status",
+        "mandatory_checks",
+        "lineage",
+        "evidence",
+        "fail_closed_reasons"
+      ]
+    }
+  ],
+  "provenance_contract": {
+    "required_fields": [
+      "evidence_id",
+      "evidence_type",
+      "corpus_role",
+      "corpus_id",
+      "remote",
+      "branch",
+      "commit_sha",
+      "path",
+      "line_start",
+      "line_end",
+      "snippet_sha256",
+      "source_artifact_name",
+      "source_artifact_sha256",
+      "extraction_rule_id"
+    ],
+    "deterministic_constraints": [
+      "sha256_only",
+      "line_end_gte_line_start",
+      "conflict_type_enum_enforced",
+      "runtime_sensitive_missing_runtime_evidence_fail_closed"
+    ]
+  }
+}

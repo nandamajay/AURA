@@ -41,7 +41,7 @@ class TaskRecorder:
                     finalized_at INTEGER,
                     snapshot_json TEXT,
                     snapshot_hash TEXT,
-                    created_at INTEGER NOT NULL DEFAULT (unixepoch())
+                    created_at INTEGER NOT NULL DEFAULT (CAST(strftime('%s','now') AS INTEGER))
                 )
                 """
             )
@@ -79,14 +79,15 @@ class TaskRecorder:
     ) -> None:
         """Record the start of a task."""
         with sqlite3.connect(self.db_path) as db:
+            created_at = int(time.time())
             db.execute(
                 """
                 INSERT INTO task_logs
                 (task_id, agent_type, seed, model_version, rules_path, input_json,
                  llm_prompts_json, llm_responses_json, execution_order_json,
                  output_json, output_hash, recording_state, revision,
-                 finalized_at, snapshot_json, snapshot_hash)
-                VALUES (?, ?, ?, ?, ?, ?, '[]', '[]', '[]', NULL, NULL, 'mutable', 0, NULL, NULL, NULL)
+                 finalized_at, snapshot_json, snapshot_hash, created_at)
+                VALUES (?, ?, ?, ?, ?, ?, '[]', '[]', '[]', NULL, NULL, 'mutable', 0, NULL, NULL, NULL, ?)
                 ON CONFLICT(task_id) DO UPDATE SET
                     agent_type = excluded.agent_type,
                     seed = excluded.seed,
@@ -102,7 +103,8 @@ class TaskRecorder:
                     revision = 0,
                     finalized_at = NULL,
                     snapshot_json = NULL,
-                    snapshot_hash = NULL
+                    snapshot_hash = NULL,
+                    created_at = excluded.created_at
                 """,
                 (
                     task_id,
@@ -111,6 +113,7 @@ class TaskRecorder:
                     model_version,
                     rules_path,
                     json.dumps(input_data, separators=(",", ":")),
+                    created_at,
                 ),
             )
             db.commit()

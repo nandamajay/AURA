@@ -44,6 +44,7 @@ class LearningAgent(BaseAgent):
             "terminal_stage": result["terminal_stage"],
             "transitions": result["transitions"],
             "stage_confidence": result["stage_confidence"],
+            "stage_confidence_details": result["stage_confidence_details"],
             "execution_artifact_path": result["execution_artifact_path"],
             "artifact_manifest_path": result["artifact_manifest_path"],
             "stage_artifacts": result["stage_artifacts"],

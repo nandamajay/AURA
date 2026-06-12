@@ -1,0 +1,52 @@
+{
+  "artifact_name": "M8_FRESH_AUDIT_REPORT",
+  "schema_version": "1.0",
+  "source_summary_path": "/local/mnt/workspace/AURA_V1_upstream/track_b_validation/m8_audit_fresh_20260612T204007Z/m8_fresh_audit_summary.json",
+  "criteria": {
+    "determinism": true,
+    "fc02_closed": true,
+    "fc03_closed": true,
+    "fc04_closed": true,
+    "real_corpus_runs": true
+  },
+  "metrics": {
+    "blocker_count": 0,
+    "m8_completion_percentage": 100.0,
+    "production_readiness_percentage": 95.0
+  },
+  "targets": {
+    "blockers_eq_0": true,
+    "m8_completion_gt_95": true,
+    "production_readiness_gt_90": true
+  },
+  "real_corpus_cases": [
+    {
+      "case": "q6apm_dai_prepare",
+      "deterministic_hashes": true,
+      "deterministic_readiness": true,
+      "deterministic_decision": true,
+      "fc03_taxonomy_ok": true,
+      "fc04_provenance_ok": true
+    },
+    {
+      "case": "snd_soc_of_parse_audio_routing",
+      "deterministic_hashes": true,
+      "deterministic_readiness": true,
+      "deterministic_decision": true,
+      "fc03_taxonomy_ok": true,
+      "fc04_provenance_ok": true
+    },
+    {
+      "case": "audio_prm_set_lpass_clk_cfg",
+      "deterministic_hashes": true,
+      "deterministic_readiness": true,
+      "deterministic_decision": true,
+      "fc03_taxonomy_ok": true,
+      "fc04_provenance_ok": true
+    }
+  ],
+  "fc02_probe": {
+    "pass": true,
+    "reason": "track_b_stage_execution fail-closed: upstreaming_request.runtime_evidence_refs must be non-empty for runtime-sensitive component_type=apr_service"
+  }
+}

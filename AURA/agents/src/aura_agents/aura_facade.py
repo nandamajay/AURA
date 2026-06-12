@@ -6,6 +6,7 @@ import argparse
 import hashlib
 import importlib.util
 import json
+import re
 import sqlite3
 import subprocess
 import sys
@@ -21,6 +22,55 @@ import httpx
 TERMINAL_TASK_STATES = {"completed", "failed", "cancelled", "timed_out"}
 ACTIVE_TASK_STATES = {"created", "queued", "started", "running"}
 REQUIRED_SESSION_IDENTITY_FIELDS = ("track", "ownership", "session_kind")
+TRACK_B_EXECUTION_STAGES = (
+    "DISCOVERED",
+    "INDEXED",
+    "STATIC_ANALYZED",
+    "EQUIVALENCE_MAPPED",
+    "DEPENDENCIES_BOUND",
+    "CONFLICTS_EVALUATED",
+    "DECISION_FINALIZED",
+    "REPORT_GENERATED",
+    "READINESS_GATED",
+)
+UPSTREAMING_COMPONENT_TYPES = (
+    "function",
+    "driver",
+    "dt_node",
+    "mixer_control",
+    "dai_link",
+    "soundwire_endpoint",
+    "apr_service",
+    "dsp_graph_component",
+)
+RUNTIME_SENSITIVE_COMPONENT_TYPES = (
+    "mixer_control",
+    "dai_link",
+    "soundwire_endpoint",
+    "apr_service",
+    "dsp_graph_component",
+)
+RUNTIME_EVIDENCE_REF_RE = re.compile(r"^(runtime|m7):[a-z0-9_.-]+:[a-z0-9_.:/-]+$", re.IGNORECASE)
+DEFAULT_TRACK_B_SOURCE_ROOTS = (
+    "sound/soc/qcom",
+    "arch/arm64/boot/dts/qcom",
+    "Documentation/devicetree/bindings/sound",
+)
+DEFAULT_TRACK_B_INCLUDE_PATTERNS = (
+    "*.c",
+    "*.h",
+    "*.dts",
+    "*.dtsi",
+    "*.yaml",
+    "*.yml",
+    "Kconfig",
+    "Makefile",
+    "*.mk",
+)
+DEFAULT_TRACK_B_EXCLUDE_PATTERNS = (
+    ".git",
+    ".git/*",
+)
 
 
 def _utc_now_iso() -> str:
@@ -63,6 +113,16 @@ def _trim(text: str, limit: int = 1200) -> str:
     if len(text) <= limit:
         return text
     return text[:limit] + "...<truncated>"
+
+
+def _is_commit_sha(value: str) -> bool:
+    text = str(value or "").strip().lower()
+    if len(text) < 7 or len(text) > 64:
+        return False
+    for char in text:
+        if char not in "0123456789abcdef":
+            return False
+    return True
 
 
 @dataclass(frozen=True)
@@ -237,8 +297,189 @@ class AuraFacade:
         if not self._identity_matches(detail_identity, filters):
             raise RuntimeError(
                 f"{command} fail-closed: resolved task identity drift detected for task_id={resolved_task_id}"
-            )
+        )
         return detail
+
+    @staticmethod
+    def _git_read(*, repository_root: Path, args: list[str], field: str) -> str:
+        run = subprocess.run(
+            ["git", "-C", str(repository_root), *args],
+            capture_output=True,
+            text=True,
+            check=False,
+        )
+        if run.returncode != 0:
+            stderr = _trim(str(run.stderr or ""), 320)
+            raise RuntimeError(
+                f"learn fail-closed: unable to read {field} from {repository_root}: {stderr}"
+            )
+        value = str(run.stdout or "").strip()
+        if not value:
+            raise RuntimeError(
+                f"learn fail-closed: git returned empty {field} for {repository_root}"
+            )
+        return value
+
+    def _build_track_b_corpus(
+        self,
+        *,
+        corpus_id: str,
+        corpus_role: str,
+        repository_root: str,
+        remote: str,
+        branch: str,
+        commit_sha: str,
+    ) -> dict[str, Any]:
+        corpus_id_text = str(corpus_id or "").strip()
+        if not corpus_id_text:
+            raise RuntimeError(f"learn fail-closed: {corpus_role} corpus_id must be non-empty")
+        role = str(corpus_role or "").strip().lower()
+        if role not in {"downstream", "upstream"}:
+            raise RuntimeError(f"learn fail-closed: unsupported corpus_role={corpus_role!r}")
+        repo_root = Path(str(repository_root or "")).resolve()
+        if not repo_root.exists() or not repo_root.is_dir():
+            raise RuntimeError(
+                f"learn fail-closed: {role} repository root does not exist: {repository_root}"
+            )
+
+        resolved_remote = str(remote or "").strip()
+        if not resolved_remote:
+            resolved_remote = self._git_read(
+                repository_root=repo_root,
+                args=["config", "--get", "remote.origin.url"],
+                field=f"{role}.revision.remote",
+            )
+        resolved_branch = str(branch or "").strip()
+        if not resolved_branch:
+            resolved_branch = self._git_read(
+                repository_root=repo_root,
+                args=["rev-parse", "--abbrev-ref", "HEAD"],
+                field=f"{role}.revision.branch",
+            )
+        resolved_commit = str(commit_sha or "").strip().lower()
+        if not resolved_commit:
+            resolved_commit = self._git_read(
+                repository_root=repo_root,
+                args=["rev-parse", "HEAD"],
+                field=f"{role}.revision.commit_sha",
+            ).lower()
+        if not _is_commit_sha(resolved_commit):
+            raise RuntimeError(
+                f"learn fail-closed: {role}.revision.commit_sha must be hexadecimal commit SHA"
+            )
+
+        return {
+            "corpus_id": corpus_id_text,
+            "corpus_role": role,
+            "repository_root": str(repo_root),
+            "revision": {
+                "remote": resolved_remote,
+                "branch": resolved_branch,
+                "commit_sha": resolved_commit,
+            },
+            "source_roots": list(DEFAULT_TRACK_B_SOURCE_ROOTS),
+            "include_patterns": list(DEFAULT_TRACK_B_INCLUDE_PATTERNS),
+            "exclude_patterns": list(DEFAULT_TRACK_B_EXCLUDE_PATTERNS),
+        }
+
+    def _build_track_b_corpora(self, args: argparse.Namespace) -> list[dict[str, Any]]:
+        downstream_root = str(args.downstream_root or "").strip() or str(
+            self._cfg.workspace_root / "track_b_corpora" / "audio-kernel-ar"
+        )
+        upstream_root = str(args.upstream_root or "").strip() or str(
+            self._cfg.workspace_root / "track_b_corpora" / "linux-next"
+        )
+
+        downstream = self._build_track_b_corpus(
+            corpus_id=str(args.downstream_corpus_id or "audio-kernel-ar"),
+            corpus_role="downstream",
+            repository_root=downstream_root,
+            remote=str(args.downstream_remote or ""),
+            branch=str(args.downstream_branch or ""),
+            commit_sha=str(args.downstream_commit or ""),
+        )
+        upstream = self._build_track_b_corpus(
+            corpus_id=str(args.upstream_corpus_id or "linux-next"),
+            corpus_role="upstream",
+            repository_root=upstream_root,
+            remote=str(args.upstream_remote or ""),
+            branch=str(args.upstream_branch or ""),
+            commit_sha=str(args.upstream_commit or ""),
+        )
+        return [downstream, upstream]
+
+    @staticmethod
+    def _normalize_track_b_target_stage(raw: str) -> str:
+        stage = str(raw or "").strip().upper()
+        if not stage:
+            return "STATIC_ANALYZED"
+        if stage not in TRACK_B_EXECUTION_STAGES:
+            raise RuntimeError(
+                f"learn fail-closed: unsupported target stage {stage!r}; allowed={TRACK_B_EXECUTION_STAGES}"
+            )
+        return stage
+
+    @staticmethod
+    def _requires_upstreaming_request(target_stage: str) -> bool:
+        stage = str(target_stage or "").strip().upper()
+        if stage not in TRACK_B_EXECUTION_STAGES:
+            return False
+        return TRACK_B_EXECUTION_STAGES.index(stage) > TRACK_B_EXECUTION_STAGES.index("STATIC_ANALYZED")
+
+    @staticmethod
+    def _build_upstreaming_request(args: argparse.Namespace) -> dict[str, Any]:
+        component_kind = str(args.component_kind or "").strip().lower()
+        component_name = str(args.component_name or "").strip()
+        source_path = str(args.component_source_path or "").strip()
+        line_start = int(args.component_line_start or 0)
+        line_end = int(args.component_line_end or 0)
+        request_id = str(args.upstreaming_request_id or "").strip()
+        runtime_evidence_refs = [str(item).strip() for item in list(args.runtime_evidence_ref or []) if str(item).strip()]
+        runtime_evidence_refs = sorted(set(runtime_evidence_refs))
+
+        if not component_kind and not component_name and not source_path and not request_id and not runtime_evidence_refs:
+            return {}
+        if component_kind not in UPSTREAMING_COMPONENT_TYPES:
+            raise RuntimeError(
+                "learn fail-closed: --component-kind must be one of "
+                + ", ".join(UPSTREAMING_COMPONENT_TYPES)
+            )
+        if not component_name:
+            raise RuntimeError("learn fail-closed: --component-name is required when upstreaming request is provided")
+        if not source_path:
+            raise RuntimeError("learn fail-closed: --component-source-path is required for upstreaming request")
+        if not request_id:
+            raise RuntimeError("learn fail-closed: --upstreaming-request-id is required for upstreaming request")
+        if line_start < 0 or line_end < 0:
+            raise RuntimeError("learn fail-closed: component line values must be >= 0")
+        if line_end and line_start and line_end < line_start:
+            raise RuntimeError("learn fail-closed: --component-line-end must be >= --component-line-start")
+        for index, ref in enumerate(runtime_evidence_refs):
+            if not RUNTIME_EVIDENCE_REF_RE.match(ref):
+                raise RuntimeError(
+                    "learn fail-closed: --runtime-evidence-ref["
+                    + str(index)
+                    + "] must match '<runtime|m7>:<type>:<id>'"
+                )
+        runtime_evidence_required = component_kind in RUNTIME_SENSITIVE_COMPONENT_TYPES
+        if runtime_evidence_required and not runtime_evidence_refs:
+            raise RuntimeError(
+                "learn fail-closed: --runtime-evidence-ref is required for runtime-sensitive component-kind "
+                + component_kind
+            )
+
+        return {
+            "request_id": request_id,
+            "downstream_component": {
+                "component_type": component_kind,
+                "component_name": component_name,
+                "source_path": source_path,
+                "line_start": line_start,
+                "line_end": line_end,
+            },
+            "runtime_evidence_required": runtime_evidence_required,
+            "runtime_evidence_refs": runtime_evidence_refs,
+        }
 
     def start(self, args: argparse.Namespace) -> dict[str, Any]:
         start_script = self._cfg.aura_root / "scripts" / "aura_start.sh"
@@ -337,6 +578,18 @@ class AuraFacade:
             raise RuntimeError(
                 f"learn fail-closed: readiness has hard blockers: {hard_blockers}"
             )
+        corpora = self._build_track_b_corpora(args)
+        target_stage = self._normalize_track_b_target_stage(str(args.target_stage or "STATIC_ANALYZED"))
+        upstreaming_request = self._build_upstreaming_request(args)
+        if self._requires_upstreaming_request(target_stage) and not upstreaming_request:
+            raise RuntimeError(
+                "learn fail-closed: upstreaming request is required when target stage is beyond STATIC_ANALYZED"
+            )
+        stage_execution_mode = (
+            "m8_deterministic_upstreaming"
+            if self._requires_upstreaming_request(target_stage)
+            else "m6_deterministic_dual_corpus"
+        )
 
         auth = self._login()
 
@@ -349,15 +602,18 @@ class AuraFacade:
             "repository_root": str(self._cfg.workspace_root),
             "track_b_stage": "DISCOVERED",
             "track_b_initial_stage": "DISCOVERED",
-            "track_b_target_stage": "STATIC_ANALYZED",
-            "stage_execution_mode": "m2_deterministic",
+            "track_b_target_stage": target_stage,
+            "stage_execution_mode": stage_execution_mode,
             "control_plane_assets": track_b["asset_paths"],
             "control_plane_sha256": track_b["asset_fingerprints"],
             "shared_core_references": track_b["shared_core_references"],
             "forbidden_actions": track_b["forbidden_actions"],
             "track_b_readiness": readiness,
             "track_b_hard_blockers": hard_blockers if isinstance(hard_blockers, list) else [],
+            "corpora": corpora,
         }
+        if upstreaming_request:
+            input_data["upstreaming_request"] = upstreaming_request
         payload = {
             "agent_type": "learning",
             "priority": str(args.priority),
@@ -960,6 +1216,85 @@ def build_parser() -> argparse.ArgumentParser:
         default="P1",
         choices=["P0", "P1", "P2"],
         help="Task priority for learning session.",
+    )
+    learn.add_argument(
+        "--downstream-root",
+        default="",
+        help=(
+            "Downstream corpus repository root. Defaults to "
+            "<workspace>/track_b_corpora/audio-kernel-ar."
+        ),
+    )
+    learn.add_argument(
+        "--upstream-root",
+        default="",
+        help=(
+            "Upstream corpus repository root. Defaults to "
+            "<workspace>/track_b_corpora/linux-next."
+        ),
+    )
+    learn.add_argument(
+        "--downstream-corpus-id",
+        default="audio-kernel-ar",
+        help="Downstream corpus identifier (default: %(default)s).",
+    )
+    learn.add_argument(
+        "--upstream-corpus-id",
+        default="linux-next",
+        help="Upstream corpus identifier (default: %(default)s).",
+    )
+    learn.add_argument("--downstream-remote", default="", help="Optional downstream revision.remote override.")
+    learn.add_argument("--downstream-branch", default="", help="Optional downstream revision.branch override.")
+    learn.add_argument("--downstream-commit", default="", help="Optional downstream revision.commit_sha override.")
+    learn.add_argument("--upstream-remote", default="", help="Optional upstream revision.remote override.")
+    learn.add_argument("--upstream-branch", default="", help="Optional upstream revision.branch override.")
+    learn.add_argument("--upstream-commit", default="", help="Optional upstream revision.commit_sha override.")
+    learn.add_argument(
+        "--target-stage",
+        default="STATIC_ANALYZED",
+        choices=list(TRACK_B_EXECUTION_STAGES),
+        help="Track-B target stage for deterministic execution (default: %(default)s).",
+    )
+    learn.add_argument(
+        "--upstreaming-request-id",
+        default="",
+        help="Required when target stage is beyond STATIC_ANALYZED.",
+    )
+    learn.add_argument(
+        "--component-kind",
+        default="",
+        help=(
+            "Downstream component kind for M8 upstreaming request "
+            f"({', '.join(UPSTREAMING_COMPONENT_TYPES)})."
+        ),
+    )
+    learn.add_argument(
+        "--component-name",
+        default="",
+        help="Downstream component identifier (function/driver/DT node/etc).",
+    )
+    learn.add_argument(
+        "--component-source-path",
+        default="",
+        help="Optional downstream source path to constrain deterministic matching.",
+    )
+    learn.add_argument(
+        "--component-line-start",
+        type=int,
+        default=0,
+        help="Optional downstream component line_start.",
+    )
+    learn.add_argument(
+        "--component-line-end",
+        type=int,
+        default=0,
+        help="Optional downstream component line_end.",
+    )
+    learn.add_argument(
+        "--runtime-evidence-ref",
+        action="append",
+        default=[],
+        help="Optional runtime evidence reference. Repeat flag for multiple references.",
     )
 
     resume = sub.add_parser("resume", help="Resume latest or selected learning session.")

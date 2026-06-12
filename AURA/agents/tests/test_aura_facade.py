@@ -62,6 +62,24 @@ def _learn_args(**overrides):
     base = {
         "platform": "sc7280",
         "priority": "P1",
+        "downstream_root": "",
+        "upstream_root": "",
+        "downstream_corpus_id": "audio-kernel-ar",
+        "upstream_corpus_id": "linux-next",
+        "downstream_remote": "",
+        "downstream_branch": "",
+        "downstream_commit": "",
+        "upstream_remote": "",
+        "upstream_branch": "",
+        "upstream_commit": "",
+        "target_stage": "STATIC_ANALYZED",
+        "upstreaming_request_id": "",
+        "component_kind": "",
+        "component_name": "",
+        "component_source_path": "",
+        "component_line_start": 0,
+        "component_line_end": 0,
+        "runtime_evidence_ref": [],
     }
     base.update(overrides)
     return argparse.Namespace(**base)
@@ -130,7 +148,7 @@ def test_main_returns_failure_code_on_exception(monkeypatch, capsys):
     assert "[FAIL] boom" in capsys.readouterr().err
 
 
-def test_learn_includes_m2_stage_execution_contract(tmp_path, monkeypatch):
+def test_learn_includes_m6_stage_execution_contract(tmp_path, monkeypatch):
     facade, _ = _make_facade(tmp_path, monkeypatch)
     monkeypatch.setattr(
         facade,
@@ -163,6 +181,30 @@ def test_learn_includes_m2_stage_execution_contract(tmp_path, monkeypatch):
             },
         },
     )
+    monkeypatch.setattr(
+        facade,
+        "_build_track_b_corpora",
+        lambda _args: [
+            {
+                "corpus_id": "audio-kernel-ar",
+                "corpus_role": "downstream",
+                "repository_root": "/tmp/downstream",
+                "revision": {"remote": "ssh://downstream", "branch": "main", "commit_sha": "a" * 40},
+                "source_roots": ["sound/soc/qcom"],
+                "include_patterns": ["*.c"],
+                "exclude_patterns": [],
+            },
+            {
+                "corpus_id": "linux-next",
+                "corpus_role": "upstream",
+                "repository_root": "/tmp/upstream",
+                "revision": {"remote": "git://upstream", "branch": "master", "commit_sha": "b" * 40},
+                "source_roots": ["sound/soc/qcom"],
+                "include_patterns": ["*.c"],
+                "exclude_patterns": [],
+            },
+        ],
+    )
 
     seen_post: dict[str, object] = {}
 
@@ -187,8 +229,165 @@ def test_learn_includes_m2_stage_execution_contract(tmp_path, monkeypatch):
     assert input_data["workflow_kind"] == "track_b_discovery"
     assert input_data["track_b_initial_stage"] == "DISCOVERED"
     assert input_data["track_b_target_stage"] == "STATIC_ANALYZED"
-    assert input_data["stage_execution_mode"] == "m2_deterministic"
+    assert input_data["stage_execution_mode"] == "m6_deterministic_dual_corpus"
     assert input_data["track_b_readiness"]["go_no_go"] == "GO_DISCOVERY_ONLY"
+    assert len(input_data["corpora"]) == 2
+    assert {item["corpus_role"] for item in input_data["corpora"]} == {"downstream", "upstream"}
+
+
+def test_learn_includes_m8_upstreaming_request_contract(tmp_path, monkeypatch):
+    facade, _ = _make_facade(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        facade,
+        "_login",
+        lambda: {"token": "tok", "email": "admin@aura.local", "role": "admin"},
+    )
+    monkeypatch.setattr(
+        facade,
+        "_load_track_b_control_plane",
+        lambda: {
+            "asset_paths": {
+                "architecture_plan.md": "/tmp/a",
+                "track_boundary_report.json": "/tmp/b",
+                "learning_progress_model.json": "/tmp/c",
+                "readiness_assessment.json": "/tmp/d",
+            },
+            "asset_fingerprints": {
+                "architecture_plan.md": "a" * 64,
+                "track_boundary_report.json": "b" * 64,
+                "learning_progress_model.json": "c" * 64,
+                "readiness_assessment.json": "d" * 64,
+            },
+            "shared_core_references": {"ontology": "/tmp/ontology.json"},
+            "forbidden_actions": ["patch_generation"],
+            "readiness": {
+                "go_no_go": "GO_DISCOVERY_ONLY",
+                "scope_mode": "DISCOVERY_ONLY",
+                "hard_blockers": [],
+                "classification": "READY_FOR_DISCOVERY_ONLY",
+            },
+        },
+    )
+    monkeypatch.setattr(
+        facade,
+        "_build_track_b_corpora",
+        lambda _args: [
+            {
+                "corpus_id": "audio-kernel-ar",
+                "corpus_role": "downstream",
+                "repository_root": "/tmp/downstream",
+                "revision": {"remote": "ssh://downstream", "branch": "main", "commit_sha": "a" * 40},
+                "source_roots": ["sound/soc/qcom"],
+                "include_patterns": ["*.c"],
+                "exclude_patterns": [],
+            },
+            {
+                "corpus_id": "linux-next",
+                "corpus_role": "upstream",
+                "repository_root": "/tmp/upstream",
+                "revision": {"remote": "git://upstream", "branch": "master", "commit_sha": "b" * 40},
+                "source_roots": ["sound/soc/qcom"],
+                "include_patterns": ["*.c"],
+                "exclude_patterns": [],
+            },
+        ],
+    )
+
+    seen_post: dict[str, object] = {}
+
+    def _api_json(*, method, path, token, params=None, json_body=None):
+        _ = token, params
+        if method == "POST" and path == "/api/v1/tasks/":
+            seen_post["body"] = json_body
+            return {"task_id": "task-1"}
+        if method == "GET" and path == "/api/v1/tasks/task-1":
+            return {"id": "task-1", "status": "queued"}
+        if method == "GET" and path == "/api/v1/tasks/task-1/replay/state":
+            return {"replayable": False, "recording_state": "finalized"}
+        raise AssertionError(f"Unexpected {method} {path}")
+
+    monkeypatch.setattr(facade, "_api_json", _api_json)
+
+    result = facade.learn(
+        _learn_args(
+            platform="sc7280",
+            target_stage="READINESS_GATED",
+            upstreaming_request_id="req-1",
+            component_kind="function",
+            component_name="q6apm_dai_prepare",
+            component_source_path="sound/soc/qcom/test_machine.c",
+            component_line_start=10,
+            component_line_end=10,
+            runtime_evidence_ref=["runtime:event:1", "runtime:event:2"],
+        )
+    )
+    assert result["classification"] == "PASS"
+    posted = seen_post["body"]
+    assert isinstance(posted, dict)
+    input_data = posted["input_data"]
+    assert input_data["track_b_target_stage"] == "READINESS_GATED"
+    assert input_data["stage_execution_mode"] == "m8_deterministic_upstreaming"
+    assert input_data["upstreaming_request"]["request_id"] == "req-1"
+    assert input_data["upstreaming_request"]["downstream_component"]["component_type"] == "function"
+    assert input_data["upstreaming_request"]["downstream_component"]["component_name"] == "q6apm_dai_prepare"
+    assert input_data["upstreaming_request"]["runtime_evidence_required"] is False
+
+
+def test_learn_fail_closed_when_m8_target_missing_request(tmp_path, monkeypatch):
+    facade, _ = _make_facade(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        facade,
+        "_load_track_b_control_plane",
+        lambda: {
+            "asset_paths": {},
+            "asset_fingerprints": {},
+            "shared_core_references": {},
+            "forbidden_actions": [],
+            "readiness": {
+                "go_no_go": "GO_DISCOVERY_ONLY",
+                "scope_mode": "DISCOVERY_ONLY",
+                "hard_blockers": [],
+                "classification": "READY_FOR_DISCOVERY_ONLY",
+            },
+        },
+    )
+    monkeypatch.setattr(facade, "_build_track_b_corpora", lambda _args: [])
+
+    with pytest.raises(RuntimeError, match="upstreaming request is required"):
+        facade.learn(_learn_args(target_stage="READINESS_GATED"))
+
+
+def test_learn_fail_closed_when_runtime_sensitive_request_has_no_runtime_evidence(tmp_path, monkeypatch):
+    facade, _ = _make_facade(tmp_path, monkeypatch)
+    monkeypatch.setattr(
+        facade,
+        "_load_track_b_control_plane",
+        lambda: {
+            "asset_paths": {},
+            "asset_fingerprints": {},
+            "shared_core_references": {},
+            "forbidden_actions": [],
+            "readiness": {
+                "go_no_go": "GO_DISCOVERY_ONLY",
+                "scope_mode": "DISCOVERY_ONLY",
+                "hard_blockers": [],
+                "classification": "READY_FOR_DISCOVERY_ONLY",
+            },
+        },
+    )
+    monkeypatch.setattr(facade, "_build_track_b_corpora", lambda _args: [])
+
+    with pytest.raises(RuntimeError, match="runtime-evidence-ref is required for runtime-sensitive"):
+        facade.learn(
+            _learn_args(
+                target_stage="READINESS_GATED",
+                upstreaming_request_id="req-rs",
+                component_kind="apr_service",
+                component_name="audio_prm_set_lpass_clk_cfg",
+                component_source_path="asoc/audio_machine.c",
+                runtime_evidence_ref=[],
+            )
+        )
 
 
 def test_learn_fail_closed_when_readiness_not_go(tmp_path, monkeypatch):
