@@ -12,6 +12,9 @@ export default function LearningCenter() {
         { title: 'Decisions', endpoint: API_ROUTES.memory.decisions(20), intervalMs: 30_000 },
         { title: 'Failures', endpoint: API_ROUTES.memory.failures(20), intervalMs: 30_000 },
         { title: 'Replay Incidents', endpoint: API_ROUTES.memory.replayIncidents(20), intervalMs: 30_000 },
+        { title: 'Track-B Learning Index', endpoint: API_ROUTES.trackB.learningIndexQuery(100, 1), intervalMs: 30_000 },
+        { title: 'Track-B Learning Patterns', endpoint: API_ROUTES.trackB.learningPatterns(), intervalMs: 30_000 },
+        { title: 'Track-B Readiness Examples', endpoint: API_ROUTES.trackB.dashboardReadiness(), intervalMs: 30_000 },
       ]}
     />
   )

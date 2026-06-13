@@ -234,6 +234,72 @@ export const API_ROUTES = {
       withQuery(buildApiV1('/runtime/equivalence'), { critical_only: criticalOnly, limit, page }),
     confidence: () => buildApiV1('/runtime/confidence'),
   },
+  trackB: {
+    artifactsIndex: () => buildApiV1('/track-b/artifacts/index'),
+    artifactsIndexQuery: (
+      limit = 50,
+      page = 1,
+      artifactName = '',
+      classification = '',
+      stageId = '',
+      decisionState = '',
+      readinessStatus = '',
+      taskId = '',
+      component = '',
+      includeInvalid = true,
+      strictValidation = true,
+    ) =>
+      withQuery(buildApiV1('/track-b/artifacts/index'), {
+        limit,
+        page,
+        artifact_name: artifactName || undefined,
+        classification: classification || undefined,
+        stage_id: stageId || undefined,
+        decision_state: decisionState || undefined,
+        readiness_status: readinessStatus || undefined,
+        task_id: taskId || undefined,
+        component: component || undefined,
+        include_invalid: includeInvalid,
+        strict_validation: strictValidation,
+      }),
+    artifactById: (artifactId: string) => buildApiV1(`/track-b/artifacts/${encodePathSegment(artifactId)}`),
+    lineage: () => buildApiV1('/track-b/lineage'),
+    lineageQuery: (componentQuery = '', reverseNodeId = '', includeInvalid = true, strictValidation = true) =>
+      withQuery(buildApiV1('/track-b/lineage'), {
+        component_query: componentQuery || undefined,
+        reverse_node_id: reverseNodeId || undefined,
+        include_invalid: includeInvalid,
+        strict_validation: strictValidation,
+      }),
+    auditsIndex: () => buildApiV1('/track-b/audits/index'),
+    auditsIndexQuery: (limit = 50, page = 1) =>
+      withQuery(buildApiV1('/track-b/audits/index'), { limit, page }),
+    auditById: (auditId: string) => buildApiV1(`/track-b/audits/${encodePathSegment(auditId)}`),
+    releasesIndex: () => buildApiV1('/track-b/releases/index'),
+    releasesIndexQuery: (limit = 50, page = 1) =>
+      withQuery(buildApiV1('/track-b/releases/index'), { limit, page }),
+    releaseByTag: (releaseTag: string) => buildApiV1(`/track-b/releases/${encodePathSegment(releaseTag)}`),
+    dashboardReleaseSummary: () => buildApiV1('/track-b/dashboard/release-summary'),
+    dashboardReadiness: () => buildApiV1('/track-b/dashboard/readiness'),
+    dashboardReadinessHistory: () => buildApiV1('/track-b/dashboard/readiness-history'),
+    dashboardDependencyCoverage: () => buildApiV1('/track-b/dashboard/dependency-coverage'),
+    dashboardConflicts: () => buildApiV1('/track-b/dashboard/conflicts'),
+    dashboardEquivalence: () => buildApiV1('/track-b/dashboard/equivalence'),
+    dashboardAuditHistory: (limit = 50) =>
+      withQuery(buildApiV1('/track-b/dashboard/audit-history'), { limit }),
+    dashboardReleaseHistory: (limit = 50) =>
+      withQuery(buildApiV1('/track-b/dashboard/release-history'), { limit }),
+    learningIndex: () => buildApiV1('/track-b/learning/index'),
+    learningIndexQuery: (limit = 100, page = 1) =>
+      withQuery(buildApiV1('/track-b/learning/index'), { limit, page }),
+    learningPatterns: () => buildApiV1('/track-b/learning/patterns'),
+    search: (q = '', kind = '', limit = 100) =>
+      withQuery(buildApiV1('/track-b/search'), {
+        q: q || undefined,
+        kind: kind || undefined,
+        limit,
+      }),
+  },
 } as const
 
 // Backward-compatible flat endpoint map for existing pages/components.
@@ -259,6 +325,10 @@ export const ENDPOINTS = {
   runtimeTopology: API_ROUTES.runtime.topology(),
   runtimeEquivalence: API_ROUTES.runtime.equivalence(),
   runtimeConfidence: API_ROUTES.runtime.confidence(),
+  trackBArtifactsIndex: API_ROUTES.trackB.artifactsIndex(),
+  trackBLineage: API_ROUTES.trackB.lineage(),
+  trackBReadiness: API_ROUTES.trackB.dashboardReadiness(),
+  trackBLearningIndex: API_ROUTES.trackB.learningIndex(),
   evidenceIndex: API_ROUTES.knowledge.evidenceIndex(),
   evidenceRead: API_ROUTES.knowledge.evidenceReadBase(),
 } as const

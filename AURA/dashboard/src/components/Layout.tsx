@@ -23,6 +23,7 @@ const NAV_ITEMS = [
   { path: '/approval', label: 'Approval Operations', icon: 'APR' },
   { path: '/governance', label: 'Governance Command Center', icon: 'GOV' },
   { path: '/runtime', label: 'Runtime Cognition Center', icon: 'RTC' },
+  { path: '/track-b', label: 'Track-B Visibility Center', icon: 'TBV' },
 ]
 
 interface MeResponse {
