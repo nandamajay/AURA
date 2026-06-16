@@ -1,0 +1,123 @@
+{
+  "artifact_name": "PATCH_07_DT_BINDING_DECISION",
+  "driver": "lpass_va_macro",
+  "decision": "NOT_REQUIRED",
+  "rationale": "The conversion target is the existing upstream qcom,lpass-va-macro driver and its existing DT binding schema. The upstream schema already documents the accepted SoC-specific compatible strings, clock inputs, power domains, qcom,dmic-sample-rate, vdd-micb-supply, and clock-output-names/fsgen output. The remaining downstream-only DT interfaces found in the transformed downstream source are not valid upstream binding deltas and should not be documented as new ABI. Therefore Patch-07 is skipped rather than adding a binding patch that would preserve downstream-private interfaces.",
+  "upstream_binding_exists": true,
+  "upstream_binding_path": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml",
+  "new_compatibles_needed": [],
+  "new_properties_needed": [],
+  "new_clock_names_needed": [],
+  "new_power_domain_requirements_needed": [],
+  "series_final_patch_count": 6,
+  "patch_file_generated": false,
+  "series_note": "Patch-07 is skipped. The final conversion series is six patches. If the patch subjects are regenerated for mailing, use [PATCH 0/6] through [PATCH 6/6] rather than retaining the earlier reviewer-model [PATCH n/7] numbering.",
+  "evidence": {
+    "upstream_binding": {
+      "path": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml",
+      "compatible_entries": [
+        "qcom,sc7280-lpass-va-macro",
+        "qcom,sm6115-lpass-va-macro",
+        "qcom,sm8250-lpass-va-macro",
+        "qcom,sm8450-lpass-va-macro",
+        "qcom,sm8550-lpass-va-macro",
+        "qcom,sc8280xp-lpass-va-macro",
+        "qcom,glymur-lpass-va-macro + qcom,sm8550-lpass-va-macro fallback",
+        "qcom,kaanapali-lpass-va-macro + qcom,sm8550-lpass-va-macro fallback",
+        "qcom,sm8650-lpass-va-macro + qcom,sm8550-lpass-va-macro fallback",
+        "qcom,sm8750-lpass-va-macro + qcom,sm8550-lpass-va-macro fallback",
+        "qcom,x1e80100-lpass-va-macro + qcom,sm8550-lpass-va-macro fallback"
+      ],
+      "documented_properties": [
+        "compatible",
+        "reg",
+        "#sound-dai-cells",
+        "#clock-cells",
+        "clocks",
+        "clock-names",
+        "clock-output-names",
+        "power-domains",
+        "power-domain-names",
+        "qcom,dmic-sample-rate",
+        "vdd-micb-supply"
+      ],
+      "documented_clock_names_by_compatible": {
+        "qcom,sc7280-lpass-va-macro_without_power_domains": ["mclk", "macro", "dcodec"],
+        "qcom,sc7280-lpass-va-macro_with_power_domains": ["mclk"],
+        "qcom,sm6115-lpass-va-macro": ["mclk", "dcodec", "npl"],
+        "qcom,sm8250-lpass-va-macro": ["mclk", "macro", "dcodec"],
+        "qcom,sc8280xp-lpass-va-macro": ["mclk", "macro", "dcodec", "npl"],
+        "qcom,sm8450-lpass-va-macro": ["mclk", "macro", "dcodec", "npl"],
+        "qcom,sm8550-lpass-va-macro": ["mclk", "macro", "dcodec"]
+      },
+      "documented_power_domain_names": ["macro", "dcodec"],
+      "fsgen_handling": "fsgen is documented as clock-output-names in the upstream binding, matching upstream driver behavior. No new fsgen input clock binding is required."
+    },
+    "upstream_driver": {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+      "compatible_table_lines": [1758, 1759, 1760, 1761, 1762, 1763],
+      "compatible_entries": [
+        "qcom,sc7280-lpass-va-macro",
+        "qcom,sm6115-lpass-va-macro",
+        "qcom,sm8250-lpass-va-macro",
+        "qcom,sm8450-lpass-va-macro",
+        "qcom,sm8550-lpass-va-macro",
+        "qcom,sc8280xp-lpass-va-macro"
+      ],
+      "dt_facing_resource_lines": {
+        "clock-output-names": 1410,
+        "devm_clk_get_optional_macro": 1544,
+        "devm_clk_get_optional_dcodec": 1548,
+        "devm_clk_get_mclk": 1552,
+        "lpass_macro_pds_init": 1556,
+        "qcom_dmic_sample_rate": 1560,
+        "devm_clk_get_npl": 1595,
+        "devm_clk_hw_get_clk_fsgen": 1674
+      }
+    },
+    "downstream_driver": {
+      "path": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+      "compatible_table_line": 2748,
+      "compatible_entries": ["qcom,lpass-cdc-va-macro"]
+    },
+    "post_six_patch_generated_source_check": {
+      "source_path_in_temp_check": "/tmp/lpass_va_patch07_dt_check/sound/soc/codecs/lpass-va-macro.c",
+      "compatible_entry": "qcom,lpass-cdc-va-macro",
+      "downstream_only_dt_names_observed": [
+        "qcom,is-used-swr-gpio",
+        "qcom,va-dmic-clk-div-factor",
+        "qcom,va-dmic-override-clk-div-factor",
+        "qcom,va-vdd-micb-current",
+        "qcom,va-vdd-micb-voltage",
+        "use-lpi-control"
+      ],
+      "binding_decision_for_observed_downstream_only_names": "do_not_document_as_upstream_abi",
+      "reason": "These names are downstream-private compatibility interfaces. A binding patch that adds them would expand upstream ABI rather than align to the existing upstream VA macro architecture."
+    }
+  },
+  "reviewer_risk_assessment": {
+    "krzysztof_kozlowski": {
+      "risk_if_patch_generated": "HIGH",
+      "likely_objection": "Do not add undocumented downstream-private compatible strings or properties without real upstream users and schema justification.",
+      "decision_impact": "Skipping Patch-07 avoids creating unnecessary DT ABI."
+    },
+    "mark_brown": {
+      "risk_if_patch_generated": "MEDIUM",
+      "likely_objection": "ASoC driver conversion should use existing upstream bindings unless hardware support genuinely requires a DT ABI extension.",
+      "decision_impact": "No binding delta keeps the driver conversion focused on source cleanup and upstream framework alignment."
+    },
+    "srinivas_kandagatla": {
+      "risk_if_patch_generated": "MEDIUM",
+      "likely_objection": "Qualcomm LPASS macro bindings already cover the upstream VA macro resource model.",
+      "decision_impact": "Existing qcom,lpass-va-macro.yaml remains the binding authority."
+    }
+  },
+  "validation": {
+    "binding_schema_search_performed": true,
+    "downstream_compatible_checked": true,
+    "upstream_compatible_checked": true,
+    "dt_property_delta_checked": true,
+    "dt_binding_check_required": false,
+    "reason_dt_binding_check_not_run": "No binding patch was generated."
+  }
+}
