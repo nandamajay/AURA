@@ -1,0 +1,199 @@
+{
+  "artifact_name": "PATCH_02_LPASS_CDC_FRAMEWORK_SYMBOL_DISPOSITION",
+  "base_assumption": "Patch-01, Patch-06, and Patch-05 have already been applied",
+  "classification": "PASS",
+  "driver": "lpass_va_macro",
+  "patch": "AURA_KB/drivers/lpass_va_macro/patches/0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+  "scope_note": "Records cover lpass-cdc.h/vendor macro framework symbols. Local lpass_cdc_va_macro_* names and lpass-cdc-clk-rsc.h calls are intentionally outside Patch-02 scope.",
+  "stub_count": 4,
+  "stubs": [
+    {
+      "stub": "lpass_va_macro_dmic_clk_enable",
+      "target_patch": 3,
+      "todo": "TODO: Patch-03 provides full implementation"
+    },
+    {
+      "stub": "lpass_va_macro_tx_mclk_enable",
+      "target_patch": 4,
+      "todo": "TODO: Patch-04 provides full implementation"
+    },
+    {
+      "stub": "va_macro_runtime_suspend",
+      "target_patch": 4,
+      "todo": "TODO: Patch-04 provides full implementation"
+    },
+    {
+      "stub": "va_macro_runtime_resume",
+      "target_patch": 4,
+      "todo": "TODO: Patch-04 provides full implementation"
+    }
+  ],
+  "summary": {
+    "removed": 11,
+    "replaced": 6,
+    "stubbed": 6
+  },
+  "symbols": [
+    {
+      "disposition": "removed",
+      "line": 18,
+      "rationale": "downstream vendor macro framework header removed from VA macro",
+      "symbol": "#include \"lpass-cdc.h\"",
+      "target_patch": null
+    },
+    {
+      "disposition": "replaced",
+      "line": 223,
+      "rationale": "localized as VA macro constant because only array bounds remain needed",
+      "symbol": "MIC_PAIR_MAX",
+      "target_patch": null
+    },
+    {
+      "disposition": "replaced",
+      "line": 286,
+      "rationale": "component callbacks now use component->dev and snd_soc_component_get_drvdata",
+      "symbol": "lpass_cdc_get_device_ptr",
+      "target_patch": null
+    },
+    {
+      "disposition": "replaced",
+      "line": 2056,
+      "rationale": "component probe now uses snd_soc_component_get_drvdata directly",
+      "symbol": "lpass_cdc_get_device_ptr",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 286,
+      "rationale": "macro-id indirection removed with lpass-cdc framework",
+      "symbol": "VA_MACRO",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 2073,
+      "rationale": "version gating was already removed by Patch-06 and upstream uses direct match data/version handling",
+      "symbol": "lpass_cdc_get_version",
+      "target_patch": null
+    },
+    {
+      "disposition": "replaced",
+      "line": 2249,
+      "rationale": "vendor macro_ops registration replaced by snd_soc_component_driver",
+      "symbol": "struct macro_ops",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 391,
+      "rationale": "LPASS_CDC_MACRO_EVT dispatch is vendor framework coupling; upstream uses direct component/platform lifecycle",
+      "symbol": "lpass_cdc_va_macro_event_handler",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 404,
+      "rationale": "removed with vendor event dispatcher",
+      "symbol": "LPASS_CDC_MACRO_EVT_WAIT_VA_CLK_RESET",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 424,
+      "rationale": "removed with vendor event dispatcher",
+      "symbol": "LPASS_CDC_MACRO_EVT_PRE_SSR_UP",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 447,
+      "rationale": "removed with vendor event dispatcher",
+      "symbol": "LPASS_CDC_MACRO_EVT_SSR_UP",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 452,
+      "rationale": "removed with vendor event dispatcher",
+      "symbol": "LPASS_CDC_MACRO_EVT_CLK_RESET",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 455,
+      "rationale": "removed with vendor event dispatcher",
+      "symbol": "LPASS_CDC_MACRO_EVT_SSR_DOWN",
+      "target_patch": null
+    },
+    {
+      "disposition": "replaced",
+      "line": 460,
+      "rationale": "event-dispatch call removed; PM ops now point to va_macro_runtime_suspend stub completed by Patch-04",
+      "symbol": "lpass_cdc_runtime_suspend",
+      "target_patch": 4
+    },
+    {
+      "disposition": "stubbed",
+      "line": 2505,
+      "rationale": "runtime PM callback replaced with local va_macro_runtime_suspend TODO stub",
+      "symbol": "lpass_cdc_runtime_suspend",
+      "target_patch": 4
+    },
+    {
+      "disposition": "stubbed",
+      "line": 2506,
+      "rationale": "runtime PM callback replaced with local va_macro_runtime_resume TODO stub",
+      "symbol": "lpass_cdc_runtime_resume",
+      "target_patch": 4
+    },
+    {
+      "disposition": "stubbed",
+      "line": 503,
+      "rationale": "TX mclk fallback replaced with local TODO helper until Patch-04 wires upstream clock/PM sequencing",
+      "symbol": "lpass_cdc_tx_mclk_enable",
+      "target_patch": 4
+    },
+    {
+      "disposition": "stubbed",
+      "line": 513,
+      "rationale": "TX mclk fallback replaced with local TODO helper until Patch-04 wires upstream clock/PM sequencing",
+      "symbol": "lpass_cdc_tx_mclk_enable",
+      "target_patch": 4
+    },
+    {
+      "disposition": "stubbed",
+      "line": 1066,
+      "rationale": "DMIC clock enable path replaced with local TODO helper until Patch-03 wires upstream DMIC handling",
+      "symbol": "lpass_cdc_dmic_clk_enable",
+      "target_patch": 3
+    },
+    {
+      "disposition": "stubbed",
+      "line": 1069,
+      "rationale": "DMIC clock disable path replaced with local TODO helper until Patch-03 wires upstream DMIC handling",
+      "symbol": "lpass_cdc_dmic_clk_enable",
+      "target_patch": 3
+    },
+    {
+      "disposition": "removed",
+      "line": 1066,
+      "rationale": "vendor DMIC domain selector removed when replacing lpass_cdc_dmic_clk_enable with local VA-only helper",
+      "symbol": "DMIC_VA",
+      "target_patch": 3
+    },
+    {
+      "disposition": "replaced",
+      "line": 2444,
+      "rationale": "replaced with devm_snd_soc_register_component using upstream direct component registration pattern",
+      "symbol": "lpass_cdc_register_macro",
+      "target_patch": null
+    },
+    {
+      "disposition": "removed",
+      "line": 2486,
+      "rationale": "explicit unregister removed because devm_snd_soc_register_component handles cleanup",
+      "symbol": "lpass_cdc_unregister_macro",
+      "target_patch": null
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "artifact_name": "PATCH_02_LPASS_CDC_FRAMEWORK_REMOVAL_VALIDATION",
+  "base_assumption": "Patch-01, Patch-06, and Patch-05 have already been applied",
+  "classification": "PASS",
+  "dangling_reference_count": 0,
+  "dangling_references": {},
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "input_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+  "out_of_scope_residuals": [
+    "local lpass_cdc_va_macro_* function names",
+    "lpass_cdc_clk_rsc_* calls from lpass-cdc-clk-rsc.h, to be addressed by later clock/power patches if required"
+  ],
+  "patch_line_count": 366,
+  "patch_path": "AURA_KB/drivers/lpass_va_macro/patches/0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+  "residual_forbidden_framework_symbol_count": 0,
+  "residual_forbidden_framework_symbols": {},
+  "series_apply_result": "SERIES_APPLY_PASS",
+  "stub_count": 4,
+  "symbol_disposition_path": "AURA_KB/drivers/lpass_va_macro/patches/patch_02_symbol_disposition.json",
+  "symbol_disposition_summary": {
+    "removed": 11,
+    "replaced": 6,
+    "stubbed": 6
+  },
+  "todo_count": 4,
+  "todo_patch_references": {
+    "Patch-03": 1,
+    "Patch-04": 3
+  },
+  "validation_checks": {
+    "all_stubs_have_single_patch_03_or_04_todo": true,
+    "devm_snd_soc_register_component_present": true,
+    "no_dmic_va_references": true,
+    "no_lpass_cdc_dmic_clk_enable": true,
+    "no_lpass_cdc_get_device_ptr": true,
+    "no_lpass_cdc_get_version": true,
+    "no_lpass_cdc_h_include": true,
+    "no_lpass_cdc_macro_evt_references": true,
+    "no_lpass_cdc_register_macro": true,
+    "no_lpass_cdc_runtime_suspend_resume": true,
+    "no_lpass_cdc_tx_mclk_enable": true,
+    "no_lpass_cdc_unregister_macro": true,
+    "no_va_macro_framework_id_references": true,
+    "patch_01_patch_06_patch_05_patch_02_apply_sequence": true
+  }
+}
