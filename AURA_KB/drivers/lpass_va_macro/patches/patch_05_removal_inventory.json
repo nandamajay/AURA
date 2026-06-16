@@ -1,0 +1,187 @@
+{
+  "artifact_name": "PATCH_05_SOUNDWIRE_VENDOR_NOTIFICATION_REMOVAL_INVENTORY",
+  "base_assumption": "Patch-01 and Patch-06 have already been applied",
+  "classification": "PASS",
+  "driver": "lpass_va_macro",
+  "patch": "AURA_KB/drivers/lpass_va_macro/patches/0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+  "removal_count": 17,
+  "removal_strategy": "remove private swr-wcd notifications and swr-common port-map dependency; retain partially shared SoundWire child-device setup",
+  "removals": [
+    {
+      "base_lines": [
+        17
+      ],
+      "kind": "include",
+      "reason": "vendor SoundWire common port-map API is not used upstream",
+      "symbol": "soc/swr-common.h"
+    },
+    {
+      "base_lines": [
+        18
+      ],
+      "kind": "include",
+      "reason": "private swr-wcd notification API is not used upstream",
+      "symbol": "soc/swr-wcd.h"
+    },
+    {
+      "base_lines": [
+        197,
+        200
+      ],
+      "kind": "struct",
+      "reason": "only tracked controller pdev for removed swrm_wcd_notify calls",
+      "symbol": "struct lpass_cdc_va_macro_swr_ctrl_data"
+    },
+    {
+      "base_lines": [
+        235
+      ],
+      "kind": "struct_member",
+      "reason": "dead after private notification calls are removed",
+      "symbol": "swr_ctrl_data"
+    },
+    {
+      "base_lines": [
+        459,
+        462
+      ],
+      "kind": "call",
+      "reason": "private codec-to-controller SSR notification",
+      "symbol": "swrm_wcd_notify(..., SWR_DEVICE_SSR_UP, NULL)"
+    },
+    {
+      "base_lines": [
+        470,
+        474
+      ],
+      "kind": "call",
+      "reason": "private codec-to-controller SSR notification",
+      "symbol": "swrm_wcd_notify(..., SWR_DEVICE_SSR_DOWN, NULL)"
+    },
+    {
+      "base_lines": [
+        2178
+      ],
+      "kind": "local_variable",
+      "reason": "dead after pdev notification tracking is removed",
+      "symbol": "swr_ctrl_data"
+    },
+    {
+      "base_lines": [
+        2179
+      ],
+      "kind": "local_variable",
+      "reason": "dead after swr_ctrl_data krealloc path is removed",
+      "symbol": "temp"
+    },
+    {
+      "base_lines": [
+        2181
+      ],
+      "kind": "local_variable",
+      "reason": "only used for removed swr_ctrl_data indexing",
+      "symbol": "ctrl_num"
+    },
+    {
+      "base_lines": [
+        2235,
+        2237
+      ],
+      "kind": "error_message_argument",
+      "reason": "removed because ctrl_num is no longer needed",
+      "symbol": "ctrl_num"
+    },
+    {
+      "base_lines": [
+        2241,
+        2251
+      ],
+      "kind": "allocation_block",
+      "reason": "only allocated storage for pdev handle used by swrm_wcd_notify",
+      "symbol": "krealloc(swr_ctrl_data, ...)"
+    },
+    {
+      "base_lines": [
+        2255
+      ],
+      "kind": "assignment",
+      "reason": "dead after swr_ctrl_data storage is removed",
+      "symbol": "va_priv->swr_ctrl_data = swr_ctrl_data"
+    },
+    {
+      "base_lines": [
+        2280,
+        2302
+      ],
+      "kind": "function",
+      "reason": "function only wrapped SWR_SET_PORT_MAP private notification",
+      "symbol": "lpass_cdc_va_macro_set_port_map"
+    },
+    {
+      "base_lines": [
+        2304,
+        2322
+      ],
+      "kind": "function",
+      "reason": "function only wrapped SWR_REGISTER_WAKE_IRQ private notification",
+      "symbol": "lpass_cdc_va_macro_reg_wake_irq"
+    },
+    {
+      "base_lines": [
+        2334
+      ],
+      "kind": "ops_assignment",
+      "reason": "callback removed with private port-map notification path",
+      "symbol": "ops->set_port_map"
+    },
+    {
+      "base_lines": [
+        2335
+      ],
+      "kind": "ops_assignment",
+      "reason": "callback removed with private wake IRQ notification path",
+      "symbol": "ops->reg_wake_irq"
+    },
+    {
+      "base_lines": [
+        2553,
+        2554
+      ],
+      "kind": "free_block",
+      "reason": "storage is no longer allocated",
+      "symbol": "kfree(va_priv->swr_ctrl_data)"
+    }
+  ],
+  "retained_related_code": [
+    {
+      "reason": "still passed to locally created child platform devices; not solely used by swrm_wcd_notify",
+      "symbol": "lpass_cdc_va_macro_swr_ctrl_platform_data"
+    },
+    {
+      "reason": "partially shared child-device setup; prompt requires retaining shared SSR/SoundWire logic",
+      "symbol": "lpass_cdc_va_macro_add_child_devices"
+    },
+    {
+      "reason": "still gates child-device lifecycle and mutex handling outside removed notification calls",
+      "symbol": "is_used_va_swr_gpio"
+    },
+    {
+      "reason": "still used as platform data for child device setup",
+      "symbol": "swr_plat_data"
+    }
+  ],
+  "source_line_basis": "post Patch-01 + Patch-06 transformed source",
+  "targets": [
+    "soc/swr-wcd.h",
+    "soc/swr-common.h",
+    "swrm_wcd_notify",
+    "SWR_DEVICE_SSR_UP",
+    "SWR_DEVICE_SSR_DOWN",
+    "SWR_SET_PORT_MAP",
+    "SWR_REGISTER_WAKE_IRQ",
+    "struct swrm_port_config",
+    "swr_ctrl_data",
+    "lpass_cdc_va_macro_set_port_map",
+    "lpass_cdc_va_macro_reg_wake_irq"
+  ]
+}

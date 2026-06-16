@@ -1,0 +1,47 @@
+{
+  "artifact_name": "PATCH_05_SOUNDWIRE_VENDOR_NOTIFICATION_REMOVAL_VALIDATION",
+  "base_assumption": "Patch-01 and Patch-06 have already been applied",
+  "classification": "PASS",
+  "dangling_reference_count": 0,
+  "dangling_references": {},
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "input_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+  "patch_01_artifact": "AURA_KB/drivers/lpass_va_macro/patches/0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+  "patch_06_artifact": "AURA_KB/drivers/lpass_va_macro/patches/0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+  "patch_line_count": 184,
+  "patch_path": "AURA_KB/drivers/lpass_va_macro/patches/0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+  "removal_count": 17,
+  "removal_inventory_path": "AURA_KB/drivers/lpass_va_macro/patches/patch_05_removal_inventory.json",
+  "residual_banned_symbol_count": 0,
+  "residual_banned_symbols": {},
+  "retained_related_code": [
+    {
+      "reason": "still passed to locally created child platform devices; not solely used by swrm_wcd_notify",
+      "symbol": "lpass_cdc_va_macro_swr_ctrl_platform_data"
+    },
+    {
+      "reason": "partially shared child-device setup; prompt requires retaining shared SSR/SoundWire logic",
+      "symbol": "lpass_cdc_va_macro_add_child_devices"
+    },
+    {
+      "reason": "still gates child-device lifecycle and mutex handling outside removed notification calls",
+      "symbol": "is_used_va_swr_gpio"
+    },
+    {
+      "reason": "still used as platform data for child device setup",
+      "symbol": "swr_plat_data"
+    }
+  ],
+  "series_apply_result": "SERIES_APPLY_PASS",
+  "validation_checks": {
+    "no_ipc_wakeup_or_port_cfg_dangling_locals": true,
+    "no_private_swr_wcd_constants": true,
+    "no_swr_common_include": true,
+    "no_swr_ctrl_data_references": true,
+    "no_swr_wcd_include": true,
+    "no_swrm_port_config_references": true,
+    "no_swrm_wcd_notify_references": true,
+    "patch_01_patch_06_patch_05_apply_sequence": true
+  }
+}
