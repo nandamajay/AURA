@@ -1,0 +1,1675 @@
+{
+  "kb_rules": {
+    "PSR1": "Split series by logical ownership: binding/core/feature/fix.",
+    "PSR2": "Expect superseded revisions before acceptance.",
+    "PSR3": "Track accepted commits via Patchwork commit_ref.",
+    "ALSA1": "Use standard snd_soc_component_driver + snd_soc_dai_driver objects.",
+    "ALSA2": "kcontrol put must return 1 on state change, 0 otherwise.",
+    "ALSA3": "Keep initial upstream feature scope reviewable.",
+    "DAPM1": "Provide explicit DAPM widgets and routes.",
+    "DAPM2": "Keep DAPM graph minimal in initial series; iterate later.",
+    "DAPM3": "DAPM minimisation is family-sensitive (WSA vs WCD).",
+    "DT1": "Submit YAML binding with driver support.",
+    "DT2": "DT schema constraints are mandatory for acceptance.",
+    "PM1": "Runtime PM integration expected in codec/macro drivers.",
+    "PM2": "Resume path must be timeout-safe before cache sync.",
+    "SDW1": "Use generic SDW lifecycle APIs.",
+    "SDW2": "Model codec core and SDW transport ownership cleanly.",
+    "MB1": "Mark Brown: focused reviewable patch deltas; kcontrol semantics.",
+    "MB2": "Mark Brown: rejects unclear or overly mixed patch scope.",
+    "PB1": "Pierre Bossart: SDW lifecycle correctness and explicit state handling.",
+    "PB2": "Pierre Bossart: timeout-safe PM recovery; defensive resume.",
+    "KK1": "Krzysztof: strict DT schema consistency and variant hygiene.",
+    "KK2": "Krzysztof: DT binding patches paired with driver enablement.",
+    "VK1": "Vinod Koul: SoundWire transport conventions (sparse evidence).",
+    "PL1": "Playbook: stage codec as DT->core->controls->DAPM->fixes.",
+    "PL2": "Playbook: keep board policy out of codec.",
+    "PL3": "Playbook: SDW startup/shutdown stream lifecycle explicit.",
+    "PL4": "Reviewer survival: ownership-clean split + iteration discipline.",
+    "PL5": "Playbook: commit message quality matters for broad-scope patches.",
+    "PL6": "Playbook: bisect-safe at each patch.",
+    "PL7": "Playbook: Changes-since-vN mapping required on resend."
+  },
+  "nodes": [
+    {
+      "id": "C1",
+      "class": "copied_rule",
+      "score": 0.9495
+    },
+    {
+      "id": "C2",
+      "class": "copied_rule",
+      "score": 0.982
+    },
+    {
+      "id": "C3",
+      "class": "copied_rule",
+      "score": 0.966
+    },
+    {
+      "id": "C4",
+      "class": "copied_rule",
+      "score": 0.9615
+    },
+    {
+      "id": "C5",
+      "class": "copied_rule",
+      "score": 0.95
+    },
+    {
+      "id": "C6",
+      "class": "copied_rule",
+      "score": 0.9705
+    },
+    {
+      "id": "C7",
+      "class": "copied_rule",
+      "score": 0.9585
+    },
+    {
+      "id": "C8",
+      "class": "copied_rule",
+      "score": 0.9335
+    },
+    {
+      "id": "C9",
+      "class": "copied_rule",
+      "score": 0.972
+    },
+    {
+      "id": "C10",
+      "class": "copied_rule",
+      "score": 0.886
+    },
+    {
+      "id": "G1",
+      "class": "generalized_rule",
+      "score": 0.598
+    },
+    {
+      "id": "G2",
+      "class": "generalized_rule",
+      "score": 0.5685
+    },
+    {
+      "id": "G3",
+      "class": "generalized_rule",
+      "score": 0.588
+    },
+    {
+      "id": "G4",
+      "class": "generalized_rule",
+      "score": 0.578
+    },
+    {
+      "id": "G5",
+      "class": "copied_rule",
+      "score": 0.953
+    },
+    {
+      "id": "G6",
+      "class": "generalized_rule",
+      "score": 0.5835
+    },
+    {
+      "id": "G7",
+      "class": "generalized_rule",
+      "score": 0.5515
+    },
+    {
+      "id": "G8",
+      "class": "generalized_rule",
+      "score": 0.61
+    },
+    {
+      "id": "G9",
+      "class": "generalized_rule",
+      "score": 0.5725
+    },
+    {
+      "id": "G10",
+      "class": "generalized_rule",
+      "score": 0.567
+    },
+    {
+      "id": "D1",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D2",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D3",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D4",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D5",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D6",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D7",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D8",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D9",
+      "class": "discovered_rule",
+      "score": 0.0
+    },
+    {
+      "id": "D10",
+      "class": "discovered_rule",
+      "score": 0.0
+    }
+  ],
+  "edges": [
+    {
+      "from": "PSR1",
+      "to": "C1",
+      "type": "Direct",
+      "confidence": 0.97
+    },
+    {
+      "from": "DT1",
+      "to": "C1",
+      "type": "Direct",
+      "confidence": 0.97
+    },
+    {
+      "from": "PSR1",
+      "to": "C1",
+      "type": "Multi-hop",
+      "confidence": 0.92
+    },
+    {
+      "from": "DT1",
+      "to": "C1",
+      "type": "Multi-hop",
+      "confidence": 0.92
+    },
+    {
+      "from": "PSR1",
+      "to": "C1",
+      "type": "Rule Composition",
+      "confidence": 0.96
+    },
+    {
+      "from": "DT1",
+      "to": "C1",
+      "type": "Rule Composition",
+      "confidence": 0.96
+    },
+    {
+      "from": "PSR1",
+      "to": "C1",
+      "type": "Constraint Combination",
+      "confidence": 0.9
+    },
+    {
+      "from": "DT1",
+      "to": "C1",
+      "type": "Constraint Combination",
+      "confidence": 0.9
+    },
+    {
+      "from": "PSR1",
+      "to": "C1",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.96
+    },
+    {
+      "from": "DT1",
+      "to": "C1",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.96
+    },
+    {
+      "from": "PL1",
+      "to": "C1",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.95
+    },
+    {
+      "from": "KK2",
+      "to": "C1",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.95
+    },
+    {
+      "from": "PSR1",
+      "to": "C1",
+      "type": "Workflow Equivalence",
+      "confidence": 0.96
+    },
+    {
+      "from": "DT1",
+      "to": "C1",
+      "type": "Workflow Equivalence",
+      "confidence": 0.96
+    },
+    {
+      "from": "ALSA2",
+      "to": "C2",
+      "type": "Direct",
+      "confidence": 0.99
+    },
+    {
+      "from": "ALSA2",
+      "to": "C2",
+      "type": "Multi-hop",
+      "confidence": 0.95
+    },
+    {
+      "from": "ALSA2",
+      "to": "C2",
+      "type": "Rule Composition",
+      "confidence": 0.99
+    },
+    {
+      "from": "ALSA2",
+      "to": "C2",
+      "type": "Constraint Combination",
+      "confidence": 0.97
+    },
+    {
+      "from": "ALSA2",
+      "to": "C2",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.99
+    },
+    {
+      "from": "MB1",
+      "to": "C2",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.99
+    },
+    {
+      "from": "ALSA2",
+      "to": "C2",
+      "type": "Workflow Equivalence",
+      "confidence": 0.99
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Direct",
+      "confidence": 0.98
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Multi-hop",
+      "confidence": 0.94
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Rule Composition",
+      "confidence": 0.97
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Constraint Combination",
+      "confidence": 0.95
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL3",
+      "to": "C3",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.97
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.97
+    },
+    {
+      "from": "SDW1",
+      "to": "C3",
+      "type": "Workflow Equivalence",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL3",
+      "to": "C3",
+      "type": "Workflow Equivalence",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Direct",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Multi-hop",
+      "confidence": 0.93
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Rule Composition",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Constraint Combination",
+      "confidence": 0.95
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.97
+    },
+    {
+      "from": "PL7",
+      "to": "C4",
+      "type": "Workflow Equivalence",
+      "confidence": 0.96
+    },
+    {
+      "from": "PSR2",
+      "to": "C4",
+      "type": "Workflow Equivalence",
+      "confidence": 0.96
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Direct",
+      "confidence": 0.96
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Multi-hop",
+      "confidence": 0.92
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Rule Composition",
+      "confidence": 0.96
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Constraint Combination",
+      "confidence": 0.94
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.95
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.96
+    },
+    {
+      "from": "PL2",
+      "to": "C5",
+      "type": "Workflow Equivalence",
+      "confidence": 0.96
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Direct",
+      "confidence": 0.98
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Multi-hop",
+      "confidence": 0.94
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Rule Composition",
+      "confidence": 0.98
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Constraint Combination",
+      "confidence": 0.96
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.98
+    },
+    {
+      "from": "PB2",
+      "to": "C6",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.97
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.97
+    },
+    {
+      "from": "PM2",
+      "to": "C6",
+      "type": "Workflow Equivalence",
+      "confidence": 0.97
+    },
+    {
+      "from": "PB2",
+      "to": "C6",
+      "type": "Workflow Equivalence",
+      "confidence": 0.97
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Direct",
+      "confidence": 0.97
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Multi-hop",
+      "confidence": 0.93
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Rule Composition",
+      "confidence": 0.97
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Constraint Combination",
+      "confidence": 0.95
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.96
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.96
+    },
+    {
+      "from": "DT2",
+      "to": "C7",
+      "type": "Workflow Equivalence",
+      "confidence": 0.96
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Direct",
+      "confidence": 0.95
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Direct",
+      "confidence": 0.95
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Multi-hop",
+      "confidence": 0.91
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Multi-hop",
+      "confidence": 0.91
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Rule Composition",
+      "confidence": 0.94
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Rule Composition",
+      "confidence": 0.94
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Constraint Combination",
+      "confidence": 0.92
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Constraint Combination",
+      "confidence": 0.92
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.93
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.93
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.94
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.94
+    },
+    {
+      "from": "PSR1",
+      "to": "C8",
+      "type": "Workflow Equivalence",
+      "confidence": 0.93
+    },
+    {
+      "from": "MB2",
+      "to": "C8",
+      "type": "Workflow Equivalence",
+      "confidence": 0.93
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Direct",
+      "confidence": 0.98
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Multi-hop",
+      "confidence": 0.94
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Rule Composition",
+      "confidence": 0.98
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Constraint Combination",
+      "confidence": 0.96
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.98
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.98
+    },
+    {
+      "from": "PL6",
+      "to": "C9",
+      "type": "Workflow Equivalence",
+      "confidence": 0.98
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Direct",
+      "confidence": 0.91
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Direct",
+      "confidence": 0.91
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Multi-hop",
+      "confidence": 0.86
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Multi-hop",
+      "confidence": 0.86
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Rule Composition",
+      "confidence": 0.9
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Rule Composition",
+      "confidence": 0.9
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Constraint Combination",
+      "confidence": 0.84
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Constraint Combination",
+      "confidence": 0.84
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.88
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.88
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.9
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.9
+    },
+    {
+      "from": "PSR1",
+      "to": "C10",
+      "type": "Workflow Equivalence",
+      "confidence": 0.89
+    },
+    {
+      "from": "ALSA3",
+      "to": "C10",
+      "type": "Workflow Equivalence",
+      "confidence": 0.89
+    },
+    {
+      "from": "PSR1",
+      "to": "G1",
+      "type": "Multi-hop",
+      "confidence": 0.88
+    },
+    {
+      "from": "ALSA3",
+      "to": "G1",
+      "type": "Multi-hop",
+      "confidence": 0.88
+    },
+    {
+      "from": "PL4",
+      "to": "G1",
+      "type": "Multi-hop",
+      "confidence": 0.88
+    },
+    {
+      "from": "PSR1",
+      "to": "G1",
+      "type": "Rule Composition",
+      "confidence": 0.86
+    },
+    {
+      "from": "ALSA3",
+      "to": "G1",
+      "type": "Rule Composition",
+      "confidence": 0.86
+    },
+    {
+      "from": "PL4",
+      "to": "G1",
+      "type": "Rule Composition",
+      "confidence": 0.86
+    },
+    {
+      "from": "PSR1",
+      "to": "G1",
+      "type": "Constraint Combination",
+      "confidence": 0.8
+    },
+    {
+      "from": "ALSA3",
+      "to": "G1",
+      "type": "Constraint Combination",
+      "confidence": 0.8
+    },
+    {
+      "from": "PL4",
+      "to": "G1",
+      "type": "Constraint Combination",
+      "confidence": 0.8
+    },
+    {
+      "from": "PSR1",
+      "to": "G1",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "ALSA3",
+      "to": "G1",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PL1",
+      "to": "G1",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.85
+    },
+    {
+      "from": "PL4",
+      "to": "G1",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.85
+    },
+    {
+      "from": "PSR1",
+      "to": "G1",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.85
+    },
+    {
+      "from": "PSR1",
+      "to": "G1",
+      "type": "Workflow Equivalence",
+      "confidence": 0.84
+    },
+    {
+      "from": "PL1",
+      "to": "G1",
+      "type": "Workflow Equivalence",
+      "confidence": 0.84
+    },
+    {
+      "from": "ALSA3",
+      "to": "G1",
+      "type": "Workflow Equivalence",
+      "confidence": 0.84
+    },
+    {
+      "from": "PL4",
+      "to": "G2",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "MB1",
+      "to": "G2",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "PB1",
+      "to": "G2",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "PL4",
+      "to": "G2",
+      "type": "Rule Composition",
+      "confidence": 0.8
+    },
+    {
+      "from": "MB1",
+      "to": "G2",
+      "type": "Rule Composition",
+      "confidence": 0.8
+    },
+    {
+      "from": "PB1",
+      "to": "G2",
+      "type": "Rule Composition",
+      "confidence": 0.8
+    },
+    {
+      "from": "PL4",
+      "to": "G2",
+      "type": "Constraint Combination",
+      "confidence": 0.76
+    },
+    {
+      "from": "MB1",
+      "to": "G2",
+      "type": "Constraint Combination",
+      "confidence": 0.76
+    },
+    {
+      "from": "PB1",
+      "to": "G2",
+      "type": "Constraint Combination",
+      "confidence": 0.76
+    },
+    {
+      "from": "PL4",
+      "to": "G2",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PL4",
+      "to": "G2",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.8
+    },
+    {
+      "from": "PL4",
+      "to": "G2",
+      "type": "Workflow Equivalence",
+      "confidence": 0.79
+    },
+    {
+      "from": "MB1",
+      "to": "G2",
+      "type": "Workflow Equivalence",
+      "confidence": 0.79
+    },
+    {
+      "from": "SDW2",
+      "to": "G3",
+      "type": "Multi-hop",
+      "confidence": 0.85
+    },
+    {
+      "from": "DAPM1",
+      "to": "G3",
+      "type": "Multi-hop",
+      "confidence": 0.85
+    },
+    {
+      "from": "PSR1",
+      "to": "G3",
+      "type": "Multi-hop",
+      "confidence": 0.85
+    },
+    {
+      "from": "SDW2",
+      "to": "G3",
+      "type": "Rule Composition",
+      "confidence": 0.84
+    },
+    {
+      "from": "DAPM1",
+      "to": "G3",
+      "type": "Rule Composition",
+      "confidence": 0.84
+    },
+    {
+      "from": "PSR1",
+      "to": "G3",
+      "type": "Rule Composition",
+      "confidence": 0.84
+    },
+    {
+      "from": "SDW2",
+      "to": "G3",
+      "type": "Constraint Combination",
+      "confidence": 0.8
+    },
+    {
+      "from": "DAPM1",
+      "to": "G3",
+      "type": "Constraint Combination",
+      "confidence": 0.8
+    },
+    {
+      "from": "PSR1",
+      "to": "G3",
+      "type": "Constraint Combination",
+      "confidence": 0.8
+    },
+    {
+      "from": "SDW2",
+      "to": "G3",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "DAPM1",
+      "to": "G3",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PL3",
+      "to": "G3",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.83
+    },
+    {
+      "from": "SDW2",
+      "to": "G3",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.83
+    },
+    {
+      "from": "DAPM1",
+      "to": "G3",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.83
+    },
+    {
+      "from": "SDW2",
+      "to": "G3",
+      "type": "Workflow Equivalence",
+      "confidence": 0.83
+    },
+    {
+      "from": "DAPM1",
+      "to": "G3",
+      "type": "Workflow Equivalence",
+      "confidence": 0.83
+    },
+    {
+      "from": "PSR1",
+      "to": "G3",
+      "type": "Workflow Equivalence",
+      "confidence": 0.83
+    },
+    {
+      "from": "PM2",
+      "to": "G4",
+      "type": "Multi-hop",
+      "confidence": 0.83
+    },
+    {
+      "from": "SDW1",
+      "to": "G4",
+      "type": "Multi-hop",
+      "confidence": 0.83
+    },
+    {
+      "from": "PSR2",
+      "to": "G4",
+      "type": "Multi-hop",
+      "confidence": 0.83
+    },
+    {
+      "from": "PM2",
+      "to": "G4",
+      "type": "Rule Composition",
+      "confidence": 0.82
+    },
+    {
+      "from": "SDW1",
+      "to": "G4",
+      "type": "Rule Composition",
+      "confidence": 0.82
+    },
+    {
+      "from": "PSR2",
+      "to": "G4",
+      "type": "Rule Composition",
+      "confidence": 0.82
+    },
+    {
+      "from": "PM2",
+      "to": "G4",
+      "type": "Constraint Combination",
+      "confidence": 0.78
+    },
+    {
+      "from": "SDW1",
+      "to": "G4",
+      "type": "Constraint Combination",
+      "confidence": 0.78
+    },
+    {
+      "from": "PSR2",
+      "to": "G4",
+      "type": "Constraint Combination",
+      "confidence": 0.78
+    },
+    {
+      "from": "PM2",
+      "to": "G4",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "SDW1",
+      "to": "G4",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PB1",
+      "to": "G4",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.82
+    },
+    {
+      "from": "PB2",
+      "to": "G4",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.82
+    },
+    {
+      "from": "PL3",
+      "to": "G4",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.82
+    },
+    {
+      "from": "PM2",
+      "to": "G4",
+      "type": "Workflow Equivalence",
+      "confidence": 0.81
+    },
+    {
+      "from": "SDW1",
+      "to": "G4",
+      "type": "Workflow Equivalence",
+      "confidence": 0.81
+    },
+    {
+      "from": "PSR2",
+      "to": "G4",
+      "type": "Workflow Equivalence",
+      "confidence": 0.81
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Direct",
+      "confidence": 0.96
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Multi-hop",
+      "confidence": 0.95
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Rule Composition",
+      "confidence": 0.96
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Constraint Combination",
+      "confidence": 0.94
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.95
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.95
+    },
+    {
+      "from": "DAPM3",
+      "to": "G5",
+      "type": "Workflow Equivalence",
+      "confidence": 0.95
+    },
+    {
+      "from": "PL5",
+      "to": "G6",
+      "type": "Multi-hop",
+      "confidence": 0.84
+    },
+    {
+      "from": "MB2",
+      "to": "G6",
+      "type": "Multi-hop",
+      "confidence": 0.84
+    },
+    {
+      "from": "PL5",
+      "to": "G6",
+      "type": "Rule Composition",
+      "confidence": 0.83
+    },
+    {
+      "from": "MB2",
+      "to": "G6",
+      "type": "Rule Composition",
+      "confidence": 0.83
+    },
+    {
+      "from": "PL5",
+      "to": "G6",
+      "type": "Constraint Combination",
+      "confidence": 0.79
+    },
+    {
+      "from": "MB2",
+      "to": "G6",
+      "type": "Constraint Combination",
+      "confidence": 0.79
+    },
+    {
+      "from": "PL5",
+      "to": "G6",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PL5",
+      "to": "G6",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.83
+    },
+    {
+      "from": "MB2",
+      "to": "G6",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.83
+    },
+    {
+      "from": "PL5",
+      "to": "G6",
+      "type": "Workflow Equivalence",
+      "confidence": 0.82
+    },
+    {
+      "from": "MB2",
+      "to": "G6",
+      "type": "Workflow Equivalence",
+      "confidence": 0.82
+    },
+    {
+      "from": "PSR1",
+      "to": "G7",
+      "type": "Multi-hop",
+      "confidence": 0.8
+    },
+    {
+      "from": "ALSA3",
+      "to": "G7",
+      "type": "Multi-hop",
+      "confidence": 0.8
+    },
+    {
+      "from": "MB2",
+      "to": "G7",
+      "type": "Multi-hop",
+      "confidence": 0.8
+    },
+    {
+      "from": "PSR1",
+      "to": "G7",
+      "type": "Rule Composition",
+      "confidence": 0.79
+    },
+    {
+      "from": "ALSA3",
+      "to": "G7",
+      "type": "Rule Composition",
+      "confidence": 0.79
+    },
+    {
+      "from": "MB2",
+      "to": "G7",
+      "type": "Rule Composition",
+      "confidence": 0.79
+    },
+    {
+      "from": "PSR1",
+      "to": "G7",
+      "type": "Constraint Combination",
+      "confidence": 0.75
+    },
+    {
+      "from": "ALSA3",
+      "to": "G7",
+      "type": "Constraint Combination",
+      "confidence": 0.75
+    },
+    {
+      "from": "MB2",
+      "to": "G7",
+      "type": "Constraint Combination",
+      "confidence": 0.75
+    },
+    {
+      "from": "PSR1",
+      "to": "G7",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.6
+    },
+    {
+      "from": "ALSA3",
+      "to": "G7",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.6
+    },
+    {
+      "from": "PSR1",
+      "to": "G7",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.79
+    },
+    {
+      "from": "ALSA3",
+      "to": "G7",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.79
+    },
+    {
+      "from": "MB2",
+      "to": "G7",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.79
+    },
+    {
+      "from": "PSR1",
+      "to": "G7",
+      "type": "Workflow Equivalence",
+      "confidence": 0.78
+    },
+    {
+      "from": "ALSA3",
+      "to": "G7",
+      "type": "Workflow Equivalence",
+      "confidence": 0.78
+    },
+    {
+      "from": "MB2",
+      "to": "G7",
+      "type": "Workflow Equivalence",
+      "confidence": 0.78
+    },
+    {
+      "from": "PSR2",
+      "to": "G8",
+      "type": "Multi-hop",
+      "confidence": 0.87
+    },
+    {
+      "from": "PL7",
+      "to": "G8",
+      "type": "Multi-hop",
+      "confidence": 0.87
+    },
+    {
+      "from": "PL4",
+      "to": "G8",
+      "type": "Multi-hop",
+      "confidence": 0.87
+    },
+    {
+      "from": "PSR2",
+      "to": "G8",
+      "type": "Rule Composition",
+      "confidence": 0.86
+    },
+    {
+      "from": "PL7",
+      "to": "G8",
+      "type": "Rule Composition",
+      "confidence": 0.86
+    },
+    {
+      "from": "PL4",
+      "to": "G8",
+      "type": "Rule Composition",
+      "confidence": 0.86
+    },
+    {
+      "from": "PSR2",
+      "to": "G8",
+      "type": "Constraint Combination",
+      "confidence": 0.82
+    },
+    {
+      "from": "PL7",
+      "to": "G8",
+      "type": "Constraint Combination",
+      "confidence": 0.82
+    },
+    {
+      "from": "PL4",
+      "to": "G8",
+      "type": "Constraint Combination",
+      "confidence": 0.82
+    },
+    {
+      "from": "PSR2",
+      "to": "G8",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.7
+    },
+    {
+      "from": "PL7",
+      "to": "G8",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.7
+    },
+    {
+      "from": "PSR2",
+      "to": "G8",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.86
+    },
+    {
+      "from": "PL7",
+      "to": "G8",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.86
+    },
+    {
+      "from": "PL4",
+      "to": "G8",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.86
+    },
+    {
+      "from": "PSR2",
+      "to": "G8",
+      "type": "Workflow Equivalence",
+      "confidence": 0.85
+    },
+    {
+      "from": "PL7",
+      "to": "G8",
+      "type": "Workflow Equivalence",
+      "confidence": 0.85
+    },
+    {
+      "from": "PL4",
+      "to": "G8",
+      "type": "Workflow Equivalence",
+      "confidence": 0.85
+    },
+    {
+      "from": "DT1",
+      "to": "G9",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "DT2",
+      "to": "G9",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "KK1",
+      "to": "G9",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "PSR1",
+      "to": "G9",
+      "type": "Multi-hop",
+      "confidence": 0.82
+    },
+    {
+      "from": "DT1",
+      "to": "G9",
+      "type": "Rule Composition",
+      "confidence": 0.81
+    },
+    {
+      "from": "DT2",
+      "to": "G9",
+      "type": "Rule Composition",
+      "confidence": 0.81
+    },
+    {
+      "from": "KK1",
+      "to": "G9",
+      "type": "Rule Composition",
+      "confidence": 0.81
+    },
+    {
+      "from": "PSR1",
+      "to": "G9",
+      "type": "Rule Composition",
+      "confidence": 0.81
+    },
+    {
+      "from": "DT1",
+      "to": "G9",
+      "type": "Constraint Combination",
+      "confidence": 0.77
+    },
+    {
+      "from": "DT2",
+      "to": "G9",
+      "type": "Constraint Combination",
+      "confidence": 0.77
+    },
+    {
+      "from": "KK1",
+      "to": "G9",
+      "type": "Constraint Combination",
+      "confidence": 0.77
+    },
+    {
+      "from": "PSR1",
+      "to": "G9",
+      "type": "Constraint Combination",
+      "confidence": 0.77
+    },
+    {
+      "from": "DT1",
+      "to": "G9",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "KK1",
+      "to": "G9",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "KK1",
+      "to": "G9",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.81
+    },
+    {
+      "from": "KK2",
+      "to": "G9",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.81
+    },
+    {
+      "from": "DT1",
+      "to": "G9",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.81
+    },
+    {
+      "from": "DT1",
+      "to": "G9",
+      "type": "Workflow Equivalence",
+      "confidence": 0.8
+    },
+    {
+      "from": "KK1",
+      "to": "G9",
+      "type": "Workflow Equivalence",
+      "confidence": 0.8
+    },
+    {
+      "from": "PSR1",
+      "to": "G9",
+      "type": "Workflow Equivalence",
+      "confidence": 0.8
+    },
+    {
+      "from": "SDW2",
+      "to": "G10",
+      "type": "Multi-hop",
+      "confidence": 0.81
+    },
+    {
+      "from": "PSR1",
+      "to": "G10",
+      "type": "Multi-hop",
+      "confidence": 0.81
+    },
+    {
+      "from": "PL3",
+      "to": "G10",
+      "type": "Multi-hop",
+      "confidence": 0.81
+    },
+    {
+      "from": "SDW2",
+      "to": "G10",
+      "type": "Rule Composition",
+      "confidence": 0.8
+    },
+    {
+      "from": "PSR1",
+      "to": "G10",
+      "type": "Rule Composition",
+      "confidence": 0.8
+    },
+    {
+      "from": "PL3",
+      "to": "G10",
+      "type": "Rule Composition",
+      "confidence": 0.8
+    },
+    {
+      "from": "SDW2",
+      "to": "G10",
+      "type": "Constraint Combination",
+      "confidence": 0.76
+    },
+    {
+      "from": "PSR1",
+      "to": "G10",
+      "type": "Constraint Combination",
+      "confidence": 0.76
+    },
+    {
+      "from": "PL3",
+      "to": "G10",
+      "type": "Constraint Combination",
+      "confidence": 0.76
+    },
+    {
+      "from": "SDW2",
+      "to": "G10",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PL3",
+      "to": "G10",
+      "type": "Semantic Paraphrase",
+      "confidence": 0.65
+    },
+    {
+      "from": "PL3",
+      "to": "G10",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.8
+    },
+    {
+      "from": "SDW2",
+      "to": "G10",
+      "type": "Reviewer-Playbook",
+      "confidence": 0.8
+    },
+    {
+      "from": "SDW2",
+      "to": "G10",
+      "type": "Workflow Equivalence",
+      "confidence": 0.79
+    },
+    {
+      "from": "PSR1",
+      "to": "G10",
+      "type": "Workflow Equivalence",
+      "confidence": 0.79
+    },
+    {
+      "from": "PL3",
+      "to": "G10",
+      "type": "Workflow Equivalence",
+      "confidence": 0.79
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "id": "RV5_004",
+  "source_artifacts": [
+    {
+      "path": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/review_campaign/20260614_092103_reviewer_evidence_acquisition/reviewer_evidence_database.md",
+      "anchor": "series=500597 patch=[v2] ASoC: codecs: wcd938x: remove incorrect module interdependency"
+    }
+  ],
+  "candidate_rule": "Fix SoundWire modeling, Move code to proper file/layer; topics=SoundWire, Patch Structure, Code Movement",
+  "novelty_proof": {
+    "max_parent_similarity": 0.2981,
+    "novelty_confidence": 0.7019
+  },
+  "derivability_proof": {
+    "derivability_score": 0.4158,
+    "parent_rules": [
+      {
+        "rule_text": "## Rule 3: Keep initial upstream feature scope reviewable",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/alsa_rules.md",
+        "similarity": 0.2981
+      },
+      {
+        "rule_text": "## Rule 2: Model codec core and SDW transport ownership cleanly",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/soundwire_rules.md",
+        "similarity": 0.2874
+      },
+      {
+        "rule_text": "## Rule 2: DT schema constraints are mandatory for acceptance path",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/dt_binding_rules.md",
+        "similarity": 0.2824
+      },
+      {
+        "rule_text": "## Rule 1: Runtime PM integration is expected in codec/macro drivers",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/runtime_pm_rules.md",
+        "similarity": 0.2674
+      }
+    ]
+  },
+  "causal_proof": {
+    "reviewer_evidence": {
+      "reviewer": "Mark Brown",
+      "topics": "SoundWire, Patch Structure, Code Movement",
+      "requested_change": "Fix SoundWire modeling, Move code to proper file/layer",
+      "series": "500597",
+      "patch": "[v2] ASoC: codecs: wcd938x: remove incorrect module interdependency"
+    },
+    "acceptance_outcome": "accepted_series_context",
+    "causal_confidence": 0.724
+  },
+  "transfer_proof": {
+    "transfer_evidence": [
+      {
+        "type": "series",
+        "id": "500597"
+      }
+    ],
+    "transfer_confidence": 0.48
+  },
+  "confidence_breakdown": {
+    "novelty_confidence": 0.7019,
+    "derivability_confidence": 0.5842,
+    "causal_confidence": 0.724,
+    "transfer_confidence": 0.48,
+    "overall_discovery_confidence": 0.6204
+  }
+}

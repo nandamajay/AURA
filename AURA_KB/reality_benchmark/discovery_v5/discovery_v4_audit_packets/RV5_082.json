@@ -1,0 +1,64 @@
+{
+  "id": "RV5_082",
+  "source_artifacts": [
+    {
+      "path": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/review_campaign/20260614_092103_reviewer_evidence_acquisition/reviewer_evidence_database.md",
+      "anchor": "series=654926 patch=[3/4] ASoC: codecs: wsa883x: add control, dapm widgets and map"
+    }
+  ],
+  "candidate_rule": "None-explicit; topics=DAPM",
+  "novelty_proof": {
+    "max_parent_similarity": 0.2727,
+    "novelty_confidence": 0.7273
+  },
+  "derivability_proof": {
+    "derivability_score": 0.3942,
+    "parent_rules": [
+      {
+        "rule_text": "## Rule 1: Upstream codec/macro series must provide explicit DAPM widgets and routes",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/dapm_rules.md",
+        "similarity": 0.2727
+      },
+      {
+        "rule_text": "## Rule 2: Split series by logical ownership (binding/core/feature blocks)",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/patch_submission_rules.md",
+        "similarity": 0.24
+      },
+      {
+        "rule_text": "## Rule 1: Upstream path should use generic SDW lifecycle APIs",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/soundwire_rules.md",
+        "similarity": 0.2273
+      },
+      {
+        "rule_text": "## Rule 3: Keep initial upstream feature scope reviewable",
+        "rule_source": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/rules/alsa_rules.md",
+        "similarity": 0.2169
+      }
+    ]
+  },
+  "causal_proof": {
+    "reviewer_evidence": {
+      "reviewer": "Mark Brown",
+      "topics": "DAPM",
+      "requested_change": "None-explicit"
+    },
+    "acceptance_outcome": "accepted_series_context",
+    "causal_confidence": 0.724
+  },
+  "transfer_proof": {
+    "transfer_evidence": [
+      {
+        "type": "series",
+        "id": "654926"
+      }
+    ],
+    "transfer_confidence": 0.48
+  },
+  "confidence_breakdown": {
+    "novelty_confidence": 0.7273,
+    "derivability_confidence": 0.6058,
+    "causal_confidence": 0.724,
+    "transfer_confidence": 0.48,
+    "overall_discovery_confidence": 0.6329
+  }
+}

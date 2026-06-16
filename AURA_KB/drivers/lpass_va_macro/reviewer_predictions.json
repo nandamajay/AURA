@@ -1,0 +1,961 @@
+{
+  "actionable_recommendations": [
+    "Keep register renames and include cleanup mechanically separate from behavioral changes.",
+    "Do not add userspace controls or new public ABI for LPI/runtime state.",
+    "Do not upstream lpass-cdc, swr-wcd, or msm-cdc-pinctrl vendor frameworks; map behavior to existing upstream ownership layers.",
+    "Merge any new shared helper with its first in-tree VA consumer; avoid unused exported helpers.",
+    "Keep SoundWire controller changes separate from ASoC codec changes unless a single patch is required for bisect safety.",
+    "Add DT binding changes only if a driver patch introduces a real new property or compatible; otherwise omit DT from v1.",
+    "For runtime PM/clock sequencing, include trace evidence in the cover letter and preserve existing error unwinding.",
+    "Use commit messages that explain why downstream vendor dependencies are removed rather than copied upstream."
+  ],
+  "artifact_name": "LPASS_VA_MACRO_REVIEWER_PREDICTIONS",
+  "classification": "PASS",
+  "dependency_resolution_input": {
+    "dependency_count": 9,
+    "dependency_headers": [
+      "asoc/msm-cdc-pinctrl.h",
+      "dsp/digital-cdc-rsc-mgr.h",
+      "lpass-cdc.h",
+      "lpass-cdc-registers.h",
+      "lpass-cdc-clk-rsc.h",
+      "lpass-cdc-va-macro.h",
+      "soc/swr-common.h",
+      "soc/swr-wcd.h",
+      "linux/version.h"
+    ],
+    "path": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/lpass_va_macro/dependency_resolution_map.json",
+    "resolution_type_counts": {
+      "REMOVAL_REQUIRED": 4,
+      "UNUSED_IN_UPSTREAM_PATH": 2,
+      "UPSTREAM_REPLACEMENT_EXISTS": 3
+    }
+  },
+  "driver": "lpass_va_macro",
+  "evidence_acquisition": {
+    "dataset_stats": {
+      "candidate_series": 176,
+      "fetched_series": 60,
+      "selected_series": 60
+    },
+    "mode": "online_patchwork",
+    "patchwork_api": "https://patchwork.kernel.org/api/1.2",
+    "scope_queries": [
+      "ASoC: qcom: lpass",
+      "ASoC: codecs: lpass-va-macro",
+      "soundwire: qcom"
+    ],
+    "sufficiency_thresholds": {
+      "candidate_series_min": 20,
+      "fetched_series_min": 20,
+      "target_reviewer_interactions_min": 10
+    },
+    "target_reviewer_interactions": {
+      "Krzysztof Kozlowski": 29,
+      "Mark Brown": 10,
+      "Pierre-Louis Bossart": 54
+    }
+  },
+  "fail_closed_reasons": [],
+  "generated_at": "2026-06-16T07:28:36.516913+00:00",
+  "model_holdout_metrics": {
+    "acceptance_probability": {
+      "brier": 0.00010000000000000018,
+      "mae": 0.010000000000000009,
+      "samples": 2
+    },
+    "objection_category_prediction": {
+      "f1": 0.6101694915254238,
+      "precision": 0.6,
+      "recall": 0.6206896551724138
+    },
+    "review_round_prediction": {
+      "mae": 0.9166666666666666,
+      "samples": 12
+    },
+    "reviewer_comment_prediction": {
+      "f1": 0.0,
+      "precision": 0.0,
+      "recall": 0.0
+    },
+    "split_request_prediction": {
+      "accuracy": 0.8333333333333334,
+      "f1": 0.0,
+      "precision": 0.0,
+      "recall": 0.0
+    }
+  },
+  "overall_prediction": {
+    "category_scores": {
+      "commit_message": 0.357,
+      "controls": 0.691,
+      "dapm": 0.077,
+      "dt_schema": 0.304,
+      "feature_cleanup_mix": 0.101,
+      "ownership_boundary": 0.142,
+      "patch_split": 0.173,
+      "refactor": 0.162,
+      "runtime_pm": 0.324,
+      "soundwire": 0.819
+    },
+    "model_raw_acceptance_probability": 0.99,
+    "predicted_acceptance_probability": 0.93,
+    "predicted_review_rounds_to_acceptance": 3,
+    "predicted_reviewers_likely_to_comment": [
+      "Krzysztof Kozlowski",
+      "Mark Brown",
+      "Pierre-Louis Bossart"
+    ],
+    "predicted_split_request_probability": 0.262,
+    "primary_risk_drivers": [
+      "soundwire ownership boundary",
+      "runtime PM sequencing evidence",
+      "feature/refactor mixing",
+      "DT binding scope creep"
+    ],
+    "recommended_patch_count": 7,
+    "reviewer_scores": {
+      "Krzysztof Kozlowski": 0.112,
+      "Mark Brown": 0.162,
+      "Pierre-Louis Bossart": 0.441
+    }
+  },
+  "patchwork_evidence_examples": [
+    {
+      "date": "2026-06-08T17:53:43",
+      "name": "soundwire: qcom: add support for EE-aware register layout",
+      "objection_categories": [
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 2,
+      "series_id": 1108044,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1108044"
+    },
+    {
+      "date": "2025-09-01T19:50:30",
+      "name": "soundwire: qcom: add support for v3.1.0 controller",
+      "objection_categories": [
+        "controls",
+        "dt_schema",
+        "soundwire"
+      ],
+      "outcome": "accepted",
+      "patch_count": 7,
+      "series_id": 997726,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997726"
+    },
+    {
+      "date": "2024-04-05T14:41:41",
+      "name": "[v2] soundwire: qcom: allow multi-link on newer devices",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 841839,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 2,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=841839"
+    },
+    {
+      "date": "2024-04-03T13:27:16",
+      "name": "[RESEND] soundwire: qcom: allow multi-link on newer devices",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "accepted",
+      "patch_count": 1,
+      "series_id": 841094,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=841094"
+    },
+    {
+      "date": "2023-11-28T15:00:49",
+      "name": "soundwire: qcom: allow multi-link on newer devices",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 804906,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski",
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=804906"
+    },
+    {
+      "date": "2023-11-23T10:53:32",
+      "name": "soundwire: qcom: set controller id to hw master id",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 803662,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=803662"
+    },
+    {
+      "date": "2023-10-25T14:45:59",
+      "name": "[1/3] soundwire: qcom: drop unneeded DAI .set_stream callback",
+      "objection_categories": [
+        "controls",
+        "dt_schema",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 3,
+      "series_id": 796495,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski",
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=796495"
+    },
+    {
+      "date": "2023-06-01T10:25:25",
+      "name": "soundwire: qcom: fix storing port config out-of-bounds",
+      "objection_categories": [
+        "commit_message",
+        "refactor",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 753045,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski",
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=753045"
+    },
+    {
+      "date": "2023-05-17T16:37:49",
+      "name": "[1/2] soundwire: qcom: fix unbalanced pm_runtime_put()",
+      "objection_categories": [
+        "commit_message",
+        "controls",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 2,
+      "series_id": 748561,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=748561"
+    },
+    {
+      "date": "2023-05-17T16:37:36",
+      "name": "soundwire: qcom: add proper error paths in qcom_swrm_startup()",
+      "objection_categories": [
+        "runtime_pm",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 748560,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=748560"
+    },
+    {
+      "date": "2023-04-20T10:16:11",
+      "name": "ASoC/soundwire: qcom: correctly probe devices after link init",
+      "objection_categories": [
+        "controls",
+        "dt_schema",
+        "ownership_boundary",
+        "refactor",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 6,
+      "series_id": 741665,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski",
+        "Mark Brown",
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=741665"
+    },
+    {
+      "date": "2023-04-05T14:29:26",
+      "name": "soundwire: qcom: Fix enumeration of second device on the bus",
+      "objection_categories": [
+        "commit_message",
+        "controls",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 737218,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski",
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=737218"
+    },
+    {
+      "date": "2023-04-03T13:24:56",
+      "name": "soundwire: qcom: add support for SM8550 (Soundwire v2.0.0)",
+      "objection_categories": [
+        "controls",
+        "dt_schema",
+        "ownership_boundary",
+        "patch_split",
+        "soundwire"
+      ],
+      "outcome": "accepted",
+      "patch_count": 7,
+      "series_id": 736397,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 2,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=736397"
+    },
+    {
+      "date": "2023-02-22T14:44:11",
+      "name": "[1/2] soundwire: qcom: define hardcoded version magic numbers",
+      "objection_categories": [
+        "commit_message",
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 2,
+      "series_id": 724085,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=724085"
+    },
+    {
+      "date": "2023-02-09T13:13:31",
+      "name": "soundwire: qcom: stablity fixes",
+      "objection_categories": [
+        "commit_message",
+        "controls",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 5,
+      "series_id": 720329,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=720329"
+    },
+    {
+      "date": "2022-10-26T11:02:04",
+      "name": "soundwire: qcom: fixes and support for v1.7",
+      "objection_categories": [
+        "dt_schema",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 6,
+      "series_id": 689002,
+      "target_reviewers_present": [
+        "Krzysztof Kozlowski",
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=689002"
+    },
+    {
+      "date": "2022-09-16T13:53:51",
+      "name": "[v2,1/2] soundwire: qcom: update status from device id 1",
+      "objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 2,
+      "series_id": 677675,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 2,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=677675"
+    },
+    {
+      "date": "2022-09-15T12:42:15",
+      "name": "soundwire: qcom: update status from device id 1",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "accepted",
+      "patch_count": 1,
+      "series_id": 677320,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=677320"
+    },
+    {
+      "date": "2022-07-13T14:54:27",
+      "name": "[v2] soundwire: qcom: Update error prints to debug prints",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "pending",
+      "patch_count": 1,
+      "series_id": 659366,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 2,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=659366"
+    },
+    {
+      "date": "2022-07-13T12:22:01",
+      "name": "soundwire: qcom: Update error prints to debug prints",
+      "objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "outcome": "accepted",
+      "patch_count": 1,
+      "series_id": 659301,
+      "target_reviewers_present": [
+        "Pierre-Louis Bossart"
+      ],
+      "version": 1,
+      "web_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=659301"
+    }
+  ],
+  "per_reviewer_predictions": {
+    "Krzysztof Kozlowski": {
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "objection_frequency": 0.5,
+      "profile_interactions": 8,
+      "relevant_preferences": {
+        "commit_message_expectation": 0.0,
+        "dt_schema_strictness": 0.75,
+        "ownership_boundary_sensitivity": 0.0,
+        "patch_split_preference": 0.0,
+        "pm_sequencing_preference": 0.0,
+        "soundwire_lifecycle_preference": 1.0
+      },
+      "reviewer_score_for_series": 0.112,
+      "top_objection_categories": [
+        "soundwire",
+        "dt_schema",
+        "controls",
+        "dapm"
+      ]
+    },
+    "Mark Brown": {
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "objection_frequency": 0.2,
+      "profile_interactions": 10,
+      "relevant_preferences": {
+        "commit_message_expectation": 0.0,
+        "dt_schema_strictness": 0.5,
+        "ownership_boundary_sensitivity": 0.1,
+        "patch_split_preference": 0.1,
+        "pm_sequencing_preference": 0.1,
+        "soundwire_lifecycle_preference": 0.6
+      },
+      "reviewer_score_for_series": 0.162,
+      "top_objection_categories": [
+        "soundwire",
+        "dt_schema",
+        "controls",
+        "patch_split",
+        "refactor"
+      ]
+    },
+    "Pierre-Louis Bossart": {
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "objection_frequency": 0.574,
+      "profile_interactions": 54,
+      "relevant_preferences": {
+        "commit_message_expectation": 0.148,
+        "dt_schema_strictness": 0.111,
+        "ownership_boundary_sensitivity": 0.0,
+        "patch_split_preference": 0.019,
+        "pm_sequencing_preference": 0.5,
+        "soundwire_lifecycle_preference": 0.926
+      },
+      "reviewer_score_for_series": 0.441,
+      "top_objection_categories": [
+        "soundwire",
+        "controls",
+        "runtime_pm",
+        "commit_message",
+        "dt_schema"
+      ]
+    }
+  },
+  "predicted_patch_series_structure": [
+    {
+      "dependencies_addressed": [
+        "lpass-cdc-registers.h"
+      ],
+      "expected_comments": [
+        "Keep this as mechanical/no-functional-change only.",
+        "Do not mix register renames with LPI, PM, or SoundWire behavior."
+      ],
+      "files_touched": [
+        "sound/soc/codecs/lpass-va-macro.c"
+      ],
+      "maintainers": [
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.819,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.407,
+          "risk": "MEDIUM"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.304,
+          "risk": "LOW"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.281,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.142,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.173,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.322,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.324,
+          "risk": "LOW"
+        },
+        "soundwire": {
+          "probability": 0.819,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 1,
+      "purpose": "Convert downstream LPASS_CDC_VA_* register references to upstream CDC_VA_* naming without changing runtime behavior.",
+      "review_difficulty": "HIGH",
+      "title": "ASoC: codecs: lpass-va-macro: isolate register-name migration from behavior changes"
+    },
+    {
+      "dependencies_addressed": [
+        "lpass-cdc.h"
+      ],
+      "expected_comments": [
+        "Explain why the downstream framework should not be upstreamed.",
+        "Keep lifecycle conversion separate from runtime PM behavior."
+      ],
+      "files_touched": [
+        "sound/soc/codecs/lpass-va-macro.c"
+      ],
+      "maintainers": [
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.819,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.477,
+          "risk": "MEDIUM"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.304,
+          "risk": "LOW"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.101,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.322,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.273,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.162,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.324,
+          "risk": "LOW"
+        },
+        "soundwire": {
+          "probability": 0.819,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 2,
+      "purpose": "Map downstream lpass-cdc registration/runtime callback model onto existing upstream component/platform lifecycle.",
+      "review_difficulty": "HIGH",
+      "title": "ASoC: codecs: lpass-va-macro: remove dependency on downstream lpass-cdc macro framework"
+    },
+    {
+      "dependencies_addressed": [
+        "lpass-cdc-clk-rsc.h"
+      ],
+      "expected_comments": [
+        "Do not export helpers before an in-tree user exists.",
+        "Justify common-code placement versus static VA-local helper."
+      ],
+      "files_touched": [
+        "sound/soc/codecs/lpass-macro-common.c",
+        "sound/soc/codecs/lpass-macro-common.h",
+        "sound/soc/codecs/lpass-va-macro.c"
+      ],
+      "maintainers": [
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.819,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.357,
+          "risk": "LOW"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.304,
+          "risk": "LOW"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.101,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.302,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.293,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.162,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.424,
+          "risk": "MEDIUM"
+        },
+        "soundwire": {
+          "probability": 0.819,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 3,
+      "purpose": "Introduce shared helper only when consumed by VA macro, avoiding unused exported APIs.",
+      "review_difficulty": "HIGH",
+      "title": "ASoC: codecs: lpass-macro-common: add only shared helper infrastructure with first VA user"
+    },
+    {
+      "dependencies_addressed": [
+        "lpass-cdc-clk-rsc.h",
+        "dsp/digital-cdc-rsc-mgr.h"
+      ],
+      "expected_comments": [
+        "Provide trace or power evidence for PM sequencing.",
+        "Preserve error unwinding and autosuspend behavior."
+      ],
+      "files_touched": [
+        "sound/soc/codecs/lpass-va-macro.c"
+      ],
+      "maintainers": [
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.819,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.477,
+          "risk": "MEDIUM"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.304,
+          "risk": "LOW"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.101,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.142,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.273,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.162,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.604,
+          "risk": "MEDIUM"
+        },
+        "soundwire": {
+          "probability": 0.819,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 4,
+      "purpose": "Replace vendor clock-resource votes with upstream clock/runtime PM sequencing while preserving VA behavior.",
+      "review_difficulty": "HIGH",
+      "title": "ASoC: codecs: lpass-va-macro: migrate VA runtime PM and clock sequencing"
+    },
+    {
+      "dependencies_addressed": [
+        "soc/swr-common.h",
+        "soc/swr-wcd.h"
+      ],
+      "expected_comments": [
+        "Do not create private codec-to-controller notification APIs.",
+        "Split controller changes from codec changes unless dependency ordering requires otherwise."
+      ],
+      "files_touched": [
+        "drivers/soundwire/qcom.c",
+        "sound/soc/codecs/lpass-va-macro.c"
+      ],
+      "maintainers": [
+        "Pierre-Louis Bossart",
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.99,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.357,
+          "risk": "LOW"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.304,
+          "risk": "LOW"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.101,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.362,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.323,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.162,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.324,
+          "risk": "LOW"
+        },
+        "soundwire": {
+          "probability": 0.99,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 5,
+      "purpose": "Avoid importing swr-wcd private notifications into VA macro; route any required behavior through upstream SoundWire ownership boundaries.",
+      "review_difficulty": "HIGH",
+      "title": "soundwire: qcom: keep VA SoundWire behavior in controller/topology layer"
+    },
+    {
+      "dependencies_addressed": [
+        "asoc/msm-cdc-pinctrl.h",
+        "linux/version.h"
+      ],
+      "expected_comments": [
+        "Do not add version conditionals to upstream code.",
+        "Explain why downstream pinctrl behavior is not part of upstream VA macro."
+      ],
+      "files_touched": [
+        "sound/soc/codecs/lpass-va-macro.c"
+      ],
+      "maintainers": [
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.819,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.437,
+          "risk": "MEDIUM"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.304,
+          "risk": "LOW"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.261,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.142,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.173,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.302,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.324,
+          "risk": "LOW"
+        },
+        "soundwire": {
+          "probability": 0.819,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 6,
+      "purpose": "Remove downstream-only pinctrl and linux/version.h compatibility assumptions from the upstream path.",
+      "review_difficulty": "HIGH",
+      "title": "ASoC: codecs: lpass-va-macro: drop downstream pinctrl/version compatibility paths"
+    },
+    {
+      "dependencies_addressed": [],
+      "expected_comments": [
+        "Do not add downstream-only properties without schema justification and users.",
+        "Run dt_binding_check and keep DTS changes separate from driver changes."
+      ],
+      "files_touched": [
+        "Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml"
+      ],
+      "maintainers": [
+        "Krzysztof Kozlowski",
+        "Mark Brown"
+      ],
+      "max_objection_probability": 0.819,
+      "objection_probability_by_category": {
+        "commit_message": {
+          "probability": 0.477,
+          "risk": "MEDIUM"
+        },
+        "controls": {
+          "probability": 0.691,
+          "risk": "MEDIUM"
+        },
+        "dt_schema": {
+          "probability": 0.644,
+          "risk": "MEDIUM"
+        },
+        "feature_cleanup_mix": {
+          "probability": 0.101,
+          "risk": "LOW"
+        },
+        "ownership_boundary": {
+          "probability": 0.142,
+          "risk": "LOW"
+        },
+        "patch_split": {
+          "probability": 0.253,
+          "risk": "LOW"
+        },
+        "refactor": {
+          "probability": 0.162,
+          "risk": "LOW"
+        },
+        "runtime_pm": {
+          "probability": 0.324,
+          "risk": "LOW"
+        },
+        "soundwire": {
+          "probability": 0.819,
+          "risk": "HIGH"
+        }
+      },
+      "patch": 7,
+      "purpose": "Keep DT binding changes separate and only include them if the conversion genuinely requires new properties or compatibles.",
+      "review_difficulty": "HIGH",
+      "title": "dt-bindings: sound: qcom,lpass-va-macro: document only required binding deltas if any remain"
+    }
+  ],
+  "related_upstream_paths": [
+    "sound/soc/codecs/lpass-macro-common.c",
+    "drivers/soundwire/qcom.c"
+  ],
+  "target_reviewers": [
+    "Mark Brown",
+    "Pierre-Louis Bossart",
+    "Krzysztof Kozlowski"
+  ],
+  "target_subsystem": "ASoC",
+  "target_upstream_file": "sound/soc/codecs/lpass-va-macro.c"
+}

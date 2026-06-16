@@ -1,0 +1,20 @@
+{
+  "artifact_name": "PATCH_06_REMOVAL_VALIDATION",
+  "base_assumption": "Patch-01 has already been applied",
+  "bolero_strategy": "keep non-BOLERO branch where present; remove BOLERO-only blocks",
+  "classification": "PASS",
+  "dangling_reference_count": 0,
+  "dangling_references": {},
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "input_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+  "patch_01_artifact": "AURA_KB/drivers/lpass_va_macro/patches/0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+  "patch_line_count": 441,
+  "patch_path": "AURA_KB/drivers/lpass_va_macro/patches/0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+  "pinctrl_strategy": "remove msm-cdc-pinctrl calls entirely; upstream VA macro has no msm-cdc pinctrl path",
+  "preprocessor_gate_residue": [],
+  "removal_inventory_path": "AURA_KB/drivers/lpass_va_macro/patches/patch_06_removal_inventory.json",
+  "residual_banned_symbol_count": 0,
+  "residual_banned_symbols": {},
+  "version_strategy": "keep target/latest upstream API branch"
+}

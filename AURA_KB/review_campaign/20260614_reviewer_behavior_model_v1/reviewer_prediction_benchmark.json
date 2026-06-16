@@ -1,0 +1,4430 @@
+{
+  "generated_at": "2026-06-15T00:04:33.687505",
+  "train_series": 560,
+  "heldout_series": 140,
+  "reviewers_modeled": [
+    "Alexey Klimov",
+    "Dmitry Baryshkov",
+    "Johan Hovold",
+    "Konrad Dybcio",
+    "Krzysztof Kozlowski",
+    "Liam Girdwood",
+    "Mark Brown",
+    "Pierre-Louis Bossart",
+    "Rob Herring",
+    "Srinivas Kandagatla",
+    "Stephen Boyd",
+    "Vinod Koul",
+    "kernel test robot"
+  ],
+  "metrics": {
+    "heldout_series": 140,
+    "reviewer_comment_prediction": {
+      "precision": 0.3201754385964912,
+      "recall": 0.365,
+      "f1": 0.3411214953271028
+    },
+    "objection_category_prediction": {
+      "precision": 0.3425925925925926,
+      "recall": 0.4157303370786517,
+      "f1": 0.3756345177664975
+    },
+    "split_request_prediction": {
+      "precision": 0.5833333333333334,
+      "recall": 0.3783783783783784,
+      "f1": 0.45901639344262296,
+      "accuracy": 0.7642857142857142
+    },
+    "acceptance_probability": {
+      "mae": 0.010000000000000009,
+      "brier": 0.00010000000000000011,
+      "samples": 95
+    },
+    "review_round_prediction": {
+      "mae": 1.7785714285714285,
+      "samples": 140
+    },
+    "baseline_vs_reviewer_model": {
+      "baseline_reviewer_prediction": {
+        "precision": 0.40714285714285714,
+        "recall": 0.285,
+        "f1": 0.33529411764705874
+      },
+      "reviewer_model_reviewer_prediction": {
+        "precision": 0.3201754385964912,
+        "recall": 0.365,
+        "f1": 0.3411214953271028
+      },
+      "f1_delta": 0.0058273776800440436,
+      "precision_delta": -0.08696741854636592,
+      "recall_delta": 0.08000000000000002
+    }
+  },
+  "heldout_predictions": [
+    {
+      "series_id": 949489,
+      "series_name": "ASoC: codecs: lpass-wsa: fix VI capture setup.",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=949489",
+      "series_date": "2025-04-03T16:02:07",
+      "actual_reviewers": [
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dapm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/ypt3vurwlmyxkmba7lrmgcmpeszx2afbqp5hwrdwcliwcf23ik@jvg45kffehxx"
+      ]
+    },
+    {
+      "series_id": 952614,
+      "series_name": "[v1] ASoC: qcom: qdsp6: Fix references to lookup USB_RX mixer status",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=952614",
+      "series_date": "2025-04-11T19:26:53",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4837607775076548,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/343a2a16-f213-4c57-87e4-221cf9d59472@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 953414,
+      "series_name": "ASoC: codecs: wcd938x: fix mux error handling",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=953414",
+      "series_date": "2025-04-15T07:41:45",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "mixed",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/18278ed3-fef0-400d-8cba-72f4c573d7ee@web.de",
+        "https://lore.kernel.org/r/5af56acb-7758-4641-8acc-b81e7c8de709@web.de"
+      ]
+    },
+    {
+      "series_id": 953512,
+      "series_name": "[next] ASoC: qcom: qdsp6: Set error code in q6usb_hw_params()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=953512",
+      "series_date": "2025-04-15T10:45:44",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/78caae4a-03d1-4992-9a06-1e2a9aef81ce@sirena.org.uk",
+        "https://lore.kernel.org/r/pcwyzf3yzsi2stdryw4qazp22cs6d5pd4yx5l2r4seycpanam5@jian7eu72vf7"
+      ]
+    },
+    {
+      "series_id": 957483,
+      "series_name": "[1/2] ASoC: codecs: wsa88xx/wcd938x: Drop kerneldoc marker from inner comment",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=957483",
+      "series_date": "2025-04-27T10:51:06",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/174622448885.4079618.3910091697301287558.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 961222,
+      "series_name": "ASoC: qcom: qdsp6: Add an error handling path in q6usb_component_probe()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=961222",
+      "series_date": "2025-05-09T09:09:55",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/aB3T_HTC27F98NJ0@stanley.mountain"
+      ]
+    },
+    {
+      "series_id": 962928,
+      "series_name": "ASoC: q6apm-lpass-dais: Print APM port id in decimal on enable error",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=962928",
+      "series_date": "2025-05-14T17:53:38",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/174730194105.333989.6865469375895643519.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/xtq5rvhihppgmi47sihvz36k3t5zrj6lmuskoevilzdffrode7@nlxr4go7hwo4"
+      ]
+    },
+    {
+      "series_id": 964069,
+      "series_name": "ASoC: qcom: sdm845: Add error handling in sdm845_slim_snd_hw_params()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=964069",
+      "series_date": "2025-05-19T07:57:39",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/174790352570.11863.6206484772425321934.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/e5k5zslz33in53ivbqttnnkt7whvzfay4uwxmi2o3m2a6c6ahg@5kpjzcyov35h"
+      ]
+    },
+    {
+      "series_id": 965726,
+      "series_name": "soundwire: qcom: demote probe registration printk",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=965726",
+      "series_date": "2025-05-23T08:53:17",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4099047250195454,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/174948583390.818152.14215125858704023461.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/fb03dd8d-8caf-4861-b56a-2c10b070e2dc@oss.qualcomm.com",
+        "https://lore.kernel.org/r/wbpucxl3kf7kmob6bbhexivtgrsn5ehgh7zfuebx2vxjcg46ws@gfhdgi7yd24o"
+      ]
+    },
+    {
+      "series_id": 965815,
+      "series_name": "ASoC: codecs: lpass: Drop unused AIF_INVALID first DAI identifier",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=965815",
+      "series_date": "2025-05-23T12:18:12",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/174947640900.126747.17690897321632994593.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 966375,
+      "series_name": "ASoC: codecs: wcd93xx: Few regulator supplies fixes",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=966375",
+      "series_date": "2025-05-26T09:47:00",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 966389,
+      "series_name": "ASoC: codecs: wcd93xx: Few simplifications of code and extend wcd939x",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=966389",
+      "series_date": "2025-05-26T10:49:49",
+      "actual_reviewers": [
+        "Rob Herring"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4186800142077789,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/174837299102.1004664.8576380880456043250.robh@kernel.org"
+      ]
+    },
+    {
+      "series_id": 967055,
+      "series_name": "ASoC: qcom: sc8280xp: Assign backend ops for multi codec dai links",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=967055",
+      "series_date": "2025-05-28T15:07:15",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/5yfyabb7h2xode53xdqowuwfzuml4ytjjzi6tlvzj7htconwtf@456qh5trwijk",
+        "https://lore.kernel.org/r/DA7X59CE8REY.4E410IER5BJF@linaro.org"
+      ]
+    },
+    {
+      "series_id": 972483,
+      "series_name": "ASoC: codecs: wcd93xx: Drop enums for chipid values (minor cleanup)",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=972483",
+      "series_date": "2025-06-16T11:54:07",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3913361160742001,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 972936,
+      "series_name": "ASoC: qcom: sm8250: Fix possibly undefined reference",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=972936",
+      "series_date": "2025-06-17T12:20:12",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175069441422.140181.5569883866488657965.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 974192,
+      "series_name": "Handle shared reset GPIO for WSA883x speakers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=974192",
+      "series_date": "2025-06-20T10:30:10",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dt_schema",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.39108250304442915,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/3ddf2df5-4591-421e-bfc2-50c7d3ca526d@kernel.org",
+        "https://lore.kernel.org/r/c1b2f651f73b4469a410f1f5027f974b4e07ddd2.camel@pengutronix.de",
+        "https://lore.kernel.org/r/d42dda52f92b327fd9a051a892c212643f5ab75a.camel@pengutronix.de",
+        "https://lore.kernel.org/r/f752cf84-0159-4ef6-a7cd-57b6fc578a74@kernel.org",
+        "https://lore.kernel.org/r/f9f96bf0-3539-4e77-8d3e-b87ddc561925@oss.qualcomm.com",
+        "https://lore.kernel.org/r/v7oxwbf6xjc2gxeviwe4tayovzasysqig5smk752an74qd2e46@q25ymfyru3ze"
+      ]
+    },
+    {
+      "series_id": 976719,
+      "series_name": "ASoC: codecs: wcd937x/8x/9x: cleanup",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=976719",
+      "series_date": "2025-06-27T15:51:00",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Konrad Dybcio",
+        "Vinod Koul"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.35478256745168596,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/68c06500-a776-4f56-8514-c180b23f7715@oss.qualcomm.com",
+        "https://lore.kernel.org/r/aF7ZEi9qQxshnWed@vaman",
+        "https://lore.kernel.org/r/cy5cpzoidygeptqwxvnnjilads4npayv2zvu7hfff74defmygv@zglnb7ur4rw2",
+        "https://lore.kernel.org/r/e1fe370c-6435-4a84-b7d7-1ce4db4dbfea@oss.qualcomm.com",
+        "https://lore.kernel.org/r/skelt3xhnonz2ixhik5dvrmg5tpquoxmioeeem2gs5espqcykj@eh47grxbpvuu"
+      ]
+    },
+    {
+      "series_id": 979119,
+      "series_name": "ASoC: codecs: wcd937x/8x/9x: cleanup",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=979119",
+      "series_date": "2025-07-04T12:12:14",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Vinod Koul"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3389530512110982,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/aOyRtp5BqY15DreH@vaman",
+        "https://lore.kernel.org/r/jl2i62jhzfetyy3tc4lmo5cdvjn5xakawyhja3tpwyu4z3ksov@k7ahrflfmvqi",
+        "https://lore.kernel.org/r/xglngdprknerf3uoeixiocagoml26kw4zcwrnmb7c25m3zt3ol@2vnglqifcb2e"
+      ]
+    },
+    {
+      "series_id": 979301,
+      "series_name": "[v2] ASoC: qcom: qdsp6: Add an error handling path in q6usb_component_probe()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=979301",
+      "series_date": "2025-07-05T08:12:25",
+      "actual_reviewers": [
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dapm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/vyr2uogrgggvk3jrzgmvxhqbgj3ble2b2vwsqfrnbrimg37fel@72766uehk47c"
+      ]
+    },
+    {
+      "series_id": 980629,
+      "series_name": "Revert \"soundwire: qcom: Add set_channel_map api support\"",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=980629",
+      "series_date": "2025-07-09T17:49:49",
+      "actual_reviewers": [
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37335117639703125,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175259126744.517280.1761573363863267576.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/6f7328df-712b-4c62-82c6-ee69ecec2108@kernel.org"
+      ]
+    },
+    {
+      "series_id": 982837,
+      "series_name": "ASoC: dt-bindings: qcom,lpass-va-macro: Define clock-names in top-level",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=982837",
+      "series_date": "2025-07-16T07:49:58",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.4930920395602123,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175268140929.726552.6903010373670247326.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 982942,
+      "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=982942",
+      "series_date": "2025-07-16T12:33:18",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "ownership_boundary",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3631342326767757,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/9f4c750a-9e23-45a0-a761-4c3fc2c7d8c9@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 983708,
+      "series_name": "Handle shared reset GPIO for WSA883x speakers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=983708",
+      "series_date": "2025-07-18T10:46:26",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dt_schema",
+        "refactor",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3689211803076063,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20250721-hairy-aardwolf-of-enterprise-bbc99f@kuoka",
+        "https://lore.kernel.org/r/20250721-teal-vole-of-finesse-82debf@kuoka",
+        "https://lore.kernel.org/r/3ba94864-769c-4a73-8e70-a3904280317f@kernel.org",
+        "https://lore.kernel.org/r/a006f099-578f-45aa-b165-64e28b8f930e@kernel.org"
+      ]
+    },
+    {
+      "series_id": 985574,
+      "series_name": "clk: qcom: drop sm8250 lpass gfm driver",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=985574",
+      "series_date": "2025-07-24T13:42:28",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown",
+        "Rob Herring"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Rob Herring",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema",
+        "refactor"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3534412105419223,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175347393332.1760852.9382967903042104261.robh@kernel.org",
+        "https://lore.kernel.org/r/819847f4-58fc-4582-bfd1-97acacc15eb8@sirena.org.uk",
+        "https://lore.kernel.org/r/crqc4pklbvykswdza7favsjszl5zqhfw5obee3pnfakwzzqot6@iuxugh6illx7",
+        "https://lore.kernel.org/r/updct7763epzqvs5xgs37xsokb534vhefvkmt3rtjqvaceu2vw@jqsd4s3nbuyk"
+      ]
+    },
+    {
+      "series_id": 986176,
+      "series_name": "Handle shared reset GPIO for WSA883x speakers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=986176",
+      "series_date": "2025-07-27T08:31:15",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "refactor"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3255636125614067,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/07faf0cc-a8e6-426d-b397-dfc321a7f3df@kernel.org",
+        "https://lore.kernel.org/r/4bc486cb-9d94-4bad-ae07-e9a7aeed481a@kernel.org"
+      ]
+    },
+    {
+      "series_id": 988858,
+      "series_name": "Handle shared reset GPIO for WSA883x speakers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=988858",
+      "series_date": "2025-08-06T18:18:16",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3255636125614067,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/5ee0656b-136b-480f-9555-26ccdbff3eda@kernel.org"
+      ]
+    },
+    {
+      "series_id": 991909,
+      "series_name": "ASoC: qcom: q6apm-lpass-dais: Fix NULL pointer dereference if source graph failed",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=991909",
+      "series_date": "2025-08-15T11:39:16",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175700469794.101252.6741664574199797818.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/70abcfee-e4c1-42d9-b623-266140aa2ff3@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 992010,
+      "series_name": "Handle shared reset GPIO for WSA883x speakers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=992010",
+      "series_date": "2025-08-15T17:23:51",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3255636125614067,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/321dc1ac-1837-4d49-bb7c-7da49316b208@oss.qualcomm.com",
+        "https://lore.kernel.org/r/fb1a7290-721e-4bde-aab3-d1edd0630862@kernel.org"
+      ]
+    },
+    {
+      "series_id": 992509,
+      "series_name": "ASoC: qcom: audioreach: cleanup and statiic",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=992509",
+      "series_date": "2025-08-18T11:28:06",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "mixed",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3913361160742001,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/36997dea-19a8-4242-aadd-ad52e0a63cce@linaro.org",
+        "https://lore.kernel.org/r/8405b263-08a9-4b8f-ad20-73c8f5865b39@linaro.org",
+        "https://lore.kernel.org/r/9f050ccd-0fc1-4fb2-94f5-36ed1f2f4f01@linaro.org",
+        "https://lore.kernel.org/r/f75a5ef0-d742-42a4-81c7-85b33028265d@linaro.org"
+      ]
+    },
+    {
+      "series_id": 992525,
+      "series_name": "ASoC: qcom: audioreach: cleanup and calibration",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=992525",
+      "series_date": "2025-08-18T12:22:34",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37550659983361234,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/3348983b-97f2-4ca8-813f-b00fe60c59be@linaro.org",
+        "https://lore.kernel.org/r/6e0d3bbc-bc30-4ae0-8258-8dd19f7f29d4@linaro.org",
+        "https://lore.kernel.org/r/855c21ca-b16b-4af7-8545-992a7b80a562@linaro.org"
+      ]
+    },
+    {
+      "series_id": 992539,
+      "series_name": "ASoC: qcom: audioreach: cleanup and calibration",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=992539",
+      "series_date": "2025-08-18T12:50:49",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3445369085863269,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/55828090-d802-4f83-923f-a6eaee866a43@linaro.org",
+        "https://lore.kernel.org/r/6d137f07-d37a-431b-ab38-5f3087d9b3b7@sirena.org.uk",
+        "https://lore.kernel.org/r/74bc063f-b9a3-4ff6-b907-3f8803beed28@linaro.org"
+      ]
+    },
+    {
+      "series_id": 992935,
+      "series_name": "ASoC: qcom: audioreach: cleanup and calibration",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=992935",
+      "series_date": "2025-08-19T09:26:46",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3445369085863269,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 992954,
+      "series_name": "ASoC: qcom: audioreach: cleanup and calibration",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=992954",
+      "series_date": "2025-08-19T10:01:45",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3445369085863269,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 994077,
+      "series_name": "[1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=994077",
+      "series_date": "2025-08-21T14:16:26",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.41165898370779236,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/2566eea5-a153-42e6-9a43-1c0af5a4c11c@oss.qualcomm.com",
+        "https://lore.kernel.org/r/666b4115-3e81-42c8-8519-f6d7b16c66df@oss.qualcomm.com",
+        "https://lore.kernel.org/r/6a4a601b-937e-441f-80a7-3f733fc86445@oss.qualcomm.com",
+        "https://lore.kernel.org/r/d2d01b40-677c-4ad7-9742-29a40082f40a@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 994466,
+      "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=994466",
+      "series_date": "2025-08-22T10:49:19",
+      "actual_reviewers": [
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "ownership_boundary",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3575664385341601,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/4jklfoinsr7ldw5gn66kmfh4vwl7hqrhvnodakirsd5vx4uzqe@axhf5e7ei5g2",
+        "https://lore.kernel.org/r/6igcrtfra6h75v5g3wucokxw3ncj3k66ui3jnhfpdf2lmxc3tm@3hzihrpgjaz3",
+        "https://lore.kernel.org/r/kmm4e5bg7uehmlsgrfhzo4agr6ga6d5gxtpxq5sg4t3wql5p6m@llwyz4kzsj7y",
+        "https://lore.kernel.org/r/ld3s5vbjjigkbesnyccyxohnekgbwkbae7zwmjd7u23km3f5fq@awxsaee7yj6m",
+        "https://lore.kernel.org/r/mmheu5fctvd47gmwilievo27suijuok7zr46qz5acti7vsrpaf@osdoa5ouaqwn"
+      ]
+    },
+    {
+      "series_id": 994646,
+      "series_name": "ASoC: qcom: audioreach: Fix lpaif_type and WS source configuration for I2S interface",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=994646",
+      "series_date": "2025-08-22T17:14:38",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "mixed",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/6ca759f1-27ef-4cf4-833c-ee2f6a9b2d87@oss.qualcomm.com",
+        "https://lore.kernel.org/r/f5cc1395-a3b7-4d5b-b8b0-d97de718e691@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 995143,
+      "series_name": "ASoC: qcom: audioreach: fix sparse warnings",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=995143",
+      "series_date": "2025-08-25T10:12:44",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 997332,
+      "series_name": "ASoC: codecs: lpass-wsa-macro: Fix speaker quality distortion",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997332",
+      "series_date": "2025-08-31T15:14:02",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0beec691-a21c-4425-b06b-728d55e7e254@oss.qualcomm.com",
+        "https://lore.kernel.org/r/175701069186.126195.4295379119424857942.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/DCPKY2GED44G.I2DSV6ZBXYAQ@linaro.org"
+      ]
+    },
+    {
+      "series_id": 997460,
+      "series_name": "ASoC: codecs: lpass-rx-macro: Fix playback quality distortion",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997460",
+      "series_date": "2025-09-01T07:44:04",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.45924176703266406,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175701069431.126195.14104429101124802886.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/93c7a172-6c56-4feb-86b2-b645a4416a18@oss.qualcomm.com",
+        "https://lore.kernel.org/r/bect6bxzxmxguqsrxkchbkhhxgz5lmnzzkwwjyvaca7qtlfz4r@lxmmfto2qkm4"
+      ]
+    },
+    {
+      "series_id": 997726,
+      "series_name": "soundwire: qcom: add support for v3.1.0 controller",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997726",
+      "series_date": "2025-09-01T19:50:30",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski",
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dt_schema",
+        "refactor",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.31115160968403865,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/1bbacc5f-7371-4451-b503-cdd98e9f9688@oss.qualcomm.com",
+        "https://lore.kernel.org/r/20250902-light-vegan-snake-efe03c@kuoka",
+        "https://lore.kernel.org/r/20250902-thoughtful-quizzical-quoll-3ecbae@kuoka",
+        "https://lore.kernel.org/r/20250902-ubiquitous-screeching-parrot-4b967d@kuoka",
+        "https://lore.kernel.org/r/202509021915.6WBFuf9m-lkp@intel.com",
+        "https://lore.kernel.org/r/bd11cb82-d8ad-40bf-8bed-82f9e8710117@oss.qualcomm.com",
+        "https://lore.kernel.org/r/ebd1a1b7-c911-43f6-91cc-fcc2c01bc600@kernel.org"
+      ]
+    },
+    {
+      "series_id": 997821,
+      "series_name": "[v2] ASoC: codecs: lpass-macro: Add support for channel map mixer control",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997821",
+      "series_date": "2025-09-02T06:23:00",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Konrad Dybcio",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4313777126445529,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/3b1c094f-5025-4e2c-83fc-e021293a49cc@oss.qualcomm.com",
+        "https://lore.kernel.org/r/708dc6e4-1566-4c72-9f3a-a34f935ac247@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DD71KONODHKJ.15RI1DXF5T6PJ@linaro.org"
+      ]
+    },
+    {
+      "series_id": 998028,
+      "series_name": "ASoC: qcom: add support for Glymur",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=998028",
+      "series_date": "2025-09-02T14:00:39",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4186800142077789,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20250903-diligent-tunneling-angelfish-bae3b3@kuoka",
+        "https://lore.kernel.org/r/20250903-flawless-classy-lorikeet-0bd38b@kuoka",
+        "https://lore.kernel.org/r/20250903-sociable-corgi-of-grandeur-d1dc76@kuoka",
+        "https://lore.kernel.org/r/20250903-speedy-fine-macaque-5e4cdd@kuoka"
+      ]
+    },
+    {
+      "series_id": 998085,
+      "series_name": "soundwire: qcom: add support for v3.1.0 controller",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=998085",
+      "series_date": "2025-09-02T16:11:49",
+      "actual_reviewers": [
+        "Rob Herring"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.29730078297352436,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/CAL_JsqKxPJ5KSJLoQNQjnivAYZF9j2wCLAxs4TgqeB7P6+XMOA@mail.gmail.com"
+      ]
+    },
+    {
+      "series_id": 998803,
+      "series_name": "[v2] ASoC: qcom: q6apm-lpass-dais: Fix NULL pointer dereference if source graph failed",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=998803",
+      "series_date": "2025-09-04T10:18:50",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175700470013.101252.2850768839303017703.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/e9572405-85eb-4ff6-b854-2fd8a4ebfe43@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 998807,
+      "series_name": "[v2,1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=998807",
+      "series_date": "2025-09-04T10:25:59",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "ownership_boundary"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.39319121476044,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/79274958-52a0-4041-b4f3-365ee84fb088@oss.qualcomm.com",
+        "https://lore.kernel.org/r/b396807c-309c-445c-85f4-b9c7ec5f1b88@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 998815,
+      "series_name": "soundwire: qcom: add support for v3.1.0",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=998815",
+      "series_date": "2025-09-04T10:56:09",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.25523120357959955,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 999289,
+      "series_name": "ASoC: qcom: Fix lpaif_type and DAI configuration for I2S interface",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999289",
+      "series_date": "2025-09-05T10:40:17",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4358370214867065,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/59775bbf-5e8d-4302-910f-94c7e1d5d9e3@oss.qualcomm.com",
+        "https://lore.kernel.org/r/a9eae2e3-0e75-4ffb-9de1-3b8a9bce86a6@oss.qualcomm.com",
+        "https://lore.kernel.org/r/b321019f-3ff6-4c6b-8285-77ca291492a2@oss.qualcomm.com",
+        "https://lore.kernel.org/r/fb126ef2-aa44-4a67-9188-3483b07b73d6@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 999408,
+      "series_name": "ASoC: qcom: Fix lpaif_type and DAI configuration for I2S interface",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999408",
+      "series_date": "2025-09-05T15:04:42",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3997057150315402,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/899db9f0-27f5-4404-8357-4985e084ac99@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 999425,
+      "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999425",
+      "series_date": "2025-09-05T15:44:19",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dt_schema",
+        "ownership_boundary",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/202509070437.ko5lmTb9-lkp@intel.com",
+        "https://lore.kernel.org/r/202509070539.WhfiRSpY-lkp@intel.com",
+        "https://lore.kernel.org/r/2yvgofbauwqzdysb3r5jfijedpg2qdfb4znfkj5veuyanff22d@tro4rzcfytk6",
+        "https://lore.kernel.org/r/4jj3ofvjiqzdyseezuhup6ig5hfio4y3siqqmxhvpse2yyvnqm@xa3jtgee6vpu",
+        "https://lore.kernel.org/r/7rizn5ckjyyxx3aabni3xgrxi3lr563q555llq677lcnehyowm@ys7uf3dlk6sx",
+        "https://lore.kernel.org/r/as3wxoths3rgy2qpbqwyys6zydhjo3lbueu7ibrwbinxt3sffw@wyprroihsjs7",
+        "https://lore.kernel.org/r/qly2mvnlrmsoy3jds25i532etwcnljewic3zcc5dbm36nolzlp@macsnqtd3hqw",
+        "https://lore.kernel.org/r/r2vk6rus2ownex4hunrwxutbrbsggmbe7lgiiksetum72y5scn@6kd55k5cdpr4"
+      ]
+    },
+    {
+      "series_id": 999737,
+      "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999737",
+      "series_date": "2025-09-07T11:21:47",
+      "actual_reviewers": [
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/202509081839.R4vv3FST-lkp@intel.com"
+      ]
+    },
+    {
+      "series_id": 1000475,
+      "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1000475",
+      "series_date": "2025-09-09T12:19:41",
+      "actual_reviewers": [
+        "Alexey Klimov"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 5,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/6f787bdf-9f9b-4d6e-b7c1-5b734ec0acf1@ijzerbout.nl",
+        "https://lore.kernel.org/r/DCPLAK9BYI9D.256FT1VOPLSW3@linaro.org"
+      ]
+    },
+    {
+      "series_id": 1001427,
+      "series_name": "ASoC: qcom: sc8280xp: explicitly set S16LE format in sc8280xp_be_hw_params_fixup()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1001427",
+      "series_date": "2025-09-11T15:43:40",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175828644908.102649.16187392982515202308.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1001652,
+      "series_name": "soundwire: qcom: add support for v3.1.0",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1001652",
+      "series_date": "2025-09-12T08:32:18",
+      "actual_reviewers": [
+        "Alexey Klimov"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.25523120357959955,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/CANgGJDri==VUhMKhEeDYs5tmkcGcOBHbzMT3U314bxK79z4mTA@mail.gmail.com",
+        "https://lore.kernel.org/r/DGJTU2TOFZR7.2MOU6I6J8GV4L@fairphone.com",
+        "https://lore.kernel.org/r/DGPQVOVH3N31.2XHZP30TUC18Q@fairphone.com"
+      ]
+    },
+    {
+      "series_id": 1002172,
+      "series_name": "[v1] ASoC: qcom: sc8280xp: Fix sound card driver name match data for QCS8275",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1002172",
+      "series_date": "2025-09-14T13:15:49",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175802452817.111062.2711141246036859762.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/f13c79a7-9595-4795-bd74-ea440f74a12f@oss.qualcomm.com",
+        "https://lore.kernel.org/r/ocevx3x6rniczf2sjhd2yie5i7obhwrohim44sqiev2cdngivc@lapwpkqbq6o2"
+      ]
+    },
+    {
+      "series_id": 1004622,
+      "series_name": "ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1004622",
+      "series_date": "2025-09-21T09:59:27",
+      "actual_reviewers": [
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/lqgi66r4voh5z4p7mrjiulxvy6gky6mzn6rq2yresuhqfzsnt3@xcgvnxxd7qnq"
+      ]
+    },
+    {
+      "series_id": 1004702,
+      "series_name": "[v2] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1004702",
+      "series_date": "2025-09-22T01:35:07",
+      "actual_reviewers": [
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/202509221535.es8PWacQ-lkp@intel.com"
+      ]
+    },
+    {
+      "series_id": 1005098,
+      "series_name": "[v3] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1005098",
+      "series_date": "2025-09-23T02:38:28",
+      "actual_reviewers": [
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "refactor"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4472884983564118,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/unqzejlsp6emzja5ry32smzlinntodgbioyojr5osiqddh2ppi@mtf4e7y4cids"
+      ]
+    },
+    {
+      "series_id": 1005144,
+      "series_name": "[v4] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1005144",
+      "series_date": "2025-09-23T06:52:12",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split",
+        "refactor"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.4472884983564118,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175863297892.1081221.9696569570789415839.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/a5o4iivd7ph4h7hb5mhfwgijob3celkn5l5dci635a7owzga6t@pjmf37gcmai6"
+      ]
+    },
+    {
+      "series_id": 1005821,
+      "series_name": "[v2] ASoC: qcom: sc8280xp: use sa8775p/ subdir for QCS9100 / QCS9075",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1005821",
+      "series_date": "2025-09-24T19:34:02",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/175889099809.84679.3269862439261126656.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/fc956fe4-e4f9-4f34-b1c1-1bc23125494a@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1008774,
+      "series_name": "ASoC: qcom: enable HDMI audio on SM8[456]50 HDK boards",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1008774",
+      "series_date": "2025-10-06T18:37:13",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Konrad Dybcio",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37603420748151245,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0e8d380f-87fb-4b90-805a-3fd7d59c10e6@kernel.org",
+        "https://lore.kernel.org/r/4aa81228-9b25-4b7a-8fd0-7e51e7d77824@oss.qualcomm.com",
+        "https://lore.kernel.org/r/64719a5b-0747-4f3f-9bf9-c04900a5e0e5@oss.qualcomm.com",
+        "https://lore.kernel.org/r/6492e444-4196-4900-a741-a74a8c506a6d@kernel.org",
+        "https://lore.kernel.org/r/6d9af57f-9174-405b-9131-145fd6d63a5f@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DDBPDACTUFEW.1VVHN1P0PC6YO@linaro.org",
+        "https://lore.kernel.org/r/DDBPGIDN8SKS.2GF6TZC6KGXVI@linaro.org",
+        "https://lore.kernel.org/r/DDC7B1BDTZCN.D7JXN4RVKYHM@linaro.org"
+      ]
+    },
+    {
+      "series_id": 1009334,
+      "series_name": "[v3,1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1009334",
+      "series_date": "2025-10-08T10:44:49",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176604606357.48417.1586328124379101511.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/66845d7a-934a-49ba-821d-362dd9cd7e2b@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1009434,
+      "series_name": "ASoC: codecs: wcd938x-sdw: remove redundant runtime pm calls",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1009434",
+      "series_date": "2025-10-08T14:58:01",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "patch_split",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.44426979915731907,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176055437050.231901.9790775935564885133.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1009505,
+      "series_name": "ASoC: qcom: enable HDMI audio on SM8[456]50 HDK boards",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1009505",
+      "series_date": "2025-10-08T18:56:47",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Konrad Dybcio",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3575664385341601,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/44606de8-3446-472f-aa6b-25ff8b76e0ec@kernel.org",
+        "https://lore.kernel.org/r/488d9182-175e-47a9-9dc1-f43753d6fdbc@oss.qualcomm.com",
+        "https://lore.kernel.org/r/5aa30c94-33f1-4f40-9013-dfbac249ce91@kernel.org",
+        "https://lore.kernel.org/r/630bb2b0-0ab4-4083-96a2-9aa485041797@oss.qualcomm.com",
+        "https://lore.kernel.org/r/6d898a68-631c-4442-9a1c-237f672e296f@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DDDR31N2P498.3FYKHZRLUS54G@linaro.org",
+        "https://lore.kernel.org/r/b614913e-7ebf-4abe-9eb5-f41b81d91ad3@kernel.org",
+        "https://lore.kernel.org/r/c0b71974-65df-47ad-902b-45c2dbe66be0@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1011875,
+      "series_name": "ASoC: qcom: q6dsp: fixes and updates",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1011875",
+      "series_date": "2025-10-15T13:17:30",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Konrad Dybcio"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "ownership_boundary",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.4287002385137175,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/168c9cee-5f5b-4c45-82bd-45c911da4dd4@oss.qualcomm.com",
+        "https://lore.kernel.org/r/60a48dfb-e266-425d-8cfb-574c637f5e9d@oss.qualcomm.com",
+        "https://lore.kernel.org/r/7abcb827-4a7f-4855-811a-4212b8357333@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DDN83LOTCUIP.5O05FBN02AZB@linaro.org",
+        "https://lore.kernel.org/r/DDN8PM13DWWZ.BCXRTJIFB7PD@linaro.org",
+        "https://lore.kernel.org/r/DDN8VVZ4ZL38.13JN04FQV1254@linaro.org",
+        "https://lore.kernel.org/r/DDNA1IMADB2J.1RQMGCQKDL7PG@linaro.org"
+      ]
+    },
+    {
+      "series_id": 1012750,
+      "series_name": "ASoC: qcom: q6dsp: few cleanups",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1012750",
+      "series_date": "2025-10-17T08:52:55",
+      "actual_reviewers": [
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "mixed",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.36337133114249054,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/202510191117.BTexj8De-lkp@intel.com"
+      ]
+    },
+    {
+      "series_id": 1013570,
+      "series_name": "ASoC: qcom: sdw: fix memory leak",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1013570",
+      "series_date": "2025-10-20T13:12:06",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.34563788412827223,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1013973,
+      "series_name": "ASoC: qcom: sdw: fix memory leak",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1013973",
+      "series_date": "2025-10-21T10:39:58",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3147434563516005,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20251022003429.4445-1-threeway@gmail.com",
+        "https://lore.kernel.org/r/CAOvMTZjjCn5gDgOrf_2++QjfdCxz2PXTey5Nh_-=caB4wX1g5Q@mail.gmail.com"
+      ]
+    },
+    {
+      "series_id": 1014056,
+      "series_name": "ASoC: qcom: x1e80100: Add sound card support for Dell XPS13 9345",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1014056",
+      "series_date": "2025-10-21T13:50:43",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Dmitry Baryshkov",
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.41165898370779236,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/224288d8-9a04-4a76-95c7-c0af4ed967e3@kernel.org",
+        "https://lore.kernel.org/r/4d69e9ba-caa4-49bc-a66a-d085edfead4a@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DDP0J063IX84.2MC5D16VHRFVR@linaro.org",
+        "https://lore.kernel.org/r/sihiwhcdra2kviuago7r6gnm6b4goqcpjgt43loen5alk4atze@mhklkp2hz5y6"
+      ]
+    },
+    {
+      "series_id": 1014563,
+      "series_name": "ASoC: qcom: sdw: fix memory leak",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1014563",
+      "series_date": "2025-10-22T14:33:45",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.2876449765102257,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1014935,
+      "series_name": "ASoC: qcom: q6dsp: fixes and updates",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1014935",
+      "series_date": "2025-10-23T10:24:24",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3675866628400986,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1017316,
+      "series_name": "ASoC: dt-bindings: pm4125-sdw: correct number of soundwire ports",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1017316",
+      "series_date": "2025-10-29T14:46:36",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Krzysztof Kozlowski",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.46488545713013674,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176182254287.10093.1638379572271955116.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/20251030-premium-intrepid-gaur-fbfc1e@kuoka",
+        "https://lore.kernel.org/r/DDVYM9SMCT7O.17T5SIB9IEED4@linaro.org"
+      ]
+    },
+    {
+      "series_id": 1017351,
+      "series_name": "ASoC: codecs: lpass-macro: complete sm6115 support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1017351",
+      "series_date": "2025-10-29T16:00:57",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski",
+        "Rob Herring"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4186800142077789,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176176645546.2481487.18047032469966565976.robh@kernel.org",
+        "https://lore.kernel.org/r/176176645718.2481556.7862823985792459137.robh@kernel.org",
+        "https://lore.kernel.org/r/20251030-flat-elated-pony-de74ab@kuoka",
+        "https://lore.kernel.org/r/20251030181102.GA128512-robh@kernel.org",
+        "https://lore.kernel.org/r/312b62d9-c95e-4364-b7e8-55ebb82fd104@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1018181,
+      "series_name": "ASoC: codecs: lpass-macro: complete sm6115 support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1018181",
+      "series_date": "2025-10-31T11:47:46",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4002122452604265,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1018193,
+      "series_name": "ASoC: codecs: lpass-macro: complete sm6115 support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1018193",
+      "series_date": "2025-10-31T12:06:57",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.36408093880526016,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20251102-able-rhino-of-triumph-a6aeb6@kuoka",
+        "https://lore.kernel.org/r/20251102-glaring-cooperative-woodpecker-fdcacb@kuoka",
+        "https://lore.kernel.org/r/20251102-thundering-nimble-mongoose-c2bcac@kuoka"
+      ]
+    },
+    {
+      "series_id": 1023227,
+      "series_name": "[v2] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to I2S format",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1023227",
+      "series_date": "2025-11-14T00:14:34",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/789ca70c-c9ac-4290-8a24-1f83febe498f@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1023866,
+      "series_name": "[v3] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to I2S format",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1023866",
+      "series_date": "2025-11-15T18:43:58",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.4472884983564118,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176580712510.161056.2503669103240241615.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/DEULFB0XJ883.3CHFIXANX1FTH@linaro.org",
+        "https://lore.kernel.org/r/zepvg4nhpihycmkaynemesuvurrp5hwafdqyvxu4gtfojllhw3@a6sy4dwlbndm"
+      ]
+    },
+    {
+      "series_id": 1023928,
+      "series_name": "ASoC: codecs: wcd937x: Fix error handling in wcd937x codec driver",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1023928",
+      "series_date": "2025-11-16T06:16:23",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.45924176703266406,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176363161218.559933.9857333808970075663.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/d09d394f-92d7-420b-b3d4-2eef493d173e@ixit.cz"
+      ]
+    },
+    {
+      "series_id": 1024092,
+      "series_name": "[1/9] ASoC: codecs: lpass-wsa-macro: remove unnecessary bounds check",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1024092",
+      "series_date": "2025-11-17T05:15:13",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dapm",
+        "patch_split",
+        "refactor",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.4287002385137175,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0954c4f6-a50e-477a-9354-0f7c497f6f4b@oss.qualcomm.com",
+        "https://lore.kernel.org/r/176363162125.559933.14265919473434937730.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/2075e642-9976-49a8-a148-3a6fa113e66c@oss.qualcomm.com",
+        "https://lore.kernel.org/r/257ffaba-fa78-4daa-8d6b-e54542c5891c@oss.qualcomm.com",
+        "https://lore.kernel.org/r/3d53b87c-c5ea-4250-8a95-4a422c58641a@oss.qualcomm.com",
+        "https://lore.kernel.org/r/5a3001a9-d28a-4df2-b486-832e25b82236@oss.qualcomm.com",
+        "https://lore.kernel.org/r/8753b824-cb16-4440-b53a-f058eb8f02d6@oss.qualcomm.com",
+        "https://lore.kernel.org/r/a77f0c42-70bf-4d6a-bb45-d435e4f29809@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1024773,
+      "series_name": "ASoC: qcom: q6dsp-lpass-ports: Add support for extended sampling rates and PCM formats",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1024773",
+      "series_date": "2025-11-18T10:02:01",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.41165898370779236,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/04d8f7e1-c716-44a2-a32f-3d124d15d011@oss.qualcomm.com",
+        "https://lore.kernel.org/r/1c35a2ce-628c-48a6-9b04-a66ee1edd04a@sirena.org.uk",
+        "https://lore.kernel.org/r/be7ade15-4c1e-4226-ae0a-cd58a2b9f07b@sirena.org.uk",
+        "https://lore.kernel.org/r/ec6512a9-83ce-4d1b-86f2-2b0153be6538@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1026147,
+      "series_name": "[v2] ASoC: codecs: lpass-wsa-macro: add RX4/RX5/RX6/RX7/RX8",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1026147",
+      "series_date": "2025-11-21T06:03:30",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.44077399808531165,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/9a6ca5eb-bcfa-41f6-b35a-e2831d5a9f02@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1026376,
+      "series_name": "ASoC: codecs: wcd934x: add explicit soundwire depenency",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1026376",
+      "series_date": "2025-11-21T14:32:58",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.42298430777017826,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176376310618.101329.9975086867710479356.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/7392a065-bfc5-4dfa-89ac-a7ac94a587d9@web.de"
+      ]
+    },
+    {
+      "series_id": 1026824,
+      "series_name": "wcd938x/wcd939x fixes",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1026824",
+      "series_date": "2025-11-24T06:45:53",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dapm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.34833277157289316,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/2758401b-e9b5-4f10-bb01-0a1fe4e09430@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DEIUJWR51WIX.43GDTH9RA8UH@linaro.org",
+        "https://lore.kernel.org/r/fafe5de2-f682-4769-bb1f-166858808746@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1027567,
+      "series_name": "ASoC: codecs: lpass-wsa-macro: add RX4/RX5/RX6/RX7/RX8",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1027567",
+      "series_date": "2025-11-25T22:35:31",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Rob Herring",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.344159933500537,
+      "actual_review_rounds": 3,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/aT6TLZRgWwGjrLPD@sirena.co.uk"
+      ]
+    },
+    {
+      "series_id": 1028308,
+      "series_name": "ASoC: codecs: wcd939x: fix regmap leak on probe failure",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1028308",
+      "series_date": "2025-11-27T13:50:57",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176428033461.177680.12682432432005950288.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1028872,
+      "series_name": "ASoC: qcom: Fix confusing cleanup.h",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1028872",
+      "series_date": "2025-11-29T13:17:52",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.35478256745168596,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1028883,
+      "series_name": "ASoC: qcom: Constify few things in audioreach and topology",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1028883",
+      "series_date": "2025-11-29T14:02:30",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "refactor"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37603420748151245,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/3cddb94b-a63d-4b75-95b7-7fd0378fda1d@oss.qualcomm.com",
+        "https://lore.kernel.org/r/f029c82f-444e-40c7-a50b-493ce8ae159f@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1029153,
+      "series_name": "ASoC: codecs: wcd939x-sdw: use devres for regmap allocation",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1029153",
+      "series_date": "2025-12-01T09:22:59",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.42298430777017826,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176615000564.376665.11468588142722382964.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1029157,
+      "series_name": "ASoC: codecs: wcd93xx: fix OF node leaks on probe failure",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1029157",
+      "series_date": "2025-12-01T09:34:18",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1029188,
+      "series_name": "soundwire: qcom: Use guard to avoid mixing cleanup and goto",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1029188",
+      "series_date": "2025-12-01T10:26:28",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "feature_cleanup_mix",
+        "refactor",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.38707572530119316,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176587679319.348344.13509792002074257048.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/d0323387-df46-437a-bdae-719d142ad61e@oss.qualcomm.com",
+        "https://lore.kernel.org/r/fba86e25-3327-4fbf-86f1-485bbaeec32d@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1030068,
+      "series_name": "ASoc: qcom: q6afe: fix bad guard conversion",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1030068",
+      "series_date": "2025-12-03T10:55:40",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4543047904340589,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/1533a073-6605-4995-bad1-c35ff367aa60@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1031914,
+      "series_name": "ASoC: qcom: q6dsp-lpass-ports: Expand sampling rate and PCM format constraints",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1031914",
+      "series_date": "2025-12-10T06:51:54",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.39319121476044,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1034101,
+      "series_name": "[v4,1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1034101",
+      "series_date": "2025-12-17T09:46:03",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 4,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/176604606703.48417.8295362346139487733.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/b7ae5cac-5eef-4a3c-a1a8-01b1d1b796cb@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1035008,
+      "series_name": "ASoC: qcom: Constify few things in audioreach and topology",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1035008",
+      "series_date": "2025-12-19T11:45:43",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3575664385341601,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1037892,
+      "series_name": "ASoC: codecs: wsa88xx: fix codec initialisation",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1037892",
+      "series_date": "2026-01-02T11:14:09",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "refactor",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4186800142077789,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/18f646c0-00f3-4460-842d-cf8811dddecf@kernel.org",
+        "https://lore.kernel.org/r/9c68b403-f11b-4395-a564-8172e7db5390@kernel.org",
+        "https://lore.kernel.org/r/a11d661e-15a0-4d9b-a171-6bc1d31a16d9@kernel.org",
+        "https://lore.kernel.org/r/b03a69a1-1f5a-4dae-a6d4-851f18e43917@kernel.org",
+        "https://lore.kernel.org/r/cd725087-14f3-4c9f-ae1a-147bbd362460@kernel.org",
+        "https://lore.kernel.org/r/df6ef95e-eca8-4590-8f79-f850e523dcec@kernel.org",
+        "https://lore.kernel.org/r/eaab0f94-b7e4-446f-b13e-db5b715b1c52@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1038026,
+      "series_name": "ASoC: qcom: q6asm: drop DSP responses for closed data streams",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1038026",
+      "series_date": "2026-01-02T21:52:25",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177007519035.976577.8405290688594066065.b4-ty@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1051249,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1051249",
+      "series_date": "2026-02-05T17:14:01",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.38605443178745097,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260206-funny-beaver-of-trust-873343@quoll",
+        "https://lore.kernel.org/r/20260206-petite-tireless-iguana-addf9e@quoll",
+        "https://lore.kernel.org/r/20260206-smoky-owl-of-tempering-9eddbf@quoll",
+        "https://lore.kernel.org/r/62fl655uwn4fevonuuhxs7rplpmcdgkghrivaihhptz3e6empc@snkbjhydc3mu",
+        "https://lore.kernel.org/r/a8706da6-20fb-456e-a428-4c7b2c5bc26b@sirena.org.uk",
+        "https://lore.kernel.org/r/aqdmav22lml3tlh7wzu5fwjyavl7wu2lbgkwjvyt67fqsldwxd@soixble4klnr",
+        "https://lore.kernel.org/r/cdc9fb39-3966-46eb-9182-fcb2c3c56dde@oss.qualcomm.com",
+        "https://lore.kernel.org/r/e9fd0da1-90b2-43bc-8c1b-95f2e147a39b@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1053098,
+      "series_name": "ASoC: qcom: sm8250: Add quinary MI2S support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1053098",
+      "series_date": "2026-02-11T11:30:10",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177132814641.11429.11218650201291165140.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/aqjyq5rjovomjod3gmlwh7s3wmlmezom2ucg7j3dlvji35ern4@i55nyr2dxcd7"
+      ]
+    },
+    {
+      "series_id": 1056710,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1056710",
+      "series_date": "2026-02-23T18:07:26",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3675866628400986,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260224-awesome-ibis-of-tolerance-5f7b98@quoll",
+        "https://lore.kernel.org/r/20260224-ethereal-koala-of-health-eab910@quoll",
+        "https://lore.kernel.org/r/3b4dfe95-9043-4682-8fee-7588fa1fde37@oss.qualcomm.com",
+        "https://lore.kernel.org/r/5159594a-26e7-4e97-8092-812072186b1e@kernel.org",
+        "https://lore.kernel.org/r/c6ceab84-899d-476a-b2d8-e57028cc91dd@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1059045,
+      "series_name": "[v1] ASoC: qcom: qdsp6: Fix q6apm remove ordering during ADSP stop and start",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1059045",
+      "series_date": "2026-02-27T14:45:34",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177306915420.149479.15947778465321461228.b4-ty@kernel.org",
+        "https://lore.kernel.org/r/968169e5-59c4-476b-b656-cc10049dcfdc@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1061276,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1061276",
+      "series_date": "2026-03-04T13:06:58",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260305-glittering-devout-llama-fcfe75@quoll",
+        "https://lore.kernel.org/r/20260305-masterful-scrupulous-parakeet-9f84f3@quoll",
+        "https://lore.kernel.org/r/e1a5bd6b-6399-4bd7-a0b2-3df7035fac86@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1062549,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1062549",
+      "series_date": "2026-03-06T12:21:02",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.38605443178745097,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260307-authentic-amphibian-stallion-9fafed@quoll"
+      ]
+    },
+    {
+      "series_id": 1063594,
+      "series_name": "ASoC: qcom: qdsp6: Add MI2S clock control",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1063594",
+      "series_date": "2026-03-09T11:12:56",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Krzysztof Kozlowski",
+        "Srinivas Kandagatla",
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm",
+        "dt_schema",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37588646355558214,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260310-crazy-screeching-angelfish-297bab@quoll",
+        "https://lore.kernel.org/r/202603120247.NRy9LSop-lkp@intel.com",
+        "https://lore.kernel.org/r/376ad62e-e6b5-438b-a23a-0988b6489e5c@kernel.org",
+        "https://lore.kernel.org/r/3ml7bphfd7abn6mat47yagw7l7whv5hia7ifkbh6yi7gdg24j7@2p4sihkcowjd",
+        "https://lore.kernel.org/r/5941830f-5892-4e75-bc27-04095b5ca28f@kernel.org",
+        "https://lore.kernel.org/r/c3f4a9cc-303f-4652-8a27-71645e8337d7@linaro.org",
+        "https://lore.kernel.org/r/cafce8ef-5297-46ea-a14d-8a12bdf2f181@kernel.org",
+        "https://lore.kernel.org/r/fc9e0399-dc24-48c4-99db-f9e39a79cda7@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1069948,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1069948",
+      "series_date": "2026-03-20T14:49:05",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/73bbc9b3-d71e-4161-8d21-496433c24300@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1071229,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1071229",
+      "series_date": "2026-03-23T22:38:32",
+      "actual_reviewers": [
+        "Mark Brown",
+        "kernel test robot"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0c9ccf4f-ac3d-4727-8e9c-d3e2acd94dd1@sirena.org.uk",
+        "https://lore.kernel.org/r/202603250417.fEMbsde2-lkp@intel.com",
+        "https://lore.kernel.org/r/54e3e041-0995-403b-a6c3-c7007bffc6a2@sirena.org.uk",
+        "https://lore.kernel.org/r/61596b66-4fef-4bdc-93f2-a8639da79d32@sirena.org.uk",
+        "https://lore.kernel.org/r/981a6253-5005-4281-88fb-3ef6361dfb76@sirena.org.uk",
+        "https://lore.kernel.org/r/9a9ea82d-e299-4a9c-bb68-f430761387f7@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1071247,
+      "series_name": "ASoC: codecs: wcd934x: fix typo in dt parsing",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1071247",
+      "series_date": "2026-03-23T23:17:48",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177435775708.81121.1764309542515337919.b4-ty@b4",
+        "https://lore.kernel.org/r/f3661dba-2619-47d7-b118-6c483ba204e6@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1072063,
+      "series_name": "[v1] ASoC: qcom: audioreach: explicitly enable speaker protection modules",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1072063",
+      "series_date": "2026-03-25T05:44:08",
+      "actual_reviewers": [
+        "Dmitry Baryshkov"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/sf2hegu7qqiq56nftimjpvf2hj4jiti3zxjex75pmcjuoaqkel@4rosfzs5zvcl"
+      ]
+    },
+    {
+      "series_id": 1072907,
+      "series_name": "[v2] ASoC: qcom: audioreach: explicitly enable speaker protection modules",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1072907",
+      "series_date": "2026-03-26T11:35:31",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177547723276.46304.3835417500406745879.b4-ty@b4",
+        "https://lore.kernel.org/r/6f70ee7e-78bf-4f45-8fb7-00db13c5e9f7@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1074413,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1074413",
+      "series_date": "2026-03-30T08:20:52",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/38eb807e-8467-4d7b-9094-3007d0ba9c89@sirena.org.uk",
+        "https://lore.kernel.org/r/f226a03d-f2d2-4a85-9a63-5ac93b665740@sirena.org.uk",
+        "https://lore.kernel.org/r/f2bb116e-bee4-4cd1-9f57-154ea1e9f0e5@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1075975,
+      "series_name": "ASoC: qcom: qdsp6: Reject pointer operations on unconfigured streams",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1075975",
+      "series_date": "2026-04-01T17:18:03",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1076236,
+      "series_name": "[v1] ASoC: codecs: wcd937x: Add conditional regulator control for wcd937x",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1076236",
+      "series_date": "2026-04-02T07:08:54",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4837607775076548,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/157b33d6-5c08-4f33-92bf-ce40ab99e109@kernel.org",
+        "https://lore.kernel.org/r/4d08f16e-856a-46ae-8a41-334ec4d32952@kernel.org",
+        "https://lore.kernel.org/r/ec716d06-3c7b-496e-9605-761346d78ad9@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1076250,
+      "series_name": "[v2] ASoC: codecs: wcd937x: Add conditional regulator control for wcd937x",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1076250",
+      "series_date": "2026-04-02T07:22:56",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski",
+        "Mark Brown",
+        "Rob Herring"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.467931261267067,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177511857667.2917822.6371182180784837499.robh@kernel.org",
+        "https://lore.kernel.org/r/3f057f41-6017-4f7c-a934-1d27993c5bad@kernel.org",
+        "https://lore.kernel.org/r/adjQJgMCGg0WlG5z@sirena.co.uk",
+        "https://lore.kernel.org/r/ee23daf4-8181-4ab0-bd21-b2ea636168f7@kernel.org",
+        "https://lore.kernel.org/r/fea78031-e570-4348-a4b3-d113b5749fec@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1076278,
+      "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1076278",
+      "series_date": "2026-04-02T08:11:07",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "refactor",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3314553563849323,
+      "actual_review_rounds": 9,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/4795570b-407d-4daa-859c-61ad0b76a091@oldschoolsolutions.biz",
+        "https://lore.kernel.org/r/7f10abbd-fb78-4c3a-ab90-7ca78239891a@oldschoolsolutions.biz"
+      ]
+    },
+    {
+      "series_id": 1078004,
+      "series_name": "[6.18.y] ASoC: qcom: sc7280: make use of common helpers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1078004",
+      "series_date": "2026-04-07T08:32:05",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1080698,
+      "series_name": "ASoC: qcom: lpass: Switch VA/WSA macros to PM clock framework",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1080698",
+      "series_date": "2026-04-13T12:18:21",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "feature_cleanup_mix",
+        "runtime_pm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.41165898370779236,
+      "actual_review_rounds": 6,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/05ec7d33-1dd5-4e67-9c88-03e39e02c39a@sirena.org.uk",
+        "https://lore.kernel.org/r/07c73c75-5ce8-46f2-bcfb-bb6d7fe0afca@oss.qualcomm.com",
+        "https://lore.kernel.org/r/c71d2ce2-e6e7-43a7-bfdd-e1cc1008b3b2@sirena.org.uk",
+        "https://lore.kernel.org/r/dd09f4b8-b0f2-40d7-80f0-bdd2cb382c65@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1083303,
+      "series_name": "ASoC: qcom: lpass: Switch VA/WSA macros to PM clock framework",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1083303",
+      "series_date": "2026-04-20T12:28:40",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.39319121476044,
+      "actual_review_rounds": 6,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/11f2596c-c9e5-46d3-af6b-1f6b09c2db78@sirena.org.uk",
+        "https://lore.kernel.org/r/1d479cf0-673a-4cea-8ba7-7287456a8f48@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1083459,
+      "series_name": "ASoC: codecs: wcd937x: fix AUX PA sequencing and mixer controls",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1083459",
+      "series_date": "2026-04-20T18:02:21",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dapm",
+        "patch_split"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.44720722888514064,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/177724587376.266775.14182011479480763882.b4-ty@b4",
+        "https://lore.kernel.org/r/89ccc6c9-525e-4878-a43f-f91c681969c3@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1083821,
+      "series_name": "ASoC: qcom: x1e80100: limit speaker volumes",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1083821",
+      "series_date": "2026-04-21T12:07:58",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "ownership_boundary"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/abcab457-a8e3-47e2-b5b8-f073bb741c1d@sirena.org.uk",
+        "https://lore.kernel.org/r/bfcf51e2-2b5f-407d-9d7f-06ea72165fb5@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1084303,
+      "series_name": "[v2] ASoC: qcom: x1e80100: limit speaker volumes",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1084303",
+      "series_date": "2026-04-22T13:30:59",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "ownership_boundary",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.48341980481157815,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/10c61642-da1c-4811-841e-ca5061d93032@kernel.org",
+        "https://lore.kernel.org/r/177686906300.36226.17703920373519139645.b4-ty@b4"
+      ]
+    },
+    {
+      "series_id": 1084508,
+      "series_name": "ASoC: qcom: fixes and improvements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1084508",
+      "series_date": "2026-04-23T04:41:00",
+      "actual_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37603420748151245,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/47f72fe9-886b-4837-9612-2b2d3e5b5da5@oss.qualcomm.com",
+        "https://lore.kernel.org/r/DI0B81W07N33.3HZQ4R8DEJ9EJ@fairphone.com"
+      ]
+    },
+    {
+      "series_id": 1090680,
+      "series_name": "ASoC: qcom: fixes and improvements",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1090680",
+      "series_date": "2026-05-06T20:33:02",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3575664385341601,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/2f516258-d71d-4b52-a310-1b6ea11455ed@oss.qualcomm.com",
+        "https://lore.kernel.org/r/6338e51d-da58-410e-b10a-4a565d467f1f@oss.qualcomm.com",
+        "https://lore.kernel.org/r/af0d5cd5-4d4d-4cf1-a347-4f40c595d07d@oss.qualcomm.com",
+        "https://lore.kernel.org/r/afv17gUZnHdXgyF_@sirena.co.uk",
+        "https://lore.kernel.org/r/afvWsfgIz9Q-_cjH@sirena.co.uk",
+        "https://lore.kernel.org/r/afxMA7CwyvLR8T1O@sirena.co.uk",
+        "https://lore.kernel.org/r/dd0e22ed-e464-4d61-b354-b396f9694976@oss.qualcomm.com",
+        "https://lore.kernel.org/r/f586f504-ab76-4641-a80c-1ba7cc2d58a8@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1091591,
+      "series_name": "ASoC: qcom: lpass: Switch VA/WSA macros to PM clock framework",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1091591",
+      "series_date": "2026-05-08T11:35:00",
+      "actual_reviewers": [
+        "Konrad Dybcio"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "feature_cleanup_mix",
+        "refactor",
+        "runtime_pm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 6,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/096361a6-0a23-49e4-aa01-9ec92d845e54@oss.qualcomm.com",
+        "https://lore.kernel.org/r/66d8dd2e-05f8-4f58-bfb4-fd290dde1ebe@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1094670,
+      "series_name": "ASoC: qcom: q6apm-dai: Allocate an extra page for PCM buffers",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1094670",
+      "series_date": "2026-05-14T09:06:07",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "patch_split",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": true,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/10e69eef-c510-46bf-be0c-ef09caf2556f@oldschoolsolutions.biz",
+        "https://lore.kernel.org/r/177889769874.1174745.11916206017896372567.b4-ty@b4",
+        "https://lore.kernel.org/r/2pe7rk7jhc36osc6i4rxeyw342mvza2m7i4ztsmm6pjgwtlemc@k4gkw5b4jg7g"
+      ]
+    },
+    {
+      "series_id": 1096422,
+      "series_name": "ASoC: qcom: lpass: Switch VA/WSA macros to PM clock framework",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1096422",
+      "series_date": "2026-05-18T08:17:35",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "runtime_pm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 6,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/1b499f23-213b-46d3-b4cc-3b5aae2cad7c@oss.qualcomm.com",
+        "https://lore.kernel.org/r/c2223ce4-0e9e-4fdb-b289-4e98e64f8e95@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1096452,
+      "series_name": "ASoC: qcom: q6asm-dai: fix error handling",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1096452",
+      "series_date": "2026-05-18T09:23:42",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.4186800142077789,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1097375,
+      "series_name": "ASoC: qcom: qdsp6: add push/pull module support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1097375",
+      "series_date": "2026-05-19T13:15:21",
+      "actual_reviewers": [
+        "Alexey Klimov",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dapm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37603420748151245,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/6d5776eb-c181-4ae0-886d-8d8dab7be7e7@sirena.org.uk",
+        "https://lore.kernel.org/r/DINUJUCEDNXP.2BDISX62IPSQ2@linaro.org"
+      ]
+    },
+    {
+      "series_id": 1099373,
+      "series_name": "ASoC: qcom: lpass: Switch VA/WSA macros to PM clock framework",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1099373",
+      "series_date": "2026-05-22T13:04:39",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "runtime_pm"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 6,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0c408230-61cc-4751-938a-06e715744c66@sirena.org.uk",
+        "https://lore.kernel.org/r/3ffcf6a0-e975-4eb4-9a4e-d6afb583e0b3@oss.qualcomm.com",
+        "https://lore.kernel.org/r/9e8c0351-0168-4d94-8610-cf2cc2f030f0@oss.qualcomm.com",
+        "https://lore.kernel.org/r/cd70aa70-1e1e-4440-be2b-414c0d331099@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1101062,
+      "series_name": "ASoC: codecs: lpass-va-macro: Fix LPASS Codec Version for SC7280",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1101062",
+      "series_date": "2026-05-26T15:03:05",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/311ceabf-23ff-471b-9553-797c7d76af74@oss.qualcomm.com",
+        "https://lore.kernel.org/r/52a26036-6ac0-496b-8990-8bef0ea029b3@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1102414,
+      "series_name": "ASoC: qcom: qdsp6: add push/pull module support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1102414",
+      "series_date": "2026-05-28T18:57:59",
+      "actual_reviewers": [
+        "Alexey Klimov"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "accepted",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3575664385341601,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/DIY1CKXWI6ST.2Y3F25YGNFM1X@linaro.org"
+      ]
+    },
+    {
+      "series_id": 1105263,
+      "series_name": "ASoC: qcom: Use guard() for mutex & spin locks",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1105263",
+      "series_date": "2026-06-03T11:49:40",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.38605443178745097,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1105942,
+      "series_name": "ASoC: qcom: lpass: Switch VA/WSA macros to PM clock framework",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1105942",
+      "series_date": "2026-06-04T12:48:20",
+      "actual_reviewers": [],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3570599083052737,
+      "actual_review_rounds": 6,
+      "pred_review_rounds": 3,
+      "lore_links": []
+    },
+    {
+      "series_id": 1106479,
+      "series_name": "ASoC: qcom: Refactor of_xlate_dai_name into common helper",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1106479",
+      "series_date": "2026-06-05T09:28:10",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.42187163855386867,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/1011c7bf-14f7-444f-af7d-3973a2e6bfb5@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1106530,
+      "series_name": "ASoC: qcom: Add QAIF driver for Shikra audio platform",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1106530",
+      "series_date": "2026-06-05T10:37:26",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski",
+        "Rob Herring"
+      ],
+      "pred_reviewers": [
+        "Rob Herring",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "commit_message",
+        "controls",
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3731544569827143,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0b1c870c-b22b-458e-b845-866bc23d0d79@kernel.org",
+        "https://lore.kernel.org/r/0f0fe294-a6c8-4b2d-a038-9f699845ab58@kernel.org",
+        "https://lore.kernel.org/r/178065883033.3171433.8446753794680185025.robh@kernel.org",
+        "https://lore.kernel.org/r/3da8b668-1504-450e-bde2-b383d63090a8@oss.qualcomm.com",
+        "https://lore.kernel.org/r/438f6817-326b-4c70-b3c3-28107ea385db@kernel.org",
+        "https://lore.kernel.org/r/a7852d0b-10ee-42ec-b966-28d3f2066bb1@kernel.org",
+        "https://lore.kernel.org/r/d38d849e-1ecb-4600-814a-23fa8d523dbb@kernel.org",
+        "https://lore.kernel.org/r/d82f95fe-4c74-4488-9b1c-ecf28a59a602@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1107422,
+      "series_name": "ASoC: qcom: qdsp6: Add MI2S clock control",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1107422",
+      "series_date": "2026-06-08T02:30:08",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski",
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3905924697946629,
+      "actual_review_rounds": 2,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260608-energetic-curly-marmoset-ee6fb8@quoll",
+        "https://lore.kernel.org/r/8b2318ff-d07c-4c2d-9c2d-ef7c5c763096@packett.cool",
+        "https://lore.kernel.org/r/b09da7e1-ddc1-452b-9380-964f9ed3b733@sirena.org.uk",
+        "https://lore.kernel.org/r/e6567656-8745-4f07-9636-7779d32ccbcf@sirena.org.uk"
+      ]
+    },
+    {
+      "series_id": 1108033,
+      "series_name": "ASoC: qcom: Add shikra LPASS RX/VA macro support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1108033",
+      "series_date": "2026-06-08T17:20:20",
+      "actual_reviewers": [
+        "Konrad Dybcio",
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dapm",
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.41165898370779236,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0387ad24-4b34-4e1a-b6f9-44158417f308@oss.qualcomm.com",
+        "https://lore.kernel.org/r/20260609-cheerful-translucent-carp-c44aff@quoll",
+        "https://lore.kernel.org/r/20260609-pretty-coral-weasel-e951ef@quoll",
+        "https://lore.kernel.org/r/3a0890b2-f9c3-439b-a392-fd13e3da850d@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1108044,
+      "series_name": "soundwire: qcom: add support for EE-aware register layout",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1108044",
+      "series_date": "2026-06-08T17:53:43",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Pierre-Louis Bossart",
+        "Srinivas Kandagatla",
+        "Vinod Koul"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dapm",
+        "dt_schema",
+        "runtime_pm",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "controls",
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3325659335471413,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/0030e12e-96b7-4a22-a3b4-1b42bd32f39e@kernel.org",
+        "https://lore.kernel.org/r/314beaa0-3dc4-4cba-a37f-c358532e90dd@oss.qualcomm.com",
+        "https://lore.kernel.org/r/66c097e8-8b5f-4b78-910d-799bc0a488b0@kernel.org",
+        "https://lore.kernel.org/r/7bcddc82-f46f-4366-a4cb-453a213f8bd4@oss.qualcomm.com"
+      ]
+    },
+    {
+      "series_id": 1108308,
+      "series_name": "ASoC: qcom: add q6apm VMID support and qdsp6 GPR destination-domain routing",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1108308",
+      "series_date": "2026-06-09T06:40:35",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.3987590089030557,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260610-goat-of-pragmatic-imagination-2ee30f@quoll",
+        "https://lore.kernel.org/r/20260610-silver-pelican-of-agility-86fcbc@quoll"
+      ]
+    },
+    {
+      "series_id": 1109211,
+      "series_name": "ASoC: qcom: x1e80100: Allow userspace WSA RX channel map override",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1109211",
+      "series_date": "2026-06-10T11:16:04",
+      "actual_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dapm",
+        "ownership_boundary",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.45924176703266406,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/5df53143-0465-40c1-bd31-0542124fb974@oss.qualcomm.com",
+        "https://lore.kernel.org/r/94afd853-d203-49e4-8faf-7b47c906d1c5@oss.qualcomm.com",
+        "https://lore.kernel.org/r/aimKEkWqIG5ml1st@sirena.co.uk"
+      ]
+    },
+    {
+      "series_id": 1109408,
+      "series_name": "ASoC: qcom: add AudioReach TDM backend support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1109408",
+      "series_date": "2026-06-10T15:45:13",
+      "actual_reviewers": [
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "dt_schema"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37603420748151245,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/6238983c-6b10-4639-b6ed-d1d25b00e748@kernel.org"
+      ]
+    },
+    {
+      "series_id": 1109977,
+      "series_name": "ASoC: qcom: Shikra machine driver and DT binding support",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1109977",
+      "series_date": "2026-06-11T11:29:44",
+      "actual_reviewers": [
+        "Dmitry Baryshkov",
+        "Krzysztof Kozlowski"
+      ],
+      "pred_reviewers": [
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [
+        "controls",
+        "dapm",
+        "dt_schema",
+        "soundwire"
+      ],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.37325872072912814,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/20260613-lively-shellfish-of-glory-b2c5af@quoll",
+        "https://lore.kernel.org/r/qcvb4wvfsk6twtvkvkechysrihngaugnhe3po6qbqjrfmqcml5@mn453je73fm6"
+      ]
+    },
+    {
+      "series_id": 1111118,
+      "series_name": "[QUESTION] ASoC: qcom: sdm845: use DSP_A format for TDM codec DAIs",
+      "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1111118",
+      "series_date": "2026-06-13T19:55:59",
+      "actual_reviewers": [
+        "Mark Brown"
+      ],
+      "pred_reviewers": [
+        "Mark Brown",
+        "Srinivas Kandagatla"
+      ],
+      "actual_objection_categories": [],
+      "pred_objection_categories": [
+        "patch_split",
+        "soundwire"
+      ],
+      "actual_outcome": "pending",
+      "pred_acceptance_probability": 0.99,
+      "actual_split_request": false,
+      "pred_split_request_probability": 0.5018875737589306,
+      "actual_review_rounds": 1,
+      "pred_review_rounds": 3,
+      "lore_links": [
+        "https://lore.kernel.org/r/ai3tafRfEgN938cu@sirena.co.uk",
+        "https://lore.kernel.org/r/ai6ECJgLG_GGx3tM@sirena.co.uk"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "artifact_name": "PATCH_01_REGISTER_RENAME_VALIDATION",
+  "classification": "PASS_WITH_DEFERRED",
+  "commit_subject": "ASoC: codecs: lpass-va-macro: isolate register-name migration",
+  "deferred_reason": "registers used only inside #ifdef CONFIG_BOLERO_VER_4P0 which is downstream-only; entire code block will be removed in Patch-05/06",
+  "deferred_to_later_patch": [
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "occurrences": 1,
+      "offset": "0x0140",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux0, LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1703
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "occurrences": 1,
+      "offset": "0x0144",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux1, LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1705
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "occurrences": 1,
+      "offset": "0x0148",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux2, LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1707
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "occurrences": 1,
+      "offset": "0x014C",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1709
+        }
+      ]
+    }
+  ],
+  "downstream_register_define_count": 94,
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "governed_deferral_decision": "AURA_KB/drivers/lpass_va_macro/patches/patch_01_deferral_decision.json",
+  "input_downstream_register_header": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-registers.h",
+  "input_downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+  "input_upstream_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+  "logic_change_detected": false,
+  "mapped_definition_count": 75,
+  "mapped_downstream_tokens_remaining_after_transform": {},
+  "mapped_usage_occurrence_count": 51,
+  "mapped_usage_symbol_count": 24,
+  "no_unmapped_symbols_remain_in_patch_01_scope": true,
+  "non_gated_register_usages_mapped": true,
+  "offset_mismatch_count": 0,
+  "patch_application_order": "apply_patch_01_before_patch_05_or_06_downstream_only_block_removal",
+  "patch_applies_to_original_downstream_source": true,
+  "patch_contains_deferred_registers": [],
+  "patch_line_count": 394,
+  "patch_path": "AURA_KB/drivers/lpass_va_macro/patches/0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+  "patch_scope_excludes_deferred_registers": true,
+  "post_ifdef_removal_apply_check": {
+    "applicable": false,
+    "reason": "Patch-01 is ordered before Patch-05/06; applying it after pre-removing CONFIG_BOLERO_VER_4P0 changes later hunk context and is not the intended application order."
+  },
+  "purely_mechanical_transform": true,
+  "register_rename_map_path": "AURA_KB/drivers/lpass_va_macro/patches/register_rename_map.json",
+  "removed_include_count": 1,
+  "scope_note": "Patch-01 covers only register usages reachable without downstream-only Kconfig gates",
+  "target_upstream_path": "sound/soc/codecs/lpass-va-macro.c",
+  "unmapped_definition_count": 19,
+  "unmapped_downstream_tokens_remaining_after_transform": {},
+  "unmapped_downstream_tokens_remaining_after_transform_before_deferral": {
+    "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2": 1,
+    "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2": 1,
+    "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2": 1,
+    "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2": 1
+  },
+  "unmapped_usage_occurrence_count": 0,
+  "unmapped_usage_occurrence_count_before_deferral": 4,
+  "unmapped_usage_symbol_count": 0,
+  "unmapped_usage_symbol_count_before_deferral": 4,
+  "upstream_register_define_count": 83
+}

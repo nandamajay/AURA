@@ -1,0 +1,955 @@
+{
+  "artifact_name": "REGISTER_RENAME_MAP",
+  "classification": "PASS_WITH_DEFERRED",
+  "deferred_reason": "registers used only inside #ifdef CONFIG_BOLERO_VER_4P0 which is downstream-only; entire code block will be removed in Patch-05/06",
+  "deferred_registers": [
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "offset": "0x0140",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux0, LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1703
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "offset": "0x0144",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux1, LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1705
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "offset": "0x0148",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux2, LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1707
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "feature": "va_psel_mux port-select DAPM widgets",
+      "gate": "CONFIG_BOLERO_VER_4P0",
+      "offset": "0x014C",
+      "reason": "downstream_only_kconfig_gate",
+      "target_patch": "patch_05_or_06_removal",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2,",
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1709
+        }
+      ]
+    }
+  ],
+  "downstream_register_header": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-registers.h",
+  "downstream_start_offset": "0x3000",
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "mapped_definition_count": 75,
+  "mapped_usage_symbol_count": 24,
+  "mapping_rule": "LPASS_CDC_VA_* -> CDC_VA_* by suffix with exact offset equality",
+  "mappings": [
+    {
+      "downstream_line": 1098,
+      "downstream_name": "LPASS_CDC_VA_CLK_RST_CTRL_MCLK_CONTROL",
+      "downstream_offset": "0x0000",
+      "status": "MAPPED",
+      "upstream_line": 23,
+      "upstream_name": "CDC_VA_CLK_RST_CTRL_MCLK_CONTROL",
+      "upstream_offset": "0x0000"
+    },
+    {
+      "downstream_line": 1099,
+      "downstream_name": "LPASS_CDC_VA_CLK_RST_CTRL_FS_CNT_CONTROL",
+      "downstream_offset": "0x0004",
+      "status": "MAPPED",
+      "upstream_line": 25,
+      "upstream_name": "CDC_VA_CLK_RST_CTRL_FS_CNT_CONTROL",
+      "upstream_offset": "0x0004"
+    },
+    {
+      "downstream_line": 1101,
+      "downstream_name": "LPASS_CDC_VA_CLK_RST_CTRL_SWR_CONTROL",
+      "downstream_offset": "0x0008",
+      "status": "MAPPED",
+      "upstream_line": 28,
+      "upstream_name": "CDC_VA_CLK_RST_CTRL_SWR_CONTROL",
+      "upstream_offset": "0x0008"
+    },
+    {
+      "downstream_line": 1102,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_TOP_CFG0",
+      "downstream_offset": "0x0080",
+      "status": "MAPPED",
+      "upstream_line": 33,
+      "upstream_name": "CDC_VA_TOP_CSR_TOP_CFG0",
+      "upstream_offset": "0x0080"
+    },
+    {
+      "downstream_line": 1103,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DMIC0_CTL",
+      "downstream_offset": "0x0084",
+      "status": "MAPPED",
+      "upstream_line": 35,
+      "upstream_name": "CDC_VA_TOP_CSR_DMIC0_CTL",
+      "upstream_offset": "0x0084"
+    },
+    {
+      "downstream_line": 1104,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DMIC1_CTL",
+      "downstream_offset": "0x0088",
+      "status": "MAPPED",
+      "upstream_line": 36,
+      "upstream_name": "CDC_VA_TOP_CSR_DMIC1_CTL",
+      "upstream_offset": "0x0088"
+    },
+    {
+      "downstream_line": 1105,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DMIC2_CTL",
+      "downstream_offset": "0x008C",
+      "status": "MAPPED",
+      "upstream_line": 37,
+      "upstream_name": "CDC_VA_TOP_CSR_DMIC2_CTL",
+      "upstream_offset": "0x008C"
+    },
+    {
+      "downstream_line": 1106,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DMIC3_CTL",
+      "downstream_offset": "0x0090",
+      "status": "MAPPED",
+      "upstream_line": 38,
+      "upstream_name": "CDC_VA_TOP_CSR_DMIC3_CTL",
+      "upstream_offset": "0x0090"
+    },
+    {
+      "downstream_line": 1107,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DMIC_CFG",
+      "downstream_offset": "0x0094",
+      "status": "MAPPED",
+      "upstream_line": 49,
+      "upstream_name": "CDC_VA_TOP_CSR_DMIC_CFG",
+      "upstream_offset": "0x0094"
+    },
+    {
+      "downstream_line": 1109,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DEBUG_BUS",
+      "downstream_offset": "0x009C",
+      "status": "MAPPED",
+      "upstream_line": 62,
+      "upstream_name": "CDC_VA_TOP_CSR_DEBUG_BUS",
+      "upstream_offset": "0x009C"
+    },
+    {
+      "downstream_line": 1110,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DEBUG_EN",
+      "downstream_offset": "0x00A0",
+      "status": "MAPPED",
+      "upstream_line": 63,
+      "upstream_name": "CDC_VA_TOP_CSR_DEBUG_EN",
+      "upstream_offset": "0x00A0"
+    },
+    {
+      "downstream_line": 1111,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_TX_I2S_CTL",
+      "downstream_offset": "0x00A4",
+      "status": "MAPPED",
+      "upstream_line": 64,
+      "upstream_name": "CDC_VA_TOP_CSR_TX_I2S_CTL",
+      "upstream_offset": "0x00A4"
+    },
+    {
+      "downstream_line": 1112,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_I2S_CLK",
+      "downstream_offset": "0x00A8",
+      "status": "MAPPED",
+      "upstream_line": 65,
+      "upstream_name": "CDC_VA_TOP_CSR_I2S_CLK",
+      "upstream_offset": "0x00A8"
+    },
+    {
+      "downstream_line": 1113,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_I2S_RESET",
+      "downstream_offset": "0x00AC",
+      "status": "MAPPED",
+      "upstream_line": 66,
+      "upstream_name": "CDC_VA_TOP_CSR_I2S_RESET",
+      "upstream_offset": "0x00AC"
+    },
+    {
+      "downstream_line": 1115,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_CORE_ID_0",
+      "downstream_offset": "0x00C0",
+      "status": "MAPPED",
+      "upstream_line": 67,
+      "upstream_name": "CDC_VA_TOP_CSR_CORE_ID_0",
+      "upstream_offset": "0x00C0"
+    },
+    {
+      "downstream_line": 1116,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_CORE_ID_1",
+      "downstream_offset": "0x00C4",
+      "status": "MAPPED",
+      "upstream_line": 69,
+      "upstream_name": "CDC_VA_TOP_CSR_CORE_ID_1",
+      "upstream_offset": "0x00C4"
+    },
+    {
+      "downstream_line": 1117,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_CORE_ID_2",
+      "downstream_offset": "0x00C8",
+      "status": "MAPPED",
+      "upstream_line": 74,
+      "upstream_name": "CDC_VA_TOP_CSR_CORE_ID_2",
+      "upstream_offset": "0x00C8"
+    },
+    {
+      "downstream_line": 1118,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_CORE_ID_3",
+      "downstream_offset": "0x00CC",
+      "status": "MAPPED",
+      "upstream_line": 77,
+      "upstream_name": "CDC_VA_TOP_CSR_CORE_ID_3",
+      "upstream_offset": "0x00CC"
+    },
+    {
+      "downstream_line": 1119,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL0",
+      "downstream_offset": "0x00D0",
+      "status": "MAPPED",
+      "upstream_line": 78,
+      "upstream_name": "CDC_VA_TOP_CSR_SWR_MIC_CTL0",
+      "upstream_offset": "0x00D0"
+    },
+    {
+      "downstream_line": 1120,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL1",
+      "downstream_offset": "0x00D4",
+      "status": "MAPPED",
+      "upstream_line": 79,
+      "upstream_name": "CDC_VA_TOP_CSR_SWR_MIC_CTL1",
+      "upstream_offset": "0x00D4"
+    },
+    {
+      "downstream_line": 1121,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL2",
+      "downstream_offset": "0x00D8",
+      "status": "MAPPED",
+      "upstream_line": 80,
+      "upstream_name": "CDC_VA_TOP_CSR_SWR_MIC_CTL2",
+      "upstream_offset": "0x00D8"
+    },
+    {
+      "downstream_line": 1122,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_SWR_CTRL",
+      "downstream_offset": "0x00DC",
+      "status": "MAPPED",
+      "upstream_line": 83,
+      "upstream_name": "CDC_VA_TOP_CSR_SWR_CTRL",
+      "upstream_offset": "0x00DC"
+    },
+    {
+      "downstream_line": 1124,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG0",
+      "downstream_offset": "0x0100",
+      "status": "MAPPED",
+      "upstream_line": 84,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX0_CFG0",
+      "upstream_offset": "0x0100"
+    },
+    {
+      "downstream_line": 1125,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1",
+      "downstream_offset": "0x0104",
+      "status": "MAPPED",
+      "upstream_line": 85,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX0_CFG1",
+      "upstream_offset": "0x0104"
+    },
+    {
+      "downstream_line": 1126,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG0",
+      "downstream_offset": "0x0108",
+      "status": "MAPPED",
+      "upstream_line": 86,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX1_CFG0",
+      "upstream_offset": "0x0108"
+    },
+    {
+      "downstream_line": 1127,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG1",
+      "downstream_offset": "0x010C",
+      "status": "MAPPED",
+      "upstream_line": 87,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX1_CFG1",
+      "upstream_offset": "0x010C"
+    },
+    {
+      "downstream_line": 1128,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG0",
+      "downstream_offset": "0x0110",
+      "status": "MAPPED",
+      "upstream_line": 88,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX2_CFG0",
+      "upstream_offset": "0x0110"
+    },
+    {
+      "downstream_line": 1129,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG1",
+      "downstream_offset": "0x0114",
+      "status": "MAPPED",
+      "upstream_line": 89,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX2_CFG1",
+      "upstream_offset": "0x0114"
+    },
+    {
+      "downstream_line": 1130,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG0",
+      "downstream_offset": "0x0118",
+      "status": "MAPPED",
+      "upstream_line": 90,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX3_CFG0",
+      "upstream_offset": "0x0118"
+    },
+    {
+      "downstream_line": 1131,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG1",
+      "downstream_offset": "0x011C",
+      "status": "MAPPED",
+      "upstream_line": 91,
+      "upstream_name": "CDC_VA_INP_MUX_ADC_MUX3_CFG1",
+      "upstream_offset": "0x011C"
+    },
+    {
+      "downstream_line": 1150,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_CTL",
+      "downstream_offset": "0x0400",
+      "status": "MAPPED",
+      "upstream_line": 92,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_CTL",
+      "upstream_offset": "0x0400"
+    },
+    {
+      "downstream_line": 1151,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_CFG0",
+      "downstream_offset": "0x0404",
+      "status": "MAPPED",
+      "upstream_line": 99,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_CFG0",
+      "upstream_offset": "0x0404"
+    },
+    {
+      "downstream_line": 1152,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_CFG1",
+      "downstream_offset": "0x0408",
+      "status": "MAPPED",
+      "upstream_line": 106,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_CFG1",
+      "upstream_offset": "0x0408"
+    },
+    {
+      "downstream_line": 1153,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_VOL_CTL",
+      "downstream_offset": "0x040C",
+      "status": "MAPPED",
+      "upstream_line": 107,
+      "upstream_name": "CDC_VA_TX0_TX_VOL_CTL",
+      "upstream_offset": "0x040C"
+    },
+    {
+      "downstream_line": 1154,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC0",
+      "downstream_offset": "0x0410",
+      "status": "MAPPED",
+      "upstream_line": 108,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC0",
+      "upstream_offset": "0x0410"
+    },
+    {
+      "downstream_line": 1155,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC1",
+      "downstream_offset": "0x0414",
+      "status": "MAPPED",
+      "upstream_line": 109,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC1",
+      "upstream_offset": "0x0414"
+    },
+    {
+      "downstream_line": 1156,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC2",
+      "downstream_offset": "0x0418",
+      "status": "MAPPED",
+      "upstream_line": 110,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC2",
+      "upstream_offset": "0x0418"
+    },
+    {
+      "downstream_line": 1157,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC3",
+      "downstream_offset": "0x041C",
+      "status": "MAPPED",
+      "upstream_line": 116,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC3",
+      "upstream_offset": "0x041C"
+    },
+    {
+      "downstream_line": 1158,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC4",
+      "downstream_offset": "0x0420",
+      "status": "MAPPED",
+      "upstream_line": 117,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC4",
+      "upstream_offset": "0x0420"
+    },
+    {
+      "downstream_line": 1159,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC5",
+      "downstream_offset": "0x0424",
+      "status": "MAPPED",
+      "upstream_line": 118,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC5",
+      "upstream_offset": "0x0424"
+    },
+    {
+      "downstream_line": 1160,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC6",
+      "downstream_offset": "0x0428",
+      "status": "MAPPED",
+      "upstream_line": 119,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC6",
+      "upstream_offset": "0x0428"
+    },
+    {
+      "downstream_line": 1161,
+      "downstream_name": "LPASS_CDC_VA_TX0_TX_PATH_SEC7",
+      "downstream_offset": "0x042C",
+      "status": "MAPPED",
+      "upstream_line": 120,
+      "upstream_name": "CDC_VA_TX0_TX_PATH_SEC7",
+      "upstream_offset": "0x042C"
+    },
+    {
+      "downstream_line": 1162,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_CTL",
+      "downstream_offset": "0x0480",
+      "status": "MAPPED",
+      "upstream_line": 121,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_CTL",
+      "upstream_offset": "0x0480"
+    },
+    {
+      "downstream_line": 1163,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_CFG0",
+      "downstream_offset": "0x0484",
+      "status": "MAPPED",
+      "upstream_line": 122,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_CFG0",
+      "upstream_offset": "0x0484"
+    },
+    {
+      "downstream_line": 1164,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_CFG1",
+      "downstream_offset": "0x0488",
+      "status": "MAPPED",
+      "upstream_line": 123,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_CFG1",
+      "upstream_offset": "0x0488"
+    },
+    {
+      "downstream_line": 1165,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_VOL_CTL",
+      "downstream_offset": "0x048C",
+      "status": "MAPPED",
+      "upstream_line": 124,
+      "upstream_name": "CDC_VA_TX1_TX_VOL_CTL",
+      "upstream_offset": "0x048C"
+    },
+    {
+      "downstream_line": 1166,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC0",
+      "downstream_offset": "0x0490",
+      "status": "MAPPED",
+      "upstream_line": 125,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC0",
+      "upstream_offset": "0x0490"
+    },
+    {
+      "downstream_line": 1167,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC1",
+      "downstream_offset": "0x0494",
+      "status": "MAPPED",
+      "upstream_line": 126,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC1",
+      "upstream_offset": "0x0494"
+    },
+    {
+      "downstream_line": 1168,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC2",
+      "downstream_offset": "0x0498",
+      "status": "MAPPED",
+      "upstream_line": 127,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC2",
+      "upstream_offset": "0x0498"
+    },
+    {
+      "downstream_line": 1169,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC3",
+      "downstream_offset": "0x049C",
+      "status": "MAPPED",
+      "upstream_line": 128,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC3",
+      "upstream_offset": "0x049C"
+    },
+    {
+      "downstream_line": 1170,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC4",
+      "downstream_offset": "0x04A0",
+      "status": "MAPPED",
+      "upstream_line": 129,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC4",
+      "upstream_offset": "0x04A0"
+    },
+    {
+      "downstream_line": 1171,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC5",
+      "downstream_offset": "0x04A4",
+      "status": "MAPPED",
+      "upstream_line": 130,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC5",
+      "upstream_offset": "0x04A4"
+    },
+    {
+      "downstream_line": 1172,
+      "downstream_name": "LPASS_CDC_VA_TX1_TX_PATH_SEC6",
+      "downstream_offset": "0x04A8",
+      "status": "MAPPED",
+      "upstream_line": 131,
+      "upstream_name": "CDC_VA_TX1_TX_PATH_SEC6",
+      "upstream_offset": "0x04A8"
+    },
+    {
+      "downstream_line": 1173,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_CTL",
+      "downstream_offset": "0x0500",
+      "status": "MAPPED",
+      "upstream_line": 132,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_CTL",
+      "upstream_offset": "0x0500"
+    },
+    {
+      "downstream_line": 1174,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_CFG0",
+      "downstream_offset": "0x0504",
+      "status": "MAPPED",
+      "upstream_line": 133,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_CFG0",
+      "upstream_offset": "0x0504"
+    },
+    {
+      "downstream_line": 1175,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_CFG1",
+      "downstream_offset": "0x0508",
+      "status": "MAPPED",
+      "upstream_line": 134,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_CFG1",
+      "upstream_offset": "0x0508"
+    },
+    {
+      "downstream_line": 1176,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_VOL_CTL",
+      "downstream_offset": "0x050C",
+      "status": "MAPPED",
+      "upstream_line": 135,
+      "upstream_name": "CDC_VA_TX2_TX_VOL_CTL",
+      "upstream_offset": "0x050C"
+    },
+    {
+      "downstream_line": 1177,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC0",
+      "downstream_offset": "0x0510",
+      "status": "MAPPED",
+      "upstream_line": 136,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC0",
+      "upstream_offset": "0x0510"
+    },
+    {
+      "downstream_line": 1178,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC1",
+      "downstream_offset": "0x0514",
+      "status": "MAPPED",
+      "upstream_line": 137,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC1",
+      "upstream_offset": "0x0514"
+    },
+    {
+      "downstream_line": 1179,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC2",
+      "downstream_offset": "0x0518",
+      "status": "MAPPED",
+      "upstream_line": 138,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC2",
+      "upstream_offset": "0x0518"
+    },
+    {
+      "downstream_line": 1180,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC3",
+      "downstream_offset": "0x051C",
+      "status": "MAPPED",
+      "upstream_line": 139,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC3",
+      "upstream_offset": "0x051C"
+    },
+    {
+      "downstream_line": 1181,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC4",
+      "downstream_offset": "0x0520",
+      "status": "MAPPED",
+      "upstream_line": 140,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC4",
+      "upstream_offset": "0x0520"
+    },
+    {
+      "downstream_line": 1182,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC5",
+      "downstream_offset": "0x0524",
+      "status": "MAPPED",
+      "upstream_line": 141,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC5",
+      "upstream_offset": "0x0524"
+    },
+    {
+      "downstream_line": 1183,
+      "downstream_name": "LPASS_CDC_VA_TX2_TX_PATH_SEC6",
+      "downstream_offset": "0x0528",
+      "status": "MAPPED",
+      "upstream_line": 142,
+      "upstream_name": "CDC_VA_TX2_TX_PATH_SEC6",
+      "upstream_offset": "0x0528"
+    },
+    {
+      "downstream_line": 1184,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_CTL",
+      "downstream_offset": "0x0580",
+      "status": "MAPPED",
+      "upstream_line": 143,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_CTL",
+      "upstream_offset": "0x0580"
+    },
+    {
+      "downstream_line": 1185,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_CFG0",
+      "downstream_offset": "0x0584",
+      "status": "MAPPED",
+      "upstream_line": 144,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_CFG0",
+      "upstream_offset": "0x0584"
+    },
+    {
+      "downstream_line": 1186,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_CFG1",
+      "downstream_offset": "0x0588",
+      "status": "MAPPED",
+      "upstream_line": 148,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_CFG1",
+      "upstream_offset": "0x0588"
+    },
+    {
+      "downstream_line": 1187,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_VOL_CTL",
+      "downstream_offset": "0x058C",
+      "status": "MAPPED",
+      "upstream_line": 149,
+      "upstream_name": "CDC_VA_TX3_TX_VOL_CTL",
+      "upstream_offset": "0x058C"
+    },
+    {
+      "downstream_line": 1188,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC0",
+      "downstream_offset": "0x0590",
+      "status": "MAPPED",
+      "upstream_line": 150,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC0",
+      "upstream_offset": "0x0590"
+    },
+    {
+      "downstream_line": 1189,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC1",
+      "downstream_offset": "0x0594",
+      "status": "MAPPED",
+      "upstream_line": 151,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC1",
+      "upstream_offset": "0x0594"
+    },
+    {
+      "downstream_line": 1190,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC2",
+      "downstream_offset": "0x0598",
+      "status": "MAPPED",
+      "upstream_line": 152,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC2",
+      "upstream_offset": "0x0598"
+    },
+    {
+      "downstream_line": 1191,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC3",
+      "downstream_offset": "0x059C",
+      "status": "MAPPED",
+      "upstream_line": 153,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC3",
+      "upstream_offset": "0x059C"
+    },
+    {
+      "downstream_line": 1192,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC4",
+      "downstream_offset": "0x05A0",
+      "status": "MAPPED",
+      "upstream_line": 154,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC4",
+      "upstream_offset": "0x05A0"
+    },
+    {
+      "downstream_line": 1193,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC5",
+      "downstream_offset": "0x05A4",
+      "status": "MAPPED",
+      "upstream_line": 155,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC5",
+      "upstream_offset": "0x05A4"
+    },
+    {
+      "downstream_line": 1194,
+      "downstream_name": "LPASS_CDC_VA_TX3_TX_PATH_SEC6",
+      "downstream_offset": "0x05A8",
+      "status": "MAPPED",
+      "upstream_line": 156,
+      "upstream_name": "CDC_VA_TX3_TX_PATH_SEC6",
+      "upstream_offset": "0x05A8"
+    }
+  ],
+  "offset_mismatch_count": 0,
+  "offset_mismatches": [],
+  "patch_application_order": "apply_patch_01_before_patch_05_or_06_downstream_only_block_removal",
+  "patch_contains_deferred_registers": [],
+  "patch_scope_excludes_deferred_registers": true,
+  "scope_note": "Patch-01 covers only register usages reachable without downstream-only Kconfig gates",
+  "unmapped_definition_count": 19,
+  "unmapped_definitions": [
+    {
+      "downstream_line": 1108,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_VAD_MUX",
+      "downstream_offset": "0x0098",
+      "expected_upstream_name": "CDC_VA_TOP_CSR_VAD_MUX",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1114,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_DEBUG_CLK",
+      "downstream_offset": "0x00B0",
+      "expected_upstream_name": "CDC_VA_TOP_CSR_DEBUG_CLK",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1123,
+      "downstream_name": "LPASS_CDC_VA_TOP_CSR_SEQ_CTL0",
+      "downstream_offset": "0x00E0",
+      "expected_upstream_name": "CDC_VA_TOP_CSR_SEQ_CTL0",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1133,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX4_CFG0",
+      "downstream_offset": "0x0120",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX4_CFG0",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1134,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX4_CFG1",
+      "downstream_offset": "0x0124",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX4_CFG1",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1135,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX5_CFG0",
+      "downstream_offset": "0x0128",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX5_CFG0",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1136,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX5_CFG1",
+      "downstream_offset": "0x012C",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX5_CFG1",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1137,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX6_CFG0",
+      "downstream_offset": "0x0130",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX6_CFG0",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1138,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX6_CFG1",
+      "downstream_offset": "0x0134",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX6_CFG1",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1139,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX7_CFG0",
+      "downstream_offset": "0x0138",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX7_CFG0",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1140,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX7_CFG1",
+      "downstream_offset": "0x013C",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX7_CFG1",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1141,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "downstream_offset": "0x0140",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1142,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "downstream_offset": "0x0144",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1143,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "downstream_offset": "0x0148",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1144,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "downstream_offset": "0x014C",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1145,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX4_CFG2",
+      "downstream_offset": "0x0150",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX4_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1146,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX5_CFG2",
+      "downstream_offset": "0x0154",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX5_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1147,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX6_CFG2",
+      "downstream_offset": "0x0158",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX6_CFG2",
+      "reason": "upstream_define_missing"
+    },
+    {
+      "downstream_line": 1148,
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX7_CFG2",
+      "downstream_offset": "0x015C",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX7_CFG2",
+      "reason": "upstream_define_missing"
+    }
+  ],
+  "unmapped_usage_symbol_count": 0,
+  "unmapped_usage_symbol_count_before_deferral": 4,
+  "unmapped_usage_symbols": [],
+  "unmapped_usage_symbols_before_deferral": [
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "downstream_offset": "0x0140",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX0_CFG2",
+      "occurrences": 1,
+      "reason": "upstream_define_missing_or_offset_mismatch",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux0, LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG2,",
+          "line": 1703
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "downstream_offset": "0x0144",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX1_CFG2",
+      "occurrences": 1,
+      "reason": "upstream_define_missing_or_offset_mismatch",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux1, LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG2,",
+          "line": 1705
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "downstream_offset": "0x0148",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX2_CFG2",
+      "occurrences": 1,
+      "reason": "upstream_define_missing_or_offset_mismatch",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux2, LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG2,",
+          "line": 1707
+        }
+      ]
+    },
+    {
+      "downstream_name": "LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "downstream_offset": "0x014C",
+      "expected_upstream_name": "CDC_VA_INP_MUX_ADC_MUX3_CFG2",
+      "occurrences": 1,
+      "reason": "upstream_define_missing_or_offset_mismatch",
+      "usage_evidence": [
+        {
+          "context": "LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2,",
+          "line": 1709
+        }
+      ]
+    }
+  ],
+  "upstream_register_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c"
+}

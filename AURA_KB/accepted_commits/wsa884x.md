@@ -1,0 +1,7 @@
+# wsa884x accepted commits (Patchwork commit_ref evidence)
+
+- `13282700` -> `fd012bc60dc63d239f8d27e230f6768e74613f5e`
+- `13282701` -> `aa21a7d4f68a0a5067578cbb93c136ab5ac09cfa`
+- `13487056` -> `6fd566129ceef1852ec8f999ec9de6f3187f32ff`
+- `13565442` -> `8f7ce92abf1300f671ca37f0f7c4f1f4d95a31d4`
+- `13714486` -> `e96f7f3f6770748f1fd65ebec82c3534d2ac66f7`

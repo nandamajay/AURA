@@ -1,0 +1,634 @@
+{
+  "artifact_name": "DEPENDENCY_RESOLUTION_MAP",
+  "classification": "PASS",
+  "driver": "lpass_va_macro",
+  "source_basis": {
+    "downstream_driver": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+    "upstream_driver": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "analysis_type": "engineering_analysis_only",
+    "source_files_modified": false
+  },
+  "dependencies": [
+    {
+      "downstream_header": "asoc/msm-cdc-pinctrl.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/include/asoc/msm-cdc-pinctrl.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "msm_cdc_pinctrl_select_active_state",
+        "msm_cdc_pinctrl_select_sleep_state",
+        "msm_cdc_pinctrl_set_wakeup_capable",
+        "msm_cdc_pinctrl_get_state"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 489,
+          "context": "msm_cdc_pinctrl_select_active_state(va_priv->va_swr_gpio_p)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 491,
+          "context": "msm_cdc_pinctrl_set_wakeup_capable(va_priv->va_swr_gpio_p, false)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 501,
+          "context": "msm_cdc_pinctrl_select_sleep_state(va_priv->va_swr_gpio_p)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 553,
+          "context": "msm_cdc_pinctrl_select_sleep_state(va_priv->va_swr_gpio_p)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 555,
+          "context": "msm_cdc_pinctrl_set_wakeup_capable(va_priv->va_swr_gpio_p, true)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2576,
+          "context": "msm_cdc_pinctrl_get_state(va_priv->va_swr_gpio_p)"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "query": "msm_cdc_pinctrl_*",
+          "result": "No matching symbols found in track_b_corpora/linux-next"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1529,
+          "context": "upstream va_macro_probe has no msm-cdc pinctrl path"
+        }
+      ],
+      "resolution_type": "REMOVAL_REQUIRED",
+      "upstream_equivalent": null,
+      "conversion_strategy": "Remove the vendor VA SWR GPIO pinctrl path and do not introduce msm-cdc pinctrl helpers upstream; rely on upstream VA macro/SoundWire/DT architecture instead.",
+      "complexity": "moderate",
+      "evidence_confidence": 0.95
+    },
+    {
+      "downstream_header": "dsp/digital-cdc-rsc-mgr.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/include/dsp/digital-cdc-rsc-mgr.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 20,
+          "context": "#include <dsp/digital-cdc-rsc-mgr.h>"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/include/dsp/digital-cdc-rsc-mgr.h",
+          "line": 14,
+          "context": "digital_cdc_rsc_mgr_hw_vote_enable declared in header, but not called by VA macro"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "query": "digital_cdc_rsc_mgr_*",
+          "result": "No matching symbols found in track_b_corpora/linux-next"
+        }
+      ],
+      "resolution_type": "UNUSED_IN_UPSTREAM_PATH",
+      "upstream_equivalent": null,
+      "conversion_strategy": "Drop the include; the VA macro source does not directly consume digital-cdc-rsc-mgr symbols.",
+      "complexity": "trivial",
+      "evidence_confidence": 0.98
+    },
+    {
+      "downstream_header": "lpass-cdc.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "lpass_cdc_register_macro",
+        "lpass_cdc_unregister_macro",
+        "lpass_cdc_runtime_suspend",
+        "lpass_cdc_runtime_resume",
+        "lpass_cdc_get_version",
+        "lpass_cdc_get_device_ptr",
+        "lpass_cdc_dmic_clk_enable",
+        "lpass_cdc_tx_mclk_enable",
+        "LPASS_CDC_MACRO_EVT_*",
+        "VA_MACRO",
+        "DMIC_VA",
+        "MIC_PAIR_MAX"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 220,
+          "context": "lpass_cdc_get_device_ptr(component->dev, VA_MACRO)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 338,
+          "context": "case LPASS_CDC_MACRO_EVT_WAIT_VA_CLK_RESET"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 403,
+          "context": "lpass_cdc_runtime_suspend(va_dev)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 446,
+          "context": "lpass_cdc_tx_mclk_enable(component, 1)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1035,
+          "context": "lpass_cdc_dmic_clk_enable(component, dmic, DMIC_VA, true)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2217,
+          "context": "lpass_cdc_get_device_ptr(component->dev, VA_MACRO)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2234,
+          "context": "lpass_cdc_get_version(va_dev)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2683,
+          "context": "lpass_cdc_register_macro(&pdev->dev, VA_MACRO, &ops)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2733,
+          "context": "lpass_cdc_unregister_macro(&pdev->dev, VA_MACRO)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2758,
+          "context": "SET_RUNTIME_PM_OPS(lpass_cdc_runtime_suspend, lpass_cdc_runtime_resume, NULL)"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "query": "lpass_cdc_register_macro / lpass_cdc_unregister_macro / lpass_cdc_runtime_suspend / lpass_cdc_get_device_ptr",
+          "result": "No matching symbols found in track_b_corpora/linux-next"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1329,
+          "context": "snd_soc_component_init_regmap(component, va->regmap)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1556,
+          "context": "va->pds = lpass_macro_pds_init(dev)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1658,
+          "context": "devm_snd_soc_register_component(dev, &va_macro_component_drv, va_macro_dais, ARRAY_SIZE(va_macro_dais))"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1711,
+          "context": "static int va_macro_runtime_suspend(struct device *dev)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1726,
+          "context": "static int va_macro_runtime_resume(struct device *dev)"
+        }
+      ],
+      "resolution_type": "UPSTREAM_REPLACEMENT_EXISTS",
+      "upstream_equivalent": "ASoC component/platform-driver registration, direct drvdata, runtime PM callbacks, and lpass-macro-common power-domain helpers",
+      "conversion_strategy": "Replace the downstream macro registry/event framework with upstream direct platform probe, component probe, runtime PM, and lpass-macro-common integration.",
+      "complexity": "significant",
+      "evidence_confidence": 0.92
+    },
+    {
+      "downstream_header": "lpass-cdc-registers.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-registers.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "LPASS_CDC_VA_CLK_RST_CTRL_SWR_CONTROL",
+        "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL0",
+        "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL1",
+        "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL2",
+        "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG0",
+        "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1",
+        "LPASS_CDC_VA_TX0_TX_PATH_CTL",
+        "LPASS_CDC_VA_TX0_TX_VOL_CTL"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 648,
+          "context": "LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 776,
+          "context": "LPASS_CDC_VA_TX0_TX_PATH_CTL"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1080,
+          "context": "LPASS_CDC_VA_TX0_TX_VOL_CTL"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2299,
+          "context": "LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL0"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 28,
+          "context": "#define CDC_VA_CLK_RST_CTRL_SWR_CONTROL (0x0008)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 78,
+          "context": "#define CDC_VA_TOP_CSR_SWR_MIC_CTL0 (0x00D0)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 84,
+          "context": "#define CDC_VA_INP_MUX_ADC_MUX0_CFG0 (0x0100)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 92,
+          "context": "#define CDC_VA_TX0_TX_PATH_CTL (0x0400)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 107,
+          "context": "#define CDC_VA_TX0_TX_VOL_CTL (0x040C)"
+        }
+      ],
+      "resolution_type": "UPSTREAM_REPLACEMENT_EXISTS",
+      "upstream_equivalent": "local CDC_VA_* register definitions in upstream lpass-va-macro.c",
+      "conversion_strategy": "Convert LPASS_CDC_VA_* register names to upstream CDC_VA_* local register definitions and avoid importing the vendor aggregate register header.",
+      "complexity": "moderate",
+      "evidence_confidence": 0.97
+    },
+    {
+      "downstream_header": "lpass-cdc-clk-rsc.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-clk-rsc.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "lpass_cdc_clk_rsc_request_clock",
+        "lpass_cdc_clk_rsc_fs_gen_request",
+        "lpass_cdc_rsc_clk_reset"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 277,
+          "context": "lpass_cdc_clk_rsc_request_clock(va_priv->dev, va_priv->default_clk_id, va_priv->clk_id, true)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 288,
+          "context": "lpass_cdc_clk_rsc_fs_gen_request(va_priv->dev, true)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 305,
+          "context": "lpass_cdc_clk_rsc_fs_gen_request(va_priv->dev, false)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 391,
+          "context": "lpass_cdc_rsc_clk_reset(va_dev, VA_CORE_CLK)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 494,
+          "context": "lpass_cdc_clk_rsc_request_clock(va_priv->dev, TX_CORE_CLK, TX_CORE_CLK, true)"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "query": "lpass_cdc_clk_rsc_request_clock / lpass_cdc_clk_rsc_fs_gen_request / lpass_cdc_rsc_clk_reset",
+          "result": "No matching symbols found in track_b_corpora/linux-next"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 460,
+          "context": "static int va_clk_rsc_fs_gen_request(struct va_macro *va, bool enable)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 493,
+          "context": "static int va_macro_mclk_enable(struct va_macro *va, bool mclk_enable)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 516,
+          "context": "clk_prepare_enable(va->fsgen)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 518,
+          "context": "clk_disable_unprepare(va->fsgen)"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": 1556,
+          "context": "lpass_macro_pds_init(dev)"
+        }
+      ],
+      "resolution_type": "UPSTREAM_REPLACEMENT_EXISTS",
+      "upstream_equivalent": "upstream clock framework usage, local VA fsgen/mclk helpers, runtime PM, and lpass-macro-common power-domain helpers",
+      "conversion_strategy": "Replace vendor clock-resource voting calls with upstream clk_prepare_enable/clk_disable_unprepare, local VA clock helpers, runtime PM sequencing, and lpass-macro-common where applicable.",
+      "complexity": "significant",
+      "evidence_confidence": 0.9
+    },
+    {
+      "downstream_header": "lpass-cdc-va-macro.h",
+      "actual_header_path": null,
+      "included_by_downstream": false,
+      "included_by_upstream": false,
+      "symbols_used": [],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": null,
+          "context": "No #include \"lpass-cdc-va-macro.h\" found in the actual downstream VA macro source; no file named lpass-cdc-va-macro.h found in audio-kernel-ar corpus."
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": null,
+          "context": "Upstream VA macro does not include a VA-specific private header."
+        }
+      ],
+      "resolution_type": "UNUSED_IN_UPSTREAM_PATH",
+      "upstream_equivalent": null,
+      "conversion_strategy": "No conversion action for this named header; it is not an actual dependency in the inspected downstream corpus.",
+      "complexity": "trivial",
+      "evidence_confidence": 0.96
+    },
+    {
+      "downstream_header": "soc/swr-common.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/include/soc/swr-common.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "struct swrm_port_config"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2433,
+          "context": "struct swrm_port_config port_cfg"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2440,
+          "context": "port_cfg.uc = usecase; port_cfg.size = size; port_cfg.params = data"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "file": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line": 153,
+          "context": "struct qcom_swrm_port_config exists inside upstream qcom SoundWire controller, not as an exported VA macro API"
+        },
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": null,
+          "context": "Upstream VA macro has no swrm_port_config dependency."
+        }
+      ],
+      "resolution_type": "REMOVAL_REQUIRED",
+      "upstream_equivalent": null,
+      "conversion_strategy": "Do not import the vendor swrm_port_config control path into VA macro; any required SoundWire port configuration must remain in the upstream SoundWire controller/topology path.",
+      "complexity": "moderate",
+      "evidence_confidence": 0.88
+    },
+    {
+      "downstream_header": "soc/swr-wcd.h",
+      "actual_header_path": "track_b_corpora/audio-kernel-ar/include/soc/swr-wcd.h",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "swrm_wcd_notify",
+        "SWR_DEVICE_SSR_UP",
+        "SWR_DEVICE_SSR_DOWN",
+        "SWR_SET_PORT_MAP",
+        "SWR_REGISTER_WAKE_IRQ"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 386,
+          "context": "swrm_wcd_notify(..., SWR_DEVICE_SSR_UP, NULL)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 397,
+          "context": "swrm_wcd_notify(..., SWR_DEVICE_SSR_DOWN, NULL)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2445,
+          "context": "swrm_wcd_notify(..., SWR_SET_PORT_MAP, &port_cfg)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2465,
+          "context": "swrm_wcd_notify(..., SWR_REGISTER_WAKE_IRQ, &ipc_wakeup)"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "query": "swrm_wcd_notify / SWR_SET_PORT_MAP / SWR_REGISTER_WAKE_IRQ / SWR_DEVICE_SSR_*",
+          "result": "No matching symbols found in track_b_corpora/linux-next"
+        },
+        {
+          "file": "track_b_corpora/linux-next/include/linux/soundwire/sdw.h",
+          "line": null,
+          "context": "Upstream has generic SoundWire framework headers, but not the vendor swr-wcd notification API."
+        },
+        {
+          "file": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line": null,
+          "context": "Upstream Qualcomm SoundWire controller exists, but VA macro does not call vendor swrm_wcd_notify."
+        }
+      ],
+      "resolution_type": "REMOVAL_REQUIRED",
+      "upstream_equivalent": "generic upstream SoundWire framework/controller path, not a direct VA macro API",
+      "conversion_strategy": "Remove the vendor swr-wcd notification coupling from VA macro; use existing upstream SoundWire controller/component lifecycle instead of adding codec-to-controller private notifications.",
+      "complexity": "significant",
+      "evidence_confidence": 0.9
+    },
+    {
+      "downstream_header": "linux/version.h",
+      "actual_header_path": "kernel generic include",
+      "included_by_downstream": true,
+      "included_by_upstream": false,
+      "symbols_used": [
+        "LINUX_VERSION_CODE",
+        "KERNEL_VERSION"
+      ],
+      "usage_evidence": [
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 809,
+          "context": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 949,
+          "context": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 978,
+          "context": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 1490,
+          "context": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2705,
+          "context": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+        },
+        {
+          "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "line": 2739,
+          "context": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+        }
+      ],
+      "upstream_equivalent_evidence": [
+        {
+          "file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+          "line": null,
+          "context": "Upstream VA macro does not include linux/version.h and does not use version-gated API compatibility branches."
+        }
+      ],
+      "resolution_type": "REMOVAL_REQUIRED",
+      "upstream_equivalent": null,
+      "conversion_strategy": "Remove version conditionals and write the driver against the target upstream kernel API only.",
+      "complexity": "trivial",
+      "evidence_confidence": 0.99
+    }
+  ],
+  "upstream_includes_not_in_downstream": [
+    {
+      "include": "linux/bitfield.h",
+      "upstream_file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+      "reason": "Used by upstream register field manipulation style."
+    },
+    {
+      "include": "linux/clk-provider.h",
+      "upstream_file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+      "reason": "Upstream VA macro participates in clock provider style infrastructure."
+    },
+    {
+      "include": "linux/of_clk.h",
+      "upstream_file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+      "reason": "Upstream driver uses OF clock integration."
+    },
+    {
+      "include": "linux/of_platform.h",
+      "upstream_file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+      "reason": "Upstream probe path uses OF/platform-driver matching."
+    },
+    {
+      "include": "lpass-macro-common.h",
+      "upstream_file": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+      "reason": "Upstream LPASS macro common helper dependency; replaces part of downstream lpass-cdc shared infrastructure."
+    }
+  ],
+  "upstream_replacement_summary": {
+    "registration": {
+      "downstream": "lpass_cdc_register_macro / lpass_cdc_unregister_macro",
+      "upstream": "devm_snd_soc_register_component + snd_soc_component_driver",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1658"
+      ]
+    },
+    "regmap": {
+      "downstream": "macro ops io_base / lpass-cdc framework indirection",
+      "upstream": "snd_soc_component_init_regmap + devm_regmap_init_mmio",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1329",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1579"
+      ]
+    },
+    "runtime_pm": {
+      "downstream": "lpass_cdc_runtime_suspend / lpass_cdc_runtime_resume",
+      "upstream": "va_macro_runtime_suspend / va_macro_runtime_resume",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1711",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1726"
+      ]
+    },
+    "clock_resource": {
+      "downstream": "lpass_cdc_clk_rsc_request_clock / lpass_cdc_clk_rsc_fs_gen_request",
+      "upstream": "clk_prepare_enable / clk_disable_unprepare / va_clk_rsc_fs_gen_request / va_macro_mclk_event",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:460",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:508",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:516",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:518"
+      ]
+    },
+    "power_domains": {
+      "downstream": "vendor lpass-cdc shared framework",
+      "upstream": "lpass_macro_pds_init / lpass_macro_pds_exit",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1556",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c:17",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h:40"
+      ]
+    },
+    "register_definitions": {
+      "downstream": "LPASS_CDC_VA_* from lpass-cdc-registers.h",
+      "upstream": "CDC_VA_* local definitions in lpass-va-macro.c",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:28",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:78",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:84",
+        "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:92"
+      ]
+    }
+  },
+  "total_dependencies": 9,
+  "resolved_count": 9,
+  "unresolved_count": 0,
+  "estimated_total_patch_complexity": "significant",
+  "engineering_conclusion": {
+    "direct_header_equivalents": 0,
+    "replacement_paths_exist": [
+      "lpass-cdc.h",
+      "lpass-cdc-registers.h",
+      "lpass-cdc-clk-rsc.h"
+    ],
+    "vendor_paths_to_remove": [
+      "asoc/msm-cdc-pinctrl.h",
+      "soc/swr-common.h",
+      "soc/swr-wcd.h",
+      "linux/version.h"
+    ],
+    "unused_or_non_actual_dependencies": [
+      "dsp/digital-cdc-rsc-mgr.h",
+      "lpass-cdc-va-macro.h"
+    ],
+    "highest_risk_dependency": "soc/swr-wcd.h",
+    "reason": "It encodes private codec-to-SoundWire-controller notifications for SSR, port-map, and wake IRQ flows that do not have direct upstream VA macro equivalents."
+  }
+}

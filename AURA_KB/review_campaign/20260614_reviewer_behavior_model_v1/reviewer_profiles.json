@@ -1,0 +1,4018 @@
+{
+  "generated_at": "2026-06-15T00:04:33.680785",
+  "dataset_stats": {
+    "candidate_series": 2030,
+    "selected_series": 700,
+    "fetched_series": 700
+  },
+  "reviewers_modeled": [
+    "Alexey Klimov",
+    "Dmitry Baryshkov",
+    "Johan Hovold",
+    "Konrad Dybcio",
+    "Krzysztof Kozlowski",
+    "Liam Girdwood",
+    "Mark Brown",
+    "Pierre-Louis Bossart",
+    "Rob Herring",
+    "Srinivas Kandagatla",
+    "Stephen Boyd",
+    "Vinod Koul",
+    "kernel test robot"
+  ],
+  "required_reviewers": [
+    "Mark Brown",
+    "Pierre-Louis Bossart",
+    "Vinod Koul",
+    "Liam Girdwood"
+  ],
+  "other_reviewers_ge20": [
+    "Alexey Klimov",
+    "Dmitry Baryshkov",
+    "Johan Hovold",
+    "Konrad Dybcio",
+    "Krzysztof Kozlowski",
+    "Rob Herring",
+    "Srinivas Kandagatla",
+    "Stephen Boyd",
+    "kernel test robot"
+  ],
+  "interaction_counts": {
+    "Vinod Koul": 60,
+    "Rob Herring": 129,
+    "Mark Brown": 441,
+    "Srinivas Kandagatla": 184,
+    "Doug Anderson": 7,
+    "Tzung-Bi Shih": 1,
+    "Pierre-Louis Bossart": 133,
+    "Bjorn Andersson": 19,
+    "Srinivasa Rao Mandadapu": 2,
+    "Stephan Gerhold": 9,
+    "Stephen Boyd": 33,
+    "kernel test robot": 39,
+    "Kees Cook": 1,
+    "Amit Pundir": 9,
+    "Lee Jones": 2,
+    "Marek Szyprowski": 2,
+    "Amadeusz S\u0142awi\u0144ski": 7,
+    "Randy Dunlap": 1,
+    "Andy Shevchenko": 3,
+    "Lars-Peter Clausen": 2,
+    "Cezary Rojewski": 1,
+    "Geert Uytterhoeven": 3,
+    "Matthias Kaehlcke": 10,
+    "Judy Hsiao": 1,
+    "Krzysztof Kozlowski": 153,
+    "Dan Carpenter": 10,
+    "Joe Perches": 1,
+    "Andrew Halaney": 1,
+    "Conor Dooley": 5,
+    "Nathan Chancellor": 2,
+    "Luca Weiss": 9,
+    "Konrad Dybcio": 62,
+    "Johan Hovold": 25,
+    "mike jenkins": 1,
+    "Dmitry Baryshkov": 108,
+    "Takashi Iwai": 4,
+    "Gustavo A. R. Silva": 1,
+    "Steev Klimaszewski": 8,
+    "Charles Keepax": 1,
+    "Dragan Simic": 1,
+    "Markus Elfring": 16,
+    "Christophe JAILLET": 3,
+    "Neil Armstrong": 6,
+    "Bryan O'Donoghue": 1,
+    "Alexey Klimov": 20,
+    "Greg KH": 3,
+    "Dzmitry Sankouski": 2,
+    "Maud Spierings": 1,
+    "Christopher Obbard": 2,
+    "Linus Walleij": 7,
+    "Peng Fan": 5,
+    "Bartosz Golaszewski": 3,
+    "Peter Rosin": 2,
+    "Philipp Zabel": 2,
+    "Kees Bakker": 1,
+    "David Heidelberg": 1,
+    "Ravi Hothi": 2,
+    "Jens Glathe": 3,
+    "Val Packett": 1
+  },
+  "profiles": {
+    "Alexey Klimov": {
+      "review_interactions": 20,
+      "reviewed_series_count": 15,
+      "objection_frequency": 0.35,
+      "objection_categories": {
+        "commit_message": 5,
+        "controls": 6,
+        "runtime_pm": 2,
+        "soundwire": 7,
+        "dt_schema": 4,
+        "ownership_boundary": 1,
+        "patch_split": 1,
+        "dapm": 1
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 32.93,
+        "mean": 332.70927777777774,
+        "samples": 15
+      },
+      "review_round_distribution": {
+        "2": 7,
+        "1": 5,
+        "5": 1,
+        "4": 1,
+        "3": 1
+      },
+      "recurring_phrases": [
+        [
+          "sound soc qcom",
+          36
+        ],
+        [
+          "soc qcom qdsp6",
+          26
+        ],
+        [
+          "sound soc codecs",
+          17
+        ],
+        [
+          "boot dts qcom",
+          17
+        ],
+        [
+          "arch arm64 boot",
+          16
+        ],
+        [
+          "arm64 boot dts",
+          16
+        ],
+        [
+          "qcom qdsp6 q6asm-dai",
+          12
+        ],
+        [
+          "oss qualcomm com",
+          11
+        ],
+        [
+          "soc qcom sc8280xp",
+          10
+        ],
+        [
+          "srinivas kandagatla wrote",
+          10
+        ],
+        [
+          "dts qcom sm8650-hdk",
+          10
+        ],
+        [
+          "qcom sm8650-hdk dts",
+          10
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 6,
+        "patch_size_bins": {
+          "small": 10,
+          "tiny": 5
+        },
+        "series_length_bins": {
+          "single": 6,
+          "long": 2,
+          "medium": 6,
+          "short": 1
+        },
+        "split_request_rate": 0.05
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.05,
+        "ownership_boundary_sensitivity": 0.05,
+        "dt_schema_strictness": 0.2,
+        "commit_message_expectation": 0.25,
+        "refactor_tolerance_inverse": 0.0,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.1,
+        "soundwire_lifecycle_preference": 0.35
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "controls",
+        "commit_message",
+        "dt_schema",
+        "runtime_pm"
+      ],
+      "acceptance_indicators_frequency": 0.6,
+      "evidence_series": [
+        {
+          "series_id": 893859,
+          "series_name": "[v1] ASoC: codecs: lpass-macro: Add support for channel map mixer control",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=893859",
+          "lore_links": [
+            "https://lore.kernel.org/r/D4Q4C17E1A8J.3O1CD1PDP51HH@linaro.org"
+          ]
+        },
+        {
+          "series_id": 967055,
+          "series_name": "ASoC: qcom: sc8280xp: Assign backend ops for multi codec dai links",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=967055",
+          "lore_links": [
+            "https://lore.kernel.org/r/5yfyabb7h2xode53xdqowuwfzuml4ytjjzi6tlvzj7htconwtf@456qh5trwijk",
+            "https://lore.kernel.org/r/DA7X59CE8REY.4E410IER5BJF@linaro.org"
+          ]
+        },
+        {
+          "series_id": 997332,
+          "series_name": "ASoC: codecs: lpass-wsa-macro: Fix speaker quality distortion",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997332",
+          "lore_links": [
+            "https://lore.kernel.org/r/0beec691-a21c-4425-b06b-728d55e7e254@oss.qualcomm.com",
+            "https://lore.kernel.org/r/175701069186.126195.4295379119424857942.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/DCPKY2GED44G.I2DSV6ZBXYAQ@linaro.org"
+          ]
+        },
+        {
+          "series_id": 997821,
+          "series_name": "[v2] ASoC: codecs: lpass-macro: Add support for channel map mixer control",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997821",
+          "lore_links": [
+            "https://lore.kernel.org/r/3b1c094f-5025-4e2c-83fc-e021293a49cc@oss.qualcomm.com",
+            "https://lore.kernel.org/r/708dc6e4-1566-4c72-9f3a-a34f935ac247@oss.qualcomm.com",
+            "https://lore.kernel.org/r/DD71KONODHKJ.15RI1DXF5T6PJ@linaro.org"
+          ]
+        },
+        {
+          "series_id": 1000475,
+          "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1000475",
+          "lore_links": [
+            "https://lore.kernel.org/r/6f787bdf-9f9b-4d6e-b7c1-5b734ec0acf1@ijzerbout.nl",
+            "https://lore.kernel.org/r/DCPLAK9BYI9D.256FT1VOPLSW3@linaro.org"
+          ]
+        },
+        {
+          "series_id": 1001652,
+          "series_name": "soundwire: qcom: add support for v3.1.0",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1001652",
+          "lore_links": [
+            "https://lore.kernel.org/r/CANgGJDri==VUhMKhEeDYs5tmkcGcOBHbzMT3U314bxK79z4mTA@mail.gmail.com",
+            "https://lore.kernel.org/r/DGJTU2TOFZR7.2MOU6I6J8GV4L@fairphone.com",
+            "https://lore.kernel.org/r/DGPQVOVH3N31.2XHZP30TUC18Q@fairphone.com"
+          ]
+        },
+        {
+          "series_id": 1008774,
+          "series_name": "ASoC: qcom: enable HDMI audio on SM8[456]50 HDK boards",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1008774",
+          "lore_links": [
+            "https://lore.kernel.org/r/0e8d380f-87fb-4b90-805a-3fd7d59c10e6@kernel.org",
+            "https://lore.kernel.org/r/4aa81228-9b25-4b7a-8fd0-7e51e7d77824@oss.qualcomm.com",
+            "https://lore.kernel.org/r/64719a5b-0747-4f3f-9bf9-c04900a5e0e5@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1009505,
+          "series_name": "ASoC: qcom: enable HDMI audio on SM8[456]50 HDK boards",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1009505",
+          "lore_links": [
+            "https://lore.kernel.org/r/44606de8-3446-472f-aa6b-25ff8b76e0ec@kernel.org",
+            "https://lore.kernel.org/r/488d9182-175e-47a9-9dc1-f43753d6fdbc@oss.qualcomm.com",
+            "https://lore.kernel.org/r/5aa30c94-33f1-4f40-9013-dfbac249ce91@kernel.org"
+          ]
+        },
+        {
+          "series_id": 1011875,
+          "series_name": "ASoC: qcom: q6dsp: fixes and updates",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1011875",
+          "lore_links": [
+            "https://lore.kernel.org/r/168c9cee-5f5b-4c45-82bd-45c911da4dd4@oss.qualcomm.com",
+            "https://lore.kernel.org/r/60a48dfb-e266-425d-8cfb-574c637f5e9d@oss.qualcomm.com",
+            "https://lore.kernel.org/r/7abcb827-4a7f-4855-811a-4212b8357333@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1014056,
+          "series_name": "ASoC: qcom: x1e80100: Add sound card support for Dell XPS13 9345",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1014056",
+          "lore_links": [
+            "https://lore.kernel.org/r/224288d8-9a04-4a76-95c7-c0af4ed967e3@kernel.org",
+            "https://lore.kernel.org/r/4d69e9ba-caa4-49bc-a66a-d085edfead4a@oss.qualcomm.com",
+            "https://lore.kernel.org/r/DDP0J063IX84.2MC5D16VHRFVR@linaro.org"
+          ]
+        },
+        {
+          "series_id": 1017316,
+          "series_name": "ASoC: dt-bindings: pm4125-sdw: correct number of soundwire ports",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1017316",
+          "lore_links": [
+            "https://lore.kernel.org/r/176182254287.10093.1638379572271955116.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/20251030-premium-intrepid-gaur-fbfc1e@kuoka",
+            "https://lore.kernel.org/r/DDVYM9SMCT7O.17T5SIB9IEED4@linaro.org"
+          ]
+        },
+        {
+          "series_id": 1023866,
+          "series_name": "[v3] ASoC: qcom: sdm845: set quaternary MI2S codec DAI to I2S format",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1023866",
+          "lore_links": [
+            "https://lore.kernel.org/r/176580712510.161056.2503669103240241615.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/DEULFB0XJ883.3CHFIXANX1FTH@linaro.org",
+            "https://lore.kernel.org/r/zepvg4nhpihycmkaynemesuvurrp5hwafdqyvxu4gtfojllhw3@a6sy4dwlbndm"
+          ]
+        },
+        {
+          "series_id": 1026824,
+          "series_name": "wcd938x/wcd939x fixes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1026824",
+          "lore_links": [
+            "https://lore.kernel.org/r/2758401b-e9b5-4f10-bb01-0a1fe4e09430@oss.qualcomm.com",
+            "https://lore.kernel.org/r/DEIUJWR51WIX.43GDTH9RA8UH@linaro.org",
+            "https://lore.kernel.org/r/fafe5de2-f682-4769-bb1f-166858808746@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1097375,
+          "series_name": "ASoC: qcom: qdsp6: add push/pull module support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1097375",
+          "lore_links": [
+            "https://lore.kernel.org/r/6d5776eb-c181-4ae0-886d-8d8dab7be7e7@sirena.org.uk",
+            "https://lore.kernel.org/r/DINUJUCEDNXP.2BDISX62IPSQ2@linaro.org"
+          ]
+        },
+        {
+          "series_id": 1102414,
+          "series_name": "ASoC: qcom: qdsp6: add push/pull module support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1102414",
+          "lore_links": [
+            "https://lore.kernel.org/r/DIY1CKXWI6ST.2Y3F25YGNFM1X@linaro.org"
+          ]
+        }
+      ]
+    },
+    "Dmitry Baryshkov": {
+      "review_interactions": 108,
+      "reviewed_series_count": 52,
+      "objection_frequency": 0.32407407407407407,
+      "objection_categories": {
+        "ownership_boundary": 10,
+        "dapm": 24,
+        "dt_schema": 11,
+        "soundwire": 49,
+        "controls": 38,
+        "patch_split": 2,
+        "commit_message": 34,
+        "refactor": 5,
+        "runtime_pm": 2
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 1.846111111111111,
+        "mean": 17.857494658119663,
+        "samples": 52
+      },
+      "review_round_distribution": {
+        "1": 18,
+        "3": 4,
+        "4": 7,
+        "2": 13,
+        "6": 6,
+        "5": 3,
+        "9": 1
+      },
+      "recurring_phrases": [
+        [
+          "sound soc codecs",
+          352
+        ],
+        [
+          "srinivas kandagatla srinivas",
+          108
+        ],
+        [
+          "kandagatla srinivas kandagatla",
+          108
+        ],
+        [
+          "srinivas kandagatla linaro",
+          106
+        ],
+        [
+          "kandagatla linaro org",
+          106
+        ],
+        [
+          "oss qualcomm com",
+          74
+        ],
+        [
+          "sound soc qcom",
+          66
+        ],
+        [
+          "signed-off-by srinivas kandagatla",
+          64
+        ],
+        [
+          "diff git sound",
+          62
+        ],
+        [
+          "git sound soc",
+          62
+        ],
+        [
+          "changed insertions deletions",
+          58
+        ],
+        [
+          "file changed insertions",
+          57
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 2.0,
+        "patch_size_bins": {
+          "tiny": 32,
+          "small": 17,
+          "medium": 3
+        },
+        "series_length_bins": {
+          "short": 15,
+          "medium": 14,
+          "single": 21,
+          "long": 2
+        },
+        "split_request_rate": 0.018518518518518517
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.018518518518518517,
+        "ownership_boundary_sensitivity": 0.09259259259259259,
+        "dt_schema_strictness": 0.10185185185185185,
+        "commit_message_expectation": 0.3148148148148148,
+        "refactor_tolerance_inverse": 0.027777777777777776,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.018518518518518517,
+        "soundwire_lifecycle_preference": 0.4537037037037037
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "controls",
+        "commit_message",
+        "dapm",
+        "dt_schema"
+      ],
+      "acceptance_indicators_frequency": 0.48148148148148145,
+      "evidence_series": [
+        {
+          "series_id": 760885,
+          "series_name": "ASoC: qcom: get tplg firmware-name from device tree",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=760885",
+          "lore_links": [
+            "https://lore.kernel.org/r/12c19702-9a0a-45b9-9dc0-6b62879fae81@sirena.org.uk",
+            "https://lore.kernel.org/r/168795111610.154546.2388306127821623760.robh@kernel.org",
+            "https://lore.kernel.org/r/20230628155453.GA537917-robh@kernel.org"
+          ]
+        },
+        {
+          "series_id": 838834,
+          "series_name": "ASoC: qcom: add support for qcm6490 machine",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=838834",
+          "lore_links": [
+            "https://lore.kernel.org/r/330dd13e-3ed3-4582-abce-b3bd99898bc3@linaro.org",
+            "https://lore.kernel.org/r/3dbb428f-0265-4741-a28e-5613799133e9@linaro.org",
+            "https://lore.kernel.org/r/917e99f1-3b4c-4f4d-b264-cb9b764a9222@kernel.org"
+          ]
+        },
+        {
+          "series_id": 846684,
+          "series_name": "ASoC: qcom: display port changes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=846684",
+          "lore_links": [
+            "https://lore.kernel.org/r/Zi-0kSU6TMcev05r@hovoldconsulting.com",
+            "https://lore.kernel.org/r/ZiefFkFOh8xoI5Bf@hovoldconsulting.com",
+            "https://lore.kernel.org/r/ZiegIgranmsYg-KL@hovoldconsulting.com"
+          ]
+        },
+        {
+          "series_id": 859530,
+          "series_name": "ASoC: codecs: lpass: add support for v2.5 rx macro",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=859530",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAA8EJpowb5eRdDH9HjiWoN5_n+VMd+sVkyx8fiuUTc5QYbxq0g@mail.gmail.com",
+            "https://lore.kernel.org/r/gda23tcdsoddyamedjd5sej4fhpjru65fqbhk4htc35kqyr3ts@glxyvqqw6x75",
+            "https://lore.kernel.org/r/mpm4pmt5ieofmpxmq5putvytyuiepbmnv5flsfqiwbtc54sb6k@jpoeaeojzzis"
+          ]
+        },
+        {
+          "series_id": 861287,
+          "series_name": "ASoC: codecs: lpass: add support for v2.5 rx macro",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=861287",
+          "lore_links": [
+            "https://lore.kernel.org/r/ZmoCl16mACdJU5Qt@finisterre.sirena.org.uk",
+            "https://lore.kernel.org/r/dxkgfqxdx4kovs4lfgl6y22chv7b7skmacpttp2z5nzhqj2ijh@6sofslw756mp",
+            "https://lore.kernel.org/r/jowqhnspiai4ydp7m7mn3p654kufg4ufbm2iexjg5dqbcxqatu@jfex2rnes5vu"
+          ]
+        },
+        {
+          "series_id": 861607,
+          "series_name": "ASoC: q6apm-lpass-dai: close graph on prepare errors",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=861607",
+          "lore_links": [
+            "https://lore.kernel.org/r/171840862015.307440.8711592846059609297.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/CAA8EJpq7SN5J8Ye8nGfbJdKAC5Ws61iKMu6QO9ebnRV6q3EVNQ@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 863457,
+          "series_name": "ASoC: codecs: lpass-wsa: fix vi capture setup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=863457",
+          "lore_links": [
+            "https://lore.kernel.org/r/45iy6ksg25iqfnfezzsutmh7ihgbdy5wukul5bek2rmzm7jbbl@65rk4o6ednor",
+            "https://lore.kernel.org/r/CAA8EJpoLE5zUEvC4-q8h5KH=c_ucew=py5TV2qCTaSEQNQeQzQ@mail.gmail.com",
+            "https://lore.kernel.org/r/hz5eqta4ttzsnwttqzqrec4vcwvyleoow7thoiym3g3wjsfqk4@tx23nktde3gh"
+          ]
+        },
+        {
+          "series_id": 865409,
+          "series_name": "ASoC: codecs: lpass-rx-macro: add missing handling of v2.1 codec",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=865409",
+          "lore_links": [
+            "https://lore.kernel.org/r/171934624243.1243504.8133552176483235259.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/7kw3xiqoc6sltaz5w4m2azprieaqbu7jivupgpzzwesxynyjd3@j2fla7epac6z",
+            "https://lore.kernel.org/r/a2b8296f-66d0-4b9a-ab3f-895f9ef647a4@linaro.org"
+          ]
+        },
+        {
+          "series_id": 865425,
+          "series_name": "[1/2] ASoC: codecs: lpass-macro: Gracefully handle unknown version",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=865425",
+          "lore_links": [
+            "https://lore.kernel.org/r/171942311637.1650281.3350190675006482081.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/6b4rnvhqnqf2w6kbafceaclri2gq7x7lttusllqswy4nkxzqg7@bqtmns4m3ghs",
+            "https://lore.kernel.org/r/fyuovswhhso2ishvullvj473xnstqcpc2czqiqy5lfaafy2cix@kfifmubk7gy3"
+          ]
+        },
+        {
+          "series_id": 866133,
+          "series_name": "ASoC: codecs: wsa88xx: add support for static port mapping.",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=866133",
+          "lore_links": [
+            "https://lore.kernel.org/r/30bfbc93-de08-4699-9bb2-53e47e3d129d@linaro.org",
+            "https://lore.kernel.org/r/3b897a1a-bd5d-4e6b-8289-a9c6b280f193@linaro.org",
+            "https://lore.kernel.org/r/654bc4b9-dcc9-4d77-92c8-1b077c99cdd9@linaro.org"
+          ]
+        },
+        {
+          "series_id": 866183,
+          "series_name": "ASoC: codecs: wsa88xx: add support for static port mapping.",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=866183",
+          "lore_links": [
+            "https://lore.kernel.org/r/grtvmbccqbwwaxftfjg2bh3naumjrsmkd22vjqxwev6vmmgr6y@op5z3i4o2non",
+            "https://lore.kernel.org/r/gyg34bmhtkhnl7ggbo6fwrr2w2seuf73o6qrkh25qvi3psi4wi@awnib2ilblf7"
+          ]
+        },
+        {
+          "series_id": 866214,
+          "series_name": "ASoC: codecs: lpass-rx-macro: Few code cleanups",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=866214",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAA8EJpq_2RUs3go6JZ+uVuJ5PJKzv0e2T8uS5QJMrB_JUAtNPw@mail.gmail.com",
+            "https://lore.kernel.org/r/dalyp774uk4ugomvdtrjkjpenfogx6dkx4vtiq6serc4unzasw@xa4adquvcijn",
+            "https://lore.kernel.org/r/grpb57rhum4auor3n66mqd2tpmd52gzofbdog3vlmxlamfxv5a@2mhfkigl6ek2"
+          ]
+        },
+        {
+          "series_id": 866512,
+          "series_name": "[1/2] ASoC: codecs: lpass-rx-macro: Fix using NULL pointer in probe() dev_err",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=866512",
+          "lore_links": [
+            "https://lore.kernel.org/r/171991980162.18111.8940228821828803310.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/kblpzus3lr6j6xnitmjk2qt2vpfbutqar2zdxrjbepcvey73no@j6f6whmsk2mj",
+            "https://lore.kernel.org/r/slpv56feowlalqd2olti5bnxluovcvjs4k7koszhukfxvgycz3@4mm2n27e372l"
+          ]
+        },
+        {
+          "series_id": 873809,
+          "series_name": "ASoC: codecs: wsa88xx and wcd93xx: Soundwire port non-functional cleanup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=873809",
+          "lore_links": [
+            "https://lore.kernel.org/r/3gd2qwpsty4owjzlborg5hkiqltpkk4gfzuj2zvxamjgjwvrlk@2x2zhokcfbv4",
+            "https://lore.kernel.org/r/bsnfiskyvzf2zrsarek47irjmt3feqyqxi5b6s7zbanagkh7dl@yhqpncgaxgtv",
+            "https://lore.kernel.org/r/dd7h6dg6uutup4av2dxvmtr6ucxhojmicsfnxoj5y7wtglnuwn@r4u3httvsn63"
+          ]
+        },
+        {
+          "series_id": 880068,
+          "series_name": "ASoC: codecs: lpass-va-macro: set the default codec version for sm8250",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=880068",
+          "lore_links": [
+            "https://lore.kernel.org/r/18DCA30B-273D-415A-81EF-EA02CEBDAA94@linaro.org",
+            "https://lore.kernel.org/r/632B6187-5CB7-45E3-8EB1-3C4C932834E1@linaro.org",
+            "https://lore.kernel.org/r/F07BF288-66F4-497A-A581-5FE4B7B432BD@linaro.org"
+          ]
+        },
+        {
+          "series_id": 880266,
+          "series_name": "[v2] ASoC: codecs: lpass-va-macro: set the default codec version for sm8250",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=880266",
+          "lore_links": [
+            "https://lore.kernel.org/r/0fcd3421-8086-44bc-b24f-7fb2262a675c@nexus-software.ie",
+            "https://lore.kernel.org/r/172504623446.461126.12391681424311035210.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/7tzmorkxuaiztz4vabjvfclv6s5vu2dtlfd6vzlnz66jhg6y2p@msgesiuficec"
+          ]
+        },
+        {
+          "series_id": 892625,
+          "series_name": "[REVIEW,1/2] ASoC: codecs: lpass-rx-macro: fix RXn(rx,n) macro for DSM_CTL and SEC7 regs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=892625",
+          "lore_links": [
+            "https://lore.kernel.org/r/172727699157.2075752.5178047483756857834.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/ZvPPpfobvDmmTCfi@finisterre.sirena.org.uk",
+            "https://lore.kernel.org/r/czlx4thp7thnb6jrauilpbtzgbq637rmnwlpifxq5b5jfa3lqm@toyy3b2viscr"
+          ]
+        },
+        {
+          "series_id": 895238,
+          "series_name": "ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe()",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=895238",
+          "lore_links": [
+            "https://lore.kernel.org/r/2024100608-chomp-undiluted-c3e2@gregkh",
+            "https://lore.kernel.org/r/2024100620-decency-discuss-df6e@gregkh",
+            "https://lore.kernel.org/r/6d17006d-ee97-4c7c-a355-245f32fe1fc3@web.de"
+          ]
+        },
+        {
+          "series_id": 899960,
+          "series_name": "[v2] ASoC: codecs: lpass-rx-macro: fix RXn(rx,n) macro for DSM_CTL and SEC7 regs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=899960",
+          "lore_links": [
+            "https://lore.kernel.org/r/172928704586.212383.11476018993792884716.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/nhpeyezvodnww4m4hou3of5xy7lbvme5jydpprpmj3yzr7yarj@thiyvzume4bo"
+          ]
+        },
+        {
+          "series_id": 945491,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=945491",
+          "lore_links": [
+            "https://lore.kernel.org/r/20250320-busy-trogon-of-philosophy-fad8db@krzk-bin",
+            "https://lore.kernel.org/r/20250320-feathered-super-walrus-8eeef8@krzk-bin",
+            "https://lore.kernel.org/r/4ie22uuz5tpg77jto3c3hec6lhonr44hrjda7jk655axlaxvba@u3atd4gcyghn"
+          ]
+        },
+        {
+          "series_id": 945898,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=945898",
+          "lore_links": [
+            "https://lore.kernel.org/r/20250321220005.GA4185430-robh@kernel.org",
+            "https://lore.kernel.org/r/3ke2oxgd2dh5wghgatyzivaxspqlezn3x5vtjaxszqad4dhfxd@vpzxmi2nqmrw",
+            "https://lore.kernel.org/r/51a40f06-caa0-49bd-a64d-5249dd50445e@kernel.org"
+          ]
+        },
+        {
+          "series_id": 946757,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=946757",
+          "lore_links": [
+            "https://lore.kernel.org/r/201dc2a7-e031-47d7-9c17-c4275365b477@kernel.org",
+            "https://lore.kernel.org/r/7fc622e8-6f9d-4a14-bf5f-3122e6f81808@oss.qualcomm.com",
+            "https://lore.kernel.org/r/fbc72787-6c98-48b4-a176-8d1b03815085@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 946814,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=946814",
+          "lore_links": [
+            "https://lore.kernel.org/r/174284845664.822870.8151972984188794106.robh@kernel.org",
+            "https://lore.kernel.org/r/8fbc8cd7-f8e7-e33b-74df-cdea389ac9a4@axentia.se",
+            "https://lore.kernel.org/r/CAO9ioeX9RTBAeL3+9STn+=oEYR0wtaF6yoa=esNddEvqLQyO9Q@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 947128,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=947128",
+          "lore_links": [
+            "https://lore.kernel.org/r/14b7f2cb-6f40-f8b8-b3de-fe99080e6e40@axentia.se",
+            "https://lore.kernel.org/r/vmhrs62ygu2xozcabc6tgy37ta5qskeyks5j3ldponzfijicl4@nudcmxonq7qj"
+          ]
+        },
+        {
+          "series_id": 947701,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=947701",
+          "lore_links": [
+            "https://lore.kernel.org/r/174670907131.90037.7280261510052841645.b4-ty@linaro.org",
+            "https://lore.kernel.org/r/174670907339.90037.743394782268502286.b4-ty@linaro.org",
+            "https://lore.kernel.org/r/174746143138.152010.11250887062386242256.b4-ty@kernel.org"
+          ]
+        }
+      ]
+    },
+    "Johan Hovold": {
+      "review_interactions": 25,
+      "reviewed_series_count": 10,
+      "objection_frequency": 0.36,
+      "objection_categories": {
+        "dapm": 4,
+        "runtime_pm": 1,
+        "soundwire": 7,
+        "commit_message": 3,
+        "controls": 8,
+        "refactor": 2,
+        "patch_split": 2,
+        "dt_schema": 1
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 1.6579166666666667,
+        "mean": 383.64827777777776,
+        "samples": 10
+      },
+      "review_round_distribution": {
+        "1": 6,
+        "2": 2,
+        "3": 1,
+        "6": 1
+      },
+      "recurring_phrases": [
+        [
+          "srinivas kandagatla linaro",
+          29
+        ],
+        [
+          "kandagatla linaro org",
+          29
+        ],
+        [
+          "srinivas kandagatla srinivas",
+          25
+        ],
+        [
+          "kandagatla srinivas kandagatla",
+          25
+        ],
+        [
+          "srinivas kandagatla wrote",
+          21
+        ],
+        [
+          "sound soc qcom",
+          16
+        ],
+        [
+          "johan hovold johan",
+          15
+        ],
+        [
+          "hovold johan linaro",
+          15
+        ],
+        [
+          "johan linaro kernel",
+          15
+        ],
+        [
+          "linaro kernel org",
+          15
+        ],
+        [
+          "signed-off-by srinivas kandagatla",
+          14
+        ],
+        [
+          "soc qcom common",
+          11
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 2.5,
+        "patch_size_bins": {
+          "tiny": 10
+        },
+        "series_length_bins": {
+          "single": 3,
+          "medium": 4,
+          "short": 3
+        },
+        "split_request_rate": 0.08
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.08,
+        "ownership_boundary_sensitivity": 0.0,
+        "dt_schema_strictness": 0.04,
+        "commit_message_expectation": 0.12,
+        "refactor_tolerance_inverse": 0.04,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.04,
+        "soundwire_lifecycle_preference": 0.28
+      },
+      "common_rejection_patterns": [
+        "controls",
+        "soundwire",
+        "dapm",
+        "commit_message",
+        "refactor"
+      ],
+      "acceptance_indicators_frequency": 0.52,
+      "evidence_series": [
+        {
+          "series_id": 726092,
+          "series_name": "ASoC: qcom: common: add default jack dapm pins",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=726092",
+          "lore_links": [
+            "https://lore.kernel.org/r/168747322954.318849.3017080931137286900.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/ZJPvs05sb-aCr3CQ@hovoldconsulting.com"
+          ]
+        },
+        {
+          "series_id": 733249,
+          "series_name": "ASoC: qcom: fixes for Click/Pop Noise",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=733249",
+          "lore_links": [
+            "https://lore.kernel.org/r/101cfc2d-59d7-4f37-9dd1-e83d1b803bc5@sirena.org.uk",
+            "https://lore.kernel.org/r/5dc11c47-bae6-2f4e-4ffd-58c4f462fd68@linux.intel.com",
+            "https://lore.kernel.org/r/6df45f92-5fe6-4b44-af04-c528d540ac06@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 750308,
+          "series_name": "[1/2] ASoC: codecs: wsa883x: do not set can_multi_write flag",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=750308",
+          "lore_links": [
+            "https://lore.kernel.org/r/00283665-e44f-457b-b2c9-1acf59d1cbd8@sirena.org.uk",
+            "https://lore.kernel.org/r/168492769030.49784.4719862081052299023.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/8becb36a-107a-4d92-8279-d4c55edc9076@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 750991,
+          "series_name": "soundwire: qcom: stablity fixes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=750991",
+          "lore_links": [
+            "https://lore.kernel.org/r/ZKu-o0GQgh84cxZ0@hovoldconsulting.com"
+          ]
+        },
+        {
+          "series_id": 762684,
+          "series_name": "ASoC: codecs: wcd938x: fix dB range for HPHL and HPHR",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=762684",
+          "lore_links": [
+            "https://lore.kernel.org/r/168865582683.36989.12106598121832751013.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/3450ef1e-cb20-4242-b482-41d3d34c4564@sirena.org.uk",
+            "https://lore.kernel.org/r/56aecc8d-2f6c-42c0-a13a-89c84cf53773@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 806598,
+          "series_name": "ASoC: qcom: Limit Digital gains on speaker",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=806598",
+          "lore_links": [
+            "https://lore.kernel.org/r/ZW3Z-bQwlEoubDU2@hovoldconsulting.com",
+            "https://lore.kernel.org/r/ZW3ZY_2_G64dNAeS@hovoldconsulting.com"
+          ]
+        },
+        {
+          "series_id": 846684,
+          "series_name": "ASoC: qcom: display port changes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=846684",
+          "lore_links": [
+            "https://lore.kernel.org/r/Zi-0kSU6TMcev05r@hovoldconsulting.com",
+            "https://lore.kernel.org/r/ZiefFkFOh8xoI5Bf@hovoldconsulting.com",
+            "https://lore.kernel.org/r/ZiegIgranmsYg-KL@hovoldconsulting.com"
+          ]
+        },
+        {
+          "series_id": 858596,
+          "series_name": "ASoC: qcom: x1e80100: Add USB DisplayPort plug support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=858596",
+          "lore_links": [
+            "https://lore.kernel.org/r/Zl7v4hezEYcuCORC@hovoldconsulting.com"
+          ]
+        },
+        {
+          "series_id": 946656,
+          "series_name": "ASoC: codec: wcd93xx: Convert to GPIO descriptors",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=946656",
+          "lore_links": [
+            "https://lore.kernel.org/r/CACRpkdYLMJaC7XREXL4m62B6x8fc6XvmR3FfXYUfh=QKM3whmA@mail.gmail.com",
+            "https://lore.kernel.org/r/CACRpkdZ4eDeN_DepR31R9mgTVbQKgzJcmndss5x2iQfgOefNag@mail.gmail.com",
+            "https://lore.kernel.org/r/CACRpkdZXG0JC7_-Mg6Dpq08Y=Kr3M+fRWQF_bPG8c-WH8pA9Mg@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 947701,
+          "series_name": "ASoC: wcd938x: enable t14s audio headset",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=947701",
+          "lore_links": [
+            "https://lore.kernel.org/r/174670907131.90037.7280261510052841645.b4-ty@linaro.org",
+            "https://lore.kernel.org/r/174670907339.90037.743394782268502286.b4-ty@linaro.org",
+            "https://lore.kernel.org/r/174746143138.152010.11250887062386242256.b4-ty@kernel.org"
+          ]
+        }
+      ]
+    },
+    "Konrad Dybcio": {
+      "review_interactions": 62,
+      "reviewed_series_count": 35,
+      "objection_frequency": 0.16129032258064516,
+      "objection_categories": {
+        "commit_message": 10,
+        "soundwire": 33,
+        "controls": 18,
+        "runtime_pm": 12,
+        "patch_split": 3,
+        "feature_cleanup_mix": 3,
+        "dt_schema": 7,
+        "refactor": 8,
+        "ownership_boundary": 1,
+        "dapm": 4
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 6.586388888888889,
+        "mean": 25.278206349206346,
+        "samples": 35
+      },
+      "review_round_distribution": {
+        "1": 14,
+        "3": 3,
+        "4": 3,
+        "6": 6,
+        "2": 7,
+        "9": 2
+      },
+      "recurring_phrases": [
+        [
+          "ctrl- reg_write ctrl",
+          67
+        ],
+        [
+          "drivers soundwire qcom",
+          61
+        ],
+        [
+          "sound soc qcom",
+          39
+        ],
+        [
+          "ctrl- reg_read ctrl",
+          35
+        ],
+        [
+          "soc qcom qdsp6",
+          34
+        ],
+        [
+          "oss qualcomm com",
+          34
+        ],
+        [
+          "struct qcom_swrm_ctrl ctrl",
+          31
+        ],
+        [
+          "sound soc codecs",
+          31
+        ],
+        [
+          "ctrl ctrl- reg_layout",
+          29
+        ],
+        [
+          "soundwire qcom drivers",
+          24
+        ],
+        [
+          "qcom drivers soundwire",
+          24
+        ],
+        [
+          "krzysztof kozlowski wrote",
+          20
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 3,
+        "patch_size_bins": {
+          "tiny": 13,
+          "small": 19,
+          "large": 1,
+          "medium": 2
+        },
+        "series_length_bins": {
+          "single": 7,
+          "short": 14,
+          "medium": 10,
+          "long": 4
+        },
+        "split_request_rate": 0.04838709677419355
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.04838709677419355,
+        "ownership_boundary_sensitivity": 0.016129032258064516,
+        "dt_schema_strictness": 0.11290322580645161,
+        "commit_message_expectation": 0.16129032258064516,
+        "refactor_tolerance_inverse": 0.016129032258064516,
+        "feature_cleanup_mixing_tolerance_inverse": 0.04838709677419355,
+        "pm_sequencing_preference": 0.1935483870967742,
+        "soundwire_lifecycle_preference": 0.532258064516129
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "controls",
+        "runtime_pm",
+        "commit_message",
+        "refactor"
+      ],
+      "acceptance_indicators_frequency": 0.3709677419354839,
+      "evidence_series": [
+        {
+          "series_id": 724071,
+          "series_name": "soundwire: qcom: correct setting ignore bit on v1.5.1",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=724071",
+          "lore_links": [
+            "https://lore.kernel.org/r/ZBHJwHN1rcqMmSHT@matsya",
+            "https://lore.kernel.org/r/f1d78b2a-f9ae-6a46-4db6-25e0b823ac46@linaro.org"
+          ]
+        },
+        {
+          "series_id": 724085,
+          "series_name": "[1/2] soundwire: qcom: define hardcoded version magic numbers",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=724085",
+          "lore_links": [
+            "https://lore.kernel.org/r/109ec760-a139-73b7-81a3-230bb040ca15@linaro.org",
+            "https://lore.kernel.org/r/64c80ca9-2317-8225-2345-146e41f3c251@linaro.org",
+            "https://lore.kernel.org/r/65533400-5baa-1577-f2af-c9fca9e888e4@linaro.org"
+          ]
+        },
+        {
+          "series_id": 736397,
+          "series_name": "soundwire: qcom: add support for SM8550 (Soundwire v2.0.0)",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=736397",
+          "lore_links": [
+            "https://lore.kernel.org/r/0bd29b3e-a6c9-ff22-cfb3-1860f56b4ee5@linaro.org",
+            "https://lore.kernel.org/r/168061801694.3827523.18263616021970369926.robh@kernel.org",
+            "https://lore.kernel.org/r/168079674130.3159330.8680786687198930722.robh@kernel.org"
+          ]
+        },
+        {
+          "series_id": 747585,
+          "series_name": "[RESEND] soundwire: qcom: drop unused struct qcom_swrm_ctrl members",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=747585",
+          "lore_links": [
+            "https://lore.kernel.org/r/ZHHeA7TU3YQS5Bib@matsya",
+            "https://lore.kernel.org/r/de735250-5661-0011-0650-a925b528463b@linaro.org"
+          ]
+        },
+        {
+          "series_id": 753045,
+          "series_name": "soundwire: qcom: fix storing port config out-of-bounds",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=753045",
+          "lore_links": [
+            "https://lore.kernel.org/r/5f647902-436a-ea1c-412e-30afbc4e71a8@linux.intel.com",
+            "https://lore.kernel.org/r/8e5380cd-2ee4-95be-14df-add5ff440088@linaro.org",
+            "https://lore.kernel.org/r/ZICBvP33XyOswWFM@matsya"
+          ]
+        },
+        {
+          "series_id": 794799,
+          "series_name": "[1/2] ASoC: dt-bindings: qcom,q6dsp-lpass-ports: Add WSA2 audio ports IDs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=794799",
+          "lore_links": [
+            "https://lore.kernel.org/r/06a2c115-278a-47e0-b5ba-74639b6b23aa@linaro.org",
+            "https://lore.kernel.org/r/20f48d75-da68-4ba5-aaeb-d9ee12df7e15@linaro.org"
+          ]
+        },
+        {
+          "series_id": 802602,
+          "series_name": "[1/2] soundwire: qcom: drop unneeded qcom_swrm_stream_alloc_ports() cleanup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=802602",
+          "lore_links": [
+            "https://lore.kernel.org/r/170072407531.674978.2652900488518504446.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/4fe84f86-b7e8-4f71-8a01-dabb835959c3@linaro.org",
+            "https://lore.kernel.org/r/b7b7db08-7294-4085-8249-e7b1741dd796@linaro.org"
+          ]
+        },
+        {
+          "series_id": 803738,
+          "series_name": "ASoC: codecs: add support for WCD939x Codec",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=803738",
+          "lore_links": [
+            "https://lore.kernel.org/r/160fc6c4-b07d-49c5-976b-aa0fa35e4f0f@linaro.org",
+            "https://lore.kernel.org/r/4c5e29ed-3767-4d14-b067-92ac3f8efb27@linaro.org",
+            "https://lore.kernel.org/r/4fdab723-8549-4e1f-9930-9e856034437c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 808776,
+          "series_name": "[1/4] ASoC: dt-bindings: qcom,lpass-rx-macro: Add X1E80100 LPASS RX",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=808776",
+          "lore_links": [
+            "https://lore.kernel.org/r/170292049267.89121.1314873749419554799.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/20231211-cardstock-elevator-3e19f9d41ac2@spud",
+            "https://lore.kernel.org/r/20231214213600.GA975481-robh@kernel.org"
+          ]
+        },
+        {
+          "series_id": 838834,
+          "series_name": "ASoC: qcom: add support for qcm6490 machine",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=838834",
+          "lore_links": [
+            "https://lore.kernel.org/r/330dd13e-3ed3-4582-abce-b3bd99898bc3@linaro.org",
+            "https://lore.kernel.org/r/3dbb428f-0265-4741-a28e-5613799133e9@linaro.org",
+            "https://lore.kernel.org/r/917e99f1-3b4c-4f4d-b264-cb9b764a9222@kernel.org"
+          ]
+        },
+        {
+          "series_id": 844932,
+          "series_name": "ASoC: codecs: wcd937x: add wcd937x audio codec support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=844932",
+          "lore_links": [
+            "https://lore.kernel.org/r/09410fa9-265e-4fb0-9814-35dee465dbec@kernel.org",
+            "https://lore.kernel.org/r/171325390367.1353462.6738496215058640142.robh@kernel.org",
+            "https://lore.kernel.org/r/20240416143237.GA2250258-robh@kernel.org"
+          ]
+        },
+        {
+          "series_id": 976719,
+          "series_name": "ASoC: codecs: wcd937x/8x/9x: cleanup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=976719",
+          "lore_links": [
+            "https://lore.kernel.org/r/68c06500-a776-4f56-8514-c180b23f7715@oss.qualcomm.com",
+            "https://lore.kernel.org/r/aF7ZEi9qQxshnWed@vaman",
+            "https://lore.kernel.org/r/cy5cpzoidygeptqwxvnnjilads4npayv2zvu7hfff74defmygv@zglnb7ur4rw2"
+          ]
+        },
+        {
+          "series_id": 994077,
+          "series_name": "[1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=994077",
+          "lore_links": [
+            "https://lore.kernel.org/r/2566eea5-a153-42e6-9a43-1c0af5a4c11c@oss.qualcomm.com",
+            "https://lore.kernel.org/r/666b4115-3e81-42c8-8519-f6d7b16c66df@oss.qualcomm.com",
+            "https://lore.kernel.org/r/6a4a601b-937e-441f-80a7-3f733fc86445@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 997726,
+          "series_name": "soundwire: qcom: add support for v3.1.0 controller",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997726",
+          "lore_links": [
+            "https://lore.kernel.org/r/1bbacc5f-7371-4451-b503-cdd98e9f9688@oss.qualcomm.com",
+            "https://lore.kernel.org/r/20250902-light-vegan-snake-efe03c@kuoka",
+            "https://lore.kernel.org/r/20250902-thoughtful-quizzical-quoll-3ecbae@kuoka"
+          ]
+        },
+        {
+          "series_id": 997821,
+          "series_name": "[v2] ASoC: codecs: lpass-macro: Add support for channel map mixer control",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997821",
+          "lore_links": [
+            "https://lore.kernel.org/r/3b1c094f-5025-4e2c-83fc-e021293a49cc@oss.qualcomm.com",
+            "https://lore.kernel.org/r/708dc6e4-1566-4c72-9f3a-a34f935ac247@oss.qualcomm.com",
+            "https://lore.kernel.org/r/DD71KONODHKJ.15RI1DXF5T6PJ@linaro.org"
+          ]
+        },
+        {
+          "series_id": 999289,
+          "series_name": "ASoC: qcom: Fix lpaif_type and DAI configuration for I2S interface",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999289",
+          "lore_links": [
+            "https://lore.kernel.org/r/59775bbf-5e8d-4302-910f-94c7e1d5d9e3@oss.qualcomm.com",
+            "https://lore.kernel.org/r/a9eae2e3-0e75-4ffb-9de1-3b8a9bce86a6@oss.qualcomm.com",
+            "https://lore.kernel.org/r/b321019f-3ff6-4c6b-8285-77ca291492a2@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1008774,
+          "series_name": "ASoC: qcom: enable HDMI audio on SM8[456]50 HDK boards",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1008774",
+          "lore_links": [
+            "https://lore.kernel.org/r/0e8d380f-87fb-4b90-805a-3fd7d59c10e6@kernel.org",
+            "https://lore.kernel.org/r/4aa81228-9b25-4b7a-8fd0-7e51e7d77824@oss.qualcomm.com",
+            "https://lore.kernel.org/r/64719a5b-0747-4f3f-9bf9-c04900a5e0e5@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1009505,
+          "series_name": "ASoC: qcom: enable HDMI audio on SM8[456]50 HDK boards",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1009505",
+          "lore_links": [
+            "https://lore.kernel.org/r/44606de8-3446-472f-aa6b-25ff8b76e0ec@kernel.org",
+            "https://lore.kernel.org/r/488d9182-175e-47a9-9dc1-f43753d6fdbc@oss.qualcomm.com",
+            "https://lore.kernel.org/r/5aa30c94-33f1-4f40-9013-dfbac249ce91@kernel.org"
+          ]
+        },
+        {
+          "series_id": 1011875,
+          "series_name": "ASoC: qcom: q6dsp: fixes and updates",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1011875",
+          "lore_links": [
+            "https://lore.kernel.org/r/168c9cee-5f5b-4c45-82bd-45c911da4dd4@oss.qualcomm.com",
+            "https://lore.kernel.org/r/60a48dfb-e266-425d-8cfb-574c637f5e9d@oss.qualcomm.com",
+            "https://lore.kernel.org/r/7abcb827-4a7f-4855-811a-4212b8357333@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1014056,
+          "series_name": "ASoC: qcom: x1e80100: Add sound card support for Dell XPS13 9345",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1014056",
+          "lore_links": [
+            "https://lore.kernel.org/r/224288d8-9a04-4a76-95c7-c0af4ed967e3@kernel.org",
+            "https://lore.kernel.org/r/4d69e9ba-caa4-49bc-a66a-d085edfead4a@oss.qualcomm.com",
+            "https://lore.kernel.org/r/DDP0J063IX84.2MC5D16VHRFVR@linaro.org"
+          ]
+        },
+        {
+          "series_id": 1017351,
+          "series_name": "ASoC: codecs: lpass-macro: complete sm6115 support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1017351",
+          "lore_links": [
+            "https://lore.kernel.org/r/176176645546.2481487.18047032469966565976.robh@kernel.org",
+            "https://lore.kernel.org/r/176176645718.2481556.7862823985792459137.robh@kernel.org",
+            "https://lore.kernel.org/r/20251030-flat-elated-pony-de74ab@kuoka"
+          ]
+        },
+        {
+          "series_id": 1029188,
+          "series_name": "soundwire: qcom: Use guard to avoid mixing cleanup and goto",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1029188",
+          "lore_links": [
+            "https://lore.kernel.org/r/176587679319.348344.13509792002074257048.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/d0323387-df46-437a-bdae-719d142ad61e@oss.qualcomm.com",
+            "https://lore.kernel.org/r/fba86e25-3327-4fbf-86f1-485bbaeec32d@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1034101,
+          "series_name": "[v4,1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1034101",
+          "lore_links": [
+            "https://lore.kernel.org/r/176604606703.48417.8295362346139487733.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/b7ae5cac-5eef-4a3c-a1a8-01b1d1b796cb@oss.qualcomm.com"
+          ]
+        },
+        {
+          "series_id": 1051249,
+          "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1051249",
+          "lore_links": [
+            "https://lore.kernel.org/r/20260206-funny-beaver-of-trust-873343@quoll",
+            "https://lore.kernel.org/r/20260206-petite-tireless-iguana-addf9e@quoll",
+            "https://lore.kernel.org/r/20260206-smoky-owl-of-tempering-9eddbf@quoll"
+          ]
+        },
+        {
+          "series_id": 1056710,
+          "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1056710",
+          "lore_links": [
+            "https://lore.kernel.org/r/20260224-awesome-ibis-of-tolerance-5f7b98@quoll",
+            "https://lore.kernel.org/r/20260224-ethereal-koala-of-health-eab910@quoll",
+            "https://lore.kernel.org/r/3b4dfe95-9043-4682-8fee-7588fa1fde37@oss.qualcomm.com"
+          ]
+        }
+      ]
+    },
+    "Krzysztof Kozlowski": {
+      "review_interactions": 153,
+      "reviewed_series_count": 65,
+      "objection_frequency": 0.33986928104575165,
+      "objection_categories": {
+        "dt_schema": 89,
+        "controls": 34,
+        "soundwire": 52,
+        "dapm": 8,
+        "commit_message": 21,
+        "ownership_boundary": 4,
+        "patch_split": 1,
+        "refactor": 5,
+        "runtime_pm": 3
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 3.448611111111111,
+        "mean": 13.577688034188034,
+        "samples": 65
+      },
+      "review_round_distribution": {
+        "2": 12,
+        "1": 23,
+        "5": 7,
+        "3": 6,
+        "4": 5,
+        "6": 8,
+        "9": 4
+      },
+      "recurring_phrases": [
+        [
+          "best regards krzysztof",
+          152
+        ],
+        [
+          "devicetree bindings sound",
+          102
+        ],
+        [
+          "documentation devicetree bindings",
+          101
+        ],
+        [
+          "bindings sound qcom",
+          99
+        ],
+        [
+          "oss qualcomm com",
+          85
+        ],
+        [
+          "mohammad rafi shaik",
+          83
+        ],
+        [
+          "srinivas kandagatla srinivas",
+          81
+        ],
+        [
+          "kandagatla srinivas kandagatla",
+          81
+        ],
+        [
+          "krzysztof kozlowski krzysztof",
+          75
+        ],
+        [
+          "kozlowski krzysztof kozlowski",
+          75
+        ],
+        [
+          "sound soc qcom",
+          72
+        ],
+        [
+          "krzysztof kozlowski linaro",
+          68
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 3,
+        "patch_size_bins": {
+          "tiny": 32,
+          "small": 24,
+          "large": 5,
+          "medium": 4
+        },
+        "series_length_bins": {
+          "short": 22,
+          "medium": 25,
+          "single": 13,
+          "long": 5
+        },
+        "split_request_rate": 0.006535947712418301
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.006535947712418301,
+        "ownership_boundary_sensitivity": 0.026143790849673203,
+        "dt_schema_strictness": 0.5816993464052288,
+        "commit_message_expectation": 0.13725490196078433,
+        "refactor_tolerance_inverse": 0.0196078431372549,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.0196078431372549,
+        "soundwire_lifecycle_preference": 0.33986928104575165
+      },
+      "common_rejection_patterns": [
+        "dt_schema",
+        "soundwire",
+        "controls",
+        "commit_message",
+        "dapm"
+      ],
+      "acceptance_indicators_frequency": 0.45751633986928103,
+      "evidence_series": [
+        {
+          "series_id": 652656,
+          "series_name": "ASoC: dt-bindings: Add bindings for WCD9335 DAIs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=652656",
+          "lore_links": [
+            "https://lore.kernel.org/r/486c2e98-db05-de1e-122e-bda3f844e4ee@linaro.org",
+            "https://lore.kernel.org/r/5421df1e-6e86-27a4-3da7-c15661aee190@linaro.org",
+            "https://lore.kernel.org/r/60b0074f-f29b-da1f-d6d0-0085e17e5dcb@linaro.org"
+          ]
+        },
+        {
+          "series_id": 652855,
+          "series_name": "ASoC: dt-bindings: Add bindings for WCD9335 DAIs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=652855",
+          "lore_links": [
+            "https://lore.kernel.org/r/3008fa44-e3b2-f394-5880-e348ace20829@linaro.org"
+          ]
+        },
+        {
+          "series_id": 668754,
+          "series_name": "ASoC: codecs: lpass: add support fro sm8450 and sc8280xp",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=668754",
+          "lore_links": [
+            "https://lore.kernel.org/r/08916db2-65f3-5e0b-7b98-7cbaff5b7059@linaro.org",
+            "https://lore.kernel.org/r/20220818171111.GF1978870-robh@kernel.org",
+            "https://lore.kernel.org/r/20220818171222.GG1978870-robh@kernel.org"
+          ]
+        },
+        {
+          "series_id": 674578,
+          "series_name": "ASoC: qcom: add support for sc8280xp machine",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=674578",
+          "lore_links": [
+            "https://lore.kernel.org/r/6cc3a526-8ff8-8000-d406-c4d8949c6f68@linaro.org",
+            "https://lore.kernel.org/r/7206917a-1250-8669-0b25-fe5c18bbc98f@linaro.org",
+            "https://lore.kernel.org/r/829cdeaa-a80b-96e2-da7a-8bab2b741c91@linaro.org"
+          ]
+        },
+        {
+          "series_id": 675095,
+          "series_name": "ASoC: qcom: add support for sc8280xp machine",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=675095",
+          "lore_links": [
+            "https://lore.kernel.org/r/06748378-f5a3-5dec-eba0-58123084c51b@linaro.org",
+            "https://lore.kernel.org/r/6b11389c-35fc-122b-5ee8-a00675f19540@linaro.org",
+            "https://lore.kernel.org/r/6e6b12aa-f516-6ea1-58e5-f46033b84985@linaro.org"
+          ]
+        },
+        {
+          "series_id": 677657,
+          "series_name": "ASoC: qcom: add support for sc8280xp machine",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=677657",
+          "lore_links": [
+            "https://lore.kernel.org/r/d8950be7-7b8b-6ad0-5825-c090e0c9b04d@linaro.org"
+          ]
+        },
+        {
+          "series_id": 680359,
+          "series_name": "[-next] ASoC: codecs: wcd934x: Fix Kconfig dependency",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=680359",
+          "lore_links": [
+            "https://lore.kernel.org/r/166427761398.294040.9515810041975112450.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/aca7f1c2-488e-28b7-2ea5-ead507aa535c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 689002,
+          "series_name": "soundwire: qcom: fixes and support for v1.7",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=689002",
+          "lore_links": [
+            "https://lore.kernel.org/r/5264f9e1-b67e-479d-843c-c92230cfd0c3@linaro.org",
+            "https://lore.kernel.org/r/86b64496-71e0-7e2d-0911-f67e1684db20@linux.intel.com",
+            "https://lore.kernel.org/r/e3ebba30-65ec-183a-eb91-c5147c28441d@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 695479,
+          "series_name": "ASoC: codec: lpass-va: add npl clock support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=695479",
+          "lore_links": [
+            "https://lore.kernel.org/r/090831eb-2c7a-56c2-601e-e910431a9403@linaro.org",
+            "https://lore.kernel.org/r/f3a6a7b1-b196-0abb-0c18-8a13908c6891@linaro.org"
+          ]
+        },
+        {
+          "series_id": 696789,
+          "series_name": "ASoC: codec: lpass-va: add npl clock support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=696789",
+          "lore_links": [
+            "https://lore.kernel.org/r/838e7657-817c-e5bd-5a45-d852560c7fe1@linaro.org",
+            "https://lore.kernel.org/r/af7f1b14-6b46-54af-19fd-de8d1de535db@linaro.org",
+            "https://lore.kernel.org/r/c3a2316f-2956-6417-f1ea-a6a64df037c6@linaro.org"
+          ]
+        },
+        {
+          "series_id": 713522,
+          "series_name": "Update lpass dt-bindings",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=713522",
+          "lore_links": [
+            "https://lore.kernel.org/r/167413318302.1585278.7105957388478984370.robh@kernel.org",
+            "https://lore.kernel.org/r/452b332a-d796-119c-e80a-e68914f46702@kernel.org",
+            "https://lore.kernel.org/r/a67ae6ac-10ff-a7ab-7c75-05218dd0c05f@kernel.org"
+          ]
+        },
+        {
+          "series_id": 714077,
+          "series_name": "Update lpass dt-bindings",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=714077",
+          "lore_links": [
+            "https://lore.kernel.org/r/bbb4f42a-28a1-e54d-28d2-1c3c23fc9074@kernel.org",
+            "https://lore.kernel.org/r/e59e3933-1fa2-06c7-9038-3b58822a4a61@kernel.org"
+          ]
+        },
+        {
+          "series_id": 803662,
+          "series_name": "soundwire: qcom: set controller id to hw master id",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=803662",
+          "lore_links": [
+            "https://lore.kernel.org/r/170080912346.720753.8349008868499476969.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/1d21fe73-495d-49b8-be90-e8f3458c5419@linaro.org"
+          ]
+        },
+        {
+          "series_id": 803738,
+          "series_name": "ASoC: codecs: add support for WCD939x Codec",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=803738",
+          "lore_links": [
+            "https://lore.kernel.org/r/160fc6c4-b07d-49c5-976b-aa0fa35e4f0f@linaro.org",
+            "https://lore.kernel.org/r/4c5e29ed-3767-4d14-b067-92ac3f8efb27@linaro.org",
+            "https://lore.kernel.org/r/4fdab723-8549-4e1f-9930-9e856034437c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 806040,
+          "series_name": "ASoC: codecs: add support for WCD939x Codec",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=806040",
+          "lore_links": [
+            "https://lore.kernel.org/r/1a09512c-aaff-4fb6-914e-db755ce6e667@suswa.mountain",
+            "https://lore.kernel.org/r/202312060107.dTzr6BK9-lkp@intel.com",
+            "https://lore.kernel.org/r/202312060158.z29IZpw9-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 808754,
+          "series_name": "ASoC: codec: wsa884x: make use of new mute_unmute_on_trigger flag",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=808754",
+          "lore_links": [
+            "https://lore.kernel.org/r/170231161312.85457.4028188008468218226.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/f694dfd0-f1cd-4d24-8b40-1d5b6d2919ee@linaro.org"
+          ]
+        },
+        {
+          "series_id": 809085,
+          "series_name": "ASoC: qcom: add sound card support for SM8650",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=809085",
+          "lore_links": [
+            "https://lore.kernel.org/r/fdf85318-2553-48ef-86f7-b8ea515793b5@linaro.org",
+            "https://lore.kernel.org/r/ff5dc990-70f4-47a6-8ef2-c93135c08b9b@linaro.org"
+          ]
+        },
+        {
+          "series_id": 811405,
+          "series_name": "ASoC: dt-bindings: qcom,lpass-va-macro: remove spurious contains in if statement",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=811405",
+          "lore_links": [
+            "https://lore.kernel.org/r/170300430078.102048.8496688469911862862.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/bb5f7150-e9ab-4fd0-a727-db348912d371@linaro.org"
+          ]
+        },
+        {
+          "series_id": 838834,
+          "series_name": "ASoC: qcom: add support for qcm6490 machine",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=838834",
+          "lore_links": [
+            "https://lore.kernel.org/r/330dd13e-3ed3-4582-abce-b3bd99898bc3@linaro.org",
+            "https://lore.kernel.org/r/3dbb428f-0265-4741-a28e-5613799133e9@linaro.org",
+            "https://lore.kernel.org/r/917e99f1-3b4c-4f4d-b264-cb9b764a9222@kernel.org"
+          ]
+        },
+        {
+          "series_id": 844932,
+          "series_name": "ASoC: codecs: wcd937x: add wcd937x audio codec support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=844932",
+          "lore_links": [
+            "https://lore.kernel.org/r/09410fa9-265e-4fb0-9814-35dee465dbec@kernel.org",
+            "https://lore.kernel.org/r/171325390367.1353462.6738496215058640142.robh@kernel.org",
+            "https://lore.kernel.org/r/20240416143237.GA2250258-robh@kernel.org"
+          ]
+        },
+        {
+          "series_id": 847767,
+          "series_name": "ASoC: codecs: wcd937x: add wcd937x audio codec support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=847767",
+          "lore_links": [
+            "https://lore.kernel.org/r/171404149555.2167007.16345461403970586923.robh@kernel.org",
+            "https://lore.kernel.org/r/260f8e7c-d96e-4f47-bccd-414e3443fcff@kernel.org",
+            "https://lore.kernel.org/r/3f961aca-6dff-4d51-bb0b-c974ed80b646@kernel.org"
+          ]
+        },
+        {
+          "series_id": 853573,
+          "series_name": "ASoC: codecs: wcd937x: add wcd937x audio codec support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=853573",
+          "lore_links": [
+            "https://lore.kernel.org/r/91f581ef-58ea-4b98-80e2-dd9b14a61c60@sirena.org.uk",
+            "https://lore.kernel.org/r/f766e8fc-64e7-4579-ac5a-4afcdae067cc@sirena.org.uk",
+            "https://lore.kernel.org/r/ff003cb8-460b-4a97-b4f7-990244781209@kernel.org"
+          ]
+        },
+        {
+          "series_id": 855563,
+          "series_name": "ASoC: codecs: wcd937x: add wcd937x audio codec support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=855563",
+          "lore_links": [
+            "https://lore.kernel.org/r/4a0778c3-163e-468b-9a67-e4c450e33436@kernel.org"
+          ]
+        },
+        {
+          "series_id": 861578,
+          "series_name": "ASoC: codecs: lpass: add support for v2.5 rx macro",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=861578",
+          "lore_links": [
+            "https://lore.kernel.org/r/7b9c8a44-d0cd-4689-986c-f16d1239c91b@linaro.org",
+            "https://lore.kernel.org/r/a6793126-ba1c-4679-a2c2-eabad4f5a506@linaro.org"
+          ]
+        },
+        {
+          "series_id": 866133,
+          "series_name": "ASoC: codecs: wsa88xx: add support for static port mapping.",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=866133",
+          "lore_links": [
+            "https://lore.kernel.org/r/30bfbc93-de08-4699-9bb2-53e47e3d129d@linaro.org",
+            "https://lore.kernel.org/r/3b897a1a-bd5d-4e6b-8289-a9c6b280f193@linaro.org",
+            "https://lore.kernel.org/r/654bc4b9-dcc9-4d77-92c8-1b077c99cdd9@linaro.org"
+          ]
+        }
+      ]
+    },
+    "Liam Girdwood": {
+      "review_interactions": 0,
+      "reviewed_series_count": 0,
+      "objection_frequency": 0.0,
+      "objection_categories": {},
+      "acceptance_rate_on_reviewed_series": 0.0,
+      "review_latency_hours": {
+        "median": null,
+        "mean": null,
+        "samples": 0
+      },
+      "review_round_distribution": {},
+      "recurring_phrases": [],
+      "preferred_patch_topology": {
+        "median_patch_count": null,
+        "patch_size_bins": {},
+        "series_length_bins": {},
+        "split_request_rate": 0.0
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.0,
+        "ownership_boundary_sensitivity": 0.0,
+        "dt_schema_strictness": 0.0,
+        "commit_message_expectation": 0.0,
+        "refactor_tolerance_inverse": 0.0,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.0,
+        "soundwire_lifecycle_preference": 0.0
+      },
+      "common_rejection_patterns": [],
+      "acceptance_indicators_frequency": 0.0,
+      "evidence_series": []
+    },
+    "Mark Brown": {
+      "review_interactions": 441,
+      "reviewed_series_count": 334,
+      "objection_frequency": 0.20634920634920634,
+      "objection_categories": {
+        "dt_schema": 70,
+        "patch_split": 263,
+        "runtime_pm": 35,
+        "commit_message": 31,
+        "controls": 77,
+        "dapm": 19,
+        "soundwire": 87,
+        "ownership_boundary": 19,
+        "refactor": 13
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 15.51625,
+        "mean": 89.6670400864937,
+        "samples": 334
+      },
+      "review_round_distribution": {
+        "2": 60,
+        "1": 215,
+        "5": 9,
+        "9": 7,
+        "7": 2,
+        "3": 18,
+        "11": 4,
+        "4": 11,
+        "6": 8
+      },
+      "recurring_phrases": [
+        [
+          "broonie sound git",
+          258
+        ],
+        [
+          "all well means",
+          258
+        ],
+        [
+          "well means integrated",
+          258
+        ],
+        [
+          "means integrated linux-next",
+          258
+        ],
+        [
+          "integrated linux-next tree",
+          258
+        ],
+        [
+          "linux-next tree usually",
+          258
+        ],
+        [
+          "tree usually sometime",
+          258
+        ],
+        [
+          "usually sometime next",
+          258
+        ],
+        [
+          "sometime next hours",
+          258
+        ],
+        [
+          "next hours sent",
+          258
+        ],
+        [
+          "hours sent linus",
+          258
+        ],
+        [
+          "sent linus during",
+          258
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 1.0,
+        "patch_size_bins": {
+          "small": 66,
+          "tiny": 238,
+          "large": 12,
+          "medium": 18
+        },
+        "series_length_bins": {
+          "short": 52,
+          "single": 237,
+          "medium": 28,
+          "long": 17
+        },
+        "split_request_rate": 0.5963718820861678
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.5963718820861678,
+        "ownership_boundary_sensitivity": 0.04308390022675737,
+        "dt_schema_strictness": 0.15873015873015872,
+        "commit_message_expectation": 0.07029478458049887,
+        "refactor_tolerance_inverse": 0.0045351473922902496,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.07936507936507936,
+        "soundwire_lifecycle_preference": 0.19727891156462585
+      },
+      "common_rejection_patterns": [
+        "patch_split",
+        "soundwire",
+        "controls",
+        "dt_schema",
+        "runtime_pm"
+      ],
+      "acceptance_indicators_frequency": 0.6235827664399093,
+      "evidence_series": [
+        {
+          "series_id": 277321,
+          "series_name": "[v2,1/2] dt-bindings: sound: lpass-cpu: Document DAI subnodes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=277321",
+          "lore_links": [
+            "https://lore.kernel.org/r/158868105044.51563.15433748499783582656.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/c7c85cba-7179-3c12-465e-66197035c7f2@linaro.org"
+          ]
+        },
+        {
+          "series_id": 372987,
+          "series_name": "[1/2] ASoC: qcom: dt-bindings: sm8250: update compatibles",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=372987",
+          "lore_links": [
+            "https://lore.kernel.org/r/160398881039.39922.12061096532284319098.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 378095,
+          "series_name": "ASoc: qcom: lpass-cpu: fix warning on symbol scope",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=378095",
+          "lore_links": [
+            "https://lore.kernel.org/r/160459472201.54851.16145337656308904668.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 378173,
+          "series_name": "ASoC: qcom: common: Fix refcounting in qcom_snd_parse_of()",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=378173",
+          "lore_links": [
+            "https://lore.kernel.org/r/160504428419.41991.2200034841116895694.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 380223,
+          "series_name": "ASoC: qcom: sc7180: Add missing PM ops",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=380223",
+          "lore_links": [
+            "https://lore.kernel.org/r/160495125733.49154.11647929702514464617.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 383895,
+          "series_name": "Asoc: qcom: sc7180: Register shutdown handler for lpass platform",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=383895",
+          "lore_links": [
+            "https://lore.kernel.org/r/160556956527.29683.12943309254001939669.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 384345,
+          "series_name": "Asoc: qcom: lpass-platform: Fix memory leak",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=384345",
+          "lore_links": [
+            "https://lore.kernel.org/r/160556956526.29683.2121148120940564064.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/20201116190400.GE4739@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 384737,
+          "series_name": "Asoc: qcom: lpass-sc7180: Add 32 bit format support for capture",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=384737",
+          "lore_links": [
+            "https://lore.kernel.org/r/160556956527.29683.2982806188163092654.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 384997,
+          "series_name": "ASoC: qcom: sc7180: initialize the \"no_headphone\" variable",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=384997",
+          "lore_links": [
+            "https://lore.kernel.org/r/160556956526.29683.11951945809418219234.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 387499,
+          "series_name": "ASoC: qcom: sm8250: fix HDMI audio playback",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=387499",
+          "lore_links": [
+            "https://lore.kernel.org/r/160590773741.47461.18033846696938877967.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/72b89b80-d548-4f4d-2da6-a83fd723366e@linaro.org"
+          ]
+        },
+        {
+          "series_id": 388337,
+          "series_name": "ASoC: codecs: lpass-va-macro: add missing MODULE_DEVICE_TABLE",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=388337",
+          "lore_links": [
+            "https://lore.kernel.org/r/160590773742.47461.7039529678765787843.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 389575,
+          "series_name": "Asoc: qcom: Fix enabling BCLK and LRCLK in LPAIF invalid state",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=389575",
+          "lore_links": [
+            "https://lore.kernel.org/r/160616391558.20973.7389509283379786250.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/20201123165124.GI6322@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 391875,
+          "series_name": "Asoc: qcom: Fix for problem in resume with CRAS",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=391875",
+          "lore_links": [
+            "https://lore.kernel.org/r/20201127123856.GA4845@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 394399,
+          "series_name": "ASoC: codecs: lpass-va-macro: remove some dead code",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=394399",
+          "lore_links": [
+            "https://lore.kernel.org/r/160692956495.33960.17489548804315513103.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/7e06abb2-a969-aa1a-6adc-6cdd72e3355c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 395885,
+          "series_name": "ASoC: qcom: fix QDSP6 dependencies, attempt #3",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=395885",
+          "lore_links": [
+            "https://lore.kernel.org/r/160712460214.7629.13610030760770322456.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/8323d386-c3f1-2db6-1870-2279784dd85e@linaro.org"
+          ]
+        },
+        {
+          "series_id": 400789,
+          "series_name": "ASoC: qcom: qdsp6: Move frontend AIFs to q6asm-dai",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=400789",
+          "lore_links": [
+            "https://lore.kernel.org/r/161055160365.21623.6334522297634428774.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 415783,
+          "series_name": "ASoC: qcom: Fix number of HDMI RDMA channels on sc7180",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=415783",
+          "lore_links": [
+            "https://lore.kernel.org/r/161125795422.35635.5979635189908672108.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/20210122133901.GC6391@sirena.org.uk",
+            "https://lore.kernel.org/r/89cc3dfb-35da-3498-b126-b440c91f9a45@codeaurora.org"
+          ]
+        },
+        {
+          "series_id": 417587,
+          "series_name": "ASoC: qcom: lpass-ipq806x: fix bitwidth regmap field",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=417587",
+          "lore_links": [
+            "https://lore.kernel.org/r/161118753484.45718.12934710533567816798.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 421005,
+          "series_name": "[v2] ASoC: qcom: lpass: Fix out-of-bounds DAI ID lookup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=421005",
+          "lore_links": [
+            "https://lore.kernel.org/r/161158424212.32959.4363498629836769179.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/5839ced8-4dba-398a-6637-139749850819@linaro.org"
+          ]
+        },
+        {
+          "series_id": 423015,
+          "series_name": "[v2] ASoC: qcom: lpass-cpu: Remove bit clock state check",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=423015",
+          "lore_links": [
+            "https://lore.kernel.org/r/161186727762.43763.16675933644941230011.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/752d2980-2c84-c03f-7960-b9de8027c4d6@linaro.org"
+          ]
+        },
+        {
+          "series_id": 423813,
+          "series_name": "ASoC: codecs: add support for LPASS Codec TX and RX macros",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=423813",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210128160718.GE4537@sirena.org.uk",
+            "https://lore.kernel.org/r/20210129150843.GC4560@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 425383,
+          "series_name": "[v2] ASoC: qcom: lpass: Fix i2s ctl register bit map",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=425383",
+          "lore_links": [
+            "https://lore.kernel.org/r/161255607745.56562.7339154592413993847.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 425883,
+          "series_name": "ASoC: qcom: Fix typo error in HDMI regmap config callbacks",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=425883",
+          "lore_links": [
+            "https://lore.kernel.org/r/161228008450.11888.13128911236969601728.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/161228602729.76967.7642340787963440028@swboyd.mtv.corp.google.com"
+          ]
+        },
+        {
+          "series_id": 430021,
+          "series_name": "ASoC: codecs: add support for LPASS Codec TX and RX macros",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=430021",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210208160830.GI8645@sirena.org.uk",
+            "https://lore.kernel.org/r/202102091415.gcIqYaN4-lkp@intel.com",
+            "https://lore.kernel.org/r/202102101439.GV6ErOfY-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 433655,
+          "series_name": "[next] ASoC: codecs: lpass-rx-macro: Fix uninitialized variable ec_tx",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=433655",
+          "lore_links": [
+            "https://lore.kernel.org/r/161408943852.48131.13240298966962769896.b4-ty@kernel.org"
+          ]
+        }
+      ]
+    },
+    "Pierre-Louis Bossart": {
+      "review_interactions": 133,
+      "reviewed_series_count": 48,
+      "objection_frequency": 0.518796992481203,
+      "objection_categories": {
+        "soundwire": 102,
+        "controls": 72,
+        "refactor": 7,
+        "dt_schema": 11,
+        "runtime_pm": 45,
+        "dapm": 11,
+        "patch_split": 2,
+        "commit_message": 16,
+        "ownership_boundary": 3
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 1.600138888888889,
+        "mean": 45.43325810185184,
+        "samples": 48
+      },
+      "review_round_distribution": {
+        "2": 16,
+        "4": 2,
+        "6": 4,
+        "1": 15,
+        "9": 1,
+        "3": 5,
+        "11": 5
+      },
+      "recurring_phrases": [
+        [
+          "drivers soundwire qcom",
+          133
+        ],
+        [
+          "struct device dev",
+          64
+        ],
+        [
+          "struct qcom_swrm_ctrl ctrl",
+          53
+        ],
+        [
+          "soundwire qcom drivers",
+          52
+        ],
+        [
+          "qcom drivers soundwire",
+          52
+        ],
+        [
+          "sound soc codecs",
+          49
+        ],
+        [
+          "ctrl- reg_write ctrl",
+          45
+        ],
+        [
+          "srinivas kandagatla wrote",
+          43
+        ],
+        [
+          "ret dev_err dev",
+          42
+        ],
+        [
+          "struct q6apm_graph graph",
+          39
+        ],
+        [
+          "struct q6apm apm",
+          35
+        ],
+        [
+          "static const struct",
+          33
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 3.0,
+        "patch_size_bins": {
+          "tiny": 24,
+          "small": 14,
+          "large": 4,
+          "medium": 6
+        },
+        "series_length_bins": {
+          "medium": 11,
+          "short": 11,
+          "long": 8,
+          "single": 18
+        },
+        "split_request_rate": 0.015037593984962405
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.015037593984962405,
+        "ownership_boundary_sensitivity": 0.022556390977443608,
+        "dt_schema_strictness": 0.08270676691729323,
+        "commit_message_expectation": 0.12030075187969924,
+        "refactor_tolerance_inverse": 0.015037593984962405,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.3383458646616541,
+        "soundwire_lifecycle_preference": 0.7669172932330827
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "controls",
+        "runtime_pm",
+        "commit_message",
+        "dt_schema"
+      ],
+      "acceptance_indicators_frequency": 0.18796992481203006,
+      "evidence_series": [
+        {
+          "series_id": 344221,
+          "series_name": "soundwire: qcom: add support for mmio soundwire master",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=344221",
+          "lore_links": [
+            "https://lore.kernel.org/r/69955702-c61c-a961-72fd-2f8a6b3ab978@linux.intel.com",
+            "https://lore.kernel.org/r/ad39f109-bfc9-332e-adc2-355499db1ab7@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 349791,
+          "series_name": "soundwire: qcom: fix IP version v1.5.1 support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=349791",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200916124634.GM2968@vkoul-mobl",
+            "https://lore.kernel.org/r/20200916124911.GN2968@vkoul-mobl",
+            "https://lore.kernel.org/r/20200916142929.GR2968@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 424537,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=424537",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210201141345.GA2771@vkoul-mobl",
+            "https://lore.kernel.org/r/20210201141642.GB2771@vkoul-mobl",
+            "https://lore.kernel.org/r/20210201142134.GC2771@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 439063,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=439063",
+          "lore_links": [
+            "https://lore.kernel.org/r/00842f73-c0fb-5728-3ed0-c0a1fd75f94e@linux.intel.com",
+            "https://lore.kernel.org/r/06a687f6-e79c-9bad-32c2-ea61356f882e@linux.intel.com",
+            "https://lore.kernel.org/r/de3b8223-f51d-6cb1-6346-7bd7dcefb482@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 439115,
+          "series_name": "soundwire: qcom: add Clock Stop and Auto Enumeration support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=439115",
+          "lore_links": [
+            "https://lore.kernel.org/r/01e5ea33-1813-069a-1674-042141947323@linux.intel.com",
+            "https://lore.kernel.org/r/0c551b23-7ed4-59d7-72c2-284bdf8584f1@linux.intel.com",
+            "https://lore.kernel.org/r/2899ca9e-2938-4d8d-5e56-49eba8cdb920@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 443867,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=443867",
+          "lore_links": [
+            "https://lore.kernel.org/r/ab00438b-dbb9-e6c6-019a-d50494e5dee1@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 451453,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=451453",
+          "lore_links": [
+            "https://lore.kernel.org/r/00c2f3cf-ef72-0fdc-3c7a-9ccb6d075191@linux.intel.com",
+            "https://lore.kernel.org/r/20210326015200.GA2160488@robh.at.kernel.org",
+            "https://lore.kernel.org/r/26038ba1-e8f6-08e3-bee5-673d69d7decd@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 458535,
+          "series_name": "soundwire: qcom: use signed variable for error return",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=458535",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210331162413.GJ904837@yoga",
+            "https://lore.kernel.org/r/9cdef4e9-a38a-6c77-1b23-739f85384b12@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 458885,
+          "series_name": "[V2] soundwire: qcom: use signed variable for error return",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=458885",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210331162619.GK904837@yoga",
+            "https://lore.kernel.org/r/4aafedf4-46f7-be2a-6422-e5611f8390f8@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 458935,
+          "series_name": "soundwire: qcom: wait for fifo space to be available before read/write",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=458935",
+          "lore_links": [
+            "https://lore.kernel.org/r/YGVxNBKAESSLMeQ+@vkoul-mobl.Dlink",
+            "https://lore.kernel.org/r/ad9f1d18-8f72-9a53-535a-ab5a99379016@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 459339,
+          "series_name": "[v2] soundwire: qcom: wait for fifo space to be available before read/write",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=459339",
+          "lore_links": [
+            "https://lore.kernel.org/r/YGvph03m7w5DbATC@vkoul-mobl.Dlink",
+            "https://lore.kernel.org/r/e1bcc85d-b583-2c9a-18e5-634994cc2916@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 494131,
+          "series_name": "ASoC: codecs: wcd934x: add Headset and button detection support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=494131",
+          "lore_links": [
+            "https://lore.kernel.org/r/139e6867-2d29-09e0-d059-399917e5962d@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 515555,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=515555",
+          "lore_links": [
+            "https://lore.kernel.org/r/202107150433.A3yyk5gC-lkp@intel.com",
+            "https://lore.kernel.org/r/202107151514.nTTVXinl-lkp@intel.com",
+            "https://lore.kernel.org/r/20210728173649.GA1290628@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 541709,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=541709",
+          "lore_links": [
+            "https://lore.kernel.org/r/081e6734-a258-6d21-cf66-f00bfeb38b04@linux.intel.com",
+            "https://lore.kernel.org/r/20210903172927.GN4932@sirena.org.uk",
+            "https://lore.kernel.org/r/202109040510.hCGhK1PH-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 543071,
+          "series_name": "soundwire: qcom: add debugfs entry for soundwire register dump",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=543071",
+          "lore_links": [
+            "https://lore.kernel.org/r/YVaMlSbmFnrQyb0u@matsya",
+            "https://lore.kernel.org/r/YXA0q+3ER3zFpyOw@matsya",
+            "https://lore.kernel.org/r/ada6763f-7821-6388-2c7a-3a771450c7bf@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 547297,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=547297",
+          "lore_links": [
+            "https://lore.kernel.org/r/4cd0e63f-107b-d10a-11e9-bced83f487a5@linux.intel.com",
+            "https://lore.kernel.org/r/83c503aa-7cb2-e6fa-e22a-b359a9cb9059@linux.intel.com",
+            "https://lore.kernel.org/r/9d02f47c-0fe5-b8b9-6b55-17678ac05c22@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 550375,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=550375",
+          "lore_links": [
+            "https://lore.kernel.org/r/7021cdec-382b-faa9-cf6c-ee06edbf19a7@linux.intel.com",
+            "https://lore.kernel.org/r/767aebb5-9aa2-8d6c-2569-eaa03f47379f@linux.intel.com",
+            "https://lore.kernel.org/r/b2d677c6-db3b-1b4b-9121-dabdf56cb137@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 553505,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=553505",
+          "lore_links": [
+            "https://lore.kernel.org/r/20605122-e6b4-1b5f-003a-96a74306f984@linux.intel.com",
+            "https://lore.kernel.org/r/2be40835-e98a-ff3f-71b1-ab2dd80086c3@linux.intel.com",
+            "https://lore.kernel.org/r/d1f69cbc-37f6-dc47-258c-f53450dd558c@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 556377,
+          "series_name": "ASoC: qcom: soundwire: Enable soundwire bus clock for version 1.6",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=556377",
+          "lore_links": [
+            "https://lore.kernel.org/r/YVyE+ytKVmOh85c3@ripper",
+            "https://lore.kernel.org/r/a2b6a9c7-2191-4bc9-b03b-3b22b495a4be@linux.intel.com",
+            "https://lore.kernel.org/r/d485af5f-4dfb-df08-9a22-901b7534ca3b@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 616250,
+          "series_name": "soundwire: qcom: add pm runtime support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=616250",
+          "lore_links": [
+            "https://lore.kernel.org/r/49099bcb-35e9-0bea-9658-006caed3ab33@linux.intel.com",
+            "https://lore.kernel.org/r/5e050d4c-e3d2-35fb-ca49-7be53579bc31@linux.intel.com",
+            "https://lore.kernel.org/r/6e79238c-2ceb-0ae7-2b37-7ffac777db60@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 616303,
+          "series_name": "ASoC: codec: add pm runtime support for Qualcomm codecs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=616303",
+          "lore_links": [
+            "https://lore.kernel.org/r/YhOuvdsKu6zOg2p/@sirena.org.uk",
+            "https://lore.kernel.org/r/YhOx+nQ/G+HNRXbq@sirena.org.uk",
+            "https://lore.kernel.org/r/YhPCWDmS2PV/AD1E@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 617524,
+          "series_name": "ASoC: codecs: add pm runtime support for Qualcomm codecs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=617524",
+          "lore_links": [
+            "https://lore.kernel.org/r/522ab282-ecc2-4186-2d77-f6241e255109@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 617581,
+          "series_name": "soundwire: qcom: add pm runtime support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=617581",
+          "lore_links": [
+            "https://lore.kernel.org/r/3dbed2f1-0c6d-9ba6-232f-db57ec9097ce@linux.intel.com",
+            "https://lore.kernel.org/r/87f434b5-0e99-d1d1-e4d1-248cf35cd05c@linux.intel.com",
+            "https://lore.kernel.org/r/Yhk6L+Z7cOs5z6hr@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 618059,
+          "series_name": "[v2] soundwire: qcom: remove redundant wait for completion",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=618059",
+          "lore_links": [
+            "https://lore.kernel.org/r/06650d56-eed3-73ad-d6b4-6b56a5a70669@linux.intel.com",
+            "https://lore.kernel.org/r/4811be6f-7e86-2a62-94cf-98504d5e64e7@linaro.org",
+            "https://lore.kernel.org/r/a99a59eb-cd59-f566-b98d-486c94f32eec@linaro.org"
+          ]
+        },
+        {
+          "series_id": 618776,
+          "series_name": "[v4] ASoC: codecs: wsa881x: add runtime pm support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=618776",
+          "lore_links": [
+            "https://lore.kernel.org/r/164608703449.3143764.5366445148621158953.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/b1b0a8b9-5fc2-bfe1-dfde-692a0a7ac34a@linux.intel.com"
+          ]
+        }
+      ]
+    },
+    "Rob Herring": {
+      "review_interactions": 129,
+      "reviewed_series_count": 70,
+      "objection_frequency": 0.20155038759689922,
+      "objection_categories": {
+        "dt_schema": 128,
+        "soundwire": 32,
+        "controls": 28,
+        "dapm": 9,
+        "refactor": 6,
+        "commit_message": 3,
+        "patch_split": 5,
+        "ownership_boundary": 6
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 6.744861111111111,
+        "mean": 41.16973015873014,
+        "samples": 70
+      },
+      "review_round_distribution": {
+        "2": 8,
+        "5": 2,
+        "6": 5,
+        "9": 13,
+        "3": 7,
+        "11": 7,
+        "13": 6,
+        "4": 2,
+        "1": 20
+      },
+      "recurring_phrases": [
+        [
+          "documentation devicetree bindings",
+          317
+        ],
+        [
+          "devicetree bindings sound",
+          263
+        ],
+        [
+          "bindings sound qcom",
+          249
+        ],
+        [
+          "arch arm64 boot",
+          95
+        ],
+        [
+          "arm64 boot dts",
+          95
+        ],
+        [
+          "boot dts qcom",
+          95
+        ],
+        [
+          "yaml file changed",
+          87
+        ],
+        [
+          "file changed insertions",
+          83
+        ],
+        [
+          "robh kernel org",
+          74
+        ],
+        [
+          "yaml arch arm64",
+          74
+        ],
+        [
+          "sound google sc7280-herobrine",
+          69
+        ],
+        [
+          "rob herring robh",
+          68
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 4.0,
+        "patch_size_bins": {
+          "small": 17,
+          "large": 7,
+          "medium": 23,
+          "tiny": 23
+        },
+        "series_length_bins": {
+          "short": 25,
+          "medium": 24,
+          "long": 15,
+          "single": 6
+        },
+        "split_request_rate": 0.03875968992248062
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.03875968992248062,
+        "ownership_boundary_sensitivity": 0.046511627906976744,
+        "dt_schema_strictness": 0.9922480620155039,
+        "commit_message_expectation": 0.023255813953488372,
+        "refactor_tolerance_inverse": 0.0,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.0,
+        "soundwire_lifecycle_preference": 0.24806201550387597
+      },
+      "common_rejection_patterns": [
+        "dt_schema",
+        "soundwire",
+        "controls",
+        "dapm",
+        "refactor"
+      ],
+      "acceptance_indicators_frequency": 0.627906976744186,
+      "evidence_series": [
+        {
+          "series_id": 267389,
+          "series_name": "[1/2] dt-bindings: sound: lpass-cpu: Document DAI subnodes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=267389",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200415000649.GA28504@bogus"
+          ]
+        },
+        {
+          "series_id": 431299,
+          "series_name": "ASoC: codecs: add support for LPASS Codec TX and RX macros",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=431299",
+          "lore_links": [
+            "https://lore.kernel.org/r/202102101839.LuUYSQ7H-lkp@intel.com",
+            "https://lore.kernel.org/r/20210210201656.GA2686235@robh.at.kernel.org",
+            "https://lore.kernel.org/r/20210210201758.GA2688240@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 446979,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=446979",
+          "lore_links": [
+            "https://lore.kernel.org/r/202103201442.RXyvtmaC-lkp@intel.com",
+            "https://lore.kernel.org/r/20210323224707.GA1490400@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 448961,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=448961",
+          "lore_links": [
+            "https://lore.kernel.org/r/1615917249.257390.3326126.nullmailer@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 451453,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=451453",
+          "lore_links": [
+            "https://lore.kernel.org/r/00c2f3cf-ef72-0fdc-3c7a-9ccb6d075191@linux.intel.com",
+            "https://lore.kernel.org/r/20210326015200.GA2160488@robh.at.kernel.org",
+            "https://lore.kernel.org/r/26038ba1-e8f6-08e3-bee5-673d69d7decd@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 467181,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=467181",
+          "lore_links": [
+            "https://lore.kernel.org/r/202104150924.O5mQIZBh-lkp@intel.com",
+            "https://lore.kernel.org/r/202104151010.VYTuVgXF-lkp@intel.com",
+            "https://lore.kernel.org/r/20210415162947.GA1511094@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 479357,
+          "series_name": "ASoC: codecs: wcd934x: add Headset and button detection support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=479357",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210510164532.GA241925@robh.at.kernel.org",
+            "https://lore.kernel.org/r/202105110538.opKWBvbF-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 482403,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=482403",
+          "lore_links": [
+            "https://lore.kernel.org/r/1620997616.615521.3936695.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/20210518012735.GA3600100@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 484369,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=484369",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210519235454.GA3752127@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 487401,
+          "series_name": "ASoC: codecs: wcd934x: add Headset and button detection support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=487401",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210602194858.GA3869855@robh.at.kernel.org",
+            "https://lore.kernel.org/r/20210603124455.GE4257@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 495501,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=495501",
+          "lore_links": [
+            "https://lore.kernel.org/r/1623185456.792100.1556860.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/1623185456.805853.1556863.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/20210618201621.GA2801502@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 515555,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=515555",
+          "lore_links": [
+            "https://lore.kernel.org/r/202107150433.A3yyk5gC-lkp@intel.com",
+            "https://lore.kernel.org/r/202107151514.nTTVXinl-lkp@intel.com",
+            "https://lore.kernel.org/r/20210728173649.GA1290628@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 525611,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=525611",
+          "lore_links": [
+            "https://lore.kernel.org/r/05f85ed8-01ce-632b-c744-3fe8995bd17a@linux.intel.com",
+            "https://lore.kernel.org/r/111d4d4f-06f0-b7ca-579a-316e87f24f86@linux.intel.com",
+            "https://lore.kernel.org/r/20210804175334.GE26252@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 528429,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=528429",
+          "lore_links": [
+            "https://lore.kernel.org/r/YRbwyIYt4YdzAbqj@robh.at.kernel.org",
+            "https://lore.kernel.org/r/YRby8EtUeXnqEd8m@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 541709,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=541709",
+          "lore_links": [
+            "https://lore.kernel.org/r/081e6734-a258-6d21-cf66-f00bfeb38b04@linux.intel.com",
+            "https://lore.kernel.org/r/20210903172927.GN4932@sirena.org.uk",
+            "https://lore.kernel.org/r/202109040510.hCGhK1PH-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 543939,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=543939",
+          "lore_links": [
+            "https://lore.kernel.org/r/1631190773.288819.200339.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAE-0n51EESvy0Y5WzcZJDAx+V1OpnaxM4T-BUbuReepJt7ufRA@mail.gmail.com",
+            "https://lore.kernel.org/r/CAL_Jsq+uUceorjp75FYABeQYaK2YgRkmDakFNwPL7uwaHGcDLA@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 545825,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=545825",
+          "lore_links": [
+            "https://lore.kernel.org/r/1631568714.639730.1412996.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAE-0n50=ABP+fs1U3JjiqMSKphfxFsZBqQQYwVH2o_iOE1Wu_g@mail.gmail.com",
+            "https://lore.kernel.org/r/CAE-0n50i9rm6fcuyjCCPXjtxTyXwAiRVx91dXT4BDpbGA-tKjg@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 547297,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=547297",
+          "lore_links": [
+            "https://lore.kernel.org/r/4cd0e63f-107b-d10a-11e9-bced83f487a5@linux.intel.com",
+            "https://lore.kernel.org/r/83c503aa-7cb2-e6fa-e22a-b359a9cb9059@linux.intel.com",
+            "https://lore.kernel.org/r/9d02f47c-0fe5-b8b9-6b55-17678ac05c22@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 548765,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=548765",
+          "lore_links": [
+            "https://lore.kernel.org/r/1631908134.321286.2025330.nullmailer@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 550955,
+          "series_name": "[v2,1/5] ASoC: qcom: Add compatible names in va, wsa, rx, tx codec drivers for sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=550955",
+          "lore_links": [
+            "https://lore.kernel.org/r/1e176dd1-fc8b-09dc-eb73-35b7d268e89a@linaro.org",
+            "https://lore.kernel.org/r/2b401e05-ae34-846e-8e1d-b5db3e0df40e@linaro.org",
+            "https://lore.kernel.org/r/YVIVC5GFTMu2PjPm@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 558495,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=558495",
+          "lore_links": [
+            "https://lore.kernel.org/r/1633547293.527218.2218062.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAL_JsqK6ankPjqXO9jghPQ7y7FHFM-8K-pyPHeE8oNa98eeauQ@mail.gmail.com",
+            "https://lore.kernel.org/r/YXbSHubt3Rivh9xp@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 559167,
+          "series_name": "Add pin control support for lpass sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=559167",
+          "lore_links": [
+            "https://lore.kernel.org/r/1633661172.649691.1409601.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAE-0n51qO1q5ZF-fAf2Gma9a2B+iSyoQnJdJ8Fnmsz+DG0rwPg@mail.gmail.com",
+            "https://lore.kernel.org/r/CAE-0n52Ge_XZr914Ksmq5Myk3FRp7+Sc5P-9jj8wuspKkjXnYw@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 560025,
+          "series_name": "Update Lpass digital codec macro drivers",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=560025",
+          "lore_links": [
+            "https://lore.kernel.org/r/1633722536.892404.3211956.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/8886b174-f3d3-7bad-a2b9-ea7def2a36e4@linaro.org",
+            "https://lore.kernel.org/r/8e042343-a40e-d00f-31a8-8368160329e4@linaro.org"
+          ]
+        },
+        {
+          "series_id": 571219,
+          "series_name": "Add pin control support for lpass sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=571219",
+          "lore_links": [
+            "https://lore.kernel.org/r/01c32c7f-9639-b3c8-045b-35469a3e54aa@linaro.org",
+            "https://lore.kernel.org/r/3a05fc62-a060-3257-ad54-53e376763fe3@linaro.org",
+            "https://lore.kernel.org/r/YYBeA7Qt2vhFoMeO@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 572615,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=572615",
+          "lore_links": [
+            "https://lore.kernel.org/r/1635542110.100441.3221281.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/4d1ca1b5-6656-1b3b-65a0-c05c92824d18@infradead.org",
+            "https://lore.kernel.org/r/CAE-0n51zXLZiaB9aCdv=p_Wcxr5ZEdN-=b1hd5VATL6-CD0vRw@mail.gmail.com"
+          ]
+        }
+      ]
+    },
+    "Srinivas Kandagatla": {
+      "review_interactions": 184,
+      "reviewed_series_count": 108,
+      "objection_frequency": 0.32608695652173914,
+      "objection_categories": {
+        "soundwire": 90,
+        "commit_message": 61,
+        "controls": 79,
+        "runtime_pm": 19,
+        "dt_schema": 45,
+        "ownership_boundary": 15,
+        "refactor": 19,
+        "dapm": 37,
+        "patch_split": 6,
+        "feature_cleanup_mix": 1
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 6.205138888888889,
+        "mean": 37.226581790123454,
+        "samples": 108
+      },
+      "review_round_distribution": {
+        "2": 34,
+        "1": 39,
+        "3": 14,
+        "7": 3,
+        "4": 7,
+        "13": 4,
+        "9": 2,
+        "5": 4,
+        "6": 1
+      },
+      "recurring_phrases": [
+        [
+          "sound soc qcom",
+          622
+        ],
+        [
+          "sound soc codecs",
+          346
+        ],
+        [
+          "soc qcom qdsp6",
+          228
+        ],
+        [
+          "diff git sound",
+          192
+        ],
+        [
+          "git sound soc",
+          190
+        ],
+        [
+          "static const struct",
+          156
+        ],
+        [
+          "srinivas kandagatla srinivas",
+          123
+        ],
+        [
+          "kandagatla srinivas kandagatla",
+          123
+        ],
+        [
+          "documentation devicetree bindings",
+          114
+        ],
+        [
+          "file changed insertions",
+          103
+        ],
+        [
+          "srinivasa rao mandadapu",
+          102
+        ],
+        [
+          "struct snd_pcm_substream substream",
+          98
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 1.0,
+        "patch_size_bins": {
+          "small": 41,
+          "tiny": 60,
+          "medium": 5,
+          "large": 2
+        },
+        "series_length_bins": {
+          "short": 22,
+          "single": 61,
+          "medium": 22,
+          "long": 3
+        },
+        "split_request_rate": 0.03260869565217391
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.03260869565217391,
+        "ownership_boundary_sensitivity": 0.08152173913043478,
+        "dt_schema_strictness": 0.24456521739130435,
+        "commit_message_expectation": 0.33152173913043476,
+        "refactor_tolerance_inverse": 0.021739130434782608,
+        "feature_cleanup_mixing_tolerance_inverse": 0.005434782608695652,
+        "pm_sequencing_preference": 0.10326086956521739,
+        "soundwire_lifecycle_preference": 0.4891304347826087
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "controls",
+        "commit_message",
+        "dt_schema",
+        "dapm"
+      ],
+      "acceptance_indicators_frequency": 0.7010869565217391,
+      "evidence_series": [
+        {
+          "series_id": 277321,
+          "series_name": "[v2,1/2] dt-bindings: sound: lpass-cpu: Document DAI subnodes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=277321",
+          "lore_links": [
+            "https://lore.kernel.org/r/158868105044.51563.15433748499783582656.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/c7c85cba-7179-3c12-465e-66197035c7f2@linaro.org"
+          ]
+        },
+        {
+          "series_id": 387499,
+          "series_name": "ASoC: qcom: sm8250: fix HDMI audio playback",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=387499",
+          "lore_links": [
+            "https://lore.kernel.org/r/160590773741.47461.18033846696938877967.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/72b89b80-d548-4f4d-2da6-a83fd723366e@linaro.org"
+          ]
+        },
+        {
+          "series_id": 392061,
+          "series_name": "[v3] ASoC: qcom: Fix playback recover problem in suspend resume",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=392061",
+          "lore_links": [
+            "https://lore.kernel.org/r/1146040c-5559-f4bf-fafe-eb7468e577a0@linaro.org"
+          ]
+        },
+        {
+          "series_id": 394399,
+          "series_name": "ASoC: codecs: lpass-va-macro: remove some dead code",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=394399",
+          "lore_links": [
+            "https://lore.kernel.org/r/160692956495.33960.17489548804315513103.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/7e06abb2-a969-aa1a-6adc-6cdd72e3355c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 395885,
+          "series_name": "ASoC: qcom: fix QDSP6 dependencies, attempt #3",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=395885",
+          "lore_links": [
+            "https://lore.kernel.org/r/160712460214.7629.13610030760770322456.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/8323d386-c3f1-2db6-1870-2279784dd85e@linaro.org"
+          ]
+        },
+        {
+          "series_id": 414471,
+          "series_name": "[1/2] ASoC: qcom: lpass: Fix hardcoded SC7810 DAI IDs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=414471",
+          "lore_links": [
+            "https://lore.kernel.org/r/68691a9f-f65d-da1a-a413-b624567ccc5f@linaro.org",
+            "https://lore.kernel.org/r/9349c21b-7cd3-3c7b-91a9-9bbf0d5c4f15@linaro.org"
+          ]
+        },
+        {
+          "series_id": 417223,
+          "series_name": "ASoC: qcom: lpass: Fix i2s ctl register bit map",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=417223",
+          "lore_links": [
+            "https://lore.kernel.org/r/875d9fbc-ddad-b62d-0374-2a77bc9d6d83@linaro.org",
+            "https://lore.kernel.org/r/a9e5b6d5-742a-9814-353f-c979543fcb9c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 417841,
+          "series_name": "[v2] ASoC: qcom: lpass: Fix i2s ctl register bit map",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=417841",
+          "lore_links": [
+            "https://lore.kernel.org/r/07d8fa7e-717b-2d88-4616-40656be6d340@linaro.org",
+            "https://lore.kernel.org/r/YA6dsJTmVcv1TKBZ@gerhold.net",
+            "https://lore.kernel.org/r/YBfbiUi/paDDMz0I@gerhold.net"
+          ]
+        },
+        {
+          "series_id": 421005,
+          "series_name": "[v2] ASoC: qcom: lpass: Fix out-of-bounds DAI ID lookup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=421005",
+          "lore_links": [
+            "https://lore.kernel.org/r/161158424212.32959.4363498629836769179.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/5839ced8-4dba-398a-6637-139749850819@linaro.org"
+          ]
+        },
+        {
+          "series_id": 422557,
+          "series_name": "ASoC: qcom: lpass-cpu: Remove bit clock state check",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=422557",
+          "lore_links": [
+            "https://lore.kernel.org/r/0bdf2a43-799b-1c89-940d-8dd0f54ab24e@linaro.org",
+            "https://lore.kernel.org/r/16199fa8-7a87-6e7f-9db6-1d5cd8493d4c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 423015,
+          "series_name": "[v2] ASoC: qcom: lpass-cpu: Remove bit clock state check",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=423015",
+          "lore_links": [
+            "https://lore.kernel.org/r/161186727762.43763.16675933644941230011.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/752d2980-2c84-c03f-7960-b9de8027c4d6@linaro.org"
+          ]
+        },
+        {
+          "series_id": 433717,
+          "series_name": "[next] ASoC: codecs: lpass-rx-macro: remove redundant initialization of variable hph_pwr_mode",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=433717",
+          "lore_links": [
+            "https://lore.kernel.org/r/161464168094.31144.11681610130344407838.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/4e261a11-4577-4568-8ab3-f2ef1a9a8474@linaro.org"
+          ]
+        },
+        {
+          "series_id": 442247,
+          "series_name": "ASoC: codecs: lpass-va-macro: mute/unmute all active decimators",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=442247",
+          "lore_links": [
+            "https://lore.kernel.org/r/161521960848.9621.4204009948012215992.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/32f49fa9-136c-91a5-5790-373651719fda@linaro.org"
+          ]
+        },
+        {
+          "series_id": 442309,
+          "series_name": "ASoC: codecs: lpass-wsa-macro: fix RX MIX input controls",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=442309",
+          "lore_links": [
+            "https://lore.kernel.org/r/161521960847.9621.10965090880693667383.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/901874d6-9b1f-714b-31bf-0e1e61956890@linaro.org"
+          ]
+        },
+        {
+          "series_id": 467527,
+          "series_name": "ASoC: codecs: wcd934x: Fix missing IRQF_ONESHOT as only threaded handler",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=467527",
+          "lore_links": [
+            "https://lore.kernel.org/r/161851148784.23061.9027207380997094789.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/896527ac-0e94-b930-80ec-8c7ef669b149@linaro.org"
+          ]
+        },
+        {
+          "series_id": 475713,
+          "series_name": "[v2] ASoC: codecs: lpass-wsa-macro: handle unexpected input",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=475713",
+          "lore_links": [
+            "https://lore.kernel.org/r/162072058168.33157.3176018576144440940.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/647db8c8-2ee0-0dee-51e5-41120566bb5e@linaro.org"
+          ]
+        },
+        {
+          "series_id": 479259,
+          "series_name": "[-next] ASoC: codecs: lpass-tx-macro: add missing MODULE_DEVICE_TABLE",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=479259",
+          "lore_links": [
+            "https://lore.kernel.org/r/162072058170.33157.14915696599003634030.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/a4bbe07e-eed6-4667-3efc-c9307782c05b@linaro.org"
+          ]
+        },
+        {
+          "series_id": 485395,
+          "series_name": "ASoC: qcom: lpass-cpu: Use optional clk APIs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=485395",
+          "lore_links": [
+            "https://lore.kernel.org/r/162160953475.10636.11463749705483843535.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/96301eb2-ef2d-be7f-2a24-8723c1e39905@linaro.org"
+          ]
+        },
+        {
+          "series_id": 487531,
+          "series_name": "[v3] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=487531",
+          "lore_links": [
+            "https://lore.kernel.org/r/9a4bbab8-91a2-f195-b77a-5234d46a2c0a@linaro.org",
+            "https://lore.kernel.org/r/CAD=FV=X+3qP3uj2AVkejmVBmMYqWAxMCS7HBRSkKcPgwP0XGdQ@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 489347,
+          "series_name": "Asoc: qcom: Add four speaker support on MI2S secondary",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=489347",
+          "lore_links": [
+            "https://lore.kernel.org/r/213e1133-0164-03da-1740-c7ca39f3fd8c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 493955,
+          "series_name": "[v6] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=493955",
+          "lore_links": [
+            "https://lore.kernel.org/r/74ab7274-1e6d-a82e-bae9-bc887aa34baa@linaro.org"
+          ]
+        },
+        {
+          "series_id": 494227,
+          "series_name": "[v7] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=494227",
+          "lore_links": [
+            "https://lore.kernel.org/r/0085836e-20d5-d74f-5a1e-1a6ea8252d02@linaro.org",
+            "https://lore.kernel.org/r/162309220525.30523.13322673130433156811.b4-ty@kernel.org"
+          ]
+        },
+        {
+          "series_id": 494659,
+          "series_name": "[v2] ASoC: qcom: Fix for DMA interrupt clear reg overwriting",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=494659",
+          "lore_links": [
+            "https://lore.kernel.org/r/ac3e70da-7d82-2021-3a25-08179aeb6b54@linaro.org"
+          ]
+        },
+        {
+          "series_id": 496875,
+          "series_name": "[v2] ASoC: qcom: Add four speaker support on MI2S secondary",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=496875",
+          "lore_links": [
+            "https://lore.kernel.org/r/d21e8951-583c-562b-421a-54ec206610ef@linaro.org"
+          ]
+        },
+        {
+          "series_id": 496907,
+          "series_name": "[v3] ASoC: qcom: Fix for DMA interrupt clear reg overwriting",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=496907",
+          "lore_links": [
+            "https://lore.kernel.org/r/162369994007.34524.2234994672815898510.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/5ae06ccb-ffd4-ca9f-5a88-1f8bf8b48d37@samsung.com",
+            "https://lore.kernel.org/r/83be2add-2fa7-a16e-4250-95520e80c514@linaro.org"
+          ]
+        }
+      ]
+    },
+    "Stephen Boyd": {
+      "review_interactions": 33,
+      "reviewed_series_count": 19,
+      "objection_frequency": 0.2727272727272727,
+      "objection_categories": {
+        "commit_message": 3,
+        "runtime_pm": 3,
+        "soundwire": 8,
+        "dt_schema": 14,
+        "dapm": 2,
+        "controls": 11,
+        "patch_split": 2,
+        "ownership_boundary": 2,
+        "refactor": 1
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 8.647777777777778,
+        "mean": 19.839415204678364,
+        "samples": 19
+      },
+      "review_round_distribution": {
+        "1": 4,
+        "7": 1,
+        "3": 3,
+        "2": 4,
+        "9": 3,
+        "4": 1,
+        "13": 3
+      },
+      "recurring_phrases": [
+        [
+          "srinivasa rao mandadapu",
+          57
+        ],
+        [
+          "const char const",
+          47
+        ],
+        [
+          "static const char",
+          45
+        ],
+        [
+          "sound soc qcom",
+          42
+        ],
+        [
+          "drivers pinctrl qcom",
+          36
+        ],
+        [
+          "quoting srinivasa rao",
+          35
+        ],
+        [
+          "documentation devicetree bindings",
+          26
+        ],
+        [
+          "static const struct",
+          20
+        ],
+        [
+          "signed-off-by srinivasa rao",
+          17
+        ],
+        [
+          "devicetree bindings pinctrl",
+          17
+        ],
+        [
+          "bindings pinctrl qcom",
+          17
+        ],
+        [
+          "soc qcom lpass-platform",
+          15
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 1,
+        "patch_size_bins": {
+          "tiny": 10,
+          "small": 6,
+          "medium": 3
+        },
+        "series_length_bins": {
+          "single": 11,
+          "short": 5,
+          "medium": 3
+        },
+        "split_request_rate": 0.06060606060606061
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.06060606060606061,
+        "ownership_boundary_sensitivity": 0.06060606060606061,
+        "dt_schema_strictness": 0.42424242424242425,
+        "commit_message_expectation": 0.09090909090909091,
+        "refactor_tolerance_inverse": 0.0,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.09090909090909091,
+        "soundwire_lifecycle_preference": 0.24242424242424243
+      },
+      "common_rejection_patterns": [
+        "dt_schema",
+        "controls",
+        "soundwire",
+        "commit_message",
+        "runtime_pm"
+      ],
+      "acceptance_indicators_frequency": 0.2727272727272727,
+      "evidence_series": [
+        {
+          "series_id": 425883,
+          "series_name": "ASoC: qcom: Fix typo error in HDMI regmap config callbacks",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=425883",
+          "lore_links": [
+            "https://lore.kernel.org/r/161228008450.11888.13128911236969601728.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/161228602729.76967.7642340787963440028@swboyd.mtv.corp.google.com"
+          ]
+        },
+        {
+          "series_id": 485871,
+          "series_name": "[v2] ASoC: qcom: lpass-cpu: Fix pop noise during audio capture begin",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=485871",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAE-0n50A18vru2bXQuQTq==J5bGQEzw4uUYv9qG7rNB5uk19jw@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 493003,
+          "series_name": "ASoC: qcom: Fix for DMA interrupt clear reg overwriting",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=493003",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAE-0n52CyZkRDForR7LumXL7Tcr=48UV7T-wxirMsxk7AJJsmg@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 497227,
+          "series_name": "[v3] ASoC: qcom: Add four speaker support on MI2S secondary",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=497227",
+          "lore_links": [
+            "https://lore.kernel.org/r/162369994008.34524.16929754677790147790.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/CAE-0n53Jy_kRK-6L4bZMZ2EAv2n3b9PX2GZSaUodZtU8P7P=6Q@mail.gmail.com",
+            "https://lore.kernel.org/r/c2ab81bc-98e8-e833-a8cc-7176ff03809c@linaro.org"
+          ]
+        },
+        {
+          "series_id": 541683,
+          "series_name": "ASoC: qcom: lpass-platform: Reset irq clear reg post handling interrupts",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=541683",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAE-0n50=vL0MHHHkc22ahrqqD3DskFXZzFU8qjU8=EY1kZ+__Q@mail.gmail.com",
+            "https://lore.kernel.org/r/CAE-0n52cvV3yqaU0Ea50MYXMQa6Ot2z1_0NfUpDeZj9_M=joiQ@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 542533,
+          "series_name": "ASoC: dt-bindings: lpass: add binding headers for digital codecs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=542533",
+          "lore_links": [
+            "https://lore.kernel.org/r/163152996584.45703.6233667847951933638.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/20210908102300.GA4112@sirena.org.uk",
+            "https://lore.kernel.org/r/4a513810-ab33-006d-4bce-5e35702a51e0@linaro.org"
+          ]
+        },
+        {
+          "series_id": 543939,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=543939",
+          "lore_links": [
+            "https://lore.kernel.org/r/1631190773.288819.200339.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAE-0n51EESvy0Y5WzcZJDAx+V1OpnaxM4T-BUbuReepJt7ufRA@mail.gmail.com",
+            "https://lore.kernel.org/r/CAL_Jsq+uUceorjp75FYABeQYaK2YgRkmDakFNwPL7uwaHGcDLA@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 545825,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=545825",
+          "lore_links": [
+            "https://lore.kernel.org/r/1631568714.639730.1412996.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAE-0n50=ABP+fs1U3JjiqMSKphfxFsZBqQQYwVH2o_iOE1Wu_g@mail.gmail.com",
+            "https://lore.kernel.org/r/CAE-0n50i9rm6fcuyjCCPXjtxTyXwAiRVx91dXT4BDpbGA-tKjg@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 549577,
+          "series_name": "Update Lpass digital codec macro drivers",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=549577",
+          "lore_links": [
+            "https://lore.kernel.org/r/5f915592-0ca6-2839-43fc-6d9aef1484b7@linaro.org",
+            "https://lore.kernel.org/r/7c12126d-99a8-4572-6e95-b63131cae300@linaro.org",
+            "https://lore.kernel.org/r/CAE-0n51L7YSA4FDLv_2Q9U3nzxK1YY8hRtZ-G0cs42nomySMTA@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 559167,
+          "series_name": "Add pin control support for lpass sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=559167",
+          "lore_links": [
+            "https://lore.kernel.org/r/1633661172.649691.1409601.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/CAE-0n51qO1q5ZF-fAf2Gma9a2B+iSyoQnJdJ8Fnmsz+DG0rwPg@mail.gmail.com",
+            "https://lore.kernel.org/r/CAE-0n52Ge_XZr914Ksmq5Myk3FRp7+Sc5P-9jj8wuspKkjXnYw@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 572615,
+          "series_name": "Machine driver to support LPASS SC7280 sound card registration",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=572615",
+          "lore_links": [
+            "https://lore.kernel.org/r/1635542110.100441.3221281.nullmailer@robh.at.kernel.org",
+            "https://lore.kernel.org/r/4d1ca1b5-6656-1b3b-65a0-c05c92824d18@infradead.org",
+            "https://lore.kernel.org/r/CAE-0n51zXLZiaB9aCdv=p_Wcxr5ZEdN-=b1hd5VATL6-CD0vRw@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 613722,
+          "series_name": "Add Euro Headset support for wcd938x codec",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=613722",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAE-0n52uBY7GzjtFwV67y5mfqZRoK9ooW-kT3=4sH=8NtVK7FQ@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 614146,
+          "series_name": "Add pin control support for lpass sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=614146",
+          "lore_links": [
+            "https://lore.kernel.org/r/09b00fe9-1770-1723-3c4c-6c494da87e8d@linaro.org",
+            "https://lore.kernel.org/r/CAE-0n5009g2WwnTsmUeKs5jgrnrUf21SgEL1s65C3FL+HJefkQ@mail.gmail.com",
+            "https://lore.kernel.org/r/CAE-0n51vhcUg5ng7FWzS0-09-zazCk5JKwpvLPfK4w15_r97kw@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 633013,
+          "series_name": "Add pin control support for lpass sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=633013",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAE-0n523c+X__wJwy=7e7WXGY3Crimne1-yUHM3Txf81n+bBVA@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 642721,
+          "series_name": "[v2] ASoC: qcom: soundwire: Add support for controlling audio CGCR from HLOS",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=642721",
+          "lore_links": [
+            "https://lore.kernel.org/r/165459871566.301808.10281011736457954166.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/1ec64a99-cfcf-c903-935b-d1bb0617c284@linaro.org",
+            "https://lore.kernel.org/r/2a520eaf-c1de-aa91-3029-83f5469cdbb0@linaro.org"
+          ]
+        },
+        {
+          "series_id": 684742,
+          "series_name": "ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=684742",
+          "lore_links": [
+            "https://lore.kernel.org/r/166567223036.170727.7011980883912234789.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/CAE-0n52dsaTLQ7o6Z2PeFSv2_vTjvtujJ0JWCPE3uXxpKD0O4Q@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 684973,
+          "series_name": "[v2] ASoC: qcom: lpass-cpu: mark HDMI TX registers as volatile",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=684973",
+          "lore_links": [
+            "https://lore.kernel.org/r/166567223944.170727.7516803650460275929.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/CAE-0n53W3+MgRzpkV-9kBc6Pcvzta+ear3oxgMA-0rpNyJyJwQ@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 685542,
+          "series_name": "[RESEND] Asoc: qcom: lpass-cpu: Mark HDMI TX parity register as volatile",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=685542",
+          "lore_links": [
+            "https://lore.kernel.org/r/166619961841.1416660.6646939908532904224.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/CAE-0n51KTx+XBewfCq3GKK++iqzhNNKRMCY1RC-_8QzcfdSpeQ@mail.gmail.com"
+          ]
+        },
+        {
+          "series_id": 699596,
+          "series_name": "ASoC: qcom: lpass-sc7180: Add system suspend/resume PM ops",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=699596",
+          "lore_links": [
+            "https://lore.kernel.org/r/166965355923.629583.3946711311315912094.b4-ty@kernel.org",
+            "https://lore.kernel.org/r/CAE-0n519fURgt4x-4maBGBEm-OWk7rbfRgNJNzR-XDcMB5b4jA@mail.gmail.com",
+            "https://lore.kernel.org/r/CAMuHMdUBojHkaAPsjOEadfaikth+L0R_NrKzvqXrmZS9Kc5zHw@mail.gmail.com"
+          ]
+        }
+      ]
+    },
+    "Vinod Koul": {
+      "review_interactions": 60,
+      "reviewed_series_count": 43,
+      "objection_frequency": 0.08333333333333333,
+      "objection_categories": {
+        "soundwire": 48,
+        "commit_message": 2,
+        "dt_schema": 2,
+        "controls": 27,
+        "ownership_boundary": 1,
+        "runtime_pm": 4,
+        "refactor": 5,
+        "patch_split": 1,
+        "feature_cleanup_mix": 1
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 11.480833333333333,
+        "mean": 174.77414728682172,
+        "samples": 43
+      },
+      "review_round_distribution": {
+        "1": 29,
+        "4": 2,
+        "6": 2,
+        "2": 10
+      },
+      "recurring_phrases": [
+        [
+          "drivers soundwire qcom",
+          80
+        ],
+        [
+          "struct qcom_swrm_ctrl ctrl",
+          31
+        ],
+        [
+          "srinivas kandagatla wrote",
+          29
+        ],
+        [
+          "ctrl- reg_write ctrl",
+          29
+        ],
+        [
+          "soundwire qcom drivers",
+          28
+        ],
+        [
+          "qcom drivers soundwire",
+          28
+        ],
+        [
+          "krzysztof kozlowski wrote",
+          18
+        ],
+        [
+          "diff git drivers",
+          15
+        ],
+        [
+          "git drivers soundwire",
+          15
+        ],
+        [
+          "soundwire qcom file",
+          14
+        ],
+        [
+          "qcom file changed",
+          14
+        ],
+        [
+          "soundwire qcom index",
+          14
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 1,
+        "patch_size_bins": {
+          "tiny": 31,
+          "small": 12
+        },
+        "series_length_bins": {
+          "single": 32,
+          "short": 7,
+          "medium": 3,
+          "long": 1
+        },
+        "split_request_rate": 0.016666666666666666
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.016666666666666666,
+        "ownership_boundary_sensitivity": 0.016666666666666666,
+        "dt_schema_strictness": 0.03333333333333333,
+        "commit_message_expectation": 0.03333333333333333,
+        "refactor_tolerance_inverse": 0.016666666666666666,
+        "feature_cleanup_mixing_tolerance_inverse": 0.016666666666666666,
+        "pm_sequencing_preference": 0.06666666666666667,
+        "soundwire_lifecycle_preference": 0.8
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "controls",
+        "refactor",
+        "runtime_pm",
+        "commit_message"
+      ],
+      "acceptance_indicators_frequency": 0.6833333333333333,
+      "evidence_series": [
+        {
+          "series_id": 257449,
+          "series_name": "soundwire: qcom: add support for get_sdw_stream()",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=257449",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200320140746.GH4885@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 279879,
+          "series_name": "soundwire: qcom: fix error handling in probe",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=279879",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200502114852.GQ948789@vkoul-mobl.Dlink"
+          ]
+        },
+        {
+          "series_id": 283643,
+          "series_name": "[-next] soundwire: qcom: Use IRQF_ONESHOT",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=283643",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200511061546.GQ1375924@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 300481,
+          "series_name": "soundwire: qcom: Constify static structs",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=300481",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200622115837.GL2324254@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 345249,
+          "series_name": "soundwire: qcom: fix SLIBMUS/SLIMBUS typo",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=345249",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200908145450.GM3715@yoga",
+            "https://lore.kernel.org/r/20200909075707.GL77521@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 345963,
+          "series_name": "soundwire: qcom: fix IP version v1.5.1 support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=345963",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200910063940.GR77521@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 349791,
+          "series_name": "soundwire: qcom: fix IP version v1.5.1 support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=349791",
+          "lore_links": [
+            "https://lore.kernel.org/r/20200916124634.GM2968@vkoul-mobl",
+            "https://lore.kernel.org/r/20200916124911.GN2968@vkoul-mobl",
+            "https://lore.kernel.org/r/20200916142929.GR2968@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 424537,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=424537",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210201141345.GA2771@vkoul-mobl",
+            "https://lore.kernel.org/r/20210201141642.GB2771@vkoul-mobl",
+            "https://lore.kernel.org/r/20210201142134.GC2771@vkoul-mobl"
+          ]
+        },
+        {
+          "series_id": 455977,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=455977",
+          "lore_links": [
+            "https://lore.kernel.org/r/YGLkA3p634eg9FDl@vkoul-mobl.Dlink",
+            "https://lore.kernel.org/r/YGLkmM4QCjkpg8/6@vkoul-mobl.Dlink"
+          ]
+        },
+        {
+          "series_id": 458935,
+          "series_name": "soundwire: qcom: wait for fifo space to be available before read/write",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=458935",
+          "lore_links": [
+            "https://lore.kernel.org/r/YGVxNBKAESSLMeQ+@vkoul-mobl.Dlink",
+            "https://lore.kernel.org/r/ad9f1d18-8f72-9a53-535a-ab5a99379016@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 459339,
+          "series_name": "[v2] soundwire: qcom: wait for fifo space to be available before read/write",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=459339",
+          "lore_links": [
+            "https://lore.kernel.org/r/YGvph03m7w5DbATC@vkoul-mobl.Dlink",
+            "https://lore.kernel.org/r/e1bcc85d-b583-2c9a-18e5-634994cc2916@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 459357,
+          "series_name": "soundwire: qcom: handle return correctly in qcom_swrm_transport_params",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=459357",
+          "lore_links": [
+            "https://lore.kernel.org/r/202104011343.B1944F3@keescook",
+            "https://lore.kernel.org/r/YGvp0lbNkaukGxmE@vkoul-mobl.Dlink"
+          ]
+        },
+        {
+          "series_id": 459371,
+          "series_name": "soundwire: qcom: cleanup internal port config indexing",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=459371",
+          "lore_links": [
+            "https://lore.kernel.org/r/YGvpcAcOGWiOFWim@vkoul-mobl.Dlink"
+          ]
+        },
+        {
+          "series_id": 476859,
+          "series_name": "soundwire: qcom: fix handling of qcom,ports-block-pack-mode",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=476859",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAMi1Hd0Fxj2Y_ZheFGveCpz1XWHhOOx3UYz7xW4-8RVAN1TPAg@mail.gmail.com",
+            "https://lore.kernel.org/r/YJpoFQkvbXLOe6ik@vkoul-mobl.Dlink"
+          ]
+        },
+        {
+          "series_id": 543071,
+          "series_name": "soundwire: qcom: add debugfs entry for soundwire register dump",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=543071",
+          "lore_links": [
+            "https://lore.kernel.org/r/YVaMlSbmFnrQyb0u@matsya",
+            "https://lore.kernel.org/r/YXA0q+3ER3zFpyOw@matsya",
+            "https://lore.kernel.org/r/ada6763f-7821-6388-2c7a-3a771450c7bf@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 580815,
+          "series_name": "soundwire: qcom: remove redundant version number read",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=580815",
+          "lore_links": [
+            "https://lore.kernel.org/r/YZzNuyDUxE+UXAG2@matsya"
+          ]
+        },
+        {
+          "series_id": 619912,
+          "series_name": "soundwire: qcom: fix build failures if CONFIG_PM=n",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=619912",
+          "lore_links": [
+            "https://lore.kernel.org/r/YiDlBevX3/BrXmwb@matsya"
+          ]
+        },
+        {
+          "series_id": 621005,
+          "series_name": "soundwire: qcom: fix an error message in swrm_wait_for_frame_gen_enabled()",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=621005",
+          "lore_links": [
+            "https://lore.kernel.org/r/YkvCzlU5/KuKE1rS@matsya"
+          ]
+        },
+        {
+          "series_id": 639033,
+          "series_name": "[v2] soundwire: qcom: adjust autoenumeration timeout",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=639033",
+          "lore_links": [
+            "https://lore.kernel.org/r/0d645ee0-a54f-d9b4-9392-06ea1c37b29a@linux.intel.com",
+            "https://lore.kernel.org/r/725af523-d144-e373-e09b-fb48b3afb9ed@linux.intel.com",
+            "https://lore.kernel.org/r/97cd6566-e686-e1f2-fe91-4b4ba9d95f12@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 656978,
+          "series_name": "soundwire: qcom: Check device status before reading devid",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=656978",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAMi1Hd2RgG7MZ90hkDPijRkN7pFP-RdnVdv_j7bj2OxXxXS+1w@mail.gmail.com",
+            "https://lore.kernel.org/r/CAMi1Hd3RNbjDhN94ArBu+_pz706gO7P55K2L9xNMfnEuCE-t=Q@mail.gmail.com",
+            "https://lore.kernel.org/r/YsW8Lnhu19Wn2fZJ@matsya"
+          ]
+        },
+        {
+          "series_id": 657823,
+          "series_name": "[v2] soundwire: qcom: fix device status array range",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=657823",
+          "lore_links": [
+            "https://lore.kernel.org/r/YxBz05JZgK38Hugt@matsya"
+          ]
+        },
+        {
+          "series_id": 659366,
+          "series_name": "[v2] soundwire: qcom: Update error prints to debug prints",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=659366",
+          "lore_links": [
+            "https://lore.kernel.org/r/726124ab-53e4-5f3c-b0bb-124d129d3028@linux.intel.com",
+            "https://lore.kernel.org/r/YwUGRGhDCXbhrHVn@matsya"
+          ]
+        },
+        {
+          "series_id": 667414,
+          "series_name": "soundwire: qcom: remove duplicate reset control get",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=667414",
+          "lore_links": [
+            "https://lore.kernel.org/r/CAMi1Hd22sLzRLsiFhGtihYtP_Y9b6TUyLOf2cxiFXrKhjJc4ig@mail.gmail.com",
+            "https://lore.kernel.org/r/YwT5COjQAvFUB+LA@matsya"
+          ]
+        },
+        {
+          "series_id": 677675,
+          "series_name": "[v2,1/2] soundwire: qcom: update status from device id 1",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=677675",
+          "lore_links": [
+            "https://lore.kernel.org/r/78c9421e-d66a-3477-9dff-f819e1ac9414@linux.intel.com",
+            "https://lore.kernel.org/r/YylJ90Vu7SUhSNIo@matsya",
+            "https://lore.kernel.org/r/ffb79f8b-7557-92eb-2c20-e8f5fd2afaee@linux.intel.com"
+          ]
+        },
+        {
+          "series_id": 724071,
+          "series_name": "soundwire: qcom: correct setting ignore bit on v1.5.1",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=724071",
+          "lore_links": [
+            "https://lore.kernel.org/r/ZBHJwHN1rcqMmSHT@matsya",
+            "https://lore.kernel.org/r/f1d78b2a-f9ae-6a46-4db6-25e0b823ac46@linaro.org"
+          ]
+        }
+      ]
+    },
+    "kernel test robot": {
+      "review_interactions": 39,
+      "reviewed_series_count": 24,
+      "objection_frequency": 0.9487179487179487,
+      "objection_categories": {
+        "dapm": 6,
+        "soundwire": 36,
+        "controls": 11,
+        "dt_schema": 9,
+        "commit_message": 17,
+        "runtime_pm": 1
+      },
+      "acceptance_rate_on_reviewed_series": 1.0,
+      "review_latency_hours": {
+        "median": 8.57638888888889,
+        "mean": 21.140324074074076,
+        "samples": 24
+      },
+      "review_round_distribution": {
+        "5": 5,
+        "6": 1,
+        "9": 3,
+        "3": 2,
+        "11": 2,
+        "13": 1,
+        "1": 3,
+        "2": 5,
+        "4": 2
+      },
+      "recurring_phrases": [
+        [
+          "drivers pinctrl qcom",
+          121
+        ],
+        [
+          "sound soc codecs",
+          115
+        ],
+        [
+          "https github com",
+          99
+        ],
+        [
+          "kernel test robot",
+          56
+        ],
+        [
+          "github com day-ci",
+          55
+        ],
+        [
+          "com day-ci linux",
+          55
+        ],
+        [
+          "pinctrl qcom core",
+          49
+        ],
+        [
+          "file included drivers",
+          48
+        ],
+        [
+          "included drivers pinctrl",
+          48
+        ],
+        [
+          "pinctrl qcom pinctrl-sm8250-lpass-lpi",
+          48
+        ],
+        [
+          "qcom pinctrl-sm8250-lpass-lpi drivers",
+          48
+        ],
+        [
+          "pinctrl-sm8250-lpass-lpi drivers pinctrl",
+          48
+        ]
+      ],
+      "preferred_patch_topology": {
+        "median_patch_count": 7.0,
+        "patch_size_bins": {
+          "large": 6,
+          "small": 9,
+          "medium": 4,
+          "tiny": 5
+        },
+        "series_length_bins": {
+          "medium": 9,
+          "long": 9,
+          "single": 5,
+          "short": 1
+        },
+        "split_request_rate": 0.0
+      },
+      "behavior_axes": {
+        "patch_split_preference": 0.0,
+        "ownership_boundary_sensitivity": 0.0,
+        "dt_schema_strictness": 0.23076923076923078,
+        "commit_message_expectation": 0.4358974358974359,
+        "refactor_tolerance_inverse": 0.0,
+        "feature_cleanup_mixing_tolerance_inverse": 0.0,
+        "pm_sequencing_preference": 0.02564102564102564,
+        "soundwire_lifecycle_preference": 0.9230769230769231
+      },
+      "common_rejection_patterns": [
+        "soundwire",
+        "commit_message",
+        "controls",
+        "dt_schema",
+        "dapm"
+      ],
+      "acceptance_indicators_frequency": 0.9230769230769231,
+      "evidence_series": [
+        {
+          "series_id": 430021,
+          "series_name": "ASoC: codecs: add support for LPASS Codec TX and RX macros",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=430021",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210208160830.GI8645@sirena.org.uk",
+            "https://lore.kernel.org/r/202102091415.gcIqYaN4-lkp@intel.com",
+            "https://lore.kernel.org/r/202102101439.GV6ErOfY-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 430153,
+          "series_name": "ASoC: codecs: add support for LPASS Codec TX and RX macros",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=430153",
+          "lore_links": [
+            "https://lore.kernel.org/r/202102090902.CMppFuvv-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 431299,
+          "series_name": "ASoC: codecs: add support for LPASS Codec TX and RX macros",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=431299",
+          "lore_links": [
+            "https://lore.kernel.org/r/202102101839.LuUYSQ7H-lkp@intel.com",
+            "https://lore.kernel.org/r/20210210201656.GA2686235@robh.at.kernel.org",
+            "https://lore.kernel.org/r/20210210201758.GA2688240@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 446979,
+          "series_name": "soundwire: qcom: various improvements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=446979",
+          "lore_links": [
+            "https://lore.kernel.org/r/202103201442.RXyvtmaC-lkp@intel.com",
+            "https://lore.kernel.org/r/20210323224707.GA1490400@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 467181,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=467181",
+          "lore_links": [
+            "https://lore.kernel.org/r/202104150924.O5mQIZBh-lkp@intel.com",
+            "https://lore.kernel.org/r/202104151010.VYTuVgXF-lkp@intel.com",
+            "https://lore.kernel.org/r/20210415162947.GA1511094@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 479357,
+          "series_name": "ASoC: codecs: wcd934x: add Headset and button detection support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=479357",
+          "lore_links": [
+            "https://lore.kernel.org/r/20210510164532.GA241925@robh.at.kernel.org",
+            "https://lore.kernel.org/r/202105110538.opKWBvbF-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 487295,
+          "series_name": "ASoC: codecs: add wcd938x support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=487295",
+          "lore_links": [
+            "https://lore.kernel.org/r/202105242113.sU2HgaGc-lkp@intel.com",
+            "https://lore.kernel.org/r/202105242347.OE0MpcaF-lkp@intel.com",
+            "https://lore.kernel.org/r/202105250138.qvOhUXEn-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 515555,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=515555",
+          "lore_links": [
+            "https://lore.kernel.org/r/202107150433.A3yyk5gC-lkp@intel.com",
+            "https://lore.kernel.org/r/202107151514.nTTVXinl-lkp@intel.com",
+            "https://lore.kernel.org/r/20210728173649.GA1290628@robh.at.kernel.org"
+          ]
+        },
+        {
+          "series_id": 541709,
+          "series_name": "ASoC: qcom: Add AudioReach support",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=541709",
+          "lore_links": [
+            "https://lore.kernel.org/r/081e6734-a258-6d21-cf66-f00bfeb38b04@linux.intel.com",
+            "https://lore.kernel.org/r/20210903172927.GN4932@sirena.org.uk",
+            "https://lore.kernel.org/r/202109040510.hCGhK1PH-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 616345,
+          "series_name": "Add pin control support for lpass sc7280",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=616345",
+          "lore_links": [
+            "https://lore.kernel.org/r/202202230101.Hp9mOcMc-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 647184,
+          "series_name": "ASoC: wcd938x: Fix event generation for some controls",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=647184",
+          "lore_links": [
+            "https://lore.kernel.org/r/202206052345.ErWjOII2-lkp@intel.com",
+            "https://lore.kernel.org/r/202206060948.KAZcrRC8-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 663644,
+          "series_name": "ASoC: qcom: SC7280: Add support for external DMIC bias supply",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=663644",
+          "lore_links": [
+            "https://lore.kernel.org/r/202207282036.84w516Y3-lkp@intel.com",
+            "https://lore.kernel.org/r/YuJpxSuPBB++pl/o@sirena.org.uk"
+          ]
+        },
+        {
+          "series_id": 806040,
+          "series_name": "ASoC: codecs: add support for WCD939x Codec",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=806040",
+          "lore_links": [
+            "https://lore.kernel.org/r/1a09512c-aaff-4fb6-914e-db755ce6e667@suswa.mountain",
+            "https://lore.kernel.org/r/202312060107.dTzr6BK9-lkp@intel.com",
+            "https://lore.kernel.org/r/202312060158.z29IZpw9-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 807303,
+          "series_name": "[v1] ASoC: codecs: wcd937x: Add wcd937x codec driver",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=807303",
+          "lore_links": [
+            "https://lore.kernel.org/r/202312070038.2pjLNBhG-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 846162,
+          "series_name": "ASoC: qcom: display port changes",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=846162",
+          "lore_links": [
+            "https://lore.kernel.org/r/202404200809.tfVSiQo5-lkp@intel.com",
+            "https://lore.kernel.org/r/202404200850.ZXhk0PO1-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 863044,
+          "series_name": "ASoC: codecs: lpass-wsa: fix vi capture setup",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=863044",
+          "lore_links": [
+            "https://lore.kernel.org/r/202406190857.mozJxHDO-lkp@intel.com",
+            "https://lore.kernel.org/r/202406191005.yMuWtspN-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 897453,
+          "series_name": "ASoC: qcom: sc7280: Fix missing Soundwire runtime stream alloc",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=897453",
+          "lore_links": [
+            "https://lore.kernel.org/r/202410121144.H6lBicv6-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 997726,
+          "series_name": "soundwire: qcom: add support for v3.1.0 controller",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=997726",
+          "lore_links": [
+            "https://lore.kernel.org/r/1bbacc5f-7371-4451-b503-cdd98e9f9688@oss.qualcomm.com",
+            "https://lore.kernel.org/r/20250902-light-vegan-snake-efe03c@kuoka",
+            "https://lore.kernel.org/r/20250902-thoughtful-quizzical-quoll-3ecbae@kuoka"
+          ]
+        },
+        {
+          "series_id": 999425,
+          "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999425",
+          "lore_links": [
+            "https://lore.kernel.org/r/202509070437.ko5lmTb9-lkp@intel.com",
+            "https://lore.kernel.org/r/202509070539.WhfiRSpY-lkp@intel.com",
+            "https://lore.kernel.org/r/2yvgofbauwqzdysb3r5jfijedpg2qdfb4znfkj5veuyanff22d@tro4rzcfytk6"
+          ]
+        },
+        {
+          "series_id": 999737,
+          "series_name": "ASoC: codecs: wcd93xxx: remove code duplication",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=999737",
+          "lore_links": [
+            "https://lore.kernel.org/r/202509081839.R4vv3FST-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 1004702,
+          "series_name": "[v2] ASoC: wcd934x: fix error handling in wcd934x_codec_parse_data()",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1004702",
+          "lore_links": [
+            "https://lore.kernel.org/r/202509221535.es8PWacQ-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 1012750,
+          "series_name": "ASoC: qcom: q6dsp: few cleanups",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1012750",
+          "lore_links": [
+            "https://lore.kernel.org/r/202510191117.BTexj8De-lkp@intel.com"
+          ]
+        },
+        {
+          "series_id": 1063594,
+          "series_name": "ASoC: qcom: qdsp6: Add MI2S clock control",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1063594",
+          "lore_links": [
+            "https://lore.kernel.org/r/20260310-crazy-screeching-angelfish-297bab@quoll",
+            "https://lore.kernel.org/r/202603120247.NRy9LSop-lkp@intel.com",
+            "https://lore.kernel.org/r/376ad62e-e6b5-438b-a23a-0988b6489e5c@kernel.org"
+          ]
+        },
+        {
+          "series_id": 1071229,
+          "series_name": "ASoC: qcom: q6dsp: few fixes and enhancements",
+          "series_url": "https://patchwork.kernel.org/project/alsa-devel/list/?series=1071229",
+          "lore_links": [
+            "https://lore.kernel.org/r/0c9ccf4f-ac3d-4727-8e9c-d3e2acd94dd1@sirena.org.uk",
+            "https://lore.kernel.org/r/202603250417.fEMbsde2-lkp@intel.com",
+            "https://lore.kernel.org/r/54e3e041-0995-403b-a6c3-c7007bffc6a2@sirena.org.uk"
+          ]
+        }
+      ]
+    }
+  }
+}

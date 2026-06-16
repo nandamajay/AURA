@@ -1,0 +1,19 @@
+{
+  "approver": "aura-pm-v1",
+  "decision": "DEFER_CFG2_REGISTERS_TO_REMOVAL_PATCH",
+  "evidence": {
+    "downstream_lines": [
+      1698,
+      1703,
+      1705,
+      1707,
+      1709
+    ],
+    "feature": "va_psel_mux port-select DAPM widgets",
+    "kconfig_gate": "CONFIG_BOLERO_VER_4P0",
+    "upstream_equivalent": null,
+    "upstream_existence": false
+  },
+  "rationale": "Registers are exclusively used inside downstream-only ifdef block. The entire block will be removed in a later patch. Including them in Patch-01 register rename would create dead renamed symbols.",
+  "timestamp": "2026-06-16"
+}

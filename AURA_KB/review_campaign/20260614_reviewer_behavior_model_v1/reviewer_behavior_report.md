@@ -1,0 +1,136 @@
+# Reviewer Behavior Report V1
+
+## Dataset
+- Candidate series discovered: **2030**
+- Series selected for modeling: **700**
+- Series fetched successfully: **700**
+- Held-out series: **140**
+- Reviewers modeled: **13**
+
+## Held-Out Prediction Metrics
+- Reviewer likelihood prediction: precision=0.320, recall=0.365, f1=0.341
+- Objection category prediction: precision=0.343, recall=0.416, f1=0.376
+- Patch-split request prediction: precision=0.583, recall=0.378, f1=0.459, acc=0.764
+- Acceptance probability: MAE=0.010, Brier=0.000, n=95
+- Review rounds prediction: MAE=1.779, n=140
+
+## Final Questions
+- Q1 Most predictable reviewer (held-out F1): **Mark Brown**
+- Q2 Strongest subsystem-specific preference (behavior concentration proxy): **Rob Herring**
+- Q3 Highest review-churn contributor (objection×rounds×volume proxy): **Mark Brown**
+- Q4 Reviewer-specific modeling vs discovered-rule-only baseline: **F1 delta = +0.006** (precision delta -0.087, recall delta +0.080)
+- Q5 Reviewer-specific rules not currently represented in KB (evidence-backed):
+  - commit_message (evidence count=44)
+  - refactor (evidence count=12)
+  - ownership_boundary (evidence count=8)
+  - feature_cleanup_mix (evidence count=3)
+
+## Held-Out Lore Evidence Index
+- Series 949489 `ASoC: codecs: lpass-wsa: fix VI capture setup.`
+  - https://lore.kernel.org/r/ypt3vurwlmyxkmba7lrmgcmpeszx2afbqp5hwrdwcliwcf23ik@jvg45kffehxx
+- Series 952614 `[v1] ASoC: qcom: qdsp6: Fix references to lookup USB_RX mixer status`
+  - https://lore.kernel.org/r/343a2a16-f213-4c57-87e4-221cf9d59472@sirena.org.uk
+- Series 953414 `ASoC: codecs: wcd938x: fix mux error handling`
+  - https://lore.kernel.org/r/18278ed3-fef0-400d-8cba-72f4c573d7ee@web.de
+  - https://lore.kernel.org/r/5af56acb-7758-4641-8acc-b81e7c8de709@web.de
+- Series 953512 `[next] ASoC: qcom: qdsp6: Set error code in q6usb_hw_params()`
+  - https://lore.kernel.org/r/78caae4a-03d1-4992-9a06-1e2a9aef81ce@sirena.org.uk
+  - https://lore.kernel.org/r/pcwyzf3yzsi2stdryw4qazp22cs6d5pd4yx5l2r4seycpanam5@jian7eu72vf7
+- Series 957483 `[1/2] ASoC: codecs: wsa88xx/wcd938x: Drop kerneldoc marker from inner comment`
+  - https://lore.kernel.org/r/174622448885.4079618.3910091697301287558.b4-ty@kernel.org
+- Series 961222 `ASoC: qcom: qdsp6: Add an error handling path in q6usb_component_probe()`
+  - https://lore.kernel.org/r/aB3T_HTC27F98NJ0@stanley.mountain
+- Series 962928 `ASoC: q6apm-lpass-dais: Print APM port id in decimal on enable error`
+  - https://lore.kernel.org/r/174730194105.333989.6865469375895643519.b4-ty@kernel.org
+  - https://lore.kernel.org/r/xtq5rvhihppgmi47sihvz36k3t5zrj6lmuskoevilzdffrode7@nlxr4go7hwo4
+- Series 964069 `ASoC: qcom: sdm845: Add error handling in sdm845_slim_snd_hw_params()`
+  - https://lore.kernel.org/r/174790352570.11863.6206484772425321934.b4-ty@kernel.org
+  - https://lore.kernel.org/r/e5k5zslz33in53ivbqttnnkt7whvzfay4uwxmi2o3m2a6c6ahg@5kpjzcyov35h
+- Series 965726 `soundwire: qcom: demote probe registration printk`
+  - https://lore.kernel.org/r/174948583390.818152.14215125858704023461.b4-ty@kernel.org
+  - https://lore.kernel.org/r/fb03dd8d-8caf-4861-b56a-2c10b070e2dc@oss.qualcomm.com
+  - https://lore.kernel.org/r/wbpucxl3kf7kmob6bbhexivtgrsn5ehgh7zfuebx2vxjcg46ws@gfhdgi7yd24o
+- Series 965815 `ASoC: codecs: lpass: Drop unused AIF_INVALID first DAI identifier`
+  - https://lore.kernel.org/r/174947640900.126747.17690897321632994593.b4-ty@kernel.org
+- Series 966389 `ASoC: codecs: wcd93xx: Few simplifications of code and extend wcd939x`
+  - https://lore.kernel.org/r/174837299102.1004664.8576380880456043250.robh@kernel.org
+- Series 967055 `ASoC: qcom: sc8280xp: Assign backend ops for multi codec dai links`
+  - https://lore.kernel.org/r/5yfyabb7h2xode53xdqowuwfzuml4ytjjzi6tlvzj7htconwtf@456qh5trwijk
+  - https://lore.kernel.org/r/DA7X59CE8REY.4E410IER5BJF@linaro.org
+- Series 972936 `ASoC: qcom: sm8250: Fix possibly undefined reference`
+  - https://lore.kernel.org/r/175069441422.140181.5569883866488657965.b4-ty@kernel.org
+- Series 974192 `Handle shared reset GPIO for WSA883x speakers`
+  - https://lore.kernel.org/r/3ddf2df5-4591-421e-bfc2-50c7d3ca526d@kernel.org
+  - https://lore.kernel.org/r/c1b2f651f73b4469a410f1f5027f974b4e07ddd2.camel@pengutronix.de
+  - https://lore.kernel.org/r/d42dda52f92b327fd9a051a892c212643f5ab75a.camel@pengutronix.de
+- Series 976719 `ASoC: codecs: wcd937x/8x/9x: cleanup`
+  - https://lore.kernel.org/r/68c06500-a776-4f56-8514-c180b23f7715@oss.qualcomm.com
+  - https://lore.kernel.org/r/aF7ZEi9qQxshnWed@vaman
+  - https://lore.kernel.org/r/cy5cpzoidygeptqwxvnnjilads4npayv2zvu7hfff74defmygv@zglnb7ur4rw2
+- Series 979119 `ASoC: codecs: wcd937x/8x/9x: cleanup`
+  - https://lore.kernel.org/r/aOyRtp5BqY15DreH@vaman
+  - https://lore.kernel.org/r/jl2i62jhzfetyy3tc4lmo5cdvjn5xakawyhja3tpwyu4z3ksov@k7ahrflfmvqi
+  - https://lore.kernel.org/r/xglngdprknerf3uoeixiocagoml26kw4zcwrnmb7c25m3zt3ol@2vnglqifcb2e
+- Series 979301 `[v2] ASoC: qcom: qdsp6: Add an error handling path in q6usb_component_probe()`
+  - https://lore.kernel.org/r/vyr2uogrgggvk3jrzgmvxhqbgj3ble2b2vwsqfrnbrimg37fel@72766uehk47c
+- Series 980629 `Revert "soundwire: qcom: Add set_channel_map api support"`
+  - https://lore.kernel.org/r/175259126744.517280.1761573363863267576.b4-ty@kernel.org
+  - https://lore.kernel.org/r/6f7328df-712b-4c62-82c6-ee69ecec2108@kernel.org
+- Series 982837 `ASoC: dt-bindings: qcom,lpass-va-macro: Define clock-names in top-level`
+  - https://lore.kernel.org/r/175268140929.726552.6903010373670247326.b4-ty@kernel.org
+- Series 982942 `ASoC: codecs: wcd93xxx: remove code duplication`
+  - https://lore.kernel.org/r/9f4c750a-9e23-45a0-a761-4c3fc2c7d8c9@sirena.org.uk
+- Series 983708 `Handle shared reset GPIO for WSA883x speakers`
+  - https://lore.kernel.org/r/20250721-hairy-aardwolf-of-enterprise-bbc99f@kuoka
+  - https://lore.kernel.org/r/20250721-teal-vole-of-finesse-82debf@kuoka
+  - https://lore.kernel.org/r/3ba94864-769c-4a73-8e70-a3904280317f@kernel.org
+- Series 985574 `clk: qcom: drop sm8250 lpass gfm driver`
+  - https://lore.kernel.org/r/175347393332.1760852.9382967903042104261.robh@kernel.org
+  - https://lore.kernel.org/r/819847f4-58fc-4582-bfd1-97acacc15eb8@sirena.org.uk
+  - https://lore.kernel.org/r/crqc4pklbvykswdza7favsjszl5zqhfw5obee3pnfakwzzqot6@iuxugh6illx7
+- Series 986176 `Handle shared reset GPIO for WSA883x speakers`
+  - https://lore.kernel.org/r/07faf0cc-a8e6-426d-b397-dfc321a7f3df@kernel.org
+  - https://lore.kernel.org/r/4bc486cb-9d94-4bad-ae07-e9a7aeed481a@kernel.org
+- Series 988858 `Handle shared reset GPIO for WSA883x speakers`
+  - https://lore.kernel.org/r/5ee0656b-136b-480f-9555-26ccdbff3eda@kernel.org
+- Series 991909 `ASoC: qcom: q6apm-lpass-dais: Fix NULL pointer dereference if source graph failed`
+  - https://lore.kernel.org/r/175700469794.101252.6741664574199797818.b4-ty@kernel.org
+  - https://lore.kernel.org/r/70abcfee-e4c1-42d9-b623-266140aa2ff3@oss.qualcomm.com
+- Series 992010 `Handle shared reset GPIO for WSA883x speakers`
+  - https://lore.kernel.org/r/321dc1ac-1837-4d49-bb7c-7da49316b208@oss.qualcomm.com
+  - https://lore.kernel.org/r/fb1a7290-721e-4bde-aab3-d1edd0630862@kernel.org
+- Series 992509 `ASoC: qcom: audioreach: cleanup and statiic`
+  - https://lore.kernel.org/r/36997dea-19a8-4242-aadd-ad52e0a63cce@linaro.org
+  - https://lore.kernel.org/r/8405b263-08a9-4b8f-ad20-73c8f5865b39@linaro.org
+  - https://lore.kernel.org/r/9f050ccd-0fc1-4fb2-94f5-36ed1f2f4f01@linaro.org
+- Series 992525 `ASoC: qcom: audioreach: cleanup and calibration`
+  - https://lore.kernel.org/r/3348983b-97f2-4ca8-813f-b00fe60c59be@linaro.org
+  - https://lore.kernel.org/r/6e0d3bbc-bc30-4ae0-8258-8dd19f7f29d4@linaro.org
+  - https://lore.kernel.org/r/855c21ca-b16b-4af7-8545-992a7b80a562@linaro.org
+- Series 992539 `ASoC: qcom: audioreach: cleanup and calibration`
+  - https://lore.kernel.org/r/55828090-d802-4f83-923f-a6eaee866a43@linaro.org
+  - https://lore.kernel.org/r/6d137f07-d37a-431b-ab38-5f3087d9b3b7@sirena.org.uk
+  - https://lore.kernel.org/r/74bc063f-b9a3-4ff6-b907-3f8803beed28@linaro.org
+- Series 994077 `[1/2] ASoC: qcom: audioreach: Add support for Speaker Protection module`
+  - https://lore.kernel.org/r/2566eea5-a153-42e6-9a43-1c0af5a4c11c@oss.qualcomm.com
+  - https://lore.kernel.org/r/666b4115-3e81-42c8-8519-f6d7b16c66df@oss.qualcomm.com
+  - https://lore.kernel.org/r/6a4a601b-937e-441f-80a7-3f733fc86445@oss.qualcomm.com
+- Series 994466 `ASoC: codecs: wcd93xxx: remove code duplication`
+  - https://lore.kernel.org/r/4jklfoinsr7ldw5gn66kmfh4vwl7hqrhvnodakirsd5vx4uzqe@axhf5e7ei5g2
+  - https://lore.kernel.org/r/6igcrtfra6h75v5g3wucokxw3ncj3k66ui3jnhfpdf2lmxc3tm@3hzihrpgjaz3
+  - https://lore.kernel.org/r/kmm4e5bg7uehmlsgrfhzo4agr6ga6d5gxtpxq5sg4t3wql5p6m@llwyz4kzsj7y
+- Series 994646 `ASoC: qcom: audioreach: Fix lpaif_type and WS source configuration for I2S interface`
+  - https://lore.kernel.org/r/6ca759f1-27ef-4cf4-833c-ee2f6a9b2d87@oss.qualcomm.com
+  - https://lore.kernel.org/r/f5cc1395-a3b7-4d5b-b8b0-d97de718e691@oss.qualcomm.com
+- Series 997332 `ASoC: codecs: lpass-wsa-macro: Fix speaker quality distortion`
+  - https://lore.kernel.org/r/0beec691-a21c-4425-b06b-728d55e7e254@oss.qualcomm.com
+  - https://lore.kernel.org/r/175701069186.126195.4295379119424857942.b4-ty@kernel.org
+  - https://lore.kernel.org/r/DCPKY2GED44G.I2DSV6ZBXYAQ@linaro.org
+- Series 997460 `ASoC: codecs: lpass-rx-macro: Fix playback quality distortion`
+  - https://lore.kernel.org/r/175701069431.126195.14104429101124802886.b4-ty@kernel.org
+  - https://lore.kernel.org/r/93c7a172-6c56-4feb-86b2-b645a4416a18@oss.qualcomm.com
+  - https://lore.kernel.org/r/bect6bxzxmxguqsrxkchbkhhxgz5lmnzzkwwjyvaca7qtlfz4r@lxmmfto2qkm4
+- Series 997726 `soundwire: qcom: add support for v3.1.0 controller`
+  - https://lore.kernel.org/r/1bbacc5f-7371-4451-b503-cdd98e9f9688@oss.qualcomm.com
+  - https://lore.kernel.org/r/20250902-light-vegan-snake-efe03c@kuoka
+  - https://lore.kernel.org/r/20250902-thoughtful-quizzical-quoll-3ecbae@kuoka

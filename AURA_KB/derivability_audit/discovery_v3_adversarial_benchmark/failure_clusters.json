@@ -1,0 +1,242 @@
+{
+  "baseline": {
+    "false_positive_discovered": 58,
+    "predicted_discovered": 108,
+    "baseline_fdr": 0.537
+  },
+  "ranked_clusters": [
+    {
+      "cluster_name": "threshold_instability_borderline",
+      "count": 36,
+      "percentage_of_all_false_positives": 62.07,
+      "representative_examples": [
+        {
+          "id": "DV3_151",
+          "statement": "Keep PM and SDW validation near core registration unless maintainers request a separate fix patch in v2. [D3V3-AMB-PARAPHRASE-151]",
+          "attack_type": "paraphrase_attack"
+        },
+        {
+          "id": "DV3_152",
+          "statement": "A small helper-first split may reduce churn, but only when reviewer-specific expectations are already represented in series notes. for qcom downstream-to-upstream transitions [D3V3-AMB-PARAPHRASE-152]",
+          "attack_type": "paraphrase_attack"
+        },
+        {
+          "id": "DV3_153",
+          "statement": "Schema-first ordering is generally preferred, except when compatible expansion is mechanically trivial. [D3V3-AMB-PARAPHRASE-153]",
+          "attack_type": "paraphrase_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by threshold instability borderline dynamics.",
+      "gate_that_failed": "decision-threshold gate",
+      "proposed_fix": "Abstain/demote borderline discovered predictions",
+      "estimated_FDR_reduction": 23.15
+    },
+    {
+      "cluster_name": "hidden_parent_rule",
+      "count": 10,
+      "percentage_of_all_false_positives": 17.24,
+      "representative_examples": [
+        {
+          "id": "DV3_091",
+          "statement": "When compatible-set and reset semantics both evolve, a schema-first split tends to reduce upstream review churn. [D3V3-GEN-HIDDEN-091]",
+          "attack_type": "hidden_parent_rule_attack"
+        },
+        {
+          "id": "DV3_092",
+          "statement": "Introducing shared SDW helpers before call-site migration usually lowers structural objections. for qcom downstream-to-upstream transitions [D3V3-GEN-HIDDEN-092]",
+          "attack_type": "hidden_parent_rule_attack"
+        },
+        {
+          "id": "DV3_093",
+          "statement": "Across qcom audio series, reviewer churn decreases when ownership split width stays within 2-5 change-set patches and feature churn is deferred. [D3V3-GEN-HIDDEN-093]",
+          "attack_type": "hidden_parent_rule_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by hidden parent rule dynamics.",
+      "gate_that_failed": "hidden-parent recovery gate",
+      "proposed_fix": "Force parent-rule search before discovered promotion",
+      "estimated_FDR_reduction": 4.72
+    },
+    {
+      "cluster_name": "causal_illusion",
+      "count": 10,
+      "percentage_of_all_false_positives": 17.24,
+      "representative_examples": [
+        {
+          "id": "DV3_066",
+          "statement": "PM and SoundWire changes survive review faster when failure-path semantics are explicit before resend. across maintainer-facing patch cycles [D3V3-GEN-CAUSAL-066]",
+          "attack_type": "causal_illusion_attack"
+        },
+        {
+          "id": "DV3_067",
+          "statement": "DAPM minimization policy should be family-sensitive; WSA and WCD need different initial graph breadth. [D3V3-GEN-CAUSAL-067]",
+          "attack_type": "causal_illusion_attack"
+        },
+        {
+          "id": "DV3_068",
+          "statement": "Commit narrative quality has largest upstream review impact when patch scope spans multiple ownership layers. [D3V3-GEN-CAUSAL-068]",
+          "attack_type": "causal_illusion_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by causal illusion dynamics.",
+      "gate_that_failed": "causal integrity gate",
+      "proposed_fix": "Require causal chain evidence not just co-occurrence",
+      "estimated_FDR_reduction": 4.72
+    },
+    {
+      "cluster_name": "novelty_inflation",
+      "count": 10,
+      "percentage_of_all_false_positives": 17.24,
+      "representative_examples": [
+        {
+          "id": "DV3_086",
+          "statement": "Revision convergence improves when each reviewer objection is tied to a precise vN delta reference. [D3V3-GEN-NOVELTY-086]",
+          "attack_type": "novelty_inflation_attack"
+        },
+        {
+          "id": "DV3_087",
+          "statement": "When compatible-set and reset semantics both evolve, a schema-first split tends to reduce upstream review churn. [D3V3-GEN-NOVELTY-087]",
+          "attack_type": "novelty_inflation_attack"
+        },
+        {
+          "id": "DV3_088",
+          "statement": "Introducing shared SDW helpers before call-site migration usually lowers structural objections. across maintainer-facing patch cycles [D3V3-GEN-NOVELTY-088]",
+          "attack_type": "novelty_inflation_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by novelty inflation dynamics.",
+      "gate_that_failed": "novelty inflation gate",
+      "proposed_fix": "Penalize novelty claims lacking parent-rule exclusion",
+      "estimated_FDR_reduction": 4.72
+    },
+    {
+      "cluster_name": "transfer_contamination",
+      "count": 8,
+      "percentage_of_all_false_positives": 13.79,
+      "representative_examples": [
+        {
+          "id": "DV3_073",
+          "statement": "Large v1 touch density on one codec file correlates with increased objection probability. across maintainer-facing patch cycles [D3V3-GEN-TRANSFER-073]",
+          "attack_type": "transfer_contamination_attack"
+        },
+        {
+          "id": "DV3_074",
+          "statement": "Revision convergence improves when each reviewer objection is tied to a precise vN delta reference. [D3V3-GEN-TRANSFER-074]",
+          "attack_type": "transfer_contamination_attack"
+        },
+        {
+          "id": "DV3_075",
+          "statement": "When compatible-set and reset semantics both evolve, a schema-first split tends to reduce upstream review churn. [D3V3-GEN-TRANSFER-075]",
+          "attack_type": "transfer_contamination_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by transfer contamination dynamics.",
+      "gate_that_failed": "transfer hygiene gate",
+      "proposed_fix": "Enforce disjoint unseen-task lineage constraints",
+      "estimated_FDR_reduction": 3.7
+    },
+    {
+      "cluster_name": "interaction_effect_false_positive",
+      "count": 7,
+      "percentage_of_all_false_positives": 12.07,
+      "representative_examples": [
+        {
+          "id": "DV3_098",
+          "statement": "When maintainer evidence is sparse, use soft upstream reviewer priors and require stronger causal support before prediction confidence is raised. [D3V3-GEN-INTERACTION-098]",
+          "attack_type": "interaction_effect_attack"
+        },
+        {
+          "id": "DV3_099",
+          "statement": "For SDW codec work, separating transport ownership from controls/DAPM changes reduces review loop depth. in upstream alsa workflows [D3V3-GEN-INTERACTION-099]",
+          "attack_type": "interaction_effect_attack"
+        },
+        {
+          "id": "DV3_196",
+          "statement": "Reviewer-confidence weighting should shrink under sparse evidence, unless cross-series analogs are strong. [D3V3-AMB-INTERACTION-196]",
+          "attack_type": "interaction_effect_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by interaction effect false positive dynamics.",
+      "gate_that_failed": "interaction irreducibility gate",
+      "proposed_fix": "Require irreducible interaction proof under ablation",
+      "estimated_FDR_reduction": 3.21
+    },
+    {
+      "cluster_name": "reviewer_specific_bias",
+      "count": 3,
+      "percentage_of_all_false_positives": 5.17,
+      "representative_examples": [
+        {
+          "id": "DV3_176",
+          "statement": "SoundWire callback guards should be explicit, though exact placement can be deferred when revision cadence is clean. [D3V3-AMB-REVIEWER-176]",
+          "attack_type": "reviewer_specific_bias_attack"
+        },
+        {
+          "id": "DV3_177",
+          "statement": "Commit-message expansions improve acceptance mainly for broad-scope changes, not always for focused bugfixes. [D3V3-AMB-REVIEWER-177]",
+          "attack_type": "reviewer_specific_bias_attack"
+        },
+        {
+          "id": "DV3_179",
+          "statement": "Timeout-safe PM checks are required; whether they belong in v1 core or v2 fix depends on observed objection pattern. [D3V3-AMB-REVIEWER-179]",
+          "attack_type": "reviewer_specific_bias_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by reviewer specific bias dynamics.",
+      "gate_that_failed": "reviewer bias gate",
+      "proposed_fix": "Require cross-reviewer evidence for discovered claims",
+      "estimated_FDR_reduction": 1.32
+    },
+    {
+      "cluster_name": "derivable_rule_mistaken_as_discovery",
+      "count": 2,
+      "percentage_of_all_false_positives": 3.45,
+      "representative_examples": [
+        {
+          "id": "DV3_053",
+          "statement": "For SDW codec work, separating transport ownership from controls/DAPM changes reduces upstream review loop depth. [D3V3-GEN-PARAPHRASE-053]",
+          "attack_type": "paraphrase_attack"
+        },
+        {
+          "id": "DV3_057",
+          "statement": "For SDW codec work, separating transport ownership from controls/DAPM changes reduces upstream review loop depth. [D3V3-GEN-SEMANTIC-057]",
+          "attack_type": "semantic_rewrite_attack"
+        }
+      ],
+      "root_cause": "False discovered predictions dominated by derivable rule mistaken as discovery dynamics.",
+      "gate_that_failed": "novelty+paraphrase gate",
+      "proposed_fix": "Tighten semantic replay + parent-rule entailment check",
+      "estimated_FDR_reduction": 0.87
+    },
+    {
+      "cluster_name": "rule_recombination",
+      "count": 0,
+      "percentage_of_all_false_positives": 0.0,
+      "representative_examples": [],
+      "root_cause": "False discovered predictions dominated by rule recombination dynamics.",
+      "gate_that_failed": "composition gate",
+      "proposed_fix": "Detect additive recombinations and demote to generalized",
+      "estimated_FDR_reduction": 0.0
+    },
+    {
+      "cluster_name": "abstraction_laundering",
+      "count": 0,
+      "percentage_of_all_false_positives": 0.0,
+      "representative_examples": [],
+      "root_cause": "False discovered predictions dominated by abstraction laundering dynamics.",
+      "gate_that_failed": "abstraction laundering gate",
+      "proposed_fix": "Require non-derivability proof for discovered classification",
+      "estimated_FDR_reduction": 0.0
+    },
+    {
+      "cluster_name": "benchmark_leakage",
+      "count": 0,
+      "percentage_of_all_false_positives": 0.0,
+      "representative_examples": [],
+      "root_cause": "False discovered predictions dominated by benchmark leakage dynamics.",
+      "gate_that_failed": "leakage gate",
+      "proposed_fix": "Lineage hash isolation and anti-leak checks",
+      "estimated_FDR_reduction": 0.0
+    }
+  ]
+}

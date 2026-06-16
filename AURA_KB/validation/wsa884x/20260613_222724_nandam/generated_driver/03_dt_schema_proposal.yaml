@@ -1,0 +1,32 @@
+$id: http://devicetree.org/schemas/sound/qcom,wsa8840.yaml#
+$schema: http://devicetree.org/meta-schemas/core.yaml#
+
+title: Qualcomm WSA884x Smart Speaker Amplifier
+
+maintainers:
+  - Qualcomm ASoC maintainers
+
+description: |
+  SoundWire slave codec binding for Qualcomm WSA8840/WSA8845 family.
+
+properties:
+  compatible:
+    enum:
+      - qcom,wsa8840
+      - qcom,wsa8845
+      - qcom,wsa8845h
+  reg:
+    maxItems: 1
+  '#sound-dai-cells':
+    const: 0
+  reset-gpios:
+    maxItems: 1
+  qcom,port-mapping:
+    $ref: /schemas/types.yaml#/definitions/uint32-array
+
+required:
+  - compatible
+  - reg
+  - '#sound-dai-cells'
+
+additionalProperties: false

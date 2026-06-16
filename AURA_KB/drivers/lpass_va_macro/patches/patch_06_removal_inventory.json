@@ -1,0 +1,214 @@
+{
+  "artifact_name": "PATCH_06_REMOVAL_INVENTORY",
+  "classification": "PASS",
+  "driver": "lpass_va_macro",
+  "patch": "Patch-06",
+  "removal_count": 20,
+  "removals": [
+    {
+      "content": "#include <asoc/msm-cdc-pinctrl.h>",
+      "kind": "line_removal",
+      "line_end": 17,
+      "line_start": 17,
+      "reason": "remove downstream-only version/pinctrl include"
+    },
+    {
+      "content": "#include <linux/version.h>",
+      "kind": "line_removal",
+      "line_end": 21,
+      "line_start": 21,
+      "reason": "remove downstream-only version/pinctrl include"
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 888,
+      "line_start": 884,
+      "reason": "keep latest ASoC API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 1024,
+      "line_start": 1020,
+      "reason": "keep latest ASoC API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 1049,
+      "line_start": 1045,
+      "reason": "keep latest ASoC API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 2275,
+      "line_start": 2271,
+      "reason": "keep latest ASoC API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 2316,
+      "line_start": 2312,
+      "reason": "keep latest ASoC API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 1561,
+      "line_start": 1553,
+      "reason": "keep latest platform_driver remove/get_channel_map API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 2758,
+      "line_start": 2754,
+      "reason": "keep latest platform_driver remove/get_channel_map API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)",
+      "kept_branch": "then",
+      "kind": "conditional_reduced",
+      "line_end": 2788,
+      "line_start": 2784,
+      "reason": "keep latest platform_driver remove/get_channel_map API branch",
+      "removed_scaffolding": [
+        "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#ifdef CONFIG_BOLERO_VER_4P0",
+      "kept_branch": "else",
+      "kind": "conditional_reduced",
+      "line_end": 1694,
+      "line_start": 1686,
+      "reason": "keep non-BOLERO upstream-reachable branch and remove downstream-only CONFIG_BOLERO_VER_4P0 branch",
+      "removed_scaffolding": [
+        "#ifdef CONFIG_BOLERO_VER_4P0",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#ifdef CONFIG_BOLERO_VER_4P0",
+      "kept_branch": "else",
+      "kind": "conditional_reduced",
+      "line_end": 1731,
+      "line_start": 1720,
+      "reason": "keep non-BOLERO upstream-reachable branch and remove downstream-only CONFIG_BOLERO_VER_4P0 branch",
+      "removed_scaffolding": [
+        "#ifdef CONFIG_BOLERO_VER_4P0",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#ifdef CONFIG_BOLERO_VER_4P0",
+      "kept_branch": "else",
+      "kind": "conditional_reduced",
+      "line_end": 1755,
+      "line_start": 1742,
+      "reason": "remove downstream-only CONFIG_BOLERO_VER_4P0 block with no upstream path",
+      "removed_scaffolding": [
+        "#ifdef CONFIG_BOLERO_VER_4P0",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#ifdef CONFIG_BOLERO_VER_4P0",
+      "kept_branch": "else",
+      "kind": "conditional_reduced",
+      "line_end": 1820,
+      "line_start": 1815,
+      "reason": "remove downstream-only CONFIG_BOLERO_VER_4P0 block with no upstream path",
+      "removed_scaffolding": [
+        "#ifdef CONFIG_BOLERO_VER_4P0",
+        "#endif"
+      ]
+    },
+    {
+      "condition": "#ifdef CONFIG_BOLERO_VER_4P0",
+      "kept_branch": "else",
+      "kind": "conditional_reduced",
+      "line_end": 2147,
+      "line_start": 1870,
+      "reason": "keep non-BOLERO upstream-reachable branch and remove downstream-only CONFIG_BOLERO_VER_4P0 branch",
+      "removed_scaffolding": [
+        "#ifdef CONFIG_BOLERO_VER_4P0",
+        "#endif"
+      ]
+    },
+    {
+      "kind": "block_removal",
+      "line_end": 493,
+      "line_start": 487,
+      "reason": "remove msm-cdc-pinctrl active/wakeup path"
+    },
+    {
+      "kind": "block_removal",
+      "line_end": 501,
+      "line_start": 500,
+      "reason": "remove msm-cdc-pinctrl error sleep path"
+    },
+    {
+      "kind": "block_removal",
+      "line_end": 557,
+      "line_start": 552,
+      "reason": "remove msm-cdc-pinctrl sleep/wakeup path"
+    },
+    {
+      "kind": "block_removal",
+      "line_end": 2580,
+      "line_start": 2569,
+      "reason": "remove msm-cdc-pinctrl probe phandle/state validation"
+    },
+    {
+      "kind": "line_removal",
+      "line_end": 160,
+      "line_start": 160,
+      "reason": "remove pinctrl-only va_swr_gpio_p field"
+    }
+  ],
+  "targets": {
+    "downstream_kconfig": "CONFIG_BOLERO_VER_4P0 blocks",
+    "vendor_pinctrl": "asoc/msm-cdc-pinctrl.h and msm_cdc_pinctrl_* calls",
+    "version_compatibility": "linux/version.h and LINUX_VERSION_CODE conditionals"
+  }
+}
