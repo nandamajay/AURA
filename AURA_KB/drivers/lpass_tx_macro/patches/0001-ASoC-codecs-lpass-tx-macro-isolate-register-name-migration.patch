@@ -1,0 +1,603 @@
+From 783d1bc829e4893b62677e91379642473565693b Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 00:43:26 +0530
+Subject: [PATCH 1/9] ASoC: codecs: lpass-tx-macro: isolate register-name
+ migration
+
+Localize TX macro register definitions from the downstream shared
+lpass-cdc-registers.h header and rename header-backed LPASS_CDC_TX_*
+register symbols to the upstream-style CDC_TX_* prefix.
+
+This is a mechanical source migration only; local TX_MACRO helper names and
+functional paths are left unchanged for later patches.
+
+Signed-off-by: AURA Conversion Engine <aura@example.invalid>
+---
+ .../soc/codecs/lpass-tx-macro.c               | 266 +++++++++++-------
+ 1 file changed, 159 insertions(+), 107 deletions(-)
+ rename asoc/codecs/lpass-cdc/lpass-cdc-tx-macro.c => sound/soc/codecs/lpass-tx-macro.c (92%)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+similarity index 92%
+rename from asoc/codecs/lpass-cdc/lpass-cdc-tx-macro.c
+rename to sound/soc/codecs/lpass-tx-macro.c
+index cc4c199..d2f812b 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -16,7 +16,59 @@
+ #include <linux/version.h>
+ #include <asoc/msm-cdc-pinctrl.h>
+ #include "lpass-cdc.h"
+-#include "lpass-cdc-registers.h"
++/* TX macro registers: localized from downstream lpass-cdc-registers.h */
++#define CDC_TX0_TX_PATH_CFG0	(0x0404)
++#define CDC_TX0_TX_PATH_CFG1	(0x0408)
++#define CDC_TX0_TX_PATH_CFG2	(0x0430)
++#define CDC_TX0_TX_PATH_CTL	(0x0400)
++#define CDC_TX0_TX_PATH_SEC2	(0x0418)
++#define CDC_TX0_TX_PATH_SEC7	(0x042C)
++#define CDC_TX0_TX_VOL_CTL	(0x040C)
++#define CDC_TX1_TX_PATH_CFG0	(0x0484)
++#define CDC_TX1_TX_PATH_CTL	(0x0480)
++#define CDC_TX1_TX_VOL_CTL	(0x048C)
++#define CDC_TX2_TX_PATH_CFG0	(0x0504)
++#define CDC_TX2_TX_VOL_CTL	(0x050C)
++#define CDC_TX3_TX_PATH_CFG0	(0x0584)
++#define CDC_TX3_TX_VOL_CTL	(0x058C)
++#define CDC_TX4_TX_PATH_CFG0	(0x0604)
++#define CDC_TX4_TX_VOL_CTL	(0x060C)
++#define CDC_TX5_TX_PATH_CFG0	(0x0684)
++#define CDC_TX5_TX_VOL_CTL	(0x068C)
++#define CDC_TX6_TX_PATH_CFG0	(0x0704)
++#define CDC_TX6_TX_VOL_CTL	(0x070C)
++#define CDC_TX7_TX_PATH_CFG0	(0x0784)
++#define CDC_TX7_TX_VOL_CTL	(0x078C)
++#define CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL	(0x0004)
++#define CDC_TX_CLK_RST_CTRL_MCLK_CONTROL	(0x0000)
++#define CDC_TX_INP_MUX_ADC_MUX0_CFG0	(0x0100)
++#define CDC_TX_INP_MUX_ADC_MUX0_CFG1	(0x0104)
++#define CDC_TX_INP_MUX_ADC_MUX0_CFG2	(0x0140)
++#define CDC_TX_INP_MUX_ADC_MUX1_CFG0	(0x0108)
++#define CDC_TX_INP_MUX_ADC_MUX1_CFG1	(0x010C)
++#define CDC_TX_INP_MUX_ADC_MUX1_CFG2	(0x0144)
++#define CDC_TX_INP_MUX_ADC_MUX2_CFG0	(0x0110)
++#define CDC_TX_INP_MUX_ADC_MUX2_CFG1	(0x0114)
++#define CDC_TX_INP_MUX_ADC_MUX2_CFG2	(0x0148)
++#define CDC_TX_INP_MUX_ADC_MUX3_CFG0	(0x0118)
++#define CDC_TX_INP_MUX_ADC_MUX3_CFG1	(0x011C)
++#define CDC_TX_INP_MUX_ADC_MUX3_CFG2	(0x014C)
++#define CDC_TX_INP_MUX_ADC_MUX4_CFG0	(0x0120)
++#define CDC_TX_INP_MUX_ADC_MUX4_CFG1	(0x0124)
++#define CDC_TX_INP_MUX_ADC_MUX4_CFG2	(0x0150)
++#define CDC_TX_INP_MUX_ADC_MUX5_CFG0	(0x0128)
++#define CDC_TX_INP_MUX_ADC_MUX5_CFG1	(0x012C)
++#define CDC_TX_INP_MUX_ADC_MUX5_CFG2	(0x0154)
++#define CDC_TX_INP_MUX_ADC_MUX6_CFG0	(0x0130)
++#define CDC_TX_INP_MUX_ADC_MUX6_CFG1	(0x0134)
++#define CDC_TX_INP_MUX_ADC_MUX6_CFG2	(0x0158)
++#define CDC_TX_INP_MUX_ADC_MUX7_CFG0	(0x0138)
++#define CDC_TX_INP_MUX_ADC_MUX7_CFG1	(0x013C)
++#define CDC_TX_INP_MUX_ADC_MUX7_CFG2	(0x015C)
++#define CDC_TX_TOP_CSR_SWR_CTRL	(0x0088)
++#define CDC_TX_TOP_CSR_SWR_MIC0_CTL	(0x00D0)
++#define CDC_TX_TOP_CSR_SWR_MIC1_CTL	(0x00D4)
++#define CDC_TX_TOP_CSR_SWR_MIC2_CTL	(0x00C0)
+ #include "lpass-cdc-clk-rsc.h"
+ 
+ #define AUTO_SUSPEND_DELAY  50 /* delay in msec */
+@@ -39,7 +91,7 @@
+ 
+ #define LPASS_CDC_TX_MACRO_DMIC_SAMPLE_RATE_UNDEFINED 0
+ #define LPASS_CDC_TX_MACRO_TX_PATH_OFFSET \
+-	(LPASS_CDC_TX1_TX_PATH_CTL - LPASS_CDC_TX0_TX_PATH_CTL)
++	(CDC_TX1_TX_PATH_CTL - CDC_TX0_TX_PATH_CTL)
+ #define LPASS_CDC_TX_MACRO_SWR_MIC_MUX_SEL_MASK 0xF
+ #define LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET 0x8
+ #define LPASS_CDC_TX_MACRO_ADC_MODE_CFG0_SHIFT 1
+@@ -258,10 +310,10 @@ static int lpass_cdc_tx_macro_mclk_enable(
+ 				TX_MAX_OFFSET);
+ 		if (tx_priv->tx_mclk_users == 0) {
+ 			regmap_update_bits(regmap,
+-				LPASS_CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
++				CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
+ 				0x01, 0x01);
+ 			regmap_update_bits(regmap,
+-				LPASS_CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
++				CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
+ 				0x01, 0x01);
+ 		}
+ 		tx_priv->tx_mclk_users++;
+@@ -275,10 +327,10 @@ static int lpass_cdc_tx_macro_mclk_enable(
+ 		tx_priv->tx_mclk_users--;
+ 		if (tx_priv->tx_mclk_users == 0) {
+ 			regmap_update_bits(regmap,
+-				LPASS_CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
++				CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
+ 				0x01, 0x00);
+ 			regmap_update_bits(regmap,
+-				LPASS_CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
++				CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
+ 				0x01, 0x00);
+ 		}
+ 
+@@ -369,7 +421,7 @@ static int lpass_cdc_tx_macro_event_handler(struct snd_soc_component *component,
+ 	case LPASS_CDC_MACRO_EVT_BCS_CLK_OFF:
+ 		if (tx_priv->bcs_clk_en)
+ 			snd_soc_component_update_bits(component,
+-				LPASS_CDC_TX0_TX_PATH_SEC7, 0x40, data << 6);
++				CDC_TX0_TX_PATH_SEC7, 0x40, data << 6);
+ 		if (data)
+ 			tx_priv->hs_slow_insert_complete = true;
+ 		else
+@@ -392,7 +444,7 @@ static bool is_amic_enabled(struct snd_soc_component *component, int decimator)
+ 	if (!lpass_cdc_tx_macro_get_data(component, &tx_dev, &tx_priv, __func__))
+ 		return ret;
+ 
+-	adc_mux_reg = LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
++	adc_mux_reg = CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
+ 			LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET * decimator;
+ 
+ 	if (snd_soc_component_read(component, adc_mux_reg) & SWR_MIC) {
+@@ -421,7 +473,7 @@ static bool is_msm_dmic_enabled(struct snd_soc_component *component, int decimat
+ 	if (!lpass_cdc_tx_macro_get_data(component, &tx_dev, &tx_priv, __func__))
+ 		return ret;
+ 
+-	adc_mux_reg = LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
++	adc_mux_reg = CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
+ 			LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET * decimator;
+ 
+ 	/* ADC_MUX_SEL is VA_MIC and swr_dmic_enable is 0, then dec is for msm-dmic use-case */
+@@ -447,16 +499,16 @@ static void lpass_cdc_tx_macro_tx_hpf_corner_freq_callback(struct work_struct *w
+ 	component = tx_priv->component;
+ 	hpf_cut_off_freq = hpf_work->hpf_cut_off_freq;
+ 
+-	dec_cfg_reg = LPASS_CDC_TX0_TX_PATH_CFG0 +
++	dec_cfg_reg = CDC_TX0_TX_PATH_CFG0 +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * hpf_work->decimator;
+-	hpf_gate_reg = LPASS_CDC_TX0_TX_PATH_SEC2 +
++	hpf_gate_reg = CDC_TX0_TX_PATH_SEC2 +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * hpf_work->decimator;
+ 
+ 	dev_dbg(component->dev, "%s: decimator %u hpf_cut_of_freq 0x%x\n",
+ 		__func__, hpf_work->decimator, hpf_cut_off_freq);
+ 
+ 	if (is_amic_enabled(component, hpf_work->decimator)) {
+-		adc_reg = LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG0 +
++		adc_reg = CDC_TX_INP_MUX_ADC_MUX0_CFG0 +
+ 			LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET * hpf_work->decimator;
+ 		adc_n = snd_soc_component_read(component, adc_reg) &
+ 				LPASS_CDC_TX_MACRO_SWR_MIC_MUX_SEL_MASK;
+@@ -522,7 +574,7 @@ static void lpass_cdc_tx_macro_mute_update_callback(struct work_struct *work)
+ 	decimator = tx_mute_dwork->decimator;
+ 
+ 	tx_vol_ctl_reg =
+-		LPASS_CDC_TX0_TX_PATH_CTL +
++		CDC_TX0_TX_PATH_CTL +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ 	snd_soc_component_update_bits(component, tx_vol_ctl_reg, 0x10, 0x00);
+ 	dev_dbg(tx_priv->dev, "%s: decimator %u unmute\n",
+@@ -549,12 +601,12 @@ static void mute_stream_dec_unmute(struct work_struct *work)
+ 
+ 	for_each_set_bit(decimator, &tx_priv->active_ch_mask[dai_id],
+ 		LPASS_CDC_TX_MACRO_DEC_MAX) {
+-		tx_mute_ctl_reg = LPASS_CDC_TX0_TX_PATH_CTL +
++		tx_mute_ctl_reg = CDC_TX0_TX_PATH_CTL +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ 		snd_soc_component_update_bits(component, tx_mute_ctl_reg, 0x10, 0x00);
+ 		tx_priv->dec_ref_cnt[decimator]++;
+ 		if (tx_priv->swr_dmic_gain_disable) {
+-			dec_gain_reg = LPASS_CDC_TX0_TX_PATH_CFG1 +
++			dec_gain_reg = CDC_TX0_TX_PATH_CFG1 +
+ 				LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ 			snd_soc_component_update_bits(component, dec_gain_reg, 0x01, 0x00);
+ 		}
+@@ -589,29 +641,29 @@ static int lpass_cdc_tx_macro_put_dec_enum(struct snd_kcontrol *kcontrol,
+ 		widget->name, val);
+ 
+ 	switch (e->reg) {
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX0_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX0_CFG0:
++		mic_sel_reg = CDC_TX0_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX1_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX1_CFG0:
++		mic_sel_reg = CDC_TX1_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX2_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX2_CFG0:
++		mic_sel_reg = CDC_TX2_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX3_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX3_CFG0:
++		mic_sel_reg = CDC_TX3_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX4_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX4_CFG0:
++		mic_sel_reg = CDC_TX4_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX5_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX5_CFG0:
++		mic_sel_reg = CDC_TX5_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX6_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX6_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX6_CFG0:
++		mic_sel_reg = CDC_TX6_TX_PATH_CFG0;
+ 		break;
+-	case LPASS_CDC_TX_INP_MUX_ADC_MUX7_CFG0:
+-		mic_sel_reg = LPASS_CDC_TX7_TX_PATH_CFG0;
++	case CDC_TX_INP_MUX_ADC_MUX7_CFG0:
++		mic_sel_reg = CDC_TX7_TX_PATH_CFG0;
+ 		break;
+ 	default:
+ 		dev_err_ratelimited(component->dev, "%s: e->reg: 0x%x not expected\n",
+@@ -1079,21 +1131,21 @@ static int lpass_cdc_tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 	dev_dbg(component->dev, "%s(): widget = %s decimator = %u\n", __func__,
+ 			w->name, decimator);
+ 
+-	tx_vol_ctl_reg = LPASS_CDC_TX0_TX_PATH_CTL +
++	tx_vol_ctl_reg = CDC_TX0_TX_PATH_CTL +
+ 				LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-	hpf_gate_reg = LPASS_CDC_TX0_TX_PATH_SEC2 +
++	hpf_gate_reg = CDC_TX0_TX_PATH_SEC2 +
+ 				LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-	dec_cfg_reg = LPASS_CDC_TX0_TX_PATH_CFG0 +
++	dec_cfg_reg = CDC_TX0_TX_PATH_CFG0 +
+ 				LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-	dec_gain_reg = LPASS_CDC_TX0_TX_PATH_CFG1 +
++	dec_gain_reg = CDC_TX0_TX_PATH_CFG1 +
+ 				LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-	tx_gain_ctl_reg = LPASS_CDC_TX0_TX_VOL_CTL +
++	tx_gain_ctl_reg = CDC_TX0_TX_VOL_CTL +
+ 				LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-	adc_mux_reg = LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
++	adc_mux_reg = CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
+ 			LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET * decimator;
+-	adc_mux0_reg = LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG0 +
++	adc_mux0_reg = CDC_TX_INP_MUX_ADC_MUX0_CFG0 +
+ 			LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET * decimator;
+-	tx_fs_reg = LPASS_CDC_TX0_TX_PATH_CTL +
++	tx_fs_reg = CDC_TX0_TX_PATH_CTL +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ #ifdef CONFIG_BOLERO_VER_2P85
+ 	adapt_ctrl = LPASS_TX_CDC_ADPT0_ADPT_CTRL +
+@@ -1102,7 +1154,7 @@ static int lpass_cdc_tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ 	adapt_pdm_ctl1 = LPASS_TX_CDC_ADPT0_DBG_PDM_RATE_CTRL_1 +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-	adc_bypass_reg = LPASS_CDC_TX0_TX_PATH_CFG2 +
++	adc_bypass_reg = CDC_TX0_TX_PATH_CFG2 +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ #endif
+ 
+@@ -1123,13 +1175,13 @@ static int lpass_cdc_tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 		if (tx_priv->swr_dmic_enable) {
+ 			swr_micn = snd_soc_component_read(component, adc_mux0_reg) & 0xf;
+ 			if (swr_micn > 0 && swr_micn <= 4) {
+-				dmic_clk_reg = LPASS_CDC_TX_TOP_CSR_SWR_MIC0_CTL;
++				dmic_clk_reg = CDC_TX_TOP_CSR_SWR_MIC0_CTL;
+ 				mic_pair = MIC_PAIR01;
+ 			} else if (swr_micn > 4 && swr_micn <= 7) {
+-				dmic_clk_reg = LPASS_CDC_TX_TOP_CSR_SWR_MIC1_CTL;
++				dmic_clk_reg = CDC_TX_TOP_CSR_SWR_MIC1_CTL;
+ 				mic_pair = MIC_PAIR23;
+ 			} else if (swr_micn > 7 && swr_micn <= 11) {
+-				dmic_clk_reg = LPASS_CDC_TX_TOP_CSR_SWR_MIC2_CTL;
++				dmic_clk_reg = CDC_TX_TOP_CSR_SWR_MIC2_CTL;
+ 				mic_pair = MIC_PAIR45;
+ 			}
+ 
+@@ -1236,7 +1288,7 @@ static int lpass_cdc_tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 			tx_priv->bcs_clk_en = true;
+ 			if (tx_priv->hs_slow_insert_complete)
+ 				snd_soc_component_update_bits(component,
+-					LPASS_CDC_TX0_TX_PATH_SEC7, 0x40,
++					CDC_TX0_TX_PATH_SEC7, 0x40,
+ 					0x40);
+ 		}
+ 		break;
+@@ -1276,7 +1328,7 @@ static int lpass_cdc_tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 		if (snd_soc_component_read(component, adc_mux_reg)
+ 						& SWR_MIC)
+ 			snd_soc_component_update_bits(component,
+-				LPASS_CDC_TX_TOP_CSR_SWR_CTRL,
++				CDC_TX_TOP_CSR_SWR_CTRL,
+ 				0x01, 0x00);
+ 
+ 		if (tx_priv->swr_dmic_gain_disable)
+@@ -1301,7 +1353,7 @@ static int lpass_cdc_tx_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 			snd_soc_component_update_bits(component, dec_cfg_reg,
+ 					0x01, 0x00);
+ 			snd_soc_component_update_bits(component,
+-				LPASS_CDC_TX0_TX_PATH_SEC7, 0x40, 0x00);
++				CDC_TX0_TX_PATH_SEC7, 0x40, 0x00);
+ 			tx_priv->bcs_clk_en = false;
+ 			snd_soc_component_update_bits(component,
+ 					LPASS_CDC_VA_TOP_CSR_SWR_CTRL, 0x0F,
+@@ -1327,21 +1379,21 @@ static const char * const cf_text[] = {
+ 	"CF_NEG_3DB_4HZ", "CF_NEG_3DB_75HZ", "CF_NEG_3DB_150HZ"
+ };
+ 
+-static SOC_ENUM_SINGLE_DECL(cf_dec0_enum, LPASS_CDC_TX0_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec0_enum, CDC_TX0_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec1_enum, LPASS_CDC_TX1_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec1_enum, CDC_TX1_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec2_enum, LPASS_CDC_TX2_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec2_enum, CDC_TX2_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec3_enum, LPASS_CDC_TX3_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec3_enum, CDC_TX3_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec4_enum, LPASS_CDC_TX4_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec4_enum, CDC_TX4_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec5_enum, LPASS_CDC_TX5_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec5_enum, CDC_TX5_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec6_enum, LPASS_CDC_TX6_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec6_enum, CDC_TX6_TX_PATH_CFG0, 5,
+ 							cf_text);
+-static SOC_ENUM_SINGLE_DECL(cf_dec7_enum, LPASS_CDC_TX7_TX_PATH_CFG0, 5,
++static SOC_ENUM_SINGLE_DECL(cf_dec7_enum, CDC_TX7_TX_PATH_CFG0, 5,
+ 							cf_text);
+ 
+ static int lpass_cdc_tx_macro_hw_params(struct snd_pcm_substream *substream,
+@@ -1395,9 +1447,9 @@ static int lpass_cdc_tx_macro_hw_params(struct snd_pcm_substream *substream,
+ 	for_each_set_bit(decimator, &tx_priv->active_ch_mask[dai->id],
+ 			 LPASS_CDC_TX_MACRO_DEC_MAX) {
+ 		if (decimator >= 0) {
+-			tx_fs_reg = LPASS_CDC_TX0_TX_PATH_CTL +
++			tx_fs_reg = CDC_TX0_TX_PATH_CTL +
+ 				    LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+-			tx_vol_ctl_reg = LPASS_CDC_TX0_TX_PATH_CTL +
++			tx_vol_ctl_reg = CDC_TX0_TX_PATH_CTL +
+ 						LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ 			dev_dbg(component->dev, "%s: set DEC%u rate to %u\n",
+ 				__func__, decimator, sample_rate);
+@@ -1461,9 +1513,9 @@ static int lpass_cdc_tx_mute_stream(struct snd_soc_dai *dai, int mute, int strea
+ 
+ 	for_each_set_bit(decimator, &tx_priv->active_ch_mask[dai->id],
+ 			LPASS_CDC_TX_MACRO_DEC_MAX) {
+-		adc_mux_reg = LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
++		adc_mux_reg = CDC_TX_INP_MUX_ADC_MUX0_CFG1 +
+ 			LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET * decimator;
+-		tx_mute_ctl_reg = LPASS_CDC_TX0_TX_PATH_CTL +
++		tx_mute_ctl_reg = CDC_TX0_TX_PATH_CTL +
+ 			LPASS_CDC_TX_MACRO_TX_PATH_OFFSET * decimator;
+ 
+ 		if (mute) {
+@@ -1564,21 +1616,21 @@ static const char * const adc_mux_text[] = {
+ };
+ #endif
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec0, LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec0, CDC_TX_INP_MUX_ADC_MUX0_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec1, LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec1, CDC_TX_INP_MUX_ADC_MUX1_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec2, LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec2, CDC_TX_INP_MUX_ADC_MUX2_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec3, LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec3, CDC_TX_INP_MUX_ADC_MUX3_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec4, LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec4, CDC_TX_INP_MUX_ADC_MUX4_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec5, LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec5, CDC_TX_INP_MUX_ADC_MUX5_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec6, LPASS_CDC_TX_INP_MUX_ADC_MUX6_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec6, CDC_TX_INP_MUX_ADC_MUX6_CFG1,
+ 		   0, adc_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec7, LPASS_CDC_TX_INP_MUX_ADC_MUX7_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec7, CDC_TX_INP_MUX_ADC_MUX7_CFG1,
+ 		   0, adc_mux_text);
+ 
+ #ifdef CONFIG_BOLERO_VER_4P0
+@@ -1586,21 +1638,21 @@ static const char * const tx_wsa_mux_text[] = {
+ 	"NO_WSA", "WSA1", "WSA2", "WSA3", "WSA4"
+ };
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux0, LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux0, CDC_TX_INP_MUX_ADC_MUX0_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux1, LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux1, CDC_TX_INP_MUX_ADC_MUX1_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux2, LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux2, CDC_TX_INP_MUX_ADC_MUX2_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux3, LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux3, CDC_TX_INP_MUX_ADC_MUX3_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux4, LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux4, CDC_TX_INP_MUX_ADC_MUX4_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux5, LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux5, CDC_TX_INP_MUX_ADC_MUX5_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux6, LPASS_CDC_TX_INP_MUX_ADC_MUX6_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux6, CDC_TX_INP_MUX_ADC_MUX6_CFG1,
+ 		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux7, LPASS_CDC_TX_INP_MUX_ADC_MUX7_CFG1,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux7, CDC_TX_INP_MUX_ADC_MUX7_CFG1,
+ 		   4, tx_wsa_mux_text);
+ #endif
+ 
+@@ -1609,35 +1661,35 @@ static const char * const dmic_mux_text[] = {
+ 	"DMIC4", "DMIC5", "DMIC6", "DMIC7"
+ };
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic0, LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic0, CDC_TX_INP_MUX_ADC_MUX0_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic1, LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic1, CDC_TX_INP_MUX_ADC_MUX1_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic2, LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic2, CDC_TX_INP_MUX_ADC_MUX2_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic3, LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic3, CDC_TX_INP_MUX_ADC_MUX3_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic4, LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic4, CDC_TX_INP_MUX_ADC_MUX4_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic5, LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic5, CDC_TX_INP_MUX_ADC_MUX5_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic6, LPASS_CDC_TX_INP_MUX_ADC_MUX6_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic6, CDC_TX_INP_MUX_ADC_MUX6_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic7, LPASS_CDC_TX_INP_MUX_ADC_MUX7_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_dmic7, CDC_TX_INP_MUX_ADC_MUX7_CFG0,
+ 			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+@@ -1654,35 +1706,35 @@ static const char * const smic_mux_text[] = {
+ };
+ #endif
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic0, LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic0, CDC_TX_INP_MUX_ADC_MUX0_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic1, LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic1, CDC_TX_INP_MUX_ADC_MUX1_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic2, LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic2, CDC_TX_INP_MUX_ADC_MUX2_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic3, LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic3, CDC_TX_INP_MUX_ADC_MUX3_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic4, LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic4, CDC_TX_INP_MUX_ADC_MUX4_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic5, LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic5, CDC_TX_INP_MUX_ADC_MUX5_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic6, LPASS_CDC_TX_INP_MUX_ADC_MUX6_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic6, CDC_TX_INP_MUX_ADC_MUX6_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic7, LPASS_CDC_TX_INP_MUX_ADC_MUX7_CFG0,
++LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT(tx_smic7, CDC_TX_INP_MUX_ADC_MUX7_CFG0,
+ 			0, smic_mux_text, snd_soc_dapm_get_enum_double,
+ 			lpass_cdc_tx_macro_put_dec_enum);
+ 
+@@ -1691,21 +1743,21 @@ static const char * const psel_mux_text[] = {
+ 	"PORT0", "PORT1", "PORT2", "PORT3", "PORT4"
+ };
+ 
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux0, LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux0, CDC_TX_INP_MUX_ADC_MUX0_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux1, LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux1, CDC_TX_INP_MUX_ADC_MUX1_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux2, LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux2, CDC_TX_INP_MUX_ADC_MUX2_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux3, LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux3, CDC_TX_INP_MUX_ADC_MUX3_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux4, LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux4, CDC_TX_INP_MUX_ADC_MUX4_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux5, LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux5, CDC_TX_INP_MUX_ADC_MUX5_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux6, LPASS_CDC_TX_INP_MUX_ADC_MUX6_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux6, CDC_TX_INP_MUX_ADC_MUX6_CFG2,
+ 			0, psel_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux7, LPASS_CDC_TX_INP_MUX_ADC_MUX7_CFG2,
++LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_psel_mux7, CDC_TX_INP_MUX_ADC_MUX7_CFG2,
+ 			0, psel_mux_text);
+ #endif
+ 
+@@ -2495,28 +2547,28 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 
+ static const struct snd_kcontrol_new lpass_cdc_tx_macro_snd_controls[] = {
+ 	SOC_SINGLE_S8_TLV("TX_DEC0 Volume",
+-			  LPASS_CDC_TX0_TX_VOL_CTL,
++			  CDC_TX0_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC1 Volume",
+-			  LPASS_CDC_TX1_TX_VOL_CTL,
++			  CDC_TX1_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC2 Volume",
+-			  LPASS_CDC_TX2_TX_VOL_CTL,
++			  CDC_TX2_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC3 Volume",
+-			  LPASS_CDC_TX3_TX_VOL_CTL,
++			  CDC_TX3_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC4 Volume",
+-			  LPASS_CDC_TX4_TX_VOL_CTL,
++			  CDC_TX4_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC5 Volume",
+-			  LPASS_CDC_TX5_TX_VOL_CTL,
++			  CDC_TX5_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC6 Volume",
+-			  LPASS_CDC_TX6_TX_VOL_CTL,
++			  CDC_TX6_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 	SOC_SINGLE_S8_TLV("TX_DEC7 Volume",
+-			  LPASS_CDC_TX7_TX_VOL_CTL,
++			  CDC_TX7_TX_VOL_CTL,
+ 			  -84, 40, digital_gain),
+ 
+ 	SOC_ENUM_EXT("DEC0 MODE", dec_mode_mux_enum,
+@@ -2631,7 +2683,7 @@ static void lpass_cdc_tx_macro_update_clk_div_factor(u32 div_factor,
+ 
+ static const struct lpass_cdc_tx_macro_reg_mask_val
+ 				lpass_cdc_tx_macro_reg_init[] = {
+-	{LPASS_CDC_TX0_TX_PATH_SEC7, 0x3F, 0x0A},
++	{CDC_TX0_TX_PATH_SEC7, 0x3F, 0x0A},
+ };
+ 
+ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+-- 
+2.34.1
+

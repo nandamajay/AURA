@@ -1,0 +1,95 @@
+{
+  "artifact_name": "CONVERSION_LESSONS_LEARNED",
+  "source_driver": "lpass_va_macro",
+  "comparison_verdict": "PARTIALLY_ALIGNED",
+  "source_metrics": {
+    "line_level_similarity_percent": 40.23,
+    "function_match": "16/28",
+    "runtime_pm_pattern_match_percent": 100.0,
+    "register_define_match_percent": 68.29,
+    "dapm_widget_route_match_percent": 64.47
+  },
+  "patterns_that_worked": [
+    {
+      "pattern": "register_prefix_rename",
+      "lesson": "LPASS_CDC_<macro> register defines can be mechanically localized and renamed to CDC_<macro> with offset preservation.",
+      "reuse_for_tx": true
+    },
+    {
+      "pattern": "vendor_framework_removal",
+      "lesson": "lpass-cdc, swr-wcd, clk-rsc, pinctrl, and version compatibility paths can be isolated into dedicated patches.",
+      "reuse_for_tx": true
+    },
+    {
+      "pattern": "runtime_pm_callback_structure",
+      "lesson": "Runtime PM callback shape and standard SET_RUNTIME_PM_OPS pattern matched upstream behavior at the pattern level.",
+      "reuse_for_tx": true
+    },
+    {
+      "pattern": "governed_fail_closed_decisions",
+      "lesson": "Deferring compatible/DT ABI guesses avoided creating unsupported binding changes.",
+      "reuse_for_tx": true
+    },
+    {
+      "pattern": "reviewer_guided_series_structure",
+      "lesson": "Separating mechanical rename, removal, framework migration, helper integration, clock/runtime PM, and residual cleanup isolated likely maintainer concerns.",
+      "reuse_for_tx": true
+    }
+  ],
+  "patterns_that_failed": [
+    {
+      "gap": "soc_compatible_data_model",
+      "missed": "VA conversion kept downstream compatible handling instead of inferring upstream per-SoC data structures.",
+      "detection_signal": "Upstream driver has of_device_get_match_data, per-compatible .data, or binding compatible oneOf entries."
+    },
+    {
+      "gap": "clock_provider_role",
+      "missed": "VA conversion modeled clock consumption but not fsgen clock provider registration.",
+      "detection_signal": "Binding contains clock-output-names or driver has clock registration / clk_hw / of_clk provider usage."
+    },
+    {
+      "gap": "regmap_ownership",
+      "missed": "VA conversion retained parent regmap/manual ioremap instead of owning devm_regmap_init_mmio.",
+      "detection_signal": "Private data lacks struct regmap * and source calls dev_get_regmap(dev->parent, NULL)."
+    },
+    {
+      "gap": "dapm_topology_reduction",
+      "missed": "VA conversion preserved downstream topology instead of reducing to upstream-style widget/route count.",
+      "detection_signal": "Converted DAPM widget/route/control count remains much larger than expected or preserves downstream-only SWR/SMIC controls."
+    },
+    {
+      "gap": "functional_helper_classification",
+      "missed": "Some helpers were SoC variant behavior, while others were architectural gaps; pipeline did not distinguish these automatically.",
+      "detection_signal": "Helper references private downstream state, delayed work, or parent framework objects after vendor framework removal."
+    }
+  ],
+  "pipeline_improvements": [
+    {
+      "rule_id": "LPASS_RULE_001",
+      "rule": "After removing vendor framework, probe must use devm_regmap_init_mmio and private data must own struct regmap *; parent regmap indirection is a conversion gap."
+    },
+    {
+      "rule_id": "LPASS_RULE_002",
+      "rule": "If binding has clock-output-names, treat the macro as a clock provider and plan clk_hw registration, not only devm_clk_get consumers."
+    },
+    {
+      "rule_id": "LPASS_RULE_003",
+      "rule": "Any upstream LPASS macro conversion must introduce a per-SoC data model and of_device_id .data entries when compatibles differ by capability."
+    },
+    {
+      "rule_id": "LPASS_RULE_004",
+      "rule": "DAPM topology should be reduced toward upstream-style widget/route count; preserving all downstream widgets is a likely conversion gap."
+    },
+    {
+      "rule_id": "LPASS_RULE_005",
+      "rule": "Private data should own regmap, clocks, and power domains directly; no lpass-cdc device pointer lookup should remain."
+    }
+  ],
+  "reusable_qualcomm_lpass_patterns": [
+    "Register rename: LPASS_CDC_<MACRO>_* -> CDC_<MACRO>_* for register symbols.",
+    "Framework removal: lpass-cdc macro_ops, swr-wcd notifications, msm-cdc-pinctrl, and lpass-cdc-clk-rsc are downstream-only integration layers.",
+    "lpass-macro-common integration: use lpass_macro_pds_init/exit for power domains and shared version helpers where applicable.",
+    "Clock provider registration: when the macro exports fsgen or clock-output-names, register clk_hw and use upstream clock framework ownership.",
+    "Fail-closed DT policy: do not invent or preserve downstream compatible strings/properties without binding evidence."
+  ]
+}

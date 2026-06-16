@@ -1,0 +1,387 @@
+{
+  "artifact_name": "BLIND_TX_DOWNSTREAM_ANALYSIS",
+  "driver": "lpass_tx_macro",
+  "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-tx-macro.c",
+  "critical_rule_observed": "Did not read upstream lpass-tx-macro.c",
+  "line_count": 2953,
+  "includes": [
+    {
+      "line": 6,
+      "include": "#include <linux/module.h>"
+    },
+    {
+      "line": 7,
+      "include": "#include <linux/init.h>"
+    },
+    {
+      "line": 8,
+      "include": "#include <linux/clk.h>"
+    },
+    {
+      "line": 9,
+      "include": "#include <linux/io.h>"
+    },
+    {
+      "line": 10,
+      "include": "#include <linux/platform_device.h>"
+    },
+    {
+      "line": 11,
+      "include": "#include <linux/regmap.h>"
+    },
+    {
+      "line": 12,
+      "include": "#include <linux/pm_runtime.h>"
+    },
+    {
+      "line": 13,
+      "include": "#include <sound/soc.h>"
+    },
+    {
+      "line": 14,
+      "include": "#include <sound/soc-dapm.h>"
+    },
+    {
+      "line": 15,
+      "include": "#include <sound/tlv.h>"
+    },
+    {
+      "line": 16,
+      "include": "#include <linux/version.h>"
+    },
+    {
+      "line": 17,
+      "include": "#include <asoc/msm-cdc-pinctrl.h>"
+    },
+    {
+      "line": 18,
+      "include": "#include \"lpass-cdc.h\""
+    },
+    {
+      "line": 19,
+      "include": "#include \"lpass-cdc-registers.h\""
+    },
+    {
+      "line": 20,
+      "include": "#include \"lpass-cdc-clk-rsc.h\""
+    }
+  ],
+  "vendor_dependencies": [
+    {
+      "dependency": "lpass-cdc.h",
+      "category": "vendor_macro_framework",
+      "include_present": true,
+      "symbols_observed": [
+        "lpass_cdc_register_macro",
+        "lpass_cdc_unregister_macro",
+        "lpass_cdc_get_device_ptr",
+        "lpass_cdc_get_version",
+        "lpass_cdc_runtime_suspend",
+        "lpass_cdc_runtime_resume",
+        "lpass_cdc_is_va_macro_registered"
+      ],
+      "usage_count": 9
+    },
+    {
+      "dependency": "lpass-cdc-registers.h",
+      "category": "vendor_register_header",
+      "include_present": true,
+      "symbols_observed": [
+        "LPASS_CDC_TX_* register defines"
+      ],
+      "usage_count": 91
+    },
+    {
+      "dependency": "lpass-cdc-clk-rsc.h",
+      "category": "vendor_clock_resource_framework",
+      "include_present": true,
+      "symbols_observed": [
+        "lpass_cdc_clk_rsc_request_clock",
+        "lpass_cdc_clk_rsc_fs_gen_request",
+        "lpass_cdc_rsc_clk_reset"
+      ],
+      "usage_count": 5
+    },
+    {
+      "dependency": "linux/version.h",
+      "category": "downstream_version_compatibility",
+      "include_present": true,
+      "symbols_observed": [
+        "LINUX_VERSION_CODE",
+        "KERNEL_VERSION"
+      ],
+      "usage_count": 20
+    },
+    {
+      "dependency": "asoc/msm-cdc-pinctrl.h",
+      "category": "vendor_pinctrl_header",
+      "include_present": true,
+      "symbols_observed": [],
+      "usage_count": 0
+    },
+    {
+      "dependency": "CONFIG_BOLERO_VER_2P85",
+      "category": "downstream_kconfig_gate",
+      "include_present": false,
+      "symbols_observed": [
+        "CONFIG_BOLERO_VER_2P85"
+      ],
+      "usage_count": 4
+    },
+    {
+      "dependency": "CONFIG_BOLERO_VER_4P0",
+      "category": "downstream_kconfig_gate",
+      "include_present": false,
+      "symbols_observed": [
+        "CONFIG_BOLERO_VER_4P0"
+      ],
+      "usage_count": 6
+    },
+    {
+      "dependency": "qcom,tx-dmic-clk-div-factor",
+      "category": "downstream_dt_property",
+      "include_present": false,
+      "symbols_observed": [
+        "qcom,tx-dmic-clk-div-factor"
+      ],
+      "usage_count": 1
+    }
+  ],
+  "dependency_count": 8,
+  "register_prefix_pattern": {
+    "downstream_prefix": "LPASS_CDC_TX_",
+    "blind_upstream_prefix": "CDC_TX_",
+    "unique_lpass_cdc_tx_tokens": 91,
+    "header_backed_register_tokens": 52,
+    "local_non_register_tokens": 39,
+    "sample_header_backed_tokens": [
+      "LPASS_CDC_TX0_TX_PATH_CFG0",
+      "LPASS_CDC_TX0_TX_PATH_CFG1",
+      "LPASS_CDC_TX0_TX_PATH_CFG2",
+      "LPASS_CDC_TX0_TX_PATH_CTL",
+      "LPASS_CDC_TX0_TX_PATH_SEC2",
+      "LPASS_CDC_TX0_TX_PATH_SEC7",
+      "LPASS_CDC_TX0_TX_VOL_CTL",
+      "LPASS_CDC_TX1_TX_PATH_CFG0",
+      "LPASS_CDC_TX1_TX_PATH_CTL",
+      "LPASS_CDC_TX1_TX_VOL_CTL",
+      "LPASS_CDC_TX2_TX_PATH_CFG0",
+      "LPASS_CDC_TX2_TX_VOL_CTL",
+      "LPASS_CDC_TX3_TX_PATH_CFG0",
+      "LPASS_CDC_TX3_TX_VOL_CTL",
+      "LPASS_CDC_TX4_TX_PATH_CFG0",
+      "LPASS_CDC_TX4_TX_VOL_CTL",
+      "LPASS_CDC_TX5_TX_PATH_CFG0",
+      "LPASS_CDC_TX5_TX_VOL_CTL",
+      "LPASS_CDC_TX6_TX_PATH_CFG0",
+      "LPASS_CDC_TX6_TX_VOL_CTL",
+      "LPASS_CDC_TX7_TX_PATH_CFG0",
+      "LPASS_CDC_TX7_TX_VOL_CTL",
+      "LPASS_CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL",
+      "LPASS_CDC_TX_CLK_RST_CTRL_MCLK_CONTROL",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG0",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG1",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX0_CFG2",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG0",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG1",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX1_CFG2",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG0",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG1",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX2_CFG2",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG0",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG1",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX3_CFG2",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG0",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG1",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX4_CFG2",
+      "LPASS_CDC_TX_INP_MUX_ADC_MUX5_CFG0"
+    ],
+    "sample_local_non_register_tokens": [
+      "LPASS_CDC_TX_MACRO_ADC_MODE_CFG0_SHIFT",
+      "LPASS_CDC_TX_MACRO_ADC_MUX_CFG_OFFSET",
+      "LPASS_CDC_TX_MACRO_AIF1_CAP",
+      "LPASS_CDC_TX_MACRO_AIF2_CAP",
+      "LPASS_CDC_TX_MACRO_AIF3_CAP",
+      "LPASS_CDC_TX_MACRO_AIF_INVALID",
+      "LPASS_CDC_TX_MACRO_AMIC_HPF_DELAY_MS",
+      "LPASS_CDC_TX_MACRO_AMIC_UNMUTE_DELAY_MS",
+      "LPASS_CDC_TX_MACRO_CHILD_DEVICES_MAX",
+      "LPASS_CDC_TX_MACRO_CLK_DIV_16",
+      "LPASS_CDC_TX_MACRO_CLK_DIV_2",
+      "LPASS_CDC_TX_MACRO_CLK_DIV_3",
+      "LPASS_CDC_TX_MACRO_CLK_DIV_4",
+      "LPASS_CDC_TX_MACRO_CLK_DIV_6",
+      "LPASS_CDC_TX_MACRO_CLK_DIV_8",
+      "LPASS_CDC_TX_MACRO_DAPM_ENUM",
+      "LPASS_CDC_TX_MACRO_DAPM_ENUM_EXT",
+      "LPASS_CDC_TX_MACRO_DAPM_MUX",
+      "LPASS_CDC_TX_MACRO_DEC0",
+      "LPASS_CDC_TX_MACRO_DEC1",
+      "LPASS_CDC_TX_MACRO_DEC2",
+      "LPASS_CDC_TX_MACRO_DEC3",
+      "LPASS_CDC_TX_MACRO_DEC4",
+      "LPASS_CDC_TX_MACRO_DEC5",
+      "LPASS_CDC_TX_MACRO_DEC6",
+      "LPASS_CDC_TX_MACRO_DEC7",
+      "LPASS_CDC_TX_MACRO_DEC_MAX",
+      "LPASS_CDC_TX_MACRO_DEC_UNMUTE_DELAY_MS",
+      "LPASS_CDC_TX_MACRO_DMIC_HPF_DELAY_MS",
+      "LPASS_CDC_TX_MACRO_DMIC_SAMPLE_RATE_UNDEFINED",
+      "LPASS_CDC_TX_MACRO_DMIC_UNMUTE_DELAY_MS",
+      "LPASS_CDC_TX_MACRO_FORMATS",
+      "LPASS_CDC_TX_MACRO_HS_AMIC_UNMUTE_DELAY_MS",
+      "LPASS_CDC_TX_MACRO_MAX_DAIS",
+      "LPASS_CDC_TX_MACRO_MAX_OFFSET",
+      "LPASS_CDC_TX_MACRO_RATES",
+      "LPASS_CDC_TX_MACRO_SWR_MIC_MUX_SEL_MASK",
+      "LPASS_CDC_TX_MACRO_SWR_STRING_LEN",
+      "LPASS_CDC_TX_MACRO_TX_PATH_OFFSET"
+    ]
+  },
+  "dapm_topology": {
+    "rough_widget_macro_count": 145,
+    "rough_route_count": 492,
+    "rough_control_count": 67
+  },
+  "probe_lifecycle": {
+    "probe_function": "lpass_cdc_tx_macro_probe",
+    "remove_function": "lpass_cdc_tx_macro_remove",
+    "uses_lpass_cdc_register_macro": true,
+    "uses_macro_ops": true,
+    "uses_manual_ioremap": true,
+    "uses_parent_regmap": true,
+    "uses_devm_regmap_init_mmio": false,
+    "requires_va_macro_registered": true
+  },
+  "clock_usage_patterns": {
+    "lpass_cdc_clk_rsc_request_clock_calls": 2,
+    "lpass_cdc_clk_rsc_fs_gen_request_calls": 2,
+    "lpass_cdc_rsc_clk_reset_calls": 1,
+    "direct_clk_prepare_enable_calls": 0,
+    "fsgen_literal_present": true,
+    "blind_clock_provider_assessment": "likely_clock_provider_or_fsgen_owner_because_mclk/fs-gen gates are programmed directly; confirm by binding evidence before implementation"
+  },
+  "private_data_model": {
+    "struct": "struct lpass_cdc_tx_macro_priv",
+    "owns_regmap": false,
+    "owns_clks": false,
+    "owns_power_domains": false,
+    "downstream_state_fields": [
+      "struct lpass_cdc_tx_macro_priv {",
+      "\tstruct device *dev;",
+      "\tbool dec_active[NUM_DECIMATORS];",
+      "\tint tx_mclk_users;",
+      "\tbool dapm_mclk_enable;",
+      "\tstruct mutex mclk_lock;",
+      "\tstruct mutex wlock;",
+      "\tstruct snd_soc_component *component;",
+      "\tstruct tx_dec_unmute_work tx_dec_unmute_work[LPASS_CDC_TX_MACRO_MAX_DAIS];",
+      "\tstruct hpf_work tx_hpf_work[NUM_DECIMATORS];",
+      "\tstruct tx_mute_work tx_mute_dwork[NUM_DECIMATORS];",
+      "\tu16 dmic_clk_div[MIC_PAIR_MAX];",
+      "\tu32 version;",
+      "\tunsigned long active_ch_mask[LPASS_CDC_TX_MACRO_MAX_DAIS];",
+      "\tunsigned long active_ch_cnt[LPASS_CDC_TX_MACRO_MAX_DAIS];",
+      "\tchar __iomem *tx_io_base;",
+      "\tstruct platform_device *pdev_child_devices",
+      "\t\t\t[LPASS_CDC_TX_MACRO_CHILD_DEVICES_MAX];",
+      "\tint child_count;",
+      "\tbool bcs_enable;",
+      "\tint dec_mode[NUM_DECIMATORS];",
+      "\tint dec_ref_cnt[NUM_DECIMATORS];",
+      "\tint bcs_ch;",
+      "\tbool bcs_clk_en;",
+      "\tbool hs_slow_insert_complete;",
+      "\tint pcm_rate[NUM_DECIMATORS];",
+      "\tbool swr_dmic_enable;",
+      "\tbool swr_dmic_gain_disable;",
+      "\tint wlock_holders;",
+      "\tbool hpf_adapt_bypass_en;",
+      "\tint adapt_tuning_registers;",
+      "\tu32 tuning_reg_values[MAX_TUNING_REG_VALUE_PAIRS];",
+      "};"
+    ]
+  },
+  "downstream_conditionals": [
+    {
+      "line": 63,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+    },
+    {
+      "line": 568,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+    },
+    {
+      "line": 650,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+    },
+    {
+      "line": 678,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+    },
+    {
+      "line": 1061,
+      "text": "#ifdef CONFIG_BOLERO_VER_2P85"
+    },
+    {
+      "line": 1098,
+      "text": "#ifdef CONFIG_BOLERO_VER_2P85"
+    },
+    {
+      "line": 1143,
+      "text": "#ifdef CONFIG_BOLERO_VER_2P85"
+    },
+    {
+      "line": 1310,
+      "text": "#ifdef CONFIG_BOLERO_VER_2P85"
+    },
+    {
+      "line": 1419,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+    },
+    {
+      "line": 1557,
+      "text": "#ifdef CONFIG_BOLERO_VER_4P0"
+    },
+    {
+      "line": 1584,
+      "text": "#ifdef CONFIG_BOLERO_VER_4P0"
+    },
+    {
+      "line": 1644,
+      "text": "#ifdef CONFIG_BOLERO_VER_4P0"
+    },
+    {
+      "line": 1689,
+      "text": "#ifdef CONFIG_BOLERO_VER_4P0"
+    },
+    {
+      "line": 1826,
+      "text": "#ifdef CONFIG_BOLERO_VER_4P0"
+    },
+    {
+      "line": 1920,
+      "text": "#ifdef CONFIG_BOLERO_VER_4P0"
+    },
+    {
+      "line": 2650,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+    },
+    {
+      "line": 2675,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+    },
+    {
+      "line": 2707,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)"
+    },
+    {
+      "line": 2887,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+    },
+    {
+      "line": 2913,
+      "text": "#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)"
+    }
+  ]
+}

@@ -1,0 +1,170 @@
+From 251f44698ab5e967767223aaaf2a720d9c86a7f4 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 00:43:26 +0530
+Subject: [PATCH 2/9] ASoC: codecs: lpass-tx-macro: drop version and unused
+ pinctrl paths
+
+Remove downstream kernel-version compatibility branches by keeping the
+current-kernel function signatures and call paths. Drop the unused
+msm-cdc-pinctrl include while leaving functional TX topology and BOLERO
+feature gates untouched for later conversion patches.
+
+Signed-off-by: AURA Conversion Engine <aura@example.invalid>
+---
+ sound/soc/codecs/lpass-tx-macro.c | 51 -------------------------------
+ 1 file changed, 51 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index d2f812b..34de7dd 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -13,8 +13,6 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/tlv.h>
+-#include <linux/version.h>
+-#include <asoc/msm-cdc-pinctrl.h>
+ #include "lpass-cdc.h"
+ /* TX macro registers: localized from downstream lpass-cdc-registers.h */
+ #define CDC_TX0_TX_PATH_CFG0	(0x0404)
+@@ -112,15 +110,9 @@ static const DECLARE_TLV_DB_SCALE(digital_gain, 0, 1, 0);
+ static int lpass_cdc_tx_macro_hw_params(struct snd_pcm_substream *substream,
+ 			       struct snd_pcm_hw_params *params,
+ 			       struct snd_soc_dai *dai);
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static int lpass_cdc_tx_macro_get_channel_map(const struct snd_soc_dai *dai,
+ 				unsigned int *tx_num, unsigned int *tx_slot,
+ 				unsigned int *rx_num, unsigned int *rx_slot);
+-#else
+-static int lpass_cdc_tx_macro_get_channel_map(struct snd_soc_dai *dai,
+-				unsigned int *tx_num, unsigned int *tx_slot,
+-				unsigned int *rx_num, unsigned int *rx_slot);
+-#endif
+ 
+ #define LPASS_CDC_TX_MACRO_SWR_STRING_LEN 80
+ #define LPASS_CDC_TX_MACRO_CHILD_DEVICES_MAX 3
+@@ -617,11 +609,7 @@ static int lpass_cdc_tx_macro_put_dec_enum(struct snd_kcontrol *kcontrol,
+ 			      struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+@@ -699,11 +687,7 @@ static int lpass_cdc_tx_macro_tx_mixer_get(struct snd_kcontrol *kcontrol,
+ 			     struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_mixer_control *mixer =
+@@ -727,11 +711,7 @@ static int lpass_cdc_tx_macro_tx_mixer_put(struct snd_kcontrol *kcontrol,
+ 			     struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct snd_soc_dapm_update *update = NULL;
+@@ -1468,15 +1448,9 @@ static int lpass_cdc_tx_macro_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static int lpass_cdc_tx_macro_get_channel_map(const struct snd_soc_dai *dai,
+ 				unsigned int *tx_num, unsigned int *tx_slot,
+ 				unsigned int *rx_num, unsigned int *rx_slot)
+-#else
+-static int lpass_cdc_tx_macro_get_channel_map(struct snd_soc_dai *dai,
+-				unsigned int *tx_num, unsigned int *tx_slot,
+-				unsigned int *rx_num, unsigned int *rx_slot)
+-#endif
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	struct device *tx_dev = NULL;
+@@ -2699,11 +2673,7 @@ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+ 		return -EINVAL;
+ 	}
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 	dapm = snd_soc_component_to_dapm(component);
+-#else
+-	dapm = snd_soc_component_get_dapm(component);
+-#endif
+ 	if (!dapm) {
+ 		dev_err(component->dev,
+ 			"%s: dapm context is NULL\n", __func__);
+@@ -2724,21 +2694,12 @@ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+ 		return -EINVAL;
+ 	}
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 	/* Add NULL check for card */
+ 	if (!snd_soc_dapm_to_card(dapm)) {
+ 		dev_err(tx_dev,
+ 			"%s: snd_soc_dapm_to_card(dapm) is NULL\n", __func__);
+ 		return -EINVAL;
+ 	}
+-#else
+-	/* Add NULL check for dapm->card */
+-	if (!dapm->card) {
+-		dev_err(tx_dev,
+-			"%s: dapm->card is NULL\n", __func__);
+-		return -EINVAL;
+-	}
+-#endif
+ 	tx_priv->version = lpass_cdc_get_version(tx_dev);
+ 	ret = snd_soc_dapm_new_controls(dapm, lpass_cdc_tx_macro_dapm_widgets,
+ 				ARRAY_SIZE(lpass_cdc_tx_macro_dapm_widgets));
+@@ -2756,11 +2717,7 @@ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+ 		return ret;
+ 	}
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 	ret = snd_soc_dapm_new_widgets(snd_soc_dapm_to_card(dapm));
+-#else
+-	ret = snd_soc_dapm_new_widgets(dapm->card);
+-#endif
+ 	if (ret < 0) {
+ 		dev_err(tx_dev, "%s: Failed to add widgets, ret=%d\n",
+ 			__func__, ret);
+@@ -2936,11 +2893,7 @@ err_reg_macro:
+ 	return ret;
+ }
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static void lpass_cdc_tx_macro_remove(struct platform_device *pdev)
+-#else
+-static int lpass_cdc_tx_macro_remove(struct platform_device *pdev)
+-#endif
+ {
+ 	int rc = 0;
+ 	struct lpass_cdc_tx_macro_priv *tx_priv = NULL;
+@@ -2962,11 +2915,7 @@ static int lpass_cdc_tx_macro_remove(struct platform_device *pdev)
+ 	mutex_destroy(&tx_priv->wlock);
+ 	lpass_cdc_unregister_macro(&pdev->dev, TX_MACRO);
+ exit:
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ 	return;
+-#else
+-	return rc;
+-#endif
+ }
+ 
+ 
+-- 
+2.34.1
+

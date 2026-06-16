@@ -1,0 +1,99 @@
+{
+  "artifact_name": "BLIND_TX_CONVERSION_PLAN",
+  "driver": "lpass_tx_macro",
+  "blind_rule": "No upstream lpass-tx-macro.c was read or used.",
+  "lessons_source": "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+  "predicted_patch_series_size": 9,
+  "patch_series": [
+    {
+      "patch": "Patch-01",
+      "title": "ASoC: codecs: lpass-tx-macro: isolate register-name migration",
+      "scope": "Move file to sound/soc/codecs/lpass-tx-macro.c, localize header-backed LPASS_CDC_TX register defines as CDC_TX, remove lpass-cdc-registers.h.",
+      "risk": "low"
+    },
+    {
+      "patch": "Patch-02",
+      "title": "ASoC: codecs: lpass-tx-macro: drop version and unused pinctrl paths",
+      "scope": "Remove linux/version.h, LINUX_VERSION_CODE compatibility branches by keeping current-kernel branch, and remove unused msm-cdc-pinctrl include.",
+      "risk": "low"
+    },
+    {
+      "patch": "Patch-03",
+      "title": "ASoC: codecs: lpass-tx-macro: remove lpass-cdc macro framework dependency",
+      "scope": "Replace macro_ops/register/unregister/device-pointer indirection with devm_snd_soc_register_component and direct private data.",
+      "risk": "high"
+    },
+    {
+      "patch": "Patch-04",
+      "title": "ASoC: codecs: lpass-tx-macro: own MMIO regmap in probe",
+      "scope": "Introduce tx_macro private data, devm_platform_ioremap_resource/devm_regmap_init_mmio, and remove parent regmap usage.",
+      "risk": "high"
+    },
+    {
+      "patch": "Patch-05",
+      "title": "ASoC: codecs: lpass-macro-common: integrate TX power domains",
+      "scope": "Use lpass_macro_pds_init/exit with TX as immediate consumer.",
+      "risk": "moderate"
+    },
+    {
+      "patch": "Patch-06",
+      "title": "ASoC: codecs: lpass-tx-macro: migrate clock and runtime PM sequencing",
+      "scope": "Replace lpass-cdc-clk-rsc with direct clock APIs and local fsgen/mclk helpers; add runtime PM callbacks.",
+      "risk": "high"
+    },
+    {
+      "patch": "Patch-07",
+      "title": "ASoC: codecs: lpass-tx-macro: add SoC data model",
+      "scope": "Introduce tx_macro_data and per-compatible flags inferred from downstream version/BOLERO capability gates.",
+      "risk": "high"
+    },
+    {
+      "patch": "Patch-08",
+      "title": "ASoC: codecs: lpass-tx-macro: reduce downstream DAPM topology",
+      "scope": "Remove/downscope downstream-only controls, SWR_DMIC policy controls, BCS/adapt controls unless binding and users are justified.",
+      "risk": "high"
+    },
+    {
+      "patch": "Patch-09",
+      "title": "ASoC: codecs: lpass-tx-macro: residual cleanup and naming normalization",
+      "scope": "Normalize lpass_cdc_tx_macro/LPASS_CDC_TX_MACRO local names, defer DT compatible changes fail-closed if SoC evidence is missing.",
+      "risk": "moderate"
+    }
+  ],
+  "lessons_applied": [
+    {
+      "lesson": "regmap ownership",
+      "tx_plan": "Probe must own struct regmap * via devm_regmap_init_mmio; parent regmap use is a known conversion gap."
+    },
+    {
+      "lesson": "clock provider",
+      "tx_plan": "Because TX manipulates MCLK/FS counter gates, plan a clock-provider assessment and fail closed until binding evidence confirms exported clocks."
+    },
+    {
+      "lesson": "SoC data model",
+      "tx_plan": "Introduce tx_macro_data for BOLERO/version feature conditionals instead of preserving downstream Kconfig gates."
+    },
+    {
+      "lesson": "DAPM reduction",
+      "tx_plan": "Do not preserve all downstream DAPM routes by default; reduce or justify BCS/adapt/SWR-DMIC controls."
+    },
+    {
+      "lesson": "private data ownership",
+      "tx_plan": "tx_macro struct must own dev, regmap, clocks, pds, component, and feature flags directly."
+    }
+  ],
+  "tx_specific_challenges": [
+    "TX has 8 decimators versus VA 4, increasing DAPM/control surface.",
+    "TX has BCS, HPF adapt, tuning-register arrays, and SWR_DMIC gain controls that need upstream ABI review.",
+    "TX has qcom,tx-dmic-clk-div-factor downstream DT property; must map to a standard sample-rate/data model or defer.",
+    "TX probe depends on lpass_cdc_is_va_macro_registered; replacing this dependency without upstream TX reference is non-trivial.",
+    "BOLERO_VER_2P85 and BOLERO_VER_4P0 gates encode feature variants; blind conversion should map them to SoC data flags later."
+  ],
+  "blind_assumptions": [
+    "CDC_TX_* is the correct local register prefix by analogy to VA CDC_VA_*.",
+    "TX should follow LPASS macro component registration and private regmap ownership conventions from VA lessons.",
+    "TX may need clock-provider plumbing if binding evidence later shows clock-output-names or exported fsgen-like outputs.",
+    "The current-kernel branch of LINUX_VERSION_CODE conditionals is the branch to preserve.",
+    "Downstream BOLERO Kconfig blocks are not removed in the first two blind patches because topology impact cannot be proven without upstream evidence."
+  ]
+}

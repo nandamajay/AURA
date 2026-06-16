@@ -1,0 +1,22 @@
+{
+  "artifact_name": "PATCH_02_TX_VERSION_PINCTRL_VALIDATION",
+  "classification": "PASS",
+  "patch": "AURA_KB/drivers/lpass_tx_macro/patches/0002-ASoC-codecs-lpass-tx-macro-drop-version-and-unused-pinctrl-paths.patch",
+  "removed": [
+    "#include <linux/version.h>",
+    "#include <asoc/msm-cdc-pinctrl.h>",
+    "LINUX_VERSION_CODE/KERNEL_VERSION compatibility scaffolding"
+  ],
+  "deferred": [
+    "CONFIG_BOLERO_VER_2P85",
+    "CONFIG_BOLERO_VER_4P0",
+    "qcom,tx-dmic-clk-div-factor",
+    "lpass-cdc framework removal",
+    "clk-rsc framework removal"
+  ],
+  "linux_version_code_remaining": false,
+  "kernel_version_remaining": false,
+  "pinctrl_include_remaining": false,
+  "series_apply_check": "PASS",
+  "fail_closed_reasons": []
+}
