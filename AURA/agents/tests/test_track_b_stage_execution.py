@@ -53,8 +53,10 @@ def _create_corpus(repo_root: Path, *, variant: str, duplicate_common_function: 
             '#include "test_internal.h"\n'
             + (
                 "static int downstream_probe(void) { return 0; }\n"
+                "static int lpass_cdc_va_macro_probe(void) { return 0; }\n"
                 if variant == "downstream"
                 else "static int upstream_probe(void) { return 0; }\n"
+                "static int va_macro_component_probe(void) { return 0; }\n"
             )
             + "int qcom_audio_common(void) { return 1; }\n"
         ),
@@ -451,6 +453,35 @@ def test_track_b_stage_execution_m8_readiness_pass(tmp_path):
         "TRACK_B_UPSTREAMING_REPORT",
         "TRACK_B_UPSTREAMING_READINESS",
     }.issubset(artifact_names)
+
+
+def test_track_b_stage_execution_m8_equivalence_hint_candidate_mapping(tmp_path):
+    upstreaming_request = _upstreaming_request(component_name="lpass_cdc_va_macro_probe")
+    upstreaming_request["equivalence_hints"] = [
+        {
+            "downstream_symbol": "lpass_cdc_va_macro_probe",
+            "upstream_symbol": "va_macro_component_probe",
+            "confidence": 0.95,
+            "evidence_source": "kb:lpass_va_macro/architecture.md",
+        }
+    ]
+    context = _context(
+        tmp_path,
+        target_stage="EQUIVALENCE_MAPPED",
+        upstreaming_request=upstreaming_request,
+    )
+    output_dir = tmp_path / "out"
+
+    TrackBStageExecutor(output_dir=output_dir).execute(context=context)
+
+    eq_payload = json.loads((output_dir / "track_b_equivalence_map.json").read_text(encoding="utf-8"))
+    candidate_mappings = eq_payload["candidate_mappings"]
+    assert candidate_mappings
+    assert any(candidate.get("match_type") == "equivalence_hint" for candidate in candidate_mappings)
+    hint_mapping = next(candidate for candidate in candidate_mappings if candidate.get("match_type") == "equivalence_hint")
+    assert hint_mapping["downstream_symbol"] == "lpass_cdc_va_macro_probe"
+    assert hint_mapping["upstream_symbol"] == "va_macro_component_probe"
+    assert hint_mapping["score"] == 0.95
 
 
 def test_track_b_stage_execution_m8_fail_closed_on_missing_upstreaming_request(tmp_path):

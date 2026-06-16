@@ -1,0 +1,10 @@
+test_id,category,scenario,command,expected,baseline_result,candidate_result,status,notes
+VA_CAP_8K,functional,"VA capture 8kHz","arecord -D hw:0,0 -f S16_LE -r 8000 -c 2 -d 3 /tmp/va_8k.wav","capture succeeds; no xrun",TODO,TODO,TODO,
+VA_CAP_16K,functional,"VA capture 16kHz","arecord -D hw:0,0 -f S16_LE -r 16000 -c 2 -d 3 /tmp/va_16k.wav","capture succeeds; no xrun",TODO,TODO,TODO,
+VA_CAP_32K,functional,"VA capture 32kHz","arecord -D hw:0,0 -f S16_LE -r 32000 -c 2 -d 3 /tmp/va_32k.wav","capture succeeds; no xrun",TODO,TODO,TODO,
+VA_CAP_48K,functional,"VA capture 48kHz","arecord -D hw:0,0 -f S16_LE -r 48000 -c 2 -d 3 /tmp/va_48k.wav","capture succeeds; no xrun",TODO,TODO,TODO,
+VA_CAP_96K,functional,"VA capture 96kHz","arecord -D hw:0,0 -f S24_LE -r 96000 -c 2 -d 3 /tmp/va_96k.wav","capture succeeds; no xrun",TODO,TODO,TODO,
+VA_CAP_192K,functional,"VA capture 192kHz","arecord -D hw:0,0 -f S24_LE -r 192000 -c 2 -d 3 /tmp/va_192k.wav","capture succeeds; no xrun",TODO,TODO,TODO,
+VA_OPEN_CLOSE_1K,stability,"1000 open/close cycles","for i in $(seq 1 1000); do arecord -D hw:0,0 -f S16_LE -r 48000 -c 2 -d 1 /tmp/va_loop_$i.wav; done","no failure",TODO,TODO,TODO,
+VA_PM_IDLE_SUSPEND,power,"runtime PM idle suspend/resume","echo auto > /sys/devices/.../power/control; sleep 30","enters suspended state and resumes cleanly",TODO,TODO,TODO,
+VA_PM_ACTIVE_SUSPEND,power,"suspend/resume during active stream","(arecord ... &) ; systemctl suspend ; resume","stream recovery and no crash",TODO,TODO,TODO,

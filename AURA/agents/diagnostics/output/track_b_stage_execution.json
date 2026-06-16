@@ -1,0 +1,380 @@
+{
+  "artifact_name": "TRACK_B_STAGE_EXECUTION",
+  "classification": "PASS",
+  "fail_closed_reasons": [],
+  "initial_stage": "DISCOVERED",
+  "schema_version": "1.0",
+  "session": {
+    "ownership": "track_b",
+    "platform": "lpass_va_macro",
+    "task_id": "diagnostic-lpass-va-macro-governed-full",
+    "track": "B",
+    "workflow_kind": "track_b_discovery"
+  },
+  "stage_confidence": {
+    "CONFLICTS_EVALUATED": 0.6667,
+    "DECISION_FINALIZED": 1.0,
+    "DEPENDENCIES_BOUND": 1.0,
+    "DISCOVERED": 1.0,
+    "EQUIVALENCE_MAPPED": 1.0,
+    "INDEXED": 0.75,
+    "READINESS_GATED": 1.0,
+    "REPORT_GENERATED": 1.0,
+    "STATIC_ANALYZED": 1.0
+  },
+  "stage_confidence_details": {
+    "CONFLICTS_EVALUATED": {
+      "required_signals": [
+        "conflict_ledger_integrity",
+        "conflict_resolution_integrity",
+        "conflict_lineage_integrity"
+      ],
+      "score": 0.6667,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "conflict_ledger_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 0.0,
+          "signal_id": "conflict_resolution_integrity",
+          "weight": 1.0,
+          "weighted_score": 0.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "conflict_lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "CONFLICTS_EVALUATED",
+      "total_weight": 3.0
+    },
+    "DECISION_FINALIZED": {
+      "required_signals": [
+        "decision_state_integrity",
+        "decision_policy_integrity",
+        "decision_lineage_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "decision_state_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "decision_policy_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "decision_lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "DECISION_FINALIZED",
+      "total_weight": 3.0
+    },
+    "DEPENDENCIES_BOUND": {
+      "required_signals": [
+        "dependency_matrix_integrity",
+        "dependency_provenance_integrity",
+        "dependency_lineage_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "dependency_matrix_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "dependency_provenance_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "dependency_lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "DEPENDENCIES_BOUND",
+      "total_weight": 3.0
+    },
+    "DISCOVERED": {
+      "required_signals": [
+        "corpus_roles_integrity",
+        "repository_provenance_integrity",
+        "discovery_inventory_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "corpus_roles_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "repository_provenance_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "discovery_inventory_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "DISCOVERED",
+      "total_weight": 3.0
+    },
+    "EQUIVALENCE_MAPPED": {
+      "required_signals": [
+        "candidate_mapping_integrity",
+        "mapping_provenance_integrity",
+        "mapping_lineage_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "candidate_mapping_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "mapping_provenance_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "mapping_lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "EQUIVALENCE_MAPPED",
+      "total_weight": 3.0
+    },
+    "INDEXED": {
+      "required_signals": [
+        "dual_corpus_index_integrity",
+        "relationship_index_integrity",
+        "static_input_integrity",
+        "lineage_integrity"
+      ],
+      "score": 0.75,
+      "signals": [
+        {
+          "score": 0.0,
+          "signal_id": "dual_corpus_index_integrity",
+          "weight": 1.0,
+          "weighted_score": 0.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "relationship_index_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "static_input_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "INDEXED",
+      "total_weight": 4.0
+    },
+    "READINESS_GATED": {
+      "required_signals": [
+        "readiness_checks_integrity",
+        "readiness_policy_integrity",
+        "readiness_lineage_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "readiness_checks_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "readiness_policy_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "readiness_lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "READINESS_GATED",
+      "total_weight": 3.0
+    },
+    "REPORT_GENERATED": {
+      "required_signals": [
+        "report_completeness_integrity",
+        "report_provenance_integrity",
+        "report_lineage_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "report_completeness_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "report_provenance_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "report_lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "REPORT_GENERATED",
+      "total_weight": 3.0
+    },
+    "STATIC_ANALYZED": {
+      "required_signals": [
+        "comparison_signals_integrity",
+        "deterministic_delta_integrity",
+        "lineage_integrity"
+      ],
+      "score": 1.0,
+      "signals": [
+        {
+          "score": 1.0,
+          "signal_id": "comparison_signals_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "deterministic_delta_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        },
+        {
+          "score": 1.0,
+          "signal_id": "lineage_integrity",
+          "weight": 1.0,
+          "weighted_score": 1.0
+        }
+      ],
+      "stage_id": "STATIC_ANALYZED",
+      "total_weight": 3.0
+    }
+  },
+  "target_stage": "READINESS_GATED",
+  "terminal_stage": "READINESS_GATED",
+  "transitions": [
+    {
+      "artifact_name": "TRACK_B_STAGE_INDEXED",
+      "artifact_path": "track_b_indexed.json",
+      "artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5",
+      "from_stage": "DISCOVERED",
+      "seq": 1,
+      "status": "PASS",
+      "to_stage": "INDEXED"
+    },
+    {
+      "artifact_name": "TRACK_B_STAGE_STATIC_ANALYZED",
+      "artifact_path": "track_b_static_analyzed.json",
+      "artifact_sha256": "e13668aba462b46553d2a98f57ca1069593c463581d51c661f17c5ab3d41cc0c",
+      "from_stage": "INDEXED",
+      "seq": 2,
+      "status": "PASS",
+      "to_stage": "STATIC_ANALYZED"
+    },
+    {
+      "artifact_name": "TRACK_B_EQUIVALENCE_MAP",
+      "artifact_path": "track_b_equivalence_map.json",
+      "artifact_sha256": "ce4fa6b1dbccaa430cf2924f42a5ff4b9aab4e94a661aec1e8d8b4f63c7c1486",
+      "from_stage": "STATIC_ANALYZED",
+      "seq": 3,
+      "status": "PASS",
+      "to_stage": "EQUIVALENCE_MAPPED"
+    },
+    {
+      "artifact_name": "TRACK_B_DEPENDENCY_MATRIX",
+      "artifact_path": "track_b_dependency_matrix.json",
+      "artifact_sha256": "2c68dc87ecfdc0699a1e4a69d59e94fb888121c122fab7810ca0ec9ec9f09806",
+      "from_stage": "EQUIVALENCE_MAPPED",
+      "seq": 4,
+      "status": "PASS",
+      "to_stage": "DEPENDENCIES_BOUND"
+    },
+    {
+      "artifact_name": "TRACK_B_CONFLICT_LEDGER",
+      "artifact_path": "track_b_conflict_ledger.json",
+      "artifact_sha256": "68204a8174ca1ea6f33a5c660a78aa24129027e98ee36ec676d14d2ccb543a44",
+      "from_stage": "DEPENDENCIES_BOUND",
+      "seq": 5,
+      "status": "PASS",
+      "to_stage": "CONFLICTS_EVALUATED"
+    },
+    {
+      "artifact_name": "TRACK_B_EQUIVALENCE_DECISION",
+      "artifact_path": "track_b_equivalence_decision.json",
+      "artifact_sha256": "37b8e6a0b38057c46172a6f9861c15e2f509621582ee309c664f66e92f49756c",
+      "from_stage": "CONFLICTS_EVALUATED",
+      "seq": 6,
+      "status": "PASS",
+      "to_stage": "DECISION_FINALIZED"
+    },
+    {
+      "artifact_name": "TRACK_B_UPSTREAMING_REPORT",
+      "artifact_path": "track_b_upstreaming_report.json",
+      "artifact_sha256": "05c4fab60cea53aed3133edde90cfe461952338b03f503ea1466e219564fd429",
+      "from_stage": "DECISION_FINALIZED",
+      "seq": 7,
+      "status": "PASS",
+      "to_stage": "REPORT_GENERATED"
+    },
+    {
+      "artifact_name": "TRACK_B_UPSTREAMING_READINESS",
+      "artifact_path": "track_b_upstreaming_readiness.json",
+      "artifact_sha256": "8d227616c78018e5ccbe9ac3d1dd9b8f581030f6aaf312d3a476a8572ffc260c",
+      "from_stage": "REPORT_GENERATED",
+      "seq": 8,
+      "status": "PASS",
+      "to_stage": "READINESS_GATED"
+    }
+  ]
+}

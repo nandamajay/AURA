@@ -1,0 +1,173 @@
+{
+  "artifact_name": "TRACK_B_CONFLICT_LEDGER",
+  "classification": "PASS",
+  "conflicts": [
+    {
+      "candidate_ids": [
+        "c3c3d729035df8e8525440a3ade11ddea8c168640753a7d4fc3f5dc1c2c1d6a4"
+      ],
+      "conflict_id": "e0fda9cbe11f646896949fcfb587eb39033866e9de4e830b7033198d943e5bed",
+      "conflict_type": "DEPENDENCY_MISMATCH",
+      "provenance": [
+        {
+          "branch": "diagnostic",
+          "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "corpus_id": "audio-kernel-ar",
+          "corpus_role": "downstream",
+          "evidence_id": "b017edde8caf6fb7b71a12ccde43808e988294ed52a1d0a931c85e53a48fb581",
+          "evidence_type": "dependency_downstream_component",
+          "extraction_rule_id": "m8_dependency_downstream_alignment",
+          "line_end": 2487,
+          "line_start": 2487,
+          "path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "remote": "local:track_b_corpora/audio-kernel-ar",
+          "snippet_sha256": "ee7fadad3d7140f312b1f9ea0641b71800c17888cc0595e1b53482b5df6327a3",
+          "source_artifact_name": "TRACK_B_STAGE_INDEXED",
+          "source_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5"
+        },
+        {
+          "branch": "diagnostic",
+          "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "corpus_id": "linux-next",
+          "corpus_role": "upstream",
+          "evidence_id": "f9b273ed387a506afb999cc8a36c0bcaddce357f06fc1a02a580307372d2e88c",
+          "evidence_type": "dependency_upstream_component",
+          "extraction_rule_id": "m8_dependency_upstream_alignment",
+          "line_end": 1529,
+          "line_start": 1529,
+          "path": "sound/soc/codecs/lpass-va-macro.c",
+          "remote": "local:track_b_corpora/linux-next",
+          "snippet_sha256": "d1796bd0759a523d943e46c3a758306e46c8d9738c01591effd1b04bda6d2968",
+          "source_artifact_name": "TRACK_B_STAGE_INDEXED",
+          "source_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5"
+        }
+      ],
+      "resolution_evidence": [
+        "2ae1c1e0e0cd5b7c71b36f21fd23772f4d43982946c99fb22e11fbc6f530deb0",
+        "2b00063617b9a04d161e55ce8ba6387409d1d620dc4f4ce555d73616c0949dac",
+        "2fc1ac2ffc53ae0b05662f792c8480838546c7469c44298202283d8e65e814e5",
+        "7ed61a84d6ee32874a1d7477ef30c2f0468d35c9abd06786059a6ff8c506e8ec",
+        "88fcb1ee0ba536d972f071a3dc8fd14f8fe80141ef28ab5191281523483792f2",
+        "9eea8a4332c5976b1b8f9584d00179893d9b3e526595bfef65c5cd854b27c120",
+        "af0664d20c20d74b2f362604508dfe68aa8d410bb1fe429d2620a1cf27d48042",
+        "d3ddb935719998733ecd8cc00a75b102d9bc5431b1c26c4ed4be892cc6db1dad"
+      ],
+      "resolved_dependency_headers": [
+        "asoc/msm-cdc-pinctrl.h",
+        "dsp/digital-cdc-rsc-mgr.h",
+        "linux/version.h",
+        "lpass-cdc-clk-rsc.h",
+        "lpass-cdc-registers.h",
+        "lpass-cdc.h",
+        "soc/swr-common.h",
+        "soc/swr-wcd.h"
+      ],
+      "severity": "INFO",
+      "status": "RESOLVED_BY_GOVERNANCE",
+      "summary": "Candidate c3c3d729035df8e8525440a3ade11ddea8c168640753a7d4fc3f5dc1c2c1d6a4 dependency gaps resolved by governed dependency assertions."
+    },
+    {
+      "candidate_ids": [
+        "c3c3d729035df8e8525440a3ade11ddea8c168640753a7d4fc3f5dc1c2c1d6a4"
+      ],
+      "conflict_id": "bcdf1a3707468e5dfcb232ed75047cad44c5a454f4aa43f290afc17501e2c308",
+      "conflict_type": "SIGNATURE_MISMATCH_SUPPRESSED",
+      "provenance": [
+        {
+          "branch": "diagnostic",
+          "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "corpus_id": "audio-kernel-ar",
+          "corpus_role": "downstream",
+          "evidence_id": "dc2699c6209946e96305bdb3400401e9c598a14d07bd5c8cf8826df1b583df6f",
+          "evidence_type": "governed_equivalence:path_family",
+          "extraction_rule_id": "diagnostic.path_family.v1",
+          "line_end": 2487,
+          "line_start": 2487,
+          "path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "remote": "local:audio-kernel-ar",
+          "snippet_sha256": "b8c0a1117d5aa130107904fedd2b4a092a00297131c4df32470629f8b1c169c9",
+          "source_artifact_name": "DIAGNOSTIC_GOVERNED_EQUIVALENCE_ASSERTION",
+          "source_artifact_sha256": "eb7d05384e0ba430314ce8c617667f6046d884d8f7ee46f1f14612e020249e61"
+        },
+        {
+          "branch": "diagnostic",
+          "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "corpus_id": "linux-next",
+          "corpus_role": "upstream",
+          "evidence_id": "fe6c47d264f6e3a14e80b71bdc78095c25ba923b53d6f9181ad92cdb2340abf5",
+          "evidence_type": "governed_equivalence:compatible_family",
+          "extraction_rule_id": "diagnostic.compatible_family.v1",
+          "line_end": 1757,
+          "line_start": 1757,
+          "path": "sound/soc/codecs/lpass-va-macro.c",
+          "remote": "local:linux-next",
+          "snippet_sha256": "88c7cff75f5efebc5169dffa887ff05516bc3500a93f4f6a4458e7b3910b5621",
+          "source_artifact_name": "DIAGNOSTIC_GOVERNED_EQUIVALENCE_ASSERTION",
+          "source_artifact_sha256": "6dcaa41915a71304aa5e26eae604c3e3f4affa6f97f2e9f99fbc739d9f951cfa"
+        },
+        {
+          "branch": "diagnostic",
+          "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "corpus_id": "linux-next",
+          "corpus_role": "upstream",
+          "evidence_id": "8ed405f16583d41dd44288bc8323938be0aee4a589f95497c58b1bc8d2a9ee72",
+          "evidence_type": "governed_equivalence:registration_role",
+          "extraction_rule_id": "diagnostic.registration_role.v1",
+          "line_end": 1529,
+          "line_start": 1529,
+          "path": "sound/soc/codecs/lpass-va-macro.c",
+          "remote": "local:linux-next",
+          "snippet_sha256": "dbbe5e65136973b3837aa5520847df721bf16b8bd804efc71d09c3ac418ab69a",
+          "source_artifact_name": "DIAGNOSTIC_GOVERNED_EQUIVALENCE_ASSERTION",
+          "source_artifact_sha256": "507de8affd5d1e950c949bdcdc3217dfa4575ff1fa5f571337771293f303d76a"
+        }
+      ],
+      "resolution_evidence": "c3c3d729035df8e8525440a3ade11ddea8c168640753a7d4fc3f5dc1c2c1d6a4",
+      "severity": "INFO",
+      "status": "RESOLVED_BY_GOVERNANCE",
+      "summary": "Signature difference expected for governed component_boundary_split assertion"
+    }
+  ],
+  "evidence": {
+    "required_evidence_types_satisfied": [
+      "conflict_detection",
+      "conflict_provenance",
+      "dependency_lineage"
+    ]
+  },
+  "fail_closed_reasons": [],
+  "lineage": {
+    "dependency_artifact_sha256": "2c68dc87ecfdc0699a1e4a69d59e94fb888121c122fab7810ca0ec9ec9f09806",
+    "equivalence_artifact_sha256": "ce4fa6b1dbccaa430cf2924f42a5ff4b9aab4e94a661aec1e8d8b4f63c7c1486"
+  },
+  "resolution_policy": {
+    "conflict_precedence": [
+      "NO_CANDIDATE_MAPPING",
+      "MULTI_EQUIVALENT_TOP_SCORE",
+      "SIGNATURE_MISMATCH",
+      "DT_BINDING_MISMATCH",
+      "DEPENDENCY_MISMATCH",
+      "STATIC_ONLY_EDGE",
+      "RUNTIME_ONLY_EDGE",
+      "ORDERING_MISMATCH",
+      "SIGNATURE_MISMATCH_SUPPRESSED"
+    ],
+    "multi_equivalent_policy": "Require explicit disambiguation evidence before readiness PASS.",
+    "supported_conflict_types": [
+      "NO_CANDIDATE_MAPPING",
+      "MULTI_EQUIVALENT_TOP_SCORE",
+      "DEPENDENCY_MISMATCH",
+      "STATIC_ONLY_EDGE",
+      "RUNTIME_ONLY_EDGE",
+      "ORDERING_MISMATCH",
+      "SIGNATURE_MISMATCH",
+      "SIGNATURE_MISMATCH_SUPPRESSED",
+      "DT_BINDING_MISMATCH"
+    ],
+    "unresolved_conflicts_fail_closed": true
+  },
+  "resolved_conflict_count": 2,
+  "schema_version": "1.0",
+  "stage_id": "CONFLICTS_EVALUATED",
+  "unresolved_conflict_count": 0
+}

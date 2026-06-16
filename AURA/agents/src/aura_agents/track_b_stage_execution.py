@@ -12,6 +12,7 @@ from pathlib import Path
 from typing import Any
 
 from aura_agents.confidence_engine import ConfidenceComputationError, compute_weighted_confidence
+from aura_agents.equivalence_governance import assertion_to_candidate_mapping, dependency_assertion_to_resolution
 from aura_agents.stage_engine import (
     DeterministicStageEngine,
     StageDefinition,
@@ -65,6 +66,7 @@ CONFLICT_TYPES = (
     "RUNTIME_ONLY_EDGE",
     "ORDERING_MISMATCH",
     "SIGNATURE_MISMATCH",
+    "SIGNATURE_MISMATCH_SUPPRESSED",
     "DT_BINDING_MISMATCH",
 )
 CONFLICT_PRECEDENCE = (
@@ -76,6 +78,7 @@ CONFLICT_PRECEDENCE = (
     "STATIC_ONLY_EDGE",
     "RUNTIME_ONLY_EDGE",
     "ORDERING_MISMATCH",
+    "SIGNATURE_MISMATCH_SUPPRESSED",
 )
 CONTROL_PLANE_FILES = (
     "architecture_plan.md",
@@ -502,6 +505,53 @@ def _runtime_evidence_required(component_type: str) -> bool:
     return str(component_type or "").strip().lower() in RUNTIME_SENSITIVE_COMPONENT_TYPES
 
 
+def _normalize_equivalence_hints(value: Any, *, field: str) -> list[dict[str, Any]]:
+    if value is None:
+        return []
+    if not isinstance(value, list):
+        raise RuntimeError(f"{field} must be a list")
+    hints: list[dict[str, Any]] = []
+    for index, raw_hint in enumerate(value):
+        hint = _safe_dict(raw_hint)
+        if not hint:
+            raise RuntimeError(f"{field}[{index}] must be an object")
+        downstream_symbol = _require_non_empty_text(
+            hint.get("downstream_symbol"),
+            field=f"{field}[{index}].downstream_symbol",
+        )
+        upstream_symbol = _require_non_empty_text(
+            hint.get("upstream_symbol"),
+            field=f"{field}[{index}].upstream_symbol",
+        )
+        confidence = hint.get("confidence")
+        if isinstance(confidence, bool) or not isinstance(confidence, (int, float)):
+            raise RuntimeError(f"{field}[{index}].confidence must be numeric")
+        confidence = float(confidence)
+        if confidence < 0.0 or confidence > 1.0:
+            raise RuntimeError(f"{field}[{index}].confidence must be within [0.0, 1.0]")
+        evidence_source = _require_non_empty_text(
+            hint.get("evidence_source"),
+            field=f"{field}[{index}].evidence_source",
+        )
+        hints.append(
+            {
+                "downstream_symbol": downstream_symbol,
+                "upstream_symbol": upstream_symbol,
+                "confidence": confidence,
+                "evidence_source": evidence_source,
+            }
+        )
+    return sorted(
+        hints,
+        key=lambda item: (
+            str(item.get("downstream_symbol")),
+            str(item.get("upstream_symbol")),
+            str(item.get("evidence_source")),
+            float(item.get("confidence") or 0.0),
+        ),
+    )
+
+
 def _normalize_upstreaming_request(context: dict[str, Any]) -> dict[str, Any]:
     raw_request = context.get("upstreaming_request")
     if raw_request is None:
@@ -552,6 +602,10 @@ def _normalize_upstreaming_request(context: dict[str, Any]) -> dict[str, Any]:
             "upstreaming_request.runtime_evidence_refs must be non-empty for runtime-sensitive "
             f"component_type={component_type}"
         )
+    equivalence_hints = _normalize_equivalence_hints(
+        request.get("equivalence_hints"),
+        field="upstreaming_request.equivalence_hints",
+    )
     return {
         "request_id": request_id,
         "downstream_component": {
@@ -563,6 +617,7 @@ def _normalize_upstreaming_request(context: dict[str, Any]) -> dict[str, Any]:
         },
         "runtime_evidence_required": runtime_evidence_required,
         "runtime_evidence_refs": runtime_evidence_refs,
+        "equivalence_hints": equivalence_hints,
     }
 
 
@@ -2907,6 +2962,7 @@ def _mapping_candidates_for_request(
     upstreaming_request: dict[str, Any],
     corpora: list[dict[str, Any]],
     source_artifact_sha256: str,
+    governed_equivalence_assertions: list[Any] | None = None,
 ) -> tuple[dict[str, Any], list[dict[str, Any]]]:
     corpora_map = _corpora_revision_map(corpora)
     downstream_records = _role_source_records(indexed_payload, role="downstream")
@@ -2918,6 +2974,11 @@ def _mapping_candidates_for_request(
     component_type = str(downstream_component.get("component_type") or "").strip().lower()
     component_name = str(downstream_component.get("component_name") or "").strip()
     requested_source_path = str(downstream_component.get("source_path") or "").strip()
+    equivalence_hints = upstreaming_request.get("equivalence_hints", [])
+    if not isinstance(equivalence_hints, list):
+        equivalence_hints = []
+    if not isinstance(governed_equivalence_assertions, list):
+        governed_equivalence_assertions = []
 
     downstream_anchor: dict[str, Any] = {
         "component_type": component_type,
@@ -3077,6 +3138,101 @@ def _mapping_candidates_for_request(
     downstream_anchor["provenance"] = downstream_provenance
 
     candidates: list[dict[str, Any]] = []
+    for assertion in governed_equivalence_assertions:
+        mapping = assertion_to_candidate_mapping(_safe_dict(assertion))
+        if not mapping:
+            continue
+        assertion_downstream = _safe_dict(mapping.get("downstream_component"))
+        if str(assertion_downstream.get("component_type") or "").strip().lower() != component_type:
+            continue
+        assertion_symbol = str(
+            assertion_downstream.get("component_name") or assertion_downstream.get("symbol") or ""
+        ).strip()
+        if assertion_symbol != component_name:
+            continue
+        candidates.append(mapping)
+
+    if component_type == "function":
+        for raw_hint in equivalence_hints:
+            hint = _safe_dict(raw_hint)
+            downstream_symbol = str(hint.get("downstream_symbol") or "").strip()
+            upstream_symbol_hint = str(hint.get("upstream_symbol") or "").strip()
+            if downstream_symbol != component_name or not upstream_symbol_hint:
+                continue
+            confidence = hint.get("confidence")
+            if isinstance(confidence, bool) or not isinstance(confidence, (int, float)):
+                continue
+            score = round(max(0.0, min(1.0, float(confidence))), 4)
+            evidence_source = str(hint.get("evidence_source") or "").strip()
+            for record in upstream_records:
+                functions = _normalize_string_list(record.get("functions"))
+                if upstream_symbol_hint not in functions:
+                    continue
+                upstream_path = str(record.get("source_path") or "").strip()
+                upstream_line_start, upstream_line_end, _ = _record_symbol_line(
+                    record, symbol=upstream_symbol_hint, definition_key="function_definitions"
+                )
+                upstream_provenance = _build_provenance_entry(
+                    corpus_role="upstream",
+                    corpora_map=corpora_map,
+                    path=upstream_path,
+                    line_start=upstream_line_start,
+                    line_end=upstream_line_end,
+                    evidence_type="upstream_component_candidate",
+                    source_artifact_sha256=source_artifact_sha256,
+                    source_artifact_name="TRACK_B_STAGE_INDEXED",
+                    extraction_rule_id="m8_equivalence_hint_upstream_candidate",
+                    snippet_basis=f"upstream:{component_type}:{upstream_symbol_hint}:{upstream_path}:{evidence_source}",
+                )
+                candidate_identity = {
+                    "component_type": component_type,
+                    "component_name": component_name,
+                    "upstream_symbol": upstream_symbol_hint,
+                    "upstream_path": upstream_path,
+                    "line_start": upstream_line_start,
+                    "line_end": upstream_line_end,
+                    "score": score,
+                    "match_type": "equivalence_hint",
+                    "evidence_source": evidence_source,
+                }
+                candidates.append(
+                    {
+                        "candidate_id": _canonical_value_sha256(candidate_identity),
+                        "mapping_state": "CANDIDATE",
+                        "match_type": "equivalence_hint",
+                        "downstream_symbol": downstream_symbol,
+                        "upstream_symbol": upstream_symbol_hint,
+                        "confidence": score,
+                        "evidence_source": evidence_source,
+                        "score": score,
+                        "score_components": {
+                            "symbol_exact": 0.0,
+                            "path_exact": 0.0,
+                            "provenance_complete": provenance_complete,
+                            "equivalence_hint_confidence": score,
+                            "formula": "equivalence_hint_confidence",
+                        },
+                        "downstream_component": {
+                            "component_type": component_type,
+                            "component_name": component_name,
+                            "source_path": downstream_path,
+                            "line_start": downstream_line_start,
+                            "line_end": downstream_line_end,
+                        },
+                        "upstream_component": {
+                            "component_type": component_type,
+                            "component_name": upstream_symbol_hint,
+                            "source_path": upstream_path,
+                            "line_start": upstream_line_start,
+                            "line_end": upstream_line_end,
+                        },
+                        "evidence": [
+                            downstream_provenance,
+                            upstream_provenance,
+                        ],
+                    }
+                )
+
     for upstream_match in upstream_matches:
         upstream_path = str(upstream_match.get("source_path") or "").strip()
         upstream_symbol = str(upstream_match.get("symbol") or "").strip() or component_name
@@ -3270,6 +3426,7 @@ def _build_equivalence_mapped(context: dict[str, Any], stage_payloads: dict[str,
         upstreaming_request=upstreaming_request,
         corpora=corpora,
         source_artifact_sha256=indexed_sha,
+        governed_equivalence_assertions=context.get("governed_equivalence_assertions"),
     )
 
     return {
@@ -3619,6 +3776,24 @@ def _validate_conflict_schema(payload: dict[str, Any]) -> list[str]:
     return errors
 
 
+
+def _dependency_header_key(header: Any) -> str:
+    return str(header or "").strip().strip('<>"').replace("\\", "/").lstrip("./")
+
+
+def _approved_dependency_resolution_index(raw_resolutions: Any) -> dict[str, dict[str, Any]]:
+    if not isinstance(raw_resolutions, list):
+        return {}
+    approved: dict[str, dict[str, Any]] = {}
+    for raw_resolution in raw_resolutions:
+        resolution = dependency_assertion_to_resolution(_safe_dict(raw_resolution))
+        if not resolution:
+            continue
+        key = _dependency_header_key(resolution.get("dependency_header"))
+        if key:
+            approved[key] = resolution
+    return approved
+
 def _build_conflicts_evaluated(context: dict[str, Any], stage_payloads: dict[str, dict[str, Any]]) -> dict[str, Any]:
     static_payload = _safe_dict(stage_payloads.get("STATIC_ANALYZED"))
     dependency_payload = _safe_dict(stage_payloads.get("DEPENDENCIES_BOUND"))
@@ -3680,6 +3855,37 @@ def _build_conflicts_evaluated(context: dict[str, Any], stage_payloads: dict[str
             "provenance": [_safe_dict(item) for item in provenance if isinstance(item, dict)],
         }
 
+    def _new_resolved_conflict(
+        *,
+        conflict_type: str,
+        severity: str,
+        summary: str,
+        candidate_ids: list[str],
+        provenance: list[dict[str, Any]],
+        resolution_evidence: Any,
+    ) -> dict[str, Any]:
+        row = _new_conflict(
+            conflict_type=conflict_type,
+            severity=severity,
+            summary=summary,
+            candidate_ids=candidate_ids,
+            provenance=provenance,
+        )
+        row["status"] = "RESOLVED_BY_GOVERNANCE"
+        row["resolution_evidence"] = resolution_evidence
+        return row
+
+    def _signature_mismatch_suppressed_by_governance(candidate: dict[str, Any]) -> bool:
+        return (
+            str(candidate.get("match_type") or "").strip() == "component_boundary_split"
+            and str(candidate.get("assertion_type") or "").strip() == "governed_human_assertion"
+            and float(candidate.get("confidence") or candidate.get("score") or 0.0) >= 0.8
+        )
+
+    approved_dependency_resolutions = _approved_dependency_resolution_index(
+        context.get("governed_dependency_resolutions", [])
+    )
+
     conflict_rows: list[dict[str, Any]] = []
     downstream_anchor = _safe_dict(equivalence_payload.get("downstream_anchor"))
     downstream_anchor_provenance = _safe_dict(downstream_anchor.get("provenance"))
@@ -3726,15 +3932,29 @@ def _build_conflicts_evaluated(context: dict[str, Any], stage_payloads: dict[str
             upstream_name = str(upstream_component.get("component_name") or "").strip()
             if request_component_name and upstream_name and upstream_name != request_component_name:
                 evidence = item.get("evidence", [])
-                conflict_rows.append(
-                    _new_conflict(
-                        conflict_type="SIGNATURE_MISMATCH",
-                        severity="MEDIUM",
-                        summary="Downstream component signature differs from upstream candidate signature.",
-                        candidate_ids=[str(item.get("candidate_id") or "").strip()],
-                        provenance=[_safe_dict(entry) for entry in evidence if isinstance(entry, dict)],
+                candidate_id = str(item.get("candidate_id") or "").strip()
+                provenance = [_safe_dict(entry) for entry in evidence if isinstance(entry, dict)]
+                if _signature_mismatch_suppressed_by_governance(item):
+                    conflict_rows.append(
+                        _new_resolved_conflict(
+                            conflict_type="SIGNATURE_MISMATCH_SUPPRESSED",
+                            severity="INFO",
+                            summary="Signature difference expected for governed component_boundary_split assertion",
+                            candidate_ids=[candidate_id],
+                            provenance=provenance,
+                            resolution_evidence=candidate_id,
+                        )
                     )
-                )
+                else:
+                    conflict_rows.append(
+                        _new_conflict(
+                            conflict_type="SIGNATURE_MISMATCH",
+                            severity="MEDIUM",
+                            summary="Downstream component signature differs from upstream candidate signature.",
+                            candidate_ids=[candidate_id],
+                            provenance=provenance,
+                        )
+                    )
 
     for record in dependency_records:
         item = _safe_dict(record)
@@ -3743,15 +3963,52 @@ def _build_conflicts_evaluated(context: dict[str, Any], stage_payloads: dict[str
             continue
         candidate_id = str(item.get("candidate_id") or "").strip()
         provenance = [_safe_dict(entry) for entry in item.get("provenance", []) if isinstance(entry, dict)]
-        conflict_rows.append(
-            _new_conflict(
+        missing_headers = _normalize_string_list(item.get("missing_headers"))
+        unresolved_dependency_gaps: list[str] = []
+        resolution_assertion_ids: list[str] = []
+        resolved_dependency_headers: list[str] = []
+        for header in missing_headers:
+            key = _dependency_header_key(header)
+            resolution = approved_dependency_resolutions.get(key)
+            if not resolution:
+                unresolved_dependency_gaps.append(f"header:{header}")
+                continue
+            resolution_assertion_ids.append(str(resolution.get("assertion_id") or "").strip())
+            resolved_dependency_headers.append(header)
+
+        non_header_gap_fields = (
+            ("kconfig", "missing_kconfig"),
+            ("makefile", "missing_makefile_objects"),
+            ("dts", "missing_dts"),
+            ("yaml", "missing_yaml"),
+        )
+        for gap_type, field_name in non_header_gap_fields:
+            for value in _normalize_string_list(item.get(field_name)):
+                unresolved_dependency_gaps.append(f"{gap_type}:{value}")
+
+        if unresolved_dependency_gaps:
+            dependency_conflict = _new_conflict(
                 conflict_type="DEPENDENCY_MISMATCH",
                 severity="MEDIUM",
                 summary=f"Candidate {candidate_id} has unresolved dependency gaps.",
                 candidate_ids=[candidate_id] if candidate_id else [],
                 provenance=provenance,
             )
-        )
+            dependency_conflict["unresolved_dependency_gaps"] = sorted(set(unresolved_dependency_gaps))
+            if resolution_assertion_ids:
+                dependency_conflict["partial_resolution_evidence"] = sorted(set(resolution_assertion_ids))
+            conflict_rows.append(dependency_conflict)
+        else:
+            dependency_conflict = _new_resolved_conflict(
+                conflict_type="DEPENDENCY_MISMATCH",
+                severity="INFO",
+                summary=f"Candidate {candidate_id} dependency gaps resolved by governed dependency assertions.",
+                candidate_ids=[candidate_id] if candidate_id else [],
+                provenance=provenance,
+                resolution_evidence=sorted(set(resolution_assertion_ids)),
+            )
+            dependency_conflict["resolved_dependency_headers"] = sorted(set(resolved_dependency_headers))
+            conflict_rows.append(dependency_conflict)
         has_dt_gap = bool(item.get("missing_dts")) or bool(item.get("missing_yaml"))
         if has_dt_gap:
             conflict_rows.append(
@@ -3962,7 +4219,7 @@ def _build_decision_finalized(context: dict[str, Any], stage_payloads: dict[str,
 
     selected_candidate_id = str(selected_candidate.get("candidate_id") or "").strip()
     selected_dependency = _safe_dict(dep_by_candidate.get(selected_candidate_id))
-    dependencies_resolved = bool(selected_dependency) and all(
+    native_dependencies_resolved = bool(selected_dependency) and all(
         bool(_safe_dict(selected_dependency.get("mandatory_checks")).get(key))
         for key in (
             "headers_resolved",
@@ -3972,6 +4229,19 @@ def _build_decision_finalized(context: dict[str, Any], stage_payloads: dict[str,
             "yaml_resolved",
         )
     )
+    selected_dependency_conflicts = [
+        _safe_dict(item)
+        for item in conflicts
+        if isinstance(item, dict)
+        and str(item.get("conflict_type") or "").strip().upper() == "DEPENDENCY_MISMATCH"
+        and selected_candidate_id in {str(candidate_id).strip() for candidate_id in item.get("candidate_ids", [])}
+    ]
+    unresolved_dependency_conflict = any(
+        str(item.get("status") or "").strip().upper() == "UNRESOLVED"
+        for item in selected_dependency_conflicts
+    )
+    governed_dependencies_resolved = bool(selected_dependency) and bool(selected_dependency_conflicts) and not unresolved_dependency_conflict
+    dependencies_resolved = native_dependencies_resolved or governed_dependencies_resolved
     provenance_complete = True
     for candidate in normalized_candidates:
         evidence = candidate.get("evidence", [])

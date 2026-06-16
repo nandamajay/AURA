@@ -1,0 +1,276 @@
+{
+  "artifact_name": "TRACK_B_EQUIVALENCE_MAP",
+  "candidate_mappings": [
+    {
+      "assertion_id": "f47e158d897bc3097a0a6a5e942400a1255a7469cd9acdd94fb1c34e25aff2cc",
+      "assertion_type": "governed_human_assertion",
+      "candidate_id": "c3c3d729035df8e8525440a3ade11ddea8c168640753a7d4fc3f5dc1c2c1d6a4",
+      "confidence": 1.0,
+      "downstream_component": {
+        "component_name": "lpass_cdc_va_macro_probe",
+        "component_type": "function",
+        "line_end": 2487,
+        "line_start": 2487,
+        "source_path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+        "symbol": "lpass_cdc_va_macro_probe"
+      },
+      "evidence": [
+        {
+          "branch": "diagnostic",
+          "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "corpus_id": "audio-kernel-ar",
+          "corpus_role": "downstream",
+          "evidence_id": "dc2699c6209946e96305bdb3400401e9c598a14d07bd5c8cf8826df1b583df6f",
+          "evidence_type": "governed_equivalence:path_family",
+          "extraction_rule_id": "diagnostic.path_family.v1",
+          "line_end": 2487,
+          "line_start": 2487,
+          "path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "remote": "local:audio-kernel-ar",
+          "snippet_sha256": "b8c0a1117d5aa130107904fedd2b4a092a00297131c4df32470629f8b1c169c9",
+          "source_artifact_name": "DIAGNOSTIC_GOVERNED_EQUIVALENCE_ASSERTION",
+          "source_artifact_sha256": "eb7d05384e0ba430314ce8c617667f6046d884d8f7ee46f1f14612e020249e61"
+        },
+        {
+          "branch": "diagnostic",
+          "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "corpus_id": "linux-next",
+          "corpus_role": "upstream",
+          "evidence_id": "fe6c47d264f6e3a14e80b71bdc78095c25ba923b53d6f9181ad92cdb2340abf5",
+          "evidence_type": "governed_equivalence:compatible_family",
+          "extraction_rule_id": "diagnostic.compatible_family.v1",
+          "line_end": 1757,
+          "line_start": 1757,
+          "path": "sound/soc/codecs/lpass-va-macro.c",
+          "remote": "local:linux-next",
+          "snippet_sha256": "88c7cff75f5efebc5169dffa887ff05516bc3500a93f4f6a4458e7b3910b5621",
+          "source_artifact_name": "DIAGNOSTIC_GOVERNED_EQUIVALENCE_ASSERTION",
+          "source_artifact_sha256": "6dcaa41915a71304aa5e26eae604c3e3f4affa6f97f2e9f99fbc739d9f951cfa"
+        },
+        {
+          "branch": "diagnostic",
+          "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "corpus_id": "linux-next",
+          "corpus_role": "upstream",
+          "evidence_id": "8ed405f16583d41dd44288bc8323938be0aee4a589f95497c58b1bc8d2a9ee72",
+          "evidence_type": "governed_equivalence:registration_role",
+          "extraction_rule_id": "diagnostic.registration_role.v1",
+          "line_end": 1529,
+          "line_start": 1529,
+          "path": "sound/soc/codecs/lpass-va-macro.c",
+          "remote": "local:linux-next",
+          "snippet_sha256": "dbbe5e65136973b3837aa5520847df721bf16b8bd804efc71d09c3ac418ab69a",
+          "source_artifact_name": "DIAGNOSTIC_GOVERNED_EQUIVALENCE_ASSERTION",
+          "source_artifact_sha256": "507de8affd5d1e950c949bdcdc3217dfa4575ff1fa5f571337771293f303d76a"
+        }
+      ],
+      "evidence_refs": [
+        {
+          "extractor_id": "diagnostic.path_family.v1",
+          "signal_id": "path_family",
+          "source_artifact_sha256": "eb7d05384e0ba430314ce8c617667f6046d884d8f7ee46f1f14612e020249e61",
+          "source_path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c"
+        },
+        {
+          "extractor_id": "diagnostic.compatible_family.v1",
+          "signal_id": "compatible_family",
+          "source_artifact_sha256": "6dcaa41915a71304aa5e26eae604c3e3f4affa6f97f2e9f99fbc739d9f951cfa",
+          "source_path": "sound/soc/codecs/lpass-va-macro.c"
+        },
+        {
+          "extractor_id": "diagnostic.registration_role.v1",
+          "signal_id": "registration_role",
+          "source_artifact_sha256": "507de8affd5d1e950c949bdcdc3217dfa4575ff1fa5f571337771293f303d76a",
+          "source_path": "sound/soc/codecs/lpass-va-macro.c"
+        }
+      ],
+      "governance": {
+        "approval_state": "approved",
+        "approval_timestamp": "2026-06-16T00:00:00Z",
+        "approver_id": "aura-pm-v1",
+        "audit_ledger_sha256": "80d17baed44012fd2554d1dd99af9bf2e80e21ed3f18c3551649217d15d9b76d"
+      },
+      "mapping_state": "CANDIDATE",
+      "match_type": "component_boundary_split",
+      "score": 1.0,
+      "score_components": {
+        "evidence_signals": {
+          "compatible_family": 1.0,
+          "path_family": 1.0,
+          "registration_role": 1.0
+        },
+        "formula": "weighted_mean_with_mandatory_signal_cap",
+        "mandatory_signals": [
+          "path_family",
+          "compatible_family",
+          "registration_role"
+        ]
+      },
+      "upstream_component": {
+        "component_name": "va_macro_probe",
+        "component_type": "function",
+        "line_end": 1529,
+        "line_start": 1529,
+        "source_path": "sound/soc/codecs/lpass-va-macro.c",
+        "symbol": "va_macro_probe"
+      }
+    }
+  ],
+  "classification": "PASS",
+  "corpora": [
+    {
+      "classification_rules": {
+        "config_files": [
+          "*.config",
+          "Kconfig",
+          "Kconfig.*"
+        ],
+        "driver_files": [
+          "*.c",
+          "*.h"
+        ],
+        "dts_files": [
+          "*.dts",
+          "*.dtsi"
+        ],
+        "makefile_files": [
+          "*.mk",
+          "Makefile"
+        ],
+        "yaml_files": [
+          "*.yaml",
+          "*.yml"
+        ]
+      },
+      "corpus_id": "audio-kernel-ar",
+      "corpus_role": "downstream",
+      "exclude_patterns": [
+        ".git",
+        ".git/*"
+      ],
+      "include_patterns": [
+        "*.c",
+        "*.h"
+      ],
+      "repository_root": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar",
+      "revision": {
+        "branch": "diagnostic",
+        "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "remote": "local:track_b_corpora/audio-kernel-ar"
+      },
+      "source_roots": [
+        "asoc/codecs/lpass-cdc",
+        "include/asoc",
+        "include/dsp",
+        "include/soc"
+      ]
+    },
+    {
+      "classification_rules": {
+        "config_files": [
+          "*.config",
+          "Kconfig",
+          "Kconfig.*"
+        ],
+        "driver_files": [
+          "*.c",
+          "*.h"
+        ],
+        "dts_files": [
+          "*.dts",
+          "*.dtsi"
+        ],
+        "makefile_files": [
+          "*.mk",
+          "Makefile"
+        ],
+        "yaml_files": [
+          "*.yaml",
+          "*.yml"
+        ]
+      },
+      "corpus_id": "linux-next",
+      "corpus_role": "upstream",
+      "exclude_patterns": [
+        ".git",
+        ".git/*"
+      ],
+      "include_patterns": [
+        "*.c",
+        "*.h"
+      ],
+      "repository_root": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next",
+      "revision": {
+        "branch": "diagnostic",
+        "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "remote": "local:track_b_corpora/linux-next"
+      },
+      "source_roots": [
+        "drivers/soundwire",
+        "include/linux/soundwire",
+        "sound/soc/codecs"
+      ]
+    }
+  ],
+  "downstream_anchor": {
+    "component_name": "lpass_cdc_va_macro_probe",
+    "component_type": "function",
+    "line_end": 2487,
+    "line_start": 2487,
+    "provenance": {
+      "branch": "diagnostic",
+      "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "corpus_id": "audio-kernel-ar",
+      "corpus_role": "downstream",
+      "evidence_id": "a2ca5c809a74dfe445cee909853989394f10179d6f9b46e81e2465f44c27294a",
+      "evidence_type": "downstream_component_anchor",
+      "extraction_rule_id": "m8_equivalence_downstream_anchor",
+      "line_end": 2487,
+      "line_start": 2487,
+      "path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+      "remote": "local:track_b_corpora/audio-kernel-ar",
+      "snippet_sha256": "84bc35d9f609118e9eb9ae0d3b91296ca58b52eacdf3babde9ca36111a493b86",
+      "source_artifact_name": "TRACK_B_STAGE_INDEXED",
+      "source_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5"
+    },
+    "source_path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c"
+  },
+  "evidence": {
+    "required_evidence_types_satisfied": [
+      "equivalence_candidates",
+      "equivalence_provenance",
+      "static_lineage"
+    ]
+  },
+  "fail_closed_reasons": [],
+  "lineage": {
+    "indexed_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5",
+    "static_artifact_sha256": "e13668aba462b46553d2a98f57ca1069593c463581d51c661f17c5ab3d41cc0c"
+  },
+  "ranking_policy": {
+    "formula": "(symbol_exact*0.6)+(path_exact*0.3)+(provenance_complete*0.1)",
+    "tie_break_order": [
+      "score_desc",
+      "symbol_asc",
+      "path_asc",
+      "line_asc"
+    ]
+  },
+  "schema_version": "1.0",
+  "stage_id": "EQUIVALENCE_MAPPED",
+  "upstreaming_request": {
+    "downstream_component": {
+      "component_name": "lpass_cdc_va_macro_probe",
+      "component_type": "function",
+      "line_end": 2487,
+      "line_start": 2487,
+      "source_path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c"
+    },
+    "equivalence_hints": [],
+    "request_id": "req-lpass-va-macro-full-governed-diagnostic",
+    "runtime_evidence_refs": [
+      "runtime:engineering_analysis:diagnostic_placeholder"
+    ],
+    "runtime_evidence_required": false
+  }
+}

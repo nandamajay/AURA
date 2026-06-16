@@ -1,0 +1,81 @@
+{
+  "artifact_name": "TRACK_B_DEPENDENCY_MATRIX",
+  "classification": "PASS",
+  "dependency_records": [
+    {
+      "candidate_id": "c3c3d729035df8e8525440a3ade11ddea8c168640753a7d4fc3f5dc1c2c1d6a4",
+      "downstream_path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+      "mandatory_checks": {
+        "dts_resolved": true,
+        "headers_resolved": false,
+        "kconfig_resolved": true,
+        "makefile_resolved": true,
+        "yaml_resolved": true
+      },
+      "missing_dependency_count": 8,
+      "missing_dts": [],
+      "missing_headers": [
+        "asoc/msm-cdc-pinctrl.h",
+        "dsp/digital-cdc-rsc-mgr.h",
+        "linux/version.h",
+        "lpass-cdc-clk-rsc.h",
+        "lpass-cdc-registers.h",
+        "lpass-cdc.h",
+        "soc/swr-common.h",
+        "soc/swr-wcd.h"
+      ],
+      "missing_kconfig": [],
+      "missing_makefile_objects": [],
+      "missing_yaml": [],
+      "provenance": [
+        {
+          "branch": "diagnostic",
+          "commit_sha": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+          "corpus_id": "audio-kernel-ar",
+          "corpus_role": "downstream",
+          "evidence_id": "b017edde8caf6fb7b71a12ccde43808e988294ed52a1d0a931c85e53a48fb581",
+          "evidence_type": "dependency_downstream_component",
+          "extraction_rule_id": "m8_dependency_downstream_alignment",
+          "line_end": 2487,
+          "line_start": 2487,
+          "path": "asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+          "remote": "local:track_b_corpora/audio-kernel-ar",
+          "snippet_sha256": "ee7fadad3d7140f312b1f9ea0641b71800c17888cc0595e1b53482b5df6327a3",
+          "source_artifact_name": "TRACK_B_STAGE_INDEXED",
+          "source_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5"
+        },
+        {
+          "branch": "diagnostic",
+          "commit_sha": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+          "corpus_id": "linux-next",
+          "corpus_role": "upstream",
+          "evidence_id": "f9b273ed387a506afb999cc8a36c0bcaddce357f06fc1a02a580307372d2e88c",
+          "evidence_type": "dependency_upstream_component",
+          "extraction_rule_id": "m8_dependency_upstream_alignment",
+          "line_end": 1529,
+          "line_start": 1529,
+          "path": "sound/soc/codecs/lpass-va-macro.c",
+          "remote": "local:track_b_corpora/linux-next",
+          "snippet_sha256": "d1796bd0759a523d943e46c3a758306e46c8d9738c01591effd1b04bda6d2968",
+          "source_artifact_name": "TRACK_B_STAGE_INDEXED",
+          "source_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5"
+        }
+      ],
+      "upstream_path": "sound/soc/codecs/lpass-va-macro.c"
+    }
+  ],
+  "evidence": {
+    "required_evidence_types_satisfied": [
+      "dependency_binding",
+      "dependency_provenance",
+      "equivalence_lineage"
+    ]
+  },
+  "fail_closed_reasons": [],
+  "lineage": {
+    "equivalence_artifact_sha256": "ce4fa6b1dbccaa430cf2924f42a5ff4b9aab4e94a661aec1e8d8b4f63c7c1486",
+    "indexed_artifact_sha256": "aa29a05c1042cbffd3f0ec13de7b364bc96bd99efd4be3bf2d1a0eaef2e381f5"
+  },
+  "schema_version": "1.0",
+  "stage_id": "DEPENDENCIES_BOUND"
+}
