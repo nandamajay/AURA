@@ -1,0 +1,182 @@
+{
+  "artifact_name": "REVIEWER_SIMULATION_REPORT",
+  "driver": "lpass_va_macro",
+  "source_prediction_file": "AURA_KB/drivers/lpass_va_macro/reviewer_predictions.json",
+  "target_reviewers": [
+    "Mark Brown",
+    "Pierre-Louis Bossart",
+    "Krzysztof Kozlowski"
+  ],
+  "classification": "NEEDS_REVISION",
+  "blocking_patch_count": 6,
+  "patches": [
+    {
+      "patch": "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+      "predicted_objections": [
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "patch_split",
+          "finding": "Mechanically scoped register rename is acceptable, but subject still says [PATCH 1/7] after DT patch was skipped.",
+          "blocking": false
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "commit_message",
+          "finding": "Commit explains the mechanical migration but should explicitly state there is no functional behavior change.",
+          "blocking": false
+        },
+        {
+          "reviewer": "quality_gate",
+          "pattern": "checkpatch",
+          "finding": "checkpatch reports trailing whitespace errors.",
+          "blocking": true
+        }
+      ],
+      "severity": "blocking",
+      "recommended_fix": "Clean trailing whitespace and regenerate with [PATCH 1/6] subject. Keep it mechanical."
+    },
+    {
+      "patch": "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+      "predicted_objections": [
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "feature_cleanup_mix",
+          "finding": "Large vendor framework removal also changes registration/lifecycle and originally depends on removals from later-numbered patches.",
+          "blocking": true
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "bisect_safety",
+          "finding": "Patch-02 does not apply after Patch-01 in requested order and was generated as not necessarily compilable by itself.",
+          "blocking": true
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "dead_code",
+          "finding": "Patch-02 introduces temporary TODO stubs that are only resolved by Patch-03/Patch-04.",
+          "blocking": true
+        },
+        {
+          "reviewer": "quality_gate",
+          "pattern": "checkpatch",
+          "finding": "checkpatch reports trailing whitespace errors.",
+          "blocking": true
+        }
+      ],
+      "severity": "blocking",
+      "recommended_fix": "Regenerate Patch-02 against Patch-01 only, or formally reorder series so deletion patches precede it. Remove TODO stubs from submitted version or squash with consumers so every patch is bisect-safe."
+    },
+    {
+      "patch": "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+      "predicted_objections": [
+        {
+          "reviewer": "Srinivas Kandagatla",
+          "pattern": "unused_helper",
+          "finding": "No unused exported helpers observed; helper has immediate VA consumer.",
+          "blocking": false
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "patch_split",
+          "finding": "Power-domain helper integration and DMIC helper are related but should remain minimal and compile-tested.",
+          "blocking": false
+        },
+        {
+          "reviewer": "quality_gate",
+          "pattern": "checkpatch",
+          "finding": "checkpatch reports trailing whitespace errors.",
+          "blocking": true
+        }
+      ],
+      "severity": "blocking",
+      "recommended_fix": "Clean whitespace and keep the patch paired with its first consumer; include compile evidence."
+    },
+    {
+      "patch": "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+      "predicted_objections": [
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "runtime_pm",
+          "finding": "Runtime PM and clock sequencing requires hardware/trace evidence; current validation is static only.",
+          "blocking": true
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "error_unwind",
+          "finding": "Clock acquisition and unwind paths are present, but mclk/fsgen sequencing assumptions need runtime validation.",
+          "blocking": false
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "commit_message",
+          "finding": "Commit explains why the vendor clock framework is removed.",
+          "blocking": false
+        },
+        {
+          "reviewer": "quality_gate",
+          "pattern": "checkpatch",
+          "finding": "checkpatch reports trailing whitespace errors.",
+          "blocking": true
+        }
+      ],
+      "severity": "blocking",
+      "recommended_fix": "Clean whitespace, add runtime PM/clock trace evidence, and compile-test in a full kernel tree before non-RFC submission."
+    },
+    {
+      "patch": "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+      "predicted_objections": [
+        {
+          "reviewer": "Pierre-Louis Bossart",
+          "pattern": "ownership_boundary",
+          "finding": "Patch correctly removes private swrm_wcd_notify calls, but residual VA SWR child-device/platform-data coupling remains after full series.",
+          "blocking": true
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "patch_scope",
+          "finding": "Removal is in ASoC codec file only and does not patch SoundWire controller code.",
+          "blocking": false
+        },
+        {
+          "reviewer": "quality_gate",
+          "pattern": "checkpatch",
+          "finding": "checkpatch reports trailing whitespace errors.",
+          "blocking": true
+        }
+      ],
+      "severity": "blocking",
+      "recommended_fix": "Remove or convert remaining VA SWR platform-data/child-device coupling and clean trailing whitespace."
+    },
+    {
+      "patch": "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+      "predicted_objections": [
+        {
+          "reviewer": "Krzysztof Kozlowski",
+          "pattern": "dt_schema",
+          "finding": "Patch removes downstream-only DT-facing paths but residual downstream DT properties remain elsewhere after full series.",
+          "blocking": true
+        },
+        {
+          "reviewer": "Mark Brown",
+          "pattern": "patch_order",
+          "finding": "Patch-06 must precede Patch-02 for current artifacts to apply, contradicting the requested 01,02,03,04,05,06 submission order.",
+          "blocking": true
+        },
+        {
+          "reviewer": "quality_gate",
+          "pattern": "checkpatch",
+          "finding": "checkpatch reports trailing whitespace errors.",
+          "blocking": true
+        }
+      ],
+      "severity": "blocking",
+      "recommended_fix": "Move this deletion earlier or regenerate dependent patches; remove remaining downstream DT properties and clean whitespace."
+    }
+  ],
+  "global_objections": [
+    "Current patch files are numbered [PATCH n/7] even though Patch-07 was skipped and final series count is 6.",
+    "Requested submission order 01,02,03,04,05,06 is not apply-safe.",
+    "No hardware/runtime validation evidence is available; cover letter must be RFC if sent.",
+    "checkpatch reports trailing whitespace errors across all six patch files."
+  ]
+}

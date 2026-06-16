@@ -1,0 +1,149 @@
+{
+  "artifact_name": "SERIES_INTEGRITY_REPORT",
+  "driver": "lpass_va_macro",
+  "classification": "FAIL",
+  "reason": "Requested submission order 01,02,03,04,05,06 fails at Patch-02; checkpatch also reports whitespace errors across all patch files.",
+  "requested_submission_order": [
+    "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+    "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+    "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+    "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+    "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+    "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch"
+  ],
+  "requested_order_apply_results": [
+    {
+      "patch": "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+      "status": "FAIL",
+      "returncode": 1,
+      "stdout": "",
+      "stderr": "error: patch failed: sound/soc/codecs/lpass-va-macro.c:15\nerror: sound/soc/codecs/lpass-va-macro.c: patch does not apply"
+    }
+  ],
+  "requested_order_pass": false,
+  "first_requested_order_failure": {
+    "patch": "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+    "status": "FAIL",
+    "returncode": 1,
+    "stdout": "",
+    "stderr": "error: patch failed: sound/soc/codecs/lpass-va-macro.c:15\nerror: sound/soc/codecs/lpass-va-macro.c: patch does not apply"
+  },
+  "explicit_banned_symbol_audit": {
+    "performed_on_order": "diagnostic_generation_order",
+    "requested_order_not_used_reason": "Full requested order did not apply, so no final requested-order tree exists for grep.",
+    "banned_symbols_surviving_count": 0,
+    "banned_symbols_surviving": []
+  },
+  "diagnostic_generation_order": [
+    "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+    "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+    "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+    "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+    "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+    "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch"
+  ],
+  "diagnostic_generation_order_apply_results": [
+    {
+      "patch": "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "patch": "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+      "status": "PASS",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "diagnostic_generation_order_pass": true,
+  "checkpatch": {
+    "command": "perl track_b_corpora/linux-next/scripts/checkpatch.pl --no-tree --strict AURA_KB/drivers/lpass_va_macro/patches/000{1,2,3,4,5,6}-*.patch",
+    "classification": "FAIL",
+    "total_errors": 107,
+    "summary_by_patch": [
+      {
+        "patch": "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+        "errors": 29,
+        "warnings": 0,
+        "checks": 0,
+        "lines_checked": 394
+      },
+      {
+        "patch": "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+        "errors": 16,
+        "warnings": 0,
+        "checks": 0,
+        "lines_checked": 366
+      },
+      {
+        "patch": "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+        "errors": 5,
+        "warnings": 0,
+        "checks": 0,
+        "lines_checked": 212
+      },
+      {
+        "patch": "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+        "errors": 26,
+        "warnings": 0,
+        "checks": 0,
+        "lines_checked": 579
+      },
+      {
+        "patch": "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+        "errors": 6,
+        "warnings": 0,
+        "checks": 0,
+        "lines_checked": 184
+      },
+      {
+        "patch": "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+        "errors": 25,
+        "warnings": 0,
+        "checks": 0,
+        "lines_checked": 441
+      }
+    ],
+    "primary_issue": "trailing whitespace in generated patch files",
+    "raw_output_path": "/tmp/lpass_va_checkpatch.txt"
+  },
+  "submission_order_recommendation": "Regenerate or reorder the patch series. Current artifact dependencies require 01,06,05,02,03,04, while the requested submission order 01,02,03,04,05,06 is not apply-safe."
+}

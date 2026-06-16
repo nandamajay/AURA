@@ -1,0 +1,738 @@
+{
+  "artifact_name": "RESIDUAL_SYMBOL_AUDIT",
+  "driver": "lpass_va_macro",
+  "classification": "NEEDS_REVISION",
+  "applied_order_for_audit": [
+    "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+    "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+    "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+    "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+    "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+    "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch"
+  ],
+  "requested_order_note": "Requested submission order did not apply; residual audit used the known full-apply diagnostic order.",
+  "explicit_banned_symbol_survivors_count": 0,
+  "explicit_banned_symbol_survivors": [],
+  "residual_symbols": [
+    {
+      "symbol": "qcom,lpass-cdc-va-macro",
+      "classification": "NEEDS_RENAME",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2481,
+          "text": "\t{.compatible = \"qcom,lpass-cdc-va-macro\"},"
+        }
+      ],
+      "reason": "Generic downstream compatible is not in upstream qcom,lpass-va-macro.yaml; use existing SoC-specific upstream compatibles instead."
+    },
+    {
+      "symbol": "qcom,is-used-swr-gpio",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 261,
+          "text": "\tu32 is_used_va_swr_gpio;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2241,
+          "text": "\tu32 is_used_va_swr_gpio = 0;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2242,
+          "text": "\tconst char *is_used_va_swr_gpio_dt = \"qcom,is-used-swr-gpio\";"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2296,
+          "text": "\tif (of_find_property(pdev->dev.of_node, is_used_va_swr_gpio_dt,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2299,
+          "text": "\t\t\t\t\t   is_used_va_swr_gpio_dt,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2300,
+          "text": "\t\t\t\t\t   &is_used_va_swr_gpio);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2303,
+          "text": "\t\t\t\t__func__, is_used_va_swr_gpio_dt);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2304,
+          "text": "\t\t\tis_used_va_swr_gpio = 0;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2377,
+          "text": "\tif (is_used_va_swr_gpio) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2390,
+          "text": "\tva_priv->is_used_va_swr_gpio = is_used_va_swr_gpio;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2429,
+          "text": "\tif (is_used_va_swr_gpio)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2444,
+          "text": "\tif (is_used_va_swr_gpio)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2458,
+          "text": "\tif (va_priv->is_used_va_swr_gpio) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2475,
+          "text": "\tif (va_priv->is_used_va_swr_gpio)"
+        }
+      ],
+      "reason": "Downstream-only property not documented upstream; retaining it creates new DT ABI and keeps vendor SWR child-device coupling alive."
+    },
+    {
+      "symbol": "qcom,va-dmic-clk-div-factor",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2239,
+          "text": "\tconst char *dmic_clk_div_factor = \"qcom,va-dmic-clk-div-factor\";"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2263,
+          "text": "\tif (!of_find_property(pdev->dev.of_node, dmic_clk_div_factor, &prop_size)) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2272,
+          "text": "\t\t\t\tdmic_clk_div_factor, temp, prop_size/sizeof(u32)))"
+        }
+      ],
+      "reason": "Downstream-specific clock divisor property is not in upstream binding; upstream models DMIC rate with qcom,dmic-sample-rate."
+    },
+    {
+      "symbol": "qcom,va-dmic-override-clk-div-factor",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2240,
+          "text": "\tconst char *dmic_override_clk_div_factor = \"qcom,va-dmic-override-clk-div-factor\";"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2279,
+          "text": "\tif (!of_find_property(pdev->dev.of_node, dmic_override_clk_div_factor, &prop_size)) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2288,
+          "text": "\t\t\t\tdmic_override_clk_div_factor, temp, prop_size/sizeof(u32)))"
+        }
+      ],
+      "reason": "Downstream-specific override property is not in upstream binding."
+    },
+    {
+      "symbol": "qcom,va-vdd-micb-voltage / qcom,va-vdd-micb-current",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 258,
+          "text": "\tu32 micb_voltage;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 259,
+          "text": "\tu32 micb_current;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1328,
+          "text": "\t\t\t\t      va_priv->micb_voltage,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1329,
+          "text": "\t\t\t\t      va_priv->micb_voltage);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1336,
+          "text": "\t\t\t\t\t va_priv->micb_current);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1365,
+          "text": "\t\t\t\tva_priv->micb_voltage);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2236,
+          "text": "\tconst char *micb_voltage_str = \"qcom,va-vdd-micb-voltage\";"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2237,
+          "text": "\tconst char *micb_current_str = \"qcom,va-vdd-micb-current\";"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2347,
+          "text": "\t\t\t\t\tmicb_voltage_str,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2348,
+          "text": "\t\t\t\t\t&va_priv->micb_voltage);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2352,
+          "text": "\t\t\t\t__func__, micb_voltage_str,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2357,
+          "text": "\t\t\t\t\tmicb_current_str,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2358,
+          "text": "\t\t\t\t\t&va_priv->micb_current);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2362,
+          "text": "\t\t\t\t__func__, micb_current_str,"
+        }
+      ],
+      "reason": "Upstream binding uses vdd-micb-supply; voltage/current tuning properties are not documented for upstream VA macro."
+    },
+    {
+      "symbol": "use-lpi-control and LPI Enable mixer control",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 271,
+          "text": "\tbool use_lpi_mixer_control;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 450,
+          "text": "\t\tif (!va_priv->use_lpi_mixer_control || va_priv->lpi_enable)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 460,
+          "text": "\t\tif (!va_priv->use_lpi_mixer_control || va_priv->lpi_enable)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1998,
+          "text": "\tSOC_SINGLE_EXT(\"LPI Enable\", 0, 0, 1, 0,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2370,
+          "text": "\tva_priv->use_lpi_mixer_control = false;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2371,
+          "text": "\tif (of_find_property(pdev->dev.of_node, \"use-lpi-control\", NULL)) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2372,
+          "text": "\t\tdev_dbg(&pdev->dev, \"%s(): Usage of LPI Enable mixer control is enabled\\n\","
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2374,
+          "text": "\t\tva_priv->use_lpi_mixer_control = true;"
+        }
+      ],
+      "reason": "Creates/retains userspace and DT-facing policy control not present in upstream; previous architecture review rejected exposing LPI state as ABI."
+    },
+    {
+      "symbol": "VA_SWR_DMIC Enable mixer control",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 270,
+          "text": "\tbool swr_dmic_enable;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 606,
+          "text": "\t/* ADC_MUX_SEL is VA_MIC and swr_dmic_enable is 0,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 629,
+          "text": "\t\tif (!va_priv->swr_dmic_enable)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 804,
+          "text": "\t\t\tif (!va_priv->swr_dmic_enable) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 873,
+          "text": "\tucontrol->value.integer.value[0] = va_priv->swr_dmic_enable;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 890,
+          "text": "\tva_priv->swr_dmic_enable = ucontrol->value.integer.value[0];"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1204,
+          "text": "\t\tif (!(va_priv->swr_dmic_enable)) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1253,
+          "text": "\t\tif (!(va_priv->swr_dmic_enable)) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 1574,
+          "text": "\t\t\tif (!va_priv->swr_dmic_enable)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2001,
+          "text": "\tSOC_SINGLE_EXT(\"VA_SWR_DMIC Enable\", 0, 0, 1, 0,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2073,
+          "text": "\tva_priv->swr_dmic_enable = false;"
+        }
+      ],
+      "reason": "Downstream-specific userspace control remains and should be justified or removed before upstream submission."
+    },
+    {
+      "symbol": "lpass_cdc_va_macro_* local prefixes",
+      "classification": "NEEDS_RENAME",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 149,
+          "text": "static int lpass_cdc_va_macro_core_vote(void *handle, bool enable);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 186,
+          "text": "\tstruct lpass_cdc_va_macro_priv *va_priv;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 192,
+          "text": "\tstruct lpass_cdc_va_macro_priv *va_priv;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 198,
+          "text": "\tstruct lpass_cdc_va_macro_priv *va_priv;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 204,
+          "text": "struct lpass_cdc_va_macro_swr_ctrl_platform_data {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 218,
+          "text": "struct lpass_cdc_va_macro_priv {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 249,
+          "text": "\tstruct lpass_cdc_va_macro_swr_ctrl_platform_data swr_plat_data;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 250,
+          "text": "\tstruct work_struct lpass_cdc_va_macro_add_child_devices_work;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 276,
+          "text": "static int lpass_cdc_va_macro_wake_enable(struct lpass_cdc_va_macro_priv *va_priv,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 299,
+          "text": "static bool lpass_cdc_va_macro_get_data(struct snd_soc_component *component,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 301,
+          "text": "\t\t\t      struct lpass_cdc_va_macro_priv **va_priv,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 314,
+          "text": "static int lpass_cdc_va_macro_clk_div_get(struct snd_soc_component *component, u32 mic_pair)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 317,
+          "text": "\tstruct lpass_cdc_va_macro_priv *va_priv = NULL;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 319,
+          "text": "\tif (!lpass_cdc_va_macro_get_data(component, &va_dev,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 332,
+          "text": "static int va_clk_rsc_fs_gen_request(struct lpass_cdc_va_macro_priv *va_priv,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 370,
+          "text": "\tstruct lpass_cdc_va_macro_priv *va_priv = snd_soc_component_get_drvdata(component);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 388,
+          "text": "static int lpass_cdc_va_macro_mclk_enable("
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 389,
+          "text": "\t\t\tstruct lpass_cdc_va_macro_priv *va_priv,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 436,
+          "text": "static int lpass_cdc_va_macro_mclk_event(struct snd_soc_dapm_widget *w,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 440,
+          "text": "\tstruct lpass_cdc_va_macro_priv *va_priv = snd_soc_component_get_drvdata(component);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 451,
+          "text": "\t\t\tret = lpass_cdc_va_macro_mclk_enable(va_priv, true, true);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 461,
+          "text": "\t\t\tlpass_cdc_va_macro_mclk_enable(va_priv, false, true);"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 477,
+          "text": "static int lpass_cdc_va_macro_tx_va_mclk_enable("
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 478,
+          "text": "\t\t\t\tstruct lpass_cdc_va_macro_priv *va_priv,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 490,
+          "text": "\t\tret = lpass_cdc_va_macro_mclk_enable(va_priv, true, true);"
+        }
+      ],
+      "reason": "Mostly local naming with no ABI impact, but upstream convention is va_macro_* and lpass_cdc naming advertises removed downstream framework."
+    },
+    {
+      "symbol": "LPASS_CDC_VA_MACRO_* constants",
+      "classification": "NEEDS_RENAME",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 109,
+          "text": "#define LPASS_CDC_VA_MACRO_MAX_OFFSET 0x1000"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 111,
+          "text": "#define LPASS_CDC_VA_MACRO_NUM_DECIMATORS 4"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 113,
+          "text": "#define LPASS_CDC_VA_MACRO_RATES (SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000 |\\"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 116,
+          "text": "#define LPASS_CDC_VA_MACRO_FORMATS (SNDRV_PCM_FMTBIT_S16_LE |\\"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 125,
+          "text": "#define LPASS_CDC_VA_MACRO_DMIC_SAMPLE_RATE_UNDEFINED 0"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 126,
+          "text": "#define LPASS_CDC_VA_MACRO_TX_PATH_OFFSET \\"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 128,
+          "text": "#define LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_MASK 0x0E"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 129,
+          "text": "#define LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_SHFT 0x01"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 130,
+          "text": "#define LPASS_CDC_VA_MACRO_SWR_MIC_MUX_SEL_MASK 0xF"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 131,
+          "text": "#define LPASS_CDC_VA_MACRO_ADC_MUX_CFG_OFFSET 0x8"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 132,
+          "text": "#define LPASS_CDC_VA_MACRO_ADC_MODE_CFG0_SHIFT 1"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 139,
+          "text": "#define LPASS_CDC_VA_MACRO_SWR_STRING_LEN 80"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 140,
+          "text": "#define LPASS_CDC_VA_MACRO_CHILD_DEVICES_MAX 3"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 141,
+          "text": "#define LPASS_CDC_VA_MACRO_DEC_UNMUTE_DELAY_MS     10"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 151,
+          "text": "\tLPASS_CDC_VA_MACRO_AIF_INVALID = 0,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 152,
+          "text": "\tLPASS_CDC_VA_MACRO_AIF1_CAP,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 153,
+          "text": "\tLPASS_CDC_VA_MACRO_AIF2_CAP,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 154,
+          "text": "\tLPASS_CDC_VA_MACRO_AIF3_CAP,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 155,
+          "text": "\tLPASS_CDC_VA_MACRO_MAX_DAIS,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 159,
+          "text": "\tLPASS_CDC_VA_MACRO_DEC0,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 160,
+          "text": "\tLPASS_CDC_VA_MACRO_DEC1,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 161,
+          "text": "\tLPASS_CDC_VA_MACRO_DEC2,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 162,
+          "text": "\tLPASS_CDC_VA_MACRO_DEC3,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 163,
+          "text": "\tLPASS_CDC_VA_MACRO_DEC_MAX,"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 167,
+          "text": "\tLPASS_CDC_VA_MACRO_CLK_DIV_2,"
+        }
+      ],
+      "reason": "Local-only but inconsistent with upstream VA_MACRO_* naming after lpass-cdc framework removal."
+    },
+    {
+      "symbol": "dsp/digital-cdc-rsc-mgr.h and lpass_cdc_clear_amic_tx_hold",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 17,
+          "text": "#include <dsp/digital-cdc-rsc-mgr.h>"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 668,
+          "text": "\t\tlpass_cdc_clear_amic_tx_hold(component->dev, adc_n);"
+        }
+      ],
+      "reason": "Vendor DSP/resource-manager dependency remains and is not available in the upstream VA macro architecture."
+    },
+    {
+      "symbol": "VA SWR child-device/platform-data coupling",
+      "classification": "NEEDS_REMOVAL",
+      "evidence": [
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 204,
+          "text": "struct lpass_cdc_va_macro_swr_ctrl_platform_data {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 249,
+          "text": "\tstruct lpass_cdc_va_macro_swr_ctrl_platform_data swr_plat_data;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2132,
+          "text": "\tstruct lpass_cdc_va_macro_swr_ctrl_platform_data *platdata = NULL;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2134,
+          "text": "\tbool va_swr_master_node = false;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2155,
+          "text": "\tplatdata = &va_priv->swr_plat_data;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2159,
+          "text": "\t\tva_swr_master_node = false;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2160,
+          "text": "\t\tif (strnstr(node->name, \"va_swr_master\","
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2161,
+          "text": "                                strlen(\"va_swr_master\")) != NULL)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2162,
+          "text": "\t\t\tva_swr_master_node = true;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2164,
+          "text": "\t\tif (va_swr_master_node)"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2165,
+          "text": "\t\t\tstrscpy(plat_dev_name, \"va_swr_ctrl\","
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2181,
+          "text": "\t\tif (va_swr_master_node) {"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2381,
+          "text": "\t\tva_priv->swr_plat_data.handle = (void *) va_priv;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2382,
+          "text": "\t\tva_priv->swr_plat_data.read = NULL;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2383,
+          "text": "\t\tva_priv->swr_plat_data.write = NULL;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2384,
+          "text": "\t\tva_priv->swr_plat_data.bulk_write = NULL;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2385,
+          "text": "\t\tva_priv->swr_plat_data.clk = lpass_cdc_va_macro_swrm_clock;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2386,
+          "text": "\t\tva_priv->swr_plat_data.core_vote = lpass_cdc_va_macro_core_vote;"
+        },
+        {
+          "file": "sound/soc/codecs/lpass-va-macro.c",
+          "line": 2387,
+          "text": "\t\tva_priv->swr_plat_data.handle_irq = NULL;"
+        }
+      ],
+      "reason": "Private codec-to-controller platform-data coupling remains even after swrm_wcd_notify removal."
+    }
+  ],
+  "summary": {
+    "needs_removal_count": 8,
+    "needs_rename_count": 3,
+    "acceptable_count": 0
+  },
+  "submission_blockers": [
+    "qcom,lpass-cdc-va-macro",
+    "qcom,is-used-swr-gpio",
+    "qcom,va-dmic-clk-div-factor",
+    "qcom,va-dmic-override-clk-div-factor",
+    "qcom,va-vdd-micb-voltage / qcom,va-vdd-micb-current",
+    "use-lpi-control and LPI Enable mixer control",
+    "VA_SWR_DMIC Enable mixer control",
+    "lpass_cdc_va_macro_* local prefixes",
+    "LPASS_CDC_VA_MACRO_* constants",
+    "dsp/digital-cdc-rsc-mgr.h and lpass_cdc_clear_amic_tx_hold",
+    "VA SWR child-device/platform-data coupling"
+  ]
+}
