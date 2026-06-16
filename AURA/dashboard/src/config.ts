@@ -300,6 +300,15 @@ export const API_ROUTES = {
         limit,
       }),
   },
+  trackBIntel: {
+    overview: () => buildApiV1('/track-b-intel/overview'),
+    trends: () => buildApiV1('/track-b-intel/trends'),
+    patterns: () => buildApiV1('/track-b-intel/patterns'),
+    recommendations: () => buildApiV1('/track-b-intel/recommendations'),
+    learning: () => buildApiV1('/track-b-intel/learning'),
+    executive: () => buildApiV1('/track-b-intel/executive'),
+    forecast: () => buildApiV1('/track-b-intel/forecast'),
+  },
 } as const
 
 // Backward-compatible flat endpoint map for existing pages/components.
@@ -329,6 +338,7 @@ export const ENDPOINTS = {
   trackBLineage: API_ROUTES.trackB.lineage(),
   trackBReadiness: API_ROUTES.trackB.dashboardReadiness(),
   trackBLearningIndex: API_ROUTES.trackB.learningIndex(),
+  trackBIntelOverview: API_ROUTES.trackBIntel.overview(),
   evidenceIndex: API_ROUTES.knowledge.evidenceIndex(),
   evidenceRead: API_ROUTES.knowledge.evidenceReadBase(),
 } as const

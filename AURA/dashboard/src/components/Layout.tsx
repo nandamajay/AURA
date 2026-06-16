@@ -24,6 +24,7 @@ const NAV_ITEMS = [
   { path: '/governance', label: 'Governance Command Center', icon: 'GOV' },
   { path: '/runtime', label: 'Runtime Cognition Center', icon: 'RTC' },
   { path: '/track-b', label: 'Track-B Visibility Center', icon: 'TBV' },
+  { path: '/track-b-intel', label: 'Track-B Intelligence Center', icon: 'TBI' },
 ]
 
 interface MeResponse {

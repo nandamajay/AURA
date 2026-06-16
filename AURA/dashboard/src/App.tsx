@@ -14,6 +14,7 @@ import ApprovalOperationsCenter from './pages/ApprovalOperationsCenter'
 import GovernanceCommandCenter from './pages/GovernanceCommandCenter'
 import RuntimeCognitionCenter from './pages/RuntimeCognitionCenter'
 import TrackBVisibilityCenter from './pages/TrackBVisibilityCenter'
+import TrackBIntelligenceCenter from './pages/TrackBIntelligenceCenter'
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
         <Route path="/governance" element={<GovernanceCommandCenter />} />
         <Route path="/runtime" element={<RuntimeCognitionCenter />} />
         <Route path="/track-b" element={<TrackBVisibilityCenter />} />
+        <Route path="/track-b-intel" element={<TrackBIntelligenceCenter />} />
 
         {/* Backward compatibility with older nav links */}
         <Route path="/tasks" element={<DriverMigrationCenter />} />

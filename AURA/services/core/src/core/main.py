@@ -21,6 +21,7 @@ from core.routers import (
     runtime,
     simulation,
     track_b,
+    track_b_intelligence,
     tasks,
 )
 
@@ -54,6 +55,7 @@ app.include_router(runtime.router, prefix="/api/v1/runtime", tags=["runtime"])
 app.include_router(engineering.router, prefix="/api/v1/engineering", tags=["engineering"])
 app.include_router(simulation.router, prefix="/api/v1/simulation", tags=["simulation"])
 app.include_router(track_b.router, prefix="/api/v1/track-b", tags=["track-b"])
+app.include_router(track_b_intelligence.router, prefix="/api/v1/track-b-intel", tags=["track-b-intel"])
 app.include_router(memory.router, prefix="/api/v1/memory", tags=["memory"])
 app.include_router(charter.router, prefix="/api/v1/charter", tags=["charter"])
 app.include_router(provenance.router, prefix="/api/v1/provenance", tags=["provenance"])
