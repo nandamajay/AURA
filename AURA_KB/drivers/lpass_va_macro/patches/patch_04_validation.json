@@ -1,0 +1,105 @@
+{
+  "artifact_name": "PATCH_04_RUNTIME_PM_CLOCK_VALIDATION",
+  "base_assumption": "Patch-01, Patch-06, Patch-05, Patch-02, and Patch-03 have already been applied",
+  "classification": "PASS",
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "input_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+  "patch_path": "AURA_KB/drivers/lpass_va_macro/patches/0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+  "clock_inventory_path": "AURA_KB/drivers/lpass_va_macro/patches/patch_04_clock_inventory.json",
+  "patch_line_count": 579,
+  "diffstat": {
+    "files_changed": 1,
+    "insertions": 174,
+    "deletions": 178
+  },
+  "series_apply_result": "SERIES_APPLY_PASS",
+  "series_order_checked": [
+    "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+    "0006-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+    "0005-soundwire-qcom-keep-VA-SoundWire-behavior-in-controller-layer.patch",
+    "0002-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+    "0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+    "0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch"
+  ],
+  "stubs_resolved_from_patch_02": [
+    {
+      "stub": "lpass_va_macro_tx_mclk_enable",
+      "target_patch": 4,
+      "status": "resolved",
+      "implementation": "local upstream-clock helper using clk_prepare_enable/clk_disable_unprepare and va_clk_rsc_fs_gen_request"
+    },
+    {
+      "stub": "va_macro_runtime_suspend",
+      "target_patch": 4,
+      "status": "resolved",
+      "implementation": "runtime PM suspend marks regcache cache-only/dirty and disables mclk"
+    },
+    {
+      "stub": "va_macro_runtime_resume",
+      "target_patch": 4,
+      "status": "resolved",
+      "implementation": "runtime PM resume enables mclk and syncs regcache"
+    }
+  ],
+  "remaining_todo_count": 0,
+  "remaining_patch_03_or_04_todos": 0,
+  "clock_resources_acquired": {
+    "count": 4,
+    "names": [
+      "macro",
+      "dcodec",
+      "mclk",
+      "fsgen"
+    ]
+  },
+  "vendor_clock_framework_removal": {
+    "include_removed": "lpass-cdc-clk-rsc.h",
+    "lpass_cdc_clk_rsc_request_clock_calls_removed": 11,
+    "lpass_cdc_clk_rsc_fs_gen_request_calls_removed": 2,
+    "lpass_cdc_clk_rsc_calls_removed_total": 13,
+    "lpass_cdc_rsc_clk_reset_calls_removed_in_patch_04": 0,
+    "lpass_cdc_rsc_clk_reset_note": "No lpass_cdc_rsc_clk_reset call exists in the Patch-04 base because Patch-02 removed the downstream event-dispatch function containing that call."
+  },
+  "dangling_reference_count": 0,
+  "dangling_references": {},
+  "validation_checks": {
+    "patch_01_patch_06_patch_05_patch_02_patch_03_patch_04_apply_sequence": true,
+    "lpass_cdc_clk_rsc_include_absent": true,
+    "lpass_cdc_clk_rsc_request_clock_absent": true,
+    "lpass_cdc_clk_rsc_fs_gen_request_absent": true,
+    "lpass_cdc_rsc_clk_reset_absent": true,
+    "lpass_cdc_check_core_votes_absent": true,
+    "default_clk_id_removed": true,
+    "clk_id_removed": true,
+    "current_clk_id_removed": true,
+    "lpass_audio_hw_vote_removed": true,
+    "tx_mclk_stub_filled": true,
+    "runtime_suspend_stub_filled": true,
+    "runtime_resume_stub_filled": true,
+    "runtime_pm_ops_registered": true,
+    "clock_acquisition_has_error_handling": true,
+    "clock_error_unwind_present": true,
+    "no_patch_03_or_04_todos_remaining": true,
+    "git_diff_check_clean": true
+  },
+  "compile_impact": {
+    "classification": "not_compiled_artifact_only",
+    "reason": "Patch artifacts are generated against transformed downstream source in the KB, not applied to a full kernel build tree in this step.",
+    "static_validation_performed": [
+      "git diff --check on Patch-04 temp tree",
+      "git apply sequence check for Patch-01 + Patch-06 + Patch-05 + Patch-02 + Patch-03 + Patch-04",
+      "forbidden-symbol grep after full series application"
+    ]
+  },
+  "assumptions": [
+    {
+      "assumption": "Use upstream clock names macro, dcodec, mclk, fsgen",
+      "reason": "These names are present in upstream lpass-va-macro probe/runtime paths."
+    },
+    {
+      "assumption": "fsgen can be represented as an optional clock in this conversion artifact",
+      "reason": "The downstream converted source does not yet include upstream fsgen clock-provider registration; treating fsgen optional keeps the patch fail-safe until that provider plumbing is introduced or confirmed unnecessary."
+    }
+  ]
+}

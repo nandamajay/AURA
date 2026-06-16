@@ -1,0 +1,75 @@
+{
+  "artifact_name": "PATCH_04_CLOCK_INVENTORY",
+  "base_assumption": "Patch-01, Patch-06, Patch-05, Patch-02, and Patch-03 have already been applied",
+  "classification": "PASS",
+  "driver": "lpass_va_macro",
+  "patch": "AURA_KB/drivers/lpass_va_macro/patches/0004-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+  "clock_resources": [
+    {
+      "name": "macro",
+      "acquisition_method": "devm_clk_get_optional(&pdev->dev, \"macro\")",
+      "enable_path": "probe: clk_prepare_enable(va_priv->macro)",
+      "disable_path": "probe error unwind, remove path",
+      "error_unwind": "err_dcodec/reg_component_fail chain disables macro after dcodec/mclk unwinds",
+      "upstream_reference": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1544,1644,1689"
+    },
+    {
+      "name": "dcodec",
+      "acquisition_method": "devm_clk_get_optional(&pdev->dev, \"dcodec\")",
+      "enable_path": "probe: clk_prepare_enable(va_priv->dcodec)",
+      "disable_path": "probe error unwind, remove path",
+      "error_unwind": "err_mclk/reg_component_fail chain disables dcodec if mclk/component registration fails",
+      "upstream_reference": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1548,1648,1688"
+    },
+    {
+      "name": "mclk",
+      "acquisition_method": "devm_clk_get(&pdev->dev, \"mclk\")",
+      "enable_path": "probe, runtime_resume, VA mclk helper paths",
+      "disable_path": "runtime_suspend, probe error unwind, remove path, VA mclk helper paths",
+      "error_unwind": "reg_component_fail disables mclk after component registration failure; tx/mclk helper disables mclk when fsgen request fails",
+      "upstream_reference": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1552,1652,1719,1731"
+    },
+    {
+      "name": "fsgen",
+      "acquisition_method": "devm_clk_get_optional(&pdev->dev, \"fsgen\")",
+      "enable_path": "DAPM mclk/tx event path: clk_prepare_enable(va_priv->fsgen)",
+      "disable_path": "DAPM mclk/tx event unwind and POST_PMD paths",
+      "error_unwind": "mclk event disables fsgen if downstream VA mclk enable fails",
+      "upstream_reference": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:508,514,1674"
+    }
+  ],
+  "local_helpers": [
+    {
+      "name": "va_clk_rsc_fs_gen_request",
+      "purpose": "replace lpass_cdc_clk_rsc_fs_gen_request with upstream-style local regmap programming of VA fsgen registers",
+      "enable_path": "lpass_va_macro_tx_mclk_enable and lpass_cdc_va_macro_mclk_enable",
+      "disable_path": "lpass_va_macro_tx_mclk_enable and lpass_cdc_va_macro_mclk_enable",
+      "upstream_reference": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:460"
+    },
+    {
+      "name": "lpass_va_macro_tx_mclk_enable",
+      "purpose": "replace Patch-02 placeholder for lpass_cdc_tx_mclk_enable with local upstream-clock helper",
+      "enable_path": "lpass_cdc_va_macro_mclk_event when LPI mixer path bypasses VA mclk path",
+      "disable_path": "lpass_cdc_va_macro_mclk_event POST_PMD",
+      "upstream_reference": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:493"
+    }
+  ],
+  "summary": {
+    "clocks_acquired_count": 4,
+    "clock_names": ["macro", "dcodec", "mclk", "fsgen"],
+    "mandatory_clock_names": ["mclk"],
+    "optional_clock_names": ["macro", "dcodec", "fsgen"],
+    "clock_framework_calls_added": {
+      "devm_clk_get": 1,
+      "devm_clk_get_optional": 3,
+      "clk_prepare_enable": 6,
+      "clk_disable_unprepare": 12
+    }
+  },
+  "assumptions": [
+    {
+      "assumption": "fsgen is acquired by the upstream clock name and treated as optional in this generated conversion artifact",
+      "reason": "upstream VA macro obtains fsgen from the registered fsgen clock provider after probe setup; this artifact does not introduce that provider plumbing"
+    }
+  ]
+}
