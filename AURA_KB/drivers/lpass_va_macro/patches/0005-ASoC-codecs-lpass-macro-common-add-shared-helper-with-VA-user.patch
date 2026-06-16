@@ -1,8 +1,7 @@
 From f46c34625e31d8a0e060540dd827b5356ac51637 Mon Sep 17 00:00:00 2001
 From: AURA Conversion Engine <aura@example.invalid>
 Date: Tue, 16 Jun 2026 18:22:04 +0530
-Subject: [PATCH 3/7] ASoC: codecs: lpass-macro-common: add shared helper
- infrastructure with VA consumer
+Subject: [PATCH 5/7] ASoC: codecs: lpass-macro-common: add shared helper infrastructure with VA consumer
 
 Integrate lpass-macro-common power domain helpers (lpass_macro_pds_init, lpass_macro_pds_exit) into the VA macro probe/remove lifecycle. Add DMIC clock enable/disable helper for VA macro decimator paths.
 
@@ -22,8 +21,8 @@ index 5ad4eb2..c2b6bff 100644
  #include <dsp/digital-cdc-rsc-mgr.h>
  #include "lpass-cdc-clk-rsc.h"
 +#include "lpass-macro-common.h"
- 
- 
+
+
  /* VA macro registers: migrated from upstream lpass-va-macro.c */
 @@ -28,6 +29,15 @@
  #define CDC_VA_TOP_CSR_DMIC2_CTL		(0x008C)
@@ -167,7 +166,7 @@ index 5ad4eb2..c2b6bff 100644
 +
  	return 0;
  }
- 
+
 @@ -2321,13 +2442,19 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  	mutex_init(&va_priv->mclk_lock);
  	mutex_init(&va_priv->wlock);
@@ -192,7 +191,7 @@ index 5ad4eb2..c2b6bff 100644
  	pm_runtime_set_autosuspend_delay(&pdev->dev, VA_AUTO_SUSPEND_DELAY);
 @@ -2340,6 +2467,8 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  	return ret;
- 
+
  reg_component_fail:
 +	lpass_macro_pds_exit(va_priv->pds);
 +pds_init_fail:
@@ -207,6 +206,6 @@ index 5ad4eb2..c2b6bff 100644
  	mutex_destroy(&va_priv->mclk_lock);
  	mutex_destroy(&va_priv->wlock);
  	if (va_priv->is_used_va_swr_gpio)
--- 
+--
 2.34.1
 

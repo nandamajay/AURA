@@ -1,7 +1,7 @@
 From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001
 From: AURA Conversion Engine <aura@example.invalid>
 Date: Tue, 16 Jun 2026 00:00:00 +0000
-Subject: [PATCH 6/7] ASoC: codecs: lpass-va-macro: drop downstream pinctrl and version paths
+Subject: [PATCH 2/7] ASoC: codecs: lpass-va-macro: drop downstream pinctrl and version paths
 
 Remove vendor-specific msm-cdc-pinctrl GPIO control, linux/version.h
 kernel-version conditionals, and CONFIG_BOLERO_VER_4P0 port-select
@@ -29,7 +29,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 -#include <linux/version.h>
  #include "lpass-cdc.h"
  #include "lpass-cdc-clk-rsc.h"
- 
+
 @@ -234,7 +232,6 @@
  	u16 va_mclk_users;
  	int swr_clk_users;
@@ -40,7 +40,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
  	struct work_struct lpass_cdc_va_macro_add_child_devices_work;
 @@ -562,20 +559,12 @@
  		(enable ? "enable" : "disable"), va_priv->va_mclk_users);
- 
+
  	if (enable) {
 -		if (va_priv->swr_clk_users == 0) {
 -			msm_cdc_pinctrl_select_active_state(
@@ -71,7 +71,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 -		}
  	}
  	return 0;
- 
+
 @@ -883,11 +866,7 @@
  			      struct snd_ctl_elem_value *ucontrol)
  {
@@ -111,7 +111,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 @@ -1564,15 +1535,9 @@
  	return 0;
  }
- 
+
 -#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
  static int lpass_cdc_va_macro_get_channel_map(const struct snd_soc_dai *dai,
  				unsigned int *tx_num, unsigned int *tx_slot,
@@ -127,7 +127,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 @@ -1703,15 +1668,9 @@
  #define LPASS_CDC_VA_MACRO_DAPM_MUX(name, shift, kctl) \
  		SND_SOC_DAPM_MUX(name, SND_SOC_NOPM, shift, 0, &kctl##_mux)
- 
+
 -#ifdef CONFIG_BOLERO_VER_4P0
 -static const char * const adc_mux_text[] = {
 -	"MSM_DMIC", "SWR_MIC", "RX_SWR_MIC"
@@ -137,13 +137,13 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
  	"MSM_DMIC", "SWR_MIC"
  };
 -#endif
- 
+
  LPASS_CDC_VA_MACRO_DAPM_ENUM(va_dec0, CDC_VA_INP_MUX_ADC_MUX0_CFG1,
  		   0, adc_mux_text);
 @@ -1743,18 +1702,11 @@
  			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -#ifdef CONFIG_BOLERO_VER_4P0
 -static const char * const smic_mux_text[] = {
 -	"ZERO", "SWR_MIC0", "SWR_MIC1", "SWR_MIC2", "SWR_MIC3",
@@ -156,13 +156,13 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
  	"SWR_MIC8", "SWR_MIC9", "SWR_MIC10", "SWR_MIC11"
  };
 -#endif
- 
+
  LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic0, CDC_VA_INP_MUX_ADC_MUX0_CFG0,
  			0, smic_mux_text, snd_soc_dapm_get_enum_double,
 @@ -1772,20 +1724,6 @@
  			0, smic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -#ifdef CONFIG_BOLERO_VER_4P0
 -static const char * const psel_mux_text[] = {
 -	"PORT0", "PORT1", "PORT2", "PORT3", "PORT4"
@@ -177,26 +177,26 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 -LPASS_CDC_VA_MACRO_DAPM_ENUM(va_psel_mux3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG2,
 -			0, psel_mux_text);
 -#endif
- 
- 
+
+
  static const struct snd_kcontrol_new va_aif1_cap_mixer[] = {
 @@ -1859,12 +1797,6 @@
  	LPASS_CDC_VA_MACRO_DAPM_MUX("VA SMIC MUX2", 0, va_smic2),
  	LPASS_CDC_VA_MACRO_DAPM_MUX("VA SMIC MUX3", 0, va_smic3),
- 
+
 -#ifdef CONFIG_BOLERO_VER_4P0
 -	LPASS_CDC_VA_MACRO_DAPM_MUX("VA PORT SEL MUX0", 0, va_psel_mux0),
 -	LPASS_CDC_VA_MACRO_DAPM_MUX("VA PORT SEL MUX1", 0, va_psel_mux1),
 -	LPASS_CDC_VA_MACRO_DAPM_MUX("VA PORT SEL MUX2", 0, va_psel_mux2),
 -	LPASS_CDC_VA_MACRO_DAPM_MUX("VA PORT SEL MUX3", 0, va_psel_mux3),
 -#endif
- 
+
  	SND_SOC_DAPM_INPUT("VA SWR_INPUT"),
- 
+
 @@ -1920,154 +1852,6 @@
- 
+
  };
- 
+
 -#ifdef CONFIG_BOLERO_VER_4P0
 -static const struct snd_soc_dapm_route va_audio_map[] = {
 -	{"VA_AIF1 CAP", NULL, "VA_MCLK"},
@@ -350,10 +350,10 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
  	{"VA_AIF2 CAP", NULL, "VA_MCLK"},
 @@ -2197,7 +1981,6 @@
  	{"VA SWR_INPUT", NULL, "VA_SWR_CLK"},
- 
+
  };
 -#endif
- 
+
  static const char * const dec_mode_mux_text[] = {
  	"ADC_DEFAULT", "ADC_LOW_PWR", "ADC_HIGH_PERF",
 @@ -2282,11 +2065,7 @@
@@ -371,7 +371,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 @@ -2327,11 +2106,7 @@
  		return ret;
  	}
- 
+
 -#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
  	ret = snd_soc_dapm_new_widgets(snd_soc_dapm_to_card(dapm));
 -#else
@@ -383,7 +383,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 @@ -2643,20 +2418,6 @@
  		}
  	}
- 
+
 -	va_priv->va_swr_gpio_p = of_parse_phandle(pdev->dev.of_node,
 -					"qcom,va-swr-gpios", 0);
 -	if (!va_priv->va_swr_gpio_p && is_used_va_swr_gpio) {
@@ -404,7 +404,7 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 @@ -2779,21 +2540,15 @@
  	return ret;
  }
- 
+
 -#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
  static void lpass_cdc_va_macro_remove(struct platform_device *pdev)
 -#else
@@ -414,9 +414,9 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
  	struct lpass_cdc_va_macro_priv *va_priv;
 -	int count = 0, rc = 0;
 +	int count = 0;
- 
+
  	va_priv = dev_get_drvdata(&pdev->dev);
- 
+
 -	if (!va_priv) {
 -		rc = -EINVAL;
 -		goto exit;
@@ -437,5 +437,5 @@ diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro
 -	return rc;
 -#endif
  }
- 
- 
+
+

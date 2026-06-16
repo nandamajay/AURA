@@ -1,4 +1,4 @@
-Subject: [RFC PATCH 0/6] ASoC: codecs: lpass-va-macro: upstream alignment series
+Subject: [RFC PATCH 0/7] ASoC: codecs: lpass-va-macro: upstream alignment series
 
 This RFC series contains the current generated downstream-to-upstream
 alignment work for the Qualcomm LPASS VA macro codec driver.
@@ -7,29 +7,30 @@ The goal is to move the downstream lpass-cdc VA macro implementation toward
 the existing upstream lpass-va-macro architecture instead of upstreaming the
 vendor lpass-cdc, msm-cdc-pinctrl, swr-wcd, and lpass-cdc-clk-rsc frameworks.
 
-The series is marked RFC because validation so far is static only.  It has not
+The series is marked RFC because validation so far is static only. It has not
 been compile-tested in a complete kernel tree and has not been validated on
 Qualcomm audio hardware with runtime PM, clock, DAPM, or SoundWire tracing.
 
 Patch summary:
   1. ASoC: codecs: lpass-va-macro: isolate register-name migration
-  2. ASoC: codecs: lpass-va-macro: remove lpass-cdc macro framework dependency
-  3. ASoC: codecs: lpass-macro-common: add shared helper infrastructure with VA consumer
-  4. ASoC: codecs: lpass-va-macro: migrate runtime PM and clock sequencing
-  5. ASoC: codecs: lpass-va-macro: remove vendor SoundWire notification coupling
-  6. ASoC: codecs: lpass-va-macro: drop downstream pinctrl and version paths
+  2. ASoC: codecs: lpass-va-macro: drop downstream pinctrl and version paths
+  3. ASoC: codecs: lpass-va-macro: remove vendor SoundWire notification coupling
+  4. ASoC: codecs: lpass-va-macro: remove lpass-cdc macro framework dependency
+  5. ASoC: codecs: lpass-macro-common: add shared helper infrastructure with VA consumer
+  6. ASoC: codecs: lpass-va-macro: migrate runtime PM and clock sequencing
+  7. ASoC: codecs: lpass-va-macro: remove residual downstream symbols
 
 Known pre-submission issues from the quality gate:
-  - The current generated artifacts are not yet apply-safe in 01,02,03,04,05,06 order.
-  - Patch files still carry [PATCH n/7] subjects even though the DT binding patch is skipped.
-  - checkpatch reports trailing whitespace errors in the generated patch files.
-  - Residual downstream DT/userspace interfaces remain and must be removed or renamed before submission.
+  - The 7-patch chain applies in submission order and has no trailing whitespace findings.
+  - checkpatch still reports non-whitespace warnings/checks that need style cleanup.
+  - The downstream compatible string qcom,lpass-cdc-va-macro is deferred because changing DT ABI requires SoC/board evidence.
   - Runtime PM and clock sequencing needs hardware or trace evidence.
 
 Testing performed:
   - Static patch generation and JSON validation for each patch artifact.
-  - Diagnostic full-series apply validation in generation order.
-  - Grep audit for removed vendor framework symbols after diagnostic full-series application.
+  - Full 7-patch apply validation in submission order.
+  - Grep audit for removed vendor framework symbols after full-series application.
+  - checkpatch --strict whitespace audit across all seven patches.
 
 Testing not yet performed:
   - Full kernel build.

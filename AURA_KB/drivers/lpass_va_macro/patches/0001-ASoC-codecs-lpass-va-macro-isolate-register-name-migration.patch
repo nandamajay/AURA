@@ -105,11 +105,11 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
 +#define CDC_VA_TX3_TX_PATH_SEC4			(0x05A0)
 +#define CDC_VA_TX3_TX_PATH_SEC5			(0x05A4)
 +#define CDC_VA_TX3_TX_PATH_SEC6			(0x05A8)
- 
+
  /* pm runtime auto suspend timer in msecs */
  #define VA_AUTO_SUSPEND_DELAY          100 /* delay in msec */
 @@ -43,7 +120,7 @@
- 
+
  #define LPASS_CDC_VA_MACRO_DMIC_SAMPLE_RATE_UNDEFINED 0
  #define LPASS_CDC_VA_MACRO_TX_PATH_OFFSET \
 -	(LPASS_CDC_VA_TX1_TX_PATH_CTL - LPASS_CDC_VA_TX0_TX_PATH_CTL)
@@ -143,20 +143,20 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
 +				CDC_VA_CLK_RST_CTRL_SWR_CONTROL,
  				0x01, 0x00);
  		lpass_cdc_va_macro_mclk_enable(va_priv, 0, true);
- 
+
 @@ -645,7 +722,7 @@
  					 &va_priv, __func__))
  		return ret;
- 
+
 -	adc_mux_reg = LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1 +
 +	adc_mux_reg = CDC_VA_INP_MUX_ADC_MUX0_CFG1 +
  			LPASS_CDC_VA_MACRO_ADC_MUX_CFG_OFFSET * decimator;
- 
+
  	/* ADC_MUX_SEL is VA_MIC and swr_dmic_enable is 0,
 @@ -668,7 +745,7 @@
  					 &va_priv, __func__))
  		return ret;
- 
+
 -	adc_mux_reg = LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1 +
 +	adc_mux_reg = CDC_VA_INP_MUX_ADC_MUX0_CFG1 +
  			LPASS_CDC_VA_MACRO_ADC_MUX_CFG_OFFSET * decimator;
@@ -165,17 +165,17 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
 @@ -695,16 +772,16 @@
  	component = va_priv->component;
  	hpf_cut_off_freq = hpf_work->hpf_cut_off_freq;
- 
+
 -	dec_cfg_reg = LPASS_CDC_VA_TX0_TX_PATH_CFG0 +
 +	dec_cfg_reg = CDC_VA_TX0_TX_PATH_CFG0 +
  			LPASS_CDC_VA_MACRO_TX_PATH_OFFSET * hpf_work->decimator;
 -	hpf_gate_reg = LPASS_CDC_VA_TX0_TX_PATH_SEC2 +
 +	hpf_gate_reg = CDC_VA_TX0_TX_PATH_SEC2 +
  			LPASS_CDC_VA_MACRO_TX_PATH_OFFSET * hpf_work->decimator;
- 
+
  	dev_dbg(va_priv->dev, "%s: decimator %u hpf_cut_of_freq 0x%x\n",
  		__func__, hpf_work->decimator, hpf_cut_off_freq);
- 
+
  	if (is_amic_enabled(component, hpf_work->decimator)) {
 -		adc_reg = LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG0 +
 +		adc_reg = CDC_VA_INP_MUX_ADC_MUX0_CFG0 +
@@ -183,7 +183,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
  			hpf_work->decimator;
  		adc_n = snd_soc_component_read(component, adc_reg) &
 @@ -773,7 +850,7 @@
- 
+
  	for_each_set_bit(decimator, &va_priv->active_ch_mask[dai_id],
  		LPASS_CDC_VA_MACRO_DEC_MAX) {
 -		va_mute_ctl_reg = LPASS_CDC_VA_TX0_TX_PATH_CTL +
@@ -193,7 +193,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
  	}
 @@ -794,7 +871,7 @@
  	decimator = va_mute_dwork->decimator;
- 
+
  	tx_vol_ctl_reg =
 -		LPASS_CDC_VA_TX0_TX_PATH_CTL +
 +		CDC_VA_TX0_TX_PATH_CTL +
@@ -202,7 +202,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
  	dev_dbg(va_priv->dev, "%s: decimator %u unmute\n",
 @@ -831,17 +908,17 @@
  		widget->name, val);
- 
+
  	switch (e->reg) {
 -	case LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG0:
 -		mic_sel_reg = LPASS_CDC_VA_TX0_TX_PATH_CFG0;
@@ -241,7 +241,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
 @@ -1071,19 +1148,19 @@
  	dev_dbg(va_dev, "%s(): widget = %s decimator = %u\n", __func__,
  		w->name, decimator);
- 
+
 -	tx_vol_ctl_reg = LPASS_CDC_VA_TX0_TX_PATH_CTL +
 +	tx_vol_ctl_reg = CDC_VA_TX0_TX_PATH_CTL +
  				LPASS_CDC_VA_MACRO_TX_PATH_OFFSET * decimator;
@@ -275,7 +275,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
  			dev_dbg(va_dev, "%s: set DEC%u rate to %u\n",
  				__func__, decimator, sample_rate);
 @@ -1534,13 +1611,13 @@
- 
+
  	for_each_set_bit(decimator, &va_priv->active_ch_mask[dai->id],
  			LPASS_CDC_VA_MACRO_DEC_MAX) {
 -		adc_mux_reg = LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1 +
@@ -293,7 +293,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
 @@ -1636,13 +1713,13 @@
  };
  #endif
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM(va_dec0, LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG1,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM(va_dec0, CDC_VA_INP_MUX_ADC_MUX0_CFG1,
  		   0, adc_mux_text);
@@ -306,58 +306,58 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
 -LPASS_CDC_VA_MACRO_DAPM_ENUM(va_dec3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG1,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM(va_dec3, CDC_VA_INP_MUX_ADC_MUX3_CFG1,
  		   0, adc_mux_text);
- 
+
  static const char * const dmic_mux_text[] = {
 @@ -1650,19 +1727,19 @@
  	"DMIC4", "DMIC5", "DMIC6", "DMIC7"
  };
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic0, LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic0, CDC_VA_INP_MUX_ADC_MUX0_CFG0,
  			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic1, LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic1, CDC_VA_INP_MUX_ADC_MUX1_CFG0,
  			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic2, LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic2, CDC_VA_INP_MUX_ADC_MUX2_CFG0,
  			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_dmic3, CDC_VA_INP_MUX_ADC_MUX3_CFG0,
  			4, dmic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 @@ -1679,19 +1756,19 @@
  };
  #endif
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic0, LPASS_CDC_VA_INP_MUX_ADC_MUX0_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic0, CDC_VA_INP_MUX_ADC_MUX0_CFG0,
  			0, smic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic1, LPASS_CDC_VA_INP_MUX_ADC_MUX1_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic1, CDC_VA_INP_MUX_ADC_MUX1_CFG0,
  			0, smic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic2, LPASS_CDC_VA_INP_MUX_ADC_MUX2_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic2, CDC_VA_INP_MUX_ADC_MUX2_CFG0,
  			0, smic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 -LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic3, LPASS_CDC_VA_INP_MUX_ADC_MUX3_CFG0,
 +LPASS_CDC_VA_MACRO_DAPM_ENUM_EXT(va_smic3, CDC_VA_INP_MUX_ADC_MUX3_CFG0,
  			0, smic_mux_text, snd_soc_dapm_get_enum_double,
  			lpass_cdc_va_macro_put_dec_enum);
- 
+
 @@ -2132,16 +2209,16 @@
- 
+
  static const struct snd_kcontrol_new lpass_cdc_va_macro_snd_controls[] = {
  	SOC_SINGLE_S8_TLV("VA_DEC0 Volume",
 -			  LPASS_CDC_VA_TX0_TX_VOL_CTL,
@@ -379,7 +379,7 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
  		lpass_cdc_va_macro_lpi_get, lpass_cdc_va_macro_lpi_put),
 @@ -2296,11 +2373,11 @@
  	va_priv->component = component;
- 
+
  	snd_soc_component_update_bits(component,
 -		LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL0, 0xEE, 0xCC);
 +		CDC_VA_TOP_CSR_SWR_MIC_CTL0, 0xEE, 0xCC);
@@ -389,6 +389,6 @@ diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c b/sound/soc/codecs/lpass
  	snd_soc_component_update_bits(component,
 -		LPASS_CDC_VA_TOP_CSR_SWR_MIC_CTL2, 0xEE, 0xCC);
 +		CDC_VA_TOP_CSR_SWR_MIC_CTL2, 0xEE, 0xCC);
- 
+
  	return 0;
  }

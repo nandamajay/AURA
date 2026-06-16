@@ -9,9 +9,9 @@
   "new_properties_needed": [],
   "new_clock_names_needed": [],
   "new_power_domain_requirements_needed": [],
-  "series_final_patch_count": 6,
+  "series_final_patch_count": 7,
   "patch_file_generated": false,
-  "series_note": "Patch-07 is skipped. The final conversion series is six patches. If the patch subjects are regenerated for mailing, use [PATCH 0/6] through [PATCH 6/6] rather than retaining the earlier reviewer-model [PATCH n/7] numbering.",
+  "series_note": "DT binding patch remains not required. The final series has seven patches because Patch-07 is now residual downstream symbol cleanup, not a DT binding patch.",
   "evidence": {
     "upstream_binding": {
       "path": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml",
@@ -42,20 +42,58 @@
         "vdd-micb-supply"
       ],
       "documented_clock_names_by_compatible": {
-        "qcom,sc7280-lpass-va-macro_without_power_domains": ["mclk", "macro", "dcodec"],
-        "qcom,sc7280-lpass-va-macro_with_power_domains": ["mclk"],
-        "qcom,sm6115-lpass-va-macro": ["mclk", "dcodec", "npl"],
-        "qcom,sm8250-lpass-va-macro": ["mclk", "macro", "dcodec"],
-        "qcom,sc8280xp-lpass-va-macro": ["mclk", "macro", "dcodec", "npl"],
-        "qcom,sm8450-lpass-va-macro": ["mclk", "macro", "dcodec", "npl"],
-        "qcom,sm8550-lpass-va-macro": ["mclk", "macro", "dcodec"]
+        "qcom,sc7280-lpass-va-macro_without_power_domains": [
+          "mclk",
+          "macro",
+          "dcodec"
+        ],
+        "qcom,sc7280-lpass-va-macro_with_power_domains": [
+          "mclk"
+        ],
+        "qcom,sm6115-lpass-va-macro": [
+          "mclk",
+          "dcodec",
+          "npl"
+        ],
+        "qcom,sm8250-lpass-va-macro": [
+          "mclk",
+          "macro",
+          "dcodec"
+        ],
+        "qcom,sc8280xp-lpass-va-macro": [
+          "mclk",
+          "macro",
+          "dcodec",
+          "npl"
+        ],
+        "qcom,sm8450-lpass-va-macro": [
+          "mclk",
+          "macro",
+          "dcodec",
+          "npl"
+        ],
+        "qcom,sm8550-lpass-va-macro": [
+          "mclk",
+          "macro",
+          "dcodec"
+        ]
       },
-      "documented_power_domain_names": ["macro", "dcodec"],
+      "documented_power_domain_names": [
+        "macro",
+        "dcodec"
+      ],
       "fsgen_handling": "fsgen is documented as clock-output-names in the upstream binding, matching upstream driver behavior. No new fsgen input clock binding is required."
     },
     "upstream_driver": {
       "path": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
-      "compatible_table_lines": [1758, 1759, 1760, 1761, 1762, 1763],
+      "compatible_table_lines": [
+        1758,
+        1759,
+        1760,
+        1761,
+        1762,
+        1763
+      ],
       "compatible_entries": [
         "qcom,sc7280-lpass-va-macro",
         "qcom,sm6115-lpass-va-macro",
@@ -78,7 +116,9 @@
     "downstream_driver": {
       "path": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
       "compatible_table_line": 2748,
-      "compatible_entries": ["qcom,lpass-cdc-va-macro"]
+      "compatible_entries": [
+        "qcom,lpass-cdc-va-macro"
+      ]
     },
     "post_six_patch_generated_source_check": {
       "source_path_in_temp_check": "/tmp/lpass_va_patch07_dt_check/sound/soc/codecs/lpass-va-macro.c",
@@ -119,5 +159,6 @@
     "dt_property_delta_checked": true,
     "dt_binding_check_required": false,
     "reason_dt_binding_check_not_run": "No binding patch was generated."
-  }
+  },
+  "superseded_numbering_note": "This artifact decides only whether a DT binding patch is required; it does not reserve the Patch-07 slot."
 }

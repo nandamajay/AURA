@@ -1,8 +1,7 @@
 From e4f7146c8e2794d73f1a8c47241cab54e7ef0e72 Mon Sep 17 00:00:00 2001
 From: AURA Conversion Engine <aura@example.invalid>
 Date: Tue, 16 Jun 2026 17:56:39 +0530
-Subject: [PATCH 2/7] ASoC: codecs: lpass-va-macro: remove lpass-cdc macro
- framework dependency
+Subject: [PATCH 4/7] ASoC: codecs: lpass-va-macro: remove lpass-cdc macro framework dependency
 
 Replace the downstream vendor lpass-cdc macro registration, event dispatch, and device-pointer indirection framework with the upstream direct component/platform registration model.
 
@@ -23,14 +22,14 @@ index 0c5f994..5ad4eb2 100644
  #include <dsp/digital-cdc-rsc-mgr.h>
 -#include "lpass-cdc.h"
  #include "lpass-cdc-clk-rsc.h"
- 
- 
+
+
 @@ -131,6 +130,7 @@
  #define LPASS_CDC_VA_MACRO_SWR_STRING_LEN 80
  #define LPASS_CDC_VA_MACRO_CHILD_DEVICES_MAX 3
  #define LPASS_CDC_VA_MACRO_DEC_UNMUTE_DELAY_MS     10
 +#define MIC_PAIR_MAX 4
- 
+
  static const DECLARE_TLV_DB_SCALE(digital_gain, 0, 1, 0);
  static int va_tx_unmute_delay = LPASS_CDC_VA_TX_DMIC_UNMUTE_DELAY_MS;
 @@ -283,13 +283,8 @@ static bool lpass_cdc_va_macro_get_data(struct snd_soc_component *component,
@@ -52,7 +51,7 @@ index 0c5f994..5ad4eb2 100644
 @@ -316,6 +311,13 @@ static int lpass_cdc_va_macro_clk_div_get(struct snd_soc_component *component, u
  	return (int)va_priv->dmic_clk_div[mic_pair];
  }
- 
+
 +static int lpass_va_macro_tx_mclk_enable(struct snd_soc_component *component,
 +					   bool enable)
 +{
@@ -66,7 +65,7 @@ index 0c5f994..5ad4eb2 100644
 @@ -388,89 +390,6 @@ exit:
  	return ret;
  }
- 
+
 -static int lpass_cdc_va_macro_event_handler(struct snd_soc_component *component,
 -				  u16 event, u32 data)
 -{
@@ -169,12 +168,12 @@ index 0c5f994..5ad4eb2 100644
 -				lpass_cdc_tx_mclk_enable(component, 0);
 +				lpass_va_macro_tx_mclk_enable(component, false);
  		}
- 
+
  		if (va_priv->dapm_tx_clk_status > 0) {
 @@ -1049,6 +968,13 @@ static int lpass_cdc_va_macro_tx_mixer_put(struct snd_kcontrol *kcontrol,
  	return 0;
  }
- 
+
 +static int lpass_va_macro_dmic_clk_enable(struct snd_soc_component *component,
 +					 u32 dmic, bool enable)
 +{
@@ -186,7 +185,7 @@ index 0c5f994..5ad4eb2 100644
  		struct snd_kcontrol *kcontrol, int event, u16 adc_mux0_cfg)
  {
 @@ -1063,10 +989,10 @@ static int lpass_cdc_va_macro_enable_dmic(struct snd_soc_dapm_widget *w,
- 
+
  	switch (event) {
  	case SND_SOC_DAPM_PRE_PMU:
 -		lpass_cdc_dmic_clk_enable(component, (u32)dmic, (u32)DMIC_VA, true);
@@ -197,7 +196,7 @@ index 0c5f994..5ad4eb2 100644
 +		lpass_va_macro_dmic_clk_enable(component, (u32)dmic, false);
  		break;
  	}
- 
+
 @@ -2049,17 +1975,11 @@ static int lpass_cdc_va_macro_init(struct snd_soc_component *component)
  {
  	struct snd_soc_dapm_context *dapm =
@@ -208,7 +207,7 @@ index 0c5f994..5ad4eb2 100644
 +	int i;
 +	struct device *va_dev = component->dev;
 +	struct lpass_cdc_va_macro_priv *va_priv;
- 
+
 -	va_dev = lpass_cdc_get_device_ptr(component->dev, VA_MACRO);
 -	if (!va_dev) {
 -		dev_err(component->dev,
@@ -223,7 +222,7 @@ index 0c5f994..5ad4eb2 100644
 @@ -2070,40 +1990,6 @@ static int lpass_cdc_va_macro_init(struct snd_soc_component *component)
  	va_priv->swr_dmic_enable = false;
  	//va_priv->register_event_listener = false;
- 
+
 -	va_priv->version = lpass_cdc_get_version(va_dev);
 -
 -	ret = snd_soc_dapm_new_controls(dapm,
@@ -264,7 +263,7 @@ index 0c5f994..5ad4eb2 100644
 @@ -2246,22 +2132,19 @@ err:
  	return;
  }
- 
+
 -static void lpass_cdc_va_macro_init_ops(struct macro_ops *ops,
 -			      char __iomem *va_io_base)
 -{
@@ -287,7 +286,7 @@ index 0c5f994..5ad4eb2 100644
 +	.dapm_routes = va_audio_map,
 +	.num_dapm_routes = ARRAY_SIZE(va_audio_map),
 +};
- 
+
  static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  {
 -	struct macro_ops ops;
@@ -318,7 +317,7 @@ index 0c5f994..5ad4eb2 100644
 @@ -2455,7 +2339,7 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  		schedule_work(&va_priv->lpass_cdc_va_macro_add_child_devices_work);
  	return ret;
- 
+
 -reg_macro_fail:
 +reg_component_fail:
  	mutex_destroy(&va_priv->mclk_lock);
@@ -335,7 +334,7 @@ index 0c5f994..5ad4eb2 100644
 @@ -2496,14 +2379,26 @@ static const struct of_device_id lpass_cdc_va_macro_dt_match[] = {
  	{}
  };
- 
+
 +static int va_macro_runtime_suspend(struct device *dev)
 +{
 +	/* TODO: Patch-04 provides full implementation */
@@ -361,6 +360,6 @@ index 0c5f994..5ad4eb2 100644
  		NULL
  	)
  };
--- 
+--
 2.34.1
 

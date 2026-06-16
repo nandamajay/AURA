@@ -1,8 +1,7 @@
 From ea1f948f783c0fd4bf339f45dfcbf288cb4235ac Mon Sep 17 00:00:00 2001
 From: AURA Conversion Engine <aura@example.invalid>
 Date: Tue, 16 Jun 2026 17:37:05 +0530
-Subject: [PATCH 5/7] ASoC: codecs: lpass-va-macro: remove vendor SoundWire
- notification coupling
+Subject: [PATCH 3/7] ASoC: codecs: lpass-va-macro: remove vendor SoundWire notification coupling
 
 Remove private swr-wcd notification calls (SSR up/down, port-map set, wake IRQ registration) and the swr-common port config dependency.
 
@@ -29,7 +28,7 @@ index 29e1e84..0c5f994 100644
 @@ -194,11 +192,6 @@ struct hpf_work {
  	struct delayed_work dwork;
  };
- 
+
 -/* Hold instance to soundwire platform device */
 -struct lpass_cdc_va_macro_swr_ctrl_data {
 -	struct platform_device *va_swr_pdev;
@@ -91,7 +90,7 @@ index 29e1e84..0c5f994 100644
 +					__func__);
  				goto fail_pdev_add;
  			}
- 
+
 -			temp = krealloc(swr_ctrl_data,
 -					(ctrl_num + 1) * sizeof(
 -					struct lpass_cdc_va_macro_swr_ctrl_data),
@@ -108,12 +107,12 @@ index 29e1e84..0c5f994 100644
  				__func__);
 -			va_priv->swr_ctrl_data = swr_ctrl_data;
  		}
- 
+
  		ret = platform_device_add(pdev);
 @@ -2277,50 +2246,6 @@ err:
  	return;
  }
- 
+
 -static int lpass_cdc_va_macro_set_port_map(struct snd_soc_component *component,
 -				u32 usecase, u32 size, void *data)
 -{
@@ -169,7 +168,7 @@ index 29e1e84..0c5f994 100644
 -	ops->reg_wake_irq = lpass_cdc_va_macro_reg_wake_irq;
  	ops->clk_div_get = lpass_cdc_va_macro_clk_div_get;
  }
- 
+
 @@ -2550,8 +2473,6 @@ static void lpass_cdc_va_macro_remove(struct platform_device *pdev)
  	if (!va_priv)
  		return;
@@ -179,6 +178,6 @@ index 29e1e84..0c5f994 100644
  		for (count = 0; count < va_priv->child_count &&
  			count < LPASS_CDC_VA_MACRO_CHILD_DEVICES_MAX; count++)
  			platform_device_unregister(
--- 
+--
 2.34.1
 

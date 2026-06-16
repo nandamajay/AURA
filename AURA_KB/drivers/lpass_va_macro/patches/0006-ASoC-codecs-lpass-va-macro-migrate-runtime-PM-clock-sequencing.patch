@@ -1,8 +1,7 @@
 From f0d0d0ac1c187707f48fcf2cb03cb1551783efc7 Mon Sep 17 00:00:00 2001
 From: AURA Conversion Engine <aura@example.invalid>
 Date: Tue, 16 Jun 2026 18:49:39 +0530
-Subject: [PATCH 4/7] ASoC: codecs: lpass-va-macro: migrate runtime PM and
- clock sequencing
+Subject: [PATCH 6/7] ASoC: codecs: lpass-va-macro: migrate runtime PM and clock sequencing
 
 Replace the vendor lpass-cdc-clk-rsc clock voting framework with direct
 upstream clock framework calls (clk_prepare_enable/clk_disable_unprepare),
@@ -27,8 +26,8 @@ index c2b6bff..2d826ac 100644
  #include <dsp/digital-cdc-rsc-mgr.h>
 -#include "lpass-cdc-clk-rsc.h"
  #include "lpass-macro-common.h"
- 
- 
+
+
 @@ -220,7 +219,10 @@ struct lpass_cdc_va_macro_priv {
  	struct device *dev;
  	bool dec_active[LPASS_CDC_VA_MACRO_NUM_DECIMATORS];
@@ -59,7 +58,7 @@ index c2b6bff..2d826ac 100644
 @@ -330,10 +329,59 @@ static int lpass_cdc_va_macro_clk_div_get(struct snd_soc_component *component, u
  	return (int)va_priv->dmic_clk_div[mic_pair];
  }
- 
+
 +static int va_clk_rsc_fs_gen_request(struct lpass_cdc_va_macro_priv *va_priv,
 +					      bool enable)
 +{
@@ -116,18 +115,18 @@ index c2b6bff..2d826ac 100644
 +	clk_disable_unprepare(va_priv->mclk);
  	return 0;
  }
- 
+
 @@ -344,7 +392,7 @@ static int lpass_cdc_va_macro_mclk_enable(
  	struct regmap *regmap = dev_get_regmap(va_priv->dev->parent, NULL);
  	int ret = 0;
- 
+
 -	if (regmap == NULL) {
 +	if (!regmap) {
  		dev_err_ratelimited(va_priv->dev, "%s: regmap is NULL\n", __func__);
  		return -EINVAL;
  	}
 @@ -354,55 +402,31 @@ static int lpass_cdc_va_macro_mclk_enable(
- 
+
  	mutex_lock(&va_priv->mclk_lock);
  	if (mclk_enable) {
 -		ret = lpass_cdc_va_macro_core_vote(va_priv, true);
@@ -206,7 +205,7 @@ index c2b6bff..2d826ac 100644
  	int ret = 0;
 -	struct device *va_dev = NULL;
 -	struct lpass_cdc_va_macro_priv *va_priv = NULL;
- 
+
 -	if (!lpass_cdc_va_macro_get_data(component, &va_dev,
 -					 &va_priv, __func__))
 -		return -EINVAL;
@@ -271,12 +270,12 @@ index c2b6bff..2d826ac 100644
  {
 -	int ret = 0, clk_tx_ret = 0;
 +	int ret;
- 
+
  	dev_dbg(va_priv->dev,
  		"%s: clock type %s, enable: %s tx_mclk_users: %d\n",
 @@ -480,17 +487,9 @@ static int lpass_cdc_va_macro_tx_va_mclk_enable(
  		(enable ? "enable" : "disable"), va_priv->va_mclk_users);
- 
+
  	if (enable) {
 -		clk_tx_ret = lpass_cdc_clk_rsc_request_clock(va_priv->dev,
 -						   TX_CORE_CLK,
@@ -330,7 +329,7 @@ index c2b6bff..2d826ac 100644
 +		lpass_cdc_va_macro_mclk_enable(va_priv, false, true);
  	}
 -	return 0;
- 
+
 -done:
 -	if (!clk_tx_ret)
 -		lpass_cdc_clk_rsc_request_clock(va_priv->dev,
@@ -340,7 +339,7 @@ index c2b6bff..2d826ac 100644
 -	return ret;
 +	return 0;
  }
- 
+
  static int lpass_cdc_va_macro_core_vote(void *handle, bool enable)
  {
 -	int rc = 0;
@@ -348,7 +347,7 @@ index c2b6bff..2d826ac 100644
 -					(struct lpass_cdc_va_macro_priv *) handle;
 +	struct lpass_cdc_va_macro_priv *va_priv = handle;
 +	int ret;
- 
+
 -	if (va_priv == NULL) {
 +	if (!va_priv) {
  		pr_err_ratelimited("%s: va priv data is NULL\n", __func__);
@@ -356,7 +355,7 @@ index c2b6bff..2d826ac 100644
  	}
 @@ -564,17 +540,15 @@ static int lpass_cdc_va_macro_core_vote(void *handle, bool enable)
  	}
- 
+
  	if (enable) {
 -		pm_runtime_get_sync(va_priv->dev);
 -		if (lpass_cdc_check_core_votes(va_priv->dev)) {
@@ -376,7 +375,7 @@ index c2b6bff..2d826ac 100644
 +
 +	return 0;
  }
- 
+
  static int lpass_cdc_va_macro_swrm_clock(void *handle, bool enable)
 @@ -1300,33 +1274,21 @@ static int lpass_cdc_va_macro_enable_dec(struct snd_soc_dapm_widget *w,
  static int lpass_cdc_va_macro_enable_tx(struct snd_soc_dapm_widget *w,
@@ -389,14 +388,14 @@ index c2b6bff..2d826ac 100644
 +	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
 +	struct lpass_cdc_va_macro_priv *va_priv = snd_soc_component_get_drvdata(component);
  	int ret = 0;
- 
+
 -	if (!lpass_cdc_va_macro_get_data(component, &va_dev,
 -					 &va_priv, __func__))
 -		return -EINVAL;
 -
 -	dev_dbg(va_dev, "%s: event = %d\n", __func__, event);
 +	dev_dbg(component->dev, "%s: event = %d\n", __func__, event);
- 
+
  	switch (event) {
  	case SND_SOC_DAPM_POST_PMU:
  		if (va_priv->dapm_tx_clk_status > 0) {
@@ -425,11 +424,11 @@ index c2b6bff..2d826ac 100644
 -	struct clk *lpass_audio_hw_vote = NULL;
  	u32 is_used_va_swr_gpio = 0;
  	const char *is_used_va_swr_gpio_dt = "qcom,is-used-swr-gpio";
- 
+
 @@ -2353,15 +2313,25 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  	}
  	va_priv->va_io_base = va_io_base;
- 
+
 -	lpass_audio_hw_vote = devm_clk_get(&pdev->dev, "lpass_audio_hw_vote");
 -	if (IS_ERR(lpass_audio_hw_vote)) {
 -		ret = PTR_ERR(lpass_audio_hw_vote);
@@ -458,7 +457,7 @@ index c2b6bff..2d826ac 100644
 +	if (IS_ERR(va_priv->fsgen))
 +		return dev_err_probe(&pdev->dev, PTR_ERR(va_priv->fsgen),
 +				     "unable to get fsgen clock\n");
- 
+
  	if (of_parse_phandle(pdev->dev.of_node, micb_supply_str, 0)) {
  		va_priv->micb_supply = devm_regulator_get(&pdev->dev,
 @@ -2394,26 +2364,7 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
@@ -487,7 +486,7 @@ index c2b6bff..2d826ac 100644
 -	va_priv->current_clk_id = TX_CORE_CLK;
 +	va_priv->wlock_holders = 0;
  	va_priv->wlock_holders = 0;
- 
+
  	va_priv->use_lpi_mixer_control = false;
 @@ -2446,9 +2397,22 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  	va_priv->pds = lpass_macro_pds_init(&pdev->dev);
@@ -496,7 +495,7 @@ index c2b6bff..2d826ac 100644
 +		va_priv->pds = NULL;
  		goto pds_init_fail;
  	}
- 
+
 +	ret = clk_prepare_enable(va_priv->macro);
 +	if (ret)
 +		goto pds_exit;
@@ -514,7 +513,7 @@ index c2b6bff..2d826ac 100644
  			lpass_cdc_va_macro_dai,
 @@ -2467,6 +2431,12 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
  	return ret;
- 
+
  reg_component_fail:
 +	clk_disable_unprepare(va_priv->mclk);
 +err_mclk:
@@ -536,7 +535,7 @@ index c2b6bff..2d826ac 100644
  	mutex_destroy(&va_priv->mclk_lock);
  	mutex_destroy(&va_priv->wlock);
 @@ -2511,13 +2484,36 @@ static const struct of_device_id lpass_cdc_va_macro_dt_match[] = {
- 
+
  static int va_macro_runtime_suspend(struct device *dev)
  {
 -	/* TODO: Patch-04 provides full implementation */
@@ -552,7 +551,7 @@ index c2b6bff..2d826ac 100644
 +
  	return 0;
  }
- 
+
  static int va_macro_runtime_resume(struct device *dev)
  {
 -	/* TODO: Patch-04 provides full implementation */
@@ -573,7 +572,7 @@ index c2b6bff..2d826ac 100644
 +
  	return 0;
  }
- 
--- 
+
+--
 2.34.1
 
