@@ -1,0 +1,55 @@
+{
+  "artifact_name": "PATCH_03_HELPER_INVENTORY",
+  "base_assumption": "Patch-01, Patch-06, Patch-05, and Patch-02 have already been applied",
+  "classification": "PASS",
+  "dmic_helper_decision": {
+    "decision": "implement locally in VA macro",
+    "reason": "lpass-macro-common provides pds/version helpers only; upstream VA macro implements DMIC clock handling locally at va_macro.c:610",
+    "shared_helper_added_for_dmic": false
+  },
+  "driver": "lpass_va_macro",
+  "helpers": [
+    {
+      "consumer": "lpass_cdc_va_macro_probe",
+      "consumer_location": "sound/soc/codecs/lpass-va-macro.c:probe power-domain setup",
+      "exported_by_patch": false,
+      "name": "lpass_macro_pds_init",
+      "rationale": "Use existing upstream shared LPASS macro power-domain setup helper; VA macro is the immediate consumer.",
+      "shared_or_local": "shared_existing_lpass_macro_common",
+      "upstream_consumer_reference_line": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1556",
+      "upstream_reference_line": "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c:17"
+    },
+    {
+      "consumer": "lpass_cdc_va_macro_remove and probe failure path",
+      "consumer_location": "sound/soc/codecs/lpass-va-macro.c:remove/reg_component_fail",
+      "exported_by_patch": false,
+      "name": "lpass_macro_pds_exit",
+      "rationale": "Use existing upstream shared LPASS macro power-domain teardown helper; VA macro is the immediate consumer.",
+      "shared_or_local": "shared_existing_lpass_macro_common",
+      "upstream_consumer_reference_line": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:1692,1708",
+      "upstream_reference_line": "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c:61"
+    },
+    {
+      "consumer": "lpass_cdc_va_macro_enable_dmic",
+      "consumer_location": "sound/soc/codecs/lpass-va-macro.c:DMIC DAPM event path",
+      "exported_by_patch": false,
+      "name": "lpass_va_macro_dmic_clk_enable",
+      "rationale": "Upstream lpass-macro-common does not provide a DMIC clock helper; upstream VA implements this locally, so this patch keeps it local.",
+      "shared_or_local": "local_va_macro_helper",
+      "upstream_consumer_reference_line": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:729,732",
+      "upstream_reference_line": "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c:610"
+    }
+  ],
+  "patch": "AURA_KB/drivers/lpass_va_macro/patches/0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+  "summary": {
+    "helpers_without_immediate_consumer": 0,
+    "local_va_macro_helper": 1,
+    "new_exported_helpers": 0,
+    "shared_existing_lpass_macro_common": 2
+  },
+  "upstream_sources_read": [
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c"
+  ]
+}

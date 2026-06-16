@@ -1,0 +1,65 @@
+{
+  "artifact_name": "PATCH_03_LPASS_MACRO_COMMON_HELPER_VALIDATION",
+  "base_assumption": "Patch-01, Patch-06, Patch-05, and Patch-02 have already been applied",
+  "carry_forward_corrections": [
+    {
+      "correction": "repair malformed register-component dev_err newline escape in probe path touched by Patch-03 lifecycle edits",
+      "reason": "keep generated series syntactically consistent while adding pds lifecycle handling",
+      "source": "Patch-02 generated artifact"
+    }
+  ],
+  "classification": "PASS",
+  "dangling_reference_count": 0,
+  "dangling_references": {},
+  "driver": "lpass_va_macro",
+  "fail_closed_reasons": [],
+  "helper_inventory_path": "AURA_KB/drivers/lpass_va_macro/patches/patch_03_helper_inventory.json",
+  "helpers_added_summary": {
+    "helpers_without_immediate_consumer": 0,
+    "local_va_macro_helper": 1,
+    "new_exported_helpers": 0,
+    "shared_existing_lpass_macro_common": 2
+  },
+  "input_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-va-macro.c",
+  "patch_line_count": 212,
+  "patch_path": "AURA_KB/drivers/lpass_va_macro/patches/0003-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+  "remaining_stub_count": 3,
+  "remaining_stubs": [
+    {
+      "stub": "lpass_va_macro_tx_mclk_enable",
+      "target_patch": 4
+    },
+    {
+      "stub": "va_macro_runtime_suspend",
+      "target_patch": 4
+    },
+    {
+      "stub": "va_macro_runtime_resume",
+      "target_patch": 4
+    }
+  ],
+  "series_apply_result": "SERIES_APPLY_PASS",
+  "stubs_resolved_from_patch_02": [
+    {
+      "implementation": "local VA helper adapted from upstream va_dmic_clk_enable",
+      "status": "resolved",
+      "stub": "lpass_va_macro_dmic_clk_enable",
+      "target_patch": 3
+    }
+  ],
+  "todo_patch_references_remaining": {
+    "Patch-04": 3
+  },
+  "validation_checks": {
+    "dmic_helper_has_immediate_consumer": true,
+    "lpass_macro_common_include_present": true,
+    "lpass_macro_pds_exit_called_in_remove": true,
+    "lpass_macro_pds_exit_called_on_probe_failure": true,
+    "lpass_macro_pds_init_called_in_probe": true,
+    "new_exported_helpers_without_users": false,
+    "only_patch_04_todos_remain": true,
+    "patch_01_patch_06_patch_05_patch_02_patch_03_apply_sequence": true,
+    "patch_03_dmic_todo_removed": true,
+    "pds_state_member_present": true
+  }
+}
