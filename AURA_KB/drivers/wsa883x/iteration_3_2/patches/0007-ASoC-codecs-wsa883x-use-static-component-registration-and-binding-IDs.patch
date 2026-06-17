@@ -1,0 +1,148 @@
+From 821af848f8872d90bcfe17f40ec86505e3e7d724 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:18:22 +0530
+Subject: [PATCH 7/14] ASoC: codecs: wsa883x: use static component registration
+ and binding IDs
+
+---
+ asoc/codecs/wsa883x/internal.h |  2 -
+ asoc/codecs/wsa883x/wsa883x.c  | 81 ++++------------------------------
+ 2 files changed, 8 insertions(+), 75 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index fdf7810..8dcd407 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -100,8 +100,6 @@ struct wsa883x_priv {
+ 	int num_supplies;
+ 	struct regulator_bulk_data *supplies;
+ 	unsigned long status_mask;
+-	struct snd_soc_dai_driver *dai_driver;
+-	struct snd_soc_component_driver *driver;
+ 	unsigned long port_status_mask;
+ 	int active_ports;
+ 	bool hw_init;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 736605b..43e1b1b 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -1276,7 +1276,7 @@ static int wsa883x_soc_codec_resume(struct snd_soc_component *component)
+ }
+ 
+ static const struct snd_soc_component_driver soc_codec_dev_wsa883x_wsa = {
+-	.name = "",
++	.name = "wsa883x",
+ 	.probe = wsa883x_codec_probe,
+ 	.remove = wsa883x_codec_remove,
+ 	.controls = wsa883x_snd_controls,
+@@ -1464,52 +1464,12 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 
+ 
+ 
+-	wsa883x->driver = devm_kzalloc(&pdev->dev,
+-			sizeof(struct snd_soc_component_driver), GFP_KERNEL);
+-        if (!wsa883x->driver) {
+-                ret = -ENOMEM;
+-                goto err_irq;
+-        }
+-
+-        memcpy(wsa883x->driver, &soc_codec_dev_wsa883x_wsa,
+-                        sizeof(struct snd_soc_component_driver));
+-
+-	wsa883x->dai_driver = devm_kzalloc(&pdev->dev,
+-				sizeof(struct snd_soc_dai_driver), GFP_KERNEL);
+-	if (!wsa883x->dai_driver) {
+-		ret = -ENOMEM;
+-		goto err_mem;
+-	}
+-
+-	memcpy(wsa883x->dai_driver, wsa_dai, sizeof(struct snd_soc_dai_driver));
+-
+-	/* Get last digit from HEX format */
+-	dev_index = (int)((char)(pdev->id.unique_id & 0xF));
+-
+-	if (of_device_is_compatible(pdev->dev.of_node, "qcom,wsa883x_2"))
+-		dev_index += 2;
+-
+-	snprintf(buffer, sizeof(buffer), "wsa-codec.%d", dev_index);
+-	wsa883x->driver->name = kstrndup(buffer, strlen(buffer), GFP_KERNEL);
+-
+-	snprintf(buffer, sizeof(buffer), "wsa_rx%d", dev_index);
+-	wsa883x->dai_driver->name =
+-				kstrndup(buffer, strlen(buffer), GFP_KERNEL);
+-
+-	snprintf(buffer, sizeof(buffer), "WSA883X_AIF%d Playback", dev_index);
+-	wsa883x->dai_driver->playback.stream_name =
+-				kstrndup(buffer, strlen(buffer), GFP_KERNEL);
+-
+-	/* Number of DAI's used is 1 */
+-	ret = snd_soc_register_component(&pdev->dev,
+-				wsa883x->driver, wsa883x->dai_driver, 1);
++	ret = devm_snd_soc_register_component(&pdev->dev,
++			&soc_codec_dev_wsa883x_wsa, wsa_dai, ARRAY_SIZE(wsa_dai));
++	if (ret)
++		goto err_supply;
+ 
+-	component = snd_soc_lookup_component(&pdev->dev, wsa883x->driver->name);
+-	if (!component) {
+-		dev_err(&pdev->dev, "%s: component is NULL \n", __func__);
+-		ret = -EINVAL;
+-		goto err_mem;
+-	}
++	component = snd_soc_lookup_component(&pdev->dev, "wsa883x");
+ 
+ 	mutex_init(&wsa883x->res_lock);
+ 
+@@ -1545,17 +1505,7 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 
+ 	return 0;
+ 
+-err_mem:
+-	if (wsa883x->dai_driver) {
+-		kfree(wsa883x->dai_driver->name);
+-		kfree(wsa883x->dai_driver->playback.stream_name);
+-		kfree(wsa883x->dai_driver);
+-	}
+-	if (wsa883x->driver) {
+-		kfree(wsa883x->driver->name);
+-		kfree(wsa883x->driver);
+-	}
+-err_irq:
++err_component:
+ dev_err:
+ 	if (pin_state_current == false)
+ 		wsa883x_gpio_ctrl(wsa883x, false);
+@@ -1583,16 +1533,6 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 	wsa883x->debugfs_dent = NULL;
+ #endif
+ 	mutex_destroy(&wsa883x->res_lock);
+-	snd_soc_unregister_component(&pdev->dev);
+-	if (wsa883x->dai_driver) {
+-		kfree(wsa883x->dai_driver->name);
+-		kfree(wsa883x->dai_driver->playback.stream_name);
+-		kfree(wsa883x->dai_driver);
+-	}
+-	if (wsa883x->driver) {
+-		kfree(wsa883x->driver->name);
+-		kfree(wsa883x->driver);
+-	}
+ 	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return 0;
+@@ -1647,12 +1587,7 @@ static const struct sdw_slave_id wsa883x_sdw_id[] = {
+ };
+ 
+ static const struct of_device_id wsa883x_sdw_dt_match[] = {
+-	{
+-		.compatible = "qcom,wsa883x",
+-	},
+-	{
+-		.compatible = "qcom,wsa883x_2",
+-	},
++	{ .compatible = "sdw10217020200" },
+ 	{}
+ };
+ 
+-- 
+2.34.1
+

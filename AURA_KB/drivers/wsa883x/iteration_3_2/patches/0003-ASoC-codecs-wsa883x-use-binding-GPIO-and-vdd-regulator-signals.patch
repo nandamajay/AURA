@@ -1,0 +1,204 @@
+From b990e8510cf9f5b3d11fe18f30ebce101c9202ab Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:18:22 +0530
+Subject: [PATCH 3/14] ASoC: codecs: wsa883x: use binding GPIO and vdd regulator
+ signals
+
+---
+ asoc/codecs/wsa883x/internal.h |  3 +-
+ asoc/codecs/wsa883x/wsa883x.c  | 92 ++++++++++++----------------------
+ 2 files changed, 32 insertions(+), 63 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index 45a1308..e0a0cc1 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -88,7 +88,7 @@ struct wsa883x_priv {
+ 	struct snd_info_entry *entry;
+ 	struct snd_info_entry *version_entry;
+ 	struct snd_info_entry *variant_entry;
+-	struct device_node *wsa_rst_np;
++	struct gpio_desc *sd_n;
+ 	int pa_mute;
+ 	int curr_temp;
+ 	int variant;
+@@ -109,7 +109,6 @@ struct wsa883x_priv {
+ 	void *handle;
+ 	int (*register_notifier)(void *handle,
+ 				struct notifier_block *nblock, bool enable);
+-	struct cdc_regulator *regulator;
+ 	int num_supplies;
+ 	struct regulator_bulk_data *supplies;
+ 	unsigned long status_mask;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index fa40f0d..89112fc 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -15,8 +15,7 @@
+ #include <linux/pm_runtime.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+-#include <linux/gpio.h>
+-#include <linux/of_gpio.h>
++#include <linux/gpio/consumer.h>
+ #include <linux/of_platform.h>
+ #include <linux/regmap.h>
+ #include <linux/debugfs.h>
+@@ -27,8 +26,6 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/tlv.h>
+-#include <asoc/msm-cdc-pinctrl.h>
+-#include <asoc/msm-cdc-supply.h>
+ #include "wsa883x-registers.h"
+ #include "wsa883x.h"
+ #include "internal.h"
+@@ -1294,20 +1291,11 @@ static const struct snd_soc_component_driver soc_codec_dev_wsa883x_wsa = {
+ 
+ static int wsa883x_gpio_ctrl(struct wsa883x_priv *wsa883x, bool enable)
+ {
+-	int ret = 0;
+-
+-	if (enable)
+-		ret = msm_cdc_pinctrl_select_active_state(
+-						wsa883x->wsa_rst_np);
+-	else
+-		ret = msm_cdc_pinctrl_select_sleep_state(
+-						wsa883x->wsa_rst_np);
+-	if (ret != 0)
+-		dev_err(wsa883x->dev,
+-			"%s: Failed to turn state %d; ret=%d\n",
+-			__func__, enable, ret);
++	if (!wsa883x->sd_n)
++		return 0;
+ 
+-	return ret;
++	gpiod_direction_output(wsa883x->sd_n, enable ? 0 : 1);
++	return 0;
+ }
+ 
+ static int wsa883x_sdw_up(struct wsa883x_priv *wsa883x)
+@@ -1408,35 +1396,27 @@ static int wsa883x_event_notify(struct notifier_block *nb,
+ 	return 0;
+ }
+ 
+-static int wsa883x_enable_supplies(struct device * dev,
+-				   struct wsa883x_priv *priv)
++static int wsa883x_enable_supplies(struct device *dev,
++					   struct wsa883x_priv *priv)
+ {
+-	int ret = 0;
++	static const char * const supply_names[] = { "vdd" };
++	int i, ret;
+ 
+-	/* Parse power supplies */
+-	msm_cdc_get_power_supplies(dev, &priv->regulator,
+-				   &priv->num_supplies);
+-	if (!priv->regulator || (priv->num_supplies <= 0)) {
+-		dev_err(dev, "%s: no power supplies defined\n", __func__);
+-		return -EINVAL;
+-	}
++	priv->num_supplies = ARRAY_SIZE(supply_names);
++	priv->supplies = devm_kcalloc(dev, priv->num_supplies,
++				       sizeof(*priv->supplies), GFP_KERNEL);
++	if (!priv->supplies)
++		return -ENOMEM;
+ 
+-	ret = msm_cdc_init_supplies(dev, &priv->supplies,
+-				    priv->regulator, priv->num_supplies);
+-	if (!priv->supplies) {
+-		dev_err(dev, "%s: Cannot init wsa supplies\n",
+-			__func__);
+-		return ret;
+-	}
++	for (i = 0; i < priv->num_supplies; i++)
++		priv->supplies[i].supply = supply_names[i];
+ 
+-	ret = msm_cdc_enable_static_supplies(dev, priv->supplies,
+-					     priv->regulator,
+-					     priv->num_supplies);
++	ret = devm_regulator_bulk_get(dev, priv->num_supplies, priv->supplies);
+ 	if (ret)
+-		dev_err(dev, "%s: wsa static supply enable failed!\n",
+-			__func__);
++		return dev_err_probe(dev, ret, "Failed to get supplies
++");
+ 
+-	return ret;
++	return regulator_bulk_enable(priv->num_supplies, priv->supplies);
+ }
+ 
+ static struct snd_soc_dai_driver wsa_dai[] = {
+@@ -1485,16 +1465,16 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 		goto err;
+ 	}
+ 
+-	wsa883x->wsa_rst_np = of_parse_phandle(pdev->dev.of_node,
+-					     "qcom,spkr-sd-n-node", 0);
+-	if (!wsa883x->wsa_rst_np) {
+-		dev_dbg(&pdev->dev, "%s: pinctrl not defined\n", __func__);
+-		goto err_supply;
+-	}
++	wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown", GPIOD_OUT_LOW);
++	if (IS_ERR(wsa883x->sd_n))
++		wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "reset", GPIOD_OUT_LOW);
++	if (IS_ERR(wsa883x->sd_n))
++		return dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->sd_n), "reset GPIO not found
++");
+ 	dev_set_drvdata(&pdev->dev, wsa883x);
+ 	wsa883x->sdw_slave = pdev;
+ 	wsa883x->dev = &pdev->dev;
+-	pin_state_current = msm_cdc_pinctrl_get_state(wsa883x->wsa_rst_np);
++	pin_state_current = false;
+ 	wsa883x_gpio_ctrl(wsa883x, true);
+ 	/*
+ 	 * Add 5msec delay to provide sufficient time for
+@@ -1733,9 +1713,7 @@ dev_err:
+ 	if (pin_state_current == false)
+ 		wsa883x_gpio_ctrl(wsa883x, false);
+ 	err_supply:
+-	msm_cdc_release_supplies(&pdev->dev, wsa883x->supplies,
+-				 wsa883x->regulator,
+-				 wsa883x->num_supplies);
++	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ err:
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return ret;
+@@ -1781,9 +1759,7 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 		kfree(wsa883x->driver->name);
+ 		kfree(wsa883x->driver);
+ 	}
+-	msm_cdc_release_supplies(&pdev->dev, wsa883x->supplies,
+-				 wsa883x->regulator,
+-				 wsa883x->num_supplies);
++	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return 0;
+ }
+@@ -1802,10 +1778,7 @@ static int wsa883x_sdw_suspend(struct device *dev)
+ 		(wsa883x->component &&
+ 		 (snd_soc_dapm_get_bias_level(snd_soc_component_to_dapm(wsa883x->component)) ==
+ 		 SND_SOC_BIAS_OFF))) {
+-		msm_cdc_set_supplies_lpm_mode(dev, wsa883x->supplies,
+-					wsa883x->regulator,
+-					wsa883x->num_supplies,
+-					true);
++		/* Supply low-power state is managed by runtime PM. */
+ 		set_bit(WSA_SUPPLIES_LPM_MODE, &wsa883x->status_mask);
+ 	}
+ 	return 0;
+@@ -1820,10 +1793,7 @@ static int wsa883x_sdw_resume(struct device *dev)
+ 		return -EINVAL;
+ 	}
+ 	if (test_bit(WSA_SUPPLIES_LPM_MODE, &wsa883x->status_mask)) {
+-		msm_cdc_set_supplies_lpm_mode(dev, wsa883x->supplies,
+-					wsa883x->regulator,
+-					wsa883x->num_supplies,
+-					false);
++		/* Supply low-power state is managed by runtime PM. */
+ 		clear_bit(WSA_SUPPLIES_LPM_MODE, &wsa883x->status_mask);
+ 	}
+ 	dev_dbg(dev, "%s: system resume\n", __func__);
+-- 
+2.34.1
+

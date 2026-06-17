@@ -1,0 +1,161 @@
+From 7016c80fec9cfa69a791787c9456a3ec65db6d71 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:18:22 +0530
+Subject: [PATCH 4/14] ASoC: codecs: wsa883x: add upstream SoundWire stream and
+ slave ops
+
+---
+ asoc/codecs/wsa883x/internal.h |  6 +++
+ asoc/codecs/wsa883x/wsa883x.c  | 91 +++++++++++++++++++++++++++++++++-
+ 2 files changed, 95 insertions(+), 2 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index e0a0cc1..6b54665 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -74,6 +74,9 @@ struct wsa883x_priv {
+ 	struct regmap *regmap;
+ 	struct device *dev;
+ 	struct sdw_slave *sdw_slave;
++	struct sdw_stream_config sconfig;
++	struct sdw_stream_runtime *sruntime;
++	struct sdw_port_config port_config[WSA883X_MAX_SWR_PORTS];
+ 	struct snd_soc_component *component;
+ 	bool comp_enable;
+ 	bool visense_enable;
+@@ -115,6 +118,9 @@ struct wsa883x_priv {
+ 	struct snd_soc_dai_driver *dai_driver;
+ 	struct snd_soc_component_driver *driver;
+ 	unsigned long port_status_mask;
++	int active_ports;
++	bool hw_init;
++	bool port_prepared[WSA883X_MAX_SWR_PORTS];
+ };
+ 
+ #endif /* WSA883X_INTERNAL_H */
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 89112fc..1f627f6 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -1419,11 +1419,58 @@ static int wsa883x_enable_supplies(struct device *dev,
+ 	return regulator_bulk_enable(priv->num_supplies, priv->supplies);
+ }
+ 
++
++static int wsa883x_hw_params(struct snd_pcm_substream *substream,
++			     struct snd_pcm_hw_params *params,
++			     struct snd_soc_dai *dai)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(dai->dev);
++
++	wsa883x->active_ports = 1;
++	wsa883x->port_config[0].num = 1;
++	return sdw_stream_add_slave(wsa883x->sdw_slave, &wsa883x->sconfig,
++				    wsa883x->port_config, wsa883x->active_ports,
++				    wsa883x->sruntime);
++}
++
++static int wsa883x_hw_free(struct snd_pcm_substream *substream,
++			   struct snd_soc_dai *dai)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(dai->dev);
++
++	sdw_stream_remove_slave(wsa883x->sdw_slave, wsa883x->sruntime);
++	return 0;
++}
++
++static int wsa883x_set_sdw_stream(struct snd_soc_dai *dai,
++				  void *stream, int direction)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(dai->dev);
++
++	wsa883x->sruntime = stream;
++	return 0;
++}
++
++static int wsa883x_digital_mute(struct snd_soc_dai *dai, int mute, int stream)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(dai->dev);
++
++	wsa883x->pa_mute = mute;
++	return 0;
++}
++
++static const struct snd_soc_dai_ops wsa883x_dai_ops = {
++	.hw_params = wsa883x_hw_params,
++	.hw_free = wsa883x_hw_free,
++	.mute_stream = wsa883x_digital_mute,
++	.set_stream = wsa883x_set_sdw_stream,
++};
++
+ static struct snd_soc_dai_driver wsa_dai[] = {
+ 	{
+-		.name = "",
++		.name = "SPKR",
+ 		.playback = {
+-			.stream_name = "",
++			.stream_name = "SPKR Playback",
+ 			.rates = WSA883X_RATES | WSA883X_FRAC_RATES,
+ 			.formats = WSA883X_FORMATS,
+ 			.rate_max = 192000,
+@@ -1431,10 +1478,49 @@ static struct snd_soc_dai_driver wsa_dai[] = {
+ 			.channels_min = 1,
+ 			.channels_max = 2,
+ 		},
++		.ops = &wsa883x_dai_ops,
+ 	},
+ };
+ 
+ 
++
++static int wsa883x_update_status(struct sdw_slave *slave,
++				 enum sdw_slave_status status)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
++
++	if (status == SDW_SLAVE_UNATTACHED)
++		wsa883x->hw_init = false;
++
++	return 0;
++}
++
++static int wsa883x_port_prep(struct sdw_slave *slave,
++			     struct sdw_prepare_ch *prepare_ch,
++			     enum sdw_port_prep_ops state)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(&slave->dev);
++
++	if (prepare_ch->num > 0 && prepare_ch->num <= WSA883X_MAX_SWR_PORTS)
++		wsa883x->port_prepared[prepare_ch->num - 1] =
++			state == SDW_OPS_PORT_POST_PREP;
++
++	return 0;
++}
++
++static int wsa883x_bus_config(struct sdw_slave *slave,
++			      struct sdw_bus_params *params)
++{
++	return sdw_write(slave, SWRS_SCP_HOST_CLK_DIV2_CTL_BANK(params->next_bank),
++			 0x01);
++}
++
++static const struct sdw_slave_ops wsa883x_slave_ops = {
++	.update_status = wsa883x_update_status,
++	.bus_config = wsa883x_bus_config,
++	.port_prep = wsa883x_port_prep,
++};
++
+ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id *id)
+ {
+ 	int ret = 0, i = 0;
+@@ -1831,6 +1917,7 @@ static struct sdw_driver wsa883x_sdw_driver = {
+ 	},
+ 	.probe = wsa883x_sdw_probe,
+ 	.remove = wsa883x_sdw_remove,
++	.ops = &wsa883x_slave_ops,
+ 	.id_table = wsa883x_sdw_id,
+ };
+ 
+-- 
+2.34.1
+

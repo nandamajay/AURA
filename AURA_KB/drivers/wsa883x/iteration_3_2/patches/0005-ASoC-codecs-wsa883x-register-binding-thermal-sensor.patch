@@ -1,0 +1,59 @@
+From 219cf3293284b966bbe0b42cea7858a6250e0cdb Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:18:22 +0530
+Subject: [PATCH 5/14] ASoC: codecs: wsa883x: register binding thermal sensor
+
+---
+ asoc/codecs/wsa883x/internal.h |  1 +
+ asoc/codecs/wsa883x/wsa883x.c  | 16 ++++++++++++++++
+ 2 files changed, 17 insertions(+)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index 6b54665..1aea857 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -94,6 +94,7 @@ struct wsa883x_priv {
+ 	struct gpio_desc *sd_n;
+ 	int pa_mute;
+ 	int curr_temp;
++	struct thermal_zone_device *tz_dev;
+ 	int variant;
+ 	int version;
+ 	u8 pa_gain;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 1f627f6..0665f2c 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -13,6 +13,7 @@
+ #include <linux/bitops.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/pm_runtime.h>
++#include <linux/thermal.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/gpio/consumer.h>
+@@ -1187,6 +1188,21 @@ static int wsa883x_get_temperature(struct snd_soc_component *component,
+ 	return ret;
+ }
+ 
++
++static int wsa883x_thermal_get_temp(struct thermal_zone_device *tz, int *temp)
++{
++	struct wsa883x_priv *wsa883x = thermal_zone_device_priv(tz);
++
++	if (!wsa883x || !wsa883x->component)
++		return -ENODEV;
++
++	return wsa883x_get_temperature(wsa883x->component, temp);
++}
++
++static const struct thermal_zone_device_ops wsa883x_thermal_ops = {
++	.get_temp = wsa883x_thermal_get_temp,
++};
++
+ static int wsa883x_codec_probe(struct snd_soc_component *component)
+ {
+ 	char w_name[MAX_NAME_LEN];
+-- 
+2.34.1
+

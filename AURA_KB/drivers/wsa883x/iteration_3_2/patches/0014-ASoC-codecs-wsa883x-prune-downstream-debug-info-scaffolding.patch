@@ -1,0 +1,287 @@
+From f93529f5bc9be2ddee206459090d2ec6b76aee92 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:14:16 +0530
+Subject: [PATCH 14/14] ASoC: codecs: wsa883x: prune downstream debug info
+ scaffolding
+
+---
+ asoc/codecs/wsa883x/internal.h |  10 --
+ asoc/codecs/wsa883x/wsa883x.c  | 191 ---------------------------------
+ asoc/codecs/wsa883x/wsa883x.h  |   3 -
+ 3 files changed, 204 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index f48ecee..a0898f4 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -80,22 +80,12 @@ struct wsa883x_priv {
+ 	int dev_mode;
+ 	int comp_offset;
+ 	struct mutex res_lock;
+-	struct snd_info_entry *entry;
+-	struct snd_info_entry *version_entry;
+-	struct snd_info_entry *variant_entry;
+ 	struct gpio_desc *sd_n;
+ 	int pa_mute;
+ 	int curr_temp;
+ 	int variant;
+ 	int version;
+ 	u8 pa_gain;
+-#ifdef CONFIG_DEBUG_FS
+-	struct dentry *debugfs_dent;
+-	struct dentry *debugfs_peek;
+-	struct dentry *debugfs_poke;
+-	struct dentry *debugfs_reg_dump;
+-	unsigned int read_data;
+-#endif
+ 	struct regulator *vdd;
+ 	struct reset_control *sd_reset;
+ 	unsigned long status_mask;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 5026637..ae7255b 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -21,7 +21,6 @@
+ #include <linux/of_platform.h>
+ #include <linux/of.h>
+ #include <linux/regmap.h>
+-#include <linux/debugfs.h>
+ #include <linux/soundwire/sdw.h>
+ #include <linux/soundwire/sdw_type.h>
+ #include <sound/pcm.h>
+@@ -448,77 +447,7 @@ static int wsa_get_temp(struct snd_kcontrol *kcontrol,
+ 	return 0;
+ }
+ 
+-static ssize_t wsa883x_codec_version_read(struct snd_info_entry *entry,
+-			       void *file_private_data, struct file *file,
+-			       char __user *buf, size_t count, loff_t pos)
+-{
+-	struct wsa883x_priv *wsa883x;
+-	char buffer[WSA883X_VERSION_ENTRY_SIZE];
+-	int len = 0;
+ 
+-	wsa883x = (struct wsa883x_priv *) entry->private_data;
+-	if (!wsa883x) {
+-		pr_err("%s: wsa883x priv is null\n", __func__);
+-		return -EINVAL;
+-	}
+-
+-	switch (wsa883x->version) {
+-	case WSA883X_VERSION_1_0:
+-		len = snprintf(buffer, sizeof(buffer), "WSA883X_1_0\n");
+-		break;
+-	case WSA883X_VERSION_1_1:
+-		len = snprintf(buffer, sizeof(buffer), "WSA883X_1_1\n");
+-		break;
+-	default:
+-		len = snprintf(buffer, sizeof(buffer), "VER_UNDEFINED\n");
+-		break;
+-	}
+-
+-	return simple_read_from_buffer(buf, count, &pos, buffer, len);
+-}
+-
+-static struct snd_info_entry_ops wsa883x_codec_info_ops = {
+-	.read = wsa883x_codec_version_read,
+-};
+-
+-static ssize_t wsa883x_variant_read(struct snd_info_entry *entry,
+-				    void *file_private_data,
+-				    struct file *file,
+-				    char __user *buf, size_t count,
+-				    loff_t pos)
+-{
+-	struct wsa883x_priv *wsa883x;
+-	char buffer[WSA883X_VARIANT_ENTRY_SIZE];
+-	int len = 0;
+-
+-	wsa883x = (struct wsa883x_priv *) entry->private_data;
+-	if (!wsa883x) {
+-		pr_err("%s: wsa883x priv is null\n", __func__);
+-		return -EINVAL;
+-	}
+-
+-	switch (wsa883x->variant) {
+-	case WSA8830:
+-		len = snprintf(buffer, sizeof(buffer), "WSA8830\n");
+-		break;
+-	case WSA8835:
+-	case WSA8835_V2:
+-		len = snprintf(buffer, sizeof(buffer), "WSA8835\n");
+-		break;
+-	case WSA8832:
+-		len = snprintf(buffer, sizeof(buffer), "WSA8832\n");
+-		break;
+-	default:
+-		len = snprintf(buffer, sizeof(buffer), "UNDEFINED\n");
+-		break;
+-	}
+-
+-	return simple_read_from_buffer(buf, count, &pos, buffer, len);
+-}
+-
+-static struct snd_info_entry_ops wsa883x_variant_ops = {
+-	.read = wsa883x_variant_read,
+-};
+ 
+ /*
+  * wsa883x_codec_info_create_codec_entry - creates wsa883x module
+@@ -530,93 +459,6 @@ static struct snd_info_entry_ops wsa883x_variant_ops = {
+  *
+  * Return: 0 on success or negative error code on failure.
+  */
+-int wsa883x_codec_info_create_codec_entry(struct snd_info_entry *codec_root,
+-					  struct snd_soc_component *component)
+-{
+-	struct snd_info_entry *version_entry;
+-	struct snd_info_entry *variant_entry;
+-	struct wsa883x_priv *wsa883x;
+-	struct snd_soc_card *card;
+-	char name[80];
+-
+-	if (!codec_root || !component)
+-		return -EINVAL;
+-
+-	wsa883x = snd_soc_component_get_drvdata(component);
+-	if (wsa883x->entry) {
+-		dev_dbg(wsa883x->dev,
+-			"%s:wsa883x module already created\n", __func__);
+-		return 0;
+-	}
+-	card = component->card;
+-
+-	snprintf(name, sizeof(name), "%s.%llx", "wsa883x",
+-		 wsa883x->sdw_slave->addr);
+-
+-	wsa883x->entry = snd_info_create_module_entry(codec_root->module,
+-						(const char *)name,
+-						codec_root);
+-	if (!wsa883x->entry) {
+-		dev_dbg(component->dev, "%s: failed to create wsa883x entry\n",
+-			__func__);
+-		return -ENOMEM;
+-	}
+-	wsa883x->entry->mode = S_IFDIR | 0555;
+-	if (snd_info_register(wsa883x->entry) < 0) {
+-		snd_info_free_entry(wsa883x->entry);
+-		return -ENOMEM;
+-	}
+-
+-	version_entry = snd_info_create_card_entry(card->snd_card,
+-						   "version",
+-						   wsa883x->entry);
+-	if (!version_entry) {
+-		dev_dbg(component->dev, "%s: failed to create wsa883x version entry\n",
+-			__func__);
+-		snd_info_free_entry(wsa883x->entry);
+-		return -ENOMEM;
+-	}
+-
+-	version_entry->private_data = wsa883x;
+-	version_entry->size = WSA883X_VERSION_ENTRY_SIZE;
+-	version_entry->content = SNDRV_INFO_CONTENT_DATA;
+-	version_entry->c.ops = &wsa883x_codec_info_ops;
+-
+-	if (snd_info_register(version_entry) < 0) {
+-		snd_info_free_entry(version_entry);
+-		snd_info_free_entry(wsa883x->entry);
+-		return -ENOMEM;
+-	}
+-	wsa883x->version_entry = version_entry;
+-
+-	variant_entry = snd_info_create_card_entry(card->snd_card,
+-						   "variant",
+-						   wsa883x->entry);
+-	if (!variant_entry) {
+-		dev_dbg(component->dev,
+-			"%s: failed to create wsa883x variant entry\n",
+-			__func__);
+-		snd_info_free_entry(version_entry);
+-		snd_info_free_entry(wsa883x->entry);
+-		return -ENOMEM;
+-	}
+-
+-	variant_entry->private_data = wsa883x;
+-	variant_entry->size = WSA883X_VARIANT_ENTRY_SIZE;
+-	variant_entry->content = SNDRV_INFO_CONTENT_DATA;
+-	variant_entry->c.ops = &wsa883x_variant_ops;
+-
+-	if (snd_info_register(variant_entry) < 0) {
+-		snd_info_free_entry(variant_entry);
+-		snd_info_free_entry(version_entry);
+-		snd_info_free_entry(wsa883x->entry);
+-		return -ENOMEM;
+-	}
+-	wsa883x->variant_entry = variant_entry;
+-
+-	return 0;
+-}
+-EXPORT_SYMBOL(wsa883x_codec_info_create_codec_entry);
+ 
+ /*
+  * wsa883x_codec_get_dev_num - returns sdw device number
+@@ -1580,35 +1422,6 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 
+ 	component = snd_soc_lookup_component(&pdev->dev, "wsa883x");
+ 
+-#ifdef CONFIG_DEBUG_FS
+-	if (!wsa883x->debugfs_dent) {
+-		wsa883x->debugfs_dent = debugfs_create_dir(
+-					dev_name(&pdev->dev), 0);
+-		if (!IS_ERR(wsa883x->debugfs_dent)) {
+-			wsa883x->debugfs_peek =
+-				debugfs_create_file("sdwslave_peek",
+-				S_IFREG | 0444,
+-				wsa883x->debugfs_dent,
+-				(void *) pdev,
+-				&codec_debug_read_ops);
+-
+-		wsa883x->debugfs_poke =
+-				debugfs_create_file("sdwslave_poke",
+-				S_IFREG | 0444,
+-				wsa883x->debugfs_dent,
+-				(void *) pdev,
+-				&codec_debug_write_ops);
+-
+-		wsa883x->debugfs_reg_dump =
+-				debugfs_create_file(
+-				"sdwslave_reg_dump",
+-				S_IFREG | 0444,
+-				wsa883x->debugfs_dent,
+-				(void *) pdev,
+-				&codec_debug_dump_ops);
+-	}
+-}
+-#endif
+ 
+ 	return 0;
+ 
+@@ -1636,10 +1449,6 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 
+ 
+ 
+-#ifdef CONFIG_DEBUG_FS
+-	debugfs_remove_recursive(wsa883x->debugfs_dent);
+-	wsa883x->debugfs_dent = NULL;
+-#endif
+ 	mutex_destroy(&wsa883x->res_lock);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return 0;
+diff --git a/asoc/codecs/wsa883x/wsa883x.h b/asoc/codecs/wsa883x/wsa883x.h
+index d69b099..749cc93 100644
+--- a/asoc/codecs/wsa883x/wsa883x.h
++++ b/asoc/codecs/wsa883x/wsa883x.h
+@@ -17,9 +17,6 @@ int wsa883x_set_channel_map(struct snd_soc_component *component,
+ 				   unsigned int *ch_rate, u8 *port_type);
+ 
+ 
+-int wsa883x_codec_info_create_codec_entry(
+-					struct snd_info_entry *codec_root,
+-					struct snd_soc_component *component);
+ int wsa883x_codec_get_dev_num(struct snd_soc_component *component);
+ #else
+ static int wsa883x_set_channel_map(struct snd_soc_component *component,
+-- 
+2.34.1
+

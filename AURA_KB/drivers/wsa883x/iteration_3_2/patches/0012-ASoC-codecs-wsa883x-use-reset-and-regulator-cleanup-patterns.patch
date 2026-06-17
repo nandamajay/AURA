@@ -1,0 +1,173 @@
+From eb0924367ab753ef247bdda7390a1f0acc8ebea1 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:12:34 +0530
+Subject: [PATCH 12/14] ASoC: codecs: wsa883x: use reset and regulator cleanup
+ patterns
+
+---
+ asoc/codecs/wsa883x/internal.h |  4 +-
+ asoc/codecs/wsa883x/wsa883x.c  | 88 +++++++++++++++++++++++-----------
+ 2 files changed, 63 insertions(+), 29 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index c2d53d6..f48ecee 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -96,8 +96,8 @@ struct wsa883x_priv {
+ 	struct dentry *debugfs_reg_dump;
+ 	unsigned int read_data;
+ #endif
+-	int num_supplies;
+-	struct regulator_bulk_data *supplies;
++	struct regulator *vdd;
++	struct reset_control *sd_reset;
+ 	unsigned long status_mask;
+ 	unsigned long port_status_mask;
+ 	int active_ports;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 0e48b94..81cf5eb 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -12,6 +12,7 @@
+ #include <linux/printk.h>
+ #include <linux/bitops.h>
+ #include <linux/regulator/consumer.h>
++#include <linux/reset.h>
+ #include <linux/pm_runtime.h>
+ #include <linux/hwmon.h>
+ #include <linux/delay.h>
+@@ -1331,29 +1332,67 @@ static int wsa883x_gpio_ctrl(struct wsa883x_priv *wsa883x, bool enable)
+ 	return 0;
+ }
+ 
++static void wsa883x_regulator_disable(void *data)
++{
++	regulator_disable(data);
++}
++
+ static int wsa883x_enable_supplies(struct device *dev,
+ 					   struct wsa883x_priv *priv)
+ {
+-	static const char * const supply_names[] = { "vdd" };
+-	int i, ret;
+-
+-	priv->num_supplies = ARRAY_SIZE(supply_names);
+-	priv->supplies = devm_kcalloc(dev, priv->num_supplies,
+-				       sizeof(*priv->supplies), GFP_KERNEL);
+-	if (!priv->supplies)
+-		return -ENOMEM;
++	int ret;
+ 
+-	for (i = 0; i < priv->num_supplies; i++)
+-		priv->supplies[i].supply = supply_names[i];
++	priv->vdd = devm_regulator_get(dev, "vdd");
++	if (IS_ERR(priv->vdd))
++		return dev_err_probe(dev, PTR_ERR(priv->vdd),
++				     "Failed to get vdd supply
++");
+ 
+-	ret = devm_regulator_bulk_get(dev, priv->num_supplies, priv->supplies);
++	ret = regulator_enable(priv->vdd);
+ 	if (ret)
+-		return dev_err_probe(dev, ret, "Failed to get supplies
++		return dev_err_probe(dev, ret, "Failed to enable vdd supply
+ ");
+ 
+-	return regulator_bulk_enable(priv->num_supplies, priv->supplies);
++	return devm_add_action_or_reset(dev, wsa883x_regulator_disable,
++					    priv->vdd);
++}
++
++static void wsa883x_reset_powerdown(void *data)
++{
++	struct wsa883x_priv *wsa883x = data;
++
++	if (wsa883x->sd_reset)
++		reset_control_assert(wsa883x->sd_reset);
++	else
++		wsa883x_gpio_ctrl(wsa883x, false);
++}
++
++static void wsa883x_reset_deassert(struct wsa883x_priv *wsa883x)
++{
++	if (wsa883x->sd_reset)
++		reset_control_deassert(wsa883x->sd_reset);
++	else
++		wsa883x_gpio_ctrl(wsa883x, true);
+ }
+ 
++static int wsa883x_get_reset(struct device *dev, struct wsa883x_priv *wsa883x)
++{
++	wsa883x->sd_reset = devm_reset_control_get_optional_shared(dev, NULL);
++	if (IS_ERR(wsa883x->sd_reset))
++		return dev_err_probe(dev, PTR_ERR(wsa883x->sd_reset),
++				     "Failed to get reset
++");
++	else if (wsa883x->sd_reset)
++		return 0;
++
++	wsa883x->sd_n = devm_gpiod_get_optional(dev, "powerdown", GPIOD_OUT_HIGH);
++	if (IS_ERR(wsa883x->sd_n))
++		return dev_err_probe(dev, PTR_ERR(wsa883x->sd_n),
++				     "Shutdown Control GPIO not found
++");
++
++	return 0;
++}
+ 
+ static int wsa883x_hw_params(struct snd_pcm_substream *substream,
+ 			     struct snd_pcm_hw_params *params,
+@@ -1478,18 +1517,9 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	wsa883x->sdw_slave = pdev;
+ 	mutex_init(&wsa883x->res_lock);
+ 
+-	wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown",
+-						GPIOD_OUT_LOW);
+-	if (IS_ERR(wsa883x->sd_n))
+-		return dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->sd_n),
+-				     "failed to get powerdown GPIO\n");
+-	if (!wsa883x->sd_n) {
+-		wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "reset",
+-							GPIOD_OUT_LOW);
+-		if (IS_ERR(wsa883x->sd_n))
+-			return dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->sd_n),
+-					     "failed to get reset GPIO\n");
+-	}
++	ret = wsa883x_get_reset(&pdev->dev, wsa883x);
++	if (ret)
++		return ret;
+ 
+ 	ret = wsa883x_enable_supplies(&pdev->dev, wsa883x);
+ 	if (ret)
+@@ -1507,6 +1537,12 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	of_property_read_u32_array(pdev->dev.of_node, "qcom,port-mapping",
+ 				   &pdev->m_port_map[1], WSA883X_MAX_SDW_PORTS);
+ 
++	wsa883x_reset_deassert(wsa883x);
++	ret = devm_add_action_or_reset(&pdev->dev, wsa883x_reset_powerdown,
++					    wsa883x);
++	if (ret)
++		return ret;
++
+ 	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
+ 	if (IS_ERR(wsa883x->regmap)) {
+ 		ret = PTR_ERR(wsa883x->regmap);
+@@ -1583,7 +1619,6 @@ dev_err:
+ 	if (pin_state_current == false)
+ 		wsa883x_gpio_ctrl(wsa883x, false);
+ err_supply:
+-	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ err:
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return ret;
+@@ -1606,7 +1641,6 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 	wsa883x->debugfs_dent = NULL;
+ #endif
+ 	mutex_destroy(&wsa883x->res_lock);
+-	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return 0;
+ }
+-- 
+2.34.1
+

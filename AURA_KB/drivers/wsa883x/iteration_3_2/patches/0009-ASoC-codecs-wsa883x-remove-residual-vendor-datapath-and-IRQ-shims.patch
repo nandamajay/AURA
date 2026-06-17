@@ -1,0 +1,52 @@
+From 5ef5b7468f99f26a12cc9aff3ef6494b5c55ae17 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:19:04 +0530
+Subject: [PATCH 9/14] ASoC: codecs: wsa883x: remove residual vendor datapath
+ and IRQ shims
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 13 +++----------
+ 1 file changed, 3 insertions(+), 10 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index eb3527b..623662b 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -893,9 +893,7 @@ static int wsa883x_enable_sdw_dac_port(struct snd_soc_dapm_widget *w,
+ 			dev_err(component->dev,
+ 				"%s: set num ch failed\n", __func__);
+ 
+-		sdw_slvdev_datapath_control(wsa883x->sdw_slave,
+-					    wsa883x->sdw_slave->dev_num,
+-					    false);
++		/* SoundWire core owns slave datapath disable. */
+ 		break;
+ 	default:
+ 		break;
+@@ -934,9 +932,7 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 						WSA883X_DRE_CTL_0,
+ 						0xF0, 0x90);
+ 		}
+-		sdw_slvdev_datapath_control(wsa883x->sdw_slave,
+-					    wsa883x->sdw_slave->dev_num,
+-					    true);
++		/* SoundWire core owns slave datapath enable. */
+ 		/* Added delay as per HW sequence */
+ 		usleep_range(250, 300);
+ 		snd_soc_component_update_bits(component,
+@@ -965,11 +961,8 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 				WSA883X_PA_FSM_CTL, 0x01, 0x01);
+ 		break;
+ 	case SND_SOC_DAPM_PRE_PMD:
+-		if (!test_bit(SPKR_ADIE_LB, &wsa883x->status_mask) && wsa883x->pdm_wd_enabled) {
+-			wcd_disable_irq(&wsa883x->irq_info,
+-					WSA883X_IRQ_INT_PDM_WD);
++		if (!test_bit(SPKR_ADIE_LB, &wsa883x->status_mask))
+ 			wsa883x->pdm_wd_enabled = false;
+-		}
+ 		snd_soc_component_update_bits(component,
+ 				WSA883X_VBAT_ADC_FLT_CTL,
+ 				0x01, 0x00);
+-- 
+2.34.1
+

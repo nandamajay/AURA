@@ -1,0 +1,46 @@
+From 9de1d985e77391198b32dd1f638832d5dc5fdfbf Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:13:22 +0530
+Subject: [PATCH 13/14] ASoC: codecs: wsa883x: use SoundWire bus identity
+ matching
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 17 +++++------------
+ 1 file changed, 5 insertions(+), 12 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 81cf5eb..5026637 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -1715,23 +1715,16 @@ static const struct dev_pm_ops wsa883x_sdw_pm_ops = {
+ 	RUNTIME_PM_OPS(wsa883x_runtime_suspend, wsa883x_runtime_resume, NULL)
+ };
+ 
+-static const struct sdw_slave_id wsa883x_sdw_id[] = {
+-	{"wsa883x", 0},
+-	{"wsa883x_2", 0},
+-	{}
+-};
+-
+-static const struct of_device_id wsa883x_sdw_dt_match[] = {
+-	{ .compatible = "sdw10217020200" },
++static const struct sdw_device_id wsa883x_sdw_id[] = {
++	SDW_SLAVE_ENTRY(0x0217, 0x0202, 0),
+ 	{}
+ };
++MODULE_DEVICE_TABLE(sdw, wsa883x_sdw_id);
+ 
+ static struct sdw_driver wsa883x_sdw_driver = {
+ 	.driver = {
+-		.name = "wsa883x",
+-		.owner = THIS_MODULE,
+-		.pm = &wsa883x_sdw_pm_ops,
+-		.of_match_table = wsa883x_sdw_dt_match,
++		.name = "wsa883x-codec",
++		.pm = pm_ptr(&wsa883x_sdw_pm_ops),
+ 	},
+ 	.probe = wsa883x_sdw_probe,
+ 	.remove = wsa883x_sdw_remove,
+-- 
+2.34.1
+

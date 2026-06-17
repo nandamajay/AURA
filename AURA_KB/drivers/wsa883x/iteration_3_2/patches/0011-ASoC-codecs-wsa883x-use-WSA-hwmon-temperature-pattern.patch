@@ -1,0 +1,126 @@
+From 1df09158e4be1cde0b7000bd326ff8be023365cf Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:11:05 +0530
+Subject: [PATCH 11/14] ASoC: codecs: wsa883x: use WSA hwmon temperature
+ pattern
+
+---
+ asoc/codecs/wsa883x/internal.h |  1 -
+ asoc/codecs/wsa883x/wsa883x.c  | 70 ++++++++++++++++++++++++++++++----
+ 2 files changed, 62 insertions(+), 9 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index 4890013..c2d53d6 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -86,7 +86,6 @@ struct wsa883x_priv {
+ 	struct gpio_desc *sd_n;
+ 	int pa_mute;
+ 	int curr_temp;
+-	struct thermal_zone_device *tz_dev;
+ 	int variant;
+ 	int version;
+ 	u8 pa_gain;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index c241e36..0e48b94 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -13,7 +13,7 @@
+ #include <linux/bitops.h>
+ #include <linux/regulator/consumer.h>
+ #include <linux/pm_runtime.h>
+-#include <linux/thermal.h>
++#include <linux/hwmon.h>
+ #include <linux/delay.h>
+ #include <linux/kernel.h>
+ #include <linux/gpio/consumer.h>
+@@ -1167,18 +1167,57 @@ static int wsa883x_get_temperature(struct snd_soc_component *component,
+ }
+ 
+ 
+-static int wsa883x_thermal_get_temp(struct thermal_zone_device *tz, int *temp)
++static umode_t wsa883x_hwmon_is_visible(const void *data,
++					enum hwmon_sensor_types type, u32 attr,
++					int channel)
+ {
+-	struct wsa883x_priv *wsa883x = thermal_zone_device_priv(tz);
++	if (type != hwmon_temp)
++		return 0;
+ 
+-	if (!wsa883x || !wsa883x->component)
+-		return -ENODEV;
++	switch (attr) {
++	case hwmon_temp_input:
++		return 0444;
++	default:
++		break;
++	}
+ 
+-	return wsa883x_get_temperature(wsa883x->component, temp);
++	return 0;
+ }
+ 
+-static const struct thermal_zone_device_ops wsa883x_thermal_ops = {
+-	.get_temp = wsa883x_thermal_get_temp,
++static int wsa883x_hwmon_read(struct device *dev,
++			      enum hwmon_sensor_types type,
++			      u32 attr, int channel, long *temp)
++{
++	struct wsa883x_priv *wsa883x = dev_get_drvdata(dev);
++	int temp_val;
++	int ret;
++
++	switch (attr) {
++	case hwmon_temp_input:
++		if (!wsa883x || !wsa883x->component)
++			return -ENODEV;
++		ret = wsa883x_get_temperature(wsa883x->component, &temp_val);
++		if (!ret)
++			*temp = temp_val;
++		return ret;
++	default:
++		return -EOPNOTSUPP;
++	}
++}
++
++static const struct hwmon_channel_info *const wsa883x_hwmon_info[] = {
++	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT),
++	NULL
++};
++
++static const struct hwmon_ops wsa883x_hwmon_ops = {
++	.is_visible = wsa883x_hwmon_is_visible,
++	.read = wsa883x_hwmon_read,
++};
++
++static const struct hwmon_chip_info wsa883x_hwmon_chip_info = {
++	.ops = &wsa883x_hwmon_ops,
++	.info = wsa883x_hwmon_info,
+ };
+ 
+ static int wsa883x_codec_probe(struct snd_soc_component *component)
+@@ -1474,6 +1513,21 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 		goto err_supply;
+ 	}
+ 
++	regcache_cache_only(wsa883x->regmap, true);
++
++	if (IS_REACHABLE(CONFIG_HWMON)) {
++		struct device *hwmon;
++
++		hwmon = devm_hwmon_device_register_with_info(&pdev->dev, "wsa883x",
++							     wsa883x,
++							     &wsa883x_hwmon_chip_info,
++							     NULL);
++		if (IS_ERR(hwmon)) {
++			ret = PTR_ERR(hwmon);
++			goto err_supply;
++		}
++	}
++
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, 3000);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+ 	pm_runtime_mark_last_busy(&pdev->dev);
+-- 
+2.34.1
+

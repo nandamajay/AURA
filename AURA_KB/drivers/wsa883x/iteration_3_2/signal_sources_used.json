@@ -1,0 +1,70 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_2_SIGNAL_SOURCES",
+  "blind_rule": "upstream wsa883x.c was not read during patch generation; it was read only for post-generation comparison",
+  "sources": [
+    {
+      "path": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+      "domain": "DT binding",
+      "used_for": [
+        "schema properties",
+        "compatible",
+        "supply/GPIO/port map contract"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+      "domain": "Kconfig",
+      "used_for": [
+        "SOUNDWIRE + REGMAP_SOUNDWIRE dependency"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+      "domain": "Makefile",
+      "used_for": [
+        "single object upstream build pattern"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c",
+      "domain": "allowed same-class reference",
+      "used_for": [
+        "basic SDW DAI stream ops",
+        "runtime PM",
+        "SDW_SLAVE_ENTRY model"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+      "domain": "allowed same-generation reference",
+      "used_for": [
+        "hwmon temperature pattern",
+        "reset_control + GPIO fallback",
+        "regulator cleanup",
+        "SDW bus identity",
+        "compact function structure"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/include/linux/soundwire/*.h",
+      "domain": "SoundWire headers",
+      "used_for": [
+        "sdw_driver, sdw_slave_ops, stream APIs"
+      ]
+    },
+    {
+      "path": "upstream hwmon/reset/regulator headers",
+      "domain": "kernel framework headers",
+      "used_for": [
+        "hwmon ops signatures and reset/regulator cleanup APIs"
+      ]
+    },
+    {
+      "path": "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa883x/",
+      "domain": "downstream source",
+      "used_for": [
+        "source transformation only"
+      ]
+    }
+  ]
+}

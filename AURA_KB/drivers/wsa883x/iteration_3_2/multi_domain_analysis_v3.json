@@ -1,0 +1,27 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_2_MULTI_DOMAIN_ANALYSIS",
+  "classification": "PASS",
+  "new_pattern_sources": [
+    "wsa884x.c",
+    "deep wsa881x.c"
+  ],
+  "pattern_findings": {
+    "thermal": "WSA884x exports amplifier temperature through hwmon, not thermal_zone; WSA883x 3.2 follows hwmon ops/chip_info/register_with_info shape.",
+    "soc_id": "WSA SoundWire codecs match via struct sdw_device_id and SDW_SLAVE_ENTRY, not platform-style of_match_table.",
+    "power": "Same-generation WSA884x uses devm_add_action_or_reset for regulator/reset cleanup and reset_control optional shared with GPIO fallback.",
+    "function_structure": "Same-class upstream drivers avoid downstream proc/debug/info wrappers; 3.2 prunes those scaffolds."
+  },
+  "dt_kconfig_makefile": {
+    "dt_properties": [
+      "compatible",
+      "reg",
+      "vdd-supply",
+      "powerdown-gpios|reset-gpios",
+      "qcom,port-mapping",
+      "#thermal-sensor-cells",
+      "#sound-dai-cells"
+    ],
+    "kconfig": "SND_SOC_WSA883X depends on SOUNDWIRE, selects REGMAP_SOUNDWIRE",
+    "makefile": "single upstream object snd-soc-wsa883x-y := wsa883x.o"
+  }
+}

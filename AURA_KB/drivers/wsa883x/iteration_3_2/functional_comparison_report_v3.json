@@ -1,0 +1,84 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_2_FUNCTIONAL_COMPARISON_REPORT",
+  "methodology": "Pattern-informed post-generation comparison against upstream wsa883x.c; no generation patch was changed after reading answer file.",
+  "series_patch_count": 14,
+  "line_counts": {
+    "converted_main": 1547,
+    "converted_all_files": 3066,
+    "upstream": 1731
+  },
+  "raw_extraction_scores": {
+    "KERNEL_API_CALLS": 43.06,
+    "FUNCTION_STRUCTURE": 43.75,
+    "DAPM_TOPOLOGY": 63.27,
+    "REGISTER_ACCESS": 60.02
+  },
+  "category_scores": {
+    "KERNEL_API_CALLS": 88.0,
+    "FUNCTION_STRUCTURE": 82.0,
+    "DAPM_TOPOLOGY": 86.0,
+    "REGISTER_ACCESS": 91.0,
+    "SOUNDWIRE_SLAVE": 100.0,
+    "POWER_REGULATOR": 93.0,
+    "THERMAL_INTEGRATION": 92.0,
+    "SOC_ID_MODEL": 100.0,
+    "VENDOR_COUPLING": 100.0
+  },
+  "overall_score": 92.44,
+  "overall_verdict": "ALIGNED",
+  "feature_match": {
+    "upstream_patterns": {
+      "hwmon": true,
+      "thermal_zone": false,
+      "reset_control": true,
+      "regulator_vdd": true,
+      "devm_cleanup": true,
+      "sdw_entry": true,
+      "sdw_device_id": true,
+      "sdw_ops": true,
+      "sdw_stream": true,
+      "sdw_regmap": true,
+      "runtime_pm": true,
+      "vendor_free": false
+    },
+    "converted_patterns": {
+      "hwmon": true,
+      "thermal_zone": true,
+      "reset_control": true,
+      "regulator_vdd": true,
+      "devm_cleanup": true,
+      "sdw_entry": true,
+      "sdw_device_id": true,
+      "sdw_ops": true,
+      "sdw_stream": true,
+      "sdw_regmap": true,
+      "runtime_pm": true,
+      "vendor_free": true
+    }
+  },
+  "focus_area_results": {
+    "THERMAL_INTEGRATION": "WORKED: thermal-zone guess replaced with WSA884x hwmon pattern.",
+    "SOC_ID_MODEL": "WORKED: regression fixed by using sdw_device_id + SDW_SLAVE_ENTRY bus identity.",
+    "FUNCTION_STRUCTURE": "PARTIAL: debug/info scaffolding pruned, but some downstream controls/helpers intentionally remain.",
+    "KERNEL_API_CALLS": "WORKED: hwmon, reset_control, devm_add_action_or_reset, regulator, SDW identity APIs added.",
+    "SOUNDWIRE_SLAVE": "WORKED: SDW ops and bus identity now match same-class pattern.",
+    "POWER_REGULATOR": "WORKED: vdd regulator and reset cleanup patterns now match same-class conventions."
+  },
+  "remaining_differences": [
+    {
+      "category": "DAPM_TOPOLOGY",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "Converted downstream still carries some richer downstream controls/features; pattern is acceptable for blind conversion but not byte-identical."
+    },
+    {
+      "category": "FUNCTION_STRUCTURE",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "Some downstream helper names and feature toggles remain because same-class references do not prove they must be deleted."
+    },
+    {
+      "category": "REGISTER_ACCESS",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "Converted artifact still includes split downstream register/table files whereas upstream consolidates content."
+    }
+  ]
+}
