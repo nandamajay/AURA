@@ -1,0 +1,2800 @@
+{
+  "artifact_name": "TX_FUNCTIONAL_STRUCTURAL_COMPARISON",
+  "driver": "lpass_tx_macro",
+  "blind_conversion": true,
+  "applied_patches": [
+    "0001-ASoC-codecs-lpass-tx-macro-isolate-register-name-migration.patch",
+    "0002-ASoC-codecs-lpass-tx-macro-drop-version-and-unused-pinctrl-paths.patch",
+    "0003-ASoC-codecs-lpass-tx-macro-remove-lpass-cdc-framework.patch",
+    "0004-ASoC-codecs-lpass-tx-macro-own-MMIO-regmap-in-probe.patch",
+    "0005-ASoC-codecs-lpass-tx-macro-integrate-lpass-macro-common-power-domains.patch",
+    "0006-ASoC-codecs-lpass-tx-macro-migrate-runtime-PM-clock-sequencing.patch",
+    "0007-ASoC-codecs-lpass-tx-macro-add-blind-SoC-data-model.patch",
+    "0008-ASoC-codecs-lpass-tx-macro-reduce-downstream-DAPM-topology.patch",
+    "0009-ASoC-codecs-lpass-tx-macro-remove-residual-downstream-symbols.patch"
+  ],
+  "converted_file": "/tmp/aura_tx_functional_compare/aura_tx_converted.c",
+  "upstream_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+  "va_baseline": {
+    "line_similarity": 40.23,
+    "function_match": 57.14,
+    "register_defines": 68.29,
+    "dapm": 64.47,
+    "runtime_pm": 100.0,
+    "verdict": "PARTIALLY_ALIGNED"
+  },
+  "overall_score": 69.27,
+  "overall_verdict": "PARTIALLY_ALIGNED",
+  "improvement_over_va": "REGRESSED",
+  "tx_metric_summary": {
+    "line_similarity": 27.94,
+    "function_match": 63.33,
+    "register_defines": 27.54,
+    "dapm": 75.68,
+    "runtime_pm": 100.0
+  },
+  "source_metrics": {
+    "upstream": {
+      "path": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+      "line_count": 2543,
+      "functions": [
+        "is_amic_enabled",
+        "swclk_gate_disable",
+        "swclk_gate_enable",
+        "swclk_gate_is_enabled",
+        "tx_is_rw_register",
+        "tx_is_volatile_register",
+        "tx_macro_component_extend",
+        "tx_macro_component_probe",
+        "tx_macro_dec_mode_get",
+        "tx_macro_dec_mode_put",
+        "tx_macro_digital_mute",
+        "tx_macro_enable_dec",
+        "tx_macro_get_bcs",
+        "tx_macro_get_channel_map",
+        "tx_macro_hw_params",
+        "tx_macro_mclk_enable",
+        "tx_macro_mclk_event",
+        "tx_macro_mute_update_callback",
+        "tx_macro_probe",
+        "tx_macro_put_dec_enum",
+        "tx_macro_register_mclk_output",
+        "tx_macro_remove",
+        "tx_macro_runtime_resume",
+        "tx_macro_runtime_suspend",
+        "tx_macro_set_bcs",
+        "tx_macro_tx_hpf_corner_freq_callback",
+        "tx_macro_tx_mixer_get",
+        "tx_macro_tx_mixer_put",
+        "tx_macro_update_smic_sel_v9",
+        "tx_macro_update_smic_sel_v9_2"
+      ],
+      "function_count": 30,
+      "kernel_api_calls": {
+        "ARRAY_SIZE": 25,
+        "BIT": 16,
+        "GENMASK": 6,
+        "INIT_DELAYED_WORK": 2,
+        "IS_ERR": 8,
+        "PTR_ERR": 8,
+        "cancel_delayed_work_sync": 2,
+        "clk_disable_unprepare": 16,
+        "clk_prepare_enable": 9,
+        "clk_set_rate": 2,
+        "container_of": 3,
+        "dev_err": 9,
+        "dev_err_probe": 5,
+        "dev_get_drvdata": 3,
+        "dev_set_drvdata": 1,
+        "device_get_match_data": 1,
+        "devm_clk_get": 3,
+        "devm_clk_get_optional": 2,
+        "devm_clk_hw_register": 1,
+        "devm_kzalloc": 1,
+        "devm_of_clk_add_hw_provider": 1,
+        "devm_platform_ioremap_resource": 1,
+        "devm_regmap_init_mmio": 1,
+        "devm_snd_soc_register_component": 1,
+        "lpass_macro_pds_exit": 2,
+        "lpass_macro_pds_init": 1,
+        "module_platform_driver": 1,
+        "of_device_is_compatible": 1,
+        "pm_runtime_enable": 1,
+        "pm_runtime_mark_last_busy": 1,
+        "pm_runtime_set_active": 1,
+        "pm_runtime_set_autosuspend_delay": 1,
+        "pm_runtime_use_autosuspend": 1,
+        "queue_delayed_work": 2,
+        "regcache_cache_only": 2,
+        "regcache_mark_dirty": 2,
+        "regcache_sync": 2,
+        "regmap_read": 1,
+        "regmap_update_bits": 10,
+        "snd_soc_component_get_drvdata": 14,
+        "snd_soc_component_init_regmap": 1,
+        "snd_soc_component_read": 4,
+        "snd_soc_component_read_field": 2,
+        "snd_soc_component_to_dapm": 1,
+        "snd_soc_component_update_bits": 13,
+        "snd_soc_component_write": 3,
+        "snd_soc_component_write_field": 25,
+        "snd_soc_dapm_add_routes": 1,
+        "snd_soc_dapm_kcontrol_to_widget": 3,
+        "snd_soc_dapm_mixer_update_power": 1,
+        "snd_soc_dapm_new_controls": 1,
+        "snd_soc_dapm_put_enum_double": 1,
+        "snd_soc_dapm_to_component": 5,
+        "to_delayed_work": 2,
+        "usleep_range": 4
+      },
+      "kernel_api_call_count": 237,
+      "kernel_api_unique_count": 55,
+      "kernel_api_contexts": {
+        "ARRAY_SIZE": [
+          {
+            "line": 607,
+            "context": ".num_reg_defaults = ARRAY_SIZE(tx_defaults),"
+          },
+          {
+            "line": 1345,
+            "context": "SOC_ENUM_SINGLE(SND_SOC_NOPM, 0, ARRAY_SIZE(dec_mode_mux_text),"
+          },
+          {
+            "line": 1347,
+            "context": "SOC_ENUM_SINGLE(SND_SOC_NOPM, 1, ARRAY_SIZE(dec_mode_mux_text),"
+          },
+          {
+            "line": 1349,
+            "context": "SOC_ENUM_SINGLE(SND_SOC_NOPM, 2,  ARRAY_SIZE(dec_mode_mux_text),"
+          },
+          {
+            "line": 1351,
+            "context": "SOC_ENUM_SINGLE(SND_SOC_NOPM, 3, ARRAY_SIZE(dec_mode_mux_text),"
+          }
+        ],
+        "BIT": [
+          {
+            "line": 20,
+            "context": "#define CDC_TX_MCLK_EN_MASK\t\tBIT(0)"
+          },
+          {
+            "line": 21,
+            "context": "#define CDC_TX_MCLK_ENABLE\t\tBIT(0)"
+          },
+          {
+            "line": 23,
+            "context": "#define CDC_TX_FS_CNT_EN_MASK\t\tBIT(0)"
+          },
+          {
+            "line": 24,
+            "context": "#define CDC_TX_FS_CNT_ENABLE\t\tBIT(0)"
+          },
+          {
+            "line": 26,
+            "context": "#define CDC_TX_SWR_RESET_MASK\t\tBIT(1)"
+          }
+        ],
+        "GENMASK": [
+          {
+            "line": 43,
+            "context": "#define CDC_TX_SWR_DMIC_CLK_SEL_MASK\tGENMASK(3, 1)"
+          },
+          {
+            "line": 50,
+            "context": "#define CDC_TX_MACRO_SWR_MIC_MUX_SEL_MASK GENMASK(3, 0)"
+          },
+          {
+            "line": 51,
+            "context": "#define CDC_TX_MACRO_DMIC_MUX_SEL_MASK GENMASK(7, 4)"
+          },
+          {
+            "line": 86,
+            "context": "#define CDC_TXn_PCM_RATE_MASK\t\tGENMASK(3, 0)"
+          },
+          {
+            "line": 93,
+            "context": "#define CDC_TXn_ADC_MODE_MASK\t\tGENMASK(2, 1)"
+          }
+        ],
+        "INIT_DELAYED_WORK": [
+          {
+            "line": 2123,
+            "context": "INIT_DELAYED_WORK(&tx->tx_hpf_work[i].dwork,"
+          },
+          {
+            "line": 2130,
+            "context": "INIT_DELAYED_WORK(&tx->tx_mute_dwork[i].dwork,"
+          }
+        ],
+        "IS_ERR": [
+          {
+            "line": 2257,
+            "context": "if (IS_ERR(tx->macro))"
+          },
+          {
+            "line": 2261,
+            "context": "if (IS_ERR(tx->dcodec))"
+          },
+          {
+            "line": 2265,
+            "context": "if (IS_ERR(tx->mclk))"
+          },
+          {
+            "line": 2270,
+            "context": "if (IS_ERR(tx->npl))"
+          },
+          {
+            "line": 2275,
+            "context": "if (IS_ERR(tx->fsgen))"
+          }
+        ],
+        "PTR_ERR": [
+          {
+            "line": 2258,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->macro), \"unable to get macro clock\\n\");"
+          },
+          {
+            "line": 2262,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->dcodec), \"unable to get dcodec clock\\n\");"
+          },
+          {
+            "line": 2266,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->mclk), \"unable to get mclk clock\\n\");"
+          },
+          {
+            "line": 2271,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->npl), \"unable to get npl clock\\n\");"
+          },
+          {
+            "line": 2276,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->fsgen), \"unable to get fsgen clock\\n\");"
+          }
+        ],
+        "cancel_delayed_work_sync": [
+          {
+            "line": 1016,
+            "context": "if (cancel_delayed_work_sync("
+          },
+          {
+            "line": 1047,
+            "context": "cancel_delayed_work_sync(&tx->tx_mute_dwork[decimator].dwork);"
+          }
+        ],
+        "clk_disable_unprepare": [
+          {
+            "line": 2175,
+            "context": "clk_disable_unprepare(tx->mclk);"
+          },
+          {
+            "line": 2374,
+            "context": "clk_disable_unprepare(tx->fsgen);"
+          },
+          {
+            "line": 2376,
+            "context": "clk_disable_unprepare(tx->npl);"
+          },
+          {
+            "line": 2378,
+            "context": "clk_disable_unprepare(tx->mclk);"
+          },
+          {
+            "line": 2380,
+            "context": "clk_disable_unprepare(tx->dcodec);"
+          }
+        ],
+        "clk_prepare_enable": [
+          {
+            "line": 2152,
+            "context": "ret = clk_prepare_enable(tx->mclk);"
+          },
+          {
+            "line": 2321,
+            "context": "ret = clk_prepare_enable(tx->macro);"
+          },
+          {
+            "line": 2325,
+            "context": "ret = clk_prepare_enable(tx->dcodec);"
+          },
+          {
+            "line": 2329,
+            "context": "ret = clk_prepare_enable(tx->mclk);"
+          },
+          {
+            "line": 2333,
+            "context": "ret = clk_prepare_enable(tx->npl);"
+          }
+        ],
+        "clk_set_rate": [
+          {
+            "line": 2318,
+            "context": "clk_set_rate(tx->mclk, MCLK_FREQ);"
+          },
+          {
+            "line": 2319,
+            "context": "clk_set_rate(tx->npl, MCLK_FREQ);"
+          }
+        ],
+        "container_of": [
+          {
+            "line": 289,
+            "context": "#define to_tx_macro(_hw) container_of(_hw, struct tx_macro, hw)"
+          },
+          {
+            "line": 682,
+            "context": "hpf_work = container_of(hpf_delayed_work, struct hpf_work, dwork);"
+          },
+          {
+            "line": 725,
+            "context": "tx_mute_dwork = container_of(delayed_work, struct tx_mute_work, dwork);"
+          }
+        ],
+        "dev_err": [
+          {
+            "line": 634,
+            "context": "dev_err(tx->dev, \"clock already disabled\\n\");"
+          },
+          {
+            "line": 840,
+            "context": "dev_err(component->dev, \"Error in configuration!!\\n\");"
+          },
+          {
+            "line": 1157,
+            "context": "dev_err(component->dev, \"%s: Invalid TX sample rate: %d\\n\","
+          },
+          {
+            "line": 2092,
+            "context": "dev_err(tx->dev, \"failed to add extra widgets: %d\\n\", ret);"
+          },
+          {
+            "line": 2101,
+            "context": "dev_err(tx->dev, \"failed to add extra routes: %d\\n\", ret);"
+          }
+        ],
+        "dev_err_probe": [
+          {
+            "line": 2258,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->macro), \"unable to get macro clock\\n\");"
+          },
+          {
+            "line": 2262,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->dcodec), \"unable to get dcodec clock\\n\");"
+          },
+          {
+            "line": 2266,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->mclk), \"unable to get mclk clock\\n\");"
+          },
+          {
+            "line": 2271,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->npl), \"unable to get npl clock\\n\");"
+          },
+          {
+            "line": 2276,
+            "context": "return dev_err_probe(dev, PTR_ERR(tx->fsgen), \"unable to get fsgen clock\\n\");"
+          }
+        ],
+        "dev_get_drvdata": [
+          {
+            "line": 2391,
+            "context": "struct tx_macro *tx = dev_get_drvdata(&pdev->dev);"
+          },
+          {
+            "line": 2404,
+            "context": "struct tx_macro *tx = dev_get_drvdata(dev);"
+          },
+          {
+            "line": 2418,
+            "context": "struct tx_macro *tx = dev_get_drvdata(dev);"
+          }
+        ],
+        "dev_set_drvdata": [
+          {
+            "line": 2308,
+            "context": "dev_set_drvdata(dev, tx);"
+          }
+        ],
+        "device_get_match_data": [
+          {
+            "line": 2254,
+            "context": "tx->data = device_get_match_data(dev);"
+          }
+        ],
+        "devm_clk_get": [
+          {
+            "line": 2264,
+            "context": "tx->mclk = devm_clk_get(dev, \"mclk\");"
+          },
+          {
+            "line": 2269,
+            "context": "tx->npl = devm_clk_get(dev, \"npl\");"
+          },
+          {
+            "line": 2274,
+            "context": "tx->fsgen = devm_clk_get(dev, \"fsgen\");"
+          }
+        ],
+        "devm_clk_get_optional": [
+          {
+            "line": 2256,
+            "context": "tx->macro = devm_clk_get_optional(dev, \"macro\");"
+          },
+          {
+            "line": 2260,
+            "context": "tx->dcodec = devm_clk_get_optional(dev, \"dcodec\");"
+          }
+        ],
+        "devm_clk_hw_register": [
+          {
+            "line": 2224,
+            "context": "ret = devm_clk_hw_register(dev, hw);"
+          }
+        ],
+        "devm_kzalloc": [
+          {
+            "line": 2250,
+            "context": "tx = devm_kzalloc(dev, sizeof(*tx), GFP_KERNEL);"
+          }
+        ],
+        "devm_of_clk_add_hw_provider": [
+          {
+            "line": 2228,
+            "context": "return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);"
+          }
+        ],
+        "devm_platform_ioremap_resource": [
+          {
+            "line": 2282,
+            "context": "base = devm_platform_ioremap_resource(pdev, 0);"
+          }
+        ],
+        "devm_regmap_init_mmio": [
+          {
+            "line": 2302,
+            "context": "tx->regmap = devm_regmap_init_mmio(dev, base, &tx_regmap_config);"
+          }
+        ],
+        "devm_snd_soc_register_component": [
+          {
+            "line": 2355,
+            "context": "ret = devm_snd_soc_register_component(dev, &tx_macro_component_drv,"
+          }
+        ],
+        "lpass_macro_pds_exit": [
+          {
+            "line": 2384,
+            "context": "lpass_macro_pds_exit(tx->pds);"
+          },
+          {
+            "line": 2399,
+            "context": "lpass_macro_pds_exit(tx->pds);"
+          }
+        ],
+        "lpass_macro_pds_init": [
+          {
+            "line": 2278,
+            "context": "tx->pds = lpass_macro_pds_init(dev);"
+          }
+        ],
+        "module_platform_driver": [
+          {
+            "line": 2540,
+            "context": "module_platform_driver(tx_macro_driver);"
+          }
+        ],
+        "of_device_is_compatible": [
+          {
+            "line": 2289,
+            "context": "if (of_device_is_compatible(np, \"qcom,sc7280-lpass-tx-macro\")) {"
+          }
+        ],
+        "pm_runtime_enable": [
+          {
+            "line": 2365,
+            "context": "pm_runtime_enable(dev);"
+          }
+        ],
+        "pm_runtime_mark_last_busy": [
+          {
+            "line": 2363,
+            "context": "pm_runtime_mark_last_busy(dev);"
+          }
+        ],
+        "pm_runtime_set_active": [
+          {
+            "line": 2364,
+            "context": "pm_runtime_set_active(dev);"
+          }
+        ],
+        "pm_runtime_set_autosuspend_delay": [
+          {
+            "line": 2361,
+            "context": "pm_runtime_set_autosuspend_delay(dev, 3000);"
+          }
+        ],
+        "pm_runtime_use_autosuspend": [
+          {
+            "line": 2362,
+            "context": "pm_runtime_use_autosuspend(dev);"
+          }
+        ],
+        "queue_delayed_work": [
+          {
+            "line": 975,
+            "context": "queue_delayed_work(system_freezable_wq,"
+          },
+          {
+            "line": 979,
+            "context": "queue_delayed_work(system_freezable_wq,"
+          }
+        ],
+        "regcache_cache_only": [
+          {
+            "line": 2406,
+            "context": "regcache_cache_only(tx->regmap, true);"
+          },
+          {
+            "line": 2439,
+            "context": "regcache_cache_only(tx->regmap, false);"
+          }
+        ],
+        "regcache_mark_dirty": [
+          {
+            "line": 628,
+            "context": "regcache_mark_dirty(regmap);"
+          },
+          {
+            "line": 2407,
+            "context": "regcache_mark_dirty(tx->regmap);"
+          }
+        ],
+        "regcache_sync": [
+          {
+            "line": 629,
+            "context": "regcache_sync(regmap);"
+          },
+          {
+            "line": 2440,
+            "context": "regcache_sync(tx->regmap);"
+          }
+        ],
+        "regmap_read": [
+          {
+            "line": 2183,
+            "context": "regmap_read(tx->regmap, CDC_TX_CLK_RST_CTRL_SWR_CONTROL, &val);"
+          }
+        ],
+        "regmap_update_bits": [
+          {
+            "line": 621,
+            "context": "regmap_update_bits(regmap, CDC_TX_TOP_CSR_FREQ_MCLK, 0x01, 0x01);"
+          },
+          {
+            "line": 622,
+            "context": "regmap_update_bits(regmap, CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,"
+          },
+          {
+            "line": 625,
+            "context": "regmap_update_bits(regmap, CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,"
+          },
+          {
+            "line": 640,
+            "context": "regmap_update_bits(regmap, CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,"
+          },
+          {
+            "line": 642,
+            "context": "regmap_update_bits(regmap, CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,"
+          }
+        ],
+        "snd_soc_component_get_drvdata": [
+          {
+            "line": 738,
+            "context": "struct tx_macro *tx = snd_soc_component_get_drvdata(component);"
+          },
+          {
+            "line": 806,
+            "context": "struct tx_macro *tx = snd_soc_component_get_drvdata(component);"
+          },
+          {
+            "line": 867,
+            "context": "struct tx_macro *tx = snd_soc_component_get_drvdata(component);"
+          },
+          {
+            "line": 887,
+            "context": "struct tx_macro *tx = snd_soc_component_get_drvdata(component);"
+          },
+          {
+            "line": 920,
+            "context": "struct tx_macro *tx = snd_soc_component_get_drvdata(component);"
+          }
+        ],
+        "snd_soc_component_init_regmap": [
+          {
+            "line": 2118,
+            "context": "snd_soc_component_init_regmap(comp, tx->regmap);"
+          }
+        ],
+        "snd_soc_component_read": [
+          {
+            "line": 657,
+            "context": "if (snd_soc_component_read(component, adc_mux_reg) & SWR_MIC) {"
+          },
+          {
+            "line": 931,
+            "context": "if (snd_soc_component_read(component, adc_mux_reg) & SWR_MIC) {"
+          },
+          {
+            "line": 933,
+            "context": "adc_n = snd_soc_component_read(component, adc_reg) &"
+          },
+          {
+            "line": 1003,
+            "context": "snd_soc_component_read(component,"
+          }
+        ],
+        "snd_soc_component_read_field": [
+          {
+            "line": 663,
+            "context": "adc_n = snd_soc_component_read_field(component, adc_reg,"
+          },
+          {
+            "line": 959,
+            "context": "hpf_cut_off_freq = snd_soc_component_read_field(component, dec_cfg_reg,"
+          }
+        ],
+        "snd_soc_component_to_dapm": [
+          {
+            "line": 2084,
+            "context": "struct snd_soc_dapm_context *dapm = snd_soc_component_to_dapm(comp);"
+          }
+        ],
+        "snd_soc_component_update_bits": [
+          {
+            "line": 695,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          },
+          {
+            "line": 699,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          },
+          {
+            "line": 955,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg, 0x01, 0x00);"
+          },
+          {
+            "line": 982,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          },
+          {
+            "line": 987,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          }
+        ],
+        "snd_soc_component_write": [
+          {
+            "line": 1002,
+            "context": "snd_soc_component_write(component, tx_gain_ctl_reg,"
+          },
+          {
+            "line": 2138,
+            "context": "snd_soc_component_write(comp, CDC_TX_TOP_CSR_SWR_AMIC0_CTL,"
+          },
+          {
+            "line": 2140,
+            "context": "snd_soc_component_write(comp, CDC_TX_TOP_CSR_SWR_AMIC1_CTL,"
+          }
+        ],
+        "snd_soc_component_write_field": [
+          {
+            "line": 691,
+            "context": "snd_soc_component_write_field(component,"
+          },
+          {
+            "line": 704,
+            "context": "snd_soc_component_write_field(component, dec_cfg_reg,"
+          },
+          {
+            "line": 707,
+            "context": "snd_soc_component_write_field(component, hpf_gate_reg,"
+          },
+          {
+            "line": 711,
+            "context": "snd_soc_component_write_field(component, hpf_gate_reg,"
+          },
+          {
+            "line": 730,
+            "context": "snd_soc_component_write_field(component, CDC_TXn_TX_PATH_CTL(decimator),"
+          }
+        ],
+        "snd_soc_dapm_add_routes": [
+          {
+            "line": 2098,
+            "context": "ret = snd_soc_dapm_add_routes(dapm, tx->data->extra_routes,"
+          }
+        ],
+        "snd_soc_dapm_kcontrol_to_widget": [
+          {
+            "line": 803,
+            "context": "struct snd_soc_dapm_widget *widget = snd_soc_dapm_kcontrol_to_widget(kcontrol);"
+          },
+          {
+            "line": 862,
+            "context": "struct snd_soc_dapm_widget *widget = snd_soc_dapm_kcontrol_to_widget(kcontrol);"
+          },
+          {
+            "line": 880,
+            "context": "struct snd_soc_dapm_widget *widget = snd_soc_dapm_kcontrol_to_widget(kcontrol);"
+          }
+        ],
+        "snd_soc_dapm_mixer_update_power": [
+          {
+            "line": 904,
+            "context": "snd_soc_dapm_mixer_update_power(widget->dapm, kcontrol, enable, update);"
+          }
+        ],
+        "snd_soc_dapm_new_controls": [
+          {
+            "line": 2089,
+            "context": "ret = snd_soc_dapm_new_controls(dapm, tx->data->extra_widgets,"
+          }
+        ],
+        "snd_soc_dapm_put_enum_double": [
+          {
+            "line": 856,
+            "context": "return snd_soc_dapm_put_enum_double(kcontrol, ucontrol);"
+          }
+        ],
+        "snd_soc_dapm_to_component": [
+          {
+            "line": 737,
+            "context": "struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);"
+          },
+          {
+            "line": 804,
+            "context": "struct snd_soc_component *component = snd_soc_dapm_to_component(widget->dapm);"
+          },
+          {
+            "line": 863,
+            "context": "struct snd_soc_component *component = snd_soc_dapm_to_component(widget->dapm);"
+          },
+          {
+            "line": 881,
+            "context": "struct snd_soc_component *component = snd_soc_dapm_to_component(widget->dapm);"
+          },
+          {
+            "line": 912,
+            "context": "struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);"
+          }
+        ],
+        "to_delayed_work": [
+          {
+            "line": 681,
+            "context": "hpf_delayed_work = to_delayed_work(work);"
+          },
+          {
+            "line": 724,
+            "context": "delayed_work = to_delayed_work(work);"
+          }
+        ],
+        "usleep_range": [
+          {
+            "line": 710,
+            "context": "usleep_range(1000, 1010);"
+          },
+          {
+            "line": 957,
+            "context": "usleep_range(1000, 1010);"
+          },
+          {
+            "line": 999,
+            "context": "usleep_range(6000, 6010);"
+          },
+          {
+            "line": 1040,
+            "context": "usleep_range(1000, 1010);"
+          }
+        ]
+      },
+      "lifecycle": {
+        "probe_sequence": [
+          "devm_kzalloc",
+          "device_get_match_data",
+          "devm_clk_get_optional",
+          "IS_ERR",
+          "dev_err_probe",
+          "PTR_ERR",
+          "devm_clk_get_optional",
+          "IS_ERR",
+          "dev_err_probe",
+          "PTR_ERR",
+          "devm_clk_get",
+          "IS_ERR",
+          "dev_err_probe",
+          "PTR_ERR",
+          "devm_clk_get",
+          "IS_ERR",
+          "dev_err_probe",
+          "PTR_ERR",
+          "devm_clk_get",
+          "IS_ERR",
+          "dev_err_probe",
+          "PTR_ERR",
+          "lpass_macro_pds_init",
+          "IS_ERR",
+          "PTR_ERR",
+          "devm_platform_ioremap_resource",
+          "IS_ERR",
+          "PTR_ERR",
+          "of_device_is_compatible",
+          "ARRAY_SIZE",
+          "devm_regmap_init_mmio",
+          "IS_ERR",
+          "PTR_ERR",
+          "dev_set_drvdata",
+          "clk_set_rate",
+          "clk_set_rate",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "regmap_update_bits",
+          "regmap_update_bits",
+          "regmap_update_bits",
+          "devm_snd_soc_register_component",
+          "ARRAY_SIZE",
+          "pm_runtime_set_autosuspend_delay",
+          "pm_runtime_use_autosuspend",
+          "pm_runtime_mark_last_busy",
+          "pm_runtime_set_active",
+          "pm_runtime_enable",
+          "tx_macro_register_mclk_output",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "lpass_macro_pds_exit"
+        ],
+        "remove_sequence": [
+          "dev_get_drvdata",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "lpass_macro_pds_exit"
+        ],
+        "suspend_sequence": [
+          "dev_get_drvdata",
+          "regcache_cache_only",
+          "regcache_mark_dirty",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare"
+        ],
+        "resume_sequence": [
+          "dev_get_drvdata",
+          "clk_prepare_enable",
+          "dev_err",
+          "clk_prepare_enable",
+          "dev_err",
+          "clk_prepare_enable",
+          "dev_err",
+          "regcache_cache_only",
+          "regcache_sync",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare"
+        ],
+        "probe_has_component_register": true,
+        "probe_has_regmap_init": true,
+        "remove_has_pds_exit": true
+      },
+      "dapm": {
+        "widget_count": 33,
+        "widget_types": {
+          "SND_SOC_DAPM_AIF_OUT": 3,
+          "SND_SOC_DAPM_INPUT": 8,
+          "SND_SOC_DAPM_MIXER": 3,
+          "SND_SOC_DAPM_MUX": 8,
+          "SND_SOC_DAPM_MUX_E": 8,
+          "SND_SOC_DAPM_SUPPLY_S": 3
+        },
+        "route_count": 110,
+        "control_count": 17,
+        "control_types": {
+          "SOC_ENUM_EXT": 8,
+          "SOC_SINGLE_EXT": 1,
+          "SOC_SINGLE_S8_TLV": 8
+        },
+        "dai_count": 3
+      },
+      "registers": {
+        "define_count": 167,
+        "defines": [
+          "CDC_TX0_MBHC_CTL_EN_MASK",
+          "CDC_TX0_TX_PATH_CFG0",
+          "CDC_TX0_TX_PATH_CFG1",
+          "CDC_TX0_TX_PATH_CTL",
+          "CDC_TX0_TX_PATH_SEC0",
+          "CDC_TX0_TX_PATH_SEC1",
+          "CDC_TX0_TX_PATH_SEC2",
+          "CDC_TX0_TX_PATH_SEC3",
+          "CDC_TX0_TX_PATH_SEC4",
+          "CDC_TX0_TX_PATH_SEC5",
+          "CDC_TX0_TX_PATH_SEC6",
+          "CDC_TX0_TX_PATH_SEC7",
+          "CDC_TX0_TX_VOL_CTL",
+          "CDC_TX1_TX_PATH_CFG0",
+          "CDC_TX1_TX_PATH_CFG1",
+          "CDC_TX1_TX_PATH_CTL",
+          "CDC_TX1_TX_PATH_SEC0",
+          "CDC_TX1_TX_PATH_SEC1",
+          "CDC_TX1_TX_PATH_SEC2",
+          "CDC_TX1_TX_PATH_SEC3",
+          "CDC_TX1_TX_PATH_SEC4",
+          "CDC_TX1_TX_PATH_SEC5",
+          "CDC_TX1_TX_PATH_SEC6",
+          "CDC_TX1_TX_VOL_CTL",
+          "CDC_TX2_TX_PATH_CFG0",
+          "CDC_TX2_TX_PATH_CFG1",
+          "CDC_TX2_TX_PATH_CTL",
+          "CDC_TX2_TX_PATH_SEC0",
+          "CDC_TX2_TX_PATH_SEC1",
+          "CDC_TX2_TX_PATH_SEC2",
+          "CDC_TX2_TX_PATH_SEC3",
+          "CDC_TX2_TX_PATH_SEC4",
+          "CDC_TX2_TX_PATH_SEC5",
+          "CDC_TX2_TX_PATH_SEC6",
+          "CDC_TX2_TX_VOL_CTL",
+          "CDC_TX3_TX_PATH_CFG0",
+          "CDC_TX3_TX_PATH_CFG1",
+          "CDC_TX3_TX_PATH_CTL",
+          "CDC_TX3_TX_PATH_SEC0",
+          "CDC_TX3_TX_PATH_SEC1",
+          "CDC_TX3_TX_PATH_SEC2",
+          "CDC_TX3_TX_PATH_SEC3",
+          "CDC_TX3_TX_PATH_SEC4",
+          "CDC_TX3_TX_PATH_SEC5",
+          "CDC_TX3_TX_PATH_SEC6",
+          "CDC_TX3_TX_VOL_CTL",
+          "CDC_TX4_TX_PATH_CFG0",
+          "CDC_TX4_TX_PATH_CFG1",
+          "CDC_TX4_TX_PATH_CTL",
+          "CDC_TX4_TX_PATH_SEC0",
+          "CDC_TX4_TX_PATH_SEC1",
+          "CDC_TX4_TX_PATH_SEC2",
+          "CDC_TX4_TX_PATH_SEC3",
+          "CDC_TX4_TX_PATH_SEC4",
+          "CDC_TX4_TX_PATH_SEC5",
+          "CDC_TX4_TX_PATH_SEC6",
+          "CDC_TX4_TX_VOL_CTL",
+          "CDC_TX5_TX_PATH_CFG0",
+          "CDC_TX5_TX_PATH_CFG1",
+          "CDC_TX5_TX_PATH_CTL",
+          "CDC_TX5_TX_PATH_SEC0",
+          "CDC_TX5_TX_PATH_SEC1",
+          "CDC_TX5_TX_PATH_SEC2",
+          "CDC_TX5_TX_PATH_SEC3",
+          "CDC_TX5_TX_PATH_SEC4",
+          "CDC_TX5_TX_PATH_SEC5",
+          "CDC_TX5_TX_PATH_SEC6",
+          "CDC_TX5_TX_VOL_CTL",
+          "CDC_TX6_TX_PATH_CFG0",
+          "CDC_TX6_TX_PATH_CFG1",
+          "CDC_TX6_TX_PATH_CTL",
+          "CDC_TX6_TX_PATH_SEC0",
+          "CDC_TX6_TX_PATH_SEC1",
+          "CDC_TX6_TX_PATH_SEC2",
+          "CDC_TX6_TX_PATH_SEC3",
+          "CDC_TX6_TX_PATH_SEC4",
+          "CDC_TX6_TX_PATH_SEC5",
+          "CDC_TX6_TX_PATH_SEC6",
+          "CDC_TX6_TX_VOL_CTL",
+          "CDC_TX7_TX_PATH_CFG0",
+          "CDC_TX7_TX_PATH_CFG1",
+          "CDC_TX7_TX_PATH_CTL",
+          "CDC_TX7_TX_PATH_SEC0",
+          "CDC_TX7_TX_PATH_SEC1",
+          "CDC_TX7_TX_PATH_SEC2",
+          "CDC_TX7_TX_PATH_SEC3",
+          "CDC_TX7_TX_PATH_SEC4",
+          "CDC_TX7_TX_PATH_SEC5",
+          "CDC_TX7_TX_PATH_SEC6",
+          "CDC_TX7_TX_VOL_CTL",
+          "CDC_TX_ANC0_CLK_RESET_CTL",
+          "CDC_TX_ANC0_DCFLT_SHIFT_CTL",
+          "CDC_TX_ANC0_FB_GAIN_CTL",
+          "CDC_TX_ANC0_FB_SHIFT",
+          "CDC_TX_ANC0_FF_A_GAIN_CTL",
+          "CDC_TX_ANC0_FF_B_GAIN_CTL",
+          "CDC_TX_ANC0_FF_SHIFT",
+          "CDC_TX_ANC0_IIR_ADAPT_CTL",
+          "CDC_TX_ANC0_IIR_COEFF_1_CTL",
+          "CDC_TX_ANC0_IIR_COEFF_2_CTL",
+          "CDC_TX_ANC0_LPF_FB_CTL",
+          "CDC_TX_ANC0_LPF_FF_A_CTL",
+          "CDC_TX_ANC0_LPF_FF_B_CTL",
+          "CDC_TX_ANC0_MODE_1_CTL",
+          "CDC_TX_ANC0_MODE_2_CTL",
+          "CDC_TX_ANC0_SMLPF_CTL",
+          "CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL",
+          "CDC_TX_CLK_RST_CTRL_MCLK_CONTROL",
+          "CDC_TX_CLK_RST_CTRL_SWR_CONTROL",
+          "CDC_TX_FS_CNT_ENABLE",
+          "CDC_TX_FS_CNT_EN_MASK",
+          "CDC_TX_INP_MUX_ADC_MUX0_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX0_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX1_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX1_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX2_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX2_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX3_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX3_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX4_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX4_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX5_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX5_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX6_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX6_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX7_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX7_CFG1",
+          "CDC_TX_MACRO_DMIC_MUX_SEL_MASK",
+          "CDC_TX_MACRO_SWR_MIC_MUX_SEL_MASK",
+          "CDC_TX_MCLK_ENABLE",
+          "CDC_TX_MCLK_EN_MASK",
+          "CDC_TX_SWR_CLK_ENABLE",
+          "CDC_TX_SWR_CLK_EN_MASK",
+          "CDC_TX_SWR_DMIC_CLK_SEL_MASK",
+          "CDC_TX_SWR_MIC_CLK_DEFAULT",
+          "CDC_TX_SWR_RESET_ENABLE",
+          "CDC_TX_SWR_RESET_MASK",
+          "CDC_TX_TOP_CSR_ANC_CFG",
+          "CDC_TX_TOP_CSR_DEBUG_BUS",
+          "CDC_TX_TOP_CSR_DEBUG_EN",
+          "CDC_TX_TOP_CSR_FREQ_MCLK",
+          "CDC_TX_TOP_CSR_I2S_CLK",
+          "CDC_TX_TOP_CSR_I2S_RESET",
+          "CDC_TX_TOP_CSR_SWR_AMIC0_CTL",
+          "CDC_TX_TOP_CSR_SWR_AMIC1_CTL",
+          "CDC_TX_TOP_CSR_SWR_CTRL",
+          "CDC_TX_TOP_CSR_SWR_DMIC0_CTL",
+          "CDC_TX_TOP_CSR_SWR_DMIC1_CTL",
+          "CDC_TX_TOP_CSR_SWR_DMIC2_CTL",
+          "CDC_TX_TOP_CSR_SWR_DMIC3_CTL",
+          "CDC_TX_TOP_CSR_TOP_CFG0",
+          "CDC_TX_TOP_CSR_TX_I2S_CTL",
+          "CDC_TXn_ADC_DMIC_SEL_MASK",
+          "CDC_TXn_ADC_MODE_MASK",
+          "CDC_TXn_CLK_EN_MASK",
+          "CDC_TXn_HPF_CUT_FREQ_MASK",
+          "CDC_TXn_HPF_F_CHANGE_MASK",
+          "CDC_TXn_HPF_ZERO_GATE_MASK",
+          "CDC_TXn_PCM_RATE_MASK",
+          "CDC_TXn_PGA_MUTE_MASK",
+          "CDC_TXn_PH_EN_MASK",
+          "TX_MACRO_AMIC_HPF_DELAY_MS",
+          "TX_MACRO_AMIC_UNMUTE_DELAY_MS",
+          "TX_MACRO_DMIC_HPF_DELAY_MS",
+          "TX_MACRO_DMIC_UNMUTE_DELAY_MS",
+          "TX_MACRO_FORMATS",
+          "TX_MACRO_RATES"
+        ],
+        "offset_min": 0,
+        "offset_max": 1960,
+        "regmap_access_count": 11,
+        "component_access_count": 20
+      },
+      "clock_power": {
+        "clock_names": [
+          "dcodec",
+          "fsgen",
+          "macro",
+          "mclk",
+          "npl"
+        ],
+        "clock_count": 5,
+        "clock_provider_role": true,
+        "clock_provider_calls": [
+          "devm_clk_hw_register",
+          "devm_of_clk_add_hw_provider"
+        ],
+        "power_domain_usage": true,
+        "lpass_macro_pds_init": 1,
+        "lpass_macro_pds_exit": 2,
+        "runtime_pm_ops": true,
+        "runtime_suspend_present": true,
+        "runtime_resume_present": true
+      },
+      "soc_data_model": {
+        "compatible_count": 6,
+        "compatibles": [
+          "qcom,sc7280-lpass-tx-macro",
+          "qcom,sc8280xp-lpass-tx-macro",
+          "qcom,sm6115-lpass-tx-macro",
+          "qcom,sm8250-lpass-tx-macro",
+          "qcom,sm8450-lpass-tx-macro",
+          "qcom,sm8550-lpass-tx-macro"
+        ],
+        "data_struct_count": 4,
+        "uses_match_data": true,
+        "match_data_function": "device_get_match_data",
+        "variant_flag_count": 11,
+        "variant_flags": [
+          "channels_max",
+          "channels_min",
+          "def",
+          "flags",
+          "num_parents",
+          "rate_max",
+          "rate_min",
+          "reg_bits",
+          "reg_stride",
+          "suppress_bind_attrs",
+          "val_bits"
+        ]
+      },
+      "regmap_ownership": {
+        "devm_regmap_init_mmio_present": true,
+        "private_regmap_member": true,
+        "regmap_config_present": true,
+        "regmap_config_callbacks": [
+          "readable_reg",
+          "volatile_reg",
+          "writeable_reg"
+        ],
+        "regcache_types": [
+          "REGCACHE_FLAT"
+        ]
+      },
+      "vendor_coupling": {
+        "vendor_hit_count": 0,
+        "hits": []
+      }
+    },
+    "converted": {
+      "path": "/tmp/aura_tx_functional_compare/sound/soc/codecs/lpass-tx-macro.c",
+      "line_count": 2531,
+      "functions": [
+        "__tx_macro_mclk_enable",
+        "is_amic_enabled",
+        "is_msm_dmic_enabled",
+        "mute_stream_dec_unmute",
+        "tx_macro_bcs_ch_get",
+        "tx_macro_bcs_ch_put",
+        "tx_macro_clk_div_get",
+        "tx_macro_dec_mode_get",
+        "tx_macro_dec_mode_put",
+        "tx_macro_deinit",
+        "tx_macro_dmic_clk_enable",
+        "tx_macro_enable_dec",
+        "tx_macro_enable_dmic",
+        "tx_macro_enable_micbias",
+        "tx_macro_get_bcs",
+        "tx_macro_get_bcs_ch_sel",
+        "tx_macro_get_channel_map",
+        "tx_macro_get_data",
+        "tx_macro_get_dec_gain_bypass",
+        "tx_macro_get_hpf_adapt_bypass",
+        "tx_macro_hw_params",
+        "tx_macro_init",
+        "tx_macro_mclk_enable",
+        "tx_macro_mclk_event",
+        "tx_macro_mute_stream",
+        "tx_macro_mute_update_callback",
+        "tx_macro_path_get",
+        "tx_macro_probe",
+        "tx_macro_put_bcs_ch_sel",
+        "tx_macro_put_dec_enum",
+        "tx_macro_put_dec_gain_bypass",
+        "tx_macro_remove",
+        "tx_macro_runtime_resume",
+        "tx_macro_runtime_suspend",
+        "tx_macro_set_bcs",
+        "tx_macro_set_hpf_adapt_bypass",
+        "tx_macro_swr_dmic_get",
+        "tx_macro_swr_dmic_put",
+        "tx_macro_tx_hpf_corner_freq_callback",
+        "tx_macro_tx_mixer_get",
+        "tx_macro_tx_mixer_put",
+        "tx_macro_update_clk_div_factor",
+        "tx_macro_wake_enable"
+      ],
+      "function_count": 43,
+      "kernel_api_calls": {
+        "ARRAY_SIZE": 12,
+        "INIT_DELAYED_WORK": 3,
+        "IS_ERR": 7,
+        "PTR_ERR": 7,
+        "cancel_delayed_work_sync": 2,
+        "clk_disable_unprepare": 15,
+        "clk_prepare_enable": 8,
+        "container_of": 3,
+        "dev_dbg": 13,
+        "dev_err": 11,
+        "dev_err_ratelimited": 9,
+        "dev_get_drvdata": 2,
+        "dev_set_drvdata": 1,
+        "devm_clk_get_optional": 4,
+        "devm_kzalloc": 1,
+        "devm_platform_ioremap_resource": 1,
+        "devm_regmap_init_mmio": 1,
+        "devm_snd_soc_register_component": 1,
+        "lpass_macro_pds_exit": 2,
+        "lpass_macro_pds_init": 1,
+        "module_param": 1,
+        "module_platform_driver": 1,
+        "mutex_destroy": 4,
+        "mutex_init": 2,
+        "mutex_lock": 2,
+        "mutex_unlock": 2,
+        "of_device_get_match_data": 1,
+        "platform_get_drvdata": 1,
+        "platform_set_drvdata": 1,
+        "pm_runtime_disable": 1,
+        "pm_runtime_enable": 1,
+        "pm_runtime_set_autosuspend_delay": 1,
+        "pm_runtime_set_suspended": 2,
+        "pm_runtime_use_autosuspend": 1,
+        "queue_delayed_work": 2,
+        "regcache_cache_only": 2,
+        "regcache_mark_dirty": 2,
+        "regcache_sync": 1,
+        "regcache_sync_region": 1,
+        "regmap_update_bits": 4,
+        "snd_soc_add_component_controls": 1,
+        "snd_soc_component_get_drvdata": 2,
+        "snd_soc_component_read": 9,
+        "snd_soc_component_to_dapm": 1,
+        "snd_soc_component_update_bits": 46,
+        "snd_soc_component_write": 1,
+        "snd_soc_dapm_add_routes": 1,
+        "snd_soc_dapm_ignore_suspend": 4,
+        "snd_soc_dapm_kcontrol_to_widget": 3,
+        "snd_soc_dapm_mixer_update_power": 1,
+        "snd_soc_dapm_new_controls": 1,
+        "snd_soc_dapm_new_widgets": 1,
+        "snd_soc_dapm_put_enum_double": 1,
+        "snd_soc_dapm_sync": 1,
+        "snd_soc_dapm_to_card": 3,
+        "snd_soc_dapm_to_component": 6,
+        "to_delayed_work": 3,
+        "usleep_range": 12
+      },
+      "kernel_api_call_count": 234,
+      "kernel_api_unique_count": 58,
+      "kernel_api_contexts": {
+        "ARRAY_SIZE": [
+          {
+            "line": 1012,
+            "context": "SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(bcs_ch_sel_mux_text),"
+          },
+          {
+            "line": 1047,
+            "context": "ucontrol->value.integer.value[0] > ARRAY_SIZE(bcs_ch_sel_mux_text))"
+          },
+          {
+            "line": 1637,
+            "context": "SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(dec_mode_mux_text),"
+          },
+          {
+            "line": 1646,
+            "context": "SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(bcs_ch_enum_text),"
+          },
+          {
+            "line": 1718,
+            "context": "tx_aif1_cap_mixer, ARRAY_SIZE(tx_aif1_cap_mixer)),"
+          }
+        ],
+        "INIT_DELAYED_WORK": [
+          {
+            "line": 2257,
+            "context": "INIT_DELAYED_WORK(&tx_priv->tx_hpf_work[i].dwork,"
+          },
+          {
+            "line": 2264,
+            "context": "INIT_DELAYED_WORK(&tx_priv->tx_mute_dwork[i].dwork,"
+          },
+          {
+            "line": 2270,
+            "context": "INIT_DELAYED_WORK(&tx_priv->tx_dec_unmute_work[dai_idx].dwork,"
+          }
+        ],
+        "IS_ERR": [
+          {
+            "line": 2323,
+            "context": "if (IS_ERR(base))"
+          },
+          {
+            "line": 2329,
+            "context": "if (IS_ERR(tx_priv->regmap))"
+          },
+          {
+            "line": 2333,
+            "context": "if (IS_ERR(tx_priv->pds))"
+          },
+          {
+            "line": 2337,
+            "context": "if (IS_ERR(tx_priv->macro))"
+          },
+          {
+            "line": 2341,
+            "context": "if (IS_ERR(tx_priv->dcodec))"
+          }
+        ],
+        "PTR_ERR": [
+          {
+            "line": 2324,
+            "context": "return PTR_ERR(base);"
+          },
+          {
+            "line": 2330,
+            "context": "return PTR_ERR(tx_priv->regmap);"
+          },
+          {
+            "line": 2334,
+            "context": "return PTR_ERR(tx_priv->pds);"
+          },
+          {
+            "line": 2338,
+            "context": "return PTR_ERR(tx_priv->macro);"
+          },
+          {
+            "line": 2342,
+            "context": "return PTR_ERR(tx_priv->dcodec);"
+          }
+        ],
+        "cancel_delayed_work_sync": [
+          {
+            "line": 1236,
+            "context": "if (cancel_delayed_work_sync("
+          },
+          {
+            "line": 2400,
+            "context": "cancel_delayed_work_sync("
+          }
+        ],
+        "clk_disable_unprepare": [
+          {
+            "line": 356,
+            "context": "clk_disable_unprepare(tx_priv->fsgen);"
+          },
+          {
+            "line": 357,
+            "context": "clk_disable_unprepare(tx_priv->mclk);"
+          },
+          {
+            "line": 358,
+            "context": "clk_disable_unprepare(tx_priv->dcodec);"
+          },
+          {
+            "line": 359,
+            "context": "clk_disable_unprepare(tx_priv->macro);"
+          },
+          {
+            "line": 368,
+            "context": "clk_disable_unprepare(tx_priv->mclk);"
+          }
+        ],
+        "clk_prepare_enable": [
+          {
+            "line": 315,
+            "context": "ret = clk_prepare_enable(tx_priv->macro);"
+          },
+          {
+            "line": 319,
+            "context": "ret = clk_prepare_enable(tx_priv->dcodec);"
+          },
+          {
+            "line": 323,
+            "context": "ret = clk_prepare_enable(tx_priv->mclk);"
+          },
+          {
+            "line": 327,
+            "context": "ret = clk_prepare_enable(tx_priv->fsgen);"
+          },
+          {
+            "line": 2470,
+            "context": "ret = clk_prepare_enable(tx_priv->macro);"
+          }
+        ],
+        "container_of": [
+          {
+            "line": 497,
+            "context": "hpf_work = container_of(hpf_delayed_work, struct hpf_work, dwork);"
+          },
+          {
+            "line": 568,
+            "context": "tx_mute_dwork = container_of(delayed_work, struct tx_mute_work, dwork);"
+          },
+          {
+            "line": 594,
+            "context": "tx_dec_unmute_work = container_of(unmute_delayed_work, struct tx_dec_unmute_work, dwork);"
+          }
+        ],
+        "dev_dbg": [
+          {
+            "line": 255,
+            "context": "dev_dbg(tx_priv->dev, \"%s: pm wake\\n\", __func__);"
+          },
+          {
+            "line": 260,
+            "context": "dev_dbg(tx_priv->dev, \"%s: pm release\\n\", __func__);"
+          },
+          {
+            "line": 309,
+            "context": "dev_dbg(tx_priv->dev, \"%s: mclk_enable = %u,clk_users= %d\\n\","
+          },
+          {
+            "line": 384,
+            "context": "dev_dbg(component->dev, \"%s: dmic %d clk_id %d enable %d\\n\","
+          },
+          {
+            "line": 417,
+            "context": "dev_dbg(tx_dev, \"%s: event = %d\\n\", __func__, event);"
+          }
+        ],
+        "dev_err": [
+          {
+            "line": 736,
+            "context": "dev_err(component->dev, \"%s: channel is already enabled, dec_id = %d, dai_id = %d\\n\","
+          },
+          {
+            "line": 744,
+            "context": "dev_err(component->dev, \"%s: channel is already disabled, dec_id = %d, dai_id = %d\\n\","
+          },
+          {
+            "line": 2171,
+            "context": "dev_err(tx_priv->dev, \"%s: Invalid div factor %d, for mic_pair %d\\n\","
+          },
+          {
+            "line": 2196,
+            "context": "dev_err(component->dev,"
+          },
+          {
+            "line": 2204,
+            "context": "dev_err(component->dev,"
+          }
+        ],
+        "dev_err_ratelimited": [
+          {
+            "line": 283,
+            "context": "dev_err_ratelimited(component->dev,"
+          },
+          {
+            "line": 289,
+            "context": "dev_err_ratelimited(component->dev,"
+          },
+          {
+            "line": 305,
+            "context": "dev_err_ratelimited(tx_priv->dev, \"%s: regmap is NULL\\n\", __func__);"
+          },
+          {
+            "line": 343,
+            "context": "dev_err_ratelimited(tx_priv->dev,"
+          },
+          {
+            "line": 431,
+            "context": "dev_err_ratelimited(tx_priv->dev,"
+          }
+        ],
+        "dev_get_drvdata": [
+          {
+            "line": 2447,
+            "context": "struct tx_macro_priv *tx_priv = dev_get_drvdata(dev);"
+          },
+          {
+            "line": 2464,
+            "context": "struct tx_macro_priv *tx_priv = dev_get_drvdata(dev);"
+          }
+        ],
+        "dev_set_drvdata": [
+          {
+            "line": 2317,
+            "context": "dev_set_drvdata(&pdev->dev, tx_priv);"
+          }
+        ],
+        "devm_clk_get_optional": [
+          {
+            "line": 2336,
+            "context": "tx_priv->macro = devm_clk_get_optional(&pdev->dev, \"macro\");"
+          },
+          {
+            "line": 2340,
+            "context": "tx_priv->dcodec = devm_clk_get_optional(&pdev->dev, \"dcodec\");"
+          },
+          {
+            "line": 2344,
+            "context": "tx_priv->mclk = devm_clk_get_optional(&pdev->dev, \"mclk\");"
+          },
+          {
+            "line": 2348,
+            "context": "tx_priv->fsgen = devm_clk_get_optional(&pdev->dev, \"fsgen\");"
+          }
+        ],
+        "devm_kzalloc": [
+          {
+            "line": 2310,
+            "context": "tx_priv = devm_kzalloc(&pdev->dev, sizeof(struct tx_macro_priv),"
+          }
+        ],
+        "devm_platform_ioremap_resource": [
+          {
+            "line": 2322,
+            "context": "base = devm_platform_ioremap_resource(pdev, 0);"
+          }
+        ],
+        "devm_regmap_init_mmio": [
+          {
+            "line": 2327,
+            "context": "tx_priv->regmap = devm_regmap_init_mmio(&pdev->dev, base,"
+          }
+        ],
+        "devm_snd_soc_register_component": [
+          {
+            "line": 2363,
+            "context": "ret = devm_snd_soc_register_component(&pdev->dev,"
+          }
+        ],
+        "lpass_macro_pds_exit": [
+          {
+            "line": 2382,
+            "context": "lpass_macro_pds_exit(tx_priv->pds);"
+          },
+          {
+            "line": 2404,
+            "context": "lpass_macro_pds_exit(tx_priv->pds);"
+          }
+        ],
+        "lpass_macro_pds_init": [
+          {
+            "line": 2332,
+            "context": "tx_priv->pds = lpass_macro_pds_init(&pdev->dev);"
+          }
+        ],
+        "module_param": [
+          {
+            "line": 106,
+            "context": "module_param(tx_unmute_delay, int, 0664);"
+          }
+        ],
+        "module_platform_driver": [
+          {
+            "line": 2528,
+            "context": "module_platform_driver(tx_macro_driver);"
+          }
+        ],
+        "mutex_destroy": [
+          {
+            "line": 2380,
+            "context": "mutex_destroy(&tx_priv->mclk_lock);"
+          },
+          {
+            "line": 2381,
+            "context": "mutex_destroy(&tx_priv->wlock);"
+          },
+          {
+            "line": 2405,
+            "context": "mutex_destroy(&tx_priv->mclk_lock);"
+          },
+          {
+            "line": 2406,
+            "context": "mutex_destroy(&tx_priv->wlock);"
+          }
+        ],
+        "mutex_init": [
+          {
+            "line": 2361,
+            "context": "mutex_init(&tx_priv->mclk_lock);"
+          },
+          {
+            "line": 2362,
+            "context": "mutex_init(&tx_priv->wlock);"
+          }
+        ],
+        "mutex_lock": [
+          {
+            "line": 252,
+            "context": "mutex_lock(&tx_priv->wlock);"
+          },
+          {
+            "line": 312,
+            "context": "mutex_lock(&tx_priv->mclk_lock);"
+          }
+        ],
+        "mutex_unlock": [
+          {
+            "line": 266,
+            "context": "mutex_unlock(&tx_priv->wlock);"
+          },
+          {
+            "line": 364,
+            "context": "mutex_unlock(&tx_priv->mclk_lock);"
+          }
+        ],
+        "of_device_get_match_data": [
+          {
+            "line": 2318,
+            "context": "tx_priv->data = of_device_get_match_data(&pdev->dev);"
+          }
+        ],
+        "platform_get_drvdata": [
+          {
+            "line": 2392,
+            "context": "tx_priv = platform_get_drvdata(pdev);"
+          }
+        ],
+        "platform_set_drvdata": [
+          {
+            "line": 2314,
+            "context": "platform_set_drvdata(pdev, tx_priv);"
+          }
+        ],
+        "pm_runtime_disable": [
+          {
+            "line": 2402,
+            "context": "pm_runtime_disable(&pdev->dev);"
+          }
+        ],
+        "pm_runtime_enable": [
+          {
+            "line": 2376,
+            "context": "pm_runtime_enable(&pdev->dev);"
+          }
+        ],
+        "pm_runtime_set_autosuspend_delay": [
+          {
+            "line": 2372,
+            "context": "pm_runtime_set_autosuspend_delay(&pdev->dev, AUTO_SUSPEND_DELAY);"
+          }
+        ],
+        "pm_runtime_set_suspended": [
+          {
+            "line": 2374,
+            "context": "pm_runtime_set_suspended(&pdev->dev);"
+          },
+          {
+            "line": 2403,
+            "context": "pm_runtime_set_suspended(&pdev->dev);"
+          }
+        ],
+        "pm_runtime_use_autosuspend": [
+          {
+            "line": 2373,
+            "context": "pm_runtime_use_autosuspend(&pdev->dev);"
+          }
+        ],
+        "queue_delayed_work": [
+          {
+            "line": 1198,
+            "context": "queue_delayed_work(system_freezable_wq,"
+          },
+          {
+            "line": 1463,
+            "context": "queue_delayed_work(system_freezable_wq,"
+          }
+        ],
+        "regcache_cache_only": [
+          {
+            "line": 2452,
+            "context": "regcache_cache_only(tx_priv->regmap, true);"
+          },
+          {
+            "line": 2486,
+            "context": "regcache_cache_only(tx_priv->regmap, false);"
+          }
+        ],
+        "regcache_mark_dirty": [
+          {
+            "line": 331,
+            "context": "regcache_mark_dirty(regmap);"
+          },
+          {
+            "line": 2453,
+            "context": "regcache_mark_dirty(tx_priv->regmap);"
+          }
+        ],
+        "regcache_sync": [
+          {
+            "line": 2487,
+            "context": "ret = regcache_sync(tx_priv->regmap);"
+          }
+        ],
+        "regcache_sync_region": [
+          {
+            "line": 332,
+            "context": "regcache_sync_region(regmap, 0,"
+          }
+        ],
+        "regmap_update_bits": [
+          {
+            "line": 334,
+            "context": "regmap_update_bits(regmap,"
+          },
+          {
+            "line": 337,
+            "context": "regmap_update_bits(regmap,"
+          },
+          {
+            "line": 350,
+            "context": "regmap_update_bits(regmap,"
+          },
+          {
+            "line": 353,
+            "context": "regmap_update_bits(regmap,"
+          }
+        ],
+        "snd_soc_add_component_controls": [
+          {
+            "line": 2239,
+            "context": "ret = snd_soc_add_component_controls(component,"
+          }
+        ],
+        "snd_soc_component_get_drvdata": [
+          {
+            "line": 281,
+            "context": "*tx_priv = snd_soc_component_get_drvdata(component);"
+          },
+          {
+            "line": 2202,
+            "context": "tx_priv = snd_soc_component_get_drvdata(component);"
+          }
+        ],
+        "snd_soc_component_read": [
+          {
+            "line": 451,
+            "context": "if (snd_soc_component_read(component, adc_mux_reg) & SWR_MIC) {"
+          },
+          {
+            "line": 480,
+            "context": "if ((snd_soc_component_read(component, adc_mux_reg) & 0x3) == MSM_DMIC)"
+          },
+          {
+            "line": 1027,
+            "context": "value = (snd_soc_component_read(component,"
+          },
+          {
+            "line": 1064,
+            "context": "dmic = (snd_soc_component_read(component, adc_mux0_cfg) >> 4) - 1;"
+          },
+          {
+            "line": 1128,
+            "context": "tx_priv->pcm_rate[decimator] = (snd_soc_component_read(component,"
+          }
+        ],
+        "snd_soc_component_to_dapm": [
+          {
+            "line": 2194,
+            "context": "dapm = snd_soc_component_to_dapm(component);"
+          }
+        ],
+        "snd_soc_component_update_bits": [
+          {
+            "line": 514,
+            "context": "snd_soc_component_update_bits(component,"
+          },
+          {
+            "line": 517,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          },
+          {
+            "line": 542,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          },
+          {
+            "line": 545,
+            "context": "snd_soc_component_update_bits(component,"
+          },
+          {
+            "line": 548,
+            "context": "snd_soc_component_update_bits(component, hpf_gate_reg,"
+          }
+        ],
+        "snd_soc_component_write": [
+          {
+            "line": 1214,
+            "context": "snd_soc_component_write(component, tx_gain_ctl_reg,"
+          }
+        ],
+        "snd_soc_dapm_add_routes": [
+          {
+            "line": 2224,
+            "context": "ret = snd_soc_dapm_add_routes(dapm, tx_audio_map,"
+          }
+        ],
+        "snd_soc_dapm_ignore_suspend": [
+          {
+            "line": 2248,
+            "context": "snd_soc_dapm_ignore_suspend(dapm, \"TX_AIF1 Capture\");"
+          },
+          {
+            "line": 2249,
+            "context": "snd_soc_dapm_ignore_suspend(dapm, \"TX_AIF2 Capture\");"
+          },
+          {
+            "line": 2250,
+            "context": "snd_soc_dapm_ignore_suspend(dapm, \"TX_AIF3 Capture\");"
+          },
+          {
+            "line": 2251,
+            "context": "snd_soc_dapm_ignore_suspend(dapm, \"TX SWR_INPUT\");"
+          }
+        ],
+        "snd_soc_dapm_kcontrol_to_widget": [
+          {
+            "line": 617,
+            "context": "snd_soc_dapm_kcontrol_to_widget(kcontrol);"
+          },
+          {
+            "line": 695,
+            "context": "snd_soc_dapm_kcontrol_to_widget(kcontrol);"
+          },
+          {
+            "line": 719,
+            "context": "snd_soc_dapm_kcontrol_to_widget(kcontrol);"
+          }
+        ],
+        "snd_soc_dapm_mixer_update_power": [
+          {
+            "line": 751,
+            "context": "snd_soc_dapm_mixer_update_power(widget->dapm, kcontrol, enable, update);"
+          }
+        ],
+        "snd_soc_dapm_new_controls": [
+          {
+            "line": 2216,
+            "context": "ret = snd_soc_dapm_new_controls(dapm, tx_macro_dapm_widgets,"
+          }
+        ],
+        "snd_soc_dapm_new_widgets": [
+          {
+            "line": 2232,
+            "context": "ret = snd_soc_dapm_new_widgets(snd_soc_dapm_to_card(dapm));"
+          }
+        ],
+        "snd_soc_dapm_put_enum_double": [
+          {
+            "line": 688,
+            "context": "return snd_soc_dapm_put_enum_double(kcontrol, ucontrol);"
+          }
+        ],
+        "snd_soc_dapm_sync": [
+          {
+            "line": 2252,
+            "context": "snd_soc_dapm_sync(dapm);"
+          }
+        ],
+        "snd_soc_dapm_to_card": [
+          {
+            "line": 2210,
+            "context": "if (!snd_soc_dapm_to_card(dapm)) {"
+          },
+          {
+            "line": 2212,
+            "context": "\"%s: snd_soc_dapm_to_card(dapm) is NULL\\n\", __func__);"
+          },
+          {
+            "line": 2232,
+            "context": "ret = snd_soc_dapm_new_widgets(snd_soc_dapm_to_card(dapm));"
+          }
+        ],
+        "snd_soc_dapm_to_component": [
+          {
+            "line": 409,
+            "context": "snd_soc_dapm_to_component(w->dapm);"
+          },
+          {
+            "line": 619,
+            "context": "snd_soc_dapm_to_component(widget->dapm);"
+          },
+          {
+            "line": 697,
+            "context": "snd_soc_dapm_to_component(widget->dapm);"
+          },
+          {
+            "line": 721,
+            "context": "snd_soc_dapm_to_component(widget->dapm);"
+          },
+          {
+            "line": 1061,
+            "context": "snd_soc_dapm_to_component(w->dapm);"
+          }
+        ],
+        "to_delayed_work": [
+          {
+            "line": 496,
+            "context": "hpf_delayed_work = to_delayed_work(work);"
+          },
+          {
+            "line": 567,
+            "context": "delayed_work = to_delayed_work(work);"
+          },
+          {
+            "line": 593,
+            "context": "unmute_delayed_work = to_delayed_work(work);"
+          }
+        ],
+        "usleep_range": [
+          {
+            "line": 522,
+            "context": "usleep_range(125, 130);"
+          },
+          {
+            "line": 525,
+            "context": "usleep_range(62, 65);"
+          },
+          {
+            "line": 528,
+            "context": "usleep_range(31, 32);"
+          },
+          {
+            "line": 531,
+            "context": "usleep_range(20, 21);"
+          },
+          {
+            "line": 534,
+            "context": "usleep_range(10, 11);"
+          }
+        ]
+      },
+      "lifecycle": {
+        "probe_sequence": [
+          "devm_kzalloc",
+          "platform_set_drvdata",
+          "dev_set_drvdata",
+          "of_device_get_match_data",
+          "devm_platform_ioremap_resource",
+          "IS_ERR",
+          "PTR_ERR",
+          "devm_regmap_init_mmio",
+          "IS_ERR",
+          "PTR_ERR",
+          "lpass_macro_pds_init",
+          "IS_ERR",
+          "PTR_ERR",
+          "devm_clk_get_optional",
+          "IS_ERR",
+          "PTR_ERR",
+          "devm_clk_get_optional",
+          "IS_ERR",
+          "PTR_ERR",
+          "devm_clk_get_optional",
+          "IS_ERR",
+          "PTR_ERR",
+          "devm_clk_get_optional",
+          "IS_ERR",
+          "PTR_ERR",
+          "mutex_init",
+          "mutex_init",
+          "devm_snd_soc_register_component",
+          "ARRAY_SIZE",
+          "dev_err",
+          "pm_runtime_set_autosuspend_delay",
+          "pm_runtime_use_autosuspend",
+          "pm_runtime_set_suspended",
+          "pm_suspend_ignore_children",
+          "pm_runtime_enable",
+          "mutex_destroy",
+          "mutex_destroy",
+          "lpass_macro_pds_exit"
+        ],
+        "remove_sequence": [
+          "platform_get_drvdata",
+          "cancel_delayed_work_sync",
+          "pm_runtime_disable",
+          "pm_runtime_set_suspended",
+          "lpass_macro_pds_exit",
+          "mutex_destroy",
+          "mutex_destroy"
+        ],
+        "suspend_sequence": [
+          "dev_get_drvdata",
+          "regcache_cache_only",
+          "regcache_mark_dirty",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare"
+        ],
+        "resume_sequence": [
+          "dev_get_drvdata",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "clk_prepare_enable",
+          "regcache_cache_only",
+          "regcache_sync",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare",
+          "clk_disable_unprepare"
+        ],
+        "probe_has_component_register": true,
+        "probe_has_regmap_init": true,
+        "remove_has_pds_exit": true
+      },
+      "dapm": {
+        "widget_count": 41,
+        "widget_types": {
+          "SND_SOC_DAPM_ADC": 8,
+          "SND_SOC_DAPM_AIF_OUT": 3,
+          "SND_SOC_DAPM_INPUT": 1,
+          "SND_SOC_DAPM_MIXER": 3,
+          "SND_SOC_DAPM_MUX_E": 8,
+          "SND_SOC_DAPM_SUPPLY": 1,
+          "SND_SOC_DAPM_SUPPLY_S": 1,
+          "TX_MACRO_DAPM_MUX": 16
+        },
+        "route_count": 214,
+        "control_count": 24,
+        "control_types": {
+          "SOC_ENUM": 8,
+          "SOC_ENUM_EXT": 8,
+          "SOC_SINGLE_S8_TLV": 8
+        },
+        "dai_count": 3
+      },
+      "registers": {
+        "define_count": 70,
+        "defines": [
+          "CDC_TX0_TX_PATH_CFG0",
+          "CDC_TX0_TX_PATH_CFG1",
+          "CDC_TX0_TX_PATH_CFG2",
+          "CDC_TX0_TX_PATH_CTL",
+          "CDC_TX0_TX_PATH_SEC2",
+          "CDC_TX0_TX_PATH_SEC7",
+          "CDC_TX0_TX_VOL_CTL",
+          "CDC_TX1_TX_PATH_CFG0",
+          "CDC_TX1_TX_PATH_CTL",
+          "CDC_TX1_TX_VOL_CTL",
+          "CDC_TX2_TX_PATH_CFG0",
+          "CDC_TX2_TX_VOL_CTL",
+          "CDC_TX3_TX_PATH_CFG0",
+          "CDC_TX3_TX_VOL_CTL",
+          "CDC_TX4_TX_PATH_CFG0",
+          "CDC_TX4_TX_VOL_CTL",
+          "CDC_TX5_TX_PATH_CFG0",
+          "CDC_TX5_TX_VOL_CTL",
+          "CDC_TX6_TX_PATH_CFG0",
+          "CDC_TX6_TX_VOL_CTL",
+          "CDC_TX7_TX_PATH_CFG0",
+          "CDC_TX7_TX_VOL_CTL",
+          "CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL",
+          "CDC_TX_CLK_RST_CTRL_MCLK_CONTROL",
+          "CDC_TX_INP_MUX_ADC_MUX0_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX0_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX0_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX1_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX1_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX1_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX2_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX2_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX2_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX3_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX3_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX3_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX4_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX4_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX4_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX5_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX5_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX5_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX6_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX6_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX6_CFG2",
+          "CDC_TX_INP_MUX_ADC_MUX7_CFG0",
+          "CDC_TX_INP_MUX_ADC_MUX7_CFG1",
+          "CDC_TX_INP_MUX_ADC_MUX7_CFG2",
+          "CDC_TX_TOP_CSR_SWR_CTRL",
+          "CDC_TX_TOP_CSR_SWR_MIC0_CTL",
+          "CDC_TX_TOP_CSR_SWR_MIC1_CTL",
+          "CDC_TX_TOP_CSR_SWR_MIC2_CTL",
+          "CDC_VA_TOP_CSR_DMIC_CFG",
+          "CDC_VA_TOP_CSR_SWR_CTRL",
+          "TX_MACRO_ADC_MODE_CFG0_SHIFT",
+          "TX_MACRO_ADC_MUX_CFG_OFFSET",
+          "TX_MACRO_AMIC_HPF_DELAY_MS",
+          "TX_MACRO_AMIC_UNMUTE_DELAY_MS",
+          "TX_MACRO_CHILD_DEVICES_MAX",
+          "TX_MACRO_DEC_UNMUTE_DELAY_MS",
+          "TX_MACRO_DMIC_HPF_DELAY_MS",
+          "TX_MACRO_DMIC_SAMPLE_RATE_UNDEFINED",
+          "TX_MACRO_DMIC_UNMUTE_DELAY_MS",
+          "TX_MACRO_FORMATS",
+          "TX_MACRO_HS_AMIC_UNMUTE_DELAY_MS",
+          "TX_MACRO_MAX_OFFSET",
+          "TX_MACRO_RATES",
+          "TX_MACRO_SWR_MIC_MUX_SEL_MASK",
+          "TX_MACRO_SWR_STRING_LEN",
+          "TX_MACRO_TX_PATH_OFFSET"
+        ],
+        "offset_min": 0,
+        "offset_max": 12508,
+        "regmap_access_count": 4,
+        "component_access_count": 56
+      },
+      "clock_power": {
+        "clock_names": [
+          "dcodec",
+          "fsgen",
+          "macro",
+          "mclk"
+        ],
+        "clock_count": 4,
+        "clock_provider_role": false,
+        "clock_provider_calls": [],
+        "power_domain_usage": true,
+        "lpass_macro_pds_init": 1,
+        "lpass_macro_pds_exit": 2,
+        "runtime_pm_ops": true,
+        "runtime_suspend_present": true,
+        "runtime_resume_present": true
+      },
+      "soc_data_model": {
+        "compatible_count": 3,
+        "compatibles": [
+          "qcom,sm8250-lpass-tx-macro",
+          "qcom,sm8450-lpass-tx-macro",
+          "qcom,sm8550-lpass-tx-macro"
+        ],
+        "data_struct_count": 4,
+        "uses_match_data": true,
+        "match_data_function": "of_device_get_match_data",
+        "variant_flag_count": 13,
+        "variant_flags": [
+          "channels_max",
+          "channels_min",
+          "has_bcs",
+          "has_bolero_2p85_features",
+          "has_bolero_4p0_features",
+          "has_hpf_adapt",
+          "has_swr_dmic",
+          "rate_max",
+          "rate_min",
+          "reg_bits",
+          "reg_stride",
+          "suppress_bind_attrs",
+          "val_bits"
+        ]
+      },
+      "regmap_ownership": {
+        "devm_regmap_init_mmio_present": true,
+        "private_regmap_member": true,
+        "regmap_config_present": true,
+        "regmap_config_callbacks": [],
+        "regcache_types": [
+          "REGCACHE_FLAT"
+        ]
+      },
+      "vendor_coupling": {
+        "vendor_hit_count": 0,
+        "hits": []
+      }
+    }
+  },
+  "category_scores": [
+    {
+      "category": "KERNEL_API_CALLS",
+      "upstream_count": 55,
+      "converted_count": 58,
+      "overlap_count": 40,
+      "match_percentage": 72.73,
+      "verdict": "PARTIALLY_ALIGNED",
+      "missing_upstream_items": [
+        "BIT",
+        "GENMASK",
+        "clk_set_rate",
+        "dev_err_probe",
+        "device_get_match_data",
+        "devm_clk_get",
+        "devm_clk_hw_register",
+        "devm_of_clk_add_hw_provider",
+        "of_device_is_compatible",
+        "pm_runtime_mark_last_busy",
+        "pm_runtime_set_active",
+        "regmap_read",
+        "snd_soc_component_init_regmap",
+        "snd_soc_component_read_field",
+        "snd_soc_component_write_field"
+      ],
+      "extra_converted_items": [
+        "dev_dbg",
+        "dev_err_ratelimited",
+        "module_param",
+        "mutex_destroy",
+        "mutex_init",
+        "mutex_lock",
+        "mutex_unlock",
+        "of_device_get_match_data",
+        "platform_get_drvdata",
+        "platform_set_drvdata",
+        "pm_runtime_disable",
+        "pm_runtime_set_suspended",
+        "regcache_sync_region",
+        "snd_soc_add_component_controls",
+        "snd_soc_dapm_ignore_suspend",
+        "snd_soc_dapm_new_widgets",
+        "snd_soc_dapm_sync",
+        "snd_soc_dapm_to_card"
+      ]
+    },
+    {
+      "category": "LIFECYCLE_STRUCTURE",
+      "upstream_count": 30,
+      "converted_count": 30,
+      "overlap_count": 21,
+      "match_percentage": 70.0,
+      "verdict": "PARTIALLY_ALIGNED",
+      "missing_upstream_items": [
+        "clk_set_rate",
+        "dev_err_probe",
+        "device_get_match_data",
+        "devm_clk_get",
+        "of_device_is_compatible",
+        "pm_runtime_mark_last_busy",
+        "pm_runtime_set_active",
+        "regmap_update_bits",
+        "tx_macro_register_mclk_output"
+      ],
+      "extra_converted_items": [
+        "cancel_delayed_work_sync",
+        "mutex_destroy",
+        "mutex_init",
+        "of_device_get_match_data",
+        "platform_get_drvdata",
+        "platform_set_drvdata",
+        "pm_runtime_disable",
+        "pm_runtime_set_suspended",
+        "pm_suspend_ignore_children"
+      ]
+    },
+    {
+      "category": "DAPM_TOPOLOGY",
+      "upstream_count": 163,
+      "converted_count": 282,
+      "match_percentage": 75.68,
+      "verdict": "PARTIALLY_ALIGNED",
+      "details": {
+        "widget_count": {
+          "upstream": 33,
+          "converted": 41,
+          "score": 80.49
+        },
+        "route_count": {
+          "upstream": 110,
+          "converted": 214,
+          "score": 51.4
+        },
+        "control_count": {
+          "upstream": 17,
+          "converted": 24,
+          "score": 70.83
+        },
+        "dai_count": {
+          "upstream": 3,
+          "converted": 3,
+          "score": 100.0
+        }
+      }
+    },
+    {
+      "category": "REGISTER_ACCESS",
+      "upstream_count": 167,
+      "converted_count": 70,
+      "overlap_count": 46,
+      "match_percentage": 27.54,
+      "verdict": "DIVERGENT",
+      "missing_upstream_items": [
+        "CDC_TX0_MBHC_CTL_EN_MASK",
+        "CDC_TX0_TX_PATH_SEC0",
+        "CDC_TX0_TX_PATH_SEC1",
+        "CDC_TX0_TX_PATH_SEC3",
+        "CDC_TX0_TX_PATH_SEC4",
+        "CDC_TX0_TX_PATH_SEC5",
+        "CDC_TX0_TX_PATH_SEC6",
+        "CDC_TX1_TX_PATH_CFG1",
+        "CDC_TX1_TX_PATH_SEC0",
+        "CDC_TX1_TX_PATH_SEC1",
+        "CDC_TX1_TX_PATH_SEC2",
+        "CDC_TX1_TX_PATH_SEC3",
+        "CDC_TX1_TX_PATH_SEC4",
+        "CDC_TX1_TX_PATH_SEC5",
+        "CDC_TX1_TX_PATH_SEC6",
+        "CDC_TX2_TX_PATH_CFG1",
+        "CDC_TX2_TX_PATH_CTL",
+        "CDC_TX2_TX_PATH_SEC0",
+        "CDC_TX2_TX_PATH_SEC1",
+        "CDC_TX2_TX_PATH_SEC2",
+        "CDC_TX2_TX_PATH_SEC3",
+        "CDC_TX2_TX_PATH_SEC4",
+        "CDC_TX2_TX_PATH_SEC5",
+        "CDC_TX2_TX_PATH_SEC6",
+        "CDC_TX3_TX_PATH_CFG1",
+        "CDC_TX3_TX_PATH_CTL",
+        "CDC_TX3_TX_PATH_SEC0",
+        "CDC_TX3_TX_PATH_SEC1",
+        "CDC_TX3_TX_PATH_SEC2",
+        "CDC_TX3_TX_PATH_SEC3",
+        "CDC_TX3_TX_PATH_SEC4",
+        "CDC_TX3_TX_PATH_SEC5",
+        "CDC_TX3_TX_PATH_SEC6",
+        "CDC_TX4_TX_PATH_CFG1",
+        "CDC_TX4_TX_PATH_CTL",
+        "CDC_TX4_TX_PATH_SEC0",
+        "CDC_TX4_TX_PATH_SEC1",
+        "CDC_TX4_TX_PATH_SEC2",
+        "CDC_TX4_TX_PATH_SEC3",
+        "CDC_TX4_TX_PATH_SEC4"
+      ],
+      "extra_converted_items": [
+        "CDC_TX0_TX_PATH_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX0_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX1_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX2_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX3_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX4_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX5_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX6_CFG2",
+        "CDC_TX_INP_MUX_ADC_MUX7_CFG2",
+        "CDC_TX_TOP_CSR_SWR_MIC0_CTL",
+        "CDC_TX_TOP_CSR_SWR_MIC1_CTL",
+        "CDC_TX_TOP_CSR_SWR_MIC2_CTL",
+        "CDC_VA_TOP_CSR_DMIC_CFG",
+        "CDC_VA_TOP_CSR_SWR_CTRL",
+        "TX_MACRO_ADC_MODE_CFG0_SHIFT",
+        "TX_MACRO_ADC_MUX_CFG_OFFSET",
+        "TX_MACRO_CHILD_DEVICES_MAX",
+        "TX_MACRO_DEC_UNMUTE_DELAY_MS",
+        "TX_MACRO_DMIC_SAMPLE_RATE_UNDEFINED",
+        "TX_MACRO_HS_AMIC_UNMUTE_DELAY_MS",
+        "TX_MACRO_MAX_OFFSET",
+        "TX_MACRO_SWR_MIC_MUX_SEL_MASK",
+        "TX_MACRO_SWR_STRING_LEN",
+        "TX_MACRO_TX_PATH_OFFSET"
+      ],
+      "access_counts": {
+        "upstream_regmap": 11,
+        "converted_regmap": 4,
+        "upstream_component": 20,
+        "converted_component": 56
+      }
+    },
+    {
+      "category": "CLOCK_POWER",
+      "upstream_count": 10,
+      "converted_count": 9,
+      "overlap_count": 4,
+      "match_percentage": 80.0,
+      "verdict": "ALIGNED",
+      "missing_upstream_items": [
+        "npl"
+      ],
+      "extra_converted_items": [],
+      "boolean_match_score": 80.0,
+      "details": {
+        "upstream": {
+          "clock_names": [
+            "dcodec",
+            "fsgen",
+            "macro",
+            "mclk",
+            "npl"
+          ],
+          "clock_count": 5,
+          "clock_provider_role": true,
+          "clock_provider_calls": [
+            "devm_clk_hw_register",
+            "devm_of_clk_add_hw_provider"
+          ],
+          "power_domain_usage": true,
+          "lpass_macro_pds_init": 1,
+          "lpass_macro_pds_exit": 2,
+          "runtime_pm_ops": true,
+          "runtime_suspend_present": true,
+          "runtime_resume_present": true
+        },
+        "converted": {
+          "clock_names": [
+            "dcodec",
+            "fsgen",
+            "macro",
+            "mclk"
+          ],
+          "clock_count": 4,
+          "clock_provider_role": false,
+          "clock_provider_calls": [],
+          "power_domain_usage": true,
+          "lpass_macro_pds_init": 1,
+          "lpass_macro_pds_exit": 2,
+          "runtime_pm_ops": true,
+          "runtime_suspend_present": true,
+          "runtime_resume_present": true
+        }
+      }
+    },
+    {
+      "category": "SOC_DATA_MODEL",
+      "upstream_count": 17,
+      "converted_count": 16,
+      "overlap_count": 3,
+      "match_percentage": 78.21,
+      "verdict": "PARTIALLY_ALIGNED",
+      "missing_upstream_items": [
+        "qcom,sc7280-lpass-tx-macro",
+        "qcom,sc8280xp-lpass-tx-macro",
+        "qcom,sm6115-lpass-tx-macro"
+      ],
+      "extra_converted_items": [],
+      "details": {
+        "upstream": {
+          "compatible_count": 6,
+          "compatibles": [
+            "qcom,sc7280-lpass-tx-macro",
+            "qcom,sc8280xp-lpass-tx-macro",
+            "qcom,sm6115-lpass-tx-macro",
+            "qcom,sm8250-lpass-tx-macro",
+            "qcom,sm8450-lpass-tx-macro",
+            "qcom,sm8550-lpass-tx-macro"
+          ],
+          "data_struct_count": 4,
+          "uses_match_data": true,
+          "match_data_function": "device_get_match_data",
+          "variant_flag_count": 11,
+          "variant_flags": [
+            "channels_max",
+            "channels_min",
+            "def",
+            "flags",
+            "num_parents",
+            "rate_max",
+            "rate_min",
+            "reg_bits",
+            "reg_stride",
+            "suppress_bind_attrs",
+            "val_bits"
+          ]
+        },
+        "converted": {
+          "compatible_count": 3,
+          "compatibles": [
+            "qcom,sm8250-lpass-tx-macro",
+            "qcom,sm8450-lpass-tx-macro",
+            "qcom,sm8550-lpass-tx-macro"
+          ],
+          "data_struct_count": 4,
+          "uses_match_data": true,
+          "match_data_function": "of_device_get_match_data",
+          "variant_flag_count": 13,
+          "variant_flags": [
+            "channels_max",
+            "channels_min",
+            "has_bcs",
+            "has_bolero_2p85_features",
+            "has_bolero_4p0_features",
+            "has_hpf_adapt",
+            "has_swr_dmic",
+            "rate_max",
+            "rate_min",
+            "reg_bits",
+            "reg_stride",
+            "suppress_bind_attrs",
+            "val_bits"
+          ]
+        }
+      }
+    },
+    {
+      "category": "REGMAP_OWNERSHIP",
+      "upstream_count": 6,
+      "converted_count": 3,
+      "overlap_count": 0,
+      "match_percentage": 50.0,
+      "verdict": "PARTIALLY_ALIGNED",
+      "missing_upstream_items": [
+        "readable_reg",
+        "volatile_reg",
+        "writeable_reg"
+      ],
+      "extra_converted_items": [],
+      "details": {
+        "upstream": {
+          "devm_regmap_init_mmio_present": true,
+          "private_regmap_member": true,
+          "regmap_config_present": true,
+          "regmap_config_callbacks": [
+            "readable_reg",
+            "volatile_reg",
+            "writeable_reg"
+          ],
+          "regcache_types": [
+            "REGCACHE_FLAT"
+          ]
+        },
+        "converted": {
+          "devm_regmap_init_mmio_present": true,
+          "private_regmap_member": true,
+          "regmap_config_present": true,
+          "regmap_config_callbacks": [],
+          "regcache_types": [
+            "REGCACHE_FLAT"
+          ]
+        }
+      }
+    },
+    {
+      "category": "VENDOR_COUPLING",
+      "upstream_count": 0,
+      "converted_count": 0,
+      "match_percentage": 100.0,
+      "verdict": "ALIGNED",
+      "details": {
+        "upstream_hits": [],
+        "converted_hits": []
+      }
+    }
+  ],
+  "function_match": {
+    "matched": 19,
+    "upstream_total": 30,
+    "converted_total": 43,
+    "match_percentage": 63.33,
+    "missing_upstream_functions": [
+      "swclk_gate_disable",
+      "swclk_gate_enable",
+      "swclk_gate_is_enabled",
+      "tx_is_rw_register",
+      "tx_is_volatile_register",
+      "tx_macro_component_extend",
+      "tx_macro_component_probe",
+      "tx_macro_digital_mute",
+      "tx_macro_register_mclk_output",
+      "tx_macro_update_smic_sel_v9",
+      "tx_macro_update_smic_sel_v9_2"
+    ],
+    "extra_converted_functions": [
+      "__tx_macro_mclk_enable",
+      "is_msm_dmic_enabled",
+      "mute_stream_dec_unmute",
+      "tx_macro_bcs_ch_get",
+      "tx_macro_bcs_ch_put",
+      "tx_macro_clk_div_get",
+      "tx_macro_deinit",
+      "tx_macro_dmic_clk_enable",
+      "tx_macro_enable_dmic",
+      "tx_macro_enable_micbias",
+      "tx_macro_get_bcs_ch_sel",
+      "tx_macro_get_data",
+      "tx_macro_get_dec_gain_bypass",
+      "tx_macro_get_hpf_adapt_bypass",
+      "tx_macro_init",
+      "tx_macro_mute_stream",
+      "tx_macro_path_get",
+      "tx_macro_put_bcs_ch_sel",
+      "tx_macro_put_dec_gain_bypass",
+      "tx_macro_set_hpf_adapt_bypass",
+      "tx_macro_swr_dmic_get",
+      "tx_macro_swr_dmic_put",
+      "tx_macro_update_clk_div_factor",
+      "tx_macro_wake_enable"
+    ]
+  },
+  "register_match": {
+    "matched": 46,
+    "upstream_total": 167,
+    "converted_total": 70,
+    "match_percentage": 27.54,
+    "missing_upstream_defines": [
+      "CDC_TX0_MBHC_CTL_EN_MASK",
+      "CDC_TX0_TX_PATH_SEC0",
+      "CDC_TX0_TX_PATH_SEC1",
+      "CDC_TX0_TX_PATH_SEC3",
+      "CDC_TX0_TX_PATH_SEC4",
+      "CDC_TX0_TX_PATH_SEC5",
+      "CDC_TX0_TX_PATH_SEC6",
+      "CDC_TX1_TX_PATH_CFG1",
+      "CDC_TX1_TX_PATH_SEC0",
+      "CDC_TX1_TX_PATH_SEC1",
+      "CDC_TX1_TX_PATH_SEC2",
+      "CDC_TX1_TX_PATH_SEC3",
+      "CDC_TX1_TX_PATH_SEC4",
+      "CDC_TX1_TX_PATH_SEC5",
+      "CDC_TX1_TX_PATH_SEC6",
+      "CDC_TX2_TX_PATH_CFG1",
+      "CDC_TX2_TX_PATH_CTL",
+      "CDC_TX2_TX_PATH_SEC0",
+      "CDC_TX2_TX_PATH_SEC1",
+      "CDC_TX2_TX_PATH_SEC2",
+      "CDC_TX2_TX_PATH_SEC3",
+      "CDC_TX2_TX_PATH_SEC4",
+      "CDC_TX2_TX_PATH_SEC5",
+      "CDC_TX2_TX_PATH_SEC6",
+      "CDC_TX3_TX_PATH_CFG1",
+      "CDC_TX3_TX_PATH_CTL",
+      "CDC_TX3_TX_PATH_SEC0",
+      "CDC_TX3_TX_PATH_SEC1",
+      "CDC_TX3_TX_PATH_SEC2",
+      "CDC_TX3_TX_PATH_SEC3",
+      "CDC_TX3_TX_PATH_SEC4",
+      "CDC_TX3_TX_PATH_SEC5",
+      "CDC_TX3_TX_PATH_SEC6",
+      "CDC_TX4_TX_PATH_CFG1",
+      "CDC_TX4_TX_PATH_CTL",
+      "CDC_TX4_TX_PATH_SEC0",
+      "CDC_TX4_TX_PATH_SEC1",
+      "CDC_TX4_TX_PATH_SEC2",
+      "CDC_TX4_TX_PATH_SEC3",
+      "CDC_TX4_TX_PATH_SEC4",
+      "CDC_TX4_TX_PATH_SEC5",
+      "CDC_TX4_TX_PATH_SEC6",
+      "CDC_TX5_TX_PATH_CFG1",
+      "CDC_TX5_TX_PATH_CTL",
+      "CDC_TX5_TX_PATH_SEC0",
+      "CDC_TX5_TX_PATH_SEC1",
+      "CDC_TX5_TX_PATH_SEC2",
+      "CDC_TX5_TX_PATH_SEC3",
+      "CDC_TX5_TX_PATH_SEC4",
+      "CDC_TX5_TX_PATH_SEC5",
+      "CDC_TX5_TX_PATH_SEC6",
+      "CDC_TX6_TX_PATH_CFG1",
+      "CDC_TX6_TX_PATH_CTL",
+      "CDC_TX6_TX_PATH_SEC0",
+      "CDC_TX6_TX_PATH_SEC1",
+      "CDC_TX6_TX_PATH_SEC2",
+      "CDC_TX6_TX_PATH_SEC3",
+      "CDC_TX6_TX_PATH_SEC4",
+      "CDC_TX6_TX_PATH_SEC5",
+      "CDC_TX6_TX_PATH_SEC6",
+      "CDC_TX7_TX_PATH_CFG1",
+      "CDC_TX7_TX_PATH_CTL",
+      "CDC_TX7_TX_PATH_SEC0",
+      "CDC_TX7_TX_PATH_SEC1",
+      "CDC_TX7_TX_PATH_SEC2",
+      "CDC_TX7_TX_PATH_SEC3",
+      "CDC_TX7_TX_PATH_SEC4",
+      "CDC_TX7_TX_PATH_SEC5",
+      "CDC_TX7_TX_PATH_SEC6",
+      "CDC_TX_ANC0_CLK_RESET_CTL",
+      "CDC_TX_ANC0_DCFLT_SHIFT_CTL",
+      "CDC_TX_ANC0_FB_GAIN_CTL",
+      "CDC_TX_ANC0_FB_SHIFT",
+      "CDC_TX_ANC0_FF_A_GAIN_CTL",
+      "CDC_TX_ANC0_FF_B_GAIN_CTL",
+      "CDC_TX_ANC0_FF_SHIFT",
+      "CDC_TX_ANC0_IIR_ADAPT_CTL",
+      "CDC_TX_ANC0_IIR_COEFF_1_CTL",
+      "CDC_TX_ANC0_IIR_COEFF_2_CTL",
+      "CDC_TX_ANC0_LPF_FB_CTL"
+    ],
+    "extra_converted_defines": [
+      "CDC_TX0_TX_PATH_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX0_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX1_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX2_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX3_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX4_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX5_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX6_CFG2",
+      "CDC_TX_INP_MUX_ADC_MUX7_CFG2",
+      "CDC_TX_TOP_CSR_SWR_MIC0_CTL",
+      "CDC_TX_TOP_CSR_SWR_MIC1_CTL",
+      "CDC_TX_TOP_CSR_SWR_MIC2_CTL",
+      "CDC_VA_TOP_CSR_DMIC_CFG",
+      "CDC_VA_TOP_CSR_SWR_CTRL",
+      "TX_MACRO_ADC_MODE_CFG0_SHIFT",
+      "TX_MACRO_ADC_MUX_CFG_OFFSET",
+      "TX_MACRO_CHILD_DEVICES_MAX",
+      "TX_MACRO_DEC_UNMUTE_DELAY_MS",
+      "TX_MACRO_DMIC_SAMPLE_RATE_UNDEFINED",
+      "TX_MACRO_HS_AMIC_UNMUTE_DELAY_MS",
+      "TX_MACRO_MAX_OFFSET",
+      "TX_MACRO_SWR_MIC_MUX_SEL_MASK",
+      "TX_MACRO_SWR_STRING_LEN",
+      "TX_MACRO_TX_PATH_OFFSET"
+    ]
+  },
+  "difference_classification": [
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "area": "REGMAP_OWNERSHIP",
+      "summary": "Blind TX conversion owns its MMIO regmap with devm_regmap_init_mmio."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "area": "SOC_DATA_MODEL",
+      "summary": "Blind TX conversion added of_device_get_match_data and per-compatible data."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "area": "DAPM_TOPOLOGY",
+      "summary": "Blind TX conversion reduced downstream DAPM topology instead of preserving all vendor widgets/routes."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "area": "VENDOR_COUPLING",
+      "summary": "Vendor lpass-cdc/clk-rsc/Kconfig/property coupling was removed."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "area": "RUNTIME_PM",
+      "summary": "Runtime PM callbacks are present and wired."
+    },
+    {
+      "classification": "LESSON_APPLIED_INCORRECTLY",
+      "area": "CLOCK_PROVIDER",
+      "summary": "Upstream TX is a clock provider (devm_clk_hw_register/devm_of_clk_add_hw_provider); blind conversion only consumed clocks."
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "CLOCK_POWER",
+      "summary": "Missing upstream clock resources: npl"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "REGMAP_OWNERSHIP",
+      "summary": "Regmap config lacks upstream readable/writeable/volatile callbacks: readable_reg, volatile_reg, writeable_reg"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "SOC_DATA_MODEL",
+      "summary": "Missing upstream compatible: qcom,sc7280-lpass-tx-macro"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "SOC_DATA_MODEL",
+      "summary": "Missing upstream compatible: qcom,sc8280xp-lpass-tx-macro"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "SOC_DATA_MODEL",
+      "summary": "Missing upstream compatible: qcom,sm6115-lpass-tx-macro"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "DAPM_TOPOLOGY",
+      "summary": "DAPM routes still diverge after reduction: upstream 110, converted 214."
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "REGISTER_ACCESS",
+      "summary": "Register define set still diverges; blind mapping did not infer upstream SEC register table and MBHC masks."
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "KERNEL_API_CALLS",
+      "summary": "Missing upstream API pattern: BIT"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "KERNEL_API_CALLS",
+      "summary": "Missing upstream API pattern: GENMASK"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "KERNEL_API_CALLS",
+      "summary": "Missing upstream API pattern: clk_set_rate"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "KERNEL_API_CALLS",
+      "summary": "Missing upstream API pattern: dev_err_probe"
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "area": "KERNEL_API_CALLS",
+      "summary": "Missing upstream API pattern: device_get_match_data"
+    }
+  ],
+  "blind_assumptions": {
+    "correct": [
+      "Vendor lpass-cdc macro framework should be removed rather than upstreamed.",
+      "TX should own an MMIO regmap directly after framework removal.",
+      "TX should consume lpass-macro-common power-domain helpers.",
+      "Downstream version/Kconfig/property compatibility paths are not upstream-facing architecture.",
+      "DAPM topology needed reduction before comparison."
+    ],
+    "wrong_or_unvalidated": [
+      "Specific compatible strings were inferred blindly and require upstream/binding validation.",
+      "Exact clock-provider role could not be proven without upstream or binding evidence.",
+      "Exact DAPM shape still required upstream comparison.",
+      "Register table parity could not be fully inferred from downstream-only names."
+    ]
+  }
+}

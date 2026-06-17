@@ -1,0 +1,39 @@
+{
+  "artifact_name": "TX_LESSONS_LEARNED",
+  "new_tx_specific_lessons": [
+    {
+      "lesson": "SWR/SMIC fanout is materially larger in TX than VA",
+      "pipeline_rule": "Topology reduction must understand mux fanout limits and not only delete named vendor controls."
+    },
+    {
+      "lesson": "Cross-macro CSR references can remain after local prefix normalization",
+      "pipeline_rule": "Register extraction must classify cross-macro register ownership before blind localizing defines."
+    },
+    {
+      "lesson": "Compatible string inference is high-risk blind work",
+      "pipeline_rule": "Do not invent SoC compatibles without binding/corpus evidence; create placeholders only as governed assumptions."
+    },
+    {
+      "lesson": "Clock-provider detection needs binding evidence",
+      "pipeline_rule": "Search binding/property evidence for clock-output-names before deciding provider role."
+    },
+    {
+      "lesson": "Function renaming should be staged after semantic removals",
+      "pipeline_rule": "Broad prefix cleanup should be last and audited for external ABI/ops-table references."
+    }
+  ],
+  "patterns_transfer_to_rx_wsa": [
+    "Register prefix migration remains a reliable first patch.",
+    "Vendor framework removal should be split before regmap/clock changes.",
+    "Owned regmap and lpass-macro-common integration should be mandatory after framework removal.",
+    "DAPM topology needs a bounded reduction rule before comparison.",
+    "Residual naming cleanup should be last, after banned-symbol audit."
+  ],
+  "pipeline_improvements_iteration_3": [
+    "Add binding-aware compatible and clock-provider inference.",
+    "Add cross-macro register ownership classifier.",
+    "Add DAPM graph isomorphism scoring instead of raw count scoring only.",
+    "Add compile-unit symbol liveness checks after each generated patch.",
+    "Add governed blind-assumption ledger for inferred compatibles and SoC flags."
+  ]
+}
