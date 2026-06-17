@@ -1,0 +1,178 @@
+From 3f27be25b9c9494d0eb12fc207225c579c7fa470 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:39:16 +0530
+Subject: [PATCH 12/12] ASoC: codecs: lpass-wsa-macro: remove residual
+ downstream symbols and normalize naming
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 40 ++++++++++-----------
+ 1 file changed, 20 insertions(+), 20 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index 5bab999..2c259b3 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -1248,7 +1248,7 @@ static int wsa_macro_get_channel_map(const struct snd_soc_dai *dai,
+ 	return 0;
+ }
+ 
+-static void lpass_cdc_wsa_unmute_interpolator(struct snd_soc_dai *dai)
++static void wsa_wsa_unmute_interpolator(struct snd_soc_dai *dai)
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	uint16_t j = 0, reg = 0, mix_reg = 0;
+@@ -1284,8 +1284,8 @@ static int wsa_macro_mute_stream(struct snd_soc_dai *dai, int mute, int stream)
+ 	switch (dai->id) {
+ 	case CDC_WSA_MACRO_AIF1_PB:
+ 	case CDC_WSA_MACRO_AIF_MIX1_PB:
+-		lpass_cdc_wsa_pa_on(wsa_dev, adie_lb);
+-		lpass_cdc_wsa_unmute_interpolator(dai);
++		wsa_wsa_pa_on(wsa_dev, adie_lb);
++		wsa_wsa_unmute_interpolator(dai);
+ 		queue_delayed_work(system_freezable_wq,
+ 			&wsa_priv->wsa_vi_dec_enable_work.dwork,
+ 			msecs_to_jiffies(CDC_WSA_MACRO_VI_DEC_ENABLE_DELAY_MS));
+@@ -1858,7 +1858,7 @@ static int wsa_macro_config_compander(struct snd_soc_component *component,
+ 	}
+ 
+ 	if (SND_SOC_DAPM_EVENT_ON(event)) {
+-		lpass_cdc_update_compander_setting(component,
++		wsa_update_compander_setting(component,
+ 					comp_ctl8_reg,
+ 					comp_settings);
+ 		/* Enable Compander Clock */
+@@ -1968,7 +1968,7 @@ static int wsa_macro_config_softclip(struct snd_soc_component *component,
+ 	return 0;
+ }
+ 
+-static int lpass_cdc_was_macro_config_pbr(struct snd_soc_component *component,
++static int wsa_was_macro_config_pbr(struct snd_soc_component *component,
+ 					  int path, int event)
+ {
+ 	struct device *wsa_dev = NULL;
+@@ -2089,7 +2089,7 @@ static int wsa_macro_enable_main_path(struct snd_soc_dapm_widget *w,
+ 					reg, 0x20, 0x20);
+ 		if (wsa_macro_adie_lb(component, w->shift)) {
+ 			adie_lb = true;
+-			lpass_cdc_wsa_pa_on(wsa_dev, adie_lb);
++			wsa_wsa_pa_on(wsa_dev, adie_lb);
+ 			snd_soc_component_update_bits(component,
+ 						reg, 0x10, 0x00);
+ 		}
+@@ -2176,7 +2176,7 @@ static int wsa_macro_enable_prim_interpolator(
+ 	return 0;
+ }
+ 
+-static void lpass_cdc_macro_idle_detect_control(struct snd_soc_component *component,
++static void wsa_macro_idle_detect_control(struct snd_soc_component *component,
+ 					 struct wsa_macro_priv *wsa_priv,
+ 					 int interp, int event)
+ {
+@@ -2291,10 +2291,10 @@ static int wsa_macro_enable_interpolator(struct snd_soc_dapm_widget *w,
+ 		}
+ 
+ 		wsa_macro_config_compander(component, w->shift, event);
+-		lpass_cdc_macro_idle_detect_control(component, wsa_priv,
++		wsa_macro_idle_detect_control(component, wsa_priv,
+ 				w->shift, event);
+ 		wsa_macro_config_softclip(component, w->shift, event);
+-		lpass_cdc_was_macro_config_pbr(component, w->shift, event);
++		wsa_was_macro_config_pbr(component, w->shift, event);
+ 		if (wsa_priv->wsa_spkrrecv)
+ 			snd_soc_component_update_bits(component,
+ 					CDC_WSA_RX0_RX_PATH_CFG1,
+@@ -2304,10 +2304,10 @@ static int wsa_macro_enable_interpolator(struct snd_soc_dapm_widget *w,
+ 		snd_soc_component_update_bits(component,
+ 				CDC_WSA_RX0_RX_PATH_CFG1, 0x08, 0x08);
+ 		wsa_macro_config_compander(component, w->shift, event);
+-		lpass_cdc_macro_idle_detect_control(component, wsa_priv,
++		wsa_macro_idle_detect_control(component, wsa_priv,
+ 				w->shift, event);
+ 		wsa_macro_config_softclip(component, w->shift, event);
+-		lpass_cdc_was_macro_config_pbr(component, w->shift, event);
++		wsa_was_macro_config_pbr(component, w->shift, event);
+ 		wsa_macro_enable_prim_interpolator(component, reg, event);
+ 		break;
+ 	}
+@@ -3832,7 +3832,7 @@ static int wsa_macro_core_vote(void *handle, bool enable)
+ 
+ 	if (enable) {
+ 		pm_runtime_get_sync(wsa_priv->dev);
+-		if (lpass_cdc_check_core_votes(wsa_priv->dev))
++		if (wsa_check_core_votes(wsa_priv->dev))
+ 			rc = 0;
+ 		else
+ 			rc = -ENOTSYNC;
+@@ -3862,7 +3862,7 @@ static int wsa_swrm_clock(void *handle, bool enable)
+ 	if (enable) {
+ 		pm_runtime_get_sync(wsa_priv->dev);
+ 		if (wsa_priv->sdw_clk_users == 0) {
+-			ret = msm_cdc_pinctrl_select_active_state(
++			ret = wsa_macro_pinctrl_select_active_state(
+ 						wsa_priv->wsa_sdw_gpio_p);
+ 			if (ret < 0) {
+ 				dev_err_ratelimited(wsa_priv->dev,
+@@ -3874,7 +3874,7 @@ static int wsa_swrm_clock(void *handle, bool enable)
+ 			}
+ 			ret = wsa_macro_mclk_enable(wsa_priv, 1, true);
+ 			if (ret < 0) {
+-				msm_cdc_pinctrl_select_sleep_state(
++				wsa_macro_pinctrl_select_sleep_state(
+ 						wsa_priv->wsa_sdw_gpio_p);
+ 				dev_err_ratelimited(wsa_priv->dev,
+ 					"%s: wsa request clock enable failed\n",
+@@ -3915,7 +3915,7 @@ static int wsa_swrm_clock(void *handle, bool enable)
+ 				CDC_WSA_CLK_RST_CTRL_SDW_CONTROL,
+ 				0x01, 0x00);
+ 			wsa_macro_mclk_enable(wsa_priv, 0, true);
+-			ret = msm_cdc_pinctrl_select_sleep_state(
++			ret = wsa_macro_pinctrl_select_sleep_state(
+ 						wsa_priv->wsa_sdw_gpio_p);
+ 			if (ret < 0) {
+ 				dev_err_ratelimited(wsa_priv->dev,
+@@ -4279,7 +4279,7 @@ static int wsa_macro_probe(struct platform_device *pdev)
+ 	u32 noise_gate_mode;
+ 	const char *is_used_wsa_sdw_gpio_dt = "qcom,is-used-swr-gpio";
+ 
+-	if (!lpass_cdc_is_va_macro_registered(&pdev->dev)) {
++	if (!wsa_is_va_macro_registered(&pdev->dev)) {
+ 		dev_err(&pdev->dev,
+ 			"%s: va-macro not registered yet, defer\n", __func__);
+ 		return -EPROBE_DEFER;
+@@ -4328,13 +4328,13 @@ static int wsa_macro_probe(struct platform_device *pdev)
+ 			__func__);
+ 		return -EINVAL;
+ 	}
+-	if (msm_cdc_pinctrl_get_state(wsa_priv->wsa_sdw_gpio_p) < 0 &&
++	if (wsa_macro_pinctrl_get_state(wsa_priv->wsa_sdw_gpio_p) < 0 &&
+ 			is_used_wsa_sdw_gpio) {
+ 		dev_err(&pdev->dev, "%s: failed to get swr pin state\n",
+ 			__func__);
+ 		return -EPROBE_DEFER;
+ 	}
+-	msm_cdc_pinctrl_set_wakeup_capable(
++	wsa_macro_pinctrl_set_wakeup_capable(
+ 				wsa_priv->wsa_sdw_gpio_p, false);
+ 
+ 	wsa_io_base = devm_ioremap(&pdev->dev,
+@@ -4480,7 +4480,7 @@ static const struct of_device_id wsa_macro_dt_match[] = {
+ 	{}
+ };
+ 
+-static const struct dev_pm_ops lpass_cdc_dev_pm_ops = {
++static const struct dev_pm_ops wsa_dev_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(
+ 		pm_runtime_force_suspend,
+ 		pm_runtime_force_resume
+@@ -4496,7 +4496,7 @@ static struct platform_driver wsa_macro_driver = {
+ 	.driver = {
+ 		.name = "wsa_macro",
+ 		.owner = THIS_MODULE,
+-		.pm = &lpass_cdc_dev_pm_ops,
++		.pm = &wsa_dev_pm_ops,
+ 		.of_match_table = wsa_macro_dt_match,
+ 		.suppress_bind_attrs = true,
+ 	},
+-- 
+2.34.1
+

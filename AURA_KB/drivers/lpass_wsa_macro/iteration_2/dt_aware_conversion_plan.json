@@ -1,0 +1,273 @@
+{
+  "artifact_name": "LPASS_WSA_MACRO_ITERATION_2_DT_AWARE_CONVERSION_PLAN",
+  "timestamp_utc": "2026-06-17T13:09:16.581334+00:00",
+  "replay_deterministic": true,
+  "decision_seed": "deterministic-lpass-wsa-iteration-2-sdw-controller-signal-v1",
+  "signal_sources_consulted": [
+    "AURA_KB/drivers/lpass_tx_macro/tx_lessons_learned.json",
+    "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+    "AURA_KB/drivers/lpass_va_macro/iteration_2/improvement_over_iteration_1.json",
+    "AURA_KB/drivers/wsa883x/iteration_3_2/learning_validation_scorecard_v3.json",
+    "AURA_KB/drivers/wsa883x/wsa_lessons_learned.json",
+    "AURA_KB/drivers/wsa884x/pattern_transfer_scorecard.json",
+    "AURA_KB/drivers/wsa884x/wsa884x_lessons_learned.json",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml",
+    "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+    "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+    "track_b_corpora/linux-next/include/linux/soundwire/sdw.h",
+    "track_b_corpora/linux-next/include/linux/soundwire/sdw_amd.h",
+    "track_b_corpora/linux-next/include/linux/soundwire/sdw_intel.h",
+    "track_b_corpora/linux-next/include/linux/soundwire/sdw_registers.h",
+    "track_b_corpora/linux-next/include/linux/soundwire/sdw_type.h",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c"
+  ],
+  "api_replacement_table": [
+    {
+      "downstream_api": "LPASS_CDC_WSA_*",
+      "upstream_api": "CDC_WSA_*",
+      "signal_source": "mechanical register migration",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_register_macro",
+      "upstream_api": "devm_snd_soc_register_component",
+      "signal_source": "VA/TX component model",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_clk_rsc_request_clock",
+      "upstream_api": "clk_prepare_enable/clk_disable_unprepare",
+      "signal_source": "LPASS runtime clock pattern",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_clk_rsc_fs_gen_request",
+      "upstream_api": "local fsgen regmap helper",
+      "signal_source": "LPASS fsgen pattern",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "swrm_wcd_notify",
+      "upstream_api": "remove; SoundWire controller/core owns enumeration/status",
+      "signal_source": "qcom.c + bus.c controller signal",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "SWR_DEVICE_*",
+      "upstream_api": "no macro direct replacement; event propagation handled by SDW controller/core",
+      "signal_source": "qcom.c sdw_handle_slave_status",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "qcom,swr-wsa-port-params",
+      "upstream_api": "drop downstream-only macro-side port table",
+      "signal_source": "binding exposes standard clock/DAI properties, SDW controller handles port transport",
+      "confidence": "HIGH",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "vdd-micb-supply",
+      "upstream_api": "devm_regulator_get_optional(dev, \"vdd-micb\")",
+      "signal_source": "qcom,lpass-wsa-macro binding",
+      "confidence": "HIGH",
+      "deterministic": true
+    }
+  ],
+  "register_callback_coverage": {
+    "used_register_count": 186,
+    "readable_ranges": [
+      "CDC_WSA_* used register whitelist generated from downstream source/header"
+    ],
+    "writeable_ranges": [
+      "CDC_WSA_* used register whitelist excluding status/readonly naming buckets"
+    ],
+    "volatile_ranges": [
+      "CDC_WSA_* status/interrupt/counter/thermal buckets"
+    ],
+    "range_buckets": {
+      "rx_int": [
+        "CDC_WSA_MACRO_RX0",
+        "CDC_WSA_MACRO_RX1",
+        "CDC_WSA_MACRO_RX4",
+        "CDC_WSA_MACRO_RX5",
+        "CDC_WSA_MACRO_RX6",
+        "CDC_WSA_MACRO_RX7",
+        "CDC_WSA_MACRO_RX8",
+        "CDC_WSA_MACRO_RX_COMP_OFFSET",
+        "CDC_WSA_MACRO_RX_FORMATS",
+        "CDC_WSA_MACRO_RX_MAX",
+        "CDC_WSA_MACRO_RX_MIX",
+        "CDC_WSA_MACRO_RX_MIX0",
+        "CDC_WSA_MACRO_RX_MIX1",
+        "CDC_WSA_MACRO_RX_MIX_RATES",
+        "CDC_WSA_MACRO_RX_PATH_CFG3_OFFSET",
+        "CDC_WSA_MACRO_RX_PATH_DSMDEM_OFFSET",
+        "CDC_WSA_MACRO_RX_PATH_OFFSET",
+        "CDC_WSA_MACRO_RX_RATES",
+        "CDC_WSA_MACRO_RX_SOFTCLIP_OFFSET",
+        "CDC_WSA_RX0_RX_PATH_CFG0",
+        "CDC_WSA_RX0_RX_PATH_CFG1",
+        "CDC_WSA_RX0_RX_PATH_CFG3",
+        "CDC_WSA_RX0_RX_PATH_CTL",
+        "CDC_WSA_RX0_RX_PATH_MIX_CFG",
+        "CDC_WSA_RX0_RX_PATH_MIX_CTL",
+        "CDC_WSA_RX0_RX_PATH_SEC3",
+        "CDC_WSA_RX0_RX_VOL_CTL",
+        "CDC_WSA_RX0_RX_VOL_MIX_CTL",
+        "CDC_WSA_RX1_RX_PATH_CFG0",
+        "CDC_WSA_RX1_RX_PATH_CFG1",
+        "CDC_WSA_RX1_RX_PATH_CFG3",
+        "CDC_WSA_RX1_RX_PATH_CTL",
+        "CDC_WSA_RX1_RX_PATH_MIX_CFG",
+        "CDC_WSA_RX1_RX_PATH_MIX_CTL",
+        "CDC_WSA_RX1_RX_PATH_SEC3",
+        "CDC_WSA_RX1_RX_VOL_CTL",
+        "CDC_WSA_RX1_RX_VOL_MIX_CTL",
+        "CDC_WSA_RX_INP_MUX_RX_INT0_CFG0",
+        "CDC_WSA_RX_INP_MUX_RX_INT0_CFG1",
+        "CDC_WSA_RX_INP_MUX_RX_INT1_CFG0",
+        "CDC_WSA_RX_INP_MUX_RX_INT1_CFG1",
+        "CDC_WSA_RX_INP_MUX_RX_MIX_CFG0",
+        "CDC_WSA_RX_INP_MUX_SOFTCLIP_CFG0"
+      ],
+      "compander": [
+        "CDC_WSA_COMPANDER0_CTL0",
+        "CDC_WSA_COMPANDER0_CTL7",
+        "CDC_WSA_COMPANDER0_CTL8",
+        "CDC_WSA_COMPANDER1_CTL0",
+        "CDC_WSA_COMPANDER1_CTL7",
+        "CDC_WSA_MACRO_COMP1",
+        "CDC_WSA_MACRO_COMP2",
+        "CDC_WSA_MACRO_COMP_MAX",
+        "CDC_WSA_MACRO_RX_COMP_OFFSET"
+      ],
+      "visense": [
+        "CDC_WSA_MACRO_AIF_VI",
+        "CDC_WSA_MACRO_CHILD_DEVICES_MAX",
+        "CDC_WSA_MACRO_VI_DEC_ENABLE_DELAY_MS",
+        "CDC_WSA_MACRO_VI_FEEDBACK_RATES",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD1",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD2",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD3",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD4",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD5",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD6",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD7",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD8",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD9",
+        "CDC_WSA_VBAT_BCL_VBAT_CFG",
+        "CDC_WSA_VBAT_BCL_VBAT_PATH_CTL"
+      ],
+      "class_h_gain": [
+        "CDC_WSA_BOOST0_BOOST_CFG1",
+        "CDC_WSA_BOOST0_BOOST_CFG2",
+        "CDC_WSA_BOOST0_BOOST_CTL",
+        "CDC_WSA_BOOST0_BOOST_PATH_CTL",
+        "CDC_WSA_BOOST1_BOOST_CFG1",
+        "CDC_WSA_BOOST1_BOOST_CFG2",
+        "CDC_WSA_BOOST1_BOOST_CTL",
+        "CDC_WSA_BOOST1_BOOST_PATH_CTL",
+        "CDC_WSA_MACRO_GAIN_OFFSET_0_DB",
+        "CDC_WSA_MACRO_GAIN_OFFSET_M1P5_DB",
+        "CDC_WSA_PBR_CFG1",
+        "CDC_WSA_PBR_CFG10",
+        "CDC_WSA_PBR_CFG10_1",
+        "CDC_WSA_PBR_CFG11",
+        "CDC_WSA_PBR_CFG11_1",
+        "CDC_WSA_PBR_CFG12",
+        "CDC_WSA_PBR_CFG12_1",
+        "CDC_WSA_PBR_CFG13",
+        "CDC_WSA_PBR_CFG13_1",
+        "CDC_WSA_PBR_CFG14",
+        "CDC_WSA_PBR_CFG14_1",
+        "CDC_WSA_PBR_CFG15",
+        "CDC_WSA_PBR_CFG15_1",
+        "CDC_WSA_PBR_CFG16",
+        "CDC_WSA_PBR_CFG16_1",
+        "CDC_WSA_PBR_CFG19",
+        "CDC_WSA_PBR_CFG1_1",
+        "CDC_WSA_PBR_CFG2",
+        "CDC_WSA_PBR_CFG20",
+        "CDC_WSA_PBR_CFG21",
+        "CDC_WSA_PBR_CFG22",
+        "CDC_WSA_PBR_CFG2_1",
+        "CDC_WSA_PBR_CFG3",
+        "CDC_WSA_PBR_CFG3_1",
+        "CDC_WSA_PBR_CFG4",
+        "CDC_WSA_PBR_CFG4_1",
+        "CDC_WSA_PBR_CFG5",
+        "CDC_WSA_PBR_CFG5_1",
+        "CDC_WSA_PBR_CFG6",
+        "CDC_WSA_PBR_CFG6_1",
+        "CDC_WSA_PBR_CFG7",
+        "CDC_WSA_PBR_CFG7_1",
+        "CDC_WSA_PBR_CFG8",
+        "CDC_WSA_PBR_CFG8_1",
+        "CDC_WSA_PBR_CFG9",
+        "CDC_WSA_PBR_CFG9_1",
+        "CDC_WSA_PBR_PATH_CTL",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD1",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD2",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD3",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD4",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD5",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD6",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD7",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD8",
+        "CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD9"
+      ],
+      "clock_power": [
+        "CDC_WSA_CLK_RST_CTRL_FS_CNT_CONTROL",
+        "CDC_WSA_CLK_RST_CTRL_MCLK_CONTROL",
+        "CDC_WSA_CLK_RST_CTRL_SWR_CONTROL",
+        "CDC_WSA_TOP_FREQ_MCLK"
+      ]
+    },
+    "signal_source": "downstream WSA macro source/header + VA/TX regmap callback pattern",
+    "confidence": "HIGH"
+  },
+  "dt_property_map": [
+    {
+      "property": "compatible",
+      "implementation": "of_device_get_match_data",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "reg",
+      "implementation": "devm_platform_ioremap_resource + devm_regmap_init_mmio",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-names",
+      "implementation": "devm_clk_get mclk/npl/macro/dcodec/fsgen depending on SoC data",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-output-names",
+      "implementation": "devm_clk_hw_register + devm_of_clk_add_hw_provider",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "vdd-micb-supply",
+      "implementation": "devm_regulator_get_optional(dev, \"vdd-micb\")",
+      "confidence": "HIGH"
+    }
+  ],
+  "fail_closed_items": [],
+  "predicted_patch_count": 12
+}

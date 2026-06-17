@@ -1,0 +1,276 @@
+From 6b63e40a4cd3ce3408da0cb22cbe4fa08cef6e93 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:39:16 +0530
+Subject: [PATCH 5/12] ASoC: codecs: lpass-wsa-macro: add complete WSA register
+ callbacks and MMIO regmap ownership
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 245 ++++++++++++++++++++
+ 1 file changed, 245 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index 9023450..889568e 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -8,6 +8,7 @@
+ #include <linux/io.h>
+ #include <linux/platform_device.h>
+ #include <linux/clk.h>
++#include <linux/regmap.h>
+ #include <linux/thermal.h>
+ #include <linux/pm_runtime.h>
+ #include <sound/soc.h>
+@@ -184,6 +185,250 @@ static struct interp_sample_rate int_mix_sample_rate_val[] = {
+ #define CDC_WSA_MACRO_SWR_STRING_LEN 80
+ 
+ static int wsa_macro_core_vote(void *handle, bool enable);
++
++static bool wsa_macro_readable_register(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case CDC_WSA_BOOST0_BOOST_CFG1:
++	case CDC_WSA_BOOST0_BOOST_CFG2:
++	case CDC_WSA_BOOST0_BOOST_CTL:
++	case CDC_WSA_BOOST0_BOOST_PATH_CTL:
++	case CDC_WSA_BOOST1_BOOST_CFG1:
++	case CDC_WSA_BOOST1_BOOST_CFG2:
++	case CDC_WSA_BOOST1_BOOST_CTL:
++	case CDC_WSA_BOOST1_BOOST_PATH_CTL:
++	case CDC_WSA_CB_DECODE_CB_DECODE_CTL1:
++	case CDC_WSA_CB_DECODE_CB_DECODE_CTL2:
++	case CDC_WSA_CB_DECODE_CB_DECODE_CTL3:
++	case CDC_WSA_CLK_RST_CTRL_FS_CNT_CONTROL:
++	case CDC_WSA_CLK_RST_CTRL_MCLK_CONTROL:
++	case CDC_WSA_CLK_RST_CTRL_SWR_CONTROL:
++	case CDC_WSA_COMPANDER0_CTL0:
++	case CDC_WSA_COMPANDER0_CTL7:
++	case CDC_WSA_COMPANDER0_CTL8:
++	case CDC_WSA_COMPANDER1_CTL0:
++	case CDC_WSA_COMPANDER1_CTL7:
++	case CDC_WSA_EC_HQ0_EC_REF_HQ_CFG0:
++	case CDC_WSA_EC_HQ0_EC_REF_HQ_PATH_CTL:
++	case CDC_WSA_IDLE_DETECT_CFG1:
++	case CDC_WSA_IDLE_DETECT_CFG3:
++	case CDC_WSA_IDLE_DETECT_PATH_CTL:
++	case CDC_WSA_ILIM_CFG0:
++	case CDC_WSA_ILIM_CFG0_1:
++	case CDC_WSA_ILIM_CFG1:
++	case CDC_WSA_ILIM_CFG1_1:
++	case CDC_WSA_ILIM_CFG2:
++	case CDC_WSA_ILIM_CFG2_1:
++	case CDC_WSA_ILIM_CFG3:
++	case CDC_WSA_ILIM_CFG4:
++	case CDC_WSA_ILIM_CFG9:
++	case CDC_WSA_LA_CFG:
++	case CDC_WSA_LA_CFG_1:
++	case CDC_WSA_MACRO_AIF1_PB:
++	case CDC_WSA_MACRO_AIF4_PB:
++	case CDC_WSA_MACRO_AIF_CPS:
++	case CDC_WSA_MACRO_AIF_ECHO:
++	case CDC_WSA_MACRO_AIF_INVALID:
++	case CDC_WSA_MACRO_AIF_MIX1_PB:
++	case CDC_WSA_MACRO_AIF_PCM_PB:
++	case CDC_WSA_MACRO_AIF_VI:
++	case CDC_WSA_MACRO_CHILD_DEVICES_MAX:
++	case CDC_WSA_MACRO_COMP1:
++	case CDC_WSA_MACRO_COMP2:
++	case CDC_WSA_MACRO_COMP_MAX:
++	case CDC_WSA_MACRO_CPS_FORMATS:
++	case CDC_WSA_MACRO_CPS_RATES:
++	case CDC_WSA_MACRO_EC0_MUX:
++	case CDC_WSA_MACRO_EC1_MUX:
++	case CDC_WSA_MACRO_ECHO_FORMATS:
++	case CDC_WSA_MACRO_ECHO_RATES:
++	case CDC_WSA_MACRO_EC_MIX_TX0_MASK:
++	case CDC_WSA_MACRO_EC_MIX_TX1_MASK:
++	case CDC_WSA_MACRO_EC_MUX_MAX:
++	case CDC_WSA_MACRO_FS_RATE_MASK:
++	case CDC_WSA_MACRO_GAIN_OFFSET_0_DB:
++	case CDC_WSA_MACRO_GAIN_OFFSET_M1P5_DB:
++	case CDC_WSA_MACRO_H:
++	case CDC_WSA_MACRO_MAX_DAIS:
++	case CDC_WSA_MACRO_MAX_DMA_CH_PER_PORT:
++	case CDC_WSA_MACRO_MAX_OFFSET:
++	case CDC_WSA_MACRO_MUX_CFG1_OFFSET:
++	case CDC_WSA_MACRO_MUX_CFG_OFFSET:
++	case CDC_WSA_MACRO_MUX_INP_MASK1:
++	case CDC_WSA_MACRO_MUX_INP_MASK2:
++	case CDC_WSA_MACRO_MUX_INP_SHFT:
++	case CDC_WSA_MACRO_RX0:
++	case CDC_WSA_MACRO_RX1:
++	case CDC_WSA_MACRO_RX4:
++	case CDC_WSA_MACRO_RX5:
++	case CDC_WSA_MACRO_RX6:
++	case CDC_WSA_MACRO_RX7:
++	case CDC_WSA_MACRO_RX8:
++	case CDC_WSA_MACRO_RX_COMP_OFFSET:
++	case CDC_WSA_MACRO_RX_FORMATS:
++	case CDC_WSA_MACRO_RX_MAX:
++	case CDC_WSA_MACRO_RX_MIX:
++	case CDC_WSA_MACRO_RX_MIX0:
++	case CDC_WSA_MACRO_RX_MIX1:
++	case CDC_WSA_MACRO_RX_MIX_RATES:
++	case CDC_WSA_MACRO_RX_PATH_CFG3_OFFSET:
++	case CDC_WSA_MACRO_RX_PATH_DSMDEM_OFFSET:
++	case CDC_WSA_MACRO_RX_PATH_OFFSET:
++	case CDC_WSA_MACRO_RX_RATES:
++	case CDC_WSA_MACRO_RX_SOFTCLIP_OFFSET:
++	case CDC_WSA_MACRO_SET_VOLUME_TLV:
++	case CDC_WSA_MACRO_SOFTCLIP0:
++	case CDC_WSA_MACRO_SOFTCLIP1:
++	case CDC_WSA_MACRO_SOFTCLIP_MAX:
++	case CDC_WSA_MACRO_SPKR_MODE_1:
++	case CDC_WSA_MACRO_SPKR_MODE_DEFAULT:
++	case CDC_WSA_MACRO_SWR_STRING_LEN:
++	case CDC_WSA_MACRO_THERMAL_MAX_STATE:
++	case CDC_WSA_MACRO_TX0:
++	case CDC_WSA_MACRO_TX1:
++	case CDC_WSA_MACRO_TX_MAX:
++	case CDC_WSA_MACRO_VI_DEC_ENABLE_DELAY_MS:
++	case CDC_WSA_MACRO_VI_FEEDBACK_RATES:
++	case CDC_WSA_MACRO_VTH_TO_REG:
++	case CDC_WSA_PBR_CFG1:
++	case CDC_WSA_PBR_CFG10:
++	case CDC_WSA_PBR_CFG10_1:
++	case CDC_WSA_PBR_CFG11:
++	case CDC_WSA_PBR_CFG11_1:
++	case CDC_WSA_PBR_CFG12:
++	case CDC_WSA_PBR_CFG12_1:
++	case CDC_WSA_PBR_CFG13:
++	case CDC_WSA_PBR_CFG13_1:
++	case CDC_WSA_PBR_CFG14:
++	case CDC_WSA_PBR_CFG14_1:
++	case CDC_WSA_PBR_CFG15:
++	case CDC_WSA_PBR_CFG15_1:
++	case CDC_WSA_PBR_CFG16:
++	case CDC_WSA_PBR_CFG16_1:
++	case CDC_WSA_PBR_CFG19:
++	case CDC_WSA_PBR_CFG1_1:
++	case CDC_WSA_PBR_CFG2:
++	case CDC_WSA_PBR_CFG20:
++	case CDC_WSA_PBR_CFG21:
++	case CDC_WSA_PBR_CFG22:
++	case CDC_WSA_PBR_CFG2_1:
++	case CDC_WSA_PBR_CFG3:
++	case CDC_WSA_PBR_CFG3_1:
++	case CDC_WSA_PBR_CFG4:
++	case CDC_WSA_PBR_CFG4_1:
++	case CDC_WSA_PBR_CFG5:
++	case CDC_WSA_PBR_CFG5_1:
++	case CDC_WSA_PBR_CFG6:
++	case CDC_WSA_PBR_CFG6_1:
++	case CDC_WSA_PBR_CFG7:
++	case CDC_WSA_PBR_CFG7_1:
++	case CDC_WSA_PBR_CFG8:
++	case CDC_WSA_PBR_CFG8_1:
++	case CDC_WSA_PBR_CFG9:
++	case CDC_WSA_PBR_CFG9_1:
++	case CDC_WSA_PBR_PATH_CTL:
++	case CDC_WSA_RX0_RX_PATH_CFG0:
++	case CDC_WSA_RX0_RX_PATH_CFG1:
++	case CDC_WSA_RX0_RX_PATH_CFG3:
++	case CDC_WSA_RX0_RX_PATH_CTL:
++	case CDC_WSA_RX0_RX_PATH_MIX_CFG:
++	case CDC_WSA_RX0_RX_PATH_MIX_CTL:
++	case CDC_WSA_RX0_RX_PATH_SEC3:
++	case CDC_WSA_RX0_RX_VOL_CTL:
++	case CDC_WSA_RX0_RX_VOL_MIX_CTL:
++	case CDC_WSA_RX1_RX_PATH_CFG0:
++	case CDC_WSA_RX1_RX_PATH_CFG1:
++	case CDC_WSA_RX1_RX_PATH_CFG3:
++	case CDC_WSA_RX1_RX_PATH_CTL:
++	case CDC_WSA_RX1_RX_PATH_MIX_CFG:
++	case CDC_WSA_RX1_RX_PATH_MIX_CTL:
++	case CDC_WSA_RX1_RX_PATH_SEC3:
++	case CDC_WSA_RX1_RX_VOL_CTL:
++	case CDC_WSA_RX1_RX_VOL_MIX_CTL:
++	case CDC_WSA_RX_INP_MUX_RX_INT0_CFG0:
++	case CDC_WSA_RX_INP_MUX_RX_INT0_CFG1:
++	case CDC_WSA_RX_INP_MUX_RX_INT1_CFG0:
++	case CDC_WSA_RX_INP_MUX_RX_INT1_CFG1:
++	case CDC_WSA_RX_INP_MUX_RX_MIX_CFG0:
++	case CDC_WSA_RX_INP_MUX_SOFTCLIP_CFG0:
++	case CDC_WSA_SOFTCLIP0_CRC:
++	case CDC_WSA_SOFTCLIP0_SOFTCLIP_CTRL:
++	case CDC_WSA_SOFTCLIP1_CRC:
++	case CDC_WSA_TOP_FREQ_MCLK:
++	case CDC_WSA_TOP_TOP_CFG1:
++	case CDC_WSA_TX0_SPKR_PROT_PATH_CFG0:
++	case CDC_WSA_TX0_SPKR_PROT_PATH_CTL:
++	case CDC_WSA_TX1_SPKR_PROT_PATH_CFG0:
++	case CDC_WSA_TX1_SPKR_PROT_PATH_CTL:
++	case CDC_WSA_TX2_SPKR_PROT_PATH_CFG0:
++	case CDC_WSA_TX2_SPKR_PROT_PATH_CTL:
++	case CDC_WSA_TX3_SPKR_PROT_PATH_CFG0:
++	case CDC_WSA_TX3_SPKR_PROT_PATH_CTL:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD1:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD2:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD3:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD4:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD5:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD6:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD7:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD8:
++	case CDC_WSA_VBAT_BCL_VBAT_BCL_GAIN_UPD9:
++	case CDC_WSA_VBAT_BCL_VBAT_CFG:
++	case CDC_WSA_VBAT_BCL_VBAT_PATH_CTL:
++
++		return true;
++	default:
++		return false;
++	}
++}
++
++static bool wsa_macro_writeable_register(struct device *dev, unsigned int reg)
++{
++	if (wsa_macro_readable_register(dev, reg))
++		return true;
++
++	return false;
++}
++
++static bool wsa_macro_volatile_register(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case CDC_WSA_CLK_RST_CTRL_FS_CNT_CONTROL:
++	case CDC_WSA_CLK_RST_CTRL_SWR_CONTROL:
++	case CDC_WSA_MACRO_SWR_STRING_LEN:
++	case CDC_WSA_MACRO_THERMAL_MAX_STATE:
++	case CDC_WSA_RX_INP_MUX_RX_INT0_CFG0:
++	case CDC_WSA_RX_INP_MUX_RX_INT0_CFG1:
++	case CDC_WSA_RX_INP_MUX_RX_INT1_CFG0:
++	case CDC_WSA_RX_INP_MUX_RX_INT1_CFG1:
++
++		return true;
++	default:
++		return false;
++	}
++}
++
++static const struct regmap_config wsa_macro_regmap_config = {
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.cache_type = REGCACHE_FLAT,
++	.readable_reg = wsa_macro_readable_register,
++	.writeable_reg = wsa_macro_writeable_register,
++	.volatile_reg = wsa_macro_volatile_register,
++};
++
++static struct regmap *wsa_macro_init_mmio_regmap(struct platform_device *pdev)
++{
++	void __iomem *base;
++
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base))
++		return ERR_CAST(base);
++
++	return devm_regmap_init_mmio(&pdev->dev, base, &wsa_macro_regmap_config);
++}
++
+ static int wsa_macro_hw_params(struct snd_pcm_substream *substream,
+ 			       struct snd_pcm_hw_params *params,
+ 			       struct snd_soc_dai *dai);
+-- 
+2.34.1
+

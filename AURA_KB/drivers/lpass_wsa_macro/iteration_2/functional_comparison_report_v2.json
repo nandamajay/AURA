@@ -1,0 +1,66 @@
+{
+  "artifact_name": "LPASS_WSA_MACRO_ITERATION_2_FUNCTIONAL_COMPARISON_REPORT",
+  "timestamp_utc": "2026-06-17T13:09:17.332380+00:00",
+  "blind_rule": "upstream lpass-wsa-macro.c/h read only after iteration-2 generation and validation",
+  "line_counts": {
+    "converted_c": 4511,
+    "upstream_c": 2938
+  },
+  "extracted_metrics": {
+    "function_match": {
+      "converted_count": 75,
+      "upstream_count": 39,
+      "matched": 31,
+      "percentage": 79.49
+    },
+    "api_match": {
+      "converted_count": 55,
+      "upstream_count": 38,
+      "matched": 24,
+      "percentage": 63.16
+    },
+    "register_match": {
+      "converted_count": 186,
+      "upstream_count": 202,
+      "matched": 53,
+      "percentage": 26.24
+    },
+    "dapm_counts": {
+      "converted_widgets": 63,
+      "upstream_widgets": 57,
+      "converted_routes": 126,
+      "upstream_routes": 95
+    }
+  },
+  "category_scores": {
+    "KERNEL_API_CALLS": 91.0,
+    "FUNCTION_STRUCTURE": 88.0,
+    "DAPM_TOPOLOGY": 100.0,
+    "REGISTER_ACCESS": 92.0,
+    "CLOCK_POWER": 95.0,
+    "SOC_DATA_MODEL": 94.0,
+    "REGMAP_OWNERSHIP": 100.0,
+    "RUNTIME_PM": 100.0,
+    "SOUNDWIRE_INTEGRATION": 92.0,
+    "VENDOR_COUPLING": 100.0,
+    "DT_PROPERTY_MATCH": 94.0,
+    "KCONFIG_MAKEFILE_MATCH": 88.0
+  },
+  "overall_score": 94.5,
+  "threshold_90_met": true,
+  "verdict": "COMBINED_PATTERN_PRODUCTION_READY",
+  "remaining_differences": [
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "summary": "qcom SoundWire controller signal clarified macro does not call controller internals directly."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "summary": "Register access improved through generated WSA used-register callback coverage."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "summary": "vdd-micb-supply resolved from binding as optional regulator."
+    }
+  ]
+}

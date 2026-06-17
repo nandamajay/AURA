@@ -1,0 +1,36 @@
+From c311bc956915dfccd0a9e54986de2e6d73d17c1d Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:39:16 +0530
+Subject: [PATCH 11/12] ASoC: codecs: lpass-wsa-macro: add explicit mclk clock
+ provider registration hook
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index 1997d5b..5bab999 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -210,6 +210,18 @@ static const struct dev_pm_ops wsa_macro_pm_ops = {
+ };
+ 
+ 
++
++static int wsa_macro_register_mclk_output(struct device *dev, struct clk_hw *hw)
++{
++	int ret;
++
++	ret = devm_clk_hw_register(dev, hw);
++	if (ret)
++		return ret;
++
++	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
++}
++
+ static int wsa_macro_get_vdd_micb(struct device *dev)
+ {
+ 	struct regulator *vdd_micb;
+-- 
+2.34.1
+

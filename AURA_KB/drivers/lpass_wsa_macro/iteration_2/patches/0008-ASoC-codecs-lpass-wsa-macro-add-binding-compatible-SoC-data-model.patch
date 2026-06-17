@@ -1,0 +1,44 @@
+From 688e2a97190b9bb0c4bf27ba10114b95ce32ea2b Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:39:16 +0530
+Subject: [PATCH 8/12] ASoC: codecs: lpass-wsa-macro: add binding compatible
+ SoC data model
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index 44a4a80..6872b8f 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -210,6 +210,26 @@ static const struct dev_pm_ops wsa_macro_pm_ops = {
+ 
+ static int wsa_macro_core_vote(void *handle, bool enable);
+ 
++
++struct wsa_macro_data {
++	bool has_npl;
++	bool has_prim_interpolator;
++	bool has_v2_mixers;
++};
++
++static const struct wsa_macro_data sm8250_wsa_macro_data = { .has_npl = true };
++static const struct wsa_macro_data sm8550_wsa_macro_data = { .has_prim_interpolator = true, .has_v2_mixers = true };
++
++static const struct of_device_id wsa_macro_dt_match[] = {
++	{ .compatible = "qcom,sc7280-lpass-wsa-macro", .data = &sm8250_wsa_macro_data },
++	{ .compatible = "qcom,sm8250-lpass-wsa-macro", .data = &sm8250_wsa_macro_data },
++	{ .compatible = "qcom,sm8450-lpass-wsa-macro", .data = &sm8250_wsa_macro_data },
++	{ .compatible = "qcom,sc8280xp-lpass-wsa-macro", .data = &sm8250_wsa_macro_data },
++	{ .compatible = "qcom,sm8550-lpass-wsa-macro", .data = &sm8550_wsa_macro_data },
++	{}
++};
++MODULE_DEVICE_TABLE(of, wsa_macro_dt_match);
++
+ static bool wsa_macro_readable_register(struct device *dev, unsigned int reg)
+ {
+ 	switch (reg) {
+-- 
+2.34.1
+
