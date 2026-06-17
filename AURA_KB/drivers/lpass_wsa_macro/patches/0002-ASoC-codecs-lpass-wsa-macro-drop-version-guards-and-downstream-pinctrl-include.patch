@@ -1,0 +1,190 @@
+From 90fa79b7b35f2266fba96d8fcaa21c1840f0bb3d Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:27:58 +0530
+Subject: [PATCH 2/10] ASoC: codecs: lpass-wsa-macro: drop version guards and
+ downstream pinctrl include
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 66 ++++-----------------
+ 1 file changed, 12 insertions(+), 54 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index 4960435..dcf4adf 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -16,8 +16,6 @@
+ #include <sound/tlv.h>
+ #include <soc/swr-common.h>
+ #include <soc/swr-wcd.h>
+-#include <linux/version.h>
+-#include <asoc/msm-cdc-pinctrl.h>
+ #include "lpass-cdc.h"
+ #include "lpass-cdc-comp.h"
+ #include "lpass-cdc-registers.h"
+@@ -194,15 +192,10 @@ static int lpass_cdc_wsa_macro_core_vote(void *handle, bool enable);
+ static int lpass_cdc_wsa_macro_hw_params(struct snd_pcm_substream *substream,
+ 			       struct snd_pcm_hw_params *params,
+ 			       struct snd_soc_dai *dai);
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static int lpass_cdc_wsa_macro_get_channel_map(const struct snd_soc_dai *dai,
+ 				unsigned int *tx_num, unsigned int *tx_slot,
+ 				unsigned int *rx_num, unsigned int *rx_slot);
+-#else
+-static int lpass_cdc_wsa_macro_get_channel_map(struct snd_soc_dai *dai,
+-				unsigned int *tx_num, unsigned int *tx_slot,
+-				unsigned int *rx_num, unsigned int *rx_slot);
+-#endif
++
+ static int lpass_cdc_wsa_macro_mute_stream(struct snd_soc_dai *dai, int mute, int stream);
+ 
+ #define CDC_WSA_MACRO_VTH_TO_REG(vth) ((vth) == 0 ? 255 : (vth))
+@@ -853,15 +846,10 @@ static int lpass_cdc_wsa_macro_hw_params(struct snd_pcm_substream *substream,
+ 	return 0;
+ }
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static int lpass_cdc_wsa_macro_get_channel_map(const struct snd_soc_dai *dai,
+ 				unsigned int *tx_num, unsigned int *tx_slot,
+ 				unsigned int *rx_num, unsigned int *rx_slot)
+-#else
+-static int lpass_cdc_wsa_macro_get_channel_map(struct snd_soc_dai *dai,
+-				unsigned int *tx_num, unsigned int *tx_slot,
+-				unsigned int *rx_num, unsigned int *rx_slot)
+-#endif
++
+ {
+ 	struct snd_soc_component *component = dai->component;
+ 	struct device *wsa_dev = NULL;
+@@ -2561,11 +2549,8 @@ static int lpass_cdc_wsa_macro_rx_mux_get(struct snd_kcontrol *kcontrol,
+ 			  struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
++
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct device *wsa_dev = NULL;
+@@ -2583,11 +2568,8 @@ static int lpass_cdc_wsa_macro_rx_mux_put(struct snd_kcontrol *kcontrol,
+ 			  struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
++
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_enum *e = (struct soc_enum *)kcontrol->private_value;
+@@ -2846,11 +2828,8 @@ static int lpass_cdc_wsa_macro_vi_feed_mixer_get(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
++
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_mixer_control *mixer =
+@@ -2875,11 +2854,8 @@ static int lpass_cdc_wsa_macro_vi_feed_mixer_put(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
++
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_mixer_control *mixer =
+@@ -2943,11 +2919,8 @@ static int lpass_cdc_wsa_macro_cps_feed_mixer_get(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
++
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_mixer_control *mixer =
+@@ -2972,11 +2945,8 @@ static int lpass_cdc_wsa_macro_cps_feed_mixer_put(struct snd_kcontrol *kcontrol,
+ 				   struct snd_ctl_elem_value *ucontrol)
+ {
+ 	struct snd_soc_dapm_widget *widget =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		snd_soc_dapm_kcontrol_to_widget(kcontrol);
+-#else
+-		snd_soc_dapm_kcontrol_widget(kcontrol);
+-#endif
++
+ 	struct snd_soc_component *component =
+ 				snd_soc_dapm_to_component(widget->dapm);
+ 	struct soc_mixer_control *mixer =
+@@ -3709,11 +3679,8 @@ static struct thermal_cooling_device_ops wsa_cooling_ops = {
+ static int lpass_cdc_wsa_macro_init(struct snd_soc_component *component)
+ {
+ 	struct snd_soc_dapm_context *dapm =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 				snd_soc_component_to_dapm(component);
+-#else
+-				snd_soc_component_get_dapm(component);
+-#endif
++
+ 	int ret;
+ 	struct device *wsa_dev = NULL;
+ 	struct lpass_cdc_wsa_macro_priv *wsa_priv = NULL;
+@@ -3745,11 +3712,8 @@ static int lpass_cdc_wsa_macro_init(struct snd_soc_component *component)
+ 		return ret;
+ 	}
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 	ret = snd_soc_dapm_new_widgets(snd_soc_dapm_to_card(dapm));
+-#else
+-	ret = snd_soc_dapm_new_widgets(dapm->card);
+-#endif
++
+ 	if (ret < 0) {
+ 		dev_err(wsa_dev, "%s: Failed to add widgets\n", __func__);
+ 		return ret;
+@@ -4156,11 +4120,8 @@ reg_macro_fail:
+ 	return ret;
+ }
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static void lpass_cdc_wsa_macro_remove(struct platform_device *pdev)
+-#else
+-static int lpass_cdc_wsa_macro_remove(struct platform_device *pdev)
+-#endif
++
+ {
+ 	int rc = 0;
+ 	struct lpass_cdc_wsa_macro_priv *wsa_priv;
+@@ -4188,11 +4149,8 @@ static int lpass_cdc_wsa_macro_remove(struct platform_device *pdev)
+ 	mutex_destroy(&wsa_priv->mclk_lock);
+ 	mutex_destroy(&wsa_priv->swr_clk_lock);
+ exit:
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ 	return;
+-#else
+-	return rc;
+-#endif
++
+ }
+ 
+ static const struct of_device_id lpass_cdc_wsa_macro_dt_match[] = {
+-- 
+2.34.1
+

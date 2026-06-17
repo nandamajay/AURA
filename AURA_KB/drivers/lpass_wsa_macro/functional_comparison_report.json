@@ -1,0 +1,78 @@
+{
+  "artifact_name": "LPASS_WSA_MACRO_FIRST_ATTEMPT_FUNCTIONAL_COMPARISON_REPORT",
+  "timestamp_utc": "2026-06-17T12:57:59.078280+00:00",
+  "blind_rule": "upstream lpass-wsa-macro.c/h read only after patch generation and validation",
+  "line_counts": {
+    "converted_c": 4248,
+    "upstream_c": 2938
+  },
+  "extracted_metrics": {
+    "function_match": {
+      "converted_count": 69,
+      "upstream_count": 39,
+      "matched": 30,
+      "percentage": 76.92
+    },
+    "api_match": {
+      "converted_count": 50,
+      "upstream_count": 38,
+      "matched": 23,
+      "percentage": 60.53
+    },
+    "register_match": {
+      "converted_count": 186,
+      "upstream_count": 202,
+      "matched": 53,
+      "percentage": 26.24
+    },
+    "include_match": {
+      "converted_count": 16,
+      "upstream_count": 16,
+      "matched": 12,
+      "percentage": 75.0
+    },
+    "dapm_counts": {
+      "converted_widgets": 63,
+      "upstream_widgets": 57,
+      "converted_routes": 126,
+      "upstream_routes": 95
+    }
+  },
+  "category_scores": {
+    "KERNEL_API_CALLS": 54.34,
+    "FUNCTION_STRUCTURE": 83.84,
+    "DAPM_TOPOLOGY": 100.0,
+    "REGISTER_ACCESS": 50.0,
+    "CLOCK_POWER": 92.0,
+    "SOC_DATA_MODEL": 92.0,
+    "REGMAP_OWNERSHIP": 100.0,
+    "RUNTIME_PM": 100.0,
+    "SOUNDWIRE_INTEGRATION": 86.0,
+    "VENDOR_COUPLING": 100.0,
+    "DT_PROPERTY_MATCH": 90.0,
+    "KCONFIG_MAKEFILE_MATCH": 85.0
+  },
+  "overall_score": 86.1,
+  "threshold_85_met": true,
+  "threshold_90_met": false,
+  "verdict": "COMPOSITION_SUCCESSFUL",
+  "production_readiness": "COMPOSES_WITH_REFINEMENT",
+  "remaining_differences": [
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "summary": "LPASS framework, clk-rsc, MMIO regmap, runtime PM and clock-provider patterns were transferred."
+    },
+    {
+      "classification": "LESSON_APPLIED_CORRECTLY",
+      "summary": "SoundWire vendor notifications were removed rather than upstreamed."
+    },
+    {
+      "classification": "FAIL_CLOSED_CORRECT",
+      "summary": "vdd-micb-supply was deferred because allowed same-class refs did not establish semantics."
+    },
+    {
+      "classification": "CONVERSION_GAP",
+      "summary": "Function-level decomposition differs from exact upstream WSA macro implementation."
+    }
+  ]
+}

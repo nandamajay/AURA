@@ -1,0 +1,51 @@
+From 93e59d26608df970ac59872763ba9f3dbf65c0c8 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:27:58 +0530
+Subject: [PATCH 5/10] ASoC: codecs: lpass-wsa-macro: own MMIO regmap in
+ platform probe
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 20 ++++++++++++++++++++
+ 1 file changed, 20 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index bf8bb7f..6d2fbec 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -8,6 +8,7 @@
+ #include <linux/io.h>
+ #include <linux/platform_device.h>
+ #include <linux/clk.h>
++#include <linux/regmap.h>
+ #include <linux/thermal.h>
+ #include <linux/pm_runtime.h>
+ #include <sound/soc.h>
+@@ -184,6 +185,25 @@ static struct interp_sample_rate int_mix_sample_rate_val[] = {
+ #define CDC_WSA_MACRO_SWR_STRING_LEN 80
+ 
+ static int wsa_macro_core_vote(void *handle, bool enable);
++
++static const struct regmap_config wsa_macro_regmap_config = {
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.cache_type = REGCACHE_FLAT,
++};
++
++static struct regmap *wsa_macro_init_mmio_regmap(struct platform_device *pdev)
++{
++	void __iomem *base;
++
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base))
++		return ERR_CAST(base);
++
++	return devm_regmap_init_mmio(&pdev->dev, base, &wsa_macro_regmap_config);
++}
++
+ static int wsa_macro_hw_params(struct snd_pcm_substream *substream,
+ 			       struct snd_pcm_hw_params *params,
+ 			       struct snd_soc_dai *dai);
+-- 
+2.34.1
+

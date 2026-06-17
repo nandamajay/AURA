@@ -1,0 +1,33 @@
+From 68ee7f661f985b2a1b29a828110fd9a4b00303d1 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:27:58 +0530
+Subject: [PATCH 6/10] ASoC: codecs: lpass-wsa-macro: integrate
+ lpass-macro-common power domains
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index 6d2fbec..ec541b8 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -16,6 +16,7 @@
+ #include <sound/pcm_params.h>
+ #include <sound/tlv.h>
+ #include "lpass-cdc-wsa-macro.h"
++#include "lpass-macro-common.h"
+ #include "lpass-cdc-clk-rsc.h"
+ 
+ #define AUTO_SUSPEND_DELAY  50 /* delay in msec */
+@@ -309,6 +310,7 @@ struct wsa_macro_priv {
+ 	struct work_struct wsa_macro_add_child_devices_work;
+ 	struct device_node *wsa_swr_gpio_p;
+ 	struct snd_soc_component *component;
++	struct lpass_macro *pds;
+ 	int rx_0_count;
+ 	int rx_1_count;
+ 	unsigned long active_ch_mask[CDC_WSA_MACRO_MAX_DAIS];
+-- 
+2.34.1
+

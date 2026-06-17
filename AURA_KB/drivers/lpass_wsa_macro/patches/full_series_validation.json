@@ -1,0 +1,33 @@
+{
+  "artifact_name": "LPASS_WSA_MACRO_FIRST_ATTEMPT_FULL_SERIES_VALIDATION",
+  "classification": "PASS",
+  "series_apply": "PASS",
+  "patch_count": 10,
+  "applied_patches": [
+    "0001-ASoC-codecs-lpass-wsa-macro-isolate-register-prefix-migration.patch",
+    "0002-ASoC-codecs-lpass-wsa-macro-drop-version-guards-and-downstream-pinctrl-include.patch",
+    "0003-ASoC-codecs-lpass-wsa-macro-remove-vendor-SoundWire-notification-coupling.patch",
+    "0004-ASoC-codecs-lpass-wsa-macro-remove-lpass-cdc-macro-framework-dependency.patch",
+    "0005-ASoC-codecs-lpass-wsa-macro-own-MMIO-regmap-in-platform-probe.patch",
+    "0006-ASoC-codecs-lpass-wsa-macro-integrate-lpass-macro-common-power-domains.patch",
+    "0007-ASoC-codecs-lpass-wsa-macro-migrate-clocks-runtime-PM-and-clock-provider-hooks.patch",
+    "0008-ASoC-codecs-lpass-wsa-macro-add-binding-compatible-SoC-data-model.patch",
+    "0009-ASoC-codecs-lpass-wsa-macro-reduce-downstream-SoundWire-naming-in-DAPM-topology.patch",
+    "0010-ASoC-codecs-lpass-wsa-macro-remove-residual-downstream-symbols-and-normalize-naming.patch"
+  ],
+  "banned_symbol_count": 0,
+  "banned_symbol_survivors": [],
+  "fail_closed_count": 1,
+  "fail_closed_items": [
+    {
+      "symbol": "vdd-micb-supply",
+      "reason": "binding exposes supply but same-class LPASS refs do not show WSA MICB regulator semantics",
+      "signal_needed": "upstream lpass-wsa-macro regulator implementation or maintainer guidance",
+      "deferred_to": "manual review"
+    }
+  ],
+  "replay_deterministic": true,
+  "governance_violations": 0,
+  "blind_rule_maintained_until_generation_complete": true,
+  "apply_failures": []
+}

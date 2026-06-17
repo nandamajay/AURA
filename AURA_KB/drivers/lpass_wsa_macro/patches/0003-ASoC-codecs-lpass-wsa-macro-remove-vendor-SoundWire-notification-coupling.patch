@@ -1,0 +1,71 @@
+From bace6ffb46df6fe0213ecfc7f62e4847be1af087 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 18:27:58 +0530
+Subject: [PATCH 3/10] ASoC: codecs: lpass-wsa-macro: remove vendor SoundWire
+ notification coupling
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c | 16 +++++++---------
+ 1 file changed, 7 insertions(+), 9 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+index dcf4adf..562e19f 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c
+@@ -14,8 +14,6 @@
+ #include <sound/soc-dapm.h>
+ #include <sound/pcm_params.h>
+ #include <sound/tlv.h>
+-#include <soc/swr-common.h>
+-#include <soc/swr-wcd.h>
+ #include "lpass-cdc.h"
+ #include "lpass-cdc-comp.h"
+ #include "lpass-cdc-registers.h"
+@@ -602,7 +600,7 @@ static int lpass_cdc_wsa_macro_set_port_map(struct snd_soc_component *component,
+ 	port_cfg.params = data;
+ 
+ 	if (wsa_priv->swr_ctrl_data)
+-		ret = swrm_wcd_notify(
++		ret = wsa_macro_sdw_notify(
+ 			wsa_priv->swr_ctrl_data[0].wsa_swr_pdev,
+ 			SWR_SET_PORT_MAP, &port_cfg);
+ 
+@@ -1117,9 +1115,9 @@ static int lpass_cdc_wsa_macro_event_handler(struct snd_soc_component *component
+ 	case LPASS_CDC_MACRO_EVT_SSR_DOWN:
+ 		wsa_priv->pre_dev_up = false;
+ 		if (wsa_priv->swr_ctrl_data) {
+-			swrm_wcd_notify(
++			wsa_macro_sdw_notify(
+ 				wsa_priv->swr_ctrl_data[0].wsa_swr_pdev,
+-				SWR_DEVICE_SSR_DOWN, NULL);
++				SDW_SLAVE_UNATTACHED, NULL);
+ 		}
+ 		if ((!pm_runtime_enabled(wsa_dev) ||
+ 		     !pm_runtime_suspended(wsa_dev))) {
+@@ -1138,9 +1136,9 @@ static int lpass_cdc_wsa_macro_event_handler(struct snd_soc_component *component
+ 		/* reset swr after ssr/pdr */
+ 		wsa_priv->reset_swr = true;
+ 		if (wsa_priv->swr_ctrl_data)
+-			swrm_wcd_notify(
++			wsa_macro_sdw_notify(
+ 				wsa_priv->swr_ctrl_data[0].wsa_swr_pdev,
+-				SWR_DEVICE_SSR_UP, NULL);
++				SDW_SLAVE_ATTACHED, NULL);
+ 		break;
+ 	case LPASS_CDC_MACRO_EVT_CLK_RESET:
+ 		lpass_cdc_rsc_clk_reset(wsa_dev, WSA_CORE_CLK);
+@@ -1375,9 +1373,9 @@ static int lpass_cdc_wsa_macro_enable_swr(struct snd_soc_dapm_widget *w,
+ 		ch_cnt = wsa_priv->rx_0_count + wsa_priv->rx_1_count;
+ 
+ 		if (wsa_priv->swr_ctrl_data) {
+-			swrm_wcd_notify(
++			wsa_macro_sdw_notify(
+ 				wsa_priv->swr_ctrl_data[0].wsa_swr_pdev,
+-				SWR_DEVICE_UP, NULL);
++				SDW_SLAVE_ATTACHED, NULL);
+ 		}
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+-- 
+2.34.1
+

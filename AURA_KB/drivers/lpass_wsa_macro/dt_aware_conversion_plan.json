@@ -1,0 +1,165 @@
+{
+  "artifact_name": "LPASS_WSA_MACRO_FIRST_ATTEMPT_DT_AWARE_CONVERSION_PLAN",
+  "timestamp_utc": "2026-06-17T12:57:58.431866+00:00",
+  "replay_deterministic": true,
+  "decision_seed": "deterministic-lpass-wsa-composition-first-attempt-v1",
+  "signal_sources_consulted": [
+    "AURA_KB/drivers/lpass_tx_macro/tx_lessons_learned.json",
+    "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+    "AURA_KB/drivers/lpass_va_macro/iteration_2/improvement_over_iteration_1.json",
+    "AURA_KB/drivers/wsa883x/iteration_3_2/learning_validation_scorecard_v3.json",
+    "AURA_KB/drivers/wsa883x/wsa_lessons_learned.json",
+    "AURA_KB/drivers/wsa884x/pattern_transfer_scorecard.json",
+    "AURA_KB/drivers/wsa884x/wsa884x_lessons_learned.json",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-wsa-macro.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c"
+  ],
+  "api_replacement_table": [
+    {
+      "downstream_api": "LPASS_CDC_WSA_*",
+      "upstream_api": "CDC_WSA_*",
+      "confidence": "HIGH",
+      "signal_source": "register-prefix migration, VA/TX lesson",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_register_macro",
+      "upstream_api": "devm_snd_soc_register_component",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX component registration pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_unregister_macro",
+      "upstream_api": "devm-managed component cleanup",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX remove path pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_get_device_ptr",
+      "upstream_api": "component drvdata / platform drvdata",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX direct private data pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_clk_rsc_request_clock",
+      "upstream_api": "clk_prepare_enable / clk_disable_unprepare",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX runtime clock migration",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "lpass_cdc_clk_rsc_fs_gen_request",
+      "upstream_api": "local regmap fsgen request helper",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX fsgen helper pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "swrm_wcd_notify",
+      "upstream_api": "standard SoundWire state handled by bus/slave callbacks",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x/884x SoundWire pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "msm_cdc_pinctrl_*",
+      "upstream_api": "binding/standard pinctrl-free probe path",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX residual cleanup",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "parent regmap indirection",
+      "upstream_api": "devm_platform_ioremap_resource + devm_regmap_init_mmio",
+      "confidence": "HIGH",
+      "signal_source": "LPASS macro iteration 2",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "downstream compatible",
+      "upstream_api": "binding compatibles with of_device_get_match_data",
+      "confidence": "HIGH",
+      "signal_source": "LPASS macro SoC-data model",
+      "deterministic": true
+    }
+  ],
+  "register_rename_table": {
+    "pattern": "LPASS_CDC_WSA_(.*) -> CDC_WSA_\\1",
+    "confidence": "HIGH"
+  },
+  "dt_property_map": [
+    {
+      "property": "compatible",
+      "probe_implementation": "of_device_get_match_data",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "reg",
+      "probe_implementation": "devm_platform_ioremap_resource",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-names",
+      "probe_implementation": "devm_clk_get for mclk/npl/macro/dcodec/fsgen by compatible",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-output-names",
+      "probe_implementation": "devm_clk_hw_register + devm_of_clk_add_hw_provider",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "vdd-micb-supply",
+      "probe_implementation": "deferred: regulator semantics not present in VA/TX macro refs",
+      "confidence": "FAIL_CLOSED"
+    }
+  ],
+  "structural_transformations": [
+    {
+      "name": "component_registration",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "mmio_regmap_ownership",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "clock_provider_registration",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "lpass_macro_common_power_domains",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "soundwire_notification_removal",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "vdd_micb_supply_handling",
+      "confidence": "FAIL_CLOSED",
+      "signal_needed": "exact upstream WSA macro regulator behavior or board validation"
+    }
+  ],
+  "fail_closed_items": [
+    {
+      "symbol": "vdd-micb-supply",
+      "reason": "binding exposes supply but same-class LPASS refs do not show WSA MICB regulator semantics",
+      "signal_needed": "upstream lpass-wsa-macro regulator implementation or maintainer guidance",
+      "deferred_to": "manual review"
+    }
+  ],
+  "predicted_patch_count": 10
+}
