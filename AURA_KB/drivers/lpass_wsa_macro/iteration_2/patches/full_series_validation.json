@@ -2,7 +2,7 @@
   "artifact_name": "LPASS_WSA_MACRO_ITERATION_2_FULL_SERIES_VALIDATION",
   "classification": "PASS",
   "series_apply": "PASS",
-  "patch_count": 12,
+  "patch_count": 13,
   "applied_patches": [
     "0001-ASoC-codecs-lpass-wsa-macro-migrate-WSA-register-prefix-mechanically.patch",
     "0002-ASoC-codecs-lpass-wsa-macro-drop-version-guards-and-downstream-pinctrl-paths.patch",
@@ -15,12 +15,20 @@
     "0009-ASoC-codecs-lpass-wsa-macro-resolve-vdd-micb-supply-with-optional-regulator-handling.patch",
     "0010-ASoC-codecs-lpass-wsa-macro-document-macro-side-SoundWire-controller-handoff.patch",
     "0011-ASoC-codecs-lpass-wsa-macro-add-explicit-mclk-clock-provider-registration-hook.patch",
-    "0012-ASoC-codecs-lpass-wsa-macro-remove-residual-downstream-symbols-and-normalize-naming.patch"
+    "0012-ASoC-codecs-lpass-wsa-macro-remove-residual-downstream-symbols-and-normalize-naming.patch",
+    "0013-ASoC-codecs-lpass-wsa-macro-fail-closed-vdd-micb-and-drop-residual-msm-cdc-pinctrl-string.patch"
   ],
   "banned_symbol_count": 0,
   "banned_symbol_survivors": [],
-  "fail_closed_count": 0,
-  "fail_closed_items": [],
+  "fail_closed_count": 1,
+  "fail_closed_items": [
+    {
+      "symbol": "vdd-micb-supply",
+      "reason": "DT binding declares property but upstream driver does not implement regulator acquisition",
+      "signal_needed": "upstream maintainer confirmation or future upstream patch adding this",
+      "deferred_to": "manual_review"
+    }
+  ],
   "replay_deterministic": true,
   "governance_violations": 0,
   "blind_rule_maintained_until_generation_complete": true,

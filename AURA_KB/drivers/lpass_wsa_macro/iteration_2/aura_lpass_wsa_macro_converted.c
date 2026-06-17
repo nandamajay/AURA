@@ -222,23 +222,6 @@ static int wsa_macro_register_mclk_output(struct device *dev, struct clk_hw *hw)
 	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, hw);
 }
 
-static int wsa_macro_get_vdd_micb(struct device *dev)
-{
-	struct regulator *vdd_micb;
-	int ret;
-
-	vdd_micb = devm_regulator_get_optional(dev, "vdd-micb");
-	if (IS_ERR(vdd_micb))
-		return PTR_ERR(vdd_micb) == -ENODEV ? 0 : PTR_ERR(vdd_micb);
-
-	ret = regulator_enable(vdd_micb);
-	if (ret)
-		return ret;
-
-	return devm_add_action_or_reset(dev, (void(*)(void *))regulator_disable, vdd_micb);
-}
-
-
 static int wsa_macro_sdw_event(struct platform_device *pdev, int event, void *data)
 {
 	/* SoundWire enumeration and slave status are owned by qcom_swrm and bus core. */
@@ -4118,10 +4101,6 @@ static void wsa_macro_add_child_devices(struct work_struct *work)
 		if (strnstr(node->name, "wsa_sdw_master",
 				strlen("wsa_sdw_master")) != NULL)
 			strscpy(plat_dev_name, "wsa_sdw_ctrl",
-				(CDC_WSA_MACRO_SDW_STRING_LEN - 1));
-		else if (strnstr(node->name, "msm_cdc_pinctrl",
-				 strlen("msm_cdc_pinctrl")) != NULL)
-			strscpy(plat_dev_name, node->name,
 				(CDC_WSA_MACRO_SDW_STRING_LEN - 1));
 		else
 			continue;
