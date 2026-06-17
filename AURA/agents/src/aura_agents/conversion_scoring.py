@@ -12,7 +12,7 @@ from typing import Any, Iterable, Sequence
 
 
 SCORING_ENGINE = "aura_conversion_scoring_v1"
-SCORING_ENGINE_VERSION = "1.1.0"
+SCORING_ENGINE_VERSION = "1.2.0"
 
 FUNCTION_MATCH = "FUNCTION_MATCH"
 API_COVERAGE = "API_COVERAGE"
@@ -136,6 +136,7 @@ DAPM_ROUTE_ENTRY_RE = re.compile(r"\{\s*\"[^\"]*\"\s*,\s*(?:NULL|\"[^\"]*\")\s*,
 DAPM_ROUTE_ENTRY_FALLBACK_RE = re.compile(r"\{\s*\"[^\"]*\"\s*,\s*(?:NULL|\"[^\"]*\")\s*,\s*\"[^\"]*\"\s*\}")
 DAPM_CONTROL_RE = re.compile(r"\bSOC_(?:SINGLE\w*|ENUM\w*|DAPM\w*|VALUE\w*)\s*\(")
 INCLUDE_RE = re.compile(r"^\s*#\s*include\s*[<\"]([^>\"]+)[>\"]", re.MULTILINE)
+QUOTED_INCLUDE_RE = re.compile(r"^\s*#\s*include\s*\"([^\"]+)\"", re.MULTILINE)
 
 OF_PROP_LITERAL_RE = re.compile(r"\bof_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
 DEV_PROP_LITERAL_RE = re.compile(r"\bdevice_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
@@ -357,6 +358,47 @@ def _register_overlap_payload(upstream_raw: list[str], converted_raw: list[str])
     return normalized_payload
 
 
+def _source_prefix_pattern(source_path: Path) -> str:
+    stem = source_path.stem
+    return f"{stem}*.h"
+
+
+def _parse_quoted_local_includes(source_text: str) -> list[str]:
+    return _sorted_unique(QUOTED_INCLUDE_RE.findall(source_text))
+
+
+def _resolve_local_include_path(source_path: Path, include_value: str) -> Path | None:
+    include_path = Path(include_value)
+    search_candidates = [
+        (source_path.parent / include_path).resolve(),
+        (source_path.parent.parent / include_path).resolve(),
+    ]
+    for candidate in search_candidates:
+        if candidate.exists() and candidate.is_file() and candidate.suffix == ".h":
+            return candidate
+    return None
+
+
+def _default_scoped_header_paths(source_path: Path, source_text: str) -> list[Path]:
+    resolved: list[Path] = []
+
+    # Rule 1: same driver prefix headers (driver.h, driver-*.h).
+    for item in sorted(source_path.parent.glob(_source_prefix_pattern(source_path))):
+        if item.is_file() and item.suffix == ".h":
+            resolved.append(item.resolve())
+
+    # Rule 2: quoted local includes resolved in same dir / one level up.
+    for include_value in _parse_quoted_local_includes(source_text):
+        local = _resolve_local_include_path(source_path, include_value)
+        if local is not None:
+            resolved.append(local)
+
+    unique: dict[str, Path] = {}
+    for path in resolved:
+        unique[str(path)] = path
+    return [unique[key] for key in sorted(unique.keys())]
+
+
 def _resolve_header_paths(source_path: Path, explicit_headers: Sequence[str | Path] | None) -> list[Path]:
     resolved: list[Path] = []
 
@@ -368,9 +410,7 @@ def _resolve_header_paths(source_path: Path, explicit_headers: Sequence[str | Pa
             if candidate.exists() and candidate.is_file() and candidate.suffix == ".h":
                 resolved.append(candidate)
     else:
-        for item in sorted(source_path.parent.glob("*.h")):
-            if item.is_file():
-                resolved.append(item.resolve())
+        resolved.extend(_default_scoped_header_paths(source_path=source_path, source_text=_read_text(source_path)))
 
     unique: dict[str, Path] = {}
     for path in resolved:

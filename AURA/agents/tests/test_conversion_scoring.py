@@ -185,7 +185,7 @@ def test_route_count_proximity_fix_symmetric(tmp_path: Path):
     assert report_0v0["categories"]["DAPM_ROUTES"]["score"] == 100.0
 
 
-def test_register_header_scanning_combines_c_and_h(tmp_path: Path):
+def test_register_header_scanning_scoped_excludes_unrelated(tmp_path: Path):
     upstream_dir = tmp_path / "upstream_dir"
     converted_dir = tmp_path / "converted_dir"
     upstream_dir.mkdir()
@@ -204,17 +204,22 @@ def test_register_header_scanning_combines_c_and_h(tmp_path: Path):
     converted_c = _write(
         converted_dir / "converted.c",
         """
+#include "converted.h"
 #define WSA_REG_A 0x01
 #define WSA_REG_B 0x02
 """,
     )
     _write(
-        converted_dir / "converted_regs.h",
+        converted_dir / "converted.h",
         """
 #define WSA_REG_C 0x03
 #define WSA_REG_D 0x04
 #define WSA_REG_E 0x05
 """,
+    )
+    _write(
+        converted_dir / "unrelated.h",
+        "\n".join([f"#define WSA_UNRELATED_{i} 0x{i:02x}" for i in range(100)]) + "\n",
     )
 
     report = score_conversion(converted_c, upstream_c)
@@ -224,6 +229,8 @@ def test_register_header_scanning_combines_c_and_h(tmp_path: Path):
     assert register_category["upstream_count"] == 5
     assert register_category["converted_count"] == 5
     assert register_category["matched_count"] == 5
+    assert all(not item.startswith("WSA_UNRELATED_") for item in register_category["extra_in_converted"])
+    assert str(converted_dir / "unrelated.h") not in report["inputs"]["converted_headers"]
 
 
 def test_register_namespace_normalization(tmp_path: Path):
@@ -249,6 +256,55 @@ def test_register_namespace_normalization(tmp_path: Path):
     assert register_category["register_normalization_applied"] is True
     assert "strip _MACRO_ infix" in register_category["normalization_rules"]
     assert "strip LPASS_ prefix" in register_category["normalization_rules"]
+
+
+def test_register_scanning_via_include_parsing(tmp_path: Path):
+    upstream = _write(
+        tmp_path / "upstream.c",
+        """
+#include "driver-registers.h"
+""",
+    )
+    converted = _write(
+        tmp_path / "converted.c",
+        """
+#include "driver-registers.h"
+""",
+    )
+    header_content = "\n".join([f"#define WSA_REG_{i} 0x{i:02x}" for i in range(10)]) + "\n"
+    _write(tmp_path / "driver-registers.h", header_content)
+
+    report = score_conversion(converted, upstream)
+    register_category = report["categories"]["REGISTER_COVERAGE"]
+
+    assert register_category["upstream_count"] == 10
+    assert register_category["converted_count"] == 10
+    assert register_category["matched_count"] == 10
+    assert register_category["score"] == 100.0
+
+
+def test_register_namespace_normalization_verification(tmp_path: Path):
+    upstream = _write(
+        tmp_path / "upstream_norm2.c",
+        """
+#define CDC_WSA_TOP_CFG 0x1
+#define CDC_WSA_RX_PATH 0x2
+""",
+    )
+    converted = _write(
+        tmp_path / "converted_norm2.c",
+        """
+#define CDC_WSA_MACRO_TOP_CFG 0x1
+#define CDC_WSA_MACRO_RX_PATH 0x2
+""",
+    )
+
+    report = score_conversion(converted, upstream)
+    register_category = report["categories"]["REGISTER_COVERAGE"]
+
+    assert register_category["score"] == 100.0
+    assert register_category["raw_score_before_normalization"] == 0.0
+    assert register_category["matched_count"] == 2
 
 
 def test_dt_expanded_extraction_patterns(tmp_path: Path):
