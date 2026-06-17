@@ -1,0 +1,28 @@
+{
+  "patch": "0003-ASoC-codecs-lpass-tx-macro-remove-lpass-cdc-framework.patch",
+  "classification": "PASS",
+  "scope": "Remove downstream lpass-cdc macro lifecycle framework and switch to direct component registration",
+  "line_count": 235,
+  "checks": {
+    "no_lpass_cdc_h_include": true,
+    "no_macro_registration_framework": true,
+    "component_registration_present": true,
+    "runtime_pm_stubs_present": true,
+    "soc_data_todo_present": true
+  },
+  "stubs": [
+    {
+      "symbol": "tx_macro_runtime_suspend",
+      "target_patch": 6
+    },
+    {
+      "symbol": "tx_macro_runtime_resume",
+      "target_patch": 6
+    },
+    {
+      "symbol": "tx_priv->version",
+      "target_patch": 7
+    }
+  ],
+  "fail_closed_reasons": []
+}

@@ -1,0 +1,32 @@
+{
+  "patch": "0008-ASoC-codecs-lpass-tx-macro-reduce-downstream-DAPM-topology.patch",
+  "classification": "PASS",
+  "scope": "Apply VA lesson: reduce downstream-only DAPM/routes/controls instead of preserving vendor topology wholesale",
+  "line_count": 392,
+  "removed_topology_terms": [
+    "TX WSA MUX",
+    "RX_SWR_MIC",
+    "TX PORT SEL MUX",
+    "DEC0_BCS Switch",
+    "DEC_HPF_ADAPT_BYPASS",
+    "TX_SWR_DMIC Enable",
+    "BCS Channel",
+    "BCS CH_SEL",
+    "DEC_GAIN_BYPASS Enable",
+    "adapt-tuning-reg-values"
+  ],
+  "checks": {
+    "removed_TX WSA MUX": true,
+    "removed_RX_SWR_MIC": true,
+    "removed_TX PORT SEL MUX": true,
+    "removed_DEC0_BCS Switch": true,
+    "removed_DEC_HPF_ADAPT_BYPASS": true,
+    "removed_TX_SWR_DMIC Enable": true,
+    "removed_BCS Channel": true,
+    "removed_BCS CH_SEL": true,
+    "removed_DEC_GAIN_BYPASS Enable": true,
+    "removed_adapt-tuning-reg-values": true,
+    "core_dapm_still_present": true
+  },
+  "fail_closed_reasons": []
+}

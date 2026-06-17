@@ -1,0 +1,9 @@
+{
+  "patch": "0008",
+  "lesson": "VA preserved too much downstream DAPM topology; TX applies topology reduction earlier.",
+  "application": "Removed WSA/port-select DAPM routes/widgets, RX_SWR_MIC route choice, downstream BCS/SWR_DMIC/HPF-adapt/DEC_GAIN controls, and adapt-tuning DT parsing while retaining core decimator and DMIC mux topology.",
+  "blind_assumptions": [
+    "Removed controls are downstream policy/tuning surfaces rather than required upstream ABI",
+    "Core decimator/DMIC topology is sufficient until post-blind comparison"
+  ]
+}

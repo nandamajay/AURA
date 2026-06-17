@@ -1,0 +1,15 @@
+{
+  "patch": "0004-ASoC-codecs-lpass-tx-macro-own-MMIO-regmap-in-probe.patch",
+  "classification": "PASS",
+  "scope": "Apply VA lesson: driver private data owns MMIO base and regmap directly",
+  "line_count": 110,
+  "checks": {
+    "devm_platform_ioremap_resource_present": true,
+    "devm_regmap_init_mmio_present": true,
+    "private_regmap_owner": true,
+    "no_parent_regmap_indirection": true,
+    "no_legacy_devm_ioremap": true,
+    "no_dt_reg_manual_parse": true
+  },
+  "fail_closed_reasons": []
+}

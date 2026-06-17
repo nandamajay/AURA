@@ -1,0 +1,9 @@
+{
+  "patch": "0007",
+  "lesson": "VA missed mandatory LPASS macro SoC-compatible data modeling. TX adds tx_macro_data and of_device_get_match_data before residual cleanup.",
+  "application": "BOLERO_VER_2P85 and BOLERO_VER_4P0 gates are represented as feature flags in per-SoC data entries. The legacy downstream compatible is retained temporarily for blind applyability and marked for Patch-09 cleanup/defer.",
+  "blind_assumptions": [
+    "No upstream TX source was consulted",
+    "Specific SoC compatible strings are inferred and must be validated during post-blind comparison/binding review"
+  ]
+}

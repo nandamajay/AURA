@@ -1,0 +1,110 @@
+From 4a3b6feadbb3b0f0905cb973e43efa75eccfe187 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 12:28:16 +0530
+Subject: [PATCH 4/9] ASoC: codecs: lpass-tx-macro: own MMIO regmap in probe
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 48 +++++++++++++++++--------------
+ 1 file changed, 27 insertions(+), 21 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index da369fd..4e1dc30 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -196,7 +196,8 @@ struct lpass_cdc_tx_macro_priv {
+ 	u32 version;
+ 	unsigned long active_ch_mask[LPASS_CDC_TX_MACRO_MAX_DAIS];
+ 	unsigned long active_ch_cnt[LPASS_CDC_TX_MACRO_MAX_DAIS];
+-	char __iomem *tx_io_base;
++	void __iomem *base;
++	struct regmap *regmap;
+ 	struct platform_device *pdev_child_devices
+ 			[LPASS_CDC_TX_MACRO_CHILD_DEVICES_MAX];
+ 	int child_count;
+@@ -215,6 +216,16 @@ struct lpass_cdc_tx_macro_priv {
+ 	u32 tuning_reg_values[MAX_TUNING_REG_VALUE_PAIRS];
+ };
+ 
++
++static const struct regmap_config tx_macro_regmap_config = {
++	.name = "tx_macro",
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.cache_type = REGCACHE_FLAT,
++	.max_register = LPASS_CDC_TX_MACRO_MAX_OFFSET,
++};
++
+ static int lpass_cdc_tx_macro_wake_enable(struct lpass_cdc_tx_macro_priv *tx_priv,
+ 					bool wake_enable)
+ {
+@@ -269,10 +280,10 @@ static int lpass_cdc_tx_macro_mclk_enable(
+ 				struct lpass_cdc_tx_macro_priv *tx_priv,
+ 				bool mclk_enable)
+ {
+-	struct regmap *regmap = dev_get_regmap(tx_priv->dev->parent, NULL);
++	struct regmap *regmap = tx_priv->regmap;
+ 	int ret = 0;
+ 
+-	if (regmap == NULL) {
++	if (!regmap) {
+ 		dev_err_ratelimited(tx_priv->dev, "%s: regmap is NULL\n", __func__);
+ 		return -EINVAL;
+ 	}
+@@ -296,8 +307,8 @@ static int lpass_cdc_tx_macro_mclk_enable(
+ 					true);
+ 		regcache_mark_dirty(regmap);
+ 		regcache_sync_region(regmap,
+-				TX_START_OFFSET,
+-				TX_MAX_OFFSET);
++				0,
++					LPASS_CDC_TX_MACRO_MAX_OFFSET);
+ 		if (tx_priv->tx_mclk_users == 0) {
+ 			regmap_update_bits(regmap,
+ 				CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
+@@ -2740,8 +2751,8 @@ static const struct snd_soc_component_driver lpass_cdc_tx_macro_component_drv =
+ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ {
+ 	struct lpass_cdc_tx_macro_priv *tx_priv = NULL;
+-	u32 tx_base_addr = 0, prop_size, *temp;
+-	char __iomem *tx_io_base = NULL;
++	u32 prop_size, *temp;
++	void __iomem *base;
+ 	int ret = 0, i;
+ 
+ 	const char *dmic_clk_div_factor = "qcom,tx-dmic-clk-div-factor";
+@@ -2754,22 +2765,17 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 	platform_set_drvdata(pdev, tx_priv);
+ 
+ 	tx_priv->dev = &pdev->dev;
+-	ret = of_property_read_u32(pdev->dev.of_node, "reg",
+-				   &tx_base_addr);
+-	if (ret) {
+-		dev_err(&pdev->dev, "%s: could not find %s entry in dt\n",
+-			__func__, "reg");
+-		return ret;
+-	}
+ 	dev_set_drvdata(&pdev->dev, tx_priv);
+ 
+-	tx_io_base = devm_ioremap(&pdev->dev,
+-				   tx_base_addr, LPASS_CDC_TX_MACRO_MAX_OFFSET);
+-	if (!tx_io_base) {
+-		dev_err(&pdev->dev, "%s: ioremap failed\n", __func__);
+-		return -ENOMEM;
+-	}
+-	tx_priv->tx_io_base = tx_io_base;
++	base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(base))
++		return PTR_ERR(base);
++	tx_priv->base = base;
++
++	tx_priv->regmap = devm_regmap_init_mmio(&pdev->dev, base,
++					     &tx_macro_regmap_config);
++	if (IS_ERR(tx_priv->regmap))
++		return PTR_ERR(tx_priv->regmap);
+ 	tx_priv->swr_dmic_enable = false;
+ 	tx_priv->swr_dmic_gain_disable = false;
+ 	tx_priv->wlock_holders = 0;
+-- 
+2.34.1
+

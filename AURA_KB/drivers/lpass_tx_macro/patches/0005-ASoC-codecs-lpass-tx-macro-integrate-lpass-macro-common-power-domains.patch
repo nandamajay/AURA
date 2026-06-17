@@ -1,0 +1,64 @@
+From 5f8082eb1f5f164f65993c680c7b7caf7fd93943 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 12:28:46 +0530
+Subject: [PATCH 5/9] ASoC: codecs: lpass-tx-macro: integrate
+ lpass-macro-common power domains
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 10 +++++++++-
+ 1 file changed, 9 insertions(+), 1 deletion(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 4e1dc30..0ec24aa 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -67,6 +67,7 @@
+ #define CDC_TX_TOP_CSR_SWR_MIC1_CTL	(0x00D4)
+ #define CDC_TX_TOP_CSR_SWR_MIC2_CTL	(0x00C0)
+ #include "lpass-cdc-clk-rsc.h"
++#include "lpass-macro-common.h"
+ 
+ #define AUTO_SUSPEND_DELAY  50 /* delay in msec */
+ #define LPASS_CDC_TX_MACRO_MAX_OFFSET 0x1000
+@@ -198,6 +199,7 @@ struct lpass_cdc_tx_macro_priv {
+ 	unsigned long active_ch_cnt[LPASS_CDC_TX_MACRO_MAX_DAIS];
+ 	void __iomem *base;
+ 	struct regmap *regmap;
++	struct lpass_macro *pds;
+ 	struct platform_device *pdev_child_devices
+ 			[LPASS_CDC_TX_MACRO_CHILD_DEVICES_MAX];
+ 	int child_count;
+@@ -2776,6 +2778,10 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 					     &tx_macro_regmap_config);
+ 	if (IS_ERR(tx_priv->regmap))
+ 		return PTR_ERR(tx_priv->regmap);
++
++	tx_priv->pds = lpass_macro_pds_init(&pdev->dev);
++	if (IS_ERR(tx_priv->pds))
++		return PTR_ERR(tx_priv->pds);
+ 	tx_priv->swr_dmic_enable = false;
+ 	tx_priv->swr_dmic_gain_disable = false;
+ 	tx_priv->wlock_holders = 0;
+@@ -2828,9 +2834,10 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	return 0;
+-err_reg_component:
++err_component:
+ 	mutex_destroy(&tx_priv->mclk_lock);
+ 	mutex_destroy(&tx_priv->wlock);
++	lpass_macro_pds_exit(tx_priv->pds);
+ 	return ret;
+ }
+ 
+@@ -2852,6 +2859,7 @@ static void lpass_cdc_tx_macro_remove(struct platform_device *pdev)
+ 				&tx_priv->tx_dec_unmute_work[dai_idx].dwork);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
++	lpass_macro_pds_exit(tx_priv->pds);
+ 	mutex_destroy(&tx_priv->mclk_lock);
+ 	mutex_destroy(&tx_priv->wlock);
+ exit:
+-- 
+2.34.1
+

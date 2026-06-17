@@ -1,0 +1,26 @@
+{
+  "patch": "0005-ASoC-codecs-lpass-tx-macro-integrate-lpass-macro-common-power-domains.patch",
+  "classification": "PASS",
+  "scope": "Add shared lpass-macro-common power-domain helper consumption for TX",
+  "line_count": 64,
+  "checks": {
+    "common_header_present": true,
+    "pds_owned_in_private_data": true,
+    "pds_init_present": true,
+    "pds_exit_present": true,
+    "immediate_consumer": true
+  },
+  "helpers_added": [
+    {
+      "name": "lpass_macro_pds_init",
+      "shared_or_local": "shared",
+      "consumer": "lpass-tx-macro probe"
+    },
+    {
+      "name": "lpass_macro_pds_exit",
+      "shared_or_local": "shared",
+      "consumer": "lpass-tx-macro remove/error path"
+    }
+  ],
+  "fail_closed_reasons": []
+}

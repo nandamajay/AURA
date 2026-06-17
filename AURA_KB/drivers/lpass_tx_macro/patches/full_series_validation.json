@@ -1,0 +1,48 @@
+{
+  "artifact_name": "TX_BLIND_FULL_SERIES_VALIDATION",
+  "classification": "PASS",
+  "series_apply": "PASS",
+  "patch_count": 9,
+  "patch_line_counts": {
+    "0001-ASoC-codecs-lpass-tx-macro-isolate-register-name-migration.patch": 603,
+    "0002-ASoC-codecs-lpass-tx-macro-drop-version-and-unused-pinctrl-paths.patch": 170,
+    "0003-ASoC-codecs-lpass-tx-macro-remove-lpass-cdc-framework.patch": 235,
+    "0004-ASoC-codecs-lpass-tx-macro-own-MMIO-regmap-in-probe.patch": 110,
+    "0005-ASoC-codecs-lpass-tx-macro-integrate-lpass-macro-common-power-domains.patch": 64,
+    "0006-ASoC-codecs-lpass-tx-macro-migrate-runtime-PM-clock-sequencing.patch": 268,
+    "0007-ASoC-codecs-lpass-tx-macro-add-blind-SoC-data-model.patch": 110,
+    "0008-ASoC-codecs-lpass-tx-macro-reduce-downstream-DAPM-topology.patch": 392,
+    "0009-ASoC-codecs-lpass-tx-macro-remove-residual-downstream-symbols.patch": 2190
+  },
+  "total_patch_lines": 4142,
+  "banned_symbol_count": 0,
+  "banned_symbol_survivors": [],
+  "patch_classifications": {
+    "AURA_KB/drivers/lpass_tx_macro/patches/0001-ASoC-codecs-lpass-tx-macro-isolate-register-name-migration.patch": "PASS",
+    "AURA_KB/drivers/lpass_tx_macro/patches/0002-ASoC-codecs-lpass-tx-macro-drop-version-and-unused-pinctrl-paths.patch": "PASS",
+    "0003-ASoC-codecs-lpass-tx-macro-remove-lpass-cdc-framework.patch": "PASS",
+    "0004-ASoC-codecs-lpass-tx-macro-own-MMIO-regmap-in-probe.patch": "PASS",
+    "0005-ASoC-codecs-lpass-tx-macro-integrate-lpass-macro-common-power-domains.patch": "PASS",
+    "0006-ASoC-codecs-lpass-tx-macro-migrate-runtime-PM-clock-sequencing.patch": "PASS",
+    "0007-ASoC-codecs-lpass-tx-macro-add-blind-SoC-data-model.patch": "PASS",
+    "0008-ASoC-codecs-lpass-tx-macro-reduce-downstream-DAPM-topology.patch": "PASS",
+    "0009-ASoC-codecs-lpass-tx-macro-remove-residual-downstream-symbols.patch": "PASS"
+  },
+  "lessons_applied_successfully": [
+    "owned_mmio_regmap",
+    "soc_data_model",
+    "dapm_topology_reduction",
+    "vendor_framework_removal",
+    "runtime_pm_clock_migration"
+  ],
+  "lessons_not_fully_validated_until_comparison": [
+    "blind_compatible_selection",
+    "exact TX DAPM parity",
+    "clock provider role"
+  ],
+  "tx_specific_issues_not_seen_in_va": [
+    "TX retained cross-macro VA CSR register references in downstream source",
+    "TX had larger SWR/SMIC DAPM route fanout",
+    "TX had HPF/adaptive tuning controls and BCS controls coupled into decimator event paths"
+  ]
+}

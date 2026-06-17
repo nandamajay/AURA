@@ -1,0 +1,9 @@
+{
+  "patch": "0004",
+  "lesson": "VA conversion missed regmap ownership; upstream LPASS macro drivers should own MMIO regmap directly after vendor framework removal.",
+  "application": "TX probe now maps resource 0 with devm_platform_ioremap_resource and initializes tx_priv->regmap with devm_regmap_init_mmio. Parent-regmap indirection is removed.",
+  "blind_assumptions": [
+    "resource 0 is the TX macro register window",
+    "LPASS_CDC_TX_MACRO_MAX_OFFSET bounds the local register map"
+  ]
+}

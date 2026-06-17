@@ -1,0 +1,28 @@
+{
+  "patch": "0006-ASoC-codecs-lpass-tx-macro-migrate-runtime-PM-clock-sequencing.patch",
+  "classification": "PASS",
+  "scope": "Remove clk-rsc framework and use direct clock/runtime-PM sequencing",
+  "line_count": 268,
+  "clocks_acquired": [
+    "macro",
+    "dcodec",
+    "mclk",
+    "fsgen"
+  ],
+  "calls_removed": [
+    "lpass_cdc_clk_rsc_request_clock",
+    "lpass_cdc_clk_rsc_fs_gen_request",
+    "lpass_cdc_rsc_clk_reset",
+    "lpass_cdc_dmic_clk_enable"
+  ],
+  "checks": {
+    "no_clk_rsc_header": true,
+    "no_lpass_cdc_clk_rsc_calls": true,
+    "clock_gets_present": true,
+    "clk_prepare_enable_present": true,
+    "clk_disable_unprepare_present": true,
+    "runtime_pm_complete": true,
+    "error_unwind_present": true
+  },
+  "fail_closed_reasons": []
+}

@@ -1,0 +1,20 @@
+{
+  "patch": "0009-ASoC-codecs-lpass-tx-macro-remove-residual-downstream-symbols.patch",
+  "classification": "PASS",
+  "scope": "Remove residual downstream DT/property/Kconfig symbols and normalize local tx_macro naming",
+  "line_count": 2190,
+  "checks": {
+    "no_vendor_framework_or_prefix_symbols": true,
+    "static_function_prefix_normalized": true,
+    "local_constants_normalized": true,
+    "legacy_compatible_removed": true,
+    "bolero_gates_removed": true
+  },
+  "surviving_banned_symbols": [],
+  "renames": [
+    "lpass_cdc_tx_macro_* -> tx_macro_*",
+    "LPASS_CDC_TX_MACRO_* -> TX_MACRO_*",
+    "lpass_cdc_tx_mute_stream -> tx_macro_mute_stream"
+  ],
+  "fail_closed_reasons": []
+}

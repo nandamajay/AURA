@@ -1,0 +1,392 @@
+From 96f519d246a03c44fbaa4ec3b56b5811c1e990b5 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 12:34:02 +0530
+Subject: [PATCH 8/9] ASoC: codecs: lpass-tx-macro: reduce downstream DAPM
+ topology
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 274 +-----------------------------
+ 1 file changed, 9 insertions(+), 265 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index bb20f9d..7227c23 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -233,7 +233,6 @@ struct lpass_cdc_tx_macro_priv {
+ 	u32 tuning_reg_values[MAX_TUNING_REG_VALUE_PAIRS];
+ };
+ 
+-
+ static const struct regmap_config tx_macro_regmap_config = {
+ 	.name = "tx_macro",
+ 	.reg_bits = 32,
+@@ -455,7 +454,6 @@ static bool is_amic_enabled(struct snd_soc_component *component, int decimator)
+ 	return ret;
+ }
+ 
+-
+ /* swr-dmic   ADC Mux Sel
+  *  0           0           MSM DMIC
+  *  0           1           SWR AMIC
+@@ -906,7 +904,6 @@ static int lpass_cdc_tx_macro_swr_dmic_put(struct snd_kcontrol *kcontrol,
+ 	return 0;
+ }
+ 
+-
+ static int lpass_cdc_tx_macro_get_dec_gain_bypass(struct snd_kcontrol *kcontrol,
+ 				struct snd_ctl_elem_value *ucontrol)
+ {
+@@ -1588,15 +1585,9 @@ static const struct snd_kcontrol_new name##_mux = \
+ #define LPASS_CDC_TX_MACRO_DAPM_MUX(name, shift, kctl) \
+ 		SND_SOC_DAPM_MUX(name, SND_SOC_NOPM, shift, 0, &kctl##_mux)
+ 
+-#ifdef CONFIG_BOLERO_VER_4P0
+-static const char * const adc_mux_text[] = {
+-	"MSM_DMIC", "SWR_MIC", "ANC_FB_TUNE1", "RX_SWR_MIC"
+-};
+-#else
+ static const char * const adc_mux_text[] = {
+ 	"MSM_DMIC", "SWR_MIC", "ANC_FB_TUNE1"
+ };
+-#endif
+ 
+ LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec0, CDC_TX_INP_MUX_ADC_MUX0_CFG1,
+ 		   0, adc_mux_text);
+@@ -1615,29 +1606,6 @@ LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec6, CDC_TX_INP_MUX_ADC_MUX6_CFG1,
+ LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_dec7, CDC_TX_INP_MUX_ADC_MUX7_CFG1,
+ 		   0, adc_mux_text);
+ 
+-#ifdef CONFIG_BOLERO_VER_4P0
+-static const char * const tx_wsa_mux_text[] = {
+-	"NO_WSA", "WSA1", "WSA2", "WSA3", "WSA4"
+-};
+-
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux0, CDC_TX_INP_MUX_ADC_MUX0_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux1, CDC_TX_INP_MUX_ADC_MUX1_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux2, CDC_TX_INP_MUX_ADC_MUX2_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux3, CDC_TX_INP_MUX_ADC_MUX3_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux4, CDC_TX_INP_MUX_ADC_MUX4_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux5, CDC_TX_INP_MUX_ADC_MUX5_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux6, CDC_TX_INP_MUX_ADC_MUX6_CFG1,
+-		   4, tx_wsa_mux_text);
+-LPASS_CDC_TX_MACRO_DAPM_ENUM(tx_wsa_mux7, CDC_TX_INP_MUX_ADC_MUX7_CFG1,
+-		   4, tx_wsa_mux_text);
+-#endif
+-
+ static const char * const dmic_mux_text[] = {
+ 	"ZERO", "DMIC0", "DMIC1", "DMIC2", "DMIC3",
+ 	"DMIC4", "DMIC5", "DMIC6", "DMIC7"
+@@ -1857,26 +1825,6 @@ static const struct snd_soc_dapm_widget lpass_cdc_tx_macro_dapm_widgets[] = {
+ 	LPASS_CDC_TX_MACRO_DAPM_MUX("TX SMIC MUX6", 0, tx_smic6),
+ 	LPASS_CDC_TX_MACRO_DAPM_MUX("TX SMIC MUX7", 0, tx_smic7),
+ 
+-#ifdef CONFIG_BOLERO_VER_4P0
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX0", 0, tx_wsa_mux0),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX1", 0, tx_wsa_mux1),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX2", 0, tx_wsa_mux2),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX3", 0, tx_wsa_mux3),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX4", 0, tx_wsa_mux4),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX5", 0, tx_wsa_mux5),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX6", 0, tx_wsa_mux6),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX WSA MUX7", 0, tx_wsa_mux7),
+-
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX0", 0, tx_psel_mux0),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX1", 0, tx_psel_mux1),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX2", 0, tx_psel_mux2),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX3", 0, tx_psel_mux3),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX4", 0, tx_psel_mux4),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX5", 0, tx_psel_mux5),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX6", 0, tx_psel_mux6),
+-	LPASS_CDC_TX_MACRO_DAPM_MUX("TX PORT SEL MUX7", 0, tx_psel_mux7),
+-#endif
+-
+ 	SND_SOC_DAPM_SUPPLY("TX MIC BIAS1", SND_SOC_NOPM, 0, 0,
+ 		lpass_cdc_tx_macro_enable_micbias,
+ 		SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMD),
+@@ -2000,211 +1948,35 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	/* SWR MIC ROUTING*/
+ 	/* DEC0 */
+ 	{"TX DEC0 MUX", "SWR_MIC", "TX SMIC MUX0"},
+-	{"TX DEC0 MUX", "RX_SWR_MIC", "TX SMIC MUX0"},
+-
+-	{"TX SMIC MUX0", "ZERO", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC0", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC1", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC2", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC3", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC4", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC5", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC6", "TX WSA MUX0"},
+-	{"TX SMIC MUX0", "SWR_MIC7", "TX WSA MUX0"},
+-
+-	{"TX WSA MUX0", "NO_WSA", "TX PORT SEL MUX0"},
+-	{"TX WSA MUX0", "WSA1", "TX PORT SEL MUX0"},
+-	{"TX WSA MUX0", "WSA2", "TX PORT SEL MUX0"},
+-	{"TX WSA MUX0", "WSA3", "TX PORT SEL MUX0"},
+-	{"TX WSA MUX0", "WSA4", "TX PORT SEL MUX0"},
+-
+-	{"TX PORT SEL MUX0", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX0", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX0", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX0", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX0", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC1 */
+ 	{"TX DEC1 MUX", "SWR_MIC", "TX SMIC MUX1"},
+-	{"TX DEC1 MUX", "RX_SWR_MIC", "TX SMIC MUX1"},
+-
+-	{"TX SMIC MUX1", "ZERO", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC0", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC1", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC2", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC3", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC4", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC5", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC6", "TX WSA MUX1"},
+-	{"TX SMIC MUX1", "SWR_MIC7", "TX WSA MUX1"},
+-
+-	{"TX WSA MUX1", "NO_WSA", "TX PORT SEL MUX1"},
+-	{"TX WSA MUX1", "WSA1", "TX PORT SEL MUX1"},
+-	{"TX WSA MUX1", "WSA2", "TX PORT SEL MUX1"},
+-	{"TX WSA MUX1", "WSA3", "TX PORT SEL MUX1"},
+-	{"TX WSA MUX1", "WSA4", "TX PORT SEL MUX1"},
+-
+-	{"TX PORT SEL MUX1", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX1", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX1", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX1", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX1", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC2 */
+ 	{"TX DEC2 MUX", "SWR_MIC", "TX SMIC MUX2"},
+-	{"TX DEC2 MUX", "RX_SWR_MIC", "TX SMIC MUX2"},
+-
+-	{"TX SMIC MUX2", "ZERO", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC0", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC1", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC2", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC3", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC4", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC5", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC6", "TX WSA MUX2"},
+-	{"TX SMIC MUX2", "SWR_MIC7", "TX WSA MUX2"},
+-
+-	{"TX WSA MUX2", "NO_WSA", "TX PORT SEL MUX2"},
+-	{"TX WSA MUX2", "WSA1", "TX PORT SEL MUX2"},
+-	{"TX WSA MUX2", "WSA2", "TX PORT SEL MUX2"},
+-	{"TX WSA MUX2", "WSA3", "TX PORT SEL MUX2"},
+-	{"TX WSA MUX2", "WSA4", "TX PORT SEL MUX2"},
+-
+-	{"TX PORT SEL MUX2", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX2", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX2", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX2", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX2", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC3 */
+ 	{"TX DEC3 MUX", "SWR_MIC", "TX SMIC MUX3"},
+-	{"TX DEC3 MUX", "RX_SWR_MIC", "TX SMIC MUX3"},
+-
+-	{"TX SMIC MUX3", "ZERO", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC0", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC1", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC2", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC3", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC4", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC5", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC6", "TX WSA MUX3"},
+-	{"TX SMIC MUX3", "SWR_MIC7", "TX WSA MUX3"},
+-
+-	{"TX WSA MUX3", "NO_WSA", "TX PORT SEL MUX3"},
+-	{"TX WSA MUX3", "WSA1", "TX PORT SEL MUX3"},
+-	{"TX WSA MUX3", "WSA2", "TX PORT SEL MUX3"},
+-	{"TX WSA MUX3", "WSA3", "TX PORT SEL MUX3"},
+-	{"TX WSA MUX3", "WSA4", "TX PORT SEL MUX3"},
+-
+-	{"TX PORT SEL MUX3", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX3", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX3", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX3", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX3", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC4 */
+ 	{"TX DEC4 MUX", "SWR_MIC", "TX SMIC MUX4"},
+-	{"TX DEC4 MUX", "RX_SWR_MIC", "TX SMIC MUX4"},
+-
+-	{"TX SMIC MUX4", "ZERO", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC0", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC1", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC2", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC3", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC4", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC5", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC6", "TX WSA MUX4"},
+-	{"TX SMIC MUX4", "SWR_MIC7", "TX WSA MUX4"},
+-
+-	{"TX WSA MUX4", "NO_WSA", "TX PORT SEL MUX4"},
+-	{"TX WSA MUX4", "WSA1", "TX PORT SEL MUX4"},
+-	{"TX WSA MUX4", "WSA2", "TX PORT SEL MUX4"},
+-	{"TX WSA MUX4", "WSA3", "TX PORT SEL MUX4"},
+-	{"TX WSA MUX4", "WSA4", "TX PORT SEL MUX4"},
+-
+-	{"TX PORT SEL MUX4", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX4", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX4", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX4", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX4", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC5 */
+ 	{"TX DEC5 MUX", "SWR_MIC", "TX SMIC MUX5"},
+-	{"TX DEC5 MUX", "RX_SWR_MIC", "TX SMIC MUX5"},
+-
+-	{"TX SMIC MUX5", "ZERO", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC0", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC1", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC2", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC3", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC4", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC5", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC6", "TX WSA MUX5"},
+-	{"TX SMIC MUX5", "SWR_MIC7", "TX WSA MUX5"},
+-
+-	{"TX WSA MUX5", "NO_WSA", "TX PORT SEL MUX5"},
+-	{"TX WSA MUX5", "WSA1", "TX PORT SEL MUX5"},
+-	{"TX WSA MUX5", "WSA2", "TX PORT SEL MUX5"},
+-	{"TX WSA MUX5", "WSA3", "TX PORT SEL MUX5"},
+-	{"TX WSA MUX5", "WSA4", "TX PORT SEL MUX5"},
+-
+-	{"TX PORT SEL MUX5", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX5", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX5", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX5", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX5", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC6 */
+ 	{"TX DEC6 MUX", "SWR_MIC", "TX SMIC MUX6"},
+-	{"TX DEC6 MUX", "RX_SWR_MIC", "TX SMIC MUX6"},
+-
+-	{"TX SMIC MUX6", "ZERO", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC0", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC1", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC2", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC3", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC4", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC5", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC6", "TX WSA MUX6"},
+-	{"TX SMIC MUX6", "SWR_MIC7", "TX WSA MUX6"},
+-
+-	{"TX WSA MUX6", "NO_WSA", "TX PORT SEL MUX6"},
+-	{"TX WSA MUX6", "WSA1", "TX PORT SEL MUX6"},
+-	{"TX WSA MUX6", "WSA2", "TX PORT SEL MUX6"},
+-	{"TX WSA MUX6", "WSA3", "TX PORT SEL MUX6"},
+-	{"TX WSA MUX6", "WSA4", "TX PORT SEL MUX6"},
+-
+-	{"TX PORT SEL MUX6", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX6", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX6", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX6", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX6", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* DEC7 */
+ 	{"TX DEC7 MUX", "SWR_MIC", "TX SMIC MUX7"},
+-	{"TX DEC7 MUX", "RX_SWR_MIC", "TX SMIC MUX7"},
+-
+-	{"TX SMIC MUX7", "ZERO", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC0", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC1", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC2", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC3", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC4", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC5", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC6", "TX WSA MUX7"},
+-	{"TX SMIC MUX7", "SWR_MIC7", "TX WSA MUX7"},
+-
+-	{"TX WSA MUX7", "NO_WSA", "TX PORT SEL MUX7"},
+-	{"TX WSA MUX7", "WSA1", "TX PORT SEL MUX7"},
+-	{"TX WSA MUX7", "WSA2", "TX PORT SEL MUX7"},
+-	{"TX WSA MUX7", "WSA3", "TX PORT SEL MUX7"},
+-	{"TX WSA MUX7", "WSA4", "TX PORT SEL MUX7"},
+-
+-	{"TX PORT SEL MUX7", "PORT0", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX7", "PORT1", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX7", "PORT2", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX7", "PORT3", "TX SWR_INPUT"},
+-	{"TX PORT SEL MUX7", "PORT4", "TX SWR_INPUT"},
++
+ 
+ 	/* MSM_DMIC routing */
+ 	{"TX DEC0 MUX", "MSM_DMIC", "TX DMIC MUX0"},
+@@ -2592,24 +2364,6 @@ static const struct snd_kcontrol_new lpass_cdc_tx_macro_snd_controls[] = {
+ 
+ 	SOC_ENUM("TX7 HPF cut off", cf_dec7_enum),
+ 
+-	SOC_SINGLE_EXT("DEC0_BCS Switch", SND_SOC_NOPM, 0, 1, 0,
+-		       lpass_cdc_tx_macro_get_bcs, lpass_cdc_tx_macro_set_bcs),
+-
+-	SOC_SINGLE_EXT("DEC_HPF_ADAPT_BYPASS Enable", SND_SOC_NOPM, 0, 1, 0,
+-		       lpass_cdc_tx_macro_get_hpf_adapt_bypass,
+-		       lpass_cdc_tx_macro_set_hpf_adapt_bypass),
+-
+-	SOC_SINGLE_EXT("TX_SWR_DMIC Enable", SND_SOC_NOPM, 0, 1, 0,
+-			lpass_cdc_tx_macro_swr_dmic_get, lpass_cdc_tx_macro_swr_dmic_put),
+-
+-	SOC_ENUM_EXT("BCS Channel", bcs_ch_enum,
+-		     lpass_cdc_tx_macro_bcs_ch_get, lpass_cdc_tx_macro_bcs_ch_put),
+-
+-	SOC_ENUM_EXT("BCS CH_SEL", bcs_ch_sel_mux_enum,
+-		       lpass_cdc_tx_macro_get_bcs_ch_sel, lpass_cdc_tx_macro_put_bcs_ch_sel),
+-
+-	SOC_SINGLE_EXT("DEC_GAIN_BYPASS Enable", SND_SOC_NOPM, 0, 1, 0,
+-		     lpass_cdc_tx_macro_get_dec_gain_bypass, lpass_cdc_tx_macro_put_dec_gain_bypass),
+ };
+ 
+ static int lpass_cdc_tx_macro_clk_div_get(struct snd_soc_component *component, u32 mic_pair)
+@@ -2799,7 +2553,6 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 
+ 	const char *dmic_clk_div_factor = "qcom,tx-dmic-clk-div-factor";
+ 
+-
+ 	tx_priv = devm_kzalloc(&pdev->dev, sizeof(struct lpass_cdc_tx_macro_priv),
+ 			    GFP_KERNEL);
+ 	if (!tx_priv)
+@@ -2865,15 +2618,7 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 
+ 	}
+ 
+-	tx_priv->adapt_tuning_registers = of_property_read_variable_u32_array(pdev->dev.of_node,
+-				"adapt-tuning-reg-values", tx_priv->tuning_reg_values, 0,
+-						ARRAY_SIZE(tx_priv->tuning_reg_values));
+-
+-	if (tx_priv->adapt_tuning_registers == -EOVERFLOW ||
+-		(tx_priv->adapt_tuning_registers < 0)) {
+-		dev_err(&pdev->dev, "failure in reading tuning registers\n");
+-		tx_priv->adapt_tuning_registers = 0;
+-	}
++	tx_priv->adapt_tuning_registers = 0;
+ 
+ 	mutex_init(&tx_priv->mclk_lock);
+ 	mutex_init(&tx_priv->wlock);
+@@ -2925,7 +2670,6 @@ exit:
+ 	return;
+ }
+ 
+-
+ static const struct tx_macro_data tx_macro_legacy_data = {
+ 	.version = 0,
+ 	.has_bolero_2p85_features = true,
+-- 
+2.34.1
+

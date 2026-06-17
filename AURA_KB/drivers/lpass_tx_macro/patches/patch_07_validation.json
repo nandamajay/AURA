@@ -1,0 +1,18 @@
+{
+  "patch": "0007-ASoC-codecs-lpass-tx-macro-add-blind-SoC-data-model.patch",
+  "classification": "PASS",
+  "scope": "Apply VA lesson: add per-SoC data model and match-data plumbing before removing compile-time gates",
+  "line_count": 110,
+  "checks": {
+    "tx_macro_data_present": true,
+    "private_data_has_match_data": true,
+    "of_device_get_match_data_present": true,
+    "dt_entries_have_data": true,
+    "version_uses_soc_data": true
+  },
+  "blind_assumptions": [
+    "sm8250/sm8450/sm8550 compatible choices inferred from LPASS macro family patterns, not upstream TX source",
+    "BOLERO feature gates are represented as data flags; full runtime replacement is deferred to residual cleanup"
+  ],
+  "fail_closed_reasons": []
+}
