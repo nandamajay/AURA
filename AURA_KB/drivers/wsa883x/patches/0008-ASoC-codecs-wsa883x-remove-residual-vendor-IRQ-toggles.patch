@@ -1,0 +1,62 @@
+From f159572a7463b684d2d30f8f636c298b4e700a95 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:51:39 +0530
+Subject: [PATCH 8/8] ASoC: codecs: wsa883x: remove residual vendor IRQ toggles
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 18 +-----------------
+ 1 file changed, 1 insertion(+), 17 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index cc188a7..95e661a 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -954,13 +954,6 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 						WSA883X_DRE_CTL_0,
+ 						0x07,
+ 						wsa883x->comp_offset);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PA_ON_ERR);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_UVLO);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_DISABLE);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_OCP);
+-		wcd_enable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLK_WD);
+ 		snd_soc_component_update_bits(component,
+ 				WSA883X_VBAT_ADC_FLT_CTL,
+ 				0x0E, 0x06);
+@@ -973,8 +966,6 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 		break;
+ 	case SND_SOC_DAPM_PRE_PMD:
+ 		if (!test_bit(SPKR_ADIE_LB, &wsa883x->status_mask) && wsa883x->pdm_wd_enabled) {
+-			wcd_disable_irq(&wsa883x->irq_info,
+-					WSA883X_IRQ_INT_PDM_WD);
+ 			wsa883x->pdm_wd_enabled = false;
+ 		}
+ 		snd_soc_component_update_bits(component,
+@@ -993,13 +984,6 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 				0x10, 0x00);
+ 		snd_soc_component_update_bits(component, WSA883X_PDM_WD_CTL,
+ 				0x01, 0x00);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLK_WD);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_OCP);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_DISABLE);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_UVLO);
+-		wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PA_ON_ERR);
+ 		clear_bit(SPKR_STATUS, &wsa883x->status_mask);
+ 		clear_bit(SPKR_ADIE_LB, &wsa883x->status_mask);
+ 		break;
+@@ -1360,7 +1344,7 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	if (!wsa883x)
+ 		return -ENOMEM;
+ 
+-	/* Upstream SoundWire/regmap IRQ plumbing replaces the vendor wcd_irq wrapper. */
++	/* Upstream SoundWire/regmap IRQ plumbing replaces the vendor regmap IRQ wrapper. */
+ 
+ 	wsa883x->pdm_wd_enabled = false;
+ 
+-- 
+2.34.1
+

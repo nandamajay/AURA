@@ -1,0 +1,73 @@
+From 8425d617170b820b8656f974fc946a45c82f4488 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:54:35 +0530
+Subject: [PATCH 9/9] ASoC: codecs: wsa883x: restore SDW regmap and remove
+ debug remnants
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 35 +----------------------------------
+ 1 file changed, 1 insertion(+), 34 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 95e661a..9b9c735 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -550,7 +550,7 @@ int wsa883x_codec_info_create_codec_entry(struct snd_info_entry *codec_root,
+ 	card = component->card;
+ 
+ 	snprintf(name, sizeof(name), "%s.%llx", "wsa883x",
+-		 wsa883x->sdw_slave->addr);
++		 wsa883x->sdw_slave->id.unique_id);
+ 
+ 	wsa883x->entry = snd_info_create_module_entry(codec_root->module,
+ 						(const char *)name,
+@@ -1358,35 +1358,6 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 
+ 	mutex_init(&wsa883x->res_lock);
+ 
+-#ifdef CONFIG_DEBUG_FS
+-	if (!wsa883x->debugfs_dent) {
+-		wsa883x->debugfs_dent = debugfs_create_dir(
+-					dev_name(&pdev->dev), 0);
+-		if (!IS_ERR(wsa883x->debugfs_dent)) {
+-			wsa883x->debugfs_peek =
+-				debugfs_create_file("sdwslave_peek",
+-				S_IFREG | 0444,
+-				wsa883x->debugfs_dent,
+-				(void *) pdev,
+-				&codec_debug_read_ops);
+-
+-		wsa883x->debugfs_poke =
+-				debugfs_create_file("sdwslave_poke",
+-				S_IFREG | 0444,
+-				wsa883x->debugfs_dent,
+-				(void *) pdev,
+-				&codec_debug_write_ops);
+-
+-		wsa883x->debugfs_reg_dump =
+-				debugfs_create_file(
+-				"sdwslave_reg_dump",
+-				S_IFREG | 0444,
+-				wsa883x->debugfs_dent,
+-				(void *) pdev,
+-				&codec_debug_dump_ops);
+-	}
+-}
+-#endif
+ 
+ 	return 0;
+ 
+@@ -1413,10 +1384,6 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 
+ 
+ 
+-#ifdef CONFIG_DEBUG_FS
+-	debugfs_remove_recursive(wsa883x->debugfs_dent);
+-	wsa883x->debugfs_dent = NULL;
+-#endif
+ 	mutex_destroy(&wsa883x->res_lock);
+ 	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+-- 
+2.34.1
+

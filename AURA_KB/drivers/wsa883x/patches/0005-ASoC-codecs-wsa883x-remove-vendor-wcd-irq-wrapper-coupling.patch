@@ -1,0 +1,209 @@
+From f15b36c536c0cf6bf4756d398d4fee30521aa340 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:51:04 +0530
+Subject: [PATCH 5/7] ASoC: codecs: wsa883x: remove vendor wcd-irq wrapper
+ coupling
+
+---
+ asoc/codecs/wsa883x/internal.h |   3 -
+ asoc/codecs/wsa883x/wsa883x.c  | 139 +--------------------------------
+ 2 files changed, 2 insertions(+), 140 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index c335aaf..b71ebac 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -7,7 +7,6 @@
+ #ifndef WSA883X_INTERNAL_H
+ #define WSA883X_INTERNAL_H
+ 
+-#include <asoc/wcd-irq.h>
+ #include "wsa883x.h"
+ #include "wsa883x-registers.h"
+ 
+@@ -94,8 +93,6 @@ struct wsa883x_priv {
+ 	int variant;
+ 	int version;
+ 	u8 pa_gain;
+-	struct irq_domain *virq;
+-	struct wcd_irq_info irq_info;
+ #ifdef CONFIG_DEBUG_FS
+ 	struct dentry *debugfs_dent;
+ 	struct dentry *debugfs_peek;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index e014272..865b720 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -207,8 +207,7 @@ static int wsa883x_handle_post_irq(void *data)
+ 	regmap_read(wsa883x->regmap, WSA883X_INTR_STATUS0, &sts1);
+ 	regmap_read(wsa883x->regmap, WSA883X_INTR_STATUS1, &sts2);
+ 
+-	wsa883x->sdw_slave->slave_irq_pending =
+-			((sts1 || sts2) ? true : false);
++	dev_dbg(wsa883x->dev, "irq status %x %x\n", sts1, sts2);
+ 
+ 	return IRQ_HANDLED;
+ }
+@@ -1460,123 +1459,10 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	if (!wsa883x)
+ 		return -ENOMEM;
+ 
+-	wsa883x_sub_regmap_irq_chip = devm_kzalloc(&pdev->dev, sizeof(struct regmap_irq_chip),
+-				GFP_KERNEL);
+-	if (!wsa883x_sub_regmap_irq_chip)
+-		return -ENOMEM;
+-	memcpy(wsa883x_sub_regmap_irq_chip, &wsa883x_regmap_irq_chip,
+-		sizeof(struct regmap_irq_chip));
+-
+-	ret = wsa883x_enable_supplies(&pdev->dev, wsa883x);
+-	if (ret) {
+-		ret = -EPROBE_DEFER;
+-		goto err;
+-	}
+-
+-	wsa883x->pinctrl = devm_pinctrl_get(&pdev->dev);
+-	if (IS_ERR(wsa883x->pinctrl))
+-		wsa883x->pinctrl = NULL;
+-	dev_set_drvdata(&pdev->dev, wsa883x);
+-	wsa883x->sdw_slave = pdev;
+-	wsa883x->dev = &pdev->dev;
+-	pin_state_current = false;
+-	wsa883x_gpio_ctrl(wsa883x, true);
+-	/*
+-	 * Add 5msec delay to provide sufficient time for
+-	 * soundwire auto enumeration of slave devices as
+-	 * as per HW requirement.
+-	 */
+-	usleep_range(5000, 5010);
+-	ret = sdw_slave_wait_for_init(pdev, 500);
+-	if (ret) {
+-		dev_dbg(&pdev->dev,
+-			"%s get devnum %d for dev addr %llx failed\n",
+-			__func__, devnum, pdev->id.unique_id);
+-		ret = -EPROBE_DEFER;
+-		goto err_supply;
+-	}
+-	devnum = pdev->dev_num;
+-
+-	wsa883x->regmap = devm_regmap_init_sdw(pdev,
+-					       &wsa883x_regmap_config);
+-	if (IS_ERR(wsa883x->regmap)) {
+-		ret = PTR_ERR(wsa883x->regmap);
+-		dev_err(&pdev->dev, "%s: regmap_init failed %d\n",
+-			__func__, ret);
+-		goto dev_err;
+-	}
+-
+-
+-
+-	/* Set all interrupts as edge triggered */
+-	for (i = 0; i < wsa883x_sub_regmap_irq_chip->num_regs; i++)
+-		regmap_write(wsa883x->regmap, (WSA883X_INTR_LEVEL0 + i), 0);
+-
+-	wsa883x_sub_regmap_irq_chip->irq_drv_data = wsa883x;
+-	wsa883x->irq_info.wcd_regmap_irq_chip = wsa883x_sub_regmap_irq_chip;
+-	wsa883x->irq_info.codec_name = "WSA883X";
+-	wsa883x->irq_info.regmap = wsa883x->regmap;
+-	wsa883x->irq_info.dev = &pdev->dev;
+-	ret = wcd_irq_init(&wsa883x->irq_info, &wsa883x->virq);
+-
+-	if (ret) {
+-		dev_err(wsa883x->dev, "%s: IRQ init failed: %d\n",
+-			__func__, ret);
+-		goto dev_err;
+-	}
+-    wsa883x->sdw_slave->slave_irq = wsa883x->virq;
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR,
+-			"WSA SAF2WAR", wsa883x_saf2war_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR);
++	/* Upstream SoundWire/regmap IRQ plumbing replaces the vendor wcd_irq wrapper. */
+ 
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF,
+-			"WSA WAR2SAF", wsa883x_war2saf_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF);
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_DISABLE,
+-			"WSA OTP", wsa883x_otp_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_DISABLE);
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_OCP,
+-			"WSA OCP", wsa883x_ocp_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_OCP);
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLIP,
+-			"WSA CLIP", wsa883x_clip_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLIP);
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PDM_WD,
+-			"WSA PDM WD", wsa883x_pdm_wd_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PDM_WD);
+ 	wsa883x->pdm_wd_enabled = false;
+ 
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLK_WD,
+-			"WSA CLK WD", wsa883x_clk_wd_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLK_WD);
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_INTR_PIN,
+-			"WSA EXT INT", wsa883x_ext_int_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_INTR_PIN);
+-
+-	/* Under Voltage Lock out (UVLO) interrupt handle */
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_UVLO,
+-			"WSA UVLO", wsa883x_uvlo_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_UVLO);
+-
+-	wcd_request_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PA_ON_ERR,
+-			"WSA PA ERR", wsa883x_pa_on_err_handle_irq, wsa883x);
+-
+-	wcd_disable_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PA_ON_ERR);
+ 
+ 	wsa883x->driver = devm_kzalloc(&pdev->dev,
+ 			sizeof(struct snd_soc_component_driver), GFP_KERNEL);
+@@ -1703,17 +1589,6 @@ err_mem:
+ 		kfree(wsa883x->driver);
+ 	}
+ err_irq:
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_DISABLE, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_OCP, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLIP, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PDM_WD, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLK_WD, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_INTR_PIN, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_UVLO, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PA_ON_ERR, NULL);
+-	wcd_irq_exit(&wsa883x->irq_info, wsa883x->virq);
+ dev_err:
+ 	if (pin_state_current == false)
+ 		wsa883x_gpio_ctrl(wsa883x, false);
+@@ -1735,16 +1610,6 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 	}
+ 
+ 
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_DISABLE, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_OCP, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLIP, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PDM_WD, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_CLK_WD, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_INTR_PIN, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_UVLO, NULL);
+-	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_PA_ON_ERR, NULL);
+ 
+ 	if (wsa883x->register_notifier)
+ 		wsa883x->register_notifier(wsa883x->handle,
+-- 
+2.34.1
+

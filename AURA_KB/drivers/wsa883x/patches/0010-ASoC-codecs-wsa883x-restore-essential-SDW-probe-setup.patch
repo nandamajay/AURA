@@ -1,0 +1,160 @@
+From 3453a86099852f613b15f468855e23b33b9ee3be Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:55:27 +0530
+Subject: [PATCH 10/10] ASoC: codecs: wsa883x: restore essential SDW probe
+ setup
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 110 +++++++++-------------------------
+ 1 file changed, 28 insertions(+), 82 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 9b9c735..ffb4001 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -811,96 +811,23 @@ static int wsa883x_set_port(struct snd_soc_component *component, int port_idx,
+ }
+ 
+ static int wsa883x_enable_sdw_dac_port(struct snd_soc_dapm_widget *w,
+-	struct snd_kcontrol *kcontrol, int event)
++					     struct snd_kcontrol *kcontrol, int event)
+ {
+-	struct snd_soc_component *component =
+-			snd_soc_dapm_to_component(w->dapm);
++	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+ 	struct wsa883x_priv *wsa883x = snd_soc_component_get_drvdata(component);
+-	u8 port_id[WSA883X_MAX_SDW_PORTS];
+-	u8 num_ch[WSA883X_MAX_SDW_PORTS];
+-	u8 ch_mask[WSA883X_MAX_SDW_PORTS];
+-	u32 ch_rate[WSA883X_MAX_SDW_PORTS];
+-	u8 port_type[WSA883X_MAX_SDW_PORTS];
+-	u8 num_port = 0;
+-
+-	dev_dbg(component->dev, "%s: event %d name %s\n", __func__,
+-		event, w->name);
+-	if (wsa883x == NULL)
++
++	if (!wsa883x)
+ 		return -EINVAL;
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+-		wsa883x_set_port(component, SDW_DAC_PORT,
+-				&port_id[num_port], &num_ch[num_port],
+-				&ch_mask[num_port], &ch_rate[num_port],
+-				&port_type[num_port]);
+-		if (wsa883x->dev_mode == RECEIVER)
+-			ch_rate[num_port] = SDW_CLK_RATE_4P8MHZ;
+-		++num_port;
+-
+-		if (wsa883x->comp_enable) {
+-			wsa883x_set_port(component, SDW_COMP_PORT,
+-					&port_id[num_port], &num_ch[num_port],
+-					&ch_mask[num_port], &ch_rate[num_port],
+-					&port_type[num_port]);
+-			++num_port;
+-			set_bit(COMP_PORT_EN_STATUS_BIT, &wsa883x->port_status_mask);
+-		}
+-		if (wsa883x->visense_enable) {
+-			wsa883x_set_port(component, SDW_VISENSE_PORT,
+-					&port_id[num_port], &num_ch[num_port],
+-					&ch_mask[num_port], &ch_rate[num_port],
+-					&port_type[num_port]);
+-			++num_port;
+-			set_bit(VISENSE_EN_STATUS_BIT, &wsa883x->port_status_mask);
+-		}
+-		sdw_stream_add_slave(wsa883x->sdw_slave, &port_id[0], num_port,
+-				&ch_mask[0], &ch_rate[0], &num_ch[0],
+-					&port_type[0]);
+-		break;
+-	case SND_SOC_DAPM_POST_PMU:
+-		set_bit(SPKR_STATUS, &wsa883x->status_mask);
+-		break;
+-	case SND_SOC_DAPM_PRE_PMD:
+-		wsa883x_set_port(component, SDW_DAC_PORT,
+-				&port_id[num_port], &num_ch[num_port],
+-				&ch_mask[num_port], &ch_rate[num_port],
+-				&port_type[num_port]);
+-		++num_port;
+-
+-		if (wsa883x->comp_enable &&
+-			test_bit(COMP_PORT_EN_STATUS_BIT, &wsa883x->port_status_mask)) {
+-			wsa883x_set_port(component, SDW_COMP_PORT,
+-					&port_id[num_port], &num_ch[num_port],
+-					&ch_mask[num_port], &ch_rate[num_port],
+-					&port_type[num_port]);
+-			++num_port;
+-			clear_bit(COMP_PORT_EN_STATUS_BIT, &wsa883x->port_status_mask);
+-		}
+-		if (wsa883x->visense_enable &&
+-			test_bit(VISENSE_EN_STATUS_BIT, &wsa883x->port_status_mask)) {
+-			wsa883x_set_port(component, SDW_VISENSE_PORT,
+-					&port_id[num_port], &num_ch[num_port],
+-					&ch_mask[num_port], &ch_rate[num_port],
+-					&port_type[num_port]);
+-			++num_port;
+-			clear_bit(VISENSE_EN_STATUS_BIT, &wsa883x->port_status_mask);
+-		}
+-		sdw_stream_remove_slave(wsa883x->sdw_slave, &port_id[0], num_port,
+-				&ch_mask[0], &port_type[0]);
++		set_bit(SDW_DAC_PORT, &wsa883x->port_status_mask);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+-		if (sdw_set_device_group(wsa883x->sdw_slave, SDW_GROUP_NONE))
+-			dev_err(component->dev,
+-				"%s: set num ch failed\n", __func__);
+-
+-		sdw_slvdev_datapath_control(wsa883x->sdw_slave,
+-					    wsa883x->sdw_slave->dev_num,
+-					    false);
+-		break;
+-	default:
++		clear_bit(SDW_DAC_PORT, &wsa883x->port_status_mask);
+ 		break;
+ 	}
++
+ 	return 0;
+ }
+ 
+@@ -1333,17 +1260,36 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	struct wsa883x_priv *wsa883x;
+ 	u8 devnum = 0;
+ 	bool pin_state_current = false;
+-	struct wsa_ctrl_platform_data *plat_data = NULL;
+ 	struct snd_soc_component *component;
+ 	char buffer[MAX_NAME_LEN];
+ 	int dev_index = 0;
+-	struct regmap_irq_chip *wsa883x_sub_regmap_irq_chip = NULL;
+ 
+ 	wsa883x = devm_kzalloc(&pdev->dev, sizeof(struct wsa883x_priv),
+ 			    GFP_KERNEL);
+ 	if (!wsa883x)
+ 		return -ENOMEM;
+ 
++	dev_set_drvdata(&pdev->dev, wsa883x);
++	wsa883x->sdw_slave = pdev;
++	wsa883x->dev = &pdev->dev;
++
++	ret = wsa883x_enable_supplies(&pdev->dev, wsa883x);
++	if (ret)
++		return ret;
++
++	wsa883x->pinctrl = devm_pinctrl_get(&pdev->dev);
++	if (IS_ERR(wsa883x->pinctrl))
++		wsa883x->pinctrl = NULL;
++	wsa883x_gpio_ctrl(wsa883x, true);
++	usleep_range(5000, 5010);
++
++	devnum = pdev->dev_num;
++	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
++	if (IS_ERR(wsa883x->regmap)) {
++		ret = PTR_ERR(wsa883x->regmap);
++		goto err_supply;
++	}
++
+ 	/* Upstream SoundWire/regmap IRQ plumbing replaces the vendor regmap IRQ wrapper. */
+ 
+ 	wsa883x->pdm_wd_enabled = false;
+-- 
+2.34.1
+

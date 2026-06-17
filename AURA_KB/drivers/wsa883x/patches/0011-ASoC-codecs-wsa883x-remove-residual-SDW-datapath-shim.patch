@@ -1,0 +1,28 @@
+From ea2a00f31606d381f99628b9114d1f2bdd04f739 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:57:16 +0530
+Subject: [PATCH 11/11] ASoC: codecs: wsa883x: remove residual SDW datapath
+ shim
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index ffb4001..b6babc3 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -862,9 +862,7 @@ static int wsa883x_spkr_event(struct snd_soc_dapm_widget *w,
+ 						WSA883X_DRE_CTL_0,
+ 						0xF0, 0x90);
+ 		}
+-		sdw_slvdev_datapath_control(wsa883x->sdw_slave,
+-					    wsa883x->sdw_slave->dev_num,
+-					    true);
++		/* SDW datapath control handled by upstream SoundWire core. */
+ 		/* Added delay as per HW sequence */
+ 		usleep_range(250, 300);
+ 		snd_soc_component_update_bits(component,
+-- 
+2.34.1
+

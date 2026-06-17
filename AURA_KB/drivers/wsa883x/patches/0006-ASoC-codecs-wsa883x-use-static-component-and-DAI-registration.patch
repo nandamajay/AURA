@@ -1,0 +1,146 @@
+From 31d3f5b0495fe50166477ec8df4567613e058c99 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:51:04 +0530
+Subject: [PATCH 6/7] ASoC: codecs: wsa883x: use static component and DAI
+ registration
+
+---
+ asoc/codecs/wsa883x/internal.h |  2 -
+ asoc/codecs/wsa883x/wsa883x.c  | 78 ++++------------------------------
+ 2 files changed, 9 insertions(+), 71 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index b71ebac..7a16b08 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -109,8 +109,6 @@ struct wsa883x_priv {
+ 	int num_supplies;
+ 	struct regulator_bulk_data *supplies;
+ 	unsigned long status_mask;
+-	struct snd_soc_dai_driver *dai_driver;
+-	struct snd_soc_component_driver *driver;
+ 	unsigned long port_status_mask;
+ };
+ 
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 865b720..949573c 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -1276,7 +1276,7 @@ static int wsa883x_soc_codec_resume(struct snd_soc_component *component)
+ }
+ 
+ static const struct snd_soc_component_driver soc_codec_dev_wsa883x_wsa = {
+-	.name = "",
++	.name = "wsa883x",
+ 	.probe = wsa883x_codec_probe,
+ 	.remove = wsa883x_codec_remove,
+ 	.controls = wsa883x_snd_controls,
+@@ -1428,9 +1428,9 @@ static int wsa883x_enable_supplies(struct device *dev,
+ 
+ static struct snd_soc_dai_driver wsa_dai[] = {
+ 	{
+-		.name = "",
++		.name = "wsa883x-aif",
+ 		.playback = {
+-			.stream_name = "",
++			.stream_name = "WSA883X_AIF Playback",
+ 			.rates = WSA883X_RATES | WSA883X_FRAC_RATES,
+ 			.formats = WSA883X_FORMATS,
+ 			.rate_max = 192000,
+@@ -1464,52 +1464,12 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	wsa883x->pdm_wd_enabled = false;
+ 
+ 
+-	wsa883x->driver = devm_kzalloc(&pdev->dev,
+-			sizeof(struct snd_soc_component_driver), GFP_KERNEL);
+-        if (!wsa883x->driver) {
+-                ret = -ENOMEM;
+-                goto err_irq;
+-        }
+-
+-        memcpy(wsa883x->driver, &soc_codec_dev_wsa883x_wsa,
+-                        sizeof(struct snd_soc_component_driver));
+-
+-	wsa883x->dai_driver = devm_kzalloc(&pdev->dev,
+-				sizeof(struct snd_soc_dai_driver), GFP_KERNEL);
+-	if (!wsa883x->dai_driver) {
+-		ret = -ENOMEM;
+-		goto err_mem;
+-	}
+-
+-	memcpy(wsa883x->dai_driver, wsa_dai, sizeof(struct snd_soc_dai_driver));
+-
+-	/* Get last digit from HEX format */
+-	dev_index = (int)((char)(pdev->id.unique_id & 0xF));
+-
+-	if (of_device_is_compatible(pdev->dev.of_node, "qcom,wsa883x_2"))
+-		dev_index += 2;
+-
+-	snprintf(buffer, sizeof(buffer), "wsa-codec.%d", dev_index);
+-	wsa883x->driver->name = kstrndup(buffer, strlen(buffer), GFP_KERNEL);
+-
+-	snprintf(buffer, sizeof(buffer), "wsa_rx%d", dev_index);
+-	wsa883x->dai_driver->name =
+-				kstrndup(buffer, strlen(buffer), GFP_KERNEL);
+-
+-	snprintf(buffer, sizeof(buffer), "WSA883X_AIF%d Playback", dev_index);
+-	wsa883x->dai_driver->playback.stream_name =
+-				kstrndup(buffer, strlen(buffer), GFP_KERNEL);
+-
+-	/* Number of DAI's used is 1 */
+-	ret = snd_soc_register_component(&pdev->dev,
+-				wsa883x->driver, wsa883x->dai_driver, 1);
++	ret = devm_snd_soc_register_component(&pdev->dev,
++			&soc_codec_dev_wsa883x_wsa, wsa_dai, ARRAY_SIZE(wsa_dai));
++	if (ret)
++		goto err_supply;
+ 
+-	component = snd_soc_lookup_component(&pdev->dev, wsa883x->driver->name);
+-	if (!component) {
+-		dev_err(&pdev->dev, "%s: component is NULL \n", __func__);
+-		ret = -EINVAL;
+-		goto err_mem;
+-	}
++	component = snd_soc_lookup_component(&pdev->dev, "wsa883x");
+ 
+ 	wsa883x->parent_np = of_parse_phandle(pdev->dev.of_node,
+ 					      "qcom,bolero-handle", 0);
+@@ -1578,17 +1538,7 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 
+ 	return 0;
+ 
+-err_mem:
+-	if (wsa883x->dai_driver) {
+-		kfree(wsa883x->dai_driver->name);
+-		kfree(wsa883x->dai_driver->playback.stream_name);
+-		kfree(wsa883x->dai_driver);
+-	}
+-	if (wsa883x->driver) {
+-		kfree(wsa883x->driver->name);
+-		kfree(wsa883x->driver);
+-	}
+-err_irq:
++err_component:
+ dev_err:
+ 	if (pin_state_current == false)
+ 		wsa883x_gpio_ctrl(wsa883x, false);
+@@ -1619,16 +1569,6 @@ static void wsa883x_sdw_remove(struct sdw_slave *pdev)
+ 	wsa883x->debugfs_dent = NULL;
+ #endif
+ 	mutex_destroy(&wsa883x->res_lock);
+-	snd_soc_unregister_component(&pdev->dev);
+-	if (wsa883x->dai_driver) {
+-		kfree(wsa883x->dai_driver->name);
+-		kfree(wsa883x->dai_driver->playback.stream_name);
+-		kfree(wsa883x->dai_driver);
+-	}
+-	if (wsa883x->driver) {
+-		kfree(wsa883x->driver->name);
+-		kfree(wsa883x->driver);
+-	}
+ 	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 	return 0;
+-- 
+2.34.1
+

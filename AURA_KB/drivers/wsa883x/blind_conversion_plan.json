@@ -1,0 +1,69 @@
+{
+  "artifact_name": "WSA883X_BLIND_CONVERSION_PLAN",
+  "classification": "PASS",
+  "driver": "wsa883x",
+  "predicted_patch_count": 7,
+  "patch_series": [
+    {
+      "patch": 1,
+      "scope": "Remove version/proc/debug diagnostics",
+      "rationale": "VA/TX showed no upstream version conditionals or vendor debugfs/proc plumbing."
+    },
+    {
+      "patch": 2,
+      "scope": "Migrate vendor SoundWire swr_* scaffolding to upstream sdw_* driver APIs",
+      "rationale": "WSA is a SoundWire slave, not a platform macro."
+    },
+    {
+      "patch": 3,
+      "scope": "Replace msm-cdc pinctrl with generic pinctrl consumer API",
+      "rationale": "Unlike VA/TX pinctrl removal, WSA reset/shutdown pinctrl is a real device-level function."
+    },
+    {
+      "patch": 4,
+      "scope": "Replace msm-cdc supply helpers with regulator_bulk framework",
+      "rationale": "WSA uses regulators instead of LPASS macro power domains."
+    },
+    {
+      "patch": 5,
+      "scope": "Remove vendor wcd_irq wrapper coupling",
+      "rationale": "Use regmap/SoundWire interrupt model; do not upstream private wcd_irq wrapper."
+    },
+    {
+      "patch": 6,
+      "scope": "Static component/DAI registration",
+      "rationale": "Avoid dynamic component-driver allocation and runtime names."
+    },
+    {
+      "patch": 7,
+      "scope": "Residual vendor cleanup: notifier/bolero coupling, SDW naming, SoundWire port simplification",
+      "rationale": "Final banned-symbol cleanup and SoundWire-slave architectural normalization."
+    }
+  ],
+  "va_tx_lessons_applied": [
+    "fail-closed decisions",
+    "remove linux/version.h conditionals",
+    "vendor framework removal must be architecture-specific",
+    "owned bus regmap is mandatory",
+    "residual vendor cleanup last",
+    "do not invent compatibles without evidence"
+  ],
+  "new_architecture_factors": [
+    "SoundWire slave driver uses struct sdw_slave/sdw_driver",
+    "regmap is devm_regmap_init_sdw, not MMIO",
+    "regulators replace LPASS power domains",
+    "pinctrl is generic pinctrl consumer or device reset state",
+    "thermal sensor integration must be preserved or converted to hwmon/thermal carefully"
+  ],
+  "blind_assumptions": [
+    "qcom,wsa883x and qcom,wsa883x_2 compatibles remain acceptable until comparison",
+    "regulator_bulk can replace msm-cdc supply helpers with supply names inferred from DT",
+    "private parent notifier/bolero callbacks are downstream-only",
+    "SoundWire port programming can be reduced to upstream stream callbacks later"
+  ],
+  "input_lessons_refs": [
+    "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+    "AURA_KB/drivers/lpass_tx_macro/tx_lessons_learned.json"
+  ],
+  "downstream_vendor_dependency_count": 17
+}

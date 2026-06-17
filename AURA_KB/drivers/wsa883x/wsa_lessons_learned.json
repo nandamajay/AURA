@@ -1,0 +1,31 @@
+{
+  "artifact_name": "WSA883X_LESSONS_LEARNED",
+  "new_wsa_specific_lessons": [
+    {
+      "lesson": "SoundWire slave conversion is bus-driver conversion, not platform macro conversion",
+      "pipeline_rule": "Classify bus type before selecting conversion templates."
+    },
+    {
+      "lesson": "Regmap over SDW is the ownership primitive",
+      "pipeline_rule": "Use devm_regmap_init_sdw for SDW slaves, not MMIO or parent regmap patterns."
+    },
+    {
+      "lesson": "Regulator conversion needs binding evidence",
+      "pipeline_rule": "Infer supply names from downstream DT/binding evidence, not generic vdd/vdd-io guesses."
+    },
+    {
+      "lesson": "Vendor IRQ wrappers often wrap regmap IRQ semantics",
+      "pipeline_rule": "Map wcd_irq wrappers to regmap_irq or SDW interrupt callbacks, not simple deletion."
+    },
+    {
+      "lesson": "Thermal sensor integration is codec-specific",
+      "pipeline_rule": "Classify thermal code as functional, not debug/vendor residue."
+    }
+  ],
+  "cumulative_learning_summary": [
+    "VA taught governed equivalence and lifecycle split handling for LPASS macros.",
+    "TX taught that lessons can improve function/DAPM structure but register/provider inference needs binding evidence.",
+    "WSA adds a new architecture class: SoundWire slave codecs with SDW regmap, regulators, SDW IDs, and codec-specific thermal/IRQ flows.",
+    "Across three drivers, AURA now needs architecture classifiers before patch planning: platform macro vs SoundWire slave vs amplifier codec."
+  ]
+}

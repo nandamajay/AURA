@@ -1,0 +1,93 @@
+From 6df8c499f2c845b9112dfc2d234b427b89b01575 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 13:51:04 +0530
+Subject: [PATCH 3/7] ASoC: codecs: wsa883x: replace msm-cdc pinctrl with
+ generic pinctrl
+
+---
+ asoc/codecs/wsa883x/internal.h |  2 +-
+ asoc/codecs/wsa883x/wsa883x.c  | 36 +++++++++++++++-------------------
+ 2 files changed, 17 insertions(+), 21 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index 45a1308..3fa25b9 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -88,7 +88,7 @@ struct wsa883x_priv {
+ 	struct snd_info_entry *entry;
+ 	struct snd_info_entry *version_entry;
+ 	struct snd_info_entry *variant_entry;
+-	struct device_node *wsa_rst_np;
++	struct pinctrl *pinctrl;
+ 	int pa_mute;
+ 	int curr_temp;
+ 	int variant;
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 8f021e0..2d6083d 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -27,7 +27,7 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/tlv.h>
+-#include <asoc/msm-cdc-pinctrl.h>
++#include <linux/pinctrl/consumer.h>
+ #include <asoc/msm-cdc-supply.h>
+ #include "wsa883x-registers.h"
+ #include "wsa883x.h"
+@@ -1293,20 +1293,19 @@ static const struct snd_soc_component_driver soc_codec_dev_wsa883x_wsa = {
+ 
+ static int wsa883x_gpio_ctrl(struct wsa883x_priv *wsa883x, bool enable)
+ {
+-	int ret = 0;
++	const char *state = enable ? "default" : "sleep";
++	int ret;
+ 
+-	if (enable)
+-		ret = msm_cdc_pinctrl_select_active_state(
+-						wsa883x->wsa_rst_np);
+-	else
+-		ret = msm_cdc_pinctrl_select_sleep_state(
+-						wsa883x->wsa_rst_np);
+-	if (ret != 0)
+-		dev_err(wsa883x->dev,
+-			"%s: Failed to turn state %d; ret=%d\n",
+-			__func__, enable, ret);
++	if (!wsa883x->pinctrl)
++		return 0;
+ 
+-	return ret;
++	ret = pinctrl_pm_select_state(wsa883x->dev, state);
++	if (ret)
++		dev_dbg(wsa883x->dev, "%s: pinctrl state %s unavailable: %d
++",
++			__func__, state, ret);
++
++	return ret == -ENODEV ? 0 : ret;
+ }
+ 
+ static int wsa883x_sdw_up(struct wsa883x_priv *wsa883x)
+@@ -1484,16 +1483,13 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 		goto err;
+ 	}
+ 
+-	wsa883x->wsa_rst_np = of_parse_phandle(pdev->dev.of_node,
+-					     "qcom,spkr-sd-n-node", 0);
+-	if (!wsa883x->wsa_rst_np) {
+-		dev_dbg(&pdev->dev, "%s: pinctrl not defined\n", __func__);
+-		goto err_supply;
+-	}
++	wsa883x->pinctrl = devm_pinctrl_get(&pdev->dev);
++	if (IS_ERR(wsa883x->pinctrl))
++		wsa883x->pinctrl = NULL;
+ 	dev_set_drvdata(&pdev->dev, wsa883x);
+ 	wsa883x->sdw_slave = pdev;
+ 	wsa883x->dev = &pdev->dev;
+-	pin_state_current = msm_cdc_pinctrl_get_state(wsa883x->wsa_rst_np);
++	pin_state_current = false;
+ 	wsa883x_gpio_ctrl(wsa883x, true);
+ 	/*
+ 	 * Add 5msec delay to provide sufficient time for
+-- 
+2.34.1
+

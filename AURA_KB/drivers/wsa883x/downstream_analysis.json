@@ -1,0 +1,235 @@
+{
+  "artifact_name": "WSA883X_DOWNSTREAM_ANALYSIS",
+  "classification": "PASS",
+  "driver": "wsa883x",
+  "source_lines": 2234,
+  "local_files": [
+    "wsa883x-temp-sensor.h",
+    "wsa883x-regmap.c",
+    "wsa883x-temp-sensor.c",
+    "wsa883x.h",
+    "wsa883x.c",
+    "wsa883x-registers.h",
+    "Kbuild",
+    "internal.h",
+    "wsa883x-tables.c",
+    "Makefile"
+  ],
+  "vendor_dependency_count": 17,
+  "vendor_dependencies": [
+    {
+      "pattern": "<soc/soundwire.h>",
+      "count": 1
+    },
+    {
+      "pattern": "struct swr",
+      "count": 14
+    },
+    {
+      "pattern": "swr_",
+      "count": 92
+    },
+    {
+      "pattern": "msm_cdc",
+      "count": 10
+    },
+    {
+      "pattern": "wcd_",
+      "count": 60
+    },
+    {
+      "pattern": "wcd-irq",
+      "count": 1
+    },
+    {
+      "pattern": "asoc/msm-cdc",
+      "count": 2
+    },
+    {
+      "pattern": "asoc/bolero",
+      "count": 1
+    },
+    {
+      "pattern": "qti-regmap",
+      "count": 1
+    },
+    {
+      "pattern": "proc_",
+      "count": 28
+    },
+    {
+      "pattern": "proc_fs",
+      "count": 1
+    },
+    {
+      "pattern": "LINUX_VERSION_CODE",
+      "count": 2
+    },
+    {
+      "pattern": "KERNEL_VERSION",
+      "count": 2
+    },
+    {
+      "pattern": "lpass-cdc",
+      "count": 1
+    },
+    {
+      "pattern": "bolero",
+      "count": 2
+    },
+    {
+      "pattern": "<asoc/wcd-irq.h>",
+      "count": 1
+    },
+    {
+      "pattern": "<asoc/msm-cdc-supply.h>",
+      "count": 1
+    }
+  ],
+  "includes": [
+    "linux/version.h",
+    "linux/module.h",
+    "linux/init.h",
+    "linux/slab.h",
+    "linux/platform_device.h",
+    "linux/device.h",
+    "linux/printk.h",
+    "linux/bitops.h",
+    "linux/regulator/consumer.h",
+    "linux/pm_runtime.h",
+    "linux/delay.h",
+    "linux/kernel.h",
+    "linux/gpio.h",
+    "linux/of_gpio.h",
+    "linux/of_platform.h",
+    "linux/regmap.h",
+    "linux/debugfs.h",
+    "soc/soundwire.h",
+    "sound/pcm.h",
+    "sound/pcm_params.h",
+    "sound/soc.h",
+    "sound/soc-dapm.h",
+    "sound/tlv.h",
+    "asoc/msm-cdc-pinctrl.h",
+    "asoc/msm-cdc-supply.h",
+    "wsa883x-registers.h",
+    "wsa883x.h",
+    "internal.h",
+    "asoc/bolero-slave-internal.h",
+    "linux/qti-regmap-debugfs.h",
+    "linux/proc_fs.h",
+    "linux/thermal.h",
+    "sound/soc.h",
+    "linux/regmap.h",
+    "sound/soc.h",
+    "sound/info.h",
+    "asoc/wcd-irq.h",
+    "wsa883x.h",
+    "wsa883x-registers.h",
+    "linux/debugfs.h",
+    "linux/uaccess.h"
+  ],
+  "function_count": 63,
+  "key_functions": [
+    "codec_debug_dump",
+    "codec_debug_open",
+    "codec_debug_peek_write",
+    "codec_debug_read",
+    "codec_debug_write",
+    "get_parameters",
+    "is_swr_slave_reg_readable",
+    "regdump_read",
+    "swr_slave_reg_show",
+    "wsa883x_clip_handle_irq",
+    "wsa883x_clk_wd_handle_irq",
+    "wsa883x_codec_get_dev_num",
+    "wsa883x_codec_info_create_codec_entry",
+    "wsa883x_codec_init",
+    "wsa883x_codec_probe",
+    "wsa883x_codec_remove",
+    "wsa883x_codec_version_read",
+    "wsa883x_enable_supplies",
+    "wsa883x_enable_swr_dac_port",
+    "wsa883x_event_notify",
+    "wsa883x_ext_int_handle_irq",
+    "wsa883x_get_comp_offset",
+    "wsa883x_get_compander",
+    "wsa883x_get_dev_num",
+    "wsa883x_get_ext_vdd_spk",
+    "wsa883x_get_mute",
+    "wsa883x_get_temperature",
+    "wsa883x_get_visense",
+    "wsa883x_gpio_ctrl",
+    "wsa883x_handle_post_irq",
+    "wsa883x_ocp_handle_irq",
+    "wsa883x_otp_handle_irq",
+    "wsa883x_pa_on_err_handle_irq",
+    "wsa883x_pdm_wd_handle_irq",
+    "wsa883x_proc_read",
+    "wsa883x_put_ext_vdd_spk",
+    "wsa883x_regcache_sync",
+    "wsa883x_saf2war_handle_irq",
+    "wsa883x_set_channel_map",
+    "wsa883x_set_comp_offset",
+    "wsa883x_set_compander",
+    "wsa883x_set_mute",
+    "wsa883x_set_port",
+    "wsa883x_set_visense",
+    "wsa883x_soc_codec_resume",
+    "wsa883x_soc_codec_suspend",
+    "wsa883x_spkr_event",
+    "wsa883x_swr_down",
+    "wsa883x_swr_probe",
+    "wsa883x_swr_remove",
+    "wsa883x_swr_reset",
+    "wsa883x_swr_resume",
+    "wsa883x_swr_suspend",
+    "wsa883x_swr_up",
+    "wsa883x_temp_reg_read",
+    "wsa883x_uvlo_handle_irq",
+    "wsa883x_variant_read",
+    "wsa883x_war2saf_handle_irq",
+    "wsa_dev_mode_get",
+    "wsa_dev_mode_put",
+    "wsa_get_temp",
+    "wsa_pa_gain_get",
+    "wsa_pa_gain_put"
+  ],
+  "architecture": {
+    "bus": "downstream vendor SoundWire slave (swr_device/swr_driver)",
+    "upstream_target": "linux SoundWire sdw_slave/sdw_driver",
+    "regmap": "SoundWire regmap, not MMIO",
+    "power": "regulator supplies, not LPASS power domains",
+    "thermal": "local thermal computation and thermal-zone helper",
+    "pinctrl": "vendor msm-cdc pinctrl for speaker shutdown/reset"
+  },
+  "dapm_topology": {
+    "widget_count": 3,
+    "control_count": 12,
+    "route_count": 2,
+    "dai_count": 3
+  },
+  "register_access": {
+    "wsa_register_symbol_count": 389,
+    "regmap_calls": 10,
+    "component_access_calls": 46
+  },
+  "soundwire_port_configuration": {
+    "swr_port_struct": 2,
+    "connect_calls": 1,
+    "disconnect_calls": 1,
+    "datapath_control_calls": 2
+  },
+  "thermal_sensor_integration": {
+    "local_temp_function": true,
+    "thermal_zone_helper_file": true,
+    "thermal_zone_register_calls": 0
+  },
+  "pinctrl_usage": {
+    "msm_cdc_pinctrl_calls": 3
+  },
+  "power_regulator_model": {
+    "msm_cdc_supply_calls": 7,
+    "regulator_bulk_refs": 1
+  }
+}
