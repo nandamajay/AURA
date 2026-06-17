@@ -1,0 +1,235 @@
+From 177d643652ef59b1dcfd71785e9fbfccfa6e4cb2 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 12:26:53 +0530
+Subject: [PATCH 3/11] ASoC: codecs: lpass-tx-macro: remove lpass-cdc macro
+ framework dependency
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 126 +++++++++---------------------
+ 1 file changed, 36 insertions(+), 90 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 34de7dd..da369fd 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -13,7 +13,6 @@
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+ #include <sound/tlv.h>
+-#include "lpass-cdc.h"
+ /* TX macro registers: localized from downstream lpass-cdc-registers.h */
+ #define CDC_TX0_TX_PATH_CFG0	(0x0404)
+ #define CDC_TX0_TX_PATH_CFG1	(0x0408)
+@@ -240,18 +239,17 @@ static int lpass_cdc_tx_macro_wake_enable(struct lpass_cdc_tx_macro_priv *tx_pri
+ }
+ 
+ static bool lpass_cdc_tx_macro_get_data(struct snd_soc_component *component,
+-			      struct device **tx_dev,
+-			      struct lpass_cdc_tx_macro_priv **tx_priv,
+-			      const char *func_name)
++				      struct device **tx_dev,
++				      struct lpass_cdc_tx_macro_priv **tx_priv,
++				      const char *func_name)
+ {
+-	*tx_dev = lpass_cdc_get_device_ptr(component->dev, TX_MACRO);
+-	if (!(*tx_dev)) {
+-		dev_err_ratelimited(component->dev,
+-			"%s: null device for macro!\n", func_name);
++	if (!component) {
++		pr_err("%s: component is NULL\n", func_name);
+ 		return false;
+ 	}
+ 
+-	*tx_priv = dev_get_drvdata((*tx_dev));
++	*tx_dev = component->dev;
++	*tx_priv = snd_soc_component_get_drvdata(component);
+ 	if (!(*tx_priv)) {
+ 		dev_err_ratelimited(component->dev,
+ 			"%s: priv is null for macro!\n", func_name);
+@@ -383,49 +381,6 @@ static int lpass_cdc_tx_macro_mclk_event(struct snd_soc_dapm_widget *w,
+ 	return ret;
+ }
+ 
+-static int lpass_cdc_tx_macro_event_handler(struct snd_soc_component *component,
+-				u16 event, u32 data)
+-{
+-	struct device *tx_dev = NULL;
+-	struct lpass_cdc_tx_macro_priv *tx_priv = NULL;
+-	int ret = 0;
+-
+-	if (!lpass_cdc_tx_macro_get_data(component, &tx_dev, &tx_priv, __func__))
+-		return -EINVAL;
+-
+-	switch (event) {
+-	case LPASS_CDC_MACRO_EVT_SSR_DOWN:
+-		if ((!pm_runtime_enabled(tx_dev) ||
+-		     !pm_runtime_suspended(tx_dev))) {
+-			ret = lpass_cdc_runtime_suspend(tx_dev);
+-			if (!ret) {
+-				pm_runtime_disable(tx_dev);
+-				pm_runtime_set_suspended(tx_dev);
+-				pm_runtime_enable(tx_dev);
+-			}
+-		}
+-		break;
+-	case LPASS_CDC_MACRO_EVT_SSR_UP:
+-		break;
+-	case LPASS_CDC_MACRO_EVT_CLK_RESET:
+-		lpass_cdc_rsc_clk_reset(tx_dev, TX_CORE_CLK);
+-		break;
+-	case LPASS_CDC_MACRO_EVT_BCS_CLK_OFF:
+-		if (tx_priv->bcs_clk_en)
+-			snd_soc_component_update_bits(component,
+-				CDC_TX0_TX_PATH_SEC7, 0x40, data << 6);
+-		if (data)
+-			tx_priv->hs_slow_insert_complete = true;
+-		else
+-			tx_priv->hs_slow_insert_complete = false;
+-		break;
+-	default:
+-		pr_debug("%s Invalid Event\n", __func__);
+-		break;
+-	}
+-	return 0;
+-}
+-
+ static bool is_amic_enabled(struct snd_soc_component *component, int decimator)
+ {
+ 	u16 adc_mux_reg = 0;
+@@ -2680,14 +2635,8 @@ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+ 		return -EINVAL;
+ 	}
+ 
+-	tx_dev = lpass_cdc_get_device_ptr(component->dev, TX_MACRO);
+-	if (!tx_dev) {
+-		dev_err(component->dev,
+-			"%s: null device for macro!\n", __func__);
+-		return -EINVAL;
+-	}
+-
+-	tx_priv = dev_get_drvdata(tx_dev);
++	tx_dev = component->dev;
++	tx_priv = snd_soc_component_get_drvdata(component);
+ 	if (!tx_priv) {
+ 		dev_err(component->dev,
+ 			"%s: priv is null for macro!\n", __func__);
+@@ -2700,7 +2649,7 @@ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+ 			"%s: snd_soc_dapm_to_card(dapm) is NULL\n", __func__);
+ 		return -EINVAL;
+ 	}
+-	tx_priv->version = lpass_cdc_get_version(tx_dev);
++	tx_priv->version = 0; /* TODO: Patch-07 provides SoC match data */
+ 	ret = snd_soc_dapm_new_controls(dapm, lpass_cdc_tx_macro_dapm_widgets,
+ 				ARRAY_SIZE(lpass_cdc_tx_macro_dapm_widgets));
+ 	if (ret < 0) {
+@@ -2782,23 +2731,14 @@ static int lpass_cdc_tx_macro_deinit(struct snd_soc_component *component)
+ 	return 0;
+ }
+ 
+-static void lpass_cdc_tx_macro_init_ops(struct macro_ops *ops,
+-			       char __iomem *tx_io_base)
+-{
+-	memset(ops, 0, sizeof(struct macro_ops));
+-	ops->init = lpass_cdc_tx_macro_init;
+-	ops->exit = lpass_cdc_tx_macro_deinit;
+-	ops->io_base = tx_io_base;
+-	ops->dai_ptr = lpass_cdc_tx_macro_dai;
+-	ops->num_dais = ARRAY_SIZE(lpass_cdc_tx_macro_dai);
+-	ops->event_handler = lpass_cdc_tx_macro_event_handler;
+-	ops->clk_div_get = lpass_cdc_tx_macro_clk_div_get;
+-	ops->clk_enable = __lpass_cdc_tx_macro_mclk_enable;
+-}
++static const struct snd_soc_component_driver lpass_cdc_tx_macro_component_drv = {
++	.name = "TX MACRO",
++	.probe = lpass_cdc_tx_macro_init,
++	.remove = lpass_cdc_tx_macro_deinit,
++};
+ 
+ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ {
+-	struct macro_ops ops = {0};
+ 	struct lpass_cdc_tx_macro_priv *tx_priv = NULL;
+ 	u32 tx_base_addr = 0, prop_size, *temp;
+ 	char __iomem *tx_io_base = NULL;
+@@ -2806,11 +2746,6 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 
+ 	const char *dmic_clk_div_factor = "qcom,tx-dmic-clk-div-factor";
+ 
+-	if (!lpass_cdc_is_va_macro_registered(&pdev->dev)) {
+-		dev_err(&pdev->dev,
+-			"%s: va-macro not registered yet, defer\n", __func__);
+-		return -EPROBE_DEFER;
+-	}
+ 
+ 	tx_priv = devm_kzalloc(&pdev->dev, sizeof(struct lpass_cdc_tx_macro_priv),
+ 			    GFP_KERNEL);
+@@ -2871,14 +2806,14 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 
+ 	mutex_init(&tx_priv->mclk_lock);
+ 	mutex_init(&tx_priv->wlock);
+-	lpass_cdc_tx_macro_init_ops(&ops, tx_io_base);
+-	ops.clk_id_req = TX_CORE_CLK;
+-	ops.default_clk_id = TX_CORE_CLK;
+-	ret = lpass_cdc_register_macro(&pdev->dev, TX_MACRO, &ops);
++	ret = devm_snd_soc_register_component(&pdev->dev,
++			&lpass_cdc_tx_macro_component_drv,
++			lpass_cdc_tx_macro_dai,
++			ARRAY_SIZE(lpass_cdc_tx_macro_dai));
+ 	if (ret) {
+ 		dev_err(&pdev->dev,
+-			"%s: register macro failed\n", __func__);
+-		goto err_reg_macro;
++			"%s: register component failed\n", __func__);
++		goto err_reg_component;
+ 	}
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, AUTO_SUSPEND_DELAY);
+ 	pm_runtime_use_autosuspend(&pdev->dev);
+@@ -2887,7 +2822,7 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_enable(&pdev->dev);
+ 
+ 	return 0;
+-err_reg_macro:
++err_reg_component:
+ 	mutex_destroy(&tx_priv->mclk_lock);
+ 	mutex_destroy(&tx_priv->wlock);
+ 	return ret;
+@@ -2913,7 +2848,6 @@ static void lpass_cdc_tx_macro_remove(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	mutex_destroy(&tx_priv->mclk_lock);
+ 	mutex_destroy(&tx_priv->wlock);
+-	lpass_cdc_unregister_macro(&pdev->dev, TX_MACRO);
+ exit:
+ 	return;
+ }
+@@ -2924,14 +2858,26 @@ static const struct of_device_id lpass_cdc_tx_macro_dt_match[] = {
+ 	{}
+ };
+ 
++static int tx_macro_runtime_suspend(struct device *dev)
++{
++	/* TODO: Patch-06 provides full implementation */
++	return 0;
++}
++
++static int tx_macro_runtime_resume(struct device *dev)
++{
++	/* TODO: Patch-06 provides full implementation */
++	return 0;
++}
++
+ static const struct dev_pm_ops lpass_cdc_dev_pm_ops = {
+ 	SET_SYSTEM_SLEEP_PM_OPS(
+ 		pm_runtime_force_suspend,
+ 		pm_runtime_force_resume
+ 	)
+ 	SET_RUNTIME_PM_OPS(
+-		lpass_cdc_runtime_suspend,
+-		lpass_cdc_runtime_resume,
++		tx_macro_runtime_suspend,
++		tx_macro_runtime_resume,
+ 		NULL
+ 	)
+ };
+-- 
+2.34.1
+

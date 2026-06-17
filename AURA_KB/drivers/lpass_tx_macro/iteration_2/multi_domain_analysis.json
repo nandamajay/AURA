@@ -1,0 +1,61 @@
+{
+  "artifact_name": "LPASS_TX_MACRO_ITERATION_2_MULTI_DOMAIN_ANALYSIS",
+  "blind_rule": "upstream lpass-tx-macro.c not read until post-generation comparison",
+  "dt_binding": {
+    "compatibles": [
+      "qcom,sc7280-lpass-tx-macro",
+      "qcom,sm6115-lpass-tx-macro",
+      "qcom,sm8250-lpass-tx-macro",
+      "qcom,sm8450-lpass-tx-macro",
+      "qcom,sm8550-lpass-tx-macro",
+      "qcom,sc8280xp-lpass-tx-macro",
+      "qcom,kaanapali-lpass-tx-macro",
+      "qcom,sm8650-lpass-tx-macro",
+      "qcom,sm8750-lpass-tx-macro",
+      "qcom,x1e80100-lpass-tx-macro"
+    ],
+    "clock_names": [
+      "mclk",
+      "npl",
+      "macro",
+      "dcodec",
+      "fsgen depending on compatible"
+    ],
+    "clock_output_names": [
+      "mclk"
+    ],
+    "power_domain_names": [
+      "macro",
+      "dcodec"
+    ],
+    "required": [
+      "compatible",
+      "reg",
+      "#sound-dai-cells"
+    ]
+  },
+  "same_class_va_patterns": {
+    "clock_provider": "VA uses clk_hw gate ops, clock-output-names, devm_clk_hw_register and devm_of_clk_add_hw_provider; TX iteration 2 mirrors this",
+    "soc_data_model": "VA uses per-compatible data and match data; TX table completed for binding compatibles",
+    "regmap": "VA uses devm_platform_ioremap_resource + devm_regmap_init_mmio callbacks; TX iteration 2 adds callback family",
+    "probe_lifecycle": [
+      "match data",
+      "owned regmap",
+      "macro-common PDS",
+      "component registration",
+      "runtime PM",
+      "clock provider registration"
+    ]
+  },
+  "kconfig_makefile": {
+    "config": "SND_SOC_LPASS_TX_MACRO depends COMMON_CLK, selects REGMAP_MMIO and SND_SOC_LPASS_MACRO_COMMON",
+    "makefile": "snd-soc-lpass-tx-macro-y := lpass-tx-macro.o"
+  },
+  "known_gap_mapping": {
+    "Clock PROVIDER": "fixed via clk_hw/devm_of_clk_add_hw_provider",
+    "SoC-data model": "completed compatible table and match-data use",
+    "Register defines/callback pattern": "fixed regmap readable/writeable/volatile callbacks; symbolic define exactness still not byte-identical",
+    "Regmap ownership": "devm_platform_ioremap_resource + devm_regmap_init_mmio",
+    "DAPM topology": "route density reduced from 202 to 138 while preserving TX decimator topology"
+  }
+}

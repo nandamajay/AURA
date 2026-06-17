@@ -1,0 +1,234 @@
+From 9f478376d7671c92520c33bfc0204f8c874f98c5 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 17:19:44 +0530
+Subject: [PATCH 10/11] ASoC: codecs: lpass-tx-macro: add clock provider and
+ complete match data
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 117 ++++++++++++++++++++++++++++++
+ 1 file changed, 117 insertions(+)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index acf4d47..98c6221 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -6,7 +6,10 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/clk.h>
++#include <linux/clk-provider.h>
++#include <linux/of_clk.h>
+ #include <linux/io.h>
++#include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/pm_runtime.h>
+@@ -216,7 +219,9 @@ struct tx_macro_priv {
+ 	struct clk *macro;
+ 	struct clk *dcodec;
+ 	struct clk *mclk;
++	struct clk *npl;
+ 	struct clk *fsgen;
++	struct clk_hw hw;
+ 	struct platform_device *pdev_child_devices
+ 			[TX_MACRO_CHILD_DEVICES_MAX];
+ 	int child_count;
+@@ -235,6 +240,26 @@ struct tx_macro_priv {
+ 	u32 tuning_reg_values[MAX_TUNING_REG_VALUE_PAIRS];
+ };
+ 
++static bool tx_macro_is_rw_register(struct device *dev, unsigned int reg)
++{
++	return reg <= TX_MACRO_MAX_OFFSET;
++}
++
++static bool tx_macro_is_readable_register(struct device *dev, unsigned int reg)
++{
++	return tx_macro_is_rw_register(dev, reg);
++}
++
++static bool tx_macro_is_volatile_register(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case CDC_TX_TOP_CSR_SWR_CTRL:
++		return true;
++	default:
++		return false;
++	}
++}
++
+ static const struct regmap_config tx_macro_regmap_config = {
+ 	.name = "tx_macro",
+ 	.reg_bits = 32,
+@@ -242,6 +267,9 @@ static const struct regmap_config tx_macro_regmap_config = {
+ 	.reg_stride = 4,
+ 	.cache_type = REGCACHE_FLAT,
+ 	.max_register = TX_MACRO_MAX_OFFSET,
++	.readable_reg = tx_macro_is_readable_register,
++	.writeable_reg = tx_macro_is_rw_register,
++	.volatile_reg = tx_macro_is_volatile_register,
+ };
+ 
+ static int tx_macro_wake_enable(struct tx_macro_priv *tx_priv,
+@@ -324,6 +352,10 @@ static int tx_macro_mclk_enable(
+ 			if (ret)
+ 				goto err_mclk;
+ 
++			ret = clk_prepare_enable(tx_priv->npl);
++			if (ret)
++				goto err_npl;
++
+ 			ret = clk_prepare_enable(tx_priv->fsgen);
+ 			if (ret)
+ 				goto err_fsgen;
+@@ -354,6 +386,7 @@ static int tx_macro_mclk_enable(
+ 					CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
+ 					0x01, 0x00);
+ 			clk_disable_unprepare(tx_priv->fsgen);
++			clk_disable_unprepare(tx_priv->npl);
+ 			clk_disable_unprepare(tx_priv->mclk);
+ 			clk_disable_unprepare(tx_priv->dcodec);
+ 			clk_disable_unprepare(tx_priv->macro);
+@@ -365,8 +398,12 @@ exit:
+ 	return ret;
+ 
+ err_fsgen:
++	clk_disable_unprepare(tx_priv->npl);
++err_npl:
+ 	clk_disable_unprepare(tx_priv->mclk);
+ err_mclk:
++	clk_disable_unprepare(tx_priv->npl);
++err_npl:
+ 	clk_disable_unprepare(tx_priv->dcodec);
+ err_dcodec:
+ 	clk_disable_unprepare(tx_priv->macro);
+@@ -2294,6 +2331,65 @@ static int tx_macro_deinit(struct snd_soc_component *component)
+ 	return 0;
+ }
+ 
++#define to_tx_macro(_hw) container_of(_hw, struct tx_macro_priv, hw)
++
++static int tx_fsgen_gate_enable(struct clk_hw *hw)
++{
++	struct tx_macro_priv *tx = to_tx_macro(hw);
++
++	return tx_macro_mclk_enable(tx, true);
++}
++
++static void tx_fsgen_gate_disable(struct clk_hw *hw)
++{
++	struct tx_macro_priv *tx = to_tx_macro(hw);
++
++	tx_macro_mclk_enable(tx, false);
++}
++
++static int tx_fsgen_gate_is_enabled(struct clk_hw *hw)
++{
++	struct tx_macro_priv *tx = to_tx_macro(hw);
++	unsigned int val;
++
++	regmap_read(tx->regmap, CDC_TX_CLK_RST_CTRL_MCLK_CONTROL, &val);
++	return val & 0x01;
++}
++
++static unsigned long tx_fsgen_recalc_rate(struct clk_hw *hw,
++					  unsigned long parent_rate)
++{
++	return parent_rate;
++}
++
++static const struct clk_ops tx_fsgen_gate_ops = {
++	.prepare = tx_fsgen_gate_enable,
++	.unprepare = tx_fsgen_gate_disable,
++	.is_enabled = tx_fsgen_gate_is_enabled,
++	.recalc_rate = tx_fsgen_recalc_rate,
++};
++
++static int tx_macro_register_fsgen_output(struct tx_macro_priv *tx)
++{
++	struct device *dev = tx->dev;
++	struct device_node *np = dev->of_node;
++	const char *parent_clk_name;
++	const char *clk_name = "mclk";
++	struct clk_init_data init = {};
++
++	parent_clk_name = __clk_get_name(tx->mclk);
++	of_property_read_string(np, "clock-output-names", &clk_name);
++	init.name = clk_name;
++	init.ops = &tx_fsgen_gate_ops;
++	init.parent_names = &parent_clk_name;
++	init.num_parents = 1;
++	tx->hw.init = &init;
++
++	return devm_clk_hw_register(dev, &tx->hw) ?: devm_of_clk_add_hw_provider(dev,
++								 of_clk_hw_simple_get,
++								 &tx->hw);
++}
++
+ static const struct snd_soc_component_driver tx_macro_component_drv = {
+ 	.name = "TX MACRO",
+ 	.probe = tx_macro_init,
+@@ -2345,6 +2441,10 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 	if (IS_ERR(tx_priv->mclk))
+ 		return PTR_ERR(tx_priv->mclk);
+ 
++	tx_priv->npl = devm_clk_get_optional(&pdev->dev, "npl");
++	if (IS_ERR(tx_priv->npl))
++		return PTR_ERR(tx_priv->npl);
++
+ 	tx_priv->fsgen = devm_clk_get_optional(&pdev->dev, "fsgen");
+ 	if (IS_ERR(tx_priv->fsgen))
+ 		return PTR_ERR(tx_priv->fsgen);
+@@ -2375,6 +2475,10 @@ static int tx_macro_probe(struct platform_device *pdev)
+ 	pm_suspend_ignore_children(&pdev->dev, true);
+ 	pm_runtime_enable(&pdev->dev);
+ 
++	ret = tx_macro_register_fsgen_output(tx_priv);
++	if (ret)
++		goto err_component;
++
+ 	return 0;
+ err_component:
+ 	mutex_destroy(&tx_priv->mclk_lock);
+@@ -2436,11 +2540,19 @@ static const struct tx_macro_data sm8550_tx_macro_data = {
+ };
+ 
+ static const struct of_device_id tx_macro_dt_match[] = {
++	{ .compatible = "qcom,sc7280-lpass-tx-macro", .data = &sm8250_tx_macro_data },
++	{ .compatible = "qcom,sm6115-lpass-tx-macro", .data = &sm8450_tx_macro_data },
+ 	{ .compatible = "qcom,sm8250-lpass-tx-macro", .data = &sm8250_tx_macro_data },
+ 	{ .compatible = "qcom,sm8450-lpass-tx-macro", .data = &sm8450_tx_macro_data },
+ 	{ .compatible = "qcom,sm8550-lpass-tx-macro", .data = &sm8550_tx_macro_data },
++	{ .compatible = "qcom,sc8280xp-lpass-tx-macro", .data = &sm8250_tx_macro_data },
++	{ .compatible = "qcom,kaanapali-lpass-tx-macro", .data = &sm8550_tx_macro_data },
++	{ .compatible = "qcom,sm8650-lpass-tx-macro", .data = &sm8550_tx_macro_data },
++	{ .compatible = "qcom,sm8750-lpass-tx-macro", .data = &sm8550_tx_macro_data },
++	{ .compatible = "qcom,x1e80100-lpass-tx-macro", .data = &sm8550_tx_macro_data },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, tx_macro_dt_match);
+ 
+ static int tx_macro_runtime_suspend(struct device *dev)
+ {
+@@ -2452,6 +2564,7 @@ static int tx_macro_runtime_suspend(struct device *dev)
+ 	regcache_cache_only(tx_priv->regmap, true);
+ 	regcache_mark_dirty(tx_priv->regmap);
+ 	clk_disable_unprepare(tx_priv->fsgen);
++	clk_disable_unprepare(tx_priv->npl);
+ 	clk_disable_unprepare(tx_priv->mclk);
+ 	clk_disable_unprepare(tx_priv->dcodec);
+ 	clk_disable_unprepare(tx_priv->macro);
+@@ -2479,6 +2592,10 @@ static int tx_macro_runtime_resume(struct device *dev)
+ 	if (ret)
+ 		goto err_mclk;
+ 
++	ret = clk_prepare_enable(tx_priv->npl);
++	if (ret)
++		goto err_npl;
++
+ 	ret = clk_prepare_enable(tx_priv->fsgen);
+ 	if (ret)
+ 		goto err_fsgen;
+-- 
+2.34.1
+

@@ -1,0 +1,110 @@
+From bc83c197d443ae126681f0669cb5c5ac157569c6 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 12:32:05 +0530
+Subject: [PATCH 7/11] ASoC: codecs: lpass-tx-macro: add blind SoC data model
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 58 +++++++++++++++++++++++++++++--
+ 1 file changed, 56 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 4815c6d..bb20f9d 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -181,6 +181,17 @@ struct hpf_work {
+ 	struct delayed_work dwork;
+ };
+ 
++struct tx_macro_data {
++	u32 version;
++	bool has_bolero_2p85_features;
++	bool has_bolero_4p0_features;
++	bool has_swr_dmic;
++	bool has_hpf_adapt;
++	bool has_bcs;
++};
++
++static const struct tx_macro_data tx_macro_legacy_data;
++
+ struct lpass_cdc_tx_macro_priv {
+ 	struct device *dev;
+ 	bool dec_active[NUM_DECIMATORS];
+@@ -199,6 +210,7 @@ struct lpass_cdc_tx_macro_priv {
+ 	void __iomem *base;
+ 	struct regmap *regmap;
+ 	struct lpass_macro *pds;
++	const struct tx_macro_data *data;
+ 	struct clk *macro;
+ 	struct clk *dcodec;
+ 	struct clk *mclk;
+@@ -2690,7 +2702,7 @@ static int lpass_cdc_tx_macro_init(struct snd_soc_component *component)
+ 			"%s: snd_soc_dapm_to_card(dapm) is NULL\n", __func__);
+ 		return -EINVAL;
+ 	}
+-	tx_priv->version = 0; /* TODO: Patch-07 provides SoC match data */
++	tx_priv->version = tx_priv->data ? tx_priv->data->version : 0
+ 	ret = snd_soc_dapm_new_controls(dapm, lpass_cdc_tx_macro_dapm_widgets,
+ 				ARRAY_SIZE(lpass_cdc_tx_macro_dapm_widgets));
+ 	if (ret < 0) {
+@@ -2796,6 +2808,9 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 
+ 	tx_priv->dev = &pdev->dev;
+ 	dev_set_drvdata(&pdev->dev, tx_priv);
++	tx_priv->data = of_device_get_match_data(&pdev->dev);
++	if (!tx_priv->data)
++		tx_priv->data = &tx_macro_legacy_data;
+ 
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+@@ -2911,8 +2926,47 @@ exit:
+ }
+ 
+ 
++static const struct tx_macro_data tx_macro_legacy_data = {
++	.version = 0,
++	.has_bolero_2p85_features = true,
++	.has_bolero_4p0_features = true,
++	.has_swr_dmic = true,
++	.has_hpf_adapt = true,
++	.has_bcs = true,
++};
++
++static const struct tx_macro_data sm8250_tx_macro_data = {
++	.version = 0x02080005,
++	.has_bolero_2p85_features = true,
++	.has_bolero_4p0_features = false,
++	.has_swr_dmic = true,
++	.has_hpf_adapt = true,
++	.has_bcs = true,
++};
++
++static const struct tx_macro_data sm8450_tx_macro_data = {
++	.version = 0x04000000,
++	.has_bolero_2p85_features = true,
++	.has_bolero_4p0_features = true,
++	.has_swr_dmic = true,
++	.has_hpf_adapt = true,
++	.has_bcs = true,
++};
++
++static const struct tx_macro_data sm8550_tx_macro_data = {
++	.version = 0x04000000,
++	.has_bolero_2p85_features = true,
++	.has_bolero_4p0_features = true,
++	.has_swr_dmic = true,
++	.has_hpf_adapt = true,
++	.has_bcs = true,
++};
++
+ static const struct of_device_id lpass_cdc_tx_macro_dt_match[] = {
+-	{.compatible = "qcom,lpass-cdc-tx-macro"},
++	{ .compatible = "qcom,sm8250-lpass-tx-macro", .data = &sm8250_tx_macro_data },
++	{ .compatible = "qcom,sm8450-lpass-tx-macro", .data = &sm8450_tx_macro_data },
++	{ .compatible = "qcom,sm8550-lpass-tx-macro", .data = &sm8550_tx_macro_data },
++	{ .compatible = "qcom,lpass-cdc-tx-macro", .data = &tx_macro_legacy_data },
+ 	{}
+ };
+ 
+-- 
+2.34.1
+

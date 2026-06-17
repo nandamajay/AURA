@@ -1,0 +1,39 @@
+{
+  "artifact_name": "LPASS_TX_MACRO_ITERATION_2_DT_AWARE_CONVERSION_PLAN",
+  "patch_count": 11,
+  "dt_property_to_probe_map": [
+    {
+      "property": "compatible",
+      "implementation": "tx_macro_dt_match with struct tx_macro_data",
+      "status": "implemented"
+    },
+    {
+      "property": "reg",
+      "implementation": "devm_platform_ioremap_resource + devm_regmap_init_mmio",
+      "status": "implemented"
+    },
+    {
+      "property": "clock-names/clocks",
+      "implementation": "devm_clk_get_optional/devm_clk_get for macro,dcodec,mclk,npl,fsgen",
+      "status": "implemented"
+    },
+    {
+      "property": "clock-output-names/#clock-cells",
+      "implementation": "clk_hw provider registered via devm_of_clk_add_hw_provider",
+      "status": "implemented"
+    },
+    {
+      "property": "power-domain-names",
+      "implementation": "lpass_macro_pds_init/exit",
+      "status": "implemented"
+    }
+  ],
+  "clock_provider_registration_plan": "VA-derived clk_hw gate ops and devm_of_clk_add_hw_provider; implemented as TX clock output provider",
+  "soc_data_model": "struct tx_macro_data with binding-compatible of_device_id entries",
+  "regmap_ownership": "devm_platform_ioremap_resource + devm_regmap_init_mmio + callbacks",
+  "dapm_topology_target": "reduce downstream-only SWR route fanout while preserving TX decimator topology",
+  "kconfig_makefile_fragments": {
+    "config": "SND_SOC_LPASS_TX_MACRO depends COMMON_CLK, selects REGMAP_MMIO and SND_SOC_LPASS_MACRO_COMMON",
+    "makefile": "snd-soc-lpass-tx-macro-y := lpass-tx-macro.o"
+  }
+}

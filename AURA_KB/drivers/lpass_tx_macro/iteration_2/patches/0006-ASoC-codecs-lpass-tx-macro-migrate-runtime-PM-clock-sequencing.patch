@@ -1,0 +1,268 @@
+From afb89e1cb2471a00d18015b21188f480dd3142cc Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 12:30:45 +0530
+Subject: [PATCH 6/11] ASoC: codecs: lpass-tx-macro: migrate runtime PM and
+ clock sequencing
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 179 ++++++++++++++++++++++--------
+ 1 file changed, 135 insertions(+), 44 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 0ec24aa..4815c6d 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -66,7 +66,6 @@
+ #define CDC_TX_TOP_CSR_SWR_MIC0_CTL	(0x00D0)
+ #define CDC_TX_TOP_CSR_SWR_MIC1_CTL	(0x00D4)
+ #define CDC_TX_TOP_CSR_SWR_MIC2_CTL	(0x00C0)
+-#include "lpass-cdc-clk-rsc.h"
+ #include "lpass-macro-common.h"
+ 
+ #define AUTO_SUSPEND_DELAY  50 /* delay in msec */
+@@ -200,6 +199,10 @@ struct lpass_cdc_tx_macro_priv {
+ 	void __iomem *base;
+ 	struct regmap *regmap;
+ 	struct lpass_macro *pds;
++	struct clk *macro;
++	struct clk *dcodec;
++	struct clk *mclk;
++	struct clk *fsgen;
+ 	struct platform_device *pdev_child_devices
+ 			[LPASS_CDC_TX_MACRO_CHILD_DEVICES_MAX];
+ 	int child_count;
+@@ -279,8 +282,8 @@ static bool lpass_cdc_tx_macro_get_data(struct snd_soc_component *component,
+ }
+ 
+ static int lpass_cdc_tx_macro_mclk_enable(
+-				struct lpass_cdc_tx_macro_priv *tx_priv,
+-				bool mclk_enable)
++					struct lpass_cdc_tx_macro_priv *tx_priv,
++					bool mclk_enable)
+ {
+ 	struct regmap *regmap = tx_priv->regmap;
+ 	int ret = 0;
+@@ -295,58 +298,83 @@ static int lpass_cdc_tx_macro_mclk_enable(
+ 
+ 	mutex_lock(&tx_priv->mclk_lock);
+ 	if (mclk_enable) {
+-		ret = lpass_cdc_clk_rsc_request_clock(tx_priv->dev,
+-						TX_CORE_CLK,
+-						TX_CORE_CLK,
+-						true);
+-		if (ret < 0) {
+-			dev_err_ratelimited(tx_priv->dev,
+-				"%s: request clock enable failed\n",
+-				__func__);
+-			goto exit;
+-		}
+-		lpass_cdc_clk_rsc_fs_gen_request(tx_priv->dev,
+-					true);
+-		regcache_mark_dirty(regmap);
+-		regcache_sync_region(regmap,
+-				0,
+-					LPASS_CDC_TX_MACRO_MAX_OFFSET);
+-		if (tx_priv->tx_mclk_users == 0) {
++		if (tx_priv->tx_mclk_users++ == 0) {
++			ret = clk_prepare_enable(tx_priv->macro);
++			if (ret)
++				goto err_macro;
++
++			ret = clk_prepare_enable(tx_priv->dcodec);
++			if (ret)
++				goto err_dcodec;
++
++			ret = clk_prepare_enable(tx_priv->mclk);
++			if (ret)
++				goto err_mclk;
++
++			ret = clk_prepare_enable(tx_priv->fsgen);
++			if (ret)
++				goto err_fsgen;
++
++			regcache_mark_dirty(regmap);
++			regcache_sync_region(regmap, 0,
++					     LPASS_CDC_TX_MACRO_MAX_OFFSET);
+ 			regmap_update_bits(regmap,
+-				CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
+-				0x01, 0x01);
++					CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
++					0x01, 0x01);
+ 			regmap_update_bits(regmap,
+-				CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
+-				0x01, 0x01);
++					CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
++					0x01, 0x01);
+ 		}
+-		tx_priv->tx_mclk_users++;
+ 	} else {
+ 		if (tx_priv->tx_mclk_users <= 0) {
+-			dev_err_ratelimited(tx_priv->dev, "%s: clock already disabled\n",
+-				__func__);
++			dev_err_ratelimited(tx_priv->dev,
++				"%s: clock already disabled\n", __func__);
+ 			tx_priv->tx_mclk_users = 0;
+ 			goto exit;
+ 		}
+-		tx_priv->tx_mclk_users--;
+-		if (tx_priv->tx_mclk_users == 0) {
++
++		if (--tx_priv->tx_mclk_users == 0) {
+ 			regmap_update_bits(regmap,
+-				CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
+-				0x01, 0x00);
++					CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL,
++					0x01, 0x00);
+ 			regmap_update_bits(regmap,
+-				CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
+-				0x01, 0x00);
++					CDC_TX_CLK_RST_CTRL_MCLK_CONTROL,
++					0x01, 0x00);
++			clk_disable_unprepare(tx_priv->fsgen);
++			clk_disable_unprepare(tx_priv->mclk);
++			clk_disable_unprepare(tx_priv->dcodec);
++			clk_disable_unprepare(tx_priv->macro);
+ 		}
+-
+-		lpass_cdc_clk_rsc_fs_gen_request(tx_priv->dev,
+-				false);
+-		lpass_cdc_clk_rsc_request_clock(tx_priv->dev,
+-				 TX_CORE_CLK,
+-				 TX_CORE_CLK,
+-				 false);
+ 	}
++
+ exit:
+ 	mutex_unlock(&tx_priv->mclk_lock);
+ 	return ret;
++
++err_fsgen:
++	clk_disable_unprepare(tx_priv->mclk);
++err_mclk:
++	clk_disable_unprepare(tx_priv->dcodec);
++err_dcodec:
++	clk_disable_unprepare(tx_priv->macro);
++err_macro:
++	tx_priv->tx_mclk_users--;
++	goto exit;
++}
++
++static int tx_macro_dmic_clk_enable(struct snd_soc_component *component,
++				    int dmic, int clk_id, bool enable)
++{
++	struct device *tx_dev = NULL;
++	struct lpass_cdc_tx_macro_priv *tx_priv = NULL;
++
++	dev_dbg(component->dev, "%s: dmic %d clk_id %d enable %d\n",
++		__func__, dmic, clk_id, enable);
++
++	if (!lpass_cdc_tx_macro_get_data(component, &tx_dev, &tx_priv, __func__))
++		return -EINVAL;
++
++	return lpass_cdc_tx_macro_mclk_enable(tx_priv, enable);
+ }
+ 
+ static int __lpass_cdc_tx_macro_mclk_enable(struct snd_soc_component *component,
+@@ -1032,10 +1060,10 @@ static int lpass_cdc_tx_macro_enable_dmic(struct snd_soc_dapm_widget *w,
+ 
+ 	switch (event) {
+ 	case SND_SOC_DAPM_PRE_PMU:
+-		lpass_cdc_dmic_clk_enable(component, dmic, DMIC_TX, true);
++		tx_macro_dmic_clk_enable(component, dmic, DMIC_TX, true);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+-		lpass_cdc_dmic_clk_enable(component, dmic, DMIC_TX, false);
++		tx_macro_dmic_clk_enable(component, dmic, DMIC_TX, false);
+ 		break;
+ 	}
+ 
+@@ -2782,6 +2810,22 @@ static int lpass_cdc_tx_macro_probe(struct platform_device *pdev)
+ 	tx_priv->pds = lpass_macro_pds_init(&pdev->dev);
+ 	if (IS_ERR(tx_priv->pds))
+ 		return PTR_ERR(tx_priv->pds);
++
++	tx_priv->macro = devm_clk_get_optional(&pdev->dev, "macro");
++	if (IS_ERR(tx_priv->macro))
++		return PTR_ERR(tx_priv->macro);
++
++	tx_priv->dcodec = devm_clk_get_optional(&pdev->dev, "dcodec");
++	if (IS_ERR(tx_priv->dcodec))
++		return PTR_ERR(tx_priv->dcodec);
++
++	tx_priv->mclk = devm_clk_get_optional(&pdev->dev, "mclk");
++	if (IS_ERR(tx_priv->mclk))
++		return PTR_ERR(tx_priv->mclk);
++
++	tx_priv->fsgen = devm_clk_get_optional(&pdev->dev, "fsgen");
++	if (IS_ERR(tx_priv->fsgen))
++		return PTR_ERR(tx_priv->fsgen);
+ 	tx_priv->swr_dmic_enable = false;
+ 	tx_priv->swr_dmic_gain_disable = false;
+ 	tx_priv->wlock_holders = 0;
+@@ -2874,14 +2918,61 @@ static const struct of_device_id lpass_cdc_tx_macro_dt_match[] = {
+ 
+ static int tx_macro_runtime_suspend(struct device *dev)
+ {
+-	/* TODO: Patch-06 provides full implementation */
++	struct lpass_cdc_tx_macro_priv *tx_priv = dev_get_drvdata(dev);
++
++	if (!tx_priv || !tx_priv->regmap)
++		return 0;
++
++	regcache_cache_only(tx_priv->regmap, true);
++	regcache_mark_dirty(tx_priv->regmap);
++	clk_disable_unprepare(tx_priv->fsgen);
++	clk_disable_unprepare(tx_priv->mclk);
++	clk_disable_unprepare(tx_priv->dcodec);
++	clk_disable_unprepare(tx_priv->macro);
++
+ 	return 0;
+ }
+ 
+ static int tx_macro_runtime_resume(struct device *dev)
+ {
+-	/* TODO: Patch-06 provides full implementation */
++	struct lpass_cdc_tx_macro_priv *tx_priv = dev_get_drvdata(dev);
++	int ret;
++
++	if (!tx_priv || !tx_priv->regmap)
++		return 0;
++
++	ret = clk_prepare_enable(tx_priv->macro);
++	if (ret)
++		return ret;
++
++	ret = clk_prepare_enable(tx_priv->dcodec);
++	if (ret)
++		goto err_dcodec;
++
++	ret = clk_prepare_enable(tx_priv->mclk);
++	if (ret)
++		goto err_mclk;
++
++	ret = clk_prepare_enable(tx_priv->fsgen);
++	if (ret)
++		goto err_fsgen;
++
++	regcache_cache_only(tx_priv->regmap, false);
++	ret = regcache_sync(tx_priv->regmap);
++	if (ret)
++		goto err_sync;
++
+ 	return 0;
++
++err_sync:
++	clk_disable_unprepare(tx_priv->fsgen);
++err_fsgen:
++	clk_disable_unprepare(tx_priv->mclk);
++err_mclk:
++	clk_disable_unprepare(tx_priv->dcodec);
++err_dcodec:
++	clk_disable_unprepare(tx_priv->macro);
++	return ret;
+ }
+ 
+ static const struct dev_pm_ops lpass_cdc_dev_pm_ops = {
+-- 
+2.34.1
+

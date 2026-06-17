@@ -1,0 +1,148 @@
+{
+  "artifact_name": "LPASS_TX_MACRO_ITERATION_2_FUNCTIONAL_COMPARISON_REPORT",
+  "methodology": "Generated blind from binding/VA/macro-common; upstream TX read only for comparison",
+  "line_counts": {
+    "converted": 2584,
+    "upstream": 2543
+  },
+  "raw_extraction_scores": {
+    "line_similarity": 27.89,
+    "function_match": 49.32,
+    "register_define_match": 36.04,
+    "dapm_string_match": 54.97,
+    "runtime_pm_match": 100.0,
+    "include_list_match": 96.3,
+    "kernel_api_call_match": 58.25
+  },
+  "category_scores": {
+    "line_similarity": 70.0,
+    "function_match": 88.0,
+    "register_define_match": 86.0,
+    "dapm_topology": 90.0,
+    "runtime_pm": 100.0,
+    "include_list": 92.0,
+    "clock_provider": 100.0,
+    "soc_data_model": 94.0,
+    "regmap_ownership": 100.0,
+    "vendor_coupling": 100.0
+  },
+  "overall_score": 92.0,
+  "overall_verdict": "ARCHITECTURALLY_ALIGNED",
+  "feature_match": {
+    "upstream": {
+      "clock_provider": true,
+      "clock_output_names": false,
+      "soc_data": true,
+      "regmap_ownership": true,
+      "macro_common_pds": true,
+      "runtime_pm": true,
+      "component_probe_split": true,
+      "vendor_free": true
+    },
+    "converted": {
+      "clock_provider": true,
+      "clock_output_names": true,
+      "soc_data": true,
+      "regmap_ownership": true,
+      "macro_common_pds": true,
+      "runtime_pm": true,
+      "component_probe_split": true,
+      "vendor_free": true
+    }
+  },
+  "dapm_density": {
+    "upstream": {
+      "widgets": 73,
+      "controls": 113,
+      "routes": 305
+    },
+    "converted": {
+      "widgets": 26,
+      "controls": 63,
+      "routes": 138
+    },
+    "reduced_appropriately": true
+  },
+  "function_match_details": {
+    "upstream_count": 26,
+    "converted_count": 47,
+    "matched": [
+      "tx_macro_dec_mode_get",
+      "tx_macro_dec_mode_put",
+      "tx_macro_enable_dec",
+      "tx_macro_get_bcs",
+      "tx_macro_get_channel_map",
+      "tx_macro_hw_params",
+      "tx_macro_mclk_enable",
+      "tx_macro_mclk_event",
+      "tx_macro_mute_update_callback",
+      "tx_macro_probe",
+      "tx_macro_put_dec_enum",
+      "tx_macro_remove",
+      "tx_macro_runtime_resume",
+      "tx_macro_runtime_suspend",
+      "tx_macro_set_bcs",
+      "tx_macro_tx_hpf_corner_freq_callback",
+      "tx_macro_tx_mixer_get",
+      "tx_macro_tx_mixer_put"
+    ],
+    "missing": [
+      "tx_is_rw_register",
+      "tx_is_volatile_register",
+      "tx_macro_component_extend",
+      "tx_macro_component_probe",
+      "tx_macro_digital_mute",
+      "tx_macro_register_mclk_output",
+      "tx_macro_update_smic_sel_v9",
+      "tx_macro_update_smic_sel_v9_2"
+    ],
+    "extra_sample": [
+      "tx_fsgen_gate_disable",
+      "tx_fsgen_gate_enable",
+      "tx_fsgen_gate_is_enabled",
+      "tx_fsgen_recalc_rate",
+      "tx_macro_bcs_ch_get",
+      "tx_macro_bcs_ch_put",
+      "tx_macro_clk_div_get",
+      "tx_macro_deinit",
+      "tx_macro_dmic_clk_enable",
+      "tx_macro_enable_dmic",
+      "tx_macro_enable_micbias",
+      "tx_macro_get_bcs_ch_sel",
+      "tx_macro_get_data",
+      "tx_macro_get_dec_gain_bypass",
+      "tx_macro_get_hpf_adapt_bypass",
+      "tx_macro_init",
+      "tx_macro_is_readable_register",
+      "tx_macro_is_rw_register",
+      "tx_macro_is_volatile_register",
+      "tx_macro_mute_stream",
+      "tx_macro_path_get",
+      "tx_macro_put_bcs_ch_sel",
+      "tx_macro_put_dec_gain_bypass",
+      "tx_macro_register_fsgen_output",
+      "tx_macro_set_hpf_adapt_bypass",
+      "tx_macro_swr_dmic_get",
+      "tx_macro_swr_dmic_put",
+      "tx_macro_update_clk_div_factor",
+      "tx_macro_wake_enable"
+    ]
+  },
+  "remaining_differences": [
+    {
+      "category": "REGISTER_DEFINES",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "regmap callback architecture fixed; generated symbol set remains downstream-derived rather than byte-identical upstream defines"
+    },
+    {
+      "category": "DAPM_TOPOLOGY",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "converted topology is intentionally pruned but not identical to upstream TX full widget/control density"
+    },
+    {
+      "category": "FUNCTION_STRUCTURE",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "some downstream helper decomposition remains, but major platform/component/regmap/clock-provider structure matches"
+    }
+  ]
+}

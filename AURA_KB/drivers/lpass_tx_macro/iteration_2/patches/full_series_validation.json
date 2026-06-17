@@ -1,0 +1,45 @@
+{
+  "artifact_name": "LPASS_TX_MACRO_ITERATION_2_SERIES_VALIDATION",
+  "classification": "PASS",
+  "series_apply": "PASS",
+  "predicted_patch_count": 11,
+  "actual_patch_count": 11,
+  "applied_patches": [
+    "0001-ASoC-codecs-lpass-tx-macro-isolate-register-name-migration.patch",
+    "0002-ASoC-codecs-lpass-tx-macro-drop-version-and-unused-pinctrl-paths.patch",
+    "0003-ASoC-codecs-lpass-tx-macro-remove-lpass-cdc-framework.patch",
+    "0004-ASoC-codecs-lpass-tx-macro-own-MMIO-regmap-in-probe.patch",
+    "0005-ASoC-codecs-lpass-tx-macro-integrate-lpass-macro-common-power-domains.patch",
+    "0006-ASoC-codecs-lpass-tx-macro-migrate-runtime-PM-clock-sequencing.patch",
+    "0007-ASoC-codecs-lpass-tx-macro-add-blind-SoC-data-model.patch",
+    "0008-ASoC-codecs-lpass-tx-macro-reduce-downstream-DAPM-topology.patch",
+    "0009-ASoC-codecs-lpass-tx-macro-remove-residual-downstream-symbols.patch",
+    "0010-ASoC-codecs-lpass-tx-macro-add-clock-provider-and-complete-match-data.patch",
+    "0011-ASoC-codecs-lpass-tx-macro-reduce-downstream-only-route-density.patch"
+  ],
+  "banned_symbol_count": 0,
+  "banned_symbol_survivors": [],
+  "pattern_fixes_present": {
+    "clock_provider": true,
+    "clock_output_names": true,
+    "soc_data": true,
+    "regmap_ownership": true,
+    "macro_common_pds": true,
+    "runtime_pm": true,
+    "component_probe_split": true,
+    "vendor_free": true
+  },
+  "dapm_counts": {
+    "converted": {
+      "widgets": 26,
+      "controls": 63,
+      "routes": 138
+    },
+    "upstream": {
+      "widgets": 73,
+      "controls": 113,
+      "routes": 305
+    }
+  },
+  "fail_closed_reasons": []
+}

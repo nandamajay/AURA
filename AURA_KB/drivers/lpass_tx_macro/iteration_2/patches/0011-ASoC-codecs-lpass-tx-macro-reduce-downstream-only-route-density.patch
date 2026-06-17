@@ -1,0 +1,137 @@
+From 20b656658ef1f97d39a15c800113cde8813dae92 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 17:20:05 +0530
+Subject: [PATCH 11/11] ASoC: codecs: lpass-tx-macro: reduce downstream-only
+ route density
+
+---
+ sound/soc/codecs/lpass-tx-macro.c | 64 -------------------------------
+ 1 file changed, 64 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+index 98c6221..aa41888 100644
+--- a/sound/soc/codecs/lpass-tx-macro.c
++++ b/sound/soc/codecs/lpass-tx-macro.c
+@@ -1914,14 +1914,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX0", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX0", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX0", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX0", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC1 MUX", "MSM_DMIC", "TX DMIC MUX1"},
+ 	{"TX DMIC MUX1", "DMIC0", "TX DMIC0"},
+@@ -1938,14 +1930,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX1", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX1", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX1", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX1", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC2 MUX", "MSM_DMIC", "TX DMIC MUX2"},
+ 	{"TX DMIC MUX2", "DMIC0", "TX DMIC0"},
+@@ -1962,14 +1946,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX2", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX2", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX2", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX2", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC3 MUX", "MSM_DMIC", "TX DMIC MUX3"},
+ 	{"TX DMIC MUX3", "DMIC0", "TX DMIC0"},
+@@ -1986,14 +1962,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX3", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX3", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX3", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX3", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC4 MUX", "MSM_DMIC", "TX DMIC MUX4"},
+ 	{"TX DMIC MUX4", "DMIC0", "TX DMIC0"},
+@@ -2010,14 +1978,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX4", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX4", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX4", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX4", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC5 MUX", "MSM_DMIC", "TX DMIC MUX5"},
+ 	{"TX DMIC MUX5", "DMIC0", "TX DMIC0"},
+@@ -2034,14 +1994,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX5", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX5", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX5", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX5", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC6 MUX", "MSM_DMIC", "TX DMIC MUX6"},
+ 	{"TX DMIC MUX6", "DMIC0", "TX DMIC0"},
+@@ -2058,14 +2010,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX6", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX6", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX6", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX6", "SWR_MIC11", "TX SWR_INPUT"},
+ 
+ 	{"TX DEC7 MUX", "MSM_DMIC", "TX DMIC MUX7"},
+ 	{"TX DMIC MUX7", "DMIC0", "TX DMIC0"},
+@@ -2082,14 +2026,6 @@ static const struct snd_soc_dapm_route tx_audio_map[] = {
+ 	{"TX SMIC MUX7", "SWR_MIC1", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX7", "SWR_MIC2", "TX SWR_INPUT"},
+ 	{"TX SMIC MUX7", "SWR_MIC3", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC4", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC5", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC6", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC7", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC8", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC9", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC10", "TX SWR_INPUT"},
+-	{"TX SMIC MUX7", "SWR_MIC11", "TX SWR_INPUT"},
+ };
+ 
+ static const struct snd_kcontrol_new tx_macro_snd_controls[] = {
+-- 
+2.34.1
+
