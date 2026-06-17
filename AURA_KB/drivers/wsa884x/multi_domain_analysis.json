@@ -1,0 +1,133 @@
+{
+  "artifact_name": "WSA884X_FIRST_ATTEMPT_MULTI_DOMAIN_ANALYSIS",
+  "timestamp_utc": "2026-06-17T12:25:07.253142+00:00",
+  "aura_governance": {
+    "bounded": true,
+    "blind_rule": "upstream wsa884x.c not read in analysis/planning/generation phase",
+    "observable": true,
+    "explainable": true,
+    "replayable": true,
+    "interruptible_fail_closed": true,
+    "reversible_patch_series": true
+  },
+  "signal_sources_used_before_generation": [
+    "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+    "AURA_KB/drivers/wsa883x/iteration_3_2/learning_validation_scorecard_v3.json",
+    "AURA_KB/drivers/wsa883x/wsa_lessons_learned.json",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/Kbuild",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/internal.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-masks.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-shifts.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-registers.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-regmap.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-tables.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c"
+  ],
+  "dt_binding": {
+    "path": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+    "compatible": "sdw20217020400",
+    "required": [
+      "compatible",
+      "reg",
+      "#sound-dai-cells",
+      "vdd-1p8-supply",
+      "vdd-io-supply"
+    ],
+    "optional": [
+      "powerdown-gpios",
+      "reset-gpios",
+      "qcom,port-mapping",
+      "sound-name-prefix"
+    ],
+    "supplies": [
+      "vdd-1p8",
+      "vdd-io"
+    ],
+    "gpio_alternatives": [
+      "powerdown",
+      "reset"
+    ],
+    "port_mapping_items": 6
+  },
+  "kconfig_makefile": {
+    "kconfig_mentions_wsa884x": true,
+    "makefile_mentions_wsa884x": true,
+    "downstream_multifile": [
+      "wsa884x.c",
+      "wsa884x-regmap.c",
+      "wsa884x-tables.c",
+      "headers"
+    ],
+    "conversion_plan": "single primary driver source plus local register/regmap helpers retained for patch replay"
+  },
+  "downstream_source_shape": {
+    "line_count": 2666,
+    "include_count": 31,
+    "function_count": 52,
+    "control_count": 13,
+    "dapm_widget_count": 3,
+    "route_initializer_count": 4,
+    "register_token_count": 529,
+    "vendor_dependency_count": 44,
+    "vendor_dependencies": [
+      "BOLERO_SLV_EVT_PA_ON_POST_FSCLK",
+      "BOLERO_SLV_EVT_PA_ON_POST_FSCLK_ADIE_LB",
+      "BOLERO_SLV_EVT_SSR_UP",
+      "KERNEL_VERSION",
+      "LINUX_VERSION_CODE",
+      "bolero",
+      "msm_cdc_enable_static_supplies",
+      "msm_cdc_get_power_supplies",
+      "msm_cdc_init_supplies",
+      "msm_cdc_pinctrl_get_state",
+      "msm_cdc_pinctrl_select_active_state",
+      "msm_cdc_pinctrl_select_sleep_state",
+      "msm_cdc_release_supplies",
+      "msm_cdc_set_supplies_lpm_mode",
+      "struct swr_dev_frame_config",
+      "struct swr_device",
+      "struct swr_device_id",
+      "struct swr_driver",
+      "struct swr_port",
+      "struct swr_port_params",
+      "swr_connect_port",
+      "swr_dac_port",
+      "swr_disconnect_port",
+      "swr_driver_register",
+      "swr_driver_unregister",
+      "swr_get_dev_data",
+      "swr_get_logical_dev_num",
+      "swr_init_port_params",
+      "swr_read",
+      "swr_remove_device",
+      "swr_remove_from_group",
+      "swr_set_dev_data",
+      "swr_set_device_group",
+      "swr_slave",
+      "swr_slave_reg_show",
+      "swr_slvdev_datapath_control",
+      "swr_write",
+      "swr_wsa_port_params",
+      "wcd_disable_irq",
+      "wcd_irq_exit",
+      "wcd_irq_info",
+      "wcd_irq_init",
+      "wcd_regmap_irq_chip",
+      "wcd_request_irq"
+    ]
+  },
+  "new_vs_wsa883x": {
+    "dual_supplies": true,
+    "six_port_mapping": true,
+    "downstream_multifile_layout": true,
+    "larger_vendor_irq_surface": true,
+    "expected_adaptation": "Use WSA883x SDW/hwmon/reset pattern, but adapt supply names and port count from qcom,wsa8840 binding."
+  }
+}

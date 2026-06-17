@@ -1,0 +1,48 @@
+From 7f34215fe116e62c0a12a82cc6b5e8d15031c62d Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 17:55:07 +0530
+Subject: [PATCH 3/10] ASoC: codecs: wsa884x: replace vendor supply and parent
+ coupling fields
+
+---
+ asoc/codecs/wsa884x/internal.h | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
+
+diff --git a/asoc/codecs/wsa884x/internal.h b/asoc/codecs/wsa884x/internal.h
+index 6e4a4fb..498a8a9 100644
+--- a/asoc/codecs/wsa884x/internal.h
++++ b/asoc/codecs/wsa884x/internal.h
+@@ -359,8 +359,7 @@ struct wsa884x_priv {
+ 	struct snd_info_entry *entry;
+ 	struct snd_info_entry *version_entry;
+ 	struct snd_info_entry *variant_entry;
+-	struct device_node *wsa_rst_np;
+-	int pa_mute;
++		int pa_mute;
+ 	int curr_temp;
+ 	int variant;
+ 	int version;
+@@ -384,17 +383,9 @@ struct wsa884x_priv {
+ 	struct dentry *debugfs_reg_dump;
+ 	unsigned int read_data;
+ #endif
+-	struct device_node *parent_np;
+-	struct device_node *macro_np;
+-	struct platform_device *parent_dev;
+-	struct platform_device *macro_dev;
+-	struct notifier_block parent_nblock;
+-	void *handle;
+-	int (*register_notifier)(void *handle,
+-				struct notifier_block *nblock, bool enable);
+-	struct cdc_regulator *regulator;
+-	int num_supplies;
+-	struct regulator_bulk_data *supplies;
++		struct regulator_bulk_data supplies[2];
++	struct gpio_desc *sd_n;
++	struct reset_control *sd_reset;
+ 	unsigned long status_mask;
+ 	unsigned long port_status_mask;
+ 	struct snd_soc_dai_driver *dai_driver;
+-- 
+2.34.1
+

@@ -1,0 +1,66 @@
+From 932394b6ece78b60b5b0d2acca4652ad9a3682ee Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 17:55:07 +0530
+Subject: [PATCH 7/10] ASoC: codecs: wsa884x: add upstream SoundWire DAI stream
+ operations
+
+---
+ asoc/codecs/wsa884x/wsa884x.c | 35 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 35 insertions(+)
+
+diff --git a/asoc/codecs/wsa884x/wsa884x.c b/asoc/codecs/wsa884x/wsa884x.c
+index 06b0b1c..6663175 100644
+--- a/asoc/codecs/wsa884x/wsa884x.c
++++ b/asoc/codecs/wsa884x/wsa884x.c
+@@ -2077,6 +2077,40 @@ static void wsa884x_disable_supplies(void *data)
+ 	regulator_bulk_disable(ARRAY_SIZE(wsa884x->supplies), wsa884x->supplies);
+ }
+ 
++
++static int wsa884x_set_sdw_stream(struct snd_soc_dai *dai, void *stream, int direction)
++{
++	struct wsa884x_priv *wsa884x = dev_get_drvdata(dai->dev);
++
++	wsa884x->sruntime = stream;
++	return 0;
++}
++
++static int wsa884x_hw_params(struct snd_pcm_substream *substream,
++			     struct snd_pcm_hw_params *params, struct snd_soc_dai *dai)
++{
++	struct wsa884x_priv *wsa884x = dev_get_drvdata(dai->dev);
++
++	wsa884x->sconfig.frame_rate = params_rate(params);
++	return sdw_stream_add_slave(wsa884x->slave, &wsa884x->sconfig,
++				wsa884x->port_config, WSA884X_MAX_SWR_PORTS, wsa884x->sruntime);
++}
++
++static int wsa884x_hw_free(struct snd_pcm_substream *substream, struct snd_soc_dai *dai)
++{
++	struct wsa884x_priv *wsa884x = dev_get_drvdata(dai->dev);
++
++	sdw_stream_remove_slave(wsa884x->slave, wsa884x->sruntime);
++	return 0;
++}
++
++static const struct snd_soc_dai_ops wsa884x_dai_ops = {
++	.hw_params = wsa884x_hw_params,
++	.hw_free = wsa884x_hw_free,
++	.set_stream = wsa884x_set_sdw_stream,
++	.mute_unmute_on_trigger = true,
++};
++
+ static struct snd_soc_dai_driver wsa_dai[] = {
+ 	{
+ 		.name = "",
+@@ -2089,6 +2123,7 @@ static struct snd_soc_dai_driver wsa_dai[] = {
+ 			.channels_min = 1,
+ 			.channels_max = 2,
+ 		},
++		.ops = &wsa884x_dai_ops,
+ 	},
+ };
+ 
+-- 
+2.34.1
+

@@ -1,0 +1,60 @@
+From 4880f005c577462e77fa884ed6a1fe4db9a275d8 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 17:55:07 +0530
+Subject: [PATCH 4/10] ASoC: codecs: wsa884x: use binding supply names with
+ regulator bulk
+
+---
+ asoc/codecs/wsa884x/wsa884x.c | 29 ++++++++++++++++++++++++++++-
+ 1 file changed, 28 insertions(+), 1 deletion(-)
+
+diff --git a/asoc/codecs/wsa884x/wsa884x.c b/asoc/codecs/wsa884x/wsa884x.c
+index 07cfd45..acc1044 100644
+--- a/asoc/codecs/wsa884x/wsa884x.c
++++ b/asoc/codecs/wsa884x/wsa884x.c
+@@ -1986,7 +1986,7 @@ err_port_map:
+ 	return ret;
+ }
+ 
+-static int wsa884x_enable_supplies(struct device *dev,
++static int wsa884x_vendor_enable_supplies_removed(struct device *dev,
+ 				   struct wsa884x_priv *priv)
+ {
+ 	int ret = 0;
+@@ -2017,6 +2017,33 @@ static int wsa884x_enable_supplies(struct device *dev,
+ 	return ret;
+ }
+ 
++
++static const char * const wsa884x_supply_names[] = {
++	"vdd-1p8",
++	"vdd-io",
++};
++
++static int wsa884x_enable_supplies(struct device *dev, struct wsa884x_priv *wsa884x)
++{
++	int i, ret;
++
++	for (i = 0; i < ARRAY_SIZE(wsa884x_supply_names); i++)
++		wsa884x->supplies[i].supply = wsa884x_supply_names[i];
++
++	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(wsa884x->supplies), wsa884x->supplies);
++	if (ret)
++		return dev_err_probe(dev, ret, "failed to get supplies\n");
++
++	return regulator_bulk_enable(ARRAY_SIZE(wsa884x->supplies), wsa884x->supplies);
++}
++
++static void wsa884x_disable_supplies(void *data)
++{
++	struct wsa884x_priv *wsa884x = data;
++
++	regulator_bulk_disable(ARRAY_SIZE(wsa884x->supplies), wsa884x->supplies);
++}
++
+ static struct snd_soc_dai_driver wsa_dai[] = {
+ 	{
+ 		.name = "",
+-- 
+2.34.1
+

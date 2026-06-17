@@ -1,0 +1,343 @@
+From 3ac528fedefc48fa391a7ce511710314d93d396a Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 17:55:07 +0530
+Subject: [PATCH 6/10] ASoC: codecs: wsa884x: normalize local SoundWire naming
+ to SDW
+
+---
+ asoc/codecs/wsa884x/wsa884x.c | 90 +++++++++++++++++------------------
+ 1 file changed, 45 insertions(+), 45 deletions(-)
+
+diff --git a/asoc/codecs/wsa884x/wsa884x.c b/asoc/codecs/wsa884x/wsa884x.c
+index 95e26bf..06b0b1c 100644
+--- a/asoc/codecs/wsa884x/wsa884x.c
++++ b/asoc/codecs/wsa884x/wsa884x.c
+@@ -249,11 +249,11 @@ static int wsa884x_handle_post_irq(void *data)
+ 			regmap_read(wsa884x->regmap, WSA884X_INTR_STATUS0, &sts1);
+ 			regmap_read(wsa884x->regmap, WSA884X_INTR_STATUS1, &sts2);
+ 
+-			wsa884x->swr_slave->slave_irq_pending =
++			wsa884x->slave->slave_irq_pending =
+ 					((sts1 || sts2) ? true : false);
+ 			pr_debug("%s: IRQs Sts0: %x, Sts1: %x\n", __func__,
+ 				 sts1, sts2);
+-			if (wsa884x->swr_slave->slave_irq_pending) {
++			if (wsa884x->slave->slave_irq_pending) {
+ 				pr_debug("%s: IRQ retries left: %0d\n",
+ 					__func__, retry);
+ 				regmap_update_bits(wsa884x->regmap,
+@@ -300,7 +300,7 @@ static int get_parameters(char *buf, u32 *param1, int num_of_par)
+ 	return 0;
+ }
+ 
+-static bool is_swr_slave_reg_readable(int reg)
++static bool is_slave_reg_readable(int reg)
+ {
+ 	int ret = true;
+ 
+@@ -340,7 +340,7 @@ static bool is_swr_slave_reg_readable(int reg)
+ 	return ret;
+ }
+ 
+-static ssize_t swr_slave_reg_show(struct swr_device *pdev, char __user *ubuf,
++static ssize_t slave_reg_show(struct swr_device *pdev, char __user *ubuf,
+ 					size_t count, loff_t *ppos)
+ {
+ 	int i, reg_val, len;
+@@ -352,7 +352,7 @@ static ssize_t swr_slave_reg_show(struct swr_device *pdev, char __user *ubuf,
+ 
+ 	for (i = (((int) *ppos/BYTES_PER_LINE) + SWR_SLV_START_REG_ADDR);
+ 		i <= SWR_SLV_MAX_REG_ADDR; i++) {
+-		if (!is_swr_slave_reg_readable(i))
++		if (!is_slave_reg_readable(i))
+ 			continue;
+ 		swr_read(pdev, pdev->dev_num, i, &reg_val, 1);
+ 		len = snprintf(tmp_buf, sizeof(tmp_buf), "0x%.3x: 0x%.2x\n", i,
+@@ -393,7 +393,7 @@ static ssize_t codec_debug_dump(struct file *file, char __user *ubuf,
+ 	if (*ppos < 0)
+ 		return -EINVAL;
+ 
+-	return swr_slave_reg_show(pdev, ubuf, count, ppos);
++	return slave_reg_show(pdev, ubuf, count, ppos);
+ }
+ 
+ static ssize_t codec_debug_read(struct file *file, char __user *ubuf,
+@@ -1025,7 +1025,7 @@ int wsa884x_codec_info_create_codec_entry(struct snd_info_entry *codec_root,
+ 	}
+ 
+ 	snprintf(name, sizeof(name), "%s.%llx", "wsa884x",
+-		 wsa884x->swr_slave->addr);
++		 wsa884x->slave->addr);
+ 
+ 	wsa884x->entry = snd_info_create_module_entry(codec_root->module,
+ 						(const char *)name,
+@@ -1126,7 +1126,7 @@ int wsa884x_codec_get_dev_num(struct snd_soc_component *component)
+ 		return -EINVAL;
+ 	}
+ 
+-	return wsa884x->swr_slave->dev_num;
++	return wsa884x->slave->dev_num;
+ }
+ EXPORT_SYMBOL(wsa884x_codec_get_dev_num);
+ 
+@@ -1146,7 +1146,7 @@ static int wsa884x_get_dev_num(struct snd_kcontrol *kcontrol,
+ 		return -EINVAL;
+ 	}
+ 
+-	ucontrol->value.integer.value[0] = wsa884x->swr_slave->dev_num;
++	ucontrol->value.integer.value[0] = wsa884x->slave->dev_num;
+ 	return 0;
+ }
+ 
+@@ -1302,7 +1302,7 @@ static const struct snd_kcontrol_new wsa884x_snd_controls[] = {
+ 
+ };
+ 
+-static const struct snd_kcontrol_new swr_dac_port[] = {
++static const struct snd_kcontrol_new sdw_dac_port[] = {
+ 	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+ };
+ 
+@@ -1320,7 +1320,7 @@ static int wsa884x_set_port(struct snd_soc_component *component, int port_idx,
+ 	return 0;
+ }
+ 
+-static int wsa884x_enable_swr_dac_port(struct snd_soc_dapm_widget *w,
++static int wsa884x_enable_sdw_dac_port(struct snd_soc_dapm_widget *w,
+ 	struct snd_kcontrol *kcontrol, int event)
+ {
+ 	struct snd_soc_component *component =
+@@ -1380,7 +1380,7 @@ static int wsa884x_enable_swr_dac_port(struct snd_soc_dapm_widget *w,
+ 			++num_port;
+ 			set_bit(CPS_PORT_EN_STATUS_BIT, &wsa884x->port_status_mask);
+ 		}
+-		swr_connect_port(wsa884x->swr_slave, &port_id[0], num_port,
++		swr_connect_port(wsa884x->slave, &port_id[0], num_port,
+ 				&ch_mask[0], &ch_rate[0], &num_ch[0],
+ 					&port_type[0]);
+ 		break;
+@@ -1430,16 +1430,16 @@ static int wsa884x_enable_swr_dac_port(struct snd_soc_dapm_widget *w,
+ 			++num_port;
+ 			clear_bit(CPS_PORT_EN_STATUS_BIT, &wsa884x->port_status_mask);
+ 		}
+-		swr_disconnect_port(wsa884x->swr_slave, &port_id[0], num_port,
++		swr_disconnect_port(wsa884x->slave, &port_id[0], num_port,
+ 				&ch_mask[0], &port_type[0]);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMD:
+-		if (swr_set_device_group(wsa884x->swr_slave, SWR_GROUP_NONE))
++		if (swr_set_device_group(wsa884x->slave, SWR_GROUP_NONE))
+ 			dev_err_ratelimited(component->dev,
+ 				"%s: set num ch failed\n", __func__);
+ 
+-		swr_slvdev_datapath_control(wsa884x->swr_slave,
+-					    wsa884x->swr_slave->dev_num,
++		swr_slvdev_datapath_control(wsa884x->slave,
++					    wsa884x->slave->dev_num,
+ 					    false);
+ 		break;
+ 	default:
+@@ -1458,8 +1458,8 @@ static int wsa884x_spkr_event(struct snd_soc_dapm_widget *w,
+ 	dev_dbg(component->dev, "%s: %s %d\n", __func__, w->name, event);
+ 	switch (event) {
+ 	case SND_SOC_DAPM_POST_PMU:
+-		swr_slvdev_datapath_control(wsa884x->swr_slave,
+-					    wsa884x->swr_slave->dev_num,
++		swr_slvdev_datapath_control(wsa884x->slave,
++					    wsa884x->slave->dev_num,
+ 					    true);
+ 		wsa884x_set_gain_parameters(component);
+ 		if (wsa884x->dev_mode == SPEAKER) {
+@@ -1509,8 +1509,8 @@ static int wsa884x_spkr_event(struct snd_soc_dapm_widget *w,
+ 					CURRENT_LIMIT, 0x09));
+ 		}
+ 		/* Force remove group */
+-		swr_remove_from_group(wsa884x->swr_slave,
+-				      wsa884x->swr_slave->dev_num);
++		swr_remove_from_group(wsa884x->slave,
++				      wsa884x->slave->dev_num);
+ 		if (test_bit(SPKR_ADIE_LB, &wsa884x->status_mask) &&
+ 		    !wsa884x->pa_mute)
+ 			snd_soc_component_update_bits(component,
+@@ -1531,8 +1531,8 @@ static int wsa884x_spkr_event(struct snd_soc_dapm_widget *w,
+ 
+ static const struct snd_soc_dapm_widget wsa884x_dapm_widgets[] = {
+ 	SND_SOC_DAPM_INPUT("IN"),
+-	SND_SOC_DAPM_MIXER_E("SWR DAC_Port", SND_SOC_NOPM, 0, 0, swr_dac_port,
+-		ARRAY_SIZE(swr_dac_port), wsa884x_enable_swr_dac_port,
++	SND_SOC_DAPM_MIXER_E("SDW DAC Port", SND_SOC_NOPM, 0, 0, sdw_dac_port,
++		ARRAY_SIZE(sdw_dac_port), wsa884x_enable_sdw_dac_port,
+ 		SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+ 		SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD),
+ 
+@@ -1540,8 +1540,8 @@ static const struct snd_soc_dapm_widget wsa884x_dapm_widgets[] = {
+ };
+ 
+ static const struct snd_soc_dapm_route wsa884x_audio_map[] = {
+-	{"SWR DAC_Port", "Switch", "IN"},
+-	{"SPKR", NULL, "SWR DAC_Port"},
++	{"SDW DAC Port", "Switch", "IN"},
++	{"SPKR", NULL, "SDW DAC Port"},
+ };
+ 
+ int wsa884x_set_channel_map(struct snd_soc_component *component, u8 *port,
+@@ -1772,7 +1772,7 @@ snd_soc_component_to_dapm(component);
+ 
+ 	snd_soc_component_init_regmap(component, wsa884x->regmap);
+ 
+-	dev = wsa884x->swr_slave;
++	dev = wsa884x->slave;
+ 	wsa884x->component = component;
+ 
+ 	variant = (snd_soc_component_read(component, WSA884X_OTP_REG_0)
+@@ -1798,7 +1798,7 @@ snd_soc_component_to_dapm(component);
+ 	snd_soc_dapm_ignore_suspend(dapm, w_name);
+ 
+ 	memset(w_name, 0, sizeof(w_name));
+-	strscpy(w_name, "SWR DAC_Port", sizeof(w_name));
++	strscpy(w_name, "SDW DAC Port", sizeof(w_name));
+ 	snd_soc_dapm_ignore_suspend(dapm, w_name);
+ 
+ 	memset(w_name, 0, sizeof(w_name));
+@@ -1876,7 +1876,7 @@ static int wsa884x_gpio_ctrl(struct wsa884x_priv *wsa884x, bool enable)
+ 	return ret;
+ }
+ 
+-static int wsa884x_swr_up(struct wsa884x_priv *wsa884x)
++static int wsa884x_sdw_up(struct wsa884x_priv *wsa884x)
+ {
+ 	int ret;
+ 
+@@ -1887,7 +1887,7 @@ static int wsa884x_swr_up(struct wsa884x_priv *wsa884x)
+ 	return ret;
+ }
+ 
+-static int wsa884x_swr_down(struct wsa884x_priv *wsa884x)
++static int wsa884x_sdw_down(struct wsa884x_priv *wsa884x)
+ {
+ 	int ret;
+ 
+@@ -1898,13 +1898,13 @@ static int wsa884x_swr_down(struct wsa884x_priv *wsa884x)
+ 	return ret;
+ }
+ 
+-static int wsa884x_swr_reset(struct wsa884x_priv *wsa884x)
++static int wsa884x_sdw_reset(struct wsa884x_priv *wsa884x)
+ {
+ 	u8 retry = WSA884X_NUM_RETRY;
+ 	u8 devnum = 0;
+ 	struct swr_device *pdev;
+ 
+-	pdev = wsa884x->swr_slave;
++	pdev = wsa884x->slave;
+ 	while (swr_get_logical_dev_num(pdev, pdev->addr, &devnum) && retry--) {
+ 		/* Retry after 1 msec delay */
+ 		usleep_range(1000, 1100);
+@@ -1927,15 +1927,15 @@ static int wsa884x_event_notify(struct notifier_block *nb,
+ 
+ 	switch (event) {
+ 	case BOLERO_SLV_EVT_SSR_UP:
+-		wsa884x_swr_down(wsa884x);
++		wsa884x_sdw_down(wsa884x);
+ 		usleep_range(500, 510);
+ 
+-		wsa884x_swr_up(wsa884x);
++		wsa884x_sdw_up(wsa884x);
+ 		/* Add delay to allow enumerate */
+ 		usleep_range(20000, 20010);
+-		wsa884x_swr_reset(wsa884x);
++		wsa884x_sdw_reset(wsa884x);
+ 		dev_err(wsa884x->dev, "%s: BOLERO_SLV_EVT_SSR_UP Called", __func__);
+-		swr_init_port_params(wsa884x->swr_slave, WSA884X_MAX_SWR_PORTS,
++		swr_init_port_params(wsa884x->slave, WSA884X_MAX_SWR_PORTS,
+ 			wsa884x->swr_wsa_port_params);
+ 		break;
+ 
+@@ -2168,7 +2168,7 @@ static const struct proc_ops wsa884x_proc_ops = {
+ 	.proc_read = wsa884x_proc_read,
+ };
+ 
+-static int wsa884x_swr_probe(struct swr_device *pdev)
++static int wsa884x_sdw_probe(struct swr_device *pdev)
+ {
+ 	int ret = 0;
+ 	struct wsa884x_priv *wsa884x;
+@@ -2212,7 +2212,7 @@ static int wsa884x_swr_probe(struct swr_device *pdev)
+ 		goto err_supply;
+ 	}
+ 	swr_set_dev_data(pdev, wsa884x);
+-	wsa884x->swr_slave = pdev;
++	wsa884x->slave = pdev;
+ 	wsa884x->dev = &pdev->dev;
+ 	pin_state_current = msm_cdc_pinctrl_get_state(wsa884x->wsa_rst_np);
+ 	wsa884x_gpio_ctrl(wsa884x, true);
+@@ -2272,7 +2272,7 @@ static int wsa884x_swr_probe(struct swr_device *pdev)
+ 		goto dev_err;
+ 	}
+ 
+-	wsa884x->swr_slave->slave_irq = wsa884x->virq;
++	wsa884x->slave->slave_irq = wsa884x->virq;
+ 
+ 	wcd_request_irq(&wsa884x->irq_info, WSA884X_IRQ_INT_SAF2WAR,
+ 			"WSA SAF2WAR", wsa884x_saf2war_handle_irq, wsa884x);
+@@ -2519,7 +2519,7 @@ static int wsa884x_swr_probe(struct swr_device *pdev)
+ 		dev_err(&pdev->dev, "Failed to read port params\n");
+ 		goto err;
+ 	}
+-	swr_init_port_params(wsa884x->swr_slave, WSA884X_MAX_SWR_PORTS,
++	swr_init_port_params(wsa884x->slave, WSA884X_MAX_SWR_PORTS,
+ 		wsa884x->swr_wsa_port_params);
+ 	mutex_init(&wsa884x->res_lock);
+ 
+@@ -2583,7 +2583,7 @@ err:
+ 	return ret;
+ }
+ 
+-static int wsa884x_swr_remove(struct swr_device *pdev)
++static int wsa884x_sdw_remove(struct swr_device *pdev)
+ {
+ 	struct wsa884x_priv *wsa884x;
+ 
+@@ -2622,7 +2622,7 @@ static int wsa884x_swr_remove(struct swr_device *pdev)
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+-static int wsa884x_swr_suspend(struct device *dev)
++static int wsa884x_sdw_suspend(struct device *dev)
+ {
+ 	struct wsa884x_priv *wsa884x = swr_get_dev_data(to_swr_device(dev));
+ 
+@@ -2644,7 +2644,7 @@ static int wsa884x_swr_suspend(struct device *dev)
+ 	return 0;
+ }
+ 
+-static int wsa884x_swr_resume(struct device *dev)
++static int wsa884x_sdw_resume(struct device *dev)
+ {
+ 	struct wsa884x_priv *wsa884x = swr_get_dev_data(to_swr_device(dev));
+ 
+@@ -2665,8 +2665,8 @@ static int wsa884x_swr_resume(struct device *dev)
+ #endif /* CONFIG_PM_SLEEP */
+ 
+ static const struct dev_pm_ops wsa884x_swr_pm_ops = {
+-	.suspend_late = wsa884x_swr_suspend,
+-	.resume_early = wsa884x_swr_resume,
++	.suspend_late = wsa884x_sdw_suspend,
++	.resume_early = wsa884x_sdw_resume,
+ };
+ 
+ static const struct swr_device_id wsa884x_swr_id[] = {
+@@ -2692,8 +2692,8 @@ static struct swr_driver wsa884x_swr_driver = {
+ 		.pm = &wsa884x_swr_pm_ops,
+ 		.of_match_table = wsa884x_swr_dt_match,
+ 	},
+-	.probe = wsa884x_swr_probe,
+-	.remove = wsa884x_swr_remove,
++	.probe = wsa884x_sdw_probe,
++	.remove = wsa884x_sdw_remove,
+ 	.id_table = wsa884x_swr_id,
+ };
+ 
+-- 
+2.34.1
+

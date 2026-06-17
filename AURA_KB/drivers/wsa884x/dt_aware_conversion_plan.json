@@ -1,0 +1,154 @@
+{
+  "artifact_name": "WSA884X_FIRST_ATTEMPT_DT_AWARE_CONVERSION_PLAN",
+  "timestamp_utc": "2026-06-17T12:25:07.253142+00:00",
+  "replay_deterministic": true,
+  "decision_seed": "deterministic-allowed-sources-wsa884x-first-attempt-v1",
+  "signal_sources_consulted": [
+    "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+    "AURA_KB/drivers/wsa883x/iteration_3_2/learning_validation_scorecard_v3.json",
+    "AURA_KB/drivers/wsa883x/wsa_lessons_learned.json",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/Kbuild",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/internal.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-masks.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-shifts.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-registers.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-regmap.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-tables.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c"
+  ],
+  "api_replacement_table": [
+    {
+      "downstream_api": "#include <soc/soundwire.h>",
+      "upstream_api": "#include <linux/soundwire/sdw.h>",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x upstream reference + SDW headers",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "struct swr_device",
+      "upstream_api": "struct sdw_slave",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x upstream reference",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "devm_regmap_init_swr",
+      "upstream_api": "devm_regmap_init_sdw",
+      "confidence": "HIGH",
+      "signal_source": "REGMAP_SOUNDWIRE pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "swr_driver_register/module_init",
+      "upstream_api": "module_sdw_driver",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x upstream reference",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "msm_cdc_get_power_supplies",
+      "upstream_api": "devm_regulator_bulk_get + regulator_bulk_enable",
+      "confidence": "HIGH",
+      "signal_source": "qcom,wsa8840 binding supplies",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "msm_cdc_pinctrl_*",
+      "upstream_api": "devm_reset_control_get_optional_shared or devm_gpiod_get_optional",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x reset fallback pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "wcd_irq_*",
+      "upstream_api": "sdw_slave_ops/update_status/port_prep + regmap IRQ paths deferred",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x SDW ops pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "qti debugfs/proc regdump",
+      "upstream_api": "remove downstream diagnostics",
+      "confidence": "HIGH",
+      "signal_source": "Upstream WSA reference pattern",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "LINUX_VERSION_CODE guards",
+      "upstream_api": "latest kernel ASoC APIs",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX/WSA lessons",
+      "deterministic": true
+    },
+    {
+      "downstream_api": "swr port connect helpers",
+      "upstream_api": "sdw_stream_add_slave/remove_slave",
+      "confidence": "HIGH",
+      "signal_source": "WSA883x DAI ops pattern",
+      "deterministic": true
+    }
+  ],
+  "dt_property_map": [
+    {
+      "property": "vdd-1p8-supply",
+      "binding_requirement": "required",
+      "probe_implementation": "regulator bulk supply \"vdd-1p8\"",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "vdd-io-supply",
+      "binding_requirement": "required",
+      "probe_implementation": "regulator bulk supply \"vdd-io\"",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "powerdown-gpios",
+      "binding_requirement": "oneOf optional alternative",
+      "probe_implementation": "devm_gpiod_get_optional(dev, \"powerdown\", GPIOD_OUT_HIGH)",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "reset-gpios",
+      "binding_requirement": "oneOf optional alternative",
+      "probe_implementation": "devm_gpiod_get_optional(dev, \"reset\", GPIOD_OUT_HIGH) fallback",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "qcom,port-mapping",
+      "binding_requirement": "optional uint32-array[6]",
+      "probe_implementation": "of_property_read_u32_array into slave->m_port_map[1]",
+      "confidence": "HIGH"
+    }
+  ],
+  "structural_transformations": [
+    {
+      "name": "vendor_sdw_to_upstream_sdw",
+      "rule": "replace downstream swr bus model with sdw_driver, sdw_slave_ops and module_sdw_driver",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "vendor_supplies_to_regulator_bulk",
+      "rule": "use binding supply names exactly and devm cleanup",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "thermal_to_hwmon",
+      "rule": "expose temperature via hwmon read callback",
+      "confidence": "HIGH"
+    },
+    {
+      "name": "debugfs_proc_cleanup",
+      "rule": "remove downstream debug/proc diagnostics from final converted source",
+      "confidence": "HIGH"
+    }
+  ],
+  "predicted_patch_count": 10,
+  "fail_closed_predicted": []
+}

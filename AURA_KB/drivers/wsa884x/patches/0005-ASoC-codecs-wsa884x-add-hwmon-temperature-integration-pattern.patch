@@ -1,0 +1,57 @@
+From 4770d898c3f8222b3c00f9d5d0ec98ba484c734c Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 17:55:07 +0530
+Subject: [PATCH 5/10] ASoC: codecs: wsa884x: add hwmon temperature integration
+ pattern
+
+---
+ asoc/codecs/wsa884x/wsa884x.c | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/asoc/codecs/wsa884x/wsa884x.c b/asoc/codecs/wsa884x/wsa884x.c
+index acc1044..95e26bf 100644
+--- a/asoc/codecs/wsa884x/wsa884x.c
++++ b/asoc/codecs/wsa884x/wsa884x.c
+@@ -1722,6 +1722,39 @@ static int wsa884x_get_temperature(struct snd_soc_component *component,
+ 	return ret;
+ }
+ 
++
++static umode_t wsa884x_hwmon_is_visible(const void *data,
++					enum hwmon_sensor_types type, u32 attr, int channel)
++{
++	return type == hwmon_temp && attr == hwmon_temp_input ? 0444 : 0;
++}
++
++static int wsa884x_hwmon_read(struct device *dev, enum hwmon_sensor_types type,
++			      u32 attr, int channel, long *temp)
++{
++	struct wsa884x_priv *wsa884x = dev_get_drvdata(dev);
++
++	if (type != hwmon_temp || attr != hwmon_temp_input)
++		return -EOPNOTSUPP;
++
++	return wsa884x_get_temperature(wsa884x->component, temp);
++}
++
++static const struct hwmon_channel_info * const wsa884x_hwmon_info[] = {
++	HWMON_CHANNEL_INFO(temp, HWMON_T_INPUT),
++	NULL
++};
++
++static const struct hwmon_ops wsa884x_hwmon_ops = {
++	.is_visible = wsa884x_hwmon_is_visible,
++	.read = wsa884x_hwmon_read,
++};
++
++static const struct hwmon_chip_info wsa884x_hwmon_chip_info = {
++	.ops = &wsa884x_hwmon_ops,
++	.info = wsa884x_hwmon_info,
++};
++
+ static int wsa884x_codec_probe(struct snd_soc_component *component)
+ {
+ 	char w_name[MAX_NAME_LEN];
+-- 
+2.34.1
+

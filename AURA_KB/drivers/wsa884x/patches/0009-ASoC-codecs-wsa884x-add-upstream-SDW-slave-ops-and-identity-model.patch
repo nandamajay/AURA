@@ -1,0 +1,47 @@
+From 13d815cef802afd6a06372308ea55908b2461dc1 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Wed, 17 Jun 2026 17:55:07 +0530
+Subject: [PATCH 9/10] ASoC: codecs: wsa884x: add upstream SDW slave ops and
+ identity model
+
+---
+ asoc/codecs/wsa884x/wsa884x.c | 23 ++++++++++++++++++++++-
+ 1 file changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/asoc/codecs/wsa884x/wsa884x.c b/asoc/codecs/wsa884x/wsa884x.c
+index 6663175..5884375 100644
+--- a/asoc/codecs/wsa884x/wsa884x.c
++++ b/asoc/codecs/wsa884x/wsa884x.c
+@@ -2704,7 +2704,28 @@ static const struct dev_pm_ops wsa884x_swr_pm_ops = {
+ 	.resume_early = wsa884x_sdw_resume,
+ };
+ 
+-static const struct swr_device_id wsa884x_swr_id[] = {
++
++static int wsa884x_update_status(struct sdw_slave *slave, enum sdw_slave_status status)
++{
++	struct wsa884x_priv *wsa884x = dev_get_drvdata(&slave->dev);
++
++	if (status == SDW_SLAVE_ATTACHED && slave->dev_num > 0)
++		wsa884x_regcache_sync(wsa884x);
++	return 0;
++}
++
++static int wsa884x_port_prep(struct sdw_slave *slave, struct sdw_prepare_ch *prepare_ch,
++			     enum sdw_port_prep_ops state)
++{
++	return 0;
++}
++
++static const struct sdw_slave_ops wsa884x_slave_ops = {
++	.update_status = wsa884x_update_status,
++	.port_prep = wsa884x_port_prep,
++};
++
++static const struct sdw_device_id wsa884x_sdw_id[] = {
+ 	{"wsa884x", 0},
+ 	{"wsa884x_2", 0},
+ 	{}
+-- 
+2.34.1
+
