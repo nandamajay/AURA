@@ -1,0 +1,57 @@
+{
+  "artifact_name": "WSA883X_BLIND_CONVERSION_PLAN_V2",
+  "classification": "PASS",
+  "target_overall_accuracy": 90,
+  "predicted_patch_count": 10,
+  "improvements_over_iteration_3": [
+    "binding-derived compatible sdw10217020200",
+    "binding-derived vdd-only regulator bulk",
+    "binding-derived reset/powerdown GPIO handling",
+    "SoundWire slave ops from wsa881x reference",
+    "DAI stream callbacks from wsa881x reference",
+    "thermal OF zone registration from binding/header signal"
+  ],
+  "patch_series": [
+    {
+      "patch": 1,
+      "scope": "drop downstream diagnostics and version paths"
+    },
+    {
+      "patch": 2,
+      "scope": "convert vendor SoundWire driver to sdw"
+    },
+    {
+      "patch": 3,
+      "scope": "use binding GPIO and vdd regulator signals"
+    },
+    {
+      "patch": 4,
+      "scope": "add upstream SoundWire stream and slave ops"
+    },
+    {
+      "patch": 5,
+      "scope": "register binding thermal sensor"
+    },
+    {
+      "patch": 6,
+      "scope": "remove vendor IRQ and parent notifier coupling"
+    },
+    {
+      "patch": 7,
+      "scope": "use static component registration and binding IDs"
+    },
+    {
+      "patch": 8,
+      "scope": "finalize SDW runtime PM and vendor cleanup"
+    },
+    {
+      "patch": 9,
+      "scope": "remove residual vendor datapath and IRQ shims"
+    },
+    {
+      "patch": 10,
+      "scope": "wire binding informed probe resources"
+    }
+  ],
+  "actual_patch_count": 10
+}

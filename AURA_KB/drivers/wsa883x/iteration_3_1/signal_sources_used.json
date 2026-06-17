@@ -1,0 +1,70 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_1_SIGNAL_SOURCES",
+  "blind_rule": "upstream wsa883x.c was not read until after patch generation and validation",
+  "sources": [
+    {
+      "path": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+      "domain": "DT binding",
+      "used_for": [
+        "compatible",
+        "vdd-supply",
+        "powerdown-gpios/reset-gpios",
+        "qcom,port-mapping",
+        "thermal/sound DAI cells"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+      "domain": "Kconfig",
+      "used_for": [
+        "SND_SOC_WSA883X depends on SOUNDWIRE",
+        "select REGMAP_SOUNDWIRE"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+      "domain": "Makefile",
+      "used_for": [
+        "single-object snd-soc-wsa883x-y := wsa883x.o"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c",
+      "domain": "SoundWire codec reference",
+      "used_for": [
+        "sdw_driver",
+        "slave ops",
+        "stream DAI callbacks",
+        "runtime PM pattern"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/include/linux/soundwire/sdw.h",
+      "domain": "SoundWire header",
+      "used_for": [
+        "slave ops and stream API signatures"
+      ]
+    },
+    {
+      "path": "track_b_corpora/linux-next/include/linux/soundwire/sdw_type.h",
+      "domain": "SoundWire header",
+      "used_for": [
+        "module_sdw_driver registration"
+      ]
+    },
+    {
+      "path": "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa883x/",
+      "domain": "downstream source",
+      "used_for": [
+        "all source transformations and vendor-dependency inventory"
+      ]
+    },
+    {
+      "path": "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa883x/Kbuild and Makefile",
+      "domain": "downstream build",
+      "used_for": [
+        "multi-object vendor module inventory"
+      ]
+    }
+  ]
+}

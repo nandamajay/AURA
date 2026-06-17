@@ -1,0 +1,55 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_1_LEARNING_VALIDATION_SCORECARD",
+  "iteration_3_scores": {
+    "KERNEL_API_CALLS": 38.64,
+    "FUNCTION_STRUCTURE": 34.62,
+    "DAPM_TOPOLOGY": 73.61,
+    "REGISTER_ACCESS": 88.02,
+    "SOUNDWIRE_SLAVE": 100.0,
+    "POWER_REGULATOR": 25.0,
+    "THERMAL_INTEGRATION": 25.0,
+    "SOC_ID_MODEL": 100.0,
+    "VENDOR_COUPLING": 100.0
+  },
+  "iteration_3_1_scores": {
+    "KERNEL_API_CALLS": 65.0,
+    "FUNCTION_STRUCTURE": 52.0,
+    "DAPM_TOPOLOGY": 71.0,
+    "REGISTER_ACCESS": 89.0,
+    "SOUNDWIRE_SLAVE": 88.89,
+    "POWER_REGULATOR": 78.57,
+    "THERMAL_INTEGRATION": 35.0,
+    "SOC_ID_MODEL": 50.0,
+    "VENDOR_COUPLING": 100.0
+  },
+  "per_category_delta": {
+    "KERNEL_API_CALLS": 26.36,
+    "FUNCTION_STRUCTURE": 17.38,
+    "DAPM_TOPOLOGY": -2.61,
+    "REGISTER_ACCESS": 0.98,
+    "SOUNDWIRE_SLAVE": -11.11,
+    "POWER_REGULATOR": 53.57,
+    "THERMAL_INTEGRATION": 10.0,
+    "SOC_ID_MODEL": -50.0,
+    "VENDOR_COUPLING": 0.0
+  },
+  "overall_3": 64.99,
+  "overall_3_1": 69.94,
+  "improvement": 4.95,
+  "target_met": false,
+  "domain_impact": {
+    "dt_binding_impact": "Improved POWER_REGULATOR supply naming, compatible selection, GPIO property handling, and DT property coverage. It did not reveal hwmon vs thermal-zone implementation.",
+    "kconfig_impact": "Confirmed SOUNDWIRE + REGMAP_SOUNDWIRE dependencies and single-object upstream model; mostly documentation impact.",
+    "makefile_impact": "Confirmed downstream multi-object consolidation requirement; comparison still shows converted artifacts retain split files outside main source.",
+    "source_signal_impact": "wsa881x reference improved SoundWire slave ops, stream callbacks, runtime PM, and regmap_sdw structure.",
+    "biggest_positive_impact": "DT binding coverage improved POWER_REGULATOR by +53.57 points and DT property coverage to 100% by identifying vdd-supply, powerdown/reset GPIO semantics, and qcom,port-mapping."
+  },
+  "iteration_3_lessons": {
+    "use_binding_supply_names": "YES",
+    "use_allowed_sdw_codec_reference": "YES",
+    "remove_vendor_coupling": "YES",
+    "thermal_from_binding_only": "NO",
+    "infer_sdw_identity_from_compatible": "NO",
+    "object_consolidation_from_makefile": "PARTIAL"
+  }
+}

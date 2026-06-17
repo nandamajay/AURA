@@ -1,0 +1,71 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_1_GAP_TO_90_ANALYSIS",
+  "overall_score": 69.94,
+  "target": 90,
+  "target_met": false,
+  "below_target_categories": [
+    {
+      "category": "KERNEL_API_CALLS",
+      "current_score": 65.0,
+      "gap_to_90": 25.0,
+      "specific_missing_element": "missing hwmon, reset_control, devm_add_action_or_reset, exact single-regulator APIs; retained extra downstream component/info helpers",
+      "additional_signal_source_needed": "multiple same-class upstream smart-amplifier references to derive API target profile"
+    },
+    {
+      "category": "FUNCTION_STRUCTURE",
+      "current_score": 52.0,
+      "gap_to_90": 38.0,
+      "specific_missing_element": "extra downstream IRQ/debug/info/thermal-zone helpers; missing upstream init/reset/hwmon helper structure",
+      "additional_signal_source_needed": "single-object consolidation rule plus same-class function-pruning profile"
+    },
+    {
+      "category": "DAPM_TOPOLOGY",
+      "current_score": 71.0,
+      "gap_to_90": 19.0,
+      "specific_missing_element": "downstream SDW DAC Port and vendor controls remain; upstream topology is smaller and direct",
+      "additional_signal_source_needed": "additional WSA88xx DAPM topology reference or stronger DAPM reduction heuristic"
+    },
+    {
+      "category": "REGISTER_ACCESS",
+      "current_score": 89.0,
+      "gap_to_90": 1.0,
+      "specific_missing_element": "high register coverage but not exact because converted path retains component access and split table/header artifacts",
+      "additional_signal_source_needed": "rule to replace component_read/update_bits with regmap_read/update_bits after SoundWire regmap ownership"
+    },
+    {
+      "category": "SOUNDWIRE_SLAVE",
+      "current_score": 88.89,
+      "gap_to_90": 1.11,
+      "specific_missing_element": "SoundWire lifecycle mostly correct but exact SDW_SLAVE_ENTRY and id-table type are wrong",
+      "additional_signal_source_needed": "formal SoundWire compatible-to-SDW_SLAVE_ENTRY decoder"
+    },
+    {
+      "category": "POWER_REGULATOR",
+      "current_score": 78.57,
+      "gap_to_90": 11.43,
+      "specific_missing_element": "vdd and GPIOs fixed, but reset_control optional shared plus devm action cleanup are missing; regulator API shape differs",
+      "additional_signal_source_needed": "allowed reset-controller/GPIO fallback examples for SoundWire codecs"
+    },
+    {
+      "category": "THERMAL_INTEGRATION",
+      "current_score": 35.0,
+      "gap_to_90": 55.0,
+      "specific_missing_element": "binding did not reveal upstream uses hwmon instead of thermal_zone",
+      "additional_signal_source_needed": "allowed hwmon smart-amplifier example or thermal/hwmon subsystem convention source"
+    },
+    {
+      "category": "SOC_ID_MODEL",
+      "current_score": 50.0,
+      "gap_to_90": 40.0,
+      "specific_missing_element": "compatible string correct, but SDW ID table value/type wrong",
+      "additional_signal_source_needed": "SoundWire enumeration/modalias documentation for exact SDW device ID derivation"
+    }
+  ],
+  "proposed_iteration_3_2_strategy": [
+    "Add allowed same-class WSA884x or other SoundWire smart-amplifier references for hwmon/reset/SDW ID conventions, while still not reading wsa883x.c during generation",
+    "Implement a formal DT-binding-to-API mapper: vdd-supply -> devm_regulator_get when singular, reset-gpios + reset controller compatibility -> reset_control optional shared plus GPIO fallback",
+    "Derive SDW_SLAVE_ENTRY from the SoundWire compatible string correctly",
+    "Prune single-object upstream drivers by deleting downstream proc/debug/info/IRQ helper families unless referenced by upstream-standard registration tables",
+    "Use hwmon for smart amplifier temperature export when allowed reference class uses hwmon or when binding thermal cells do not imply thermal_zone implementation"
+  ]
+}

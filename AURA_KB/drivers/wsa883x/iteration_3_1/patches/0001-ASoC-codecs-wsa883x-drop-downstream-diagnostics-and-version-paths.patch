@@ -1,0 +1,468 @@
+From a58adfdc705d8d480ec3a8c4c26bfa5a49358f40 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:18:22 +0530
+Subject: [PATCH 1/10] ASoC: codecs: wsa883x: drop downstream diagnostics and
+ version paths
+
+---
+ asoc/codecs/wsa883x/internal.h |  13 --
+ asoc/codecs/wsa883x/wsa883x.c  | 353 ---------------------------------
+ 2 files changed, 366 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/internal.h b/asoc/codecs/wsa883x/internal.h
+index 5897cb5..63c24d6 100644
+--- a/asoc/codecs/wsa883x/internal.h
++++ b/asoc/codecs/wsa883x/internal.h
+@@ -11,18 +11,6 @@
+ #include "wsa883x.h"
+ #include "wsa883x-registers.h"
+ 
+-#ifdef CONFIG_DEBUG_FS
+-#include <linux/debugfs.h>
+-#include <linux/uaccess.h>
+-
+-#define SWR_SLV_MAX_REG_ADDR	0x2009
+-#define SWR_SLV_START_REG_ADDR	0x40
+-#define SWR_SLV_MAX_BUF_LEN	20
+-#define BYTES_PER_LINE		12
+-#define SWR_SLV_RD_BUF_LEN	8
+-#define SWR_SLV_WR_BUF_LEN	32
+-#define SWR_SLV_MAX_DEVICES	2
+-#endif /* CONFIG_DEBUG_FS */
+ 
+ #define WSA883X_DRV_NAME "wsa883x-codec"
+ #define WSA883X_NUM_RETRY	5
+@@ -128,7 +116,6 @@ struct wsa883x_priv {
+ 	struct snd_soc_dai_driver *dai_driver;
+ 	struct snd_soc_component_driver *driver;
+ 	unsigned long port_status_mask;
+-	struct proc_dir_entry *wsa883x_proc_entry;
+ };
+ 
+ #endif /* WSA883X_INTERNAL_H */
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 86886ce..09f0da1 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -4,7 +4,6 @@
+  * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
+  */
+ 
+-#include <linux/version.h>
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/slab.h>
+@@ -33,8 +32,6 @@
+ #include "wsa883x.h"
+ #include "internal.h"
+ #include "asoc/bolero-slave-internal.h"
+-#include <linux/qti-regmap-debugfs.h>
+-#include <linux/proc_fs.h>
+ 
+ #define REGDUMP_PRINT_LEN 8
+ #define T1_TEMP -10
+@@ -216,246 +213,6 @@ static int wsa883x_handle_post_irq(void *data)
+ 	return IRQ_HANDLED;
+ }
+ 
+-#ifdef CONFIG_DEBUG_FS
+-static int codec_debug_open(struct inode *inode, struct file *file)
+-{
+-	file->private_data = inode->i_private;
+-	return 0;
+-}
+-
+-static int get_parameters(char *buf, u32 *param1, int num_of_par)
+-{
+-	char *token;
+-	int base, cnt;
+-
+-	token = strsep(&buf, " ");
+-	for (cnt = 0; cnt < num_of_par; cnt++) {
+-		if (token) {
+-			if ((token[1] == 'x') || (token[1] == 'X'))
+-				base = 16;
+-			else
+-				base = 10;
+-
+-			if (kstrtou32(token, base, &param1[cnt]) != 0)
+-				return -EINVAL;
+-
+-			token = strsep(&buf, " ");
+-		} else {
+-			return -EINVAL;
+-		}
+-	}
+-	return 0;
+-}
+-
+-static bool is_swr_slave_reg_readable(int reg)
+-{
+-	int ret = true;
+-
+-	if (((reg > 0x46) && (reg < 0x4A)) ||
+-	    ((reg > 0x4A) && (reg < 0x50)) ||
+-	    ((reg > 0x55) && (reg < 0xD0)) ||
+-	    ((reg > 0xD0) && (reg < 0xE0)) ||
+-	    ((reg > 0xE0) && (reg < 0xF0)) ||
+-	    ((reg > 0xF0) && (reg < 0x100)) ||
+-	    ((reg > 0x105) && (reg < 0x120)) ||
+-	    ((reg > 0x205) && (reg < 0x220)) ||
+-	    ((reg > 0x305) && (reg < 0x320)) ||
+-	    ((reg > 0x405) && (reg < 0x420)) ||
+-	    ((reg > 0x128) && (reg < 0x130)) ||
+-	    ((reg > 0x228) && (reg < 0x230)) ||
+-	    ((reg > 0x328) && (reg < 0x330)) ||
+-	    ((reg > 0x428) && (reg < 0x430)) ||
+-	    ((reg > 0x138) && (reg < 0x205)) ||
+-	    ((reg > 0x238) && (reg < 0x305)) ||
+-	    ((reg > 0x338) && (reg < 0x405)) ||
+-	    ((reg > 0x405) && (reg < 0xF00)) ||
+-	    ((reg > 0xF05) && (reg < 0xF20)) ||
+-	    ((reg > 0xF25) && (reg < 0xF30)) ||
+-	    ((reg > 0xF35) && (reg < 0x2000)))
+-		ret = false;
+-
+-	return ret;
+-}
+-
+-static ssize_t swr_slave_reg_show(struct swr_device *pdev, char __user *ubuf,
+-					size_t count, loff_t *ppos)
+-{
+-	int i, reg_val, len;
+-	ssize_t total = 0;
+-	char tmp_buf[SWR_SLV_MAX_BUF_LEN];
+-
+-	if (!ubuf || !ppos)
+-		return 0;
+-
+-	for (i = (((int) *ppos/BYTES_PER_LINE) + SWR_SLV_START_REG_ADDR);
+-		i <= SWR_SLV_MAX_REG_ADDR; i++) {
+-		if (!is_swr_slave_reg_readable(i))
+-			continue;
+-		swr_read(pdev, pdev->dev_num, i, &reg_val, 1);
+-		len = snprintf(tmp_buf, sizeof(tmp_buf), "0x%.3x: 0x%.2x\n", i,
+-			       (reg_val & 0xFF));
+-		if (len < 0) {
+-			pr_err("%s: fail to fill the buffer\n", __func__);
+-			total = -EFAULT;
+-			goto copy_err;
+-		}
+-		if ((total + len) >= count - 1)
+-			break;
+-		if (copy_to_user((ubuf + total), tmp_buf, len)) {
+-			pr_err("%s: fail to copy reg dump\n", __func__);
+-			total = -EFAULT;
+-			goto copy_err;
+-		}
+-		total += len;
+-		*ppos += len;
+-	}
+-
+-copy_err:
+-	*ppos = SWR_SLV_MAX_REG_ADDR * BYTES_PER_LINE;
+-	return total;
+-}
+-
+-static ssize_t codec_debug_dump(struct file *file, char __user *ubuf,
+-				size_t count, loff_t *ppos)
+-{
+-	struct swr_device *pdev;
+-
+-	if (!count || !file || !ppos || !ubuf)
+-		return -EINVAL;
+-
+-	pdev = file->private_data;
+-	if (!pdev)
+-		return -EINVAL;
+-
+-	if (*ppos < 0)
+-		return -EINVAL;
+-
+-	return swr_slave_reg_show(pdev, ubuf, count, ppos);
+-}
+-
+-static ssize_t codec_debug_read(struct file *file, char __user *ubuf,
+-				size_t count, loff_t *ppos)
+-{
+-	char lbuf[SWR_SLV_RD_BUF_LEN];
+-	struct swr_device *pdev = NULL;
+-	struct wsa883x_priv *wsa883x = NULL;
+-
+-	if (!count || !file || !ppos || !ubuf)
+-		return -EINVAL;
+-
+-	pdev = file->private_data;
+-	if (!pdev)
+-		return -EINVAL;
+-
+-	wsa883x = swr_get_dev_data(pdev);
+-	if (!wsa883x)
+-		return -EINVAL;
+-
+-	if (*ppos < 0)
+-		return -EINVAL;
+-
+-	snprintf(lbuf, sizeof(lbuf), "0x%x\n",
+-			(wsa883x->read_data & 0xFF));
+-
+-	return simple_read_from_buffer(ubuf, count, ppos, lbuf,
+-					       strnlen(lbuf, 7));
+-}
+-
+-static ssize_t codec_debug_peek_write(struct file *file,
+-	const char __user *ubuf, size_t cnt, loff_t *ppos)
+-{
+-	char lbuf[SWR_SLV_WR_BUF_LEN];
+-	int rc = 0;
+-	u32 param[5];
+-	struct swr_device *pdev = NULL;
+-	struct wsa883x_priv *wsa883x = NULL;
+-
+-	if (!cnt || !file || !ppos || !ubuf)
+-		return -EINVAL;
+-
+-	pdev = file->private_data;
+-	if (!pdev)
+-		return -EINVAL;
+-
+-	wsa883x = swr_get_dev_data(pdev);
+-	if (!wsa883x)
+-		return -EINVAL;
+-
+-	if (*ppos < 0)
+-		return -EINVAL;
+-
+-	if (cnt > sizeof(lbuf) - 1)
+-		return -EINVAL;
+-
+-	rc = copy_from_user(lbuf, ubuf, cnt);
+-	if (rc)
+-		return -EFAULT;
+-
+-	lbuf[cnt] = '\0';
+-	rc = get_parameters(lbuf, param, 1);
+-	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) && (rc == 0)))
+-		return -EINVAL;
+-	swr_read(pdev, pdev->dev_num, param[0], &wsa883x->read_data, 1);
+-	if (rc == 0)
+-		rc = cnt;
+-	else
+-		pr_err("%s: rc = %d\n", __func__, rc);
+-
+-	return rc;
+-}
+-
+-static ssize_t codec_debug_write(struct file *file,
+-	const char __user *ubuf, size_t cnt, loff_t *ppos)
+-{
+-	char lbuf[SWR_SLV_WR_BUF_LEN];
+-	int rc = 0;
+-	u32 param[5];
+-	struct swr_device *pdev;
+-
+-	if (!file || !ppos || !ubuf)
+-		return -EINVAL;
+-
+-	pdev = file->private_data;
+-	if (!pdev)
+-		return -EINVAL;
+-
+-	if (cnt > sizeof(lbuf) - 1)
+-		return -EINVAL;
+-
+-	rc = copy_from_user(lbuf, ubuf, cnt);
+-	if (rc)
+-		return -EFAULT;
+-
+-	lbuf[cnt] = '\0';
+-	rc = get_parameters(lbuf, param, 2);
+-	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) &&
+-		(param[1] <= 0xFF) && (rc == 0)))
+-		return -EINVAL;
+-	swr_write(pdev, pdev->dev_num, param[0], &param[1]);
+-	if (rc == 0)
+-		rc = cnt;
+-	else
+-		pr_err("%s: rc = %d\n", __func__, rc);
+-
+-	return rc;
+-}
+-
+-static const struct file_operations codec_debug_write_ops = {
+-	.open = codec_debug_open,
+-	.write = codec_debug_write,
+-};
+-
+-static const struct file_operations codec_debug_read_ops = {
+-	.open = codec_debug_open,
+-	.read = codec_debug_read,
+-	.write = codec_debug_peek_write,
+-};
+-
+-static const struct file_operations codec_debug_dump_ops = {
+-	.open = codec_debug_open,
+-	.read = codec_debug_dump,
+-};
+-#endif
+ 
+ static void wsa883x_regcache_sync(struct wsa883x_priv *wsa883x)
+ {
+@@ -1439,11 +1196,7 @@ static int wsa883x_codec_probe(struct snd_soc_component *component)
+ 	struct swr_device *dev;
+ 	int variant = 0, version = 0;
+ 	struct snd_soc_dapm_context *dapm =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 			snd_soc_component_to_dapm(component);
+-#else
+-			snd_soc_component_get_dapm(component);
+-#endif
+ 
+ 	if (!wsa883x)
+ 		return -EINVAL;
+@@ -1700,82 +1453,6 @@ static struct snd_soc_dai_driver wsa_dai[] = {
+ 	},
+ };
+ 
+-static int regdump_read(struct regmap *map, int baseReg, int endReg,
+-		char __user *user_buf, size_t count, loff_t *ppos)
+-{
+-	int i = 0, ret = 0;
+-	size_t pos = 0;
+-	char *buf;
+-	unsigned int reg_val = 0, reg_len = 0;
+-	unsigned int reg_val_len = 0, regdump_wr_len = 0;
+-
+-	i  = ((int) *ppos + baseReg);
+-
+-
+-	buf = kzalloc(count, GFP_KERNEL);
+-	if (!buf)
+-		return -ENOMEM;
+-
+-	reg_len = scnprintf(buf, count, "%x", endReg);
+-	reg_val_len = 2 * DIV_ROUND_UP(REGDUMP_PRINT_LEN, 8);
+-	regdump_wr_len = reg_len + reg_val_len + 3;
+-
+-	/* Disable Reading/Writing from Cache */
+-	regcache_cache_bypass(map, true);
+-	for (; i >= 0 && i <= endReg; i++) {
+-
+-		scnprintf(buf+pos, count-pos, "%.*x: ", reg_len, i);
+-		pos += reg_len + 2;
+-		ret = regmap_read(map, i, &reg_val);
+-		if (ret == 0)
+-			scnprintf(buf+pos, count-pos, "%.*x", reg_val_len, reg_val);
+-		else
+-			memset(buf+pos, 'X', reg_val_len);
+-
+-		pos +=  reg_val_len;
+-		buf[pos++] = '\n';
+-		*ppos += 1;
+-
+-		/*
+-		 * Check not to overwrite the buffer, by ensuring we have
+-		 * space for writing next register data
+-		 *
+-		 * this is scalable if we use proc or any other fs interface
+-		 * as count would take the buf_size passed from userspace
+-		 */
+-		if ((pos + regdump_wr_len) >= count)
+-			break;
+-	}
+-	/* Enable Reading/Writing from Cache */
+-	regcache_cache_bypass(map, false);
+-
+-	ret = pos;
+-	if (copy_to_user(user_buf, buf, pos))
+-		ret = -EFAULT;
+-
+-	kfree(buf);
+-	return ret;
+-}
+-
+-
+-static ssize_t wsa883x_proc_read(struct file *filep, char __user *buf, size_t size, loff_t *ppos)
+-{
+-	ssize_t ret = 0;
+-	struct wsa883x_priv *wsa883x = NULL;
+-
+-	if (!size || !filep || !ppos || !buf || *ppos < 0)
+-		return -EINVAL;
+-
+-	wsa883x = pde_data(file_inode(filep));
+-	if (!wsa883x)
+-		return -EINVAL;
+-
+-	ret = regdump_read(wsa883x->regmap, WSA883X_BASE, WSA883X_MAX_REGISTER, buf, size, ppos);
+-	return ret;
+-}
+-static const struct proc_ops wsa883x_proc_ops = {
+-	.proc_read = wsa883x_proc_read,
+-};
+ 
+ static int wsa883x_swr_probe(struct swr_device *pdev)
+ {
+@@ -1787,8 +1464,6 @@ static int wsa883x_swr_probe(struct swr_device *pdev)
+ 	struct snd_soc_component *component;
+ 	char buffer[MAX_NAME_LEN];
+ 	int dev_index = 0;
+-	char *proc_entry_name;
+-	struct proc_dir_entry *wsa883x_proc_regdump_file = NULL;
+ 	struct regmap_irq_chip *wsa883x_sub_regmap_irq_chip = NULL;
+ 
+ 	wsa883x = devm_kzalloc(&pdev->dev, sizeof(struct wsa883x_priv),
+@@ -1845,29 +1520,7 @@ static int wsa883x_swr_probe(struct swr_device *pdev)
+ 		goto dev_err;
+ 	}
+ 
+-	devm_regmap_qti_debugfs_register(&pdev->dev, wsa883x->regmap);
+ 
+-	/*
+-	 * gracefully handle proc creation
+-	 * if proc fails, probe should not be affected
+-	 **/
+-	proc_entry_name = devm_kasprintf(&pdev->dev, GFP_KERNEL, "wsa883x_reginfo_%d", devnum);
+-	if (proc_entry_name) {
+-		wsa883x->wsa883x_proc_entry = proc_mkdir(proc_entry_name, NULL);
+-		if (wsa883x->wsa883x_proc_entry) {
+-			wsa883x_proc_regdump_file =
+-					proc_create_data("wsa883x_regdump", 0444,
+-			wsa883x->wsa883x_proc_entry, &wsa883x_proc_ops, wsa883x);
+-			if (!wsa883x_proc_regdump_file) {
+-				dev_err(&pdev->dev, "%s: Error creating proc read file interface\n",
+-					__func__);
+-				proc_remove(wsa883x->wsa883x_proc_entry);
+-				wsa883x->wsa883x_proc_entry = NULL;
+-			}
+-		} else {
+-			dev_err(&pdev->dev, "%s: Error creating proc dir interface\n", __func__);
+-		}
+-	}
+ 
+ 	/* Set all interrupts as edge triggered */
+ 	for (i = 0; i < wsa883x_sub_regmap_irq_chip->num_regs; i++)
+@@ -2098,8 +1751,6 @@ static int wsa883x_swr_remove(struct swr_device *pdev)
+ 		return -EINVAL;
+ 	}
+ 
+-	if (wsa883x->wsa883x_proc_entry)
+-		proc_remove(wsa883x->wsa883x_proc_entry);
+ 
+ 	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_SAF2WAR, NULL);
+ 	wcd_free_irq(&wsa883x->irq_info, WSA883X_IRQ_INT_WAR2SAF, NULL);
+@@ -2149,11 +1800,7 @@ static int wsa883x_swr_suspend(struct device *dev)
+ 	dev_dbg(dev, "%s: system suspend\n", __func__);
+ 	if (wsa883x->dapm_bias_off ||
+ 		(wsa883x->component &&
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 		 (snd_soc_dapm_get_bias_level(snd_soc_component_to_dapm(wsa883x->component)) ==
+-#else
+-		 (snd_soc_component_get_bias_level(wsa883x->component) ==
+-#endif
+ 		 SND_SOC_BIAS_OFF))) {
+ 		msm_cdc_set_supplies_lpm_mode(dev, wsa883x->supplies,
+ 					wsa883x->regulator,
+-- 
+2.34.1
+

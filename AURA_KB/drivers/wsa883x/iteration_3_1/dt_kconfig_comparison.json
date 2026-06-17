@@ -1,0 +1,37 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_1_DT_KCONFIG_COMPARISON",
+  "dt_properties_upstream_reads": [
+    "#sound-dai-cells",
+    "#thermal-sensor-cells",
+    "powerdown-gpios",
+    "qcom,port-mapping",
+    "reset-gpios",
+    "vdd-supply"
+  ],
+  "dt_properties_converted_reads": [
+    "#sound-dai-cells",
+    "#thermal-sensor-cells",
+    "powerdown-gpios",
+    "qcom,port-mapping",
+    "reset-gpios",
+    "vdd-supply"
+  ],
+  "dt_property_match_percentage": 100.0,
+  "supply_names_upstream": [
+    "vdd"
+  ],
+  "supply_names_converted": [
+    "vdd"
+  ],
+  "supply_match": true,
+  "clock_names_upstream": [],
+  "clock_names_converted": [],
+  "clock_match": true,
+  "kconfig_correct": true,
+  "makefile_correct": true,
+  "notes": [
+    "clock_match is true because the binding and upstream driver expose no named clock resources for WSA883x",
+    "supply name match improved from iteration 3 by using binding-derived vdd",
+    "DT property coverage reached 100%; implementation API still differs for reset and thermal/hwmon paths."
+  ]
+}

@@ -1,0 +1,115 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_1_DT_AWARE_CONVERSION_PLAN",
+  "classification": "PASS",
+  "predicted_patch_count": 10,
+  "patch_series": [
+    {
+      "patch": 1,
+      "file": "0001-ASoC-codecs-wsa883x-drop-downstream-diagnostics-and-version-paths.patch",
+      "scope": "drop downstream diagnostics and version paths"
+    },
+    {
+      "patch": 2,
+      "file": "0002-ASoC-codecs-wsa883x-convert-vendor-SoundWire-driver-to-sdw.patch",
+      "scope": "convert vendor SoundWire driver to sdw"
+    },
+    {
+      "patch": 3,
+      "file": "0003-ASoC-codecs-wsa883x-use-binding-GPIO-and-vdd-regulator-signals.patch",
+      "scope": "use binding GPIO and vdd regulator signals"
+    },
+    {
+      "patch": 4,
+      "file": "0004-ASoC-codecs-wsa883x-add-upstream-SoundWire-stream-and-slave-ops.patch",
+      "scope": "add upstream SoundWire stream and slave ops"
+    },
+    {
+      "patch": 5,
+      "file": "0005-ASoC-codecs-wsa883x-register-binding-thermal-sensor.patch",
+      "scope": "register binding thermal sensor"
+    },
+    {
+      "patch": 6,
+      "file": "0006-ASoC-codecs-wsa883x-remove-vendor-IRQ-and-parent-notifier-coupling.patch",
+      "scope": "remove vendor IRQ and parent notifier coupling"
+    },
+    {
+      "patch": 7,
+      "file": "0007-ASoC-codecs-wsa883x-use-static-component-registration-and-binding-IDs.patch",
+      "scope": "use static component registration and binding IDs"
+    },
+    {
+      "patch": 8,
+      "file": "0008-ASoC-codecs-wsa883x-finalize-SDW-runtime-PM-and-vendor-cleanup.patch",
+      "scope": "finalize SDW runtime PM and vendor cleanup"
+    },
+    {
+      "patch": 9,
+      "file": "0009-ASoC-codecs-wsa883x-remove-residual-vendor-datapath-and-IRQ-shims.patch",
+      "scope": "remove residual vendor datapath and IRQ shims"
+    },
+    {
+      "patch": 10,
+      "file": "0010-ASoC-codecs-wsa883x-wire-binding-informed-probe-resources.patch",
+      "scope": "wire binding informed probe resources"
+    }
+  ],
+  "dt_property_to_probe_implementation": [
+    {
+      "property": "vdd-supply",
+      "binding_requirement": "required",
+      "planned_probe_implementation": "regulator get using supply name vdd",
+      "downstream_equivalent": "msm_cdc_get_supplies/vendor cdc_regulator abstraction"
+    },
+    {
+      "property": "powerdown-gpios",
+      "binding_requirement": "oneOf required",
+      "planned_probe_implementation": "devm_gpiod_get_optional(dev, powerdown, GPIOD_OUT_LOW)",
+      "downstream_equivalent": "qcom,spkr-sd-n-node + msm_cdc_pinctrl"
+    },
+    {
+      "property": "reset-gpios",
+      "binding_requirement": "oneOf required",
+      "planned_probe_implementation": "fallback reset GPIO lookup",
+      "downstream_equivalent": "same shutdown/reset line as qcom,spkr-sd-n-node"
+    },
+    {
+      "property": "qcom,port-mapping",
+      "binding_requirement": "optional",
+      "planned_probe_implementation": "of_property_read_u32_array into SoundWire port map",
+      "downstream_equivalent": "hardcoded port table / port-status masks"
+    },
+    {
+      "property": "#thermal-sensor-cells",
+      "binding_requirement": "required",
+      "planned_probe_implementation": "thermal sensor registration, blind assumption",
+      "downstream_equivalent": "separate wsa883x-temp-sensor module"
+    },
+    {
+      "property": "#sound-dai-cells",
+      "binding_requirement": "required",
+      "planned_probe_implementation": "devm_snd_soc_register_component with DAI driver",
+      "downstream_equivalent": "dynamic component/DAI allocation"
+    }
+  ],
+  "kconfig_fragment": {
+    "config": "SND_SOC_WSA883X",
+    "depends_on": [
+      "SOUNDWIRE"
+    ],
+    "selects": [
+      "REGMAP_SOUNDWIRE"
+    ],
+    "action": "documented upstream already has correct entry; no generated source patch needed"
+  },
+  "makefile_fragment": {
+    "assignment": "snd-soc-wsa883x-y := wsa883x.o",
+    "obj": "obj-$(CONFIG_SND_SOC_WSA883X) += snd-soc-wsa883x.o",
+    "action": "documented upstream already has correct entry; no generated source patch needed"
+  },
+  "blind_assumptions": [
+    "thermal cells imply thermal-zone registration rather than hwmon",
+    "reset-gpios can be represented as GPIO fallback without reset controller API",
+    "SDW identity inferred from compatible string rather than verified from answer file"
+  ]
+}

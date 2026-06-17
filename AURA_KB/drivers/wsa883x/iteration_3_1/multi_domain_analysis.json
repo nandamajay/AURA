@@ -1,0 +1,98 @@
+{
+  "artifact_name": "WSA883X_ITERATION_3_1_MULTI_DOMAIN_ANALYSIS",
+  "device_tree_analysis": {
+    "binding": "qcom,wsa883x.yaml",
+    "compatible": "sdw10217020200",
+    "required_properties": [
+      "compatible",
+      "reg",
+      "vdd-supply",
+      "#thermal-sensor-cells",
+      "#sound-dai-cells"
+    ],
+    "one_of_required": [
+      "powerdown-gpios",
+      "reset-gpios"
+    ],
+    "optional_properties": [
+      "qcom,port-mapping",
+      "sound-name-prefix from dai-common"
+    ],
+    "property_to_probe_map": [
+      {
+        "property": "vdd-supply",
+        "binding_requirement": "required",
+        "planned_probe_implementation": "regulator get using supply name vdd",
+        "downstream_equivalent": "msm_cdc_get_supplies/vendor cdc_regulator abstraction"
+      },
+      {
+        "property": "powerdown-gpios",
+        "binding_requirement": "oneOf required",
+        "planned_probe_implementation": "devm_gpiod_get_optional(dev, powerdown, GPIOD_OUT_LOW)",
+        "downstream_equivalent": "qcom,spkr-sd-n-node + msm_cdc_pinctrl"
+      },
+      {
+        "property": "reset-gpios",
+        "binding_requirement": "oneOf required",
+        "planned_probe_implementation": "fallback reset GPIO lookup",
+        "downstream_equivalent": "same shutdown/reset line as qcom,spkr-sd-n-node"
+      },
+      {
+        "property": "qcom,port-mapping",
+        "binding_requirement": "optional",
+        "planned_probe_implementation": "of_property_read_u32_array into SoundWire port map",
+        "downstream_equivalent": "hardcoded port table / port-status masks"
+      },
+      {
+        "property": "#thermal-sensor-cells",
+        "binding_requirement": "required",
+        "planned_probe_implementation": "thermal sensor registration, blind assumption",
+        "downstream_equivalent": "separate wsa883x-temp-sensor module"
+      },
+      {
+        "property": "#sound-dai-cells",
+        "binding_requirement": "required",
+        "planned_probe_implementation": "devm_snd_soc_register_component with DAI driver",
+        "downstream_equivalent": "dynamic component/DAI allocation"
+      }
+    ]
+  },
+  "kconfig_analysis": {
+    "upstream_entry": "SND_SOC_WSA883X",
+    "depends_on": [
+      "SOUNDWIRE"
+    ],
+    "selects": [
+      "REGMAP_SOUNDWIRE"
+    ],
+    "downstream_difference": "external DLKM Kbuild with ARCH_* config includes and multi-object WSA883X_OBJS"
+  },
+  "makefile_analysis": {
+    "upstream_objects": [
+      "snd-soc-wsa883x-y := wsa883x.o"
+    ],
+    "downstream_objects": [
+      "wsa883x.o",
+      "wsa883x-regmap.o",
+      "wsa883x-tables.o"
+    ],
+    "object_consolidation_needed": true
+  },
+  "source_analysis": {
+    "vendor_dependencies_removed": [
+      "soc/soundwire.h",
+      "asoc/msm-cdc-pinctrl.h",
+      "asoc/msm-cdc-supply.h",
+      "asoc/bolero-slave-internal.h",
+      "qti-regmap-debugfs",
+      "proc_fs",
+      "wcd-irq wrappers"
+    ],
+    "regulator_supply_names_from_binding": [
+      "vdd"
+    ],
+    "clock_names_from_binding": [],
+    "thermal_signal": "binding requires thermal cells but not implementation API; wsa881x lacks WSA883x hwmon detail",
+    "interrupt_model": "vendor wcd_irq removed; SoundWire/regmap IRQ handling left to upstream SDW model"
+  }
+}

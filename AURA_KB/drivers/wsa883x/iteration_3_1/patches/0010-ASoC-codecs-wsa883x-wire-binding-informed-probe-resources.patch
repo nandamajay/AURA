@@ -1,0 +1,121 @@
+From 05d42aa74a0c7dd0e330d710d15b6b489282e3ae Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 15:28:52 +0530
+Subject: [PATCH 10/10] ASoC: codecs: wsa883x: wire binding-informed probe
+ resources
+
+---
+ asoc/codecs/wsa883x/wsa883x.c | 64 ++++++++++++++++++++++++-----------
+ 1 file changed, 45 insertions(+), 19 deletions(-)
+
+diff --git a/asoc/codecs/wsa883x/wsa883x.c b/asoc/codecs/wsa883x/wsa883x.c
+index 623662b..c241e36 100644
+--- a/asoc/codecs/wsa883x/wsa883x.c
++++ b/asoc/codecs/wsa883x/wsa883x.c
+@@ -18,6 +18,7 @@
+ #include <linux/kernel.h>
+ #include <linux/gpio/consumer.h>
+ #include <linux/of_platform.h>
++#include <linux/of.h>
+ #include <linux/regmap.h>
+ #include <linux/debugfs.h>
+ #include <linux/soundwire/sdw.h>
+@@ -1433,39 +1434,62 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 	if (!wsa883x)
+ 		return -ENOMEM;
+ 
+-	/* Interrupt delivery is handled by SoundWire slave callbacks/regmap IRQs. */
+-
+-
+-
+-
+-
++	dev_set_drvdata(&pdev->dev, wsa883x);
++	wsa883x->dev = &pdev->dev;
++	wsa883x->sdw_slave = pdev;
++	mutex_init(&wsa883x->res_lock);
+ 
++	wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "powerdown",
++						GPIOD_OUT_LOW);
++	if (IS_ERR(wsa883x->sd_n))
++		return dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->sd_n),
++				     "failed to get powerdown GPIO\n");
++	if (!wsa883x->sd_n) {
++		wsa883x->sd_n = devm_gpiod_get_optional(&pdev->dev, "reset",
++							GPIOD_OUT_LOW);
++		if (IS_ERR(wsa883x->sd_n))
++			return dev_err_probe(&pdev->dev, PTR_ERR(wsa883x->sd_n),
++					     "failed to get reset GPIO\n");
++	}
+ 
++	ret = wsa883x_enable_supplies(&pdev->dev, wsa883x);
++	if (ret)
++		return ret;
+ 
++	wsa883x->sconfig.ch_count = 1;
++	wsa883x->sconfig.bps = 1;
++	wsa883x->sconfig.frame_rate = 48000;
++	wsa883x->sconfig.direction = SDW_DATA_DIR_RX;
++	wsa883x->sconfig.type = SDW_STREAM_PDM;
++	wsa883x->port_config[0].num = 1;
++	wsa883x->port_config[0].ch_mask = 1;
++	wsa883x->active_ports = 1;
+ 
++	of_property_read_u32_array(pdev->dev.of_node, "qcom,port-mapping",
++				   &pdev->m_port_map[1], WSA883X_MAX_SDW_PORTS);
+ 
++	wsa883x->regmap = devm_regmap_init_sdw(pdev, &wsa883x_regmap_config);
++	if (IS_ERR(wsa883x->regmap)) {
++		ret = PTR_ERR(wsa883x->regmap);
++		goto err_supply;
++	}
+ 
++	pm_runtime_set_autosuspend_delay(&pdev->dev, 3000);
++	pm_runtime_use_autosuspend(&pdev->dev);
++	pm_runtime_mark_last_busy(&pdev->dev);
++	pm_runtime_set_active(&pdev->dev);
++	pm_runtime_enable(&pdev->dev);
+ 
+ 	wsa883x->pdm_wd_enabled = false;
+-
+-
+-
+-
+-
+-	/* Under Voltage Lock out (UVLO) interrupt handle */
+-
+-
+-
++	/* Interrupt delivery is handled by SoundWire slave callbacks/regmap IRQs. */
+ 
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+ 			&soc_codec_dev_wsa883x_wsa, wsa_dai, ARRAY_SIZE(wsa_dai));
+ 	if (ret)
+-		goto err_supply;
++		goto err_pm;
+ 
+ 	component = snd_soc_lookup_component(&pdev->dev, "wsa883x");
+ 
+-	mutex_init(&wsa883x->res_lock);
+-
+ #ifdef CONFIG_DEBUG_FS
+ 	if (!wsa883x->debugfs_dent) {
+ 		wsa883x->debugfs_dent = debugfs_create_dir(
+@@ -1498,11 +1522,13 @@ static int wsa883x_sdw_probe(struct sdw_slave *pdev, const struct sdw_device_id
+ 
+ 	return 0;
+ 
++err_pm:
++	pm_runtime_disable(&pdev->dev);
+ err_component:
+ dev_err:
+ 	if (pin_state_current == false)
+ 		wsa883x_gpio_ctrl(wsa883x, false);
+-	err_supply:
++err_supply:
+ 	regulator_bulk_disable(wsa883x->num_supplies, wsa883x->supplies);
+ err:
+ 	dev_set_drvdata(&pdev->dev, NULL);
+-- 
+2.34.1
+
