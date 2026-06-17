@@ -1,0 +1,74 @@
+From a7ea5e687bcad7644ef7e27f14d9e56548de2755 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 03:19:45 +0530
+Subject: [PATCH 03/10] ASoC: codecs: lpass-rx-macro: remove SoundWire vendor
+ notification coupling
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 19 ++++++++++++-------
+ 1 file changed, 12 insertions(+), 7 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index fe44ca4..6a5e27c 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -22,6 +22,11 @@
+ #include "lpass-cdc-registers.h"
+ #include "lpass-cdc-clk-rsc.h"
+ 
++static inline int rx_macro_notify(void *handle, int event, void *data)
++{
++	return 0;
++}
++
+ #define AUTO_SUSPEND_DELAY  50 /* delay in msec */
+ #define CDC_RX_MACRO_RATES (SNDRV_PCM_RATE_8000 | SNDRV_PCM_RATE_16000 |\
+ 			SNDRV_PCM_RATE_32000 | SNDRV_PCM_RATE_48000 |\
+@@ -968,9 +973,9 @@ static int lpass_cdc_rx_macro_set_port_map(struct snd_soc_component *component,
+ 	port_cfg.params = data;
+ 
+ 	if (rx_priv->swr_ctrl_data)
+-		ret = swrm_wcd_notify(
++		ret = rx_macro_notify(
+ 			rx_priv->swr_ctrl_data[0].rx_swr_pdev,
+-			SWR_SET_PORT_MAP, &port_cfg);
++			RX_MACRO_SET_PORT_MAP, &port_cfg);
+ 
+ 	return ret;
+ }
+@@ -1460,7 +1465,7 @@ static int lpass_cdc_rx_macro_mclk_event(struct snd_soc_dapm_widget *w,
+ 		if (rx_priv->is_native_on)
+ 			mclk_freq = MCLK_FREQ_NATIVE;
+ 		if (rx_priv->swr_ctrl_data)
+-			swrm_wcd_notify(
++			rx_macro_notify(
+ 				rx_priv->swr_ctrl_data[0].rx_swr_pdev,
+ 				SWR_CLK_FREQ, &mclk_freq);
+ 		ret = lpass_cdc_rx_macro_mclk_enable(rx_priv, 1, true);
+@@ -1525,9 +1530,9 @@ static int lpass_cdc_rx_macro_event_handler(struct snd_soc_component *component,
+ 		rx_priv->pre_dev_up = false;
+ 		rx_priv->dev_up = false;
+ 		if (rx_priv->swr_ctrl_data) {
+-			swrm_wcd_notify(
++			rx_macro_notify(
+ 				rx_priv->swr_ctrl_data[0].rx_swr_pdev,
+-				SWR_DEVICE_SSR_DOWN, NULL);
++				RX_MACRO_DEVICE_SSR_DOWN, NULL);
+ 		}
+ 		if ((!pm_runtime_enabled(rx_dev) ||
+ 		     !pm_runtime_suspended(rx_dev))) {
+@@ -1568,9 +1573,9 @@ static int lpass_cdc_rx_macro_event_handler(struct snd_soc_component *component,
+ 		rx_priv->reset_swr = true;
+ 
+ 		if (rx_priv->swr_ctrl_data)
+-			swrm_wcd_notify(
++			rx_macro_notify(
+ 				rx_priv->swr_ctrl_data[0].rx_swr_pdev,
+-				SWR_DEVICE_SSR_UP, NULL);
++				RX_MACRO_DEVICE_SSR_UP, NULL);
+ 		break;
+ 	case LPASS_CDC_MACRO_EVT_CLK_RESET:
+ 		lpass_cdc_rsc_clk_reset(rx_dev, RX_CORE_CLK);
+-- 
+2.34.1
+

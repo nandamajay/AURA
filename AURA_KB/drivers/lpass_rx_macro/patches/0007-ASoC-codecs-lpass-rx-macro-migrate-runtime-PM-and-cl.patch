@@ -1,0 +1,134 @@
+From f086bddcad5811fd52037a5f03df827f304a6b62 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 03:19:45 +0530
+Subject: [PATCH 07/10] ASoC: codecs: lpass-rx-macro: migrate runtime PM and
+ clock-provider pattern
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 89 ++++++++++++++++++++++
+ 1 file changed, 89 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 92efba9..0e40214 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -24,6 +24,81 @@ static inline int rx_macro_notify(void *handle, int event, void *data)
+ 	return 0;
+ }
+ 
++static int rx_macro_clk_gate_enable(struct clk_hw *hw)
++{
++	return 0;
++}
++
++static void rx_macro_clk_gate_disable(struct clk_hw *hw)
++{
++}
++
++static int rx_macro_clk_gate_is_enabled(struct clk_hw *hw)
++{
++	return 1;
++}
++
++static unsigned long rx_macro_clk_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
++{
++	return parent_rate;
++}
++
++static const struct clk_ops rx_macro_clk_gate_ops = {
++	.enable = rx_macro_clk_gate_enable,
++	.disable = rx_macro_clk_gate_disable,
++	.is_enabled = rx_macro_clk_gate_is_enabled,
++	.recalc_rate = rx_macro_clk_recalc_rate,
++};
++
++static int rx_macro_register_mclk_output(struct lpass_cdc_rx_macro_priv *rx_priv)
++{
++	const char *parent_clk_name = "mclk";
++	const char *clk_name = "lpass-rx-mclk";
++	struct clk_init_data init = { };
++	struct device *dev = rx_priv->dev;
++
++	if (rx_priv->mclk)
++		parent_clk_name = __clk_get_name(rx_priv->mclk);
++
++	init.name = clk_name;
++	init.ops = &rx_macro_clk_gate_ops;
++	init.flags = 0;
++	init.parent_names = &parent_clk_name;
++	init.num_parents = 1;
++	rx_priv->hw.init = &init;
++
++	if (devm_clk_hw_register(dev, &rx_priv->hw))
++		return -EINVAL;
++
++	return devm_of_clk_add_hw_provider(dev, of_clk_hw_simple_get, &rx_priv->hw);
++}
++
++static int rx_macro_runtime_suspend(struct device *dev)
++{
++	struct lpass_cdc_rx_macro_priv *rx_priv = dev_get_drvdata(dev);
++
++	if (!rx_priv || !rx_priv->regmap)
++		return 0;
++	regcache_cache_only(rx_priv->regmap, true);
++	regcache_mark_dirty(rx_priv->regmap);
++	if (rx_priv->hifi_fir_clk)
++		clk_disable_unprepare(rx_priv->hifi_fir_clk);
++	return 0;
++}
++
++static int rx_macro_runtime_resume(struct device *dev)
++{
++	struct lpass_cdc_rx_macro_priv *rx_priv = dev_get_drvdata(dev);
++
++	if (!rx_priv || !rx_priv->regmap)
++		return 0;
++	if (rx_priv->hifi_fir_clk)
++		clk_prepare_enable(rx_priv->hifi_fir_clk);
++	regcache_cache_only(rx_priv->regmap, false);
++	regcache_sync(rx_priv->regmap);
++	return 0;
++}
++
+ static bool rx_macro_readable_register(struct device *dev, unsigned int reg)
+ {
+ 	return reg <= CDC_RX_MACRO_MAX_OFFSET;
+@@ -528,6 +603,12 @@ struct lpass_cdc_rx_macro_priv {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+ 	struct lpass_macro *pds;
++	struct clk *mclk;
++	struct clk *npl;
++	struct clk *macro_clk;
++	struct clk *dcodec_clk;
++	struct clk *fsgen;
++	struct clk_hw hw;
+ 	int comp_enabled[CDC_RX_MACRO_COMP_MAX];
+ 	u8 is_pcm_enabled;
+ 	/* Main path clock users count */
+@@ -4885,6 +4966,11 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 
+ 	rx_priv->pre_dev_up = true;
+ 	rx_priv->dev = &pdev->dev;
++	rx_priv->macro_clk = devm_clk_get_optional(&pdev->dev, "macro");
++	rx_priv->dcodec_clk = devm_clk_get_optional(&pdev->dev, "dcodec");
++	rx_priv->mclk = devm_clk_get_optional(&pdev->dev, "mclk");
++	rx_priv->npl = devm_clk_get_optional(&pdev->dev, "npl");
++	rx_priv->fsgen = devm_clk_get_optional(&pdev->dev, "fsgen");
+ 	rx_priv->pds = lpass_macro_pds_init(&pdev->dev);
+ 	if (IS_ERR(rx_priv->pds))
+ 		return PTR_ERR(rx_priv->pds);
+@@ -5029,6 +5115,9 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_suspend_ignore_children(&pdev->dev, true);
+ 	pm_runtime_enable(&pdev->dev);
++	ret = rx_macro_register_mclk_output(rx_priv);
++	if (ret)
++		dev_dbg(&pdev->dev, "%s: clock provider registration skipped %d\n", __func__, ret);
+ 	schedule_work(&rx_priv->lpass_cdc_rx_macro_add_child_devices_work);
+ 	return 0;
+ 
+-- 
+2.34.1
+

@@ -1,0 +1,373 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_MULTI_DOMAIN_ANALYSIS",
+  "generated_at_utc": "2026-06-17T21:47:18+00:00",
+  "blind_rule": {
+    "upstream_lpass_rx_macro_c_read_before_task5": false,
+    "status": "ENFORCED"
+  },
+  "allowed_signal_sources": [
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/include/linux/clk-provider.h",
+    "track_b_corpora/linux-next/include/linux/of_clk.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "AURA_KB/drivers/lpass_va_macro/conversion_lessons_learned.json",
+    "AURA_KB/drivers/lpass_va_macro/iteration_2/improvement_over_iteration_1.json",
+    "AURA_KB/drivers/lpass_tx_macro/tx_lessons_learned.json",
+    "AURA_KB/drivers/lpass_wsa_macro/wsa_macro_lessons_learned.json"
+  ],
+  "dt_binding": {
+    "file": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml",
+    "compatibles": [
+      "qcom,sc7280-lpass-rx-macro",
+      "qcom,sm6115-lpass-rx-macro",
+      "qcom,sm8250-lpass-rx-macro",
+      "qcom,sm8450-lpass-rx-macro",
+      "qcom,sm8550-lpass-rx-macro",
+      "qcom,sc8280xp-lpass-rx-macro",
+      "qcom,kaanapali-lpass-rx-macro",
+      "qcom,sm8650-lpass-rx-macro",
+      "qcom,sm8750-lpass-rx-macro",
+      "qcom,x1e80100-lpass-rx-macro"
+    ],
+    "required_properties": [
+      "compatible",
+      "reg",
+      "#sound-dai-cells"
+    ],
+    "clock_names_per_binding": [
+      "mclk",
+      "npl",
+      "macro",
+      "dcodec",
+      "fsgen"
+    ],
+    "clock_output_names": [
+      "mclk"
+    ],
+    "power_domain_names": [
+      "macro",
+      "dcodec"
+    ],
+    "property_to_probe_mapping": [
+      {
+        "property": "compatible",
+        "probe_requirement": "of_device_id table + of_device_get_match_data()",
+        "confidence": "HIGH",
+        "source": "lpass-va-macro.c:1587,1757-1763; lpass-tx-macro.c:2494-2517"
+      },
+      {
+        "property": "reg",
+        "probe_requirement": "devm_platform_ioremap_resource(pdev, 0) + devm_regmap_init_mmio()",
+        "confidence": "HIGH",
+        "source": "lpass-va-macro.c:1573-1579; lpass-tx-macro.c:2282-2302"
+      },
+      {
+        "property": "clock-names/clocks",
+        "probe_requirement": "devm_clk_get()/devm_clk_get_optional() for mclk/npl/macro/dcodec/fsgen",
+        "confidence": "HIGH",
+        "source": "lpass-va-macro.c:1544-1554,1594-1603; lpass-tx-macro.c:2252-2276"
+      },
+      {
+        "property": "clock-output-names",
+        "probe_requirement": "clk_hw registration + devm_of_clk_add_hw_provider()",
+        "confidence": "HIGH",
+        "source": "lpass-va-macro.c:1410-1422; lpass-tx-macro.c:2224-2228"
+      },
+      {
+        "property": "power-domains/power-domain-names",
+        "probe_requirement": "lpass_macro_pds_init()/lpass_macro_pds_exit()",
+        "confidence": "HIGH",
+        "source": "lpass-macro-common.c:17-70; lpass-va-macro.c:1556,1692; lpass-tx-macro.c:2278,2384"
+      },
+      {
+        "property": "#sound-dai-cells",
+        "probe_requirement": "devm_snd_soc_register_component() with dai array",
+        "confidence": "HIGH",
+        "source": "lpass-va-macro.c:1658-1660; lpass-tx-macro.c:2355-2357"
+      }
+    ]
+  },
+  "kconfig_makefile": {
+    "kconfig_entry": {
+      "symbol": "SND_SOC_LPASS_RX_MACRO",
+      "depends_on": [
+        "COMMON_CLK"
+      ],
+      "selects": [
+        "REGMAP_MMIO",
+        "SND_SOC_LPASS_MACRO_COMMON"
+      ],
+      "source": "track_b_corpora/linux-next/sound/soc/codecs/Kconfig:2910-2914"
+    },
+    "makefile_entry": {
+      "object": "snd-soc-lpass-rx-macro-y := lpass-rx-macro.o",
+      "source": "track_b_corpora/linux-next/sound/soc/codecs/Makefile:162,889"
+    }
+  },
+  "same_class_reference_patterns": {
+    "va_macro": {
+      "probe_lifecycle": "devm_kzalloc -> clock gets -> pds init -> ioremap resource -> regmap init -> match data -> component register -> runtime pm -> clock provider",
+      "source": "lpass-va-macro.c:1530-1680",
+      "clock_provider_signal": "of_property_read_string(clock-output-names)+devm_clk_hw_register+devm_of_clk_add_hw_provider",
+      "source_clock": "lpass-va-macro.c:1410-1422"
+    },
+    "tx_macro": {
+      "probe_lifecycle": "devm_kzalloc -> device_get_match_data -> clocks -> pds init -> ioremap resource -> regmap init -> component register -> runtime pm -> mclk provider",
+      "source": "lpass-tx-macro.c:2233-2382",
+      "runtime_pm_signal": "RUNTIME_PM_OPS(tx_macro_runtime_suspend, tx_macro_runtime_resume, NULL)",
+      "source_runtime": "lpass-tx-macro.c:2402-2453"
+    },
+    "macro_common": {
+      "power_domain_pattern": "attach macro/dcodec domains and runtime resume/put with detach on exit",
+      "source": "lpass-macro-common.c:17-70"
+    }
+  },
+  "downstream_source_inventory": {
+    "file": "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "line_count": 5066,
+    "vendor_dependency_inventory": [
+      {
+        "symbol": "lpass_cdc_register_macro",
+        "lines": [
+          4979
+        ],
+        "replacement_target": "devm_snd_soc_register_component path",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "lpass_cdc_unregister_macro",
+        "lines": [
+          5022
+        ],
+        "replacement_target": "component-native remove path",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "lpass_cdc_clk_rsc_*",
+        "lines": [
+          1333,
+          1344,
+          1390,
+          1398,
+          1554,
+          1562
+        ],
+        "replacement_target": "clk API ownership",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "lpass_cdc_rsc_clk_reset",
+        "lines": [
+          1578,
+          1579
+        ],
+        "replacement_target": "runtime-pm/local clock sequencing",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "swrm_wcd_notify",
+        "lines": [
+          972,
+          1465,
+          1530,
+          1573
+        ],
+        "replacement_target": "remove vendor notification coupling",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "SWR_SET_PORT_MAP/SWR_DEVICE_SSR_*",
+        "lines": [
+          974,
+          1532,
+          1575
+        ],
+        "replacement_target": "remove vendor event enums",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "msm_cdc_pinctrl_*",
+        "lines": [
+          4510,
+          4522,
+          4561,
+          4898,
+          4904
+        ],
+        "replacement_target": "drop vendor pinctrl path",
+        "confidence": "HIGH"
+      },
+      {
+        "symbol": "dev_get_regmap(dev->parent)",
+        "lines": [
+          1310,
+          2996,
+          4495
+        ],
+        "replacement_target": "private regmap ownership",
+        "confidence": "HIGH"
+      }
+    ],
+    "register_namespace": {
+      "detected_prefix": "LPASS_CDC_RX_*",
+      "planned_prefix": "CDC_RX_*",
+      "signal": "LPASS macro lessons + VA/TX migration pattern"
+    },
+    "topology_counts": {
+      "dapm_widgets": 68,
+      "dapm_routes": 292,
+      "dapm_controls": 54,
+      "method": "aura conversion_scoring extractor"
+    },
+    "rx_feature_signals": {
+      "interpolator_hits": 179,
+      "compander_hits": 75,
+      "classh_hits": 4,
+      "iir_hits": 345,
+      "sidetone_hits": 71,
+      "native_mode_hits": 9
+    },
+    "dt_properties_observed": [
+      {
+        "property": "reg",
+        "lines": [
+          4854
+        ],
+        "in_binding": true
+      },
+      {
+        "property": "qcom,rx_mclk_mode_muxsel",
+        "lines": [
+          4861
+        ],
+        "in_binding": false
+      },
+      {
+        "property": "qcom,default-clk-id",
+        "lines": [
+          4867
+        ],
+        "in_binding": false
+      },
+      {
+        "property": "bypass-startup-pulse",
+        "lines": [
+          4875
+        ],
+        "in_binding": false
+      },
+      {
+        "property": "qcom,is-used-swr-gpio",
+        "lines": [
+          4880,
+          4882
+        ],
+        "in_binding": false
+      },
+      {
+        "property": "qcom,rx-swr-gpios",
+        "lines": [
+          4891
+        ],
+        "in_binding": false
+      },
+      {
+        "property": "qcom,rx0-datahub-ch0-addr",
+        "lines": [
+          4950,
+          4953
+        ],
+        "in_binding": false
+      },
+      {
+        "property": "rx_mclk2_2x_clk",
+        "lines": [
+          4937
+        ],
+        "in_binding": false,
+        "note": "clock consumer id, not dt property string in binding schema"
+      }
+    ]
+  },
+  "downstream_to_upstream_mapping": [
+    {
+      "downstream_pattern": "LPASS_CDC_RX_* register symbols",
+      "upstream_replacement": "CDC_RX_* register symbols",
+      "confidence": "HIGH",
+      "upstream_signal_source": "VA/TX learned pattern + mechanical prefix transform"
+    },
+    {
+      "downstream_pattern": "parent regmap via dev_get_regmap(dev->parent, NULL)",
+      "upstream_replacement": "owned regmap via devm_regmap_init_mmio",
+      "confidence": "HIGH",
+      "upstream_signal_source": "lpass-va-macro.c + lpass-tx-macro.c"
+    },
+    {
+      "downstream_pattern": "lpass_cdc_register_macro/lpass_cdc_unregister_macro",
+      "upstream_replacement": "direct devm_snd_soc_register_component + remove cleanup",
+      "confidence": "HIGH",
+      "upstream_signal_source": "lpass-va-macro.c:1658-1694; lpass-tx-macro.c:2355-2384"
+    },
+    {
+      "downstream_pattern": "no SoC data table",
+      "upstream_replacement": "struct rx_macro_data + of_device_get_match_data",
+      "confidence": "HIGH",
+      "upstream_signal_source": "lpass-va-macro.c struct va_macro_data + dt_match .data"
+    },
+    {
+      "downstream_pattern": "no clock provider registration",
+      "upstream_replacement": "clk_hw + devm_clk_hw_register + devm_of_clk_add_hw_provider",
+      "confidence": "HIGH",
+      "upstream_signal_source": "lpass-va-macro.c:1410-1422; lpass-tx-macro.c:2209-2228"
+    },
+    {
+      "downstream_pattern": "vendor notification path swrm_wcd_notify/SWR_*",
+      "upstream_replacement": "remove from core lifecycle",
+      "confidence": "HIGH",
+      "upstream_signal_source": "VA/TX do not use these vendor notify paths"
+    }
+  ],
+  "fail_closed_items": [
+    {
+      "symbol": "qcom,rx_mclk_mode_muxsel",
+      "reason": "Not present in upstream DT binding schema; no same-class deterministic mapping.",
+      "confidence": "FAIL_CLOSED",
+      "action": "DEFERRED; do not introduce new upstream ABI assumption"
+    },
+    {
+      "symbol": "qcom,default-clk-id",
+      "reason": "Binding does not declare property; no deterministic upstream replacement from allowed references.",
+      "confidence": "FAIL_CLOSED",
+      "action": "DEFERRED"
+    },
+    {
+      "symbol": "qcom,is-used-swr-gpio / qcom,rx-swr-gpios",
+      "reason": "Vendor pinctrl flow absent from allowed upstream macro references.",
+      "confidence": "FAIL_CLOSED",
+      "action": "DEFERRED; remove vendor pinctrl coupling"
+    },
+    {
+      "symbol": "qcom,rx0-datahub-ch0-addr",
+      "reason": "Guarded by downstream CONFIG_BOLERO block and not present in binding.",
+      "confidence": "FAIL_CLOSED",
+      "action": "DEFERRED"
+    },
+    {
+      "symbol": "child platform_device fanout for rx_swr_master",
+      "reason": "No deterministic same-class evidence in VA/TX for retaining this integration model.",
+      "confidence": "FAIL_CLOSED",
+      "action": "DEFERRED for manual review"
+    }
+  ],
+  "confidence_summary": {
+    "high_confidence_transformations": 6,
+    "fail_closed_items": 5,
+    "overall_confidence_classification": "HIGH_WITH_FAIL_CLOSED_DEFERRED_ITEMS"
+  }
+}

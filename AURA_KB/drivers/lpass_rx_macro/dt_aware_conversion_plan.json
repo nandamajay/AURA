@@ -1,0 +1,253 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_DT_AWARE_CONVERSION_PLAN",
+  "generated_at_utc": "2026-06-17T21:47:18+00:00",
+  "api_replacement_table": [
+    {
+      "downstream": "dev_get_regmap(rx_priv->dev->parent, NULL)",
+      "replacement": "rx_priv->regmap (owned via devm_regmap_init_mmio)",
+      "confidence": "HIGH",
+      "signal_source": "lpass-va-macro.c:1573-1579; lpass-tx-macro.c:2282-2302"
+    },
+    {
+      "downstream": "lpass_cdc_register_macro(...)",
+      "replacement": "devm_snd_soc_register_component(...) in probe",
+      "confidence": "HIGH",
+      "signal_source": "lpass-va-macro.c:1658; lpass-tx-macro.c:2355"
+    },
+    {
+      "downstream": "lpass_cdc_unregister_macro(...)",
+      "replacement": "component-native remove path",
+      "confidence": "HIGH",
+      "signal_source": "lpass-va-macro.c:1684-1694; lpass-tx-macro.c:2384-2399"
+    },
+    {
+      "downstream": "lpass_cdc_clk_rsc_* / lpass_cdc_rsc_clk_reset",
+      "replacement": "clk_prepare_enable/clk_disable_unprepare + runtime PM sequencing",
+      "confidence": "HIGH",
+      "signal_source": "lpass-va-macro.c:1590-1739; lpass-tx-macro.c:2321-2448"
+    },
+    {
+      "downstream": "swrm_wcd_notify(..., SWR_SET_PORT_MAP/SWR_DEVICE_SSR_*)",
+      "replacement": "remove vendor notify coupling from core path",
+      "confidence": "HIGH",
+      "signal_source": "VA/TX upstream references omit vendor swrm_wcd_notify coupling"
+    },
+    {
+      "downstream": "msm_cdc_pinctrl_*",
+      "replacement": "remove vendor pinctrl state machine from converted driver",
+      "confidence": "HIGH",
+      "signal_source": "banned symbol governance + absent in VA/TX upstream references"
+    },
+    {
+      "downstream": "single legacy compatible qcom,lpass-cdc-rx-macro",
+      "replacement": "binding-driven of_match table with qcom,*-lpass-rx-macro compatibles",
+      "confidence": "HIGH",
+      "signal_source": "qcom,lpass-rx-macro.yaml compatibles"
+    },
+    {
+      "downstream": "no SoC data model",
+      "replacement": "struct rx_macro_data + of_device_get_match_data()",
+      "confidence": "HIGH",
+      "signal_source": "lpass-va-macro.c struct va_macro_data; lpass-tx-macro.c struct tx_macro_data"
+    },
+    {
+      "downstream": "clock consumer only",
+      "replacement": "clock provider registration using clk_hw/devm_of_clk_add_hw_provider",
+      "confidence": "HIGH",
+      "signal_source": "clock-output-names in binding + VA/TX provider pattern"
+    }
+  ],
+  "register_rename_pattern": {
+    "pattern": "LPASS_CDC_RX_ -> CDC_RX_",
+    "scope": "all symbol references and macro identifiers in converted source",
+    "mechanism": "deterministic string replacement",
+    "confidence": "HIGH",
+    "source": "LPASS macro lessons + validated VA/TX methodology"
+  },
+  "dt_property_map": [
+    {
+      "property": "compatible",
+      "binding_status": "DECLARED_REQUIRED",
+      "conversion_action": "use binding-compatible of_match_table with .data",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "reg",
+      "binding_status": "DECLARED_REQUIRED",
+      "conversion_action": "devm_platform_ioremap_resource + regmap init",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-names",
+      "binding_status": "DECLARED_CONDITIONAL",
+      "conversion_action": "request mclk/npl/macro/dcodec/fsgen via clk framework",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-output-names",
+      "binding_status": "DECLARED_OPTIONAL",
+      "conversion_action": "register mclk clock provider",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "power-domains/power-domain-names",
+      "binding_status": "DECLARED_OPTIONAL",
+      "conversion_action": "lpass_macro_pds_init/exit",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "qcom,rx_mclk_mode_muxsel",
+      "binding_status": "NOT_IN_BINDING",
+      "conversion_action": "FAIL_CLOSED",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "property": "qcom,default-clk-id",
+      "binding_status": "NOT_IN_BINDING",
+      "conversion_action": "FAIL_CLOSED",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "property": "qcom,is-used-swr-gpio",
+      "binding_status": "NOT_IN_BINDING",
+      "conversion_action": "FAIL_CLOSED",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "property": "qcom,rx-swr-gpios",
+      "binding_status": "NOT_IN_BINDING",
+      "conversion_action": "FAIL_CLOSED",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "property": "qcom,rx0-datahub-ch0-addr",
+      "binding_status": "NOT_IN_BINDING",
+      "conversion_action": "FAIL_CLOSED",
+      "confidence": "FAIL_CLOSED"
+    }
+  ],
+  "structural_transformations": [
+    {
+      "id": "RX_PATCH_01",
+      "change": "register namespace migration",
+      "what_was_changed": "LPASS_CDC_RX_* identifiers to CDC_RX_*",
+      "why": "match LPASS upstream naming convention",
+      "upstream_signal_source": "VA/TX learned pattern",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_02",
+      "change": "drop downstream version/Kconfig guards",
+      "what_was_changed": "LINUX_VERSION_CODE/KERNEL_VERSION/CONFIG_BOLERO gated blocks",
+      "why": "remove downstream kernel-version/vendor-config coupling",
+      "upstream_signal_source": "VA/TX upstream patterns avoid downstream guards",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_03",
+      "change": "remove SoundWire vendor notify coupling",
+      "what_was_changed": "swrm_wcd_notify + SWR_DEVICE_SSR/SWR_SET_PORT_MAP references",
+      "why": "vendor bus notification hooks are downstream-only",
+      "upstream_signal_source": "VA/TX same-class references",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_04",
+      "change": "remove lpass-cdc framework dependencies",
+      "what_was_changed": "vendor includes and framework glue symbols",
+      "why": "upstream macro drivers own lifecycle/components directly",
+      "upstream_signal_source": "VA/TX + banned symbol governance",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_05",
+      "change": "own MMIO regmap",
+      "what_was_changed": "regmap callbacks + devm_regmap_init_mmio + private regmap usage",
+      "why": "eliminate parent-regmap dependency",
+      "upstream_signal_source": "VA/TX probe pattern",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_06",
+      "change": "integrate lpass-macro-common power domains",
+      "what_was_changed": "pds init/exit in probe/remove",
+      "why": "binding-compatible domain lifecycle",
+      "upstream_signal_source": "lpass-macro-common + VA/TX",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_07",
+      "change": "runtime PM + clock provider pattern",
+      "what_was_changed": "runtime suspend/resume + clk_hw provider",
+      "why": "align with clock-output-names and macro lifecycle",
+      "upstream_signal_source": "VA/TX clock-provider implementation",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_08",
+      "change": "SoC-data model",
+      "what_was_changed": "struct rx_macro_data + of_match .data",
+      "why": "binding-compatible variant modeling",
+      "upstream_signal_source": "VA/TX data model",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_09",
+      "change": "bounded DAPM reduction",
+      "what_was_changed": "prune downstream-only debug/fanout surface",
+      "why": "reduce non-upstream topology density",
+      "upstream_signal_source": "TX lesson on DAPM reduction",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "RX_PATCH_10",
+      "change": "residual naming normalization",
+      "what_was_changed": "local symbol and driver naming cleanup",
+      "why": "remove residual downstream naming noise",
+      "upstream_signal_source": "VA/TX iteration sequencing",
+      "confidence": "HIGH"
+    }
+  ],
+  "fail_closed_items": [
+    {
+      "symbol": "qcom,rx_mclk_mode_muxsel",
+      "reason": "No binding declaration and no deterministic same-class replacement",
+      "signal_needed": "upstream maintainer confirmation",
+      "deferred_to": "manual_review",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "symbol": "qcom,default-clk-id",
+      "reason": "Not declared in binding",
+      "signal_needed": "upstream patch introducing property or maintainer direction",
+      "deferred_to": "manual_review",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "symbol": "qcom,is-used-swr-gpio + qcom,rx-swr-gpios",
+      "reason": "Vendor GPIO/pinctrl contract not present in allowed upstream references",
+      "signal_needed": "binding update + upstream code evidence",
+      "deferred_to": "manual_review",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "symbol": "qcom,rx0-datahub-ch0-addr",
+      "reason": "Downstream-only CONFIG_BOLERO feature gate",
+      "signal_needed": "upstream feature introduction",
+      "deferred_to": "manual_review",
+      "confidence": "FAIL_CLOSED"
+    },
+    {
+      "symbol": "dynamic child platform device creation for rx_swr_master",
+      "reason": "No deterministic LPASS macro upstream pattern in allowed references",
+      "signal_needed": "upstream implementation evidence",
+      "deferred_to": "manual_review",
+      "confidence": "FAIL_CLOSED"
+    }
+  ],
+  "plan_confidence_gate": {
+    "rule": "emit code only for HIGH confidence mappings; everything else FAIL_CLOSED",
+    "high_confidence_count": 10,
+    "fail_closed_count": 5
+  }
+}

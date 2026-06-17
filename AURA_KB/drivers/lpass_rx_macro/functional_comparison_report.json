@@ -1,0 +1,136 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_FUNCTIONAL_COMPARISON_REPORT",
+  "generated_at_utc": "2026-06-17T21:52:14+00:00",
+  "blind_rule_break": {
+    "task": "TASK_5",
+    "upstream_file_read": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "status": "ALLOWED_AND_EXECUTED"
+  },
+  "compared_files": {
+    "converted": "/tmp/aura_rx_apply_1781733011/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "upstream": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "converted_lines": 5199,
+    "upstream_lines": 4035
+  },
+  "scoring_snapshot": {
+    "overall": 71.96,
+    "categories": {
+      "FUNCTION_MATCH": 70.49,
+      "API_COVERAGE": 67.57,
+      "REGISTER_COVERAGE": 0.0,
+      "DAPM_WIDGETS": 74.44,
+      "DAPM_ROUTES": 99.65,
+      "DAPM_CONTROLS": 44.07,
+      "LIFECYCLE_PATTERN": 70.0,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 100.0,
+      "INCLUDE_ALIGNMENT": 93.33
+    }
+  },
+  "upstream_patterns_observed": [
+    {
+      "pattern": "version-aware register model",
+      "evidence": "Upstream defines both CDC_RX_* and CDC_2_5_RX_* blocks and switches register defaults/stride by codec_version in probe.",
+      "source": "lpass-rx-macro.c:20-350, 3807-3854"
+    },
+    {
+      "pattern": "component_probe-owned topology initialization",
+      "evidence": "rx_macro_component_probe() initializes regmap via snd_soc_component_init_regmap and selects control/widget tables per codec version.",
+      "source": "lpass-rx-macro.c:3606-3666"
+    },
+    {
+      "pattern": "clock-provider gate ops",
+      "evidence": "swclk_gate_* hooks actively manipulate RX SWR clock bits and use parent clock rate/2 recalc.",
+      "source": "lpass-rx-macro.c:3669-3749"
+    },
+    {
+      "pattern": "probe lifecycle",
+      "evidence": "device_get_match_data -> optional clocks -> pds init + devm_add_action_or_reset -> devm_platform_ioremap_resource -> devm_regmap_init_mmio -> devm_snd_soc_register_component.",
+      "source": "lpass-rx-macro.c:3773-3904"
+    },
+    {
+      "pattern": "runtime PM",
+      "evidence": "runtime suspend/resume sequence disables/enables fsgen/npl/mclk with regcache sync on resume.",
+      "source": "lpass-rx-macro.c:3969-4019"
+    }
+  ],
+  "what_blind_conversion_missed": [
+    {
+      "gap": "register define completeness",
+      "impact": "REGISTER_COVERAGE = 0.0 due missing upstream register universe (394 upstream vs 25 converted).",
+      "root_cause": "blind conversion removed vendor register header include without importing upstream register block.",
+      "severity": "HIGH"
+    },
+    {
+      "gap": "component_probe split",
+      "impact": "LIFECYCLE and API coverage missed snd_soc_component_init_regmap/snd_soc_add_component_controls/snd_soc_dapm_new_controls split pattern.",
+      "root_cause": "blind series kept monolithic downstream component init path.",
+      "severity": "HIGH"
+    },
+    {
+      "gap": "control set mismatch",
+      "impact": "DAPM_CONTROLS = 44.07; converted retained extra FIR-heavy controls not present upstream and dropped some upstream controls.",
+      "root_cause": "scale-driven over-retention from downstream RX feature surface.",
+      "severity": "HIGH"
+    },
+    {
+      "gap": "probe API specifics",
+      "impact": "API_COVERAGE misses devm_platform_ioremap_resource/devm_snd_soc_register_component/device_get_match_data exact usage shape.",
+      "root_cause": "blind adaptation used approximated probe edits with residual downstream constructs.",
+      "severity": "MEDIUM"
+    },
+    {
+      "gap": "remove path",
+      "impact": "LIFECYCLE remove function mismatch remained after naming normalization.",
+      "root_cause": "residual remove signature/logic divergence from upstream minimalist remove handler.",
+      "severity": "MEDIUM"
+    }
+  ],
+  "rx_feature_comparison": {
+    "interpolators": {
+      "upstream_handling": "rate programming through rx_macro_set_{prim,mix}_interpolator_rate and event-managed path enable.",
+      "converted_status": "core interpolator logic retained; naming partially normalized.",
+      "assessment": "PARTIAL_MATCH"
+    },
+    "companders": {
+      "upstream_handling": "compander config and coefficient load are path/event gated with codec-version aware path macros.",
+      "converted_status": "compander paths exist but with residual legacy glue and mismatched register definitions.",
+      "assessment": "PARTIAL_MATCH"
+    },
+    "class_h": {
+      "upstream_handling": "class-h configured in rx_macro_config_classh within event flow.",
+      "converted_status": "class-h hooks retained; vendor-removal did not fully align probe/component lifecycle around them.",
+      "assessment": "PARTIAL_MATCH"
+    },
+    "iir_fir_sidetone": {
+      "upstream_handling": "IIR/sidetone control set present; no FIR-heavy control surface comparable to converted artifact.",
+      "converted_status": "retained large FIR programming surface from downstream.",
+      "assessment": "DIVERGENT"
+    }
+  },
+  "dapm_structure": {
+    "widgets": {
+      "upstream": 90,
+      "converted": 67,
+      "score": 74.44
+    },
+    "routes": {
+      "upstream": 288,
+      "converted": 287,
+      "score": 99.65
+    },
+    "controls": {
+      "upstream": 118,
+      "converted": 52,
+      "score": 44.07
+    },
+    "conclusion": "Route graph size is close, but control surface and widget composition are not yet upstream-equivalent."
+  },
+  "rx_specific_lessons_extracted": [
+    "RX macro requires explicit versioned register model (CDC_RX + CDC_2_5_RX); blind register renaming alone is insufficient.",
+    "For RX scale, component_probe split is a structural requirement, not an optional refactor.",
+    "Retaining downstream FIR-specific controls inflates code size without improving upstream alignment.",
+    "Route count parity can hide significant control/lifecycle divergences; controls and probe APIs must be checked independently."
+  ],
+  "verdict": "SCALE_INTRODUCES_NEW_GAPS"
+}

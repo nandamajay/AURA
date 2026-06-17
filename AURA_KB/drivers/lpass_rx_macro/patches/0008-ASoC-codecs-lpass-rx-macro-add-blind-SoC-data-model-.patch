@@ -1,0 +1,70 @@
+From d398a7eb37a25321aea3dfbe2756936a1ba38116 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 03:19:45 +0530
+Subject: [PATCH 08/10] ASoC: codecs: lpass-rx-macro: add blind SoC-data model
+ and binding compatibles
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 25 +++++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 0e40214..6f90bf7 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -568,6 +568,18 @@ struct rx_swr_ctrl_platform_data {
+ 			  int action);
+ };
+ 
++struct rx_macro_data {
++	unsigned int flags;
++};
++
++static const struct rx_macro_data rx_macro_data_v9 = {
++	.flags = LPASS_MACRO_FLAG_HAS_NPL_CLOCK | LPASS_MACRO_FLAG_RESET_SWR,
++};
++
++static const struct rx_macro_data rx_macro_data_v11 = {
++	.flags = LPASS_MACRO_FLAG_RESET_SWR,
++};
++
+ enum {
+ 	RX_MACRO_AIF_INVALID = 0,
+ 	RX_MACRO_AIF1_PB,
+@@ -609,6 +621,7 @@ struct lpass_cdc_rx_macro_priv {
+ 	struct clk *dcodec_clk;
+ 	struct clk *fsgen;
+ 	struct clk_hw hw;
++	const struct rx_macro_data *data;
+ 	int comp_enabled[CDC_RX_MACRO_COMP_MAX];
+ 	u8 is_pcm_enabled;
+ 	/* Main path clock users count */
+@@ -4966,6 +4979,7 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 
+ 	rx_priv->pre_dev_up = true;
+ 	rx_priv->dev = &pdev->dev;
++	rx_priv->data = of_device_get_match_data(&pdev->dev);
+ 	rx_priv->macro_clk = devm_clk_get_optional(&pdev->dev, "macro");
+ 	rx_priv->dcodec_clk = devm_clk_get_optional(&pdev->dev, "dcodec");
+ 	rx_priv->mclk = devm_clk_get_optional(&pdev->dev, "mclk");
+@@ -5164,7 +5178,16 @@ exit:
+ }
+ 
+ static const struct of_device_id lpass_cdc_rx_macro_dt_match[] = {
+-	{.compatible = "qcom,lpass-cdc-rx-macro"},
++	{ .compatible = "qcom,sc7280-lpass-rx-macro", .data = &rx_macro_data_v9 },
++	{ .compatible = "qcom,sm6115-lpass-rx-macro", .data = &rx_macro_data_v9 },
++	{ .compatible = "qcom,sm8250-lpass-rx-macro", .data = &rx_macro_data_v9 },
++	{ .compatible = "qcom,sm8450-lpass-rx-macro", .data = &rx_macro_data_v9 },
++	{ .compatible = "qcom,sm8550-lpass-rx-macro", .data = &rx_macro_data_v11 },
++	{ .compatible = "qcom,sc8280xp-lpass-rx-macro", .data = &rx_macro_data_v9 },
++	{ .compatible = "qcom,kaanapali-lpass-rx-macro", .data = &rx_macro_data_v11 },
++	{ .compatible = "qcom,sm8650-lpass-rx-macro", .data = &rx_macro_data_v11 },
++	{ .compatible = "qcom,sm8750-lpass-rx-macro", .data = &rx_macro_data_v11 },
++	{ .compatible = "qcom,x1e80100-lpass-rx-macro", .data = &rx_macro_data_v11 },
+ 	{}
+ };
+ 
+-- 
+2.34.1
+

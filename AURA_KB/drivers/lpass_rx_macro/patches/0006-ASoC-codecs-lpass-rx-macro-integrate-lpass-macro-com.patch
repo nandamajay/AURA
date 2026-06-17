@@ -1,0 +1,51 @@
+From f1632e4cb7602e1717f2f735bac64757d625badf Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 03:19:45 +0530
+Subject: [PATCH 06/10] ASoC: codecs: lpass-rx-macro: integrate
+ lpass-macro-common power domains
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 4b75f94..92efba9 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -527,6 +527,7 @@ enum {
+ struct lpass_cdc_rx_macro_priv {
+ 	struct device *dev;
+ 	struct regmap *regmap;
++	struct lpass_macro *pds;
+ 	int comp_enabled[CDC_RX_MACRO_COMP_MAX];
+ 	u8 is_pcm_enabled;
+ 	/* Main path clock users count */
+@@ -4884,6 +4885,9 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 
+ 	rx_priv->pre_dev_up = true;
+ 	rx_priv->dev = &pdev->dev;
++	rx_priv->pds = lpass_macro_pds_init(&pdev->dev);
++	if (IS_ERR(rx_priv->pds))
++		return PTR_ERR(rx_priv->pds);
+ 	ret = of_property_read_u32(pdev->dev.of_node, "reg",
+ 				   &rx_base_addr);
+ 	if (ret) {
+@@ -5029,6 +5033,7 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 	return 0;
+ 
+ err_reg_macro:
++	lpass_macro_pds_exit(rx_priv->pds);
+ 	mutex_destroy(&rx_priv->mclk_lock);
+ 	mutex_destroy(&rx_priv->swr_clk_lock);
+ 	return ret;
+@@ -5060,6 +5065,7 @@ static int lpass_cdc_rx_macro_remove(struct platform_device *pdev)
+ 	mutex_destroy(&rx_priv->mclk_lock);
+ 	mutex_destroy(&rx_priv->swr_clk_lock);
+ 	kfree(rx_priv->swr_ctrl_data);
++	lpass_macro_pds_exit(rx_priv->pds);
+ exit:
+ #if 1
+ 	return;
+-- 
+2.34.1
+

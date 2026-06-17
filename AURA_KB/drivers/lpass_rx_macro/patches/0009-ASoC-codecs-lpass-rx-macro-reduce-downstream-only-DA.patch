@@ -1,0 +1,83 @@
+From c7231a71c22591add632485463a37556a7fe2ec2 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 03:19:45 +0530
+Subject: [PATCH 09/10] ASoC: codecs: lpass-rx-macro: reduce downstream-only
+ DAPM density
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 24 +---------------------
+ 1 file changed, 1 insertion(+), 23 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 6f90bf7..b3bb440 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -755,7 +755,6 @@ static const struct soc_enum lpass_cdc_rx_macro_fir_filter_enum =
+ 	SOC_ENUM_SINGLE_EXT(2, lpass_cdc_rx_macro_fir_filter_text);
+ 
+ static const struct snd_kcontrol_new rx_int2_1_vbat_mix_switch[] = {
+-	SOC_DAPM_SINGLE("RX AUX VBAT Enable", SND_SOC_NOPM, 0, 1, 0)
+ };
+ 
+ static const char * const hph_idle_detect_text[] = {"OFF", "ON"};
+@@ -3988,7 +3987,6 @@ static const struct snd_kcontrol_new lpass_cdc_rx_macro_snd_controls[] = {
+ 	SOC_SINGLE_EXT("RX_Softclip Enable", SND_SOC_NOPM, 0, 1, 0,
+ 		     lpass_cdc_rx_macro_soft_clip_enable_get,
+ 		     lpass_cdc_rx_macro_soft_clip_enable_put),
+-	SOC_SINGLE_EXT("AUX_HPF Enable", SND_SOC_NOPM, 0, 1, 0,
+ 			lpass_cdc_rx_macro_aux_hpf_mode_get,
+ 			lpass_cdc_rx_macro_aux_hpf_mode_put),
+ 
+@@ -4048,21 +4046,7 @@ static const struct snd_kcontrol_new lpass_cdc_rx_macro_snd_controls[] = {
+ 		lpass_cdc_rx_macro_iir_enable_audio_mixer_get,
+ 		lpass_cdc_rx_macro_iir_enable_audio_mixer_put),
+ 
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR0 Band1", IIR0, BAND1),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR0 Band2", IIR0, BAND2),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR0 Band3", IIR0, BAND3),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR0 Band4", IIR0, BAND4),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR0 Band5", IIR0, BAND5),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR1 Band1", IIR1, BAND1),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR1 Band2", IIR1, BAND2),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR1 Band3", IIR1, BAND3),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR1 Band4", IIR1, BAND4),
+-	CDC_RX_MACRO_IIR_FILTER_CTL("IIR1 Band5", IIR1, BAND5),
+-
+-	CDC_RX_MACRO_FIR_FILTER_CTL("RX0 FIR Coeff Group0", RX0_PATH, GRP0),
+-	CDC_RX_MACRO_FIR_FILTER_CTL("RX0 FIR Coeff Group1", RX0_PATH, GRP1),
+-	CDC_RX_MACRO_FIR_FILTER_CTL("RX1 FIR Coeff Group0", RX1_PATH, GRP0),
+-	CDC_RX_MACRO_FIR_FILTER_CTL("RX1 FIR Coeff Group1", RX1_PATH, GRP1),
++
+ };
+ 
+ static int lpass_cdc_rx_macro_enable_echo(struct snd_soc_dapm_widget *w,
+@@ -4122,7 +4106,6 @@ static const struct snd_soc_dapm_widget lpass_cdc_rx_macro_dapm_widgets[] = {
+ 	SND_SOC_DAPM_AIF_IN("RX AIF4 PB", "RX_MACRO_AIF4 Playback", 0,
+ 		SND_SOC_NOPM, 0, 0),
+ 
+-	SND_SOC_DAPM_AIF_OUT("RX AIF_ECHO", "RX_AIF_ECHO Capture", 0,
+ 		SND_SOC_NOPM, 0, 0),
+ 
+ 	SND_SOC_DAPM_AIF_IN("RX AIF5 PB", "RX_MACRO_AIF5 Playback", 0,
+@@ -4425,10 +4408,6 @@ static const struct snd_soc_dapm_route rx_audio_map[] = {
+ 	{"RX MIX TX2 MUX", "RX_MIX0", "RX INT0 SEC MIX"},
+ 	{"RX MIX TX2 MUX", "RX_MIX1", "RX INT1 SEC MIX"},
+ 	{"RX MIX TX2 MUX", "RX_MIX2", "RX INT2 SEC MIX"},
+-	{"RX AIF_ECHO", NULL, "RX MIX TX0 MUX"},
+-	{"RX AIF_ECHO", NULL, "RX MIX TX1 MUX"},
+-	{"RX AIF_ECHO", NULL, "RX MIX TX2 MUX"},
+-	{"RX AIF_ECHO", NULL, "RX_MCLK"},
+ 
+ 	/* Mixing path INT0 */
+ 	{"RX INT0_2 MUX", "RX0", "RX_RX0"},
+@@ -4478,7 +4457,6 @@ static const struct snd_soc_dapm_route rx_audio_map[] = {
+ 
+ 	{"RX INT2_1 INTERP", NULL, "RX INT2_1 MIX1"},
+ 
+-	{"RX INT2_1 VBAT", "RX AUX VBAT Enable", "RX INT2_1 INTERP"},
+ 	{"RX INT2 SEC MIX", NULL, "RX INT2_1 VBAT"},
+ 
+ 	{"RX INT2 SEC MIX", NULL, "RX INT2_1 INTERP"},
+-- 
+2.34.1
+

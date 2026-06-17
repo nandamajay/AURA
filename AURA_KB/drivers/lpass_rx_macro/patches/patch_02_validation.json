@@ -1,0 +1,51 @@
+{
+  "timestamp_utc": "2026-06-17T21:50:41+00:00",
+  "classification": "PASS",
+  "patch": "0002-ASoC-codecs-lpass-rx-macro-drop-downstream-version-c.patch",
+  "patch_index": 2,
+  "line_count": 162,
+  "summary": "Deterministic transformation patch generated from blind conversion plan.",
+  "replay_inputs": [
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "AURA_KB/drivers/lpass_rx_macro/multi_domain_analysis.json",
+    "AURA_KB/drivers/lpass_rx_macro/dt_aware_conversion_plan.json"
+  ],
+  "replay_signal_sources": [
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h"
+  ],
+  "replay_deterministic": true,
+  "fail_closed_items": [
+    {
+      "symbol": "qcom,rx_mclk_mode_muxsel",
+      "reason": "Not present in upstream DT binding schema",
+      "deferred_to": "manual_review"
+    },
+    {
+      "symbol": "qcom,default-clk-id",
+      "reason": "Not present in upstream DT binding schema",
+      "deferred_to": "manual_review"
+    },
+    {
+      "symbol": "qcom,is-used-swr-gpio/qcom,rx-swr-gpios",
+      "reason": "Vendor GPIO/pinctrl contract not evidenced in allowed same-class references",
+      "deferred_to": "manual_review"
+    },
+    {
+      "symbol": "qcom,rx0-datahub-ch0-addr",
+      "reason": "Downstream-only config-gated datahub mapping",
+      "deferred_to": "manual_review"
+    },
+    {
+      "symbol": "rx_swr_master child platform fanout",
+      "reason": "No deterministic same-class upstream evidence in blind phase",
+      "deferred_to": "manual_review"
+    }
+  ],
+  "confidence_classification": "HIGH"
+}

@@ -1,0 +1,50 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_LESSONS_LEARNED",
+  "generated_at_utc": "2026-06-17T21:52:14+00:00",
+  "driver": "lpass_rx_macro",
+  "stress_test_context": {
+    "downstream_lines": 5066,
+    "upstream_lines": 4035,
+    "size_vs_va_tx": "~2x control/register surface vs VA/TX",
+    "score_v3_overall": 71.96
+  },
+  "new_lessons": [
+    {
+      "lesson": "Scale amplifies register-model mismatch.",
+      "evidence": "REGISTER_COVERAGE 0.0 with 394 upstream registers vs 25 converted.",
+      "pipeline_rule": "Import/register-map completeness must be solved before topology tuning on large macros."
+    },
+    {
+      "lesson": "Component probe split is mandatory for RX class drivers.",
+      "evidence": "Upstream uses rx_macro_component_probe with per-version control/widget sets and regmap init.",
+      "pipeline_rule": "Always model component_probe + version switch when upstream macro has multi-version controls."
+    },
+    {
+      "lesson": "Route parity is not enough at RX scale.",
+      "evidence": "ROUTES 99.65 but CONTROLS 44.07 and API 67.57.",
+      "pipeline_rule": "Gate success on control/lifecycle categories, not routes alone."
+    },
+    {
+      "lesson": "Blind vendor cleanup can overshoot into behavioral divergence.",
+      "evidence": "Vendor elimination reached 100, but functional lifecycle gaps remained.",
+      "pipeline_rule": "Pair vendor removal with immediate upstream lifecycle reconstitution checks."
+    },
+    {
+      "lesson": "RX-specific FIR/IIR surface needs explicit upstream signal classification.",
+      "evidence": "Converted retained FIR-heavy downstream logic not mirrored upstream.",
+      "pipeline_rule": "Classify DSP feature blocks as KEEP/PRUNE via upstream evidence before large-scale carryover."
+    }
+  ],
+  "governance_observations": {
+    "replayable": true,
+    "deterministic": true,
+    "fail_closed_used": true,
+    "fail_closed_count": 5
+  },
+  "next_iteration_focus": [
+    "Rebuild register block/model from upstream RX defines and versioned defaults.",
+    "Implement upstream-style component_probe split and regmap binding.",
+    "Align control arrays to upstream default + 2.5 tables.",
+    "Remove blind-retained FIR-only downstream controls not present upstream."
+  ]
+}
