@@ -1,0 +1,186 @@
+From 77ed21afd3b62e0fc937d5dce4529318309ea8a3 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:49:35 +0530
+Subject: [PATCH 9/11] ASoC: codecs: lpass-va-macro: add SoC data and clock
+ provider
+
+---
+ sound/soc/codecs/lpass-va-macro.c | 107 +++++++++++++++++++++++++++++-
+ 1 file changed, 105 insertions(+), 2 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 810fc10..cdbd0c1 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -254,6 +254,7 @@ struct va_macro_priv {
+ 	struct clk *macro;
+ 	struct clk *dcodec;
+ 	struct clk *mclk;
++	struct clk *npl;
+ 	struct clk *fsgen;
+ 	struct mutex mclk_lock;
+ 	struct mutex wlock;
+@@ -402,7 +403,9 @@ static int va_macro_mclk_enable(
+ 				goto exit;
+ 			ret = va_clk_rsc_fs_gen_request(va_priv, true);
+ 			if (ret) {
+-				clk_disable_unprepare(va_priv->mclk);
++				clk_disable_unprepare(va_priv->fsgen);
++	clk_disable_unprepare(va_priv->npl);
++	clk_disable_unprepare(va_priv->mclk);
+ 				goto exit;
+ 			}
+ 			regcache_mark_dirty(regmap);
+@@ -1781,6 +1784,58 @@ static int va_macro_deinit(struct snd_soc_component *component)
+ 	return 0;
+ }
+ 
++#define to_va_macro(_hw) container_of(_hw, struct va_macro_priv, hw)
++
++static int va_mclk_gate_enable(struct clk_hw *hw)
++{
++	struct va_macro_priv *va = to_va_macro(hw);
++	int ret;
++
++	ret = clk_prepare_enable(va->mclk);
++	if (ret)
++		return ret;
++
++	return va_macro_mclk_enable(va, true);
++}
++
++static void va_mclk_gate_disable(struct clk_hw *hw)
++{
++	struct va_macro_priv *va = to_va_macro(hw);
++
++	va_macro_mclk_enable(va, false);
++	clk_disable_unprepare(va->mclk);
++}
++
++static unsigned long va_mclk_recalc_rate(struct clk_hw *hw,
++					 unsigned long parent_rate)
++{
++	return parent_rate;
++}
++
++static const struct clk_ops va_mclk_gate_ops = {
++	.prepare = va_mclk_gate_enable,
++	.unprepare = va_mclk_gate_disable,
++	.recalc_rate = va_mclk_recalc_rate,
++};
++
++static int va_macro_register_mclk_output(struct va_macro_priv *va)
++{
++	struct device *dev = va->dev;
++	const char *parent_clk_name;
++	struct clk_init_data init = {};
++
++	parent_clk_name = __clk_get_name(va->mclk);
++	init.name = "lpass-va-mclk";
++	init.ops = &va_mclk_gate_ops;
++	init.parent_names = &parent_clk_name;
++	init.num_parents = 1;
++	va->hw.init = &init;
++
++	return devm_clk_hw_register(dev, &va->hw) ?: devm_of_clk_add_hw_provider(dev,
++								 of_clk_hw_simple_get,
++								 &va->hw);
++}
++
+ static const struct snd_soc_component_driver va_macro_component_drv = {
+ 	.name = "VA MACRO",
+ 	.probe = va_macro_init,
+@@ -1873,6 +1928,14 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	if (ret)
+ 		goto err_mclk;
+ 
++	ret = clk_prepare_enable(va_priv->npl);
++	if (ret)
++		goto err_npl;
++
++	ret = clk_prepare_enable(va_priv->fsgen);
++	if (ret)
++		goto err_fsgen;
++
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+ 			&va_macro_component_drv,
+ 			va_macro_dai,
+@@ -1886,9 +1949,18 @@ static int va_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_suspend_ignore_children(&pdev->dev, true);
+ 	pm_runtime_enable(&pdev->dev);
++
++	ret = va_macro_register_mclk_output(va_priv);
++	if (ret)
++		goto reg_component_fail;
++
+ 	return ret;
+ 
+ reg_component_fail:
++	clk_disable_unprepare(va_priv->fsgen);
++err_fsgen:
++	clk_disable_unprepare(va_priv->npl);
++err_npl:
+ 	clk_disable_unprepare(va_priv->mclk);
+ err_mclk:
+ 	clk_disable_unprepare(va_priv->dcodec);
+@@ -1915,6 +1987,8 @@ static void va_macro_remove(struct platform_device *pdev)
+ 		&va_priv->va_dec_unmute_work.dwork);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
++	clk_disable_unprepare(va_priv->fsgen);
++	clk_disable_unprepare(va_priv->npl);
+ 	clk_disable_unprepare(va_priv->mclk);
+ 	clk_disable_unprepare(va_priv->dcodec);
+ 	clk_disable_unprepare(va_priv->macro);
+@@ -1923,10 +1997,34 @@ static void va_macro_remove(struct platform_device *pdev)
+ 	mutex_destroy(&va_priv->wlock);
+ }
+ 
++static const struct va_macro_data lpass_va_v9 = {
++	.flags = LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
++	.ver = LPASS_VER_9_0_0,
++};
++
++static const struct va_macro_data lpass_va_v10 = {
++	.ver = LPASS_VER_10_0_0,
++};
++
++static const struct va_macro_data lpass_va_v11 = {
++	.ver = LPASS_VER_11_0_0,
++};
++
+ static const struct of_device_id va_macro_dt_match[] = {
+-	{.compatible = "qcom,lpass-cdc-va-macro"},
++	{ .compatible = "qcom,sc7280-lpass-va-macro", .data = &lpass_va_v9 },
++	{ .compatible = "qcom,sm6115-lpass-va-macro", .data = &lpass_va_v10 },
++	{ .compatible = "qcom,sm8250-lpass-va-macro", .data = &lpass_va_v9 },
++	{ .compatible = "qcom,sm8450-lpass-va-macro", .data = &lpass_va_v9 },
++	{ .compatible = "qcom,sm8550-lpass-va-macro", .data = &lpass_va_v11 },
++	{ .compatible = "qcom,sc8280xp-lpass-va-macro", .data = &lpass_va_v9 },
++	{ .compatible = "qcom,glymur-lpass-va-macro", .data = &lpass_va_v11 },
++	{ .compatible = "qcom,kaanapali-lpass-va-macro", .data = &lpass_va_v11 },
++	{ .compatible = "qcom,sm8650-lpass-va-macro", .data = &lpass_va_v11 },
++	{ .compatible = "qcom,sm8750-lpass-va-macro", .data = &lpass_va_v11 },
++	{ .compatible = "qcom,x1e80100-lpass-va-macro", .data = &lpass_va_v11 },
+ 	{}
+ };
++MODULE_DEVICE_TABLE(of, va_macro_dt_match);
+ 
+ static int va_macro_runtime_suspend(struct device *dev)
+ {
+@@ -1957,6 +2055,11 @@ static int va_macro_runtime_resume(struct device *dev)
+ 	regcache_sync(regmap);
+ 
+ 	return 0;
++err_fsgen:
++	clk_disable_unprepare(va_priv->npl);
++err_npl:
++	clk_disable_unprepare(va_priv->mclk);
++	return ret;
+ }
+ 
+ static const struct dev_pm_ops va_macro_pm_ops = {
+-- 
+2.34.1
+

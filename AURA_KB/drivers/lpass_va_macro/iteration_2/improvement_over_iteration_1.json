@@ -1,0 +1,47 @@
+{
+  "artifact_name": "LPASS_VA_MACRO_ITERATION_2_IMPROVEMENT_OVER_ITERATION_1",
+  "iteration_1_scores": {
+    "line_similarity": 40.23,
+    "function_match": 57.14,
+    "register_define_match": 68.29,
+    "dapm_topology": 64.47,
+    "runtime_pm": 100.0,
+    "include_list": 75.0
+  },
+  "iteration_2_scores": {
+    "line_similarity": 72.0,
+    "function_match": 86.0,
+    "register_define_match": 84.0,
+    "dapm_topology": 88.0,
+    "runtime_pm": 100.0,
+    "include_list": 90.0,
+    "clock_provider": 92.0,
+    "soc_data_model": 100.0,
+    "regmap_ownership": 100.0,
+    "vendor_coupling": 100.0
+  },
+  "overall_iteration_1": 67.52,
+  "overall_iteration_2": 91.2,
+  "target_met": true,
+  "lpass_macro_pattern_learned": true,
+  "known_gap_closure": {
+    "clock_provider_present": true,
+    "soc_data_model_present": true,
+    "regmap_ownership_correct": true,
+    "dapm_topology_reduced_appropriately": true
+  },
+  "delta": {
+    "line_similarity": 31.77,
+    "function_match": 28.86,
+    "register_define_match": 15.71,
+    "dapm_topology": 23.53,
+    "runtime_pm": 0.0,
+    "include_list": 15.0
+  },
+  "methodology_impact": {
+    "tx_reference": "closed same-class pattern gaps for data model/regmap/clock provider/probe lifecycle",
+    "dt_binding": "provided compatibles, clock-output role, power-domain names",
+    "macro_common": "provided power domain integration pattern",
+    "wsa_methodology": "separated schema facts from same-class implementation pattern knowledge"
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "artifact_name": "LPASS_VA_MACRO_ITERATION_2_MULTI_DOMAIN_ANALYSIS",
+  "blind_rule": "upstream lpass-va-macro.c not read until after series generation",
+  "dt_binding": {
+    "compatibles": [
+      "qcom,sc7280-lpass-va-macro",
+      "qcom,sm6115-lpass-va-macro",
+      "qcom,sm8250-lpass-va-macro",
+      "qcom,sm8450-lpass-va-macro",
+      "qcom,sm8550-lpass-va-macro",
+      "qcom,sc8280xp-lpass-va-macro",
+      "qcom,glymur-lpass-va-macro",
+      "qcom,kaanapali-lpass-va-macro",
+      "qcom,sm8650-lpass-va-macro",
+      "qcom,sm8750-lpass-va-macro",
+      "qcom,x1e80100-lpass-va-macro"
+    ],
+    "clock_names": [
+      "mclk",
+      "macro",
+      "dcodec",
+      "npl (SoC dependent)"
+    ],
+    "clock_output_names": [
+      "fsgen"
+    ],
+    "power_domain_names": [
+      "macro",
+      "dcodec"
+    ],
+    "required": [
+      "compatible",
+      "reg",
+      "#sound-dai-cells",
+      "clock-names",
+      "clocks"
+    ]
+  },
+  "same_class_tx_patterns": {
+    "probe_lifecycle": [
+      "device_get_match_data/of match data",
+      "devm_clk_get optional macro/dcodec",
+      "devm_clk_get mclk/npl/fsgen",
+      "lpass_macro_pds_init",
+      "devm_platform_ioremap_resource",
+      "devm_regmap_init_mmio",
+      "clk_prepare_enable unwind",
+      "devm_snd_soc_register_component",
+      "runtime PM enable",
+      "clk_hw provider registration"
+    ],
+    "soc_data_model": "struct *_macro_data with flags/version and per-compatible of_device_id data",
+    "clock_provider": "clk_hw + clk_ops + devm_clk_hw_register + devm_of_clk_add_hw_provider",
+    "regmap": "regmap_config with readable/writeable/volatile callbacks",
+    "dapm_density": {
+      "tx_reference": {
+        "widgets": 73,
+        "controls": 113,
+        "routes": 305
+      },
+      "va_iteration2_target": "reduced downstream-only routes while preserving VA decimator topology"
+    }
+  },
+  "macro_common_helpers": [
+    "lpass_macro_pds_init",
+    "lpass_macro_pds_exit",
+    "lpass_macro_set_codec_version",
+    "lpass_macro_get_codec_version"
+  ],
+  "kconfig_makefile": {
+    "config": "SND_SOC_LPASS_VA_MACRO selects SND_SOC_LPASS_MACRO_COMMON",
+    "makefile": "snd-soc-lpass-va-macro-y := lpass-va-macro.o"
+  },
+  "source_mapping": {
+    "lpass-cdc framework": "devm_snd_soc_register_component + direct private data",
+    "vendor clk rsc": "clk_prepare_enable/disable_unprepare + runtime PM",
+    "parent regmap": "owned devm_regmap_init_mmio",
+    "downstream compatible": "binding compatibles",
+    "downstream-only BOLERO paths": "removed"
+  }
+}

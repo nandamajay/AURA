@@ -1,0 +1,143 @@
+From 1325e4756b469fc9ec9e90e573bd325851279e30 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:48:38 +0530
+Subject: [PATCH 8/11] ASoC: codecs: lpass-va-macro: own MMIO regmap and match
+ data
+
+---
+ sound/soc/codecs/lpass-va-macro.c | 75 ++++++++++++++++++++++++++-----
+ 1 file changed, 63 insertions(+), 12 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 7d24120..810fc10 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -6,7 +6,10 @@
+ #include <linux/module.h>
+ #include <linux/init.h>
+ #include <linux/clk.h>
++#include <linux/clk-provider.h>
++#include <linux/of_clk.h>
+ #include <linux/io.h>
++#include <linux/of.h>
+ #include <linux/platform_device.h>
+ #include <linux/regmap.h>
+ #include <linux/regulator/consumer.h>
+@@ -172,6 +175,56 @@ enum {
+ 	SWR_MIC,
+ };
+ 
++struct va_macro_data {
++	unsigned int flags;
++	unsigned int ver;
++};
++
++static const struct reg_default va_defaults[] = {
++	{ CDC_VA_CLK_RST_CTRL_MCLK_CONTROL, 0x00 },
++	{ CDC_VA_CLK_RST_CTRL_FS_CNT_CONTROL, 0x00 },
++	{ CDC_VA_CLK_RST_CTRL_SWR_CONTROL, 0x00 },
++	{ CDC_VA_TOP_CSR_TOP_CFG0, 0x00 },
++	{ CDC_VA_TOP_CSR_DMIC_CFG, 0x00 },
++};
++
++static bool va_is_readable_register(struct device *dev, unsigned int reg)
++{
++	return reg <= VA_MACRO_MAX_OFFSET;
++}
++
++static bool va_is_writeable_register(struct device *dev, unsigned int reg)
++{
++	return reg <= VA_MACRO_MAX_OFFSET;
++}
++
++static bool va_is_volatile_register(struct device *dev, unsigned int reg)
++{
++	switch (reg) {
++	case CDC_VA_TOP_CSR_CORE_ID_0:
++	case CDC_VA_TOP_CSR_CORE_ID_1:
++	case CDC_VA_TOP_CSR_CORE_ID_2:
++	case CDC_VA_TOP_CSR_CORE_ID_3:
++		return true;
++	default:
++		return false;
++	}
++}
++
++static const struct regmap_config va_regmap_config = {
++	.name = "va_macro",
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.max_register = VA_MACRO_MAX_OFFSET,
++	.reg_defaults = va_defaults,
++	.num_reg_defaults = ARRAY_SIZE(va_defaults),
++	.readable_reg = va_is_readable_register,
++	.writeable_reg = va_is_writeable_register,
++	.volatile_reg = va_is_volatile_register,
++	.cache_type = REGCACHE_FLAT,
++};
++
+ struct va_dec_unmute_work {
+ 	struct va_macro_priv *va_priv;
+ 	int dai_id;
+@@ -193,6 +246,9 @@ struct hpf_work {
+ 
+ struct va_macro_priv {
+ 	struct device *dev;
++	const struct va_macro_data *data;
++	struct regmap *regmap;
++	struct clk_hw hw;
+ 	bool dec_active[VA_MACRO_NUM_DECIMATORS];
+ 	bool va_without_decimation;
+ 	struct clk *macro;
+@@ -1739,8 +1795,7 @@ static const struct snd_soc_component_driver va_macro_component_drv = {
+ static int va_macro_probe(struct platform_device *pdev)
+ {
+ 	struct va_macro_priv *va_priv;
+-	u32 va_base_addr;
+-	char __iomem *va_io_base;
++	void __iomem *va_io_base;
+ 	int ret = 0, i;
+ 
+ 	va_priv = devm_kzalloc(&pdev->dev, sizeof(*va_priv),
+@@ -1876,12 +1931,10 @@ static const struct of_device_id va_macro_dt_match[] = {
+ static int va_macro_runtime_suspend(struct device *dev)
+ {
+ 	struct va_macro_priv *va_priv = dev_get_drvdata(dev);
+-	struct regmap *regmap = dev_get_regmap(dev->parent, NULL);
++	struct regmap *regmap = va_priv->regmap;
+ 
+-	if (regmap) {
+-		regcache_cache_only(regmap, true);
+-		regcache_mark_dirty(regmap);
+-	}
++	regcache_cache_only(regmap, true);
++	regcache_mark_dirty(regmap);
+ 
+ 	clk_disable_unprepare(va_priv->mclk);
+ 
+@@ -1891,7 +1944,7 @@ static int va_macro_runtime_suspend(struct device *dev)
+ static int va_macro_runtime_resume(struct device *dev)
+ {
+ 	struct va_macro_priv *va_priv = dev_get_drvdata(dev);
+-	struct regmap *regmap = dev_get_regmap(dev->parent, NULL);
++	struct regmap *regmap = va_priv->regmap;
+ 	int ret;
+ 
+ 	ret = clk_prepare_enable(va_priv->mclk);
+@@ -1900,10 +1953,8 @@ static int va_macro_runtime_resume(struct device *dev)
+ 		return ret;
+ 	}
+ 
+-	if (regmap) {
+-		regcache_cache_only(regmap, false);
+-		regcache_sync(regmap);
+-	}
++	regcache_cache_only(regmap, false);
++	regcache_sync(regmap);
+ 
+ 	return 0;
+ }
+-- 
+2.34.1
+

@@ -1,0 +1,183 @@
+From ea1f948f783c0fd4bf339f45dfcbf288cb4235ac Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Tue, 16 Jun 2026 17:37:05 +0530
+Subject: [PATCH 3/11] ASoC: codecs: lpass-va-macro: remove vendor SoundWire notification coupling
+
+Remove private swr-wcd notification calls (SSR up/down, port-map set, wake IRQ registration) and the swr-common port config dependency.
+
+The upstream VA macro does not use private codec-to-controller notifications; SoundWire lifecycle is handled entirely within the upstream SoundWire controller and framework layer.
+
+Signed-off-by: AURA Conversion Engine <aura@example.invalid>
+---
+ sound/soc/codecs/lpass-va-macro.c | 85 ++-----------------------------
+ 1 file changed, 3 insertions(+), 82 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 29e1e84..0c5f994 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -14,8 +14,6 @@
+ #include <sound/soc-dapm.h>
+ #include <sound/tlv.h>
+ #include <linux/pm_runtime.h>
+-#include <soc/swr-common.h>
+-#include <soc/swr-wcd.h>
+ #include <dsp/digital-cdc-rsc-mgr.h>
+ #include "lpass-cdc.h"
+ #include "lpass-cdc-clk-rsc.h"
+@@ -194,11 +192,6 @@ struct hpf_work {
+ 	struct delayed_work dwork;
+ };
+
+-/* Hold instance to soundwire platform device */
+-struct lpass_cdc_va_macro_swr_ctrl_data {
+-	struct platform_device *va_swr_pdev;
+-};
+-
+ struct lpass_cdc_va_macro_swr_ctrl_platform_data {
+ 	void *handle; /* holds codec private data */
+ 	int (*read)(void *handle, int reg);
+@@ -232,7 +225,6 @@ struct lpass_cdc_va_macro_priv {
+ 	u16 va_mclk_users;
+ 	int swr_clk_users;
+ 	bool reset_swr;
+-	struct lpass_cdc_va_macro_swr_ctrl_data *swr_ctrl_data;
+ 	struct lpass_cdc_va_macro_swr_ctrl_platform_data swr_plat_data;
+ 	struct work_struct lpass_cdc_va_macro_add_child_devices_work;
+ 	int child_count;
+@@ -456,10 +448,6 @@ static int lpass_cdc_va_macro_event_handler(struct snd_soc_component *component,
+ 		/* reset swr after ssr/pdr */
+ 		va_priv->reset_swr = true;
+ 		va_priv->dev_up = true;
+-		if (va_priv->swr_ctrl_data)
+-			swrm_wcd_notify(
+-				va_priv->swr_ctrl_data[0].va_swr_pdev,
+-				SWR_DEVICE_SSR_UP, NULL);
+ 		break;
+ 	case LPASS_CDC_MACRO_EVT_CLK_RESET:
+ 		lpass_cdc_rsc_clk_reset(va_dev, VA_CORE_CLK);
+@@ -467,11 +455,6 @@ static int lpass_cdc_va_macro_event_handler(struct snd_soc_component *component,
+ 	case LPASS_CDC_MACRO_EVT_SSR_DOWN:
+ 		va_priv->pre_dev_up = false;
+ 		va_priv->dev_up = false;
+-		if (va_priv->swr_ctrl_data) {
+-			swrm_wcd_notify(
+-				va_priv->swr_ctrl_data[0].va_swr_pdev,
+-				SWR_DEVICE_SSR_DOWN, NULL);
+-		}
+ 		if ((!pm_runtime_enabled(va_dev) ||
+ 		     !pm_runtime_suspended(va_dev))) {
+ 			ret = lpass_cdc_runtime_suspend(va_dev);
+@@ -2175,10 +2158,8 @@ static void lpass_cdc_va_macro_add_child_devices(struct work_struct *work)
+ 	struct lpass_cdc_va_macro_priv *va_priv = NULL;
+ 	struct platform_device *pdev = NULL;
+ 	struct device_node *node = NULL;
+-	struct lpass_cdc_va_macro_swr_ctrl_data *swr_ctrl_data = NULL;
+-	struct lpass_cdc_va_macro_swr_ctrl_data *temp = NULL;
+ 	int ret = 0;
+-	u16 count = 0, ctrl_num = 0;
++	u16 count = 0;
+ 	struct lpass_cdc_va_macro_swr_ctrl_platform_data *platdata = NULL;
+ 	char plat_dev_name[LPASS_CDC_VA_MACRO_SWR_STRING_LEN] = "";
+ 	bool va_swr_master_node = false;
+@@ -2233,26 +2214,14 @@ static void lpass_cdc_va_macro_add_child_devices(struct work_struct *work)
+ 						       sizeof(*platdata));
+ 			if (ret) {
+ 				dev_err(&pdev->dev,
+-					"%s: cannot add plat data ctrl:%d\n",
+-					__func__, ctrl_num);
++					"%s: cannot add plat data\n",
++					__func__);
+ 				goto fail_pdev_add;
+ 			}
+
+-			temp = krealloc(swr_ctrl_data,
+-					(ctrl_num + 1) * sizeof(
+-					struct lpass_cdc_va_macro_swr_ctrl_data),
+-					GFP_KERNEL);
+-			if (!temp) {
+-				ret = -ENOMEM;
+-				goto fail_pdev_add;
+-			}
+-			swr_ctrl_data = temp;
+-			swr_ctrl_data[ctrl_num].va_swr_pdev = pdev;
+-			ctrl_num++;
+ 			dev_dbg(&pdev->dev,
+ 				"%s: Adding soundwire ctrl device(s)\n",
+ 				__func__);
+-			va_priv->swr_ctrl_data = swr_ctrl_data;
+ 		}
+
+ 		ret = platform_device_add(pdev);
+@@ -2277,50 +2246,6 @@ err:
+ 	return;
+ }
+
+-static int lpass_cdc_va_macro_set_port_map(struct snd_soc_component *component,
+-				u32 usecase, u32 size, void *data)
+-{
+-	struct device *va_dev = NULL;
+-	struct lpass_cdc_va_macro_priv *va_priv = NULL;
+-	struct swrm_port_config port_cfg;
+-	int ret = 0;
+-
+-	if (!lpass_cdc_va_macro_get_data(component, &va_dev, &va_priv, __func__))
+-		return -EINVAL;
+-
+-	memset(&port_cfg, 0, sizeof(port_cfg));
+-	port_cfg.uc = usecase;
+-	port_cfg.size = size;
+-	port_cfg.params = data;
+-
+-	if (va_priv->swr_ctrl_data)
+-		ret = swrm_wcd_notify(
+-			va_priv->swr_ctrl_data[0].va_swr_pdev,
+-			SWR_SET_PORT_MAP, &port_cfg);
+-
+-	return ret;
+-}
+-
+-static int lpass_cdc_va_macro_reg_wake_irq(struct snd_soc_component *component,
+-				 u32 data)
+-{
+-	struct device *va_dev = NULL;
+-	struct lpass_cdc_va_macro_priv *va_priv = NULL;
+-	u32 ipc_wakeup = data;
+-	int ret = 0;
+-
+-	if (!lpass_cdc_va_macro_get_data(component, &va_dev,
+-					&va_priv, __func__))
+-		return -EINVAL;
+-
+-	if (va_priv->swr_ctrl_data)
+-		ret = swrm_wcd_notify(
+-			va_priv->swr_ctrl_data[0].va_swr_pdev,
+-			SWR_REGISTER_WAKE_IRQ, &ipc_wakeup);
+-
+-	return ret;
+-}
+-
+ static void lpass_cdc_va_macro_init_ops(struct macro_ops *ops,
+ 			      char __iomem *va_io_base)
+ {
+@@ -2331,8 +2256,6 @@ static void lpass_cdc_va_macro_init_ops(struct macro_ops *ops,
+ 	ops->exit = lpass_cdc_va_macro_deinit;
+ 	ops->io_base = va_io_base;
+ 	ops->event_handler = lpass_cdc_va_macro_event_handler;
+-	ops->set_port_map = lpass_cdc_va_macro_set_port_map;
+-	ops->reg_wake_irq = lpass_cdc_va_macro_reg_wake_irq;
+ 	ops->clk_div_get = lpass_cdc_va_macro_clk_div_get;
+ }
+
+@@ -2550,8 +2473,6 @@ static void lpass_cdc_va_macro_remove(struct platform_device *pdev)
+ 	if (!va_priv)
+ 		return;
+ 	if (va_priv->is_used_va_swr_gpio) {
+-		if (va_priv->swr_ctrl_data)
+-			kfree(va_priv->swr_ctrl_data);
+ 		for (count = 0; count < va_priv->child_count &&
+ 			count < LPASS_CDC_VA_MACRO_CHILD_DEVICES_MAX; count++)
+ 			platform_device_unregister(
+--
+2.34.1
+

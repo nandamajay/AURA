@@ -1,0 +1,211 @@
+From f46c34625e31d8a0e060540dd827b5356ac51637 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Tue, 16 Jun 2026 18:22:04 +0530
+Subject: [PATCH 5/11] ASoC: codecs: lpass-macro-common: add shared helper infrastructure with VA consumer
+
+Integrate lpass-macro-common power domain helpers (lpass_macro_pds_init, lpass_macro_pds_exit) into the VA macro probe/remove lifecycle. Add DMIC clock enable/disable helper for VA macro decimator paths.
+
+Every helper introduced has the VA macro as an immediate in-tree consumer per upstream convention.
+
+Signed-off-by: AURA Conversion Engine <aura@example.invalid>
+---
+ sound/soc/codecs/lpass-va-macro.c | 136 +++++++++++++++++++++++++++++-
+ 1 file changed, 133 insertions(+), 3 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 5ad4eb2..c2b6bff 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -16,6 +16,7 @@
+ #include <linux/pm_runtime.h>
+ #include <dsp/digital-cdc-rsc-mgr.h>
+ #include "lpass-cdc-clk-rsc.h"
++#include "lpass-macro-common.h"
+
+
+ /* VA macro registers: migrated from upstream lpass-va-macro.c */
+@@ -28,6 +29,15 @@
+ #define CDC_VA_TOP_CSR_DMIC2_CTL		(0x008C)
+ #define CDC_VA_TOP_CSR_DMIC3_CTL		(0x0090)
+ #define CDC_VA_TOP_CSR_DMIC_CFG			(0x0094)
++#define CDC_VA_DMIC_EN_MASK			0x1
++#define CDC_VA_DMIC_ENABLE			0x1
++#define CDC_VA_RESET_ALL_DMICS_MASK		0x80
++#define CDC_VA_RESET_ALL_DMICS_DISABLE		0x0
++#define CDC_VA_DMIC0_FREQ_CHANGE_MASK		0x1
++#define CDC_VA_DMIC1_FREQ_CHANGE_MASK		0x2
++#define CDC_VA_DMIC2_FREQ_CHANGE_MASK		0x4
++#define CDC_VA_DMIC3_FREQ_CHANGE_MASK		0x8
++#define CDC_VA_DMIC_FREQ_CHANGE_DISABLE		0x0
+ #define CDC_VA_TOP_CSR_DEBUG_BUS		(0x009C)
+ #define CDC_VA_TOP_CSR_DEBUG_EN			(0x00A0)
+ #define CDC_VA_TOP_CSR_TX_I2S_CTL		(0x00A4)
+@@ -222,6 +232,15 @@ struct lpass_cdc_va_macro_priv {
+ 	unsigned long active_ch_cnt[LPASS_CDC_VA_MACRO_MAX_DAIS];
+ 	u16 dmic_clk_div[MIC_PAIR_MAX];
+ 	u16 dmic_override_clk_div[MIC_PAIR_MAX];
++	s32 dmic_0_1_clk_cnt;
++	s32 dmic_2_3_clk_cnt;
++	s32 dmic_4_5_clk_cnt;
++	s32 dmic_6_7_clk_cnt;
++	u8 dmic_0_1_clk_div;
++	u8 dmic_2_3_clk_div;
++	u8 dmic_4_5_clk_div;
++	u8 dmic_6_7_clk_div;
++	struct lpass_macro *pds;
+ 	u16 va_mclk_users;
+ 	int swr_clk_users;
+ 	bool reset_swr;
+@@ -971,7 +990,109 @@ static int lpass_cdc_va_macro_tx_mixer_put(struct snd_kcontrol *kcontrol,
+ static int lpass_va_macro_dmic_clk_enable(struct snd_soc_component *component,
+ 					 u32 dmic, bool enable)
+ {
+-	/* TODO: Patch-03 provides full implementation */
++	struct device *va_dev = NULL;
++	struct lpass_cdc_va_macro_priv *va_priv = NULL;
++	u16 dmic_clk_reg;
++	s32 *dmic_clk_cnt;
++	u8 *dmic_clk_div;
++	u8 freq_change_mask;
++	int clk_div;
++
++	if (!lpass_cdc_va_macro_get_data(component, &va_dev, &va_priv, __func__))
++		return -EINVAL;
++
++	switch (dmic) {
++	case 0:
++	case 1:
++		dmic_clk_cnt = &va_priv->dmic_0_1_clk_cnt;
++		dmic_clk_div = &va_priv->dmic_0_1_clk_div;
++		dmic_clk_reg = CDC_VA_TOP_CSR_DMIC0_CTL;
++		freq_change_mask = CDC_VA_DMIC0_FREQ_CHANGE_MASK;
++		break;
++	case 2:
++	case 3:
++		dmic_clk_cnt = &va_priv->dmic_2_3_clk_cnt;
++		dmic_clk_div = &va_priv->dmic_2_3_clk_div;
++		dmic_clk_reg = CDC_VA_TOP_CSR_DMIC1_CTL;
++		freq_change_mask = CDC_VA_DMIC1_FREQ_CHANGE_MASK;
++		break;
++	case 4:
++	case 5:
++		dmic_clk_cnt = &va_priv->dmic_4_5_clk_cnt;
++		dmic_clk_div = &va_priv->dmic_4_5_clk_div;
++		dmic_clk_reg = CDC_VA_TOP_CSR_DMIC2_CTL;
++		freq_change_mask = CDC_VA_DMIC2_FREQ_CHANGE_MASK;
++		break;
++	case 6:
++	case 7:
++		dmic_clk_cnt = &va_priv->dmic_6_7_clk_cnt;
++		dmic_clk_div = &va_priv->dmic_6_7_clk_div;
++		dmic_clk_reg = CDC_VA_TOP_CSR_DMIC3_CTL;
++		freq_change_mask = CDC_VA_DMIC3_FREQ_CHANGE_MASK;
++		break;
++	default:
++		dev_err(component->dev, "%s: Invalid DMIC Selection\n", __func__);
++		return -EINVAL;
++	}
++
++	clk_div = lpass_cdc_va_macro_clk_div_get(component, dmic / 2);
++	if (clk_div < 0)
++		return clk_div;
++
++	if (enable) {
++		(*dmic_clk_cnt)++;
++		if (*dmic_clk_cnt == 1) {
++			snd_soc_component_update_bits(component,
++					CDC_VA_TOP_CSR_DMIC_CFG,
++					CDC_VA_RESET_ALL_DMICS_MASK,
++					CDC_VA_RESET_ALL_DMICS_DISABLE);
++			snd_soc_component_update_bits(component, dmic_clk_reg,
++					LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_MASK,
++					clk_div << LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_SHFT);
++			snd_soc_component_update_bits(component, dmic_clk_reg,
++					CDC_VA_DMIC_EN_MASK,
++					CDC_VA_DMIC_ENABLE);
++		} else if (*dmic_clk_div > clk_div) {
++			snd_soc_component_update_bits(component,
++					CDC_VA_TOP_CSR_DMIC_CFG,
++					freq_change_mask, freq_change_mask);
++			snd_soc_component_update_bits(component, dmic_clk_reg,
++					LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_MASK,
++					clk_div << LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_SHFT);
++			snd_soc_component_update_bits(component,
++					CDC_VA_TOP_CSR_DMIC_CFG,
++					freq_change_mask,
++					CDC_VA_DMIC_FREQ_CHANGE_DISABLE);
++		} else {
++			clk_div = *dmic_clk_div;
++		}
++		*dmic_clk_div = clk_div;
++	} else {
++		(*dmic_clk_cnt)--;
++		if (*dmic_clk_cnt == 0) {
++			snd_soc_component_update_bits(component, dmic_clk_reg,
++					CDC_VA_DMIC_EN_MASK, 0);
++			clk_div = 0;
++			snd_soc_component_update_bits(component, dmic_clk_reg,
++					LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_MASK,
++					clk_div << LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_SHFT);
++		} else if (*dmic_clk_div > clk_div) {
++			snd_soc_component_update_bits(component,
++					CDC_VA_TOP_CSR_DMIC_CFG,
++					freq_change_mask, freq_change_mask);
++			snd_soc_component_update_bits(component, dmic_clk_reg,
++					LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_MASK,
++					clk_div << LPASS_CDC_VA_MACRO_TX_DMIC_CLK_DIV_SHFT);
++			snd_soc_component_update_bits(component,
++					CDC_VA_TOP_CSR_DMIC_CFG,
++					freq_change_mask,
++					CDC_VA_DMIC_FREQ_CHANGE_DISABLE);
++		} else {
++			clk_div = *dmic_clk_div;
++		}
++		*dmic_clk_div = clk_div;
++	}
++
+ 	return 0;
+ }
+
+@@ -2321,13 +2442,19 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
+ 	mutex_init(&va_priv->mclk_lock);
+ 	mutex_init(&va_priv->wlock);
+ 	dev_set_drvdata(&pdev->dev, va_priv);
++
++	va_priv->pds = lpass_macro_pds_init(&pdev->dev);
++	if (IS_ERR(va_priv->pds)) {
++		ret = PTR_ERR(va_priv->pds);
++		goto pds_init_fail;
++	}
++
+ 	ret = devm_snd_soc_register_component(&pdev->dev,
+ 			&lpass_cdc_va_macro_component_drv,
+ 			lpass_cdc_va_macro_dai,
+ 			ARRAY_SIZE(lpass_cdc_va_macro_dai));
+ 	if (ret < 0) {
+-		dev_err(&pdev->dev, "%s: register component failed
+-", __func__);
++		dev_err(&pdev->dev, "%s: register component failed\n", __func__);
+ 		goto reg_component_fail;
+ 	}
+ 	pm_runtime_set_autosuspend_delay(&pdev->dev, VA_AUTO_SUSPEND_DELAY);
+@@ -2340,6 +2467,8 @@ static int lpass_cdc_va_macro_probe(struct platform_device *pdev)
+ 	return ret;
+
+ reg_component_fail:
++	lpass_macro_pds_exit(va_priv->pds);
++pds_init_fail:
+ 	mutex_destroy(&va_priv->mclk_lock);
+ 	mutex_destroy(&va_priv->wlock);
+ 	if (is_used_va_swr_gpio)
+@@ -2367,6 +2496,7 @@ static void lpass_cdc_va_macro_remove(struct platform_device *pdev)
+ 		&va_priv->va_dec_unmute_work.dwork);
+ 	pm_runtime_disable(&pdev->dev);
+ 	pm_runtime_set_suspended(&pdev->dev);
++	lpass_macro_pds_exit(va_priv->pds);
+ 	mutex_destroy(&va_priv->mclk_lock);
+ 	mutex_destroy(&va_priv->wlock);
+ 	if (va_priv->is_used_va_swr_gpio)
+--
+2.34.1
+

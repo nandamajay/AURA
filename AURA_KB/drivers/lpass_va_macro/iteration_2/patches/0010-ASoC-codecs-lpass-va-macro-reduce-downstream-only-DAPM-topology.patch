@@ -1,0 +1,109 @@
+From 2f659aee99cc35883feb1dd2d66ae6bf8d29b8db Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:50:32 +0530
+Subject: [PATCH 10/11] ASoC: codecs: lpass-va-macro: reduce downstream-only
+ DAPM topology
+
+---
+ sound/soc/codecs/lpass-va-macro.c | 43 -------------------------------
+ 1 file changed, 43 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index cdbd0c1..6d173ed 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -893,9 +893,6 @@ static int va_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 	u16 adc_mux_reg = 0;
+ 	u16 adc_mux0_reg = 0;
+ 	u16 tx_fs_reg = 0;
+-#ifdef CONFIG_BOLERO_VER_2P85
+-	u16 adapt_ctrl = 0;
+-#endif
+ 	struct device *va_dev = NULL;
+ 	struct va_macro_priv *va_priv = NULL;
+ 	int hpf_delay = VA_MACRO_TX_DMIC_HPF_DELAY_MS;
+@@ -924,10 +921,6 @@ static int va_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 			VA_MACRO_ADC_MUX_CFG_OFFSET * decimator;
+ 	tx_fs_reg = CDC_VA_TX0_TX_PATH_CTL +
+ 				VA_MACRO_TX_PATH_OFFSET * decimator;
+-#ifdef CONFIG_BOLERO_VER_2P85
+-	adapt_ctrl = LPASS_VA_CDC_ADPT0_ADPT_CTRL +
+-			VA_MACRO_TX_PATH_OFFSET * decimator;
+-#endif
+ 	va_priv->pcm_rate[decimator] = (snd_soc_component_read(component,
+ 				tx_fs_reg) & 0x0F);
+ 
+@@ -941,10 +934,6 @@ static int va_macro_enable_dec(struct snd_soc_dapm_widget *w,
+ 			VA_MACRO_ADC_MODE_CFG0_SHIFT);
+ 		break;
+ 	case SND_SOC_DAPM_POST_PMU:
+-#ifdef CONFIG_BOLERO_VER_2P85
+-		//Disable adapt block
+-		snd_soc_component_update_bits(component, adapt_ctrl, 0xFF, 0x00);
+-#endif
+ 		/* Enable TX CLK */
+ 		snd_soc_component_update_bits(component,
+ 				tx_vol_ctl_reg, 0x20, 0x20);
+@@ -1593,14 +1582,6 @@ static const struct snd_soc_dapm_route va_audio_map[] = {
+ 	{"VA SMIC MUX0", "SWR_MIC1", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX0", "SWR_MIC2", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX0", "SWR_MIC3", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC4", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC5", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC6", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC7", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC8", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC9", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC10", "VA SWR_INPUT"},
+-	{"VA SMIC MUX0", "SWR_MIC11", "VA SWR_INPUT"},
+ 
+ 	{"VA DEC1 MUX", "MSM_DMIC", "VA DMIC MUX1"},
+ 	{"VA DMIC MUX1", "DMIC0", "VA DMIC0"},
+@@ -1618,14 +1599,6 @@ static const struct snd_soc_dapm_route va_audio_map[] = {
+ 	{"VA SMIC MUX1", "SWR_MIC1", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX1", "SWR_MIC2", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX1", "SWR_MIC3", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC4", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC5", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC6", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC7", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC8", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC9", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC10", "VA SWR_INPUT"},
+-	{"VA SMIC MUX1", "SWR_MIC11", "VA SWR_INPUT"},
+ 
+ 	{"VA DEC2 MUX", "MSM_DMIC", "VA DMIC MUX2"},
+ 	{"VA DMIC MUX2", "DMIC0", "VA DMIC0"},
+@@ -1643,14 +1616,6 @@ static const struct snd_soc_dapm_route va_audio_map[] = {
+ 	{"VA SMIC MUX2", "SWR_MIC1", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX2", "SWR_MIC2", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX2", "SWR_MIC3", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC4", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC5", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC6", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC7", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC8", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC9", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC10", "VA SWR_INPUT"},
+-	{"VA SMIC MUX2", "SWR_MIC11", "VA SWR_INPUT"},
+ 
+ 	{"VA DEC3 MUX", "MSM_DMIC", "VA DMIC MUX3"},
+ 	{"VA DMIC MUX3", "DMIC0", "VA DMIC0"},
+@@ -1668,14 +1633,6 @@ static const struct snd_soc_dapm_route va_audio_map[] = {
+ 	{"VA SMIC MUX3", "SWR_MIC1", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX3", "SWR_MIC2", "VA SWR_INPUT"},
+ 	{"VA SMIC MUX3", "SWR_MIC3", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC4", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC5", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC6", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC7", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC8", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC9", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC10", "VA SWR_INPUT"},
+-	{"VA SMIC MUX3", "SWR_MIC11", "VA SWR_INPUT"},
+ 
+ 	{"VA SWR_INPUT", NULL, "VA_SWR_PWR"},
+ 
+-- 
+2.34.1
+

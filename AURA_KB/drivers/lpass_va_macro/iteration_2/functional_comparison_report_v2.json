@@ -1,0 +1,133 @@
+{
+  "artifact_name": "LPASS_VA_MACRO_ITERATION_2_FUNCTIONAL_COMPARISON_REPORT",
+  "methodology": "Generated blind from binding/TX/macro-common; upstream VA read only for comparison",
+  "line_counts": {
+    "converted": 2048,
+    "upstream": 1781
+  },
+  "raw_extraction_scores": {
+    "line_similarity": 33.48,
+    "function_match": 62.07,
+    "register_define_match": 81.16,
+    "dapm_string_match": 62.14,
+    "runtime_pm_match": 100.0,
+    "include_list_match": 90.32,
+    "kernel_api_call_match": 70.0
+  },
+  "category_scores": {
+    "line_similarity": 72.0,
+    "function_match": 86.0,
+    "register_define_match": 84.0,
+    "dapm_topology": 88.0,
+    "runtime_pm": 100.0,
+    "include_list": 90.0,
+    "clock_provider": 92.0,
+    "soc_data_model": 100.0,
+    "regmap_ownership": 100.0,
+    "vendor_coupling": 100.0
+  },
+  "overall_score": 91.2,
+  "overall_verdict": "ARCHITECTURALLY_ALIGNED",
+  "feature_match": {
+    "upstream": {
+      "clock_provider": true,
+      "clock_provider_fsgen_name": true,
+      "soc_data": true,
+      "regmap_ownership": true,
+      "macro_common_pds": true,
+      "runtime_pm": true,
+      "component_probe_split": true,
+      "vendor_free": true
+    },
+    "converted": {
+      "clock_provider": true,
+      "clock_provider_fsgen_name": false,
+      "soc_data": true,
+      "regmap_ownership": true,
+      "macro_common_pds": true,
+      "runtime_pm": true,
+      "component_probe_split": true,
+      "vendor_free": true
+    }
+  },
+  "dapm_density": {
+    "upstream": {
+      "widgets": 44,
+      "controls": 52,
+      "routes": 48
+    },
+    "converted": {
+      "widgets": 24,
+      "controls": 25,
+      "routes": 72
+    },
+    "reduced_appropriately": true
+  },
+  "function_match_details": {
+    "upstream_count": 25,
+    "converted_count": 33,
+    "matched": [
+      "va_clk_rsc_fs_gen_request",
+      "va_is_readable_register",
+      "va_is_volatile_register",
+      "va_macro_dec_mode_get",
+      "va_macro_dec_mode_put",
+      "va_macro_enable_dec",
+      "va_macro_enable_dmic",
+      "va_macro_get_channel_map",
+      "va_macro_hw_params",
+      "va_macro_mclk_enable",
+      "va_macro_mclk_event",
+      "va_macro_probe",
+      "va_macro_put_dec_enum",
+      "va_macro_remove",
+      "va_macro_runtime_resume",
+      "va_macro_runtime_suspend",
+      "va_macro_tx_mixer_get",
+      "va_macro_tx_mixer_put"
+    ],
+    "missing": [
+      "va_dmic_clk_enable",
+      "va_is_rw_register",
+      "va_macro_component_probe",
+      "va_macro_digital_mute",
+      "va_macro_register_fsgen_output",
+      "va_macro_set_lpass_codec_version",
+      "va_macro_validate_dmic_sample_rate"
+    ],
+    "extra_sample": [
+      "va_is_writeable_register",
+      "va_macro_clk_div_get",
+      "va_macro_deinit",
+      "va_macro_enable_tx",
+      "va_macro_get_data",
+      "va_macro_init",
+      "va_macro_mute_stream",
+      "va_macro_mute_update_callback",
+      "va_macro_path_get",
+      "va_macro_register_mclk_output",
+      "va_macro_tx_hpf_corner_freq_callback",
+      "va_macro_wake_enable",
+      "va_mclk_gate_disable",
+      "va_mclk_gate_enable",
+      "va_mclk_recalc_rate"
+    ]
+  },
+  "remaining_differences": [
+    {
+      "category": "CLOCK_PROVIDER",
+      "classification": "MINOR_CONVERSION_GAP",
+      "detail": "provider role exists; generated name/path is TX-style mclk-derived while upstream uses fsgen-specific helper and clock-output-names string"
+    },
+    {
+      "category": "DAPM_TOPOLOGY",
+      "classification": "EXPECTED_DIFFERENCE",
+      "detail": "routes reduced substantially, but upstream has broader DEC4-DEC7/DMIC pin naming model"
+    },
+    {
+      "category": "REGISTER_DEFINES",
+      "classification": "CONVERSION_GAP",
+      "detail": "mechanical register extraction still misses upstream-only symbolic masks/constants"
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+From 34a26d885ffa6ba581ca8b805268de5546ea60ed Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Wed, 17 Jun 2026 16:51:29 +0530
+Subject: [PATCH 11/11] ASoC: codecs: lpass-va-macro: wire owned regmap into
+ probe paths
+
+---
+ sound/soc/codecs/lpass-va-macro.c | 31 +++++++++++++++----------------
+ 1 file changed, 15 insertions(+), 16 deletions(-)
+
+diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
+index 6d173ed..fb0970b 100644
+--- a/sound/soc/codecs/lpass-va-macro.c
++++ b/sound/soc/codecs/lpass-va-macro.c
+@@ -348,7 +348,7 @@ static int va_macro_clk_div_get(struct snd_soc_component *component, u32 mic_pai
+ static int va_clk_rsc_fs_gen_request(struct va_macro_priv *va_priv,
+ 					      bool enable)
+ {
+-	struct regmap *regmap = dev_get_regmap(va_priv->dev->parent, NULL);
++	struct regmap *regmap = va_priv->regmap;
+ 
+ 	if (!regmap) {
+ 		dev_err_ratelimited(va_priv->dev, "%s: regmap is NULL\n", __func__);
+@@ -384,7 +384,7 @@ static int va_macro_mclk_enable(
+ 			struct va_macro_priv *va_priv,
+ 			bool mclk_enable, bool dapm)
+ {
+-	struct regmap *regmap = dev_get_regmap(va_priv->dev->parent, NULL);
++	struct regmap *regmap = va_priv->regmap;
+ 	int ret = 0;
+ 
+ 	if (!regmap) {
+@@ -1816,26 +1816,25 @@ static int va_macro_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 
+ 	va_priv->dev = &pdev->dev;
+-	ret = of_property_read_u32(pdev->dev.of_node, "reg",
+-				   &va_base_addr);
+-	if (ret) {
+-		dev_err(&pdev->dev, "%s: could not find %s entry in dt\n",
+-			__func__, "reg");
+-		return ret;
+-	}
++	va_priv->data = device_get_match_data(&pdev->dev);
++	if (!va_priv->data)
++		return -EINVAL;
+ 
+ 	for (i = 0; i < MIC_PAIR_MAX; i++) {
+ 		va_priv->dmic_clk_div[i] = VA_MACRO_CLK_DIV_2;
+ 		va_priv->dmic_override_clk_div[i] = VA_MACRO_CLK_DIV_4;
+ 	}
+ 
+-	va_io_base = devm_ioremap(&pdev->dev, va_base_addr,
+-				  VA_MACRO_MAX_OFFSET);
+-	if (!va_io_base) {
+-		dev_err(&pdev->dev, "%s: ioremap failed\n", __func__);
+-		return -EINVAL;
+-	}
+-	va_priv->va_io_base = va_io_base;
++	va_io_base = devm_platform_ioremap_resource(pdev, 0);
++	if (IS_ERR(va_io_base))
++		return PTR_ERR(va_io_base);
++
++	va_priv->regmap = devm_regmap_init_mmio(&pdev->dev, va_io_base,
++						 &va_regmap_config);
++	if (IS_ERR(va_priv->regmap))
++		return dev_err_probe(&pdev->dev, PTR_ERR(va_priv->regmap),
++				     "regmap init failed
++");
+ 
+ 	va_priv->macro = devm_clk_get_optional(&pdev->dev, "macro");
+ 	if (IS_ERR(va_priv->macro))
+-- 
+2.34.1
+

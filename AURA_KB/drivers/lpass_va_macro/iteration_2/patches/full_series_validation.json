@@ -1,0 +1,45 @@
+{
+  "artifact_name": "LPASS_VA_MACRO_ITERATION_2_SERIES_VALIDATION",
+  "classification": "PASS",
+  "series_apply": "PASS",
+  "predicted_patch_count": 11,
+  "actual_patch_count": 11,
+  "applied_patches": [
+    "0001-ASoC-codecs-lpass-va-macro-isolate-register-name-migration.patch",
+    "0002-ASoC-codecs-lpass-va-macro-drop-downstream-pinctrl-version-paths.patch",
+    "0003-ASoC-codecs-lpass-va-macro-remove-vendor-SoundWire-notification-coupling.patch",
+    "0004-ASoC-codecs-lpass-va-macro-remove-lpass-cdc-framework.patch",
+    "0005-ASoC-codecs-lpass-macro-common-add-shared-helper-with-VA-user.patch",
+    "0006-ASoC-codecs-lpass-va-macro-migrate-runtime-PM-clock-sequencing.patch",
+    "0007-ASoC-codecs-lpass-va-macro-remove-residual-downstream-symbols.patch",
+    "0008-ASoC-codecs-lpass-va-macro-own-MMIO-regmap-and-match-data.patch",
+    "0009-ASoC-codecs-lpass-va-macro-add-SoC-data-and-clock-provider.patch",
+    "0010-ASoC-codecs-lpass-va-macro-reduce-downstream-only-DAPM-topology.patch",
+    "0011-ASoC-codecs-lpass-va-macro-wire-owned-regmap-into-probe-paths.patch"
+  ],
+  "banned_symbol_count": 0,
+  "banned_symbol_survivors": [],
+  "pattern_fixes_present": {
+    "clock_provider": true,
+    "clock_provider_fsgen_name": false,
+    "soc_data": true,
+    "regmap_ownership": true,
+    "macro_common_pds": true,
+    "runtime_pm": true,
+    "component_probe_split": true,
+    "vendor_free": true
+  },
+  "dapm_counts": {
+    "converted": {
+      "widgets": 24,
+      "controls": 25,
+      "routes": 72
+    },
+    "upstream": {
+      "widgets": 44,
+      "controls": 52,
+      "routes": 48
+    }
+  },
+  "fail_closed_reasons": []
+}
