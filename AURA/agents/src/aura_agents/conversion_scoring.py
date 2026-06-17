@@ -8,11 +8,11 @@ import json
 import re
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Iterable, Sequence
 
 
 SCORING_ENGINE = "aura_conversion_scoring_v1"
-SCORING_ENGINE_VERSION = "1.0.0"
+SCORING_ENGINE_VERSION = "1.1.0"
 
 FUNCTION_MATCH = "FUNCTION_MATCH"
 API_COVERAGE = "API_COVERAGE"
@@ -36,6 +36,11 @@ CATEGORY_ORDER = (
     DT_PROPERTY_COVERAGE,
     VENDOR_ELIMINATION,
     INCLUDE_ALIGNMENT,
+)
+
+REGISTER_NORMALIZATION_RULES = (
+    "strip _MACRO_ infix",
+    "strip LPASS_ prefix",
 )
 
 DEFAULT_BANNED_SYMBOL_PATTERNS = (
@@ -118,10 +123,11 @@ FUNCTION_DEF_RE = re.compile(
     re.MULTILINE,
 )
 FUNCTION_CALL_RE = re.compile(r"\b([A-Za-z_]\w*)\s*\(")
-REGISTER_DEFINE_RE = re.compile(r"^\s*#define\s+(CDC_\w+|WSA\w+|VA\w+|TX\w+|RX\w+)\s+", re.MULTILINE)
-DAPM_WIDGET_RE = re.compile(
-    r"\bSND_SOC_DAPM_(?:INPUT|OUTPUT|MUX|MIXER|PGA|SUPPLY|AIF_IN|AIF_OUT|DAC|ADC|SWITCH|MIC|HP|SPK|LINE|VIRT)\b"
+REGISTER_DEFINE_RE = re.compile(
+    r"^\s*#define\s+(CDC_\w+|WSA\w+|VA\w+|TX\w+|RX\w+|LPASS_\w+|WCD\w+)\s+",
+    re.MULTILINE,
 )
+DAPM_WIDGET_RE = re.compile(r"\bSND_SOC_DAPM_[A-Z_]+\s*\(")
 DAPM_ROUTE_ARRAY_RE = re.compile(
     r"(?:struct\s+)?snd_soc_dapm_route\s+\w+\s*\[\]\s*=\s*\{(?P<body>.*?)\};",
     re.DOTALL,
@@ -130,8 +136,32 @@ DAPM_ROUTE_ENTRY_RE = re.compile(r"\{\s*\"[^\"]*\"\s*,\s*(?:NULL|\"[^\"]*\")\s*,
 DAPM_ROUTE_ENTRY_FALLBACK_RE = re.compile(r"\{\s*\"[^\"]*\"\s*,\s*(?:NULL|\"[^\"]*\")\s*,\s*\"[^\"]*\"\s*\}")
 DAPM_CONTROL_RE = re.compile(r"\bSOC_(?:SINGLE\w*|ENUM\w*|DAPM\w*|VALUE\w*)\s*\(")
 INCLUDE_RE = re.compile(r"^\s*#\s*include\s*[<\"]([^>\"]+)[>\"]", re.MULTILINE)
-OF_PROP_RE = re.compile(r"\bof_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
-DEV_PROP_RE = re.compile(r"\bdevice_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
+
+OF_PROP_LITERAL_RE = re.compile(r"\bof_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
+DEV_PROP_LITERAL_RE = re.compile(r"\bdevice_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
+FWNODE_PROP_LITERAL_RE = re.compile(r"\bfwnode_property_read_\w+\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
+
+# Extract second-argument symbolic property names from read calls.
+PROP_SYMBOL_CALL_RE = re.compile(
+    r"\b(?:of_property_read_\w+|device_property_read_\w+|fwnode_property_read_\w+)\s*\([^,]+,\s*([A-Za-z_]\w*)\s*,",
+    re.DOTALL,
+)
+
+STRING_DEFINE_RE = re.compile(r"^\s*#define\s+([A-Za-z_]\w*)\s+\"([^\"]+)\"", re.MULTILINE)
+CHAR_PTR_ASSIGN_RE = re.compile(
+    r"\b(?:const\s+)?char\s*\*\s*([A-Za-z_]\w*)\s*=\s*\"([^\"]+)\"\s*;",
+    re.MULTILINE,
+)
+PLAIN_ASSIGN_RE = re.compile(r"\b([A-Za-z_]\w*)\s*=\s*\"([^\"]+)\"\s*;", re.MULTILINE)
+
+REGULATOR_GET_LITERAL_RE = re.compile(
+    r"\b(?:devm_)?regulator_get(?:_optional|_exclusive)?\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"",
+    re.DOTALL,
+)
+CLK_GET_LITERAL_RE = re.compile(r"\bdevm_clk_get\w*\s*\([^;]*?\"([A-Za-z0-9_\-]+)\"", re.DOTALL)
+CLK_PROVIDER_RE = re.compile(r"\b(?:devm_)?of_clk_add_hw_provider\s*\(")
+FWNODE_PROP_CALL_RE = re.compile(r"\bfwnode_property_read_\w+\s*\(")
+DEVICE_CHILD_NODE_RE = re.compile(r"\bdevice_for_each_child_node(?:_scoped)?\s*\(")
 
 LIFECYCLE_ELEMENTS = (
     ("probe function exists", lambda text, fnames: any(name.endswith("_probe") or name == "probe" for name in fnames)),
@@ -168,15 +198,12 @@ def _safe_division_score(numerator: int, denominator: int) -> float:
     return (float(numerator) / float(denominator)) * 100.0
 
 
-def _count_proximity_score(upstream_count: int, converted_count: int) -> float:
-    delta = abs(upstream_count - converted_count)
-    denom = max(upstream_count, 1)
-    value = 1.0 - (float(delta) / float(denom))
-    if value < 0.0:
-        value = 0.0
-    if value > 1.0:
-        value = 1.0
-    return value * 100.0
+def _symmetric_count_match_score(upstream_count: int, converted_count: int) -> float:
+    upper = max(upstream_count, converted_count)
+    if upper == 0:
+        return 100.0
+    lower = min(upstream_count, converted_count)
+    return (float(lower) / float(upper)) * 100.0
 
 
 def _read_text(path: Path) -> str:
@@ -224,9 +251,50 @@ def _extract_dapm_control_count(text: str) -> int:
     return len(DAPM_CONTROL_RE.findall(text))
 
 
-def _extract_dt_properties(text: str) -> list[str]:
-    names = [*OF_PROP_RE.findall(text), *DEV_PROP_RE.findall(text)]
-    return _sorted_unique(names)
+def _extract_string_symbol_map(text: str) -> dict[str, str]:
+    mapping: dict[str, str] = {}
+
+    for match in STRING_DEFINE_RE.finditer(text):
+        mapping[match.group(1)] = match.group(2)
+
+    for match in CHAR_PTR_ASSIGN_RE.finditer(text):
+        mapping[match.group(1)] = match.group(2)
+
+    for match in PLAIN_ASSIGN_RE.finditer(text):
+        mapping[match.group(1)] = match.group(2)
+
+    return mapping
+
+
+def _extract_dt_properties(text: str) -> tuple[list[str], dict[str, bool]]:
+    names: list[str] = []
+    names.extend(OF_PROP_LITERAL_RE.findall(text))
+    names.extend(DEV_PROP_LITERAL_RE.findall(text))
+    names.extend(FWNODE_PROP_LITERAL_RE.findall(text))
+
+    symbol_map = _extract_string_symbol_map(text)
+    for match in PROP_SYMBOL_CALL_RE.finditer(text):
+        symbol = match.group(1)
+        literal = symbol_map.get(symbol)
+        if literal:
+            names.append(literal)
+
+    for reg_name in REGULATOR_GET_LITERAL_RE.findall(text):
+        names.append(f"{reg_name}-supply")
+
+    for clk_name in CLK_GET_LITERAL_RE.findall(text):
+        names.append(clk_name)
+
+    if CLK_PROVIDER_RE.search(text):
+        names.append("clock-output-names")
+
+    signals = {
+        "has_fwnode_property_read": bool(FWNODE_PROP_CALL_RE.search(text)),
+        "has_device_for_each_child_node": bool(DEVICE_CHILD_NODE_RE.search(text)),
+        "has_of_clk_add_hw_provider": bool(CLK_PROVIDER_RE.search(text)),
+    }
+
+    return _sorted_unique(names), signals
 
 
 def _extract_includes(text: str) -> list[str]:
@@ -253,6 +321,79 @@ def _overlap_payload(upstream_items: list[str], converted_items: list[str], form
         "missing_from_converted": missing,
         "extra_in_converted": extra,
     }
+
+
+def _normalize_register_symbol(symbol: str) -> str:
+    value = symbol
+    while value.startswith("LPASS_"):
+        value = value[len("LPASS_") :]
+    value = value.replace("_MACRO_", "_")
+    return value
+
+
+def _register_overlap_payload(upstream_raw: list[str], converted_raw: list[str]) -> dict[str, Any]:
+    raw_upstream_set = _to_set(upstream_raw)
+    raw_converted_set = _to_set(converted_raw)
+    raw_matched = raw_upstream_set.intersection(raw_converted_set)
+
+    upstream_normalized = _sorted_unique(_normalize_register_symbol(item) for item in upstream_raw)
+    converted_normalized = _sorted_unique(_normalize_register_symbol(item) for item in converted_raw)
+
+    normalized_payload = _overlap_payload(
+        upstream_items=upstream_normalized,
+        converted_items=converted_normalized,
+        formula="|normalized_upstream_registers ∩ normalized_converted_registers| / |normalized_upstream_registers| * 100",
+    )
+
+    normalized_payload["register_normalization_applied"] = True
+    normalized_payload["normalization_rules"] = list(REGISTER_NORMALIZATION_RULES)
+    normalized_payload["raw_upstream_count"] = len(raw_upstream_set)
+    normalized_payload["raw_converted_count"] = len(raw_converted_set)
+    normalized_payload["raw_matched_count"] = len(raw_matched)
+    normalized_payload["raw_score_before_normalization"] = _round_score(
+        _safe_division_score(len(raw_matched), len(raw_upstream_set))
+    )
+
+    return normalized_payload
+
+
+def _resolve_header_paths(source_path: Path, explicit_headers: Sequence[str | Path] | None) -> list[Path]:
+    resolved: list[Path] = []
+
+    if explicit_headers:
+        for item in explicit_headers:
+            item_path = Path(item)
+            candidate = item_path if item_path.is_absolute() else (source_path.parent / item_path)
+            candidate = candidate.resolve()
+            if candidate.exists() and candidate.is_file() and candidate.suffix == ".h":
+                resolved.append(candidate)
+    else:
+        for item in sorted(source_path.parent.glob("*.h")):
+            if item.is_file():
+                resolved.append(item.resolve())
+
+    unique: dict[str, Path] = {}
+    for path in resolved:
+        unique[str(path)] = path
+    return [unique[key] for key in sorted(unique.keys())]
+
+
+def _extract_registers_for_source(
+    source_path: Path,
+    source_text: str,
+    explicit_headers: Sequence[str | Path] | None,
+) -> tuple[list[str], list[Path], list[str]]:
+    header_paths = _resolve_header_paths(source_path, explicit_headers)
+    all_symbols: list[str] = []
+    all_symbols.extend(_extract_register_defines(source_text))
+
+    header_text_hashes: list[str] = []
+    for header_path in header_paths:
+        header_text = _read_text(header_path)
+        all_symbols.extend(_extract_register_defines(header_text))
+        header_text_hashes.append(hashlib.sha256(header_text.encode("utf-8")).hexdigest())
+
+    return _sorted_unique(all_symbols), header_paths, header_text_hashes
 
 
 def _load_banned_patterns(path: Path | None) -> list[dict[str, Any]]:
@@ -283,6 +424,7 @@ def _load_banned_patterns(path: Path | None) -> list[dict[str, Any]]:
                 is_regex = bool(item.get("regex", True))
                 if name and pattern:
                     entries.append({"name": name, "pattern": pattern if is_regex else re.escape(pattern), "regex": True})
+
     if entries:
         return sorted(entries, key=lambda item: item["name"])
     return [dict(entry) for entry in DEFAULT_BANNED_SYMBOL_PATTERNS]
@@ -297,9 +439,10 @@ def _score_vendor_elimination(converted_text: str, banned_patterns: list[dict[st
         count = len(list(re.finditer(pattern, converted_text, re.MULTILINE)))
         total += count
         per_symbol.append({"symbol": name, "occurrences": count})
-    score = 100.0 if total == 0 else 0.0
+
+    computed_score = 100.0 if total == 0 else 0.0
     return {
-        "score": _round_score(score),
+        "score": _round_score(computed_score),
         "formula": "0 occurrences found -> 100, any found -> 0",
         "total_occurrences": total,
         "per_symbol_occurrences": sorted(per_symbol, key=lambda item: item["symbol"]),
@@ -318,9 +461,10 @@ def _score_lifecycle(upstream_text: str, converted_text: str, upstream_functions
             if in_converted:
                 converted_present += 1
         per_element.append({"name": name, "in_upstream": in_upstream, "in_converted": in_converted})
-    score = _round_score(_safe_division_score(converted_present, upstream_present))
+
+    score_value = _round_score(_safe_division_score(converted_present, upstream_present))
     return {
-        "score": score,
+        "score": score_value,
         "formula": "elements_present_in_converted / elements_present_in_upstream * 100",
         "upstream_present_count": upstream_present,
         "converted_present_count": converted_present,
@@ -350,6 +494,8 @@ def score_conversion(
     upstream_source: str | Path,
     banned_symbols_file: str | Path | None = None,
     dt_binding_file: str | Path | None = None,
+    converted_headers: Sequence[str | Path] | None = None,
+    upstream_headers: Sequence[str | Path] | None = None,
 ) -> dict[str, Any]:
     """Score converted source against upstream source using fixed deterministic categories."""
 
@@ -368,8 +514,16 @@ def score_conversion(
     upstream_apis = _extract_api_calls(upstream_text)
     converted_apis = _extract_api_calls(converted_text)
 
-    upstream_registers = _extract_register_defines(upstream_text)
-    converted_registers = _extract_register_defines(converted_text)
+    upstream_registers, upstream_header_paths, upstream_header_hashes = _extract_registers_for_source(
+        source_path=upstream_path,
+        source_text=upstream_text,
+        explicit_headers=upstream_headers,
+    )
+    converted_registers, converted_header_paths, converted_header_hashes = _extract_registers_for_source(
+        source_path=converted_path,
+        source_text=converted_text,
+        explicit_headers=converted_headers,
+    )
 
     upstream_widgets = _extract_dapm_widget_count(upstream_text)
     converted_widgets = _extract_dapm_widget_count(converted_text)
@@ -380,8 +534,8 @@ def score_conversion(
     upstream_controls = _extract_dapm_control_count(upstream_text)
     converted_controls = _extract_dapm_control_count(converted_text)
 
-    upstream_dt_props = _extract_dt_properties(upstream_text)
-    converted_dt_props = _extract_dt_properties(converted_text)
+    upstream_dt_props, upstream_dt_signals = _extract_dt_properties(upstream_text)
+    converted_dt_props, converted_dt_signals = _extract_dt_properties(converted_text)
 
     upstream_includes = _extract_includes(upstream_text)
     converted_includes = _extract_includes(converted_text)
@@ -397,28 +551,28 @@ def score_conversion(
         converted_apis,
         "|upstream ∩ converted| / |upstream| * 100",
     )
-    categories[REGISTER_COVERAGE] = _overlap_payload(
-        upstream_registers,
-        converted_registers,
-        "|upstream ∩ converted| / |upstream| * 100",
+    categories[REGISTER_COVERAGE] = _register_overlap_payload(
+        upstream_raw=upstream_registers,
+        converted_raw=converted_registers,
     )
+
     categories[DAPM_WIDGETS] = {
-        "score": _round_score(_count_proximity_score(upstream_widgets, converted_widgets)),
-        "formula": "1 - abs(upstream_count - converted_count) / max(upstream_count, 1), capped to [0, 1], *100",
+        "score": _round_score(_symmetric_count_match_score(upstream_widgets, converted_widgets)),
+        "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
         "upstream_count": upstream_widgets,
         "converted_count": converted_widgets,
         "difference": abs(upstream_widgets - converted_widgets),
     }
     categories[DAPM_ROUTES] = {
-        "score": _round_score(_count_proximity_score(upstream_routes, converted_routes)),
-        "formula": "1 - abs(upstream_count - converted_count) / max(upstream_count, 1), capped to [0, 1], *100",
+        "score": _round_score(_symmetric_count_match_score(upstream_routes, converted_routes)),
+        "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
         "upstream_count": upstream_routes,
         "converted_count": converted_routes,
         "difference": abs(upstream_routes - converted_routes),
     }
     categories[DAPM_CONTROLS] = {
-        "score": _round_score(_count_proximity_score(upstream_controls, converted_controls)),
-        "formula": "1 - abs(upstream_count - converted_count) / max(upstream_count, 1), capped to [0, 1], *100",
+        "score": _round_score(_symmetric_count_match_score(upstream_controls, converted_controls)),
+        "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
         "upstream_count": upstream_controls,
         "converted_count": converted_controls,
         "difference": abs(upstream_controls - converted_controls),
@@ -435,17 +589,21 @@ def score_conversion(
         converted_dt_props,
         "|upstream_properties ∩ converted_properties| / |upstream_properties| * 100",
     )
+    dt_score = dt_overlap["score"]
+    if not upstream_dt_props:
+        dt_score = 100.0
+
     categories[DT_PROPERTY_COVERAGE] = {
-        "score": dt_overlap["score"],
+        "score": _round_score(dt_score),
         "formula": "|upstream_properties ∩ converted_properties| / |upstream_properties| * 100 (if upstream empty -> 100)",
         "upstream_properties": upstream_dt_props,
         "converted_properties": converted_dt_props,
         "matched": _sorted_unique(_to_set(upstream_dt_props).intersection(_to_set(converted_dt_props))),
         "missing": _sorted_unique(_to_set(upstream_dt_props).difference(_to_set(converted_dt_props))),
         "extra": _sorted_unique(_to_set(converted_dt_props).difference(_to_set(upstream_dt_props))),
+        "upstream_extraction_signals": upstream_dt_signals,
+        "converted_extraction_signals": converted_dt_signals,
     }
-    if not upstream_dt_props:
-        categories[DT_PROPERTY_COVERAGE]["score"] = 100.0
 
     banned_patterns = _load_banned_patterns(banned_path)
     categories[VENDOR_ELIMINATION] = _score_vendor_elimination(converted_text, banned_patterns)
@@ -477,8 +635,12 @@ def score_conversion(
             str(upstream_path),
             str(banned_path) if banned_path else "",
             str(dt_path) if dt_path else "",
+            ";".join(str(p) for p in converted_header_paths),
+            ";".join(str(p) for p in upstream_header_paths),
             hashlib.sha256(converted_text.encode("utf-8")).hexdigest(),
             hashlib.sha256(upstream_text.encode("utf-8")).hexdigest(),
+            ";".join(converted_header_hashes),
+            ";".join(upstream_header_hashes),
             hashlib.sha256(dt_binding_text.encode("utf-8")).hexdigest() if dt_path else "",
             scoring_sha,
         ]
@@ -491,6 +653,8 @@ def score_conversion(
         "inputs": {
             "converted_source": str(converted_path),
             "upstream_source": str(upstream_path),
+            "converted_headers": [str(path) for path in converted_header_paths],
+            "upstream_headers": [str(path) for path in upstream_header_paths],
             "banned_symbols_file": str(banned_path) if banned_path else None,
             "dt_binding_file": str(dt_path) if dt_path else None,
         },
@@ -518,6 +682,8 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Deterministic conversion scoring")
     parser.add_argument("--converted", required=True, help="Path to converted source file")
     parser.add_argument("--upstream", required=True, help="Path to upstream target source file")
+    parser.add_argument("--converted-headers", nargs="*", default=None, help="Optional list of converted header files to include")
+    parser.add_argument("--upstream-headers", nargs="*", default=None, help="Optional list of upstream header files to include")
     parser.add_argument("--banned-symbols", help="Optional path to banned symbols JSON")
     parser.add_argument("--dt-binding", help="Optional path to DT binding YAML")
     parser.add_argument("--output", help="Optional path to write JSON output")
@@ -529,6 +695,8 @@ def main(argv: list[str] | None = None) -> int:
     report = score_conversion(
         converted_source=args.converted,
         upstream_source=args.upstream,
+        converted_headers=args.converted_headers,
+        upstream_headers=args.upstream_headers,
         banned_symbols_file=args.banned_symbols,
         dt_binding_file=args.dt_binding,
     )
