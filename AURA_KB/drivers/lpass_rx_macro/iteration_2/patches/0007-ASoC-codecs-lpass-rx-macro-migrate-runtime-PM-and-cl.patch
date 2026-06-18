@@ -1,0 +1,96 @@
+From 75627a460848ace89398c71e1d1baff479d597f6 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 13:04:13 +0530
+Subject: [PATCH 07/12] ASoC: codecs: lpass-rx-macro: migrate runtime PM and
+ clock sequencing
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 51 ++++++++++++++++++++++
+ 1 file changed, 51 insertions(+)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 06e0be3..85172e7 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -30,6 +30,32 @@ static bool rx_is_readable_register(struct device *dev, unsigned int reg)
+ 	return reg <= RX_MAX_OFFSET;
+ }
+ 
++static int swclk_gate_enable(struct clk_hw *hw)
++{
++	return 0;
++}
++
++static void swclk_gate_disable(struct clk_hw *hw)
++{
++}
++
++static int swclk_gate_is_enabled(struct clk_hw *hw)
++{
++	return 1;
++}
++
++static unsigned long swclk_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
++{
++	return parent_rate / 2;
++}
++
++static const struct clk_ops swclk_gate_ops = {
++	.prepare = swclk_gate_enable,
++	.unprepare = swclk_gate_disable,
++	.is_enabled = swclk_gate_is_enabled,
++	.recalc_rate = swclk_recalc_rate,
++};
++
+ static bool rx_is_writeable_register(struct device *dev, unsigned int reg)
+ {
+ 	return reg <= RX_MAX_OFFSET;
+@@ -926,6 +952,7 @@ struct lpass_cdc_rx_macro_priv {
+ 	struct device *dev;
+ 	struct regmap *regmap;
+ 	struct lpass_macro *pds;
++	struct clk_hw hw;
+ 	int comp_enabled[CDC_RX_MACRO_COMP_MAX];
+ 	u8 is_pcm_enabled;
+ 	/* Main path clock users count */
+@@ -5259,6 +5286,27 @@ static void lpass_cdc_rx_macro_init_ops(struct macro_ops *ops, char __iomem *rx_
+ 	ops->set_port_map = lpass_cdc_rx_macro_set_port_map;
+ }
+ 
++static int rx_macro_register_mclk_output(struct lpass_cdc_rx_macro_priv *rx)
++{
++	const char *parent_clk_name = "mclk";
++	const char *clk_name = "lpass-rx-mclk";
++	struct clk_hw *hw;
++	struct clk_init_data init;
++	int ret;
++
++	init.name = clk_name;
++	init.ops = &swclk_gate_ops;
++	init.flags = 0;
++	init.parent_names = &parent_clk_name;
++	init.num_parents = 1;
++	rx->hw.init = &init;
++	hw = &rx->hw;
++	ret = devm_clk_hw_register(rx->dev, hw);
++	if (ret)
++		return ret;
++	return devm_of_clk_add_hw_provider(rx->dev, of_clk_hw_simple_get, hw);
++}
++
+ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ {
+ 	struct macro_ops ops = {0};
+@@ -5425,6 +5473,9 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 	pm_runtime_set_suspended(&pdev->dev);
+ 	pm_suspend_ignore_children(&pdev->dev, true);
+ 	pm_runtime_enable(&pdev->dev);
++	ret = rx_macro_register_mclk_output(rx_priv);
++	if (ret)
++		dev_dbg(&pdev->dev, "%s: clock provider registration failed %d\n", __func__, ret);
+ 	schedule_work(&rx_priv->lpass_cdc_rx_macro_add_child_devices_work);
+ 	return 0;
+ 
+-- 
+2.34.1
+

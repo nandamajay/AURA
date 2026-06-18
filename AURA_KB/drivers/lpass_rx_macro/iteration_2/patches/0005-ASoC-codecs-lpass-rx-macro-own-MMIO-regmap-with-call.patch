@@ -1,0 +1,103 @@
+From 38b9606e152dd283b27e62906c0602e93a01fe87 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 13:04:13 +0530
+Subject: [PATCH 05/12] ASoC: codecs: lpass-rx-macro: own MMIO regmap with
+ callbacks
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 37 ++++++++++++++++++++--
+ 1 file changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 04c2c88..ed6b43c 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -11,6 +11,7 @@
+ #include <linux/of_clk.h>
+ #include <linux/clk-provider.h>
+ #include <linux/pm_runtime.h>
++#include <linux/regmap.h>
+ #include <sound/soc.h>
+ #include <sound/pcm.h>
+ #include <sound/pcm_params.h>
+@@ -24,6 +25,32 @@ static inline int rx_macro_notify_noop(void *handle, int event, void *data)
+ 	return 0;
+ }
+ 
++static bool rx_is_readable_register(struct device *dev, unsigned int reg)
++{
++	return reg <= RX_MAX_OFFSET;
++}
++
++static bool rx_is_writeable_register(struct device *dev, unsigned int reg)
++{
++	return reg <= RX_MAX_OFFSET;
++}
++
++static bool rx_is_volatile_register(struct device *dev, unsigned int reg)
++{
++	return false;
++}
++
++static const struct regmap_config rx_macro_regmap_config = {
++	.reg_bits = 32,
++	.val_bits = 32,
++	.reg_stride = 4,
++	.max_register = RX_MAX_OFFSET,
++	.readable_reg = rx_is_readable_register,
++	.writeable_reg = rx_is_writeable_register,
++	.volatile_reg = rx_is_volatile_register,
++	.cache_type = REGCACHE_FLAT,
++};
++
+ #define AUTO_SUSPEND_DELAY  50 /* delay in msec */
+ 
+ /* Imported upstream RX register universe for deterministic convergence */
+@@ -897,6 +924,7 @@ enum {
+  */
+ struct lpass_cdc_rx_macro_priv {
+ 	struct device *dev;
++	struct regmap *regmap;
+ 	int comp_enabled[CDC_RX_MACRO_COMP_MAX];
+ 	u8 is_pcm_enabled;
+ 	/* Main path clock users count */
+@@ -1711,7 +1739,7 @@ static int lpass_cdc_rx_macro_mclk_enable(
+ 				struct lpass_cdc_rx_macro_priv *rx_priv,
+ 				bool mclk_enable, bool dapm)
+ {
+-	struct regmap *regmap = dev_get_regmap(rx_priv->dev->parent, NULL);
++	struct regmap *regmap = rx_priv->regmap;
+ 	int ret = 0;
+ 
+ 	if (regmap == NULL) {
+@@ -3397,7 +3425,7 @@ static void lpass_cdc_rx_macro_restore_iir_coeff(struct lpass_cdc_rx_macro_priv
+ 				int band_idx)
+ {
+ 	u16 reg_add = 0, coeff_idx = 0, idx = 0;
+-	struct regmap *regmap = dev_get_regmap(rx_priv->dev->parent, NULL);
++	struct regmap *regmap = rx_priv->regmap;
+ 
+ 	if (regmap == NULL) {
+ 		dev_err_ratelimited(rx_priv->dev, "%s: regmap is NULL\n", __func__);
+@@ -4896,7 +4924,7 @@ static int lpass_cdc_rx_macro_core_vote(void *handle, bool enable)
+ static int rx_swrm_clock(void *handle, bool enable)
+ {
+ 	struct lpass_cdc_rx_macro_priv *rx_priv = (struct lpass_cdc_rx_macro_priv *) handle;
+-	struct regmap *regmap = dev_get_regmap(rx_priv->dev->parent, NULL);
++	struct regmap *regmap = rx_priv->regmap;
+ 	int ret = 0;
+ 
+ 	if (regmap == NULL) {
+@@ -5314,6 +5342,9 @@ static int lpass_cdc_rx_macro_probe(struct platform_device *pdev)
+ 		return -ENOMEM;
+ 	}
+ 	rx_priv->rx_io_base = rx_io_base;
++	rx_priv->regmap = devm_regmap_init_mmio(&pdev->dev, rx_io_base, &rx_macro_regmap_config);
++	if (IS_ERR(rx_priv->regmap))
++		return PTR_ERR(rx_priv->regmap);
+ 	muxsel_io = devm_ioremap(&pdev->dev, muxsel, 0x4);
+ 	if (!muxsel_io) {
+ 		dev_err(&pdev->dev, "%s: ioremap failed for muxsel\n",
+-- 
+2.34.1
+

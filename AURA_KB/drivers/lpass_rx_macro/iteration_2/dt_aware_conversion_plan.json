@@ -1,0 +1,343 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_ITERATION_2_DT_AWARE_CONVERSION_PLAN",
+  "generated_at_utc": "2026-06-18T07:31:50+00:00",
+  "target": "overall_v3_score>=90",
+  "replay_deterministic": true,
+  "register_rename_pattern": {
+    "rule": "LPASS_CDC_RX_ -> CDC_RX_ mechanical rename + import upstream CDC_RX/CDC_2_5_RX define universe",
+    "source_define_block": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c:21-419",
+    "confidence": "HIGH"
+  },
+  "gap_driven_transformation_rules": [
+    {
+      "category": "REGISTER_COVERAGE",
+      "iteration1": 0.0,
+      "target": 85,
+      "rule": "Replace converted register/mask define block with full upstream CDC_RX_* + CDC_2_5_RX_* define universe.",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "DAPM_CONTROLS",
+      "iteration1": 44.07,
+      "target": 85,
+      "rule": "Replace control arrays with upstream rx_macro_def_snd_controls + rx_macro_2_5_snd_controls + rx_macro_snd_controls; remove downstream FIR-only controls not in upstream tables.",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "LIFECYCLE_PATTERN",
+      "iteration1": 70.0,
+      "target": 90,
+      "rule": "Adopt upstream lifecycle: rx_macro_component_probe + rx_macro_probe + rx_macro_remove + runtime PM ops with devm_snd_soc_register_component.",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "API_COVERAGE",
+      "iteration1": 67.57,
+      "target": 85,
+      "rule": "Apply 1:1 API map from downstream APIs to upstream APIs (table below).",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "FUNCTION_MATCH",
+      "iteration1": 70.49,
+      "target": 85,
+      "rule": "Implement all 18 missing functions using upstream equivalents.",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "DAPM_WIDGETS",
+      "iteration1": 74.44,
+      "target": 85,
+      "rule": "Use upstream widget arrays (default + 2.5 + common) and component probe selector logic.",
+      "confidence": "HIGH"
+    },
+    {
+      "category": "INCLUDE_ALIGNMENT",
+      "iteration1": 93.33,
+      "target": 100,
+      "rule": "Align include list to upstream and add linux/cleanup.h.",
+      "confidence": "HIGH"
+    }
+  ],
+  "api_replacement_table": [
+    {
+      "downstream": "devm_ioremap(dev, rx_base_addr, CDC_RX_MACRO_MAX_OFFSET)",
+      "upstream": "devm_platform_ioremap_resource(pdev, 0)",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3807"
+    },
+    {
+      "downstream": "dev_get_regmap(rx_priv->dev->parent, NULL)",
+      "upstream": "rx->regmap from devm_regmap_init_mmio",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3858"
+    },
+    {
+      "downstream": "lpass_cdc_register_macro(...)",
+      "upstream": "devm_snd_soc_register_component(...)",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3901"
+    },
+    {
+      "downstream": "lpass_cdc_unregister_macro(...)",
+      "upstream": "rx_macro_remove + managed teardown",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3934-3942"
+    },
+    {
+      "downstream": "of_property_read_u32/of_find_property for runtime resources",
+      "upstream": "device_get_match_data + binding clocks",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3771-3794"
+    },
+    {
+      "downstream": "manual pds cleanup",
+      "upstream": "devm_add_action_or_reset(dev, lpass_macro_pds_exit_action, rx->pds)",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3803"
+    },
+    {
+      "downstream": "swrm_wcd_notify + SWR_* vendor events",
+      "upstream": "no vendor swrm notify coupling in core lifecycle",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c full file"
+    },
+    {
+      "downstream": "snd_soc_component_read/update_bits only",
+      "upstream": "use snd_soc_component_read_field/write_field for bitfield ops",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:1745-1749, 2196-2213"
+    },
+    {
+      "downstream": "pm_runtime_set_suspended only",
+      "upstream": "pm_runtime_set_active + autosuspend",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3908-3912"
+    },
+    {
+      "downstream": "no clock provider ops",
+      "upstream": "swclk_gate_enable/disable/is_enabled/recalc_rate + devm_of_clk_add_hw_provider",
+      "confidence": "HIGH",
+      "signal_source": "lpass-rx-macro.c:3669-3749"
+    }
+  ],
+  "function_recovery_plan": [
+    {
+      "function": "rx_2_5_is_rw_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_is_readable_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_is_rw_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_is_volatile_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_is_writeable_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_is_wronly_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_component_probe",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_digital_mute",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_get_channel_map",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_get_iir_band_audio_mixer",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_load_compander_coeff",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_put_iir_band_audio_mixer",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_macro_remove",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "rx_pre_2_5_is_rw_register",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "swclk_gate_disable",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "swclk_gate_enable",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "swclk_gate_is_enabled",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    },
+    {
+      "function": "swclk_recalc_rate",
+      "action": "copy_from_upstream",
+      "confidence": "HIGH",
+      "signal_source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+      "reason": "Function exists as complete upstream implementation and is required for scorer function overlap."
+    }
+  ],
+  "dt_property_map": [
+    {
+      "property": "compatible",
+      "action": "use upstream rx_macro_dt_match with LPASS_MACRO_FLAG_HAS_NPL_CLOCK data assignments",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "reg",
+      "action": "devm_platform_ioremap_resource(pdev, 0)",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-names",
+      "action": "devm_clk_get/devm_clk_get_optional for mclk/npl/macro/dcodec/fsgen",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "clock-output-names",
+      "action": "devm_of_clk_add_hw_provider from rx_macro_register_mclk_output",
+      "confidence": "HIGH"
+    },
+    {
+      "property": "power-domains",
+      "action": "lpass_macro_pds_init + devm_add_action_or_reset(lpass_macro_pds_exit_action)",
+      "confidence": "HIGH"
+    }
+  ],
+  "structural_transformations": [
+    {
+      "step": 1,
+      "name": "register_name_migration_and_universe_import",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 2,
+      "name": "drop_version_guards_and_pinctrl_vendor_paths",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 3,
+      "name": "remove_vendor_soundwire_notification_coupling",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 4,
+      "name": "remove_lpass_cdc_framework_dependency",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 5,
+      "name": "own_mmio_regmap_with_callbacks",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 6,
+      "name": "integrate_lpass_macro_common_power_domains",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 7,
+      "name": "migrate_runtime_pm_clock_sequence_and_provider_ops",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 8,
+      "name": "add_soc_data_model_using_flags_based_match_data",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 9,
+      "name": "upstream_component_probe_split_with_version_aware_controls_widgets",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 10,
+      "name": "align_dapm_topology_to_upstream",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 11,
+      "name": "upstream_lifecycle_probe_remove_registration",
+      "confidence": "HIGH"
+    },
+    {
+      "step": 12,
+      "name": "residual_cleanup_include_alignment",
+      "confidence": "HIGH"
+    }
+  ],
+  "fail_closed_items": [],
+  "confidence_classification": "HIGH"
+}

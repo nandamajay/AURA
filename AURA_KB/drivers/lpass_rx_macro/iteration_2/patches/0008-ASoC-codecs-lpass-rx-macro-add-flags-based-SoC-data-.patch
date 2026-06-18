@@ -1,0 +1,39 @@
+From 6c3e2f4a5614e4d9e88fef7a91a1f438305c04c2 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 13:04:13 +0530
+Subject: [PATCH 08/12] ASoC: codecs: lpass-rx-macro: add flags-based SoC data
+ model
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index 85172e7..6b1ec8e 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -1419,6 +1419,7 @@ static int lpass_cdc_rx_macro_set_port_map(struct snd_soc_component *component,
+ 	struct lpass_cdc_rx_macro_priv *rx_priv = NULL;
+ 	struct swrm_port_config port_cfg;
+ 	int ret = 0;
++	kernel_ulong_t flags;
+ 
+ 	if (!lpass_cdc_rx_macro_get_data(component, &rx_dev, &rx_priv, __func__))
+ 		return -EINVAL;
+@@ -5523,7 +5524,12 @@ exit:
+ }
+ 
+ static const struct of_device_id lpass_cdc_rx_macro_dt_match[] = {
+-	{.compatible = "qcom,lpass-cdc-rx-macro"},
++	{ .compatible = "qcom,sc7280-lpass-rx-macro", .data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK },
++	{ .compatible = "qcom,sm6115-lpass-rx-macro", .data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK },
++	{ .compatible = "qcom,sm8250-lpass-rx-macro", .data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK },
++	{ .compatible = "qcom,sm8450-lpass-rx-macro", .data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK },
++	{ .compatible = "qcom,sm8550-lpass-rx-macro" },
++	{ .compatible = "qcom,sc8280xp-lpass-rx-macro", .data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK },
+ 	{}
+ };
+ 
+-- 
+2.34.1
+

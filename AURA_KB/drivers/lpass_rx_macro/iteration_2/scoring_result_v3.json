@@ -1,0 +1,325 @@
+{
+  "scoring_engine": "aura_conversion_scoring_v1",
+  "scoring_engine_version": "1.2.0",
+  "timestamp": "2016-03-18T06:38:17Z",
+  "inputs": {
+    "converted_source": "/tmp/aura_rx_iter2_apply_1781768076/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "upstream_source": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "converted_headers": [],
+    "upstream_headers": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h"
+    ],
+    "banned_symbols_file": null,
+    "dt_binding_file": null
+  },
+  "categories": {
+    "FUNCTION_MATCH": {
+      "score": 100.0,
+      "formula": "|upstream \u2229 converted| / |upstream| * 100",
+      "upstream_count": 61,
+      "converted_count": 61,
+      "matched_count": 61,
+      "missing_from_converted": [],
+      "extra_in_converted": []
+    },
+    "API_COVERAGE": {
+      "score": 100.0,
+      "formula": "|upstream \u2229 converted| / |upstream| * 100",
+      "upstream_count": 37,
+      "converted_count": 37,
+      "matched_count": 37,
+      "missing_from_converted": [],
+      "extra_in_converted": []
+    },
+    "REGISTER_COVERAGE": {
+      "score": 99.49,
+      "formula": "|normalized_upstream_registers \u2229 normalized_converted_registers| / |normalized_upstream_registers| * 100",
+      "upstream_count": 394,
+      "converted_count": 392,
+      "matched_count": 392,
+      "missing_from_converted": [
+        "MACRO_FLAG_HAS_NPL_CLOCK",
+        "MACRO_FLAG_RESET_SWR"
+      ],
+      "extra_in_converted": [],
+      "register_normalization_applied": true,
+      "normalization_rules": [
+        "strip _MACRO_ infix",
+        "strip LPASS_ prefix"
+      ],
+      "raw_upstream_count": 394,
+      "raw_converted_count": 392,
+      "raw_matched_count": 392,
+      "raw_score_before_normalization": 99.49
+    },
+    "DAPM_WIDGETS": {
+      "score": 100.0,
+      "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+      "upstream_count": 90,
+      "converted_count": 90,
+      "difference": 0
+    },
+    "DAPM_ROUTES": {
+      "score": 100.0,
+      "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+      "upstream_count": 288,
+      "converted_count": 288,
+      "difference": 0
+    },
+    "DAPM_CONTROLS": {
+      "score": 100.0,
+      "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+      "upstream_count": 118,
+      "converted_count": 118,
+      "difference": 0
+    },
+    "LIFECYCLE_PATTERN": {
+      "score": 100.0,
+      "formula": "elements_present_in_converted / elements_present_in_upstream * 100",
+      "upstream_present_count": 10,
+      "converted_present_count": 10,
+      "per_element": [
+        {
+          "name": "probe function exists",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "remove function exists",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "component_probe exists",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "runtime_suspend exists",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "runtime_resume exists",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "SET_RUNTIME_PM_OPS or RUNTIME_PM_OPS present",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "devm_regmap_init (mmio/sdw/i2c/spi/any) present",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "devm_snd_soc_register_component present",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "of_device_id table present",
+          "in_upstream": true,
+          "in_converted": true
+        },
+        {
+          "name": "module_platform_driver OR module_sdw_driver OR module_i2c_driver present",
+          "in_upstream": true,
+          "in_converted": true
+        }
+      ]
+    },
+    "DT_PROPERTY_COVERAGE": {
+      "score": 100.0,
+      "formula": "|upstream_properties \u2229 converted_properties| / |upstream_properties| * 100 (if upstream empty -> 100)",
+      "upstream_properties": [
+        "clock-output-names",
+        "dcodec",
+        "fsgen",
+        "macro",
+        "mclk",
+        "npl"
+      ],
+      "converted_properties": [
+        "clock-output-names",
+        "dcodec",
+        "fsgen",
+        "macro",
+        "mclk",
+        "npl"
+      ],
+      "matched": [
+        "clock-output-names",
+        "dcodec",
+        "fsgen",
+        "macro",
+        "mclk",
+        "npl"
+      ],
+      "missing": [],
+      "extra": [],
+      "upstream_extraction_signals": {
+        "has_fwnode_property_read": false,
+        "has_device_for_each_child_node": false,
+        "has_of_clk_add_hw_provider": true
+      },
+      "converted_extraction_signals": {
+        "has_fwnode_property_read": false,
+        "has_device_for_each_child_node": false,
+        "has_of_clk_add_hw_provider": true
+      }
+    },
+    "VENDOR_ELIMINATION": {
+      "score": 100.0,
+      "formula": "0 occurrences found -> 100, any found -> 0",
+      "total_occurrences": 0,
+      "per_symbol_occurrences": [
+        {
+          "symbol": "CONFIG_BOLERO",
+          "occurrences": 0
+        },
+        {
+          "symbol": "KERNEL_VERSION_in_if",
+          "occurrences": 0
+        },
+        {
+          "symbol": "LINUX_VERSION_CODE_in_if",
+          "occurrences": 0
+        },
+        {
+          "symbol": "SWR_DEVICE_SSR",
+          "occurrences": 0
+        },
+        {
+          "symbol": "SWR_REGISTER_WAKE_IRQ",
+          "occurrences": 0
+        },
+        {
+          "symbol": "SWR_SET_PORT_MAP",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_linux/version.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_lpass-cdc-clk-rsc.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_lpass-cdc-registers.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_lpass-cdc.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_msm-cdc-pinctrl.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_swr-common.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "include_swr-wcd.h",
+          "occurrences": 0
+        },
+        {
+          "symbol": "lpass_cdc_clk_rsc",
+          "occurrences": 0
+        },
+        {
+          "symbol": "lpass_cdc_register_macro",
+          "occurrences": 0
+        },
+        {
+          "symbol": "lpass_cdc_rsc_clk",
+          "occurrences": 0
+        },
+        {
+          "symbol": "lpass_cdc_unregister_macro",
+          "occurrences": 0
+        },
+        {
+          "symbol": "msm_cdc_pinctrl",
+          "occurrences": 0
+        },
+        {
+          "symbol": "swrm_wcd_notify",
+          "occurrences": 0
+        }
+      ]
+    },
+    "INCLUDE_ALIGNMENT": {
+      "score": 100.0,
+      "formula": "|upstream_includes \u2229 converted_includes| / |upstream_includes| * 100",
+      "upstream_includes": [
+        "linux/cleanup.h",
+        "linux/clk-provider.h",
+        "linux/clk.h",
+        "linux/init.h",
+        "linux/io.h",
+        "linux/module.h",
+        "linux/of_clk.h",
+        "linux/platform_device.h",
+        "linux/pm_runtime.h",
+        "lpass-macro-common.h",
+        "sound/pcm.h",
+        "sound/pcm_params.h",
+        "sound/soc-dapm.h",
+        "sound/soc.h",
+        "sound/tlv.h"
+      ],
+      "converted_includes": [
+        "linux/cleanup.h",
+        "linux/clk-provider.h",
+        "linux/clk.h",
+        "linux/init.h",
+        "linux/io.h",
+        "linux/module.h",
+        "linux/of_clk.h",
+        "linux/platform_device.h",
+        "linux/pm_runtime.h",
+        "lpass-macro-common.h",
+        "sound/pcm.h",
+        "sound/pcm_params.h",
+        "sound/soc-dapm.h",
+        "sound/soc.h",
+        "sound/tlv.h"
+      ],
+      "matched": [
+        "linux/cleanup.h",
+        "linux/clk-provider.h",
+        "linux/clk.h",
+        "linux/init.h",
+        "linux/io.h",
+        "linux/module.h",
+        "linux/of_clk.h",
+        "linux/platform_device.h",
+        "linux/pm_runtime.h",
+        "lpass-macro-common.h",
+        "sound/pcm.h",
+        "sound/pcm_params.h",
+        "sound/soc-dapm.h",
+        "sound/soc.h",
+        "sound/tlv.h"
+      ],
+      "missing": [],
+      "extra": []
+    }
+  },
+  "overall": {
+    "score": 99.95,
+    "formula": "arithmetic_mean(10 categories)",
+    "category_count": 10
+  },
+  "metadata": {
+    "deterministic": true,
+    "reproducible": true,
+    "scoring_logic_sha256": "3dfa946b62fc35e5e7fb16885cfb3276bcd7f36e0eadde14ed6daf149340de10"
+  }
+}

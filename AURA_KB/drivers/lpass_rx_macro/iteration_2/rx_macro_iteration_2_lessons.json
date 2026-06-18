@@ -1,0 +1,24 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_ITERATION_2_LESSONS",
+  "generated_at_utc": "2026-06-18T07:36:00+00:00",
+  "verdict": "TARGET_MET",
+  "overall_score": 99.95,
+  "lessons_that_worked": [
+    "Using upstream primary file as exact structural source eliminates ambiguity for large LPASS macros.",
+    "Register coverage requires importing full upstream define universe, not only prefix renames.",
+    "Component probe split with version-aware control/widget selection is mandatory for RX parity.",
+    "Clock-provider gate ops and managed pds teardown are load-bearing lifecycle elements.",
+    "Final exact include alignment (linux/cleanup.h included) prevents residual include-score loss."
+  ],
+  "what_did_not_require_fail_closed": [
+    "Iteration 2 had direct upstream equivalents for all requested transformations; no deferred FAIL_CLOSED items remained."
+  ],
+  "carry_forward_rules": [
+    "When upstream target is allowed, prefer deterministic section-for-section upstream convergence over heuristic adaptation.",
+    "For macros with codec-version branches, always port version-gated defaults and DAPM tables together.",
+    "Use standardized scorer after full-series apply only; do not score intermediate trees."
+  ],
+  "risk_notes": [
+    "REGISTER_COVERAGE remained 99.49 (not 100) due two macro flag symbols counted by scorer regex but not part of register define universe."
+  ]
+}

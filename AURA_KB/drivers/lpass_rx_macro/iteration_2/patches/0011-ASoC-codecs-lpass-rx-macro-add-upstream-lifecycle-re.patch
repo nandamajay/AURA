@@ -1,0 +1,46 @@
+From 44583d5b15bab3e4e25b18ea97e57787a1cb2d79 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Thu, 18 Jun 2026 13:04:13 +0530
+Subject: [PATCH 11/12] ASoC: codecs: lpass-rx-macro: add upstream lifecycle
+ registration and remove path
+
+---
+ asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c | 8 +++++---
+ 1 file changed, 5 insertions(+), 3 deletions(-)
+
+diff --git a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+index e6fd5e0..23e7d64 100644
+--- a/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
++++ b/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c
+@@ -3799,7 +3799,9 @@ static int rx_macro_probe(struct platform_device *pdev)
+ 	if (IS_ERR(rx->pds))
+ 		return PTR_ERR(rx->pds);
+ 
+-	/* devm_add_action_or_reset deferred to follow-up lifecycle patch */
++	ret = devm_add_action_or_reset(dev, lpass_macro_pds_exit_action, rx->pds);
++	if (ret)
++		return ret;
+ 
+ 	base = devm_platform_ioremap_resource(pdev, 0);
+ 	if (IS_ERR(base))
+@@ -3928,7 +3930,7 @@ err_dcodec:
+ 	return ret;
+ }
+ 
+-static void rx_macro_remove_deferred(struct platform_device *pdev)
++static void rx_macro_remove(struct platform_device *pdev)
+ {
+ 	struct rx_macro *rx = dev_get_drvdata(&pdev->dev);
+ 
+@@ -4023,7 +4025,7 @@ static struct platform_driver rx_macro_driver = {
+ 		.pm = pm_ptr(&rx_macro_pm_ops),
+ 	},
+ 	.probe = rx_macro_probe,
+-	.remove = rx_macro_remove_deferred,
++	.remove = rx_macro_remove,
+ };
+ 
+ module_platform_driver(rx_macro_driver);
+-- 
+2.34.1
+
