@@ -1,0 +1,211 @@
+{
+  "artifact_name": "WCD937X_VARIANT_A_LESSONS_LEARNED",
+  "blind_methodology": {
+    "outcome": "SUCCESS",
+    "target_files_hidden_until_task6": true,
+    "target_files_opened_in_task6_only": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.h"
+    ]
+  },
+  "confidence_classification": "FAIL_CLOSED",
+  "fail_closed_summary": {
+    "count": 111,
+    "examples": [
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 140,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_handle_post_irq"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 155,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_init_reg"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 230,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_get_dev_num"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 246,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_set_port_params"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 297,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_parse_port_params"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 364,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_parse_port_mapping"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 512,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_rx_clk_enable"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 537,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_rx_clk_disable"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 584,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_hphl_dac_event"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 673,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_hphr_dac_event"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 759,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_ear_dac_event"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 817,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_aux_dac_event"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 857,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_enable_hphr_pa"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 956,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_enable_hphl_pa"
+      },
+      {
+        "classification": "FAIL_CLOSED",
+        "downstream_line": 1055,
+        "reason": "Insufficient blind evidence to prove this downstream-only helper is required for upstream driver.",
+        "symbol": "wcd937x_codec_enable_aux_pa"
+      }
+    ],
+    "reasons": [
+      "Insufficient blind evidence for downstream-only helper necessity.",
+      "Codec-local MBHC special-case flows deferred to upstream module callbacks unless clearly required."
+    ]
+  },
+  "generated_at_utc": "2026-06-19T14:16:32Z",
+  "new_multifile_challenges": [
+    "Main platform codec and SDW slave must be split and bound through component framework.",
+    "Header consolidation requires balancing register namespace completeness with shared SDW structures.",
+    "MBHC/Class-H paths must be wired through shared modules instead of retaining downstream standalone implementations."
+  ],
+  "pattern_transfer_from_prior_learning": [
+    {
+      "evidence_in_variant_a": "wcd937x-sdw.c uses sdw_driver, sdw_slave_ops, devm_regmap_init_sdw, runtime PM",
+      "impact": "high",
+      "source": "WSA lessons",
+      "transferred_rule": "Classify bus type first; for SoundWire codecs use sdw_driver + regmap over SDW"
+    },
+    {
+      "evidence_in_variant_a": "analysis + plan JSON contain explicit fail_closed_items and replay metadata",
+      "impact": "high",
+      "source": "LPASS/VA governance lessons",
+      "transferred_rule": "Separate deterministic planning from patch emission and enforce FAIL_CLOSED on unclear symbols"
+    },
+    {
+      "evidence_in_variant_a": "wcd938x architecture adapted to wcd937x naming, DT, and Kconfig constraints",
+      "impact": "high",
+      "source": "WSA884x functional comparison practice",
+      "transferred_rule": "Drive architecture from closest upstream reference instead of preserving vendor framework internals"
+    }
+  ],
+  "remaining_gaps": [
+    "DAPM controls/routes/widgets remained below 85 in blind mode; topology refinement likely requires target-specific details.",
+    "API/function match is strong but not complete, indicating missing or differently-named helper paths compared to true upstream target."
+  ],
+  "replay_deterministic": true,
+  "replay_inputs": [
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x_slave.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/internal.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-registers.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-regmap.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-tables.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-mbhc.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-mbhc.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/Kbuild",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/Makefile",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd-common.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "/local/mnt/workspace/Datasheets/qualcomm_aqstic_wcd937x_specs.pdf"
+  ],
+  "replay_signal_sources": [
+    "downstream wcd937x multi-file driver set",
+    "upstream wcd938x architecture reference",
+    "shared modules: wcd-mbhc-v2, wcd-clsh-v2, wcd-common",
+    "DT bindings: qcom,wcd937x.yaml + qcom,wcd937x-sdw.yaml + qcom,wcd93xx-common.yaml",
+    "linux-next codecs Kconfig/Makefile",
+    "Qualcomm WCD937x datasheet (public summary PDF)",
+    "AURA KB lessons: wsa883x, wsa884x, lpass_va_macro iteration_2"
+  ],
+  "scoring_summary_v4": {
+    "aggregate_categories": {
+      "API_COVERAGE": 85.47,
+      "DAPM_CONTROLS": 68.98,
+      "DAPM_ROUTES": 81.76,
+      "DAPM_WIDGETS": 80.76,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "FUNCTION_MATCH": 89.86,
+      "INCLUDE_ALIGNMENT": 100.0,
+      "LIFECYCLE_PATTERN": 100.0,
+      "REGISTER_COVERAGE": 97.49,
+      "VENDOR_ELIMINATION": 100.0
+    },
+    "aggregate_overall": 90.43,
+    "per_file_overall": [
+      {
+        "converted_file": "wcd937x-sdw.c",
+        "overall": 97.79,
+        "status": "PAIRED",
+        "upstream_file": "wcd937x-sdw.c"
+      },
+      {
+        "converted_file": "wcd937x.c",
+        "overall": 87.71,
+        "status": "PAIRED",
+        "upstream_file": "wcd937x.c"
+      }
+    ]
+  },
+  "what_worked": [
+    "Upstream SoundWire/component model transfer produced 100% lifecycle and vendor-elimination categories.",
+    "Register namespace consolidation in wcd937x.h achieved high register coverage.",
+    "Explicit split between main and sdw files aligned with Kconfig/Makefile architecture."
+  ]
+}

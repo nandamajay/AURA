@@ -1,0 +1,51 @@
+{
+  "artifact_name": "WCD937X_VARIANT_A_PATCH_LINEAGE",
+  "generated_at_utc": "2026-06-19T14:17:07Z",
+  "lineage": [
+    {
+      "confidence": "HIGH",
+      "patch": "0001-ASoC-wcd937x-consolidate-shared-upstream-style-heade.patch",
+      "signal_source": [
+        "wcd938x.h",
+        "downstream wcd937x-registers.h",
+        "Kconfig/Makefile two-file split"
+      ],
+      "what_was_changed": "Replaced legacy local header with consolidated upstream-style wcd937x.h containing SDW-facing structures and register namespace.",
+      "why": "Enable shared compilation boundary between main codec and SDW slave paths and remove dependency on vendor-only internal layering."
+    },
+    {
+      "confidence": "HIGH",
+      "patch": "0002-ASoC-wcd937x-convert-main-codec-driver-to-upstream-c.patch",
+      "signal_source": [
+        "wcd938x.c",
+        "wcd-mbhc-v2.h",
+        "wcd-clsh-v2.h",
+        "qcom,wcd937x.yaml"
+      ],
+      "what_was_changed": "Replaced downstream main codec implementation with component-master/platform architecture patterned after upstream WCD class drivers.",
+      "why": "Remove vendor framework coupling and align lifecycle/API usage with upstream SoundWire codec model."
+    },
+    {
+      "confidence": "HIGH",
+      "patch": "0003-ASoC-wcd937x-migrate-legacy-SWR-slave-to-SoundWire-s.patch",
+      "signal_source": [
+        "wcd938x-sdw.c",
+        "qcom,wcd937x-sdw.yaml",
+        "Kconfig SND_SOC_WCD937X_SDW"
+      ],
+      "what_was_changed": "Renamed and replaced legacy wcd937x_slave.c with upstream-style wcd937x-sdw.c using sdw_driver/regmap/runtime PM/component hooks.",
+      "why": "Target kernel bus model is SoundWire SDW; legacy SWR APIs are downstream/vendor-specific."
+    },
+    {
+      "confidence": "HIGH",
+      "patch": "0004-ASoC-wcd937x-remove-downstream-only-split-units-and-.patch",
+      "signal_source": [
+        "wcd938x file organization",
+        "linux-next codecs Makefile object layout"
+      ],
+      "what_was_changed": "Removed downstream-only split helper units and updated Kbuild references to upstream naming.",
+      "why": "Regmap/tables/mbhc split units were absorbed into upstream-style main/sdw/header structure or delegated to shared modules."
+    }
+  ],
+  "replay_deterministic": true
+}
