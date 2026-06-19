@@ -229,6 +229,8 @@ def verify_conversion(
                 severity = "COPY_RISK"
             elif similarity >= derived_threshold:
                 severity = "DERIVATION_RISK"
+            if group_name == "downstream" and severity == "COPY_RISK":
+                severity = "DOWNSTREAM_REUSE_RISK"
             item = dict(match)
             item["severity"] = severity
             if severity != "PASS":
@@ -242,8 +244,14 @@ def verify_conversion(
 
     lineage = _lineage_function_coverage(converted_files, Path(lineage_file) if lineage_file else None)
 
-    blocking_findings = [item for item in derivation_findings if item["severity"] == "COPY_RISK"]
-    warning_findings = [item for item in derivation_findings if item["severity"] == "DERIVATION_RISK"]
+    blocking_findings = [
+        item for item in derivation_findings
+        if item["severity"] == "COPY_RISK" and item["group"] in {"references", "targets"}
+    ]
+    warning_findings = [
+        item for item in derivation_findings
+        if item["severity"] in {"DERIVATION_RISK", "DOWNSTREAM_REUSE_RISK"}
+    ]
     lineage_coverage = lineage.get("coverage")
     lineage_blocking = lineage_coverage is not None and float(lineage_coverage) < lineage_threshold
 

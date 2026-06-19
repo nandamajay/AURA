@@ -89,6 +89,18 @@ def test_no_lineage_warns_but_does_not_fail(tmp_path: Path):
     assert report["lineage_check"]["status"] == "SKIPPED"
 
 
+def test_downstream_reuse_warns_not_blocks(tmp_path: Path):
+    converted = _write(tmp_path / "converted" / "driver.c", "static int f(void) { return 0; }\n")
+    downstream = _write(tmp_path / "downstream" / "driver.c", "static int f(void) { return 0; }\n")
+    lineage = _write(tmp_path / "lineage.json", json.dumps({"functions": ["f"]}))
+
+    report = verify_conversion([converted.parent], downstream_paths=[downstream.parent], lineage_file=lineage)
+
+    assert report["verdict"] == "WARN"
+    assert report["findings"]["blocking"] == []
+    assert report["findings"]["warnings"][0]["severity"] == "DOWNSTREAM_REUSE_RISK"
+
+
 def test_render_is_deterministic(tmp_path: Path):
     converted = _write(tmp_path / "converted" / "driver.c", "static int f(void) { return 0; }\n")
 
