@@ -1,0 +1,88 @@
+{
+  "artifact": "variant_c_gap_analysis",
+  "generated_at_utc": "2026-06-19T17:20:00Z",
+  "inputs": {
+    "variant_a_scoring": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_a_corrected/scoring_result_v4.json",
+    "variant_b_scoring": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/scoring_result_v4.json",
+    "variant_b_gate": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/governance_gate/governance_verdict.json",
+    "reference_skeletons": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c"
+    ],
+    "downstream_signal": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x_slave.c",
+    "dt_binding_signal": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml"
+  },
+  "scores": {
+    "variant_a_overall": 80.42,
+    "variant_b_overall": 81.43,
+    "delta_b_minus_a": 1.01,
+    "category_deltas_a_to_b": {
+      "FUNCTION_MATCH": 0.0,
+      "API_COVERAGE": 0.0,
+      "REGISTER_COVERAGE": 10.12,
+      "DAPM_WIDGETS": 0.0,
+      "DAPM_ROUTES": 0.0,
+      "DAPM_CONTROLS": 0.0,
+      "LIFECYCLE_PATTERN": 0.0,
+      "DT_PROPERTY_COVERAGE": 0.0,
+      "VENDOR_ELIMINATION": 0.0,
+      "INCLUDE_ALIGNMENT": 0.0
+    }
+  },
+  "why_variant_b_only_improved_registers": [
+    {
+      "signal": "Variant B preserved downstream-style SDW lifecycle/function naming",
+      "evidence": "scorer missing upstream SDW functions: wcd9370_probe/remove, register callbacks, runtime PM callbacks",
+      "effect": "FUNCTION_MATCH and LIFECYCLE_PATTERN remained low"
+    },
+    {
+      "signal": "Variant B SDW file did not use upstream SDW APIs for DT parsing/regmap/runtime setup",
+      "evidence": "missing APIs included devm_regmap_init_sdw, of_property_* calls, pm_runtime_set_suspended",
+      "effect": "API_COVERAGE remained low"
+    },
+    {
+      "signal": "Variant B SDW include set remained downstream-centric (debugfs/uaccess) versus upstream SDW include profile",
+      "evidence": "missing linux/of.h linux/pm_runtime.h linux/regmap.h sound/soc*.h",
+      "effect": "INCLUDE_ALIGNMENT remained low"
+    },
+    {
+      "signal": "Variant B header merged register universes and increased overlap",
+      "evidence": "REGISTER_COVERAGE increased from 86.32 to 96.44",
+      "effect": "overall gain was predominantly register-driven"
+    }
+  ],
+  "missing_upstream_style_patterns_inferred_from_wcd938x_wcd939x": [
+    "SDW probe/remove naming and shape tied to sdw_driver lifecycle",
+    "runtime PM callbacks using regcache cache_only/mark_dirty/sync",
+    "regmap callbacks (rdwr/readable/volatile) wired into devm_regmap_init_sdw",
+    "DT property parsing via of_property_present + of_property_read_u32_array + of_property_read_u8_array",
+    "stream lifecycle hook using sdw_stream_add_slave in *_sdw_hw_params"
+  ],
+  "improvable_without_target_access": {
+    "FUNCTION_MATCH": [
+      "Add WCD937x SDW function names that are inferable from scorer deltas and WCD938x/939x SDW patterns",
+      "Retain downstream lineage by mapping to existing SoundWire slave responsibilities"
+    ],
+    "API_COVERAGE": [
+      "Adopt deterministic upstream APIs proven in WCD938x/939x for DT parse, regmap init, runtime PM"
+    ],
+    "INCLUDE_ALIGNMENT": [
+      "Align SDW includes to API usage and upstream SDW include profile"
+    ],
+    "LIFECYCLE_PATTERN": [
+      "Adopt runtime suspend/resume and pm ops shape consistent with reference SDW drivers"
+    ]
+  },
+  "must_remain_fail_closed": [
+    {
+      "area": "main codec function parity versus upstream target",
+      "reason": "without target access, adding dozens of exact wcd937x main-file function signatures would risk unsupported inference/copy behavior"
+    },
+    {
+      "area": "target-specific IRQ/linking flows in main file",
+      "reason": "insufficient deterministic evidence from allowed sources to safely infer target-only implementation details"
+    }
+  ],
+  "governance_conclusion": "Variant C should prioritize SDW low-category recovery while keeping register category stable and avoiding target/reference copy-risk escalation.",
+  "replay_deterministic": true
+}

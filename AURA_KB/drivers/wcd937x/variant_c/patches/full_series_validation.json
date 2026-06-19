@@ -1,0 +1,83 @@
+{
+  "artifact": "variant_c_full_series_validation",
+  "generated_at_utc": "2026-06-19T17:24:00Z",
+  "series_apply": {
+    "status": "PASS",
+    "validation_repo": "/tmp/wcd937x_variant_c_apply_1781887974675416571",
+    "applied_patch_count": 4,
+    "patches": [
+      "0001-wcd937x-apply-relative-informed-main-driver-adaptati.patch",
+      "0002-wcd937x-merge-skeleton-header-with-downstream-regist.patch",
+      "0003-wcd937x-migrate-downstream-slave-implementation-into.patch",
+      "0004-wcd937x-variant-c-sdw-lifecycle-api-function-alignme.patch"
+    ],
+    "resulting_head": "1f7489a",
+    "notes": "Patch 0001 carries one whitespace warning inherited from Variant-B baseline; apply completed successfully."
+  },
+  "banned_symbol_check": {
+    "status": "PASS",
+    "total_occurrences": 0,
+    "files_checked": [
+      "wcd937x.c",
+      "wcd937x.h",
+      "wcd937x-sdw.c"
+    ],
+    "pattern_set": [
+      "CONFIG_BOLERO",
+      "SWR_DEVICE_SSR",
+      "SWR_REGISTER_WAKE_IRQ",
+      "SWR_SET_PORT_MAP",
+      "lpass_cdc_clk_rsc",
+      "lpass_cdc_register_macro",
+      "lpass_cdc_rsc_clk",
+      "lpass_cdc_unregister_macro",
+      "msm_cdc_pinctrl",
+      "swrm_wcd_notify",
+      "linux/version.h",
+      "lpass-cdc-clk-rsc.h",
+      "lpass-cdc-registers.h",
+      "lpass-cdc.h",
+      "msm-cdc-pinctrl.h",
+      "swr-common.h",
+      "swr-wcd.h"
+    ]
+  },
+  "line_count_report": {
+    "downstream": {
+      "wcd937x.c": 3723,
+      "wcd937x.h": 111,
+      "wcd937x_slave.c": 441
+    },
+    "variant_c_converted": {
+      "wcd937x.c": 3706,
+      "wcd937x.h": 1154,
+      "wcd937x-sdw.c": 378
+    }
+  },
+  "fail_closed_items": [
+    {
+      "symbol": "target_exact_main_function_parity",
+      "reason": "deferred until target access to avoid unsupported inference"
+    },
+    {
+      "symbol": "target_specific_irq_link_topology",
+      "reason": "insufficient deterministic pre-target signal"
+    }
+  ],
+  "replay_inputs": [
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x_slave.c",
+    "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/converted/wcd937x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/converted/wcd937x.h",
+    "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/converted/wcd937x-sdw.c"
+  ],
+  "replay_signal_sources": [
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml"
+  ],
+  "replay_deterministic": true,
+  "confidence_classification": "HIGH"
+}

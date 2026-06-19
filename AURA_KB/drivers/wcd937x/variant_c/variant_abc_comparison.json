@@ -1,0 +1,139 @@
+{
+  "artifact": "variant_abc_comparison",
+  "generated_at_utc": "2026-06-19T16:58:00Z",
+  "sources_of_truth": {
+    "variant_a_gate": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_a_corrected/governance_gate/governance_verdict.json",
+    "variant_b_gate": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/governance_gate/governance_verdict.json",
+    "variant_c_gate": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/governance_gate/governance_verdict.json",
+    "variant_a_verifier": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_a_corrected/governance_gate/verifier_result.json",
+    "variant_b_verifier": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/governance_gate/verifier_result.json",
+    "variant_c_verifier": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/governance_gate/verifier_result.json"
+  },
+  "variants": {
+    "A_corrected": {
+      "overall": 80.42,
+      "categories": {
+        "FUNCTION_MATCH": 38.52,
+        "API_COVERAGE": 40.38,
+        "REGISTER_COVERAGE": 86.32,
+        "DAPM_WIDGETS": 95.89,
+        "DAPM_ROUTES": 87.65,
+        "DAPM_CONTROLS": 95.24,
+        "LIFECYCLE_PATTERN": 84.56,
+        "DT_PROPERTY_COVERAGE": 100.0,
+        "VENDOR_ELIMINATION": 100.0,
+        "INCLUDE_ALIGNMENT": 75.61
+      },
+      "gate_verdict": "WARN",
+      "warning_count": 1,
+      "blocking_count": 0,
+      "lineage_coverage": 94.12
+    },
+    "B": {
+      "overall": 81.43,
+      "categories": {
+        "FUNCTION_MATCH": 38.52,
+        "API_COVERAGE": 40.38,
+        "REGISTER_COVERAGE": 96.44,
+        "DAPM_WIDGETS": 95.89,
+        "DAPM_ROUTES": 87.65,
+        "DAPM_CONTROLS": 95.24,
+        "LIFECYCLE_PATTERN": 84.56,
+        "DT_PROPERTY_COVERAGE": 100.0,
+        "VENDOR_ELIMINATION": 100.0,
+        "INCLUDE_ALIGNMENT": 75.61
+      },
+      "gate_verdict": "WARN",
+      "warning_count": 2,
+      "blocking_count": 0,
+      "lineage_coverage": 100.0
+    },
+    "C": {
+      "overall": 88.95,
+      "categories": {
+        "FUNCTION_MATCH": 65.54,
+        "API_COVERAGE": 61.99,
+        "REGISTER_COVERAGE": 96.44,
+        "DAPM_WIDGETS": 95.89,
+        "DAPM_ROUTES": 87.65,
+        "DAPM_CONTROLS": 95.24,
+        "LIFECYCLE_PATTERN": 100.0,
+        "DT_PROPERTY_COVERAGE": 100.0,
+        "VENDOR_ELIMINATION": 100.0,
+        "INCLUDE_ALIGNMENT": 86.73
+      },
+      "gate_verdict": "WARN",
+      "warning_count": 2,
+      "blocking_count": 0,
+      "lineage_coverage": 100.0
+    }
+  },
+  "deltas": {
+    "A_to_B": {
+      "overall": 1.01,
+      "categories": {
+        "FUNCTION_MATCH": 0.0,
+        "API_COVERAGE": 0.0,
+        "REGISTER_COVERAGE": 10.12,
+        "DAPM_WIDGETS": 0.0,
+        "DAPM_ROUTES": 0.0,
+        "DAPM_CONTROLS": 0.0,
+        "LIFECYCLE_PATTERN": 0.0,
+        "DT_PROPERTY_COVERAGE": 0.0,
+        "VENDOR_ELIMINATION": 0.0,
+        "INCLUDE_ALIGNMENT": 0.0
+      }
+    },
+    "B_to_C": {
+      "overall": 7.52,
+      "categories": {
+        "FUNCTION_MATCH": 27.02,
+        "API_COVERAGE": 21.61,
+        "REGISTER_COVERAGE": 0.0,
+        "DAPM_WIDGETS": 0.0,
+        "DAPM_ROUTES": 0.0,
+        "DAPM_CONTROLS": 0.0,
+        "LIFECYCLE_PATTERN": 15.44,
+        "DT_PROPERTY_COVERAGE": 0.0,
+        "VENDOR_ELIMINATION": 0.0,
+        "INCLUDE_ALIGNMENT": 11.12
+      }
+    },
+    "A_to_C": {
+      "overall": 8.53,
+      "categories": {
+        "FUNCTION_MATCH": 27.02,
+        "API_COVERAGE": 21.61,
+        "REGISTER_COVERAGE": 10.12,
+        "DAPM_WIDGETS": 0.0,
+        "DAPM_ROUTES": 0.0,
+        "DAPM_CONTROLS": 0.0,
+        "LIFECYCLE_PATTERN": 15.44,
+        "DT_PROPERTY_COVERAGE": 0.0,
+        "VENDOR_ELIMINATION": 0.0,
+        "INCLUDE_ALIGNMENT": 11.12
+      }
+    }
+  },
+  "improvement_attribution": {
+    "register_only_improvement": false,
+    "low_category_improvements_count": 4,
+    "improved_low_categories": [
+      "FUNCTION_MATCH",
+      "API_COVERAGE",
+      "INCLUDE_ALIGNMENT",
+      "LIFECYCLE_PATTERN"
+    ],
+    "register_delta_b_to_c": 0.0,
+    "assessment": "Variant C improvement is low-category-driven, not register-driven."
+  },
+  "gate_comparison": {
+    "all_blocking_count_zero": true,
+    "variant_c_warnings_explained": [
+      "DERIVATION_RISK on wcd937x.h vs wcd938x.h inherited from Variant B header strategy",
+      "DOWNSTREAM_REUSE_RISK on wcd937x.c inherited because main-file was intentionally fail-closed in Variant C"
+    ]
+  },
+  "pm_readable_verdict": "MEANINGFUL_IMPROVEMENT",
+  "replay_deterministic": true
+}

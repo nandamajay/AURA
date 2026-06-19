@@ -1,0 +1,72 @@
+{
+  "artifact": "variant_c_transformation_plan",
+  "generated_at_utc": "2026-06-19T17:20:00Z",
+  "strategy": "target low-category improvement without additional register-centric optimization",
+  "replay_deterministic": true,
+  "planned_changes": [
+    {
+      "area": "FUNCTION_MATCH",
+      "change": "Replace downstream-style SDW bind/unbind/up/down/reset path with upstream-style SDW function set: wcd9370_interrupt_callback, wcd9370_probe, wcd9370_remove, wcd937x_rdwr_register, wcd937x_readable_register, wcd937x_volatile_register, wcd937x_sdw_runtime_suspend, wcd937x_sdw_runtime_resume, wcd937x_sdw_hw_params",
+      "source_signal": "Variant B scorer missing function list + WCD938x/WCD939x SDW function layout",
+      "downstream_lineage": "wcd937x_slave.c lifecycle responsibilities (probe/remove, port mapping, bus bring-up) retained under SDW naming",
+      "reference_signal": "wcd938x-sdw.c and wcd939x-sdw.c",
+      "confidence": "HIGH",
+      "expected_score_impact": "Large positive on FUNCTION_MATCH and moderate positive on LIFECYCLE_PATTERN"
+    },
+    {
+      "area": "API_COVERAGE",
+      "change": "Adopt deterministic upstream SDW APIs in probe/hw_params: devm_regmap_init_sdw, of_property_present, of_property_read_u32_array, of_property_count_u8_elems, of_property_read_u8_array, pm_runtime_set_suspended, sdw_stream_add_slave, dev_info",
+      "source_signal": "Variant B scorer missing API list + DT binding property definitions",
+      "downstream_lineage": "downstream soundwire slave parsing of static mappings and runtime data path",
+      "reference_signal": "wcd938x-sdw.c probe and hw_params patterns + qcom,wcd937x-sdw.yaml",
+      "confidence": "HIGH",
+      "expected_score_impact": "Large positive on API_COVERAGE"
+    },
+    {
+      "area": "INCLUDE_ALIGNMENT",
+      "change": "Align SDW include set to API usage profile: add linux/of.h linux/pm_runtime.h linux/regmap.h linux/irq.h linux/irqdomain.h sound/soc.h sound/soc-dapm.h; remove debugfs/uaccess-only path",
+      "source_signal": "Variant B include mismatch report",
+      "downstream_lineage": "N/A (header-level alignment), preserves existing SDW functionality scope",
+      "reference_signal": "wcd938x-sdw.c and wcd939x-sdw.c include lists",
+      "confidence": "HIGH",
+      "expected_score_impact": "Moderate positive on INCLUDE_ALIGNMENT"
+    },
+    {
+      "area": "LIFECYCLE_PATTERN",
+      "change": "Add runtime PM callbacks with regcache cache_only/mark_dirty/sync and RUNTIME_PM_OPS binding in sdw_driver",
+      "source_signal": "Variant B lifecycle deficit in SDW file",
+      "downstream_lineage": "downstream runtime responsibility retained; API modernized",
+      "reference_signal": "wcd938x-sdw.c and wcd939x-sdw.c runtime PM shape",
+      "confidence": "HIGH",
+      "expected_score_impact": "Large positive on LIFECYCLE_PATTERN"
+    },
+    {
+      "area": "FUNCTION_MATCH",
+      "change": "Do not force main-file function-name parity with target upstream beyond deterministic evidence",
+      "source_signal": "governance anti-copy and fail-closed constraints",
+      "downstream_lineage": "main file remains Variant-B lineage",
+      "reference_signal": "Variant B gate warnings + fail-closed policy",
+      "confidence": "FAIL_CLOSED",
+      "expected_score_impact": "No direct gain; avoids unsafe inference/copy risk"
+    }
+  ],
+  "api_replacement_table": [
+    {
+      "downstream_or_variant_b_api": "sdw/slave-specific ad-hoc mapping without upstream of_property_* parse path",
+      "variant_c_api": "of_property_present + of_property_read_u32_array + of_property_count_u8_elems + of_property_read_u8_array",
+      "confidence": "HIGH"
+    },
+    {
+      "downstream_or_variant_b_api": "manual SDW transport handling without regmap init",
+      "variant_c_api": "devm_regmap_init_sdw + regmap cache controls",
+      "confidence": "HIGH"
+    },
+    {
+      "downstream_or_variant_b_api": "stream config without explicit upstream helper",
+      "variant_c_api": "sdw_stream_add_slave",
+      "confidence": "HIGH"
+    }
+  ],
+  "register_optimization_policy": "NO_NEW_REGISTER_COVERAGE_OPTIMIZATION",
+  "methodology_guard": "If gains are register-only, classify as METHODOLOGY_REGRESSION"
+}

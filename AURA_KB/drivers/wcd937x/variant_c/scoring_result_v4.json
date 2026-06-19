@@ -1,0 +1,1103 @@
+{
+  "scoring_engine": "aura_multifile_scoring_v1",
+  "scoring_engine_version": "1.0.0",
+  "single_file_scorer_version": "1.2.0",
+  "inputs": {
+    "upstream_dir": "/tmp/wcd937x_variant_c_upstream",
+    "converted_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/converted",
+    "file_map": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/file_map_v4.json",
+    "banned_symbols_file": null,
+    "dt_binding_file": null
+  },
+  "file_pairing": {
+    "paired_source_files": 2,
+    "unpaired_upstream_source_files": 0,
+    "unpaired_converted_files": 0,
+    "paired_header_files": 1,
+    "total_upstream_source_lines": 4119,
+    "pairing_details": [
+      {
+        "upstream": "wcd937x-sdw.c",
+        "converted": "wcd937x-sdw.c"
+      },
+      {
+        "upstream": "wcd937x.c",
+        "converted": "wcd937x.c"
+      }
+    ],
+    "unpaired_upstream": [],
+    "unpaired_converted": []
+  },
+  "per_file_scores": [
+    {
+      "upstream_file": "/tmp/wcd937x_variant_c_upstream/wcd937x-sdw.c",
+      "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/converted/wcd937x-sdw.c",
+      "status": "PAIRED",
+      "upstream_lines": 1113,
+      "converted_lines": 378,
+      "categories": {
+        "FUNCTION_MATCH": {
+          "score": 100.0,
+          "formula": "|upstream \u2229 converted| / |upstream| * 100",
+          "upstream_count": 9,
+          "converted_count": 13,
+          "matched_count": 9,
+          "missing_from_converted": [],
+          "extra_in_converted": [
+            "wcd937x_parse_channel_mapping",
+            "wcd937x_sdw_free",
+            "wcd937x_sdw_set_sdw_stream",
+            "wcd937x_writeable_register"
+          ]
+        },
+        "API_COVERAGE": {
+          "score": 100.0,
+          "formula": "|upstream \u2229 converted| / |upstream| * 100",
+          "upstream_count": 10,
+          "converted_count": 12,
+          "matched_count": 10,
+          "missing_from_converted": [],
+          "extra_in_converted": [
+            "pm_runtime_mark_last_busy",
+            "sdw_stream_remove_slave"
+          ]
+        },
+        "REGISTER_COVERAGE": {
+          "score": 97.89,
+          "formula": "|normalized_upstream_registers \u2229 normalized_converted_registers| / |normalized_upstream_registers| * 100",
+          "upstream_count": 475,
+          "converted_count": 602,
+          "matched_count": 465,
+          "missing_from_converted": [
+            "WCD937X_ANA_MICB2_ENABLE",
+            "WCD937X_ANA_MICB2_ENABLE_MASK",
+            "WCD937X_ANA_MICB2_VOUT_MASK",
+            "WCD937X_ANA_MICB_EN",
+            "WCD937X_ANA_MICB_VOUT",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_EN",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_HOLD_OFF",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_MASK",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_TIMEOUT_SEL",
+            "WCD937X_MAX_MICBIAS"
+          ],
+          "extra_in_converted": [
+            "WCD937X_AMIC1_IN_SEL_AMIC",
+            "WCD937X_AMIC1_IN_SEL_DMIC",
+            "WCD937X_AMIC1_IN_SEL_MASK",
+            "WCD937X_AMIC3_IN_SEL_MASK",
+            "WCD937X_AMIC4_IN_SEL_MASK",
+            "WCD937X_AMIC5_IN_SEL_MASK",
+            "WCD937X_ANA_MICB4",
+            "WCD937X_ANA_PAGE_REGISTER",
+            "WCD937X_ANA_RX_CLK_EN_MASK",
+            "WCD937X_ANA_RX_DIV2_CLK_EN_MASK",
+            "WCD937X_ANA_RX_DIV4_CLK_EN_MASK",
+            "WCD937X_ANA_TX_CH4",
+            "WCD937X_ANA_TX_CLK_EN_MASK",
+            "WCD937X_ANA_TX_DIV2_CLK_EN_MASK",
+            "WCD937X_ANA_TX_DIV4_CLK_EN_MASK",
+            "WCD937X_AUTOCHOP_TIMER_EN",
+            "WCD937X_AUX_EN_MASK",
+            "WCD937X_AUX_PDM_WD_EN_MASK",
+            "WCD937X_DAC_SAMPLE_EDGE_SEL_MASK",
+            "WCD937X_DEM_DITHER_ENABLE_MASK",
+            "WCD937X_DIGITAL_CDC_ANA_TX_CLK_CTL",
+            "WCD937X_DIGITAL_CDC_DMIC4_CTL",
+            "WCD937X_DIGITAL_CDC_DMIC_RATE_1_2",
+            "WCD937X_DIGITAL_CDC_DMIC_RATE_3_4",
+            "WCD937X_DIGITAL_CDC_RST",
+            "WCD937X_DIGITAL_CDC_TX_ANA_MODE_0_1",
+            "WCD937X_DIGITAL_CDC_TX_ANA_MODE_2_3",
+            "WCD937X_DIGITAL_CDC_TX_TANGGU_SW_MODE",
+            "WCD937X_DIGITAL_I2C_CTL",
+            "WCD937X_DIGITAL_LB_IN_SEL_CTL",
+            "WCD937X_DIGITAL_PAD_CTL_PDM_TX2",
+            "WCD937X_DIGITAL_PAD_CTL_SWR_0",
+            "WCD937X_DIGITAL_PAD_CTL_SWR_1",
+            "WCD937X_DIGITAL_SWR_HM_TEST_0",
+            "WCD937X_DIGITAL_SWR_HM_TEST_1",
+            "WCD937X_DIGITAL_SWR_HM_TEST_TX_2",
+            "WCD937X_DIGITAL_SWR_TX_CLK_RATE",
+            "WCD937X_DIGITAL_TX_MODE_DBG_0_1",
+            "WCD937X_DIGITAL_TX_MODE_DBG_2_3",
+            "WCD937X_DIGITAL_TX_MODE_DBG_EN",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_0",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_1",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_2",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_3",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_4",
+            "WCD937X_DMIC1_RATE_MASK",
+            "WCD937X_DMIC2_RATE_MASK",
+            "WCD937X_DMIC3_RATE_MASK",
+            "WCD937X_DMIC4_RATE_2P4MHZ",
+            "WCD937X_DMIC4_RATE_MASK",
+            "WCD937X_DMIC_CLK_EN_MASK",
+            "WCD937X_DMIC_CLK_SCALING_EN_MASK",
+            "WCD937X_DOWNSTREAM_REGISTER_OVERLAY",
+            "WCD937X_EN_CUR_DET_MASK",
+            "WCD937X_FS_RATE_4P8_MASK",
+            "WCD937X_GAIN_OVRD_REG_MASK",
+            "WCD937X_HPF1_INIT_MASK",
+            "WCD937X_HPF2_INIT_MASK",
+            "WCD937X_HPF3_INIT_MASK",
+            "WCD937X_HPF4_INIT_MASK",
+            "WCD937X_HPHL_COMP_EN_MASK",
+            "WCD937X_HPHL_EN_MASK",
+            "WCD937X_HPHL_REF_EN_MASK",
+            "WCD937X_HPHL_RX_EN_MASK",
+            "WCD937X_HPHR_COMP_EN_MASK",
+            "WCD937X_HPHR_EN_MASK",
+            "WCD937X_HPHR_REF_EN_MASK",
+            "WCD937X_HPHR_RX_EN_MASK",
+            "WCD937X_HPH_NEW_INT_RDAC_HD2_CTL_L_NEW",
+            "WCD937X_HPH_NEW_INT_RDAC_HD2_CTL_R_NEW",
+            "WCD937X_HPH_RES_DIV_MASK",
+            "WCD937X_ID_MASK",
+            "WCD937X_LDOH_EN_MASK",
+            "WCD937X_MICB4_TEST_CTL_1",
+            "WCD937X_MICB4_TEST_CTL_2",
+            "WCD937X_MICB4_TEST_CTL_3",
+            "WCD937X_NO_NOTCH_MASK",
+            "WCD937X_PDM_WD_EN_MASK",
+            "WCD937X_REGISTERS_MAX_SIZE",
+            "WCD937X_REGULATOR_MODE_CLASS_AB",
+            "WCD937X_REGULATOR_MODE_MASK",
+            "WCD937X_RXD0_CLK_EN_MASK",
+            "WCD937X_RXD1_CLK_EN_MASK",
+            "WCD937X_RXD2_CLK_EN_MASK",
+            "WCD937X_RX_BIAS_EN_MASK",
+            "WCD937X_TXD0_CLK_EN_MASK",
+            "WCD937X_TXD0_MODE_MASK",
+            "WCD937X_TXD1_CLK_EN_MASK",
+            "WCD937X_TXD1_MODE_MASK",
+            "WCD937X_TXD2_CLK_EN_MASK",
+            "WCD937X_TXD2_MODE_MASK",
+            "WCD937X_TXD3_CLK_EN_MASK",
+            "WCD937X_TXD3_MODE_MASK",
+            "WCD937X_TX_1_2_TEST_BLK_EN1",
+            "WCD937X_TX_1_2_TXFE1_CLKDIV",
+            "WCD937X_TX_3_4_ADC_IB",
+            "WCD937X_TX_3_4_ATEST_REFCTL",
+            "WCD937X_TX_3_4_SAR3_ERR",
+            "WCD937X_TX_3_4_SAR4_ERR",
+            "WCD937X_TX_3_4_SPARE1",
+            "WCD937X_TX_3_4_SPARE2",
+            "WCD937X_TX_3_4_TEST_BLK_EN2",
+            "WCD937X_TX_3_4_TEST_BLK_EN3",
+            "WCD937X_TX_3_4_TEST_BLK_EN4",
+            "WCD937X_TX_3_4_TEST_CTL",
+            "WCD937X_TX_3_4_TEST_EN",
+            "WCD937X_TX_3_4_TXFE2_CLKDIV",
+            "WCD937X_TX_3_4_TXFE3_CLKDIV",
+            "WCD937X_TX_3_4_TXFE4_CLKDIV",
+            "WCD937X_TX_CLK_EN_MASK",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_L0",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_L1",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_L2",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_ULP",
+            "WCD937X_TX_COM_NEW_INT_TXADC_SCBIAS_L0ULP",
+            "WCD937X_TX_COM_NEW_INT_TXADC_SCBIAS_L2L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_L2",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_ULP0P6M",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_ULP1P2M",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG1_L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG1_L2L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG1_ULP",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2CASC_L2L1L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2CASC_ULP",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2MAIN_L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2MAIN_L2L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2MAIN_ULP",
+            "WCD937X_TX_COM_SPARE1",
+            "WCD937X_TX_COM_SPARE2",
+            "WCD937X_TX_COM_SPARE3",
+            "WCD937X_TX_COM_SPARE4",
+            "WCD937X_TX_NEW_AMIC_MUX_CFG",
+            "WCD937X_TX_SC_CLK_EN_MASK",
+            "WCD937X_VNEG_EN_MASK",
+            "WCD937X_VPOS_EN_MASK"
+          ],
+          "register_normalization_applied": true,
+          "normalization_rules": [
+            "strip _MACRO_ infix",
+            "strip LPASS_ prefix"
+          ],
+          "raw_upstream_count": 475,
+          "raw_converted_count": 602,
+          "raw_matched_count": 465,
+          "raw_score_before_normalization": 97.89
+        },
+        "DAPM_WIDGETS": {
+          "score": 100.0,
+          "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+          "upstream_count": 0,
+          "converted_count": 0,
+          "difference": 0
+        },
+        "DAPM_ROUTES": {
+          "score": 100.0,
+          "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+          "upstream_count": 0,
+          "converted_count": 0,
+          "difference": 0
+        },
+        "DAPM_CONTROLS": {
+          "score": 100.0,
+          "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+          "upstream_count": 0,
+          "converted_count": 0,
+          "difference": 0
+        },
+        "LIFECYCLE_PATTERN": {
+          "score": 100.0,
+          "formula": "elements_present_in_converted / elements_present_in_upstream * 100",
+          "upstream_present_count": 7,
+          "converted_present_count": 7,
+          "per_element": [
+            {
+              "name": "probe function exists",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "remove function exists",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "component_probe exists",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "runtime_suspend exists",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "runtime_resume exists",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "SET_RUNTIME_PM_OPS or RUNTIME_PM_OPS present",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "devm_regmap_init (mmio/sdw/i2c/spi/any) present",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "devm_snd_soc_register_component present",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "of_device_id table present",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "module_platform_driver OR module_sdw_driver OR module_i2c_driver present",
+              "in_upstream": true,
+              "in_converted": true
+            }
+          ]
+        },
+        "DT_PROPERTY_COVERAGE": {
+          "score": 100.0,
+          "formula": "|upstream_properties \u2229 converted_properties| / |upstream_properties| * 100 (if upstream empty -> 100)",
+          "upstream_properties": [],
+          "converted_properties": [],
+          "matched": [],
+          "missing": [],
+          "extra": [],
+          "upstream_extraction_signals": {
+            "has_fwnode_property_read": false,
+            "has_device_for_each_child_node": false,
+            "has_of_clk_add_hw_provider": false
+          },
+          "converted_extraction_signals": {
+            "has_fwnode_property_read": false,
+            "has_device_for_each_child_node": false,
+            "has_of_clk_add_hw_provider": false
+          }
+        },
+        "VENDOR_ELIMINATION": {
+          "score": 100.0,
+          "formula": "0 occurrences found -> 100, any found -> 0",
+          "total_occurrences": 0,
+          "per_symbol_occurrences": [
+            {
+              "symbol": "CONFIG_BOLERO",
+              "occurrences": 0
+            },
+            {
+              "symbol": "KERNEL_VERSION_in_if",
+              "occurrences": 0
+            },
+            {
+              "symbol": "LINUX_VERSION_CODE_in_if",
+              "occurrences": 0
+            },
+            {
+              "symbol": "SWR_DEVICE_SSR",
+              "occurrences": 0
+            },
+            {
+              "symbol": "SWR_REGISTER_WAKE_IRQ",
+              "occurrences": 0
+            },
+            {
+              "symbol": "SWR_SET_PORT_MAP",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_linux/version.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_lpass-cdc-clk-rsc.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_lpass-cdc-registers.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_lpass-cdc.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_msm-cdc-pinctrl.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_swr-common.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_swr-wcd.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_clk_rsc",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_register_macro",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_rsc_clk",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_unregister_macro",
+              "occurrences": 0
+            },
+            {
+              "symbol": "msm_cdc_pinctrl",
+              "occurrences": 0
+            },
+            {
+              "symbol": "swrm_wcd_notify",
+              "occurrences": 0
+            }
+          ]
+        },
+        "INCLUDE_ALIGNMENT": {
+          "score": 100.0,
+          "formula": "|upstream_includes \u2229 converted_includes| / |upstream_includes| * 100",
+          "upstream_includes": [
+            "linux/component.h",
+            "linux/device.h",
+            "linux/irq.h",
+            "linux/irqdomain.h",
+            "linux/kernel.h",
+            "linux/module.h",
+            "linux/of.h",
+            "linux/platform_device.h",
+            "linux/pm_runtime.h",
+            "linux/regmap.h",
+            "linux/slab.h",
+            "linux/soundwire/sdw.h",
+            "linux/soundwire/sdw_registers.h",
+            "linux/soundwire/sdw_type.h",
+            "sound/soc-dapm.h",
+            "sound/soc.h",
+            "wcd937x.h"
+          ],
+          "converted_includes": [
+            "linux/component.h",
+            "linux/device.h",
+            "linux/irq.h",
+            "linux/irqdomain.h",
+            "linux/kernel.h",
+            "linux/module.h",
+            "linux/of.h",
+            "linux/platform_device.h",
+            "linux/pm_runtime.h",
+            "linux/regmap.h",
+            "linux/slab.h",
+            "linux/soundwire/sdw.h",
+            "linux/soundwire/sdw_registers.h",
+            "linux/soundwire/sdw_type.h",
+            "sound/soc-dapm.h",
+            "sound/soc.h",
+            "wcd-common.h",
+            "wcd937x.h"
+          ],
+          "matched": [
+            "linux/component.h",
+            "linux/device.h",
+            "linux/irq.h",
+            "linux/irqdomain.h",
+            "linux/kernel.h",
+            "linux/module.h",
+            "linux/of.h",
+            "linux/platform_device.h",
+            "linux/pm_runtime.h",
+            "linux/regmap.h",
+            "linux/slab.h",
+            "linux/soundwire/sdw.h",
+            "linux/soundwire/sdw_registers.h",
+            "linux/soundwire/sdw_type.h",
+            "sound/soc-dapm.h",
+            "sound/soc.h",
+            "wcd937x.h"
+          ],
+          "missing": [],
+          "extra": [
+            "wcd-common.h"
+          ]
+        }
+      },
+      "overall": {
+        "score": 99.79,
+        "formula": "arithmetic_mean(10 categories)",
+        "category_count": 10
+      }
+    },
+    {
+      "upstream_file": "/tmp/wcd937x_variant_c_upstream/wcd937x.c",
+      "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_c/converted/wcd937x.c",
+      "status": "PAIRED",
+      "upstream_lines": 3006,
+      "converted_lines": 3706,
+      "categories": {
+        "FUNCTION_MATCH": {
+          "score": 52.78,
+          "formula": "|upstream \u2229 converted| / |upstream| * 100",
+          "upstream_count": 72,
+          "converted_count": 74,
+          "matched_count": 38,
+          "missing_from_converted": [
+            "wcd937x_codec_free",
+            "wcd937x_codec_hw_params",
+            "wcd937x_codec_set_jack",
+            "wcd937x_codec_set_sdw_stream",
+            "wcd937x_connect_port",
+            "wcd937x_get_channel_map",
+            "wcd937x_get_hph_type",
+            "wcd937x_get_swr_port",
+            "wcd937x_hph_impedance_get",
+            "wcd937x_io_init",
+            "wcd937x_irq_init",
+            "wcd937x_mbhc_clk_setup",
+            "wcd937x_mbhc_deinit",
+            "wcd937x_mbhc_get_moisture_status",
+            "wcd937x_mbhc_get_result_params",
+            "wcd937x_mbhc_gnd_det_ctrl",
+            "wcd937x_mbhc_hph_l_pull_up_control",
+            "wcd937x_mbhc_hph_pull_down_ctrl",
+            "wcd937x_mbhc_init",
+            "wcd937x_mbhc_mbhc_bias_control",
+            "wcd937x_mbhc_micb_ctrl_threshold_mic",
+            "wcd937x_mbhc_micb_en_status",
+            "wcd937x_mbhc_micb_ramp_control",
+            "wcd937x_mbhc_moisture_config",
+            "wcd937x_mbhc_moisture_detect_en",
+            "wcd937x_mbhc_moisture_polling_ctrl",
+            "wcd937x_mbhc_program_btn_thr",
+            "wcd937x_mbhc_request_micbias",
+            "wcd937x_mbhc_zdet_ramp",
+            "wcd937x_set_swr_port",
+            "wcd937x_swap_gnd_mic",
+            "wcd937x_wcd_mbhc_calc_impedance",
+            "wcd937x_wcd_mbhc_qfuse_cal",
+            "wcd_irq_chip_map"
+          ],
+          "extra_in_converted": [
+            "get_usbc_hs_status",
+            "wcd937x_bcs_get",
+            "wcd937x_bcs_put",
+            "wcd937x_codec_enable_vdd_buck",
+            "wcd937x_codec_get_dev_num",
+            "wcd937x_compare_of",
+            "wcd937x_disable_bcs_before_slow_insert",
+            "wcd937x_dt_parse_micbias_info",
+            "wcd937x_ear_pa_gain_get",
+            "wcd937x_ear_pa_gain_put",
+            "wcd937x_ecid_read",
+            "wcd937x_enable_clsh",
+            "wcd937x_event_notify",
+            "wcd937x_get_codec_variant",
+            "wcd937x_get_logical_addr",
+            "wcd937x_get_micb_vout_ctl_val",
+            "wcd937x_info_create_codec_entry",
+            "wcd937x_init_reg",
+            "wcd937x_parse_port_mapping",
+            "wcd937x_parse_port_params",
+            "wcd937x_read_of_property_u32",
+            "wcd937x_release_of",
+            "wcd937x_reset_low",
+            "wcd937x_resume",
+            "wcd937x_rx_connect_port",
+            "wcd937x_set_port_params",
+            "wcd937x_suspend",
+            "wcd937x_tx_ch_pwr_level_get",
+            "wcd937x_tx_ch_pwr_level_put",
+            "wcd937x_tx_connect_port",
+            "wcd937x_tx_get_slave_ch_type_idx",
+            "wcd937x_tx_master_ch_get",
+            "wcd937x_tx_master_ch_put",
+            "wcd937x_variant_read",
+            "wcd937x_version_read",
+            "wcd937x_wakeup"
+          ]
+        },
+        "API_COVERAGE": {
+          "score": 47.92,
+          "formula": "|upstream \u2229 converted| / |upstream| * 100",
+          "upstream_count": 48,
+          "converted_count": 35,
+          "matched_count": 23,
+          "missing_from_converted": [
+            "device_link_add",
+            "device_link_remove",
+            "devm_gpiod_get",
+            "devm_gpiod_get_optional",
+            "devm_regmap_add_irq_chip",
+            "devm_regulator_bulk_get_enable",
+            "devm_request_threaded_irq",
+            "of_sdw_find_device_by_node",
+            "pm_runtime_disable",
+            "pm_runtime_dont_use_autosuspend",
+            "pm_runtime_enable",
+            "pm_runtime_idle",
+            "pm_runtime_mark_last_busy",
+            "pm_runtime_put",
+            "pm_runtime_resume_and_get",
+            "pm_runtime_set_active",
+            "pm_runtime_set_autosuspend_delay",
+            "pm_runtime_set_suspended",
+            "pm_runtime_use_autosuspend",
+            "regmap_irq_get_virq",
+            "sdw_stream_remove_slave",
+            "snd_soc_add_component_controls",
+            "snd_soc_component_read_field",
+            "snd_soc_component_write",
+            "snd_soc_component_write_field"
+          ],
+          "extra_in_converted": [
+            "dev_info",
+            "devm_regmap_init_swr",
+            "devm_regmap_qti_debugfs_register",
+            "kfree",
+            "kzalloc",
+            "of_find_property",
+            "of_node_get",
+            "of_node_put",
+            "of_property_read_u32",
+            "of_property_read_u32_array",
+            "snd_soc_dapm_ignore_suspend",
+            "snd_soc_dapm_sync"
+          ]
+        },
+        "REGISTER_COVERAGE": {
+          "score": 95.9,
+          "formula": "|normalized_upstream_registers \u2229 normalized_converted_registers| / |normalized_upstream_registers| * 100",
+          "upstream_count": 488,
+          "converted_count": 611,
+          "matched_count": 468,
+          "missing_from_converted": [
+            "WCD937X_ANA_MICB2_ENABLE",
+            "WCD937X_ANA_MICB2_ENABLE_MASK",
+            "WCD937X_ANA_MICB2_VOUT_MASK",
+            "WCD937X_ANA_MICB_EN",
+            "WCD937X_ANA_MICB_VOUT",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_EN",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_HOLD_OFF",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_MASK",
+            "WCD937X_DIGITAL_PDM_WD_CTL2_TIMEOUT_SEL",
+            "WCD937X_MAX_MICBIAS",
+            "WCD937X_MBHC_MAX_BUTTONS",
+            "WCD937X_MBHC_MOISTURE_RREF",
+            "WCD937X_MBHC_ZDET_CONST",
+            "WCD937X_ZDET_FLOATING_IMPEDANCE",
+            "WCD937X_ZDET_NUM_MEASUREMENTS",
+            "WCD937X_ZDET_VAL_100K",
+            "WCD937X_ZDET_VAL_1200",
+            "WCD937X_ZDET_VAL_32",
+            "WCD937X_ZDET_VAL_400",
+            "WCD_MBHC_HS_V_MAX"
+          ],
+          "extra_in_converted": [
+            "WCD9370_VARIANT",
+            "WCD9375_VARIANT",
+            "WCD937X_AMIC1_IN_SEL_AMIC",
+            "WCD937X_AMIC1_IN_SEL_DMIC",
+            "WCD937X_AMIC1_IN_SEL_MASK",
+            "WCD937X_AMIC3_IN_SEL_MASK",
+            "WCD937X_AMIC4_IN_SEL_MASK",
+            "WCD937X_AMIC5_IN_SEL_MASK",
+            "WCD937X_ANA_MICB4",
+            "WCD937X_ANA_PAGE_REGISTER",
+            "WCD937X_ANA_RX_CLK_EN_MASK",
+            "WCD937X_ANA_RX_DIV2_CLK_EN_MASK",
+            "WCD937X_ANA_RX_DIV4_CLK_EN_MASK",
+            "WCD937X_ANA_TX_CH4",
+            "WCD937X_ANA_TX_CLK_EN_MASK",
+            "WCD937X_ANA_TX_DIV2_CLK_EN_MASK",
+            "WCD937X_ANA_TX_DIV4_CLK_EN_MASK",
+            "WCD937X_AUTOCHOP_TIMER_EN",
+            "WCD937X_AUX_EN_MASK",
+            "WCD937X_AUX_PDM_WD_EN_MASK",
+            "WCD937X_DAC_SAMPLE_EDGE_SEL_MASK",
+            "WCD937X_DEM_DITHER_ENABLE_MASK",
+            "WCD937X_DIGITAL_CDC_ANA_TX_CLK_CTL",
+            "WCD937X_DIGITAL_CDC_DMIC4_CTL",
+            "WCD937X_DIGITAL_CDC_DMIC_RATE_1_2",
+            "WCD937X_DIGITAL_CDC_DMIC_RATE_3_4",
+            "WCD937X_DIGITAL_CDC_RST",
+            "WCD937X_DIGITAL_CDC_TX_ANA_MODE_0_1",
+            "WCD937X_DIGITAL_CDC_TX_ANA_MODE_2_3",
+            "WCD937X_DIGITAL_CDC_TX_TANGGU_SW_MODE",
+            "WCD937X_DIGITAL_I2C_CTL",
+            "WCD937X_DIGITAL_LB_IN_SEL_CTL",
+            "WCD937X_DIGITAL_PAD_CTL_PDM_TX2",
+            "WCD937X_DIGITAL_PAD_CTL_SWR_0",
+            "WCD937X_DIGITAL_PAD_CTL_SWR_1",
+            "WCD937X_DIGITAL_SWR_HM_TEST_0",
+            "WCD937X_DIGITAL_SWR_HM_TEST_1",
+            "WCD937X_DIGITAL_SWR_HM_TEST_TX_2",
+            "WCD937X_DIGITAL_SWR_TX_CLK_RATE",
+            "WCD937X_DIGITAL_TX_MODE_DBG_0_1",
+            "WCD937X_DIGITAL_TX_MODE_DBG_2_3",
+            "WCD937X_DIGITAL_TX_MODE_DBG_EN",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_0",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_1",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_2",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_3",
+            "WCD937X_DIGITAL_TX_REQ_FB_CTL_4",
+            "WCD937X_DMIC1_RATE_MASK",
+            "WCD937X_DMIC2_RATE_MASK",
+            "WCD937X_DMIC3_RATE_MASK",
+            "WCD937X_DMIC4_RATE_2P4MHZ",
+            "WCD937X_DMIC4_RATE_MASK",
+            "WCD937X_DMIC_CLK_EN_MASK",
+            "WCD937X_DMIC_CLK_SCALING_EN_MASK",
+            "WCD937X_DOWNSTREAM_REGISTER_OVERLAY",
+            "WCD937X_ECID_ENTRY_SIZE",
+            "WCD937X_EN_CUR_DET_MASK",
+            "WCD937X_FS_RATE_4P8_MASK",
+            "WCD937X_GAIN_OVRD_REG_MASK",
+            "WCD937X_HPF1_INIT_MASK",
+            "WCD937X_HPF2_INIT_MASK",
+            "WCD937X_HPF3_INIT_MASK",
+            "WCD937X_HPF4_INIT_MASK",
+            "WCD937X_HPHL_COMP_EN_MASK",
+            "WCD937X_HPHL_EN_MASK",
+            "WCD937X_HPHL_REF_EN_MASK",
+            "WCD937X_HPHL_RX_EN_MASK",
+            "WCD937X_HPHR_COMP_EN_MASK",
+            "WCD937X_HPHR_EN_MASK",
+            "WCD937X_HPHR_REF_EN_MASK",
+            "WCD937X_HPHR_RX_EN_MASK",
+            "WCD937X_HPH_NEW_INT_RDAC_HD2_CTL_L_NEW",
+            "WCD937X_HPH_NEW_INT_RDAC_HD2_CTL_R_NEW",
+            "WCD937X_HPH_RES_DIV_MASK",
+            "WCD937X_ID_MASK",
+            "WCD937X_LDOH_EN_MASK",
+            "WCD937X_MICB4_TEST_CTL_1",
+            "WCD937X_MICB4_TEST_CTL_2",
+            "WCD937X_MICB4_TEST_CTL_3",
+            "WCD937X_NO_NOTCH_MASK",
+            "WCD937X_PDM_WD_EN_MASK",
+            "WCD937X_REGISTERS_MAX_SIZE",
+            "WCD937X_REGULATOR_MODE_CLASS_AB",
+            "WCD937X_REGULATOR_MODE_MASK",
+            "WCD937X_RXD0_CLK_EN_MASK",
+            "WCD937X_RXD1_CLK_EN_MASK",
+            "WCD937X_RXD2_CLK_EN_MASK",
+            "WCD937X_RX_BIAS_EN_MASK",
+            "WCD937X_TXD0_CLK_EN_MASK",
+            "WCD937X_TXD0_MODE_MASK",
+            "WCD937X_TXD1_CLK_EN_MASK",
+            "WCD937X_TXD1_MODE_MASK",
+            "WCD937X_TXD2_CLK_EN_MASK",
+            "WCD937X_TXD2_MODE_MASK",
+            "WCD937X_TXD3_CLK_EN_MASK",
+            "WCD937X_TXD3_MODE_MASK",
+            "WCD937X_TX_1_2_TEST_BLK_EN1",
+            "WCD937X_TX_1_2_TXFE1_CLKDIV",
+            "WCD937X_TX_3_4_ADC_IB",
+            "WCD937X_TX_3_4_ATEST_REFCTL",
+            "WCD937X_TX_3_4_SAR3_ERR",
+            "WCD937X_TX_3_4_SAR4_ERR",
+            "WCD937X_TX_3_4_SPARE1",
+            "WCD937X_TX_3_4_SPARE2",
+            "WCD937X_TX_3_4_TEST_BLK_EN2",
+            "WCD937X_TX_3_4_TEST_BLK_EN3",
+            "WCD937X_TX_3_4_TEST_BLK_EN4",
+            "WCD937X_TX_3_4_TEST_CTL",
+            "WCD937X_TX_3_4_TEST_EN",
+            "WCD937X_TX_3_4_TXFE2_CLKDIV",
+            "WCD937X_TX_3_4_TXFE3_CLKDIV",
+            "WCD937X_TX_3_4_TXFE4_CLKDIV",
+            "WCD937X_TX_CLK_EN_MASK",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_L0",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_L1",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_L2",
+            "WCD937X_TX_COM_NEW_INT_TXADC_INT_ULP",
+            "WCD937X_TX_COM_NEW_INT_TXADC_SCBIAS_L0ULP",
+            "WCD937X_TX_COM_NEW_INT_TXADC_SCBIAS_L2L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_L2",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_ULP0P6M",
+            "WCD937X_TX_COM_NEW_INT_TXFE_DIVSTOP_ULP1P2M",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG1_L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG1_L2L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG1_ULP",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2CASC_L2L1L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2CASC_ULP",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2MAIN_L0",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2MAIN_L2L1",
+            "WCD937X_TX_COM_NEW_INT_TXFE_ICTRL_STG2MAIN_ULP",
+            "WCD937X_TX_COM_SPARE1",
+            "WCD937X_TX_COM_SPARE2",
+            "WCD937X_TX_COM_SPARE3",
+            "WCD937X_TX_COM_SPARE4",
+            "WCD937X_TX_NEW_AMIC_MUX_CFG",
+            "WCD937X_TX_SC_CLK_EN_MASK",
+            "WCD937X_VARIANT_ENTRY_SIZE",
+            "WCD937X_VERSION_1_0",
+            "WCD937X_VERSION_ENTRY_SIZE",
+            "WCD937X_VNEG_EN_MASK",
+            "WCD937X_VPOS_EN_MASK"
+          ],
+          "register_normalization_applied": true,
+          "normalization_rules": [
+            "strip _MACRO_ infix",
+            "strip LPASS_ prefix"
+          ],
+          "raw_upstream_count": 488,
+          "raw_converted_count": 611,
+          "raw_matched_count": 468,
+          "raw_score_before_normalization": 95.9
+        },
+        "DAPM_WIDGETS": {
+          "score": 94.37,
+          "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+          "upstream_count": 67,
+          "converted_count": 71,
+          "difference": 4
+        },
+        "DAPM_ROUTES": {
+          "score": 83.08,
+          "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+          "upstream_count": 54,
+          "converted_count": 65,
+          "difference": 11
+        },
+        "DAPM_CONTROLS": {
+          "score": 93.48,
+          "formula": "min(upstream_count, converted_count) / max(upstream_count, converted_count) * 100; if both zero -> 100",
+          "upstream_count": 46,
+          "converted_count": 43,
+          "difference": 3
+        },
+        "LIFECYCLE_PATTERN": {
+          "score": 100.0,
+          "formula": "elements_present_in_converted / elements_present_in_upstream * 100",
+          "upstream_present_count": 4,
+          "converted_present_count": 4,
+          "per_element": [
+            {
+              "name": "probe function exists",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "remove function exists",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "component_probe exists",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "runtime_suspend exists",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "runtime_resume exists",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "SET_RUNTIME_PM_OPS or RUNTIME_PM_OPS present",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "devm_regmap_init (mmio/sdw/i2c/spi/any) present",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "devm_snd_soc_register_component present",
+              "in_upstream": false,
+              "in_converted": false
+            },
+            {
+              "name": "of_device_id table present",
+              "in_upstream": true,
+              "in_converted": true
+            },
+            {
+              "name": "module_platform_driver OR module_sdw_driver OR module_i2c_driver present",
+              "in_upstream": true,
+              "in_converted": true
+            }
+          ]
+        },
+        "DT_PROPERTY_COVERAGE": {
+          "score": 100.0,
+          "formula": "|upstream_properties \u2229 converted_properties| / |upstream_properties| * 100 (if upstream empty -> 100)",
+          "upstream_properties": [],
+          "converted_properties": [],
+          "matched": [],
+          "missing": [],
+          "extra": [],
+          "upstream_extraction_signals": {
+            "has_fwnode_property_read": false,
+            "has_device_for_each_child_node": false,
+            "has_of_clk_add_hw_provider": false
+          },
+          "converted_extraction_signals": {
+            "has_fwnode_property_read": false,
+            "has_device_for_each_child_node": false,
+            "has_of_clk_add_hw_provider": false
+          }
+        },
+        "VENDOR_ELIMINATION": {
+          "score": 100.0,
+          "formula": "0 occurrences found -> 100, any found -> 0",
+          "total_occurrences": 0,
+          "per_symbol_occurrences": [
+            {
+              "symbol": "CONFIG_BOLERO",
+              "occurrences": 0
+            },
+            {
+              "symbol": "KERNEL_VERSION_in_if",
+              "occurrences": 0
+            },
+            {
+              "symbol": "LINUX_VERSION_CODE_in_if",
+              "occurrences": 0
+            },
+            {
+              "symbol": "SWR_DEVICE_SSR",
+              "occurrences": 0
+            },
+            {
+              "symbol": "SWR_REGISTER_WAKE_IRQ",
+              "occurrences": 0
+            },
+            {
+              "symbol": "SWR_SET_PORT_MAP",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_linux/version.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_lpass-cdc-clk-rsc.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_lpass-cdc-registers.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_lpass-cdc.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_msm-cdc-pinctrl.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_swr-common.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "include_swr-wcd.h",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_clk_rsc",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_register_macro",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_rsc_clk",
+              "occurrences": 0
+            },
+            {
+              "symbol": "lpass_cdc_unregister_macro",
+              "occurrences": 0
+            },
+            {
+              "symbol": "msm_cdc_pinctrl",
+              "occurrences": 0
+            },
+            {
+              "symbol": "swrm_wcd_notify",
+              "occurrences": 0
+            }
+          ]
+        },
+        "INCLUDE_ALIGNMENT": {
+          "score": 81.82,
+          "formula": "|upstream_includes \u2229 converted_includes| / |upstream_includes| * 100",
+          "upstream_includes": [
+            "linux/component.h",
+            "linux/delay.h",
+            "linux/device.h",
+            "linux/gpio/consumer.h",
+            "linux/kernel.h",
+            "linux/module.h",
+            "linux/of.h",
+            "linux/platform_device.h",
+            "linux/pm_runtime.h",
+            "linux/regmap.h",
+            "linux/regulator/consumer.h",
+            "linux/slab.h",
+            "sound/jack.h",
+            "sound/pcm.h",
+            "sound/pcm_params.h",
+            "sound/soc-dapm.h",
+            "sound/soc.h",
+            "sound/tlv.h",
+            "wcd-clsh-v2.h",
+            "wcd-common.h",
+            "wcd-mbhc-v2.h",
+            "wcd937x.h"
+          ],
+          "converted_includes": [
+            "linux/component.h",
+            "linux/delay.h",
+            "linux/device.h",
+            "linux/gpio/consumer.h",
+            "linux/kernel.h",
+            "linux/module.h",
+            "linux/platform_device.h",
+            "linux/pm_runtime.h",
+            "linux/qti-regmap-debugfs.h",
+            "linux/regmap.h",
+            "linux/regulator/consumer.h",
+            "linux/slab.h",
+            "linux/soundwire/sdw.h",
+            "linux/soundwire/sdw_registers.h",
+            "linux/soundwire/sdw_type.h",
+            "sound/soc-dapm.h",
+            "sound/soc.h",
+            "sound/tlv.h",
+            "wcd-clsh-v2.h",
+            "wcd-common.h",
+            "wcd-mbhc-v2.h",
+            "wcd937x-registers.h",
+            "wcd937x.h"
+          ],
+          "matched": [
+            "linux/component.h",
+            "linux/delay.h",
+            "linux/device.h",
+            "linux/gpio/consumer.h",
+            "linux/kernel.h",
+            "linux/module.h",
+            "linux/platform_device.h",
+            "linux/pm_runtime.h",
+            "linux/regmap.h",
+            "linux/regulator/consumer.h",
+            "linux/slab.h",
+            "sound/soc-dapm.h",
+            "sound/soc.h",
+            "sound/tlv.h",
+            "wcd-clsh-v2.h",
+            "wcd-common.h",
+            "wcd-mbhc-v2.h",
+            "wcd937x.h"
+          ],
+          "missing": [
+            "linux/of.h",
+            "sound/jack.h",
+            "sound/pcm.h",
+            "sound/pcm_params.h"
+          ],
+          "extra": [
+            "linux/qti-regmap-debugfs.h",
+            "linux/soundwire/sdw.h",
+            "linux/soundwire/sdw_registers.h",
+            "linux/soundwire/sdw_type.h",
+            "wcd937x-registers.h"
+          ]
+        }
+      },
+      "overall": {
+        "score": 84.93,
+        "formula": "arithmetic_mean(10 categories)",
+        "category_count": 10
+      }
+    }
+  ],
+  "aggregate": {
+    "method": "weighted_arithmetic_mean_by_upstream_line_count",
+    "total_weight": 4119,
+    "categories": {
+      "FUNCTION_MATCH": 65.54,
+      "API_COVERAGE": 61.99,
+      "REGISTER_COVERAGE": 96.44,
+      "DAPM_WIDGETS": 95.89,
+      "DAPM_ROUTES": 87.65,
+      "DAPM_CONTROLS": 95.24,
+      "LIFECYCLE_PATTERN": 100.0,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 100.0,
+      "INCLUDE_ALIGNMENT": 86.73
+    },
+    "overall": 88.95
+  },
+  "metadata": {
+    "deterministic": true,
+    "reproducible": true,
+    "single_file_scoring_logic_sha256": "3dfa946b62fc35e5e7fb16885cfb3276bcd7f36e0eadde14ed6daf149340de10",
+    "multifile_scoring_logic_sha256": "a1a99b5a788ff331d038e63b44c6d1b8ac0a79e9bbf2ec8499e7565ec8f7e31b"
+  }
+}

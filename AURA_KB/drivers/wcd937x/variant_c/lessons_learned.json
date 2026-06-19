@@ -1,0 +1,72 @@
+{
+  "artifact": "variant_c_lessons_learned",
+  "generated_at_utc": "2026-06-19T16:59:00Z",
+  "summary": {
+    "variant_c_outperformed_variant_b": true,
+    "variant_b_overall": 81.43,
+    "variant_c_overall": 88.95,
+    "delta": 7.52
+  },
+  "did_combined_learning_outperform_variant_b_meaningfully": {
+    "answer": "YES",
+    "reason": "Variant C improved all four previously weak categories while keeping register coverage stable: FUNCTION_MATCH +27.02, API_COVERAGE +21.61, INCLUDE_ALIGNMENT +11.12, LIFECYCLE_PATTERN +15.44, REGISTER_COVERAGE +0.00."
+  },
+  "which_low_categories_improved": [
+    {
+      "category": "FUNCTION_MATCH",
+      "variant_b": 38.52,
+      "variant_c": 65.54,
+      "delta": 27.02,
+      "driver": "SDW function-name and lifecycle alignment in wcd937x-sdw.c"
+    },
+    {
+      "category": "API_COVERAGE",
+      "variant_b": 40.38,
+      "variant_c": 61.99,
+      "delta": 21.61,
+      "driver": "Deterministic adoption of devm_regmap_init_sdw/of_property*/pm_runtime APIs in SDW probe path"
+    },
+    {
+      "category": "INCLUDE_ALIGNMENT",
+      "variant_b": 75.61,
+      "variant_c": 86.73,
+      "delta": 11.12,
+      "driver": "SDW include set aligned to upstream-required API surface"
+    },
+    {
+      "category": "LIFECYCLE_PATTERN",
+      "variant_b": 84.56,
+      "variant_c": 100.0,
+      "delta": 15.44,
+      "driver": "Added runtime suspend/resume + RUNTIME_PM_OPS + regmap-init lifecycle signals in SDW file"
+    }
+  ],
+  "did_wcd938x_skeleton_help_or_risk_copy_behavior": {
+    "answer": "BOTH",
+    "helped": [
+      "Provided valid SDW probe/runtime/regmap/lifecycle idioms that directly improved low categories",
+      "Reduced need for speculative API choices"
+    ],
+    "risked": [
+      "Header derivation warning persisted (wcd937x.h vs wcd938x.h DERIVATION_RISK)",
+      "Requires explicit adaptation audit and fail-closed boundaries to prevent rename-only carryover"
+    ]
+  },
+  "what_must_be_learned_before_wcd9378": [
+    "Reduce main-file downstream reuse risk by decomposing wcd937x.c into independently justified deltas before porting",
+    "Build deterministic MBHC/Class-H migration map from shared library APIs to cut API/FUNCTION gap in main file",
+    "Refactor header strategy to avoid high reference similarity while preserving register completeness",
+    "Automate SDW + main-file lineage generation from parser output to keep coverage high without manual drift"
+  ],
+  "is_wcd9378_readiness_improved": {
+    "answer": "YES_WITH_CONDITIONS",
+    "why": "Variant C proves low-category recovery can be achieved without target-copy behavior in SDW path, but main-file downstream reuse warning remains unresolved and must be addressed first for production-grade WCD9378 readiness."
+  },
+  "gate_status": {
+    "variant_c_verdict": "WARN",
+    "blocking_count": 0,
+    "warning_count": 2,
+    "acceptability": "EXPERIMENTAL_ACCEPTABLE"
+  },
+  "replay_deterministic": true
+}
