@@ -11,6 +11,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import shutil
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -79,6 +80,21 @@ def _copy_input_manifest(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+def _stage_target_files(run_dir: Path, target_paths: list[str]) -> Path | None:
+    if not target_paths:
+        return None
+
+    target_dir = run_dir / "upstream_target"
+    target_dir.mkdir(parents=True, exist_ok=True)
+    staged = 0
+    for item in target_paths:
+        path = Path(item).resolve()
+        if path.is_file():
+            shutil.copy2(path, target_dir / path.name)
+            staged += 1
+    return target_dir if staged else None
+
+
 def run_gate(args: argparse.Namespace) -> dict[str, Any]:
     run_dir = Path(args.run_dir).resolve()
     run_dir.mkdir(parents=True, exist_ok=True)
@@ -87,11 +103,15 @@ def run_gate(args: argparse.Namespace) -> dict[str, Any]:
     manifest_path = run_dir / "gate_input_manifest.json"
     manifest_path.write_text(json.dumps(manifest, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
 
+    target_paths = list(args.target)
+    staged_upstream_dir = None if args.upstream_dir else _stage_target_files(run_dir, target_paths)
+    scoring_upstream_dir = args.upstream_dir or (str(staged_upstream_dir) if staged_upstream_dir else None)
+
     score_report: dict[str, Any] | None = None
     score_path: Path | None = None
-    if args.upstream_dir:
+    if scoring_upstream_dir:
         score_report = score_multifile(
-            upstream_dir=args.upstream_dir,
+            upstream_dir=scoring_upstream_dir,
             converted_dir=args.converted_dir,
             file_map_path=args.file_map,
             banned_symbols_file=args.banned_symbols,
@@ -100,9 +120,8 @@ def run_gate(args: argparse.Namespace) -> dict[str, Any]:
         score_path = run_dir / "scoring_result_v4.json"
         score_path.write_text(render_multifile_score_json(score_report), encoding="utf-8")
 
-    target_paths = list(args.target)
-    if args.upstream_dir and not target_paths:
-        target_paths = [args.upstream_dir]
+    if scoring_upstream_dir and not target_paths:
+        target_paths = [scoring_upstream_dir]
 
     verifier_report = verify_conversion(
         converted_paths=[args.converted_dir],
@@ -142,6 +161,7 @@ def run_gate(args: argparse.Namespace) -> dict[str, Any]:
         "artifacts": {
             "scoring_result": str(score_path) if score_path else None,
             "verifier_result": str(verifier_path),
+            "staged_upstream_dir": str(staged_upstream_dir) if staged_upstream_dir else None,
         },
         "score_summary": None if score_report is None else {
             "overall": score_report["aggregate"]["overall"],

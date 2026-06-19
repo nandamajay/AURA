@@ -90,6 +90,28 @@ static int delta_runtime_resume(struct device *dev) { return 0; }
     assert Path(result["artifacts"]["scoring_result"]).exists()
 
 
+def test_gate_stages_target_files_for_scoring(tmp_path: Path):
+    converted_source = """
+#include <linux/module.h>
+static int alpha_probe(void) { return 0; }
+"""
+    upstream_source = """
+#include <linux/module.h>
+#include <linux/platform_device.h>
+static int alpha_probe(struct platform_device *pdev) { return 0; }
+static int beta_remove(struct platform_device *pdev) { return 0; }
+"""
+    _write(tmp_path / "converted" / "driver.c", converted_source)
+    upstream_file = _write(tmp_path / "target" / "driver.c", upstream_source)
+    lineage = _write(tmp_path / "lineage.json", json.dumps({"functions": ["alpha_probe"]}))
+
+    result = run_gate(_args(tmp_path, target=[str(upstream_file)], lineage=str(lineage)))
+
+    assert result["score_summary"] is not None
+    assert result["artifacts"]["staged_upstream_dir"] is not None
+    assert Path(result["artifacts"]["staged_upstream_dir"], "driver.c").exists()
+
+
 def test_gate_requires_allowed_sources(tmp_path: Path):
     _write(tmp_path / "converted" / "driver.c", "static int f(void) { return 0; }\n")
     bad_allowed = _write(tmp_path / "bad_allowed.json", json.dumps({"allowed_sources": []}))
