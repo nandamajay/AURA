@@ -1,0 +1,131 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "governance_mode": "audit-only",
+    "source_scope": "Allowed sources from Blocker Burndown 01 prompt",
+    "decision_labels": [
+      "RESOLVED_READY_FOR_CONVERSION",
+      "PARTIALLY_RESOLVED",
+      "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "REJECTED_NOT_UPSTREAMABLE",
+      "BOARD_SPECIFIC_ONLY",
+      "TEMP_DEBUG_ONLY"
+    ]
+  },
+  "buckets": {
+    "DT_BINDING": [
+      {
+        "patch_scope": "Extend `qcom,wcd937x.yaml` compatible set to include `qcom,wcd9378-codec`.",
+        "required": true,
+        "evidence": "Downstream uses `qcom,wcd9378-codec` (wcd9378.c:4591-4593); upstream binding only has 9370/9375 (qcom,wcd937x.yaml:21-27).",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": true,
+        "notes": "Fallback compatibility chain remains FAIL_CLOSED pending evidence."
+      },
+      {
+        "patch_scope": "Decide if `qcom,swr-tx-port-params` needs binding addition or should be removed by conversion mapping.",
+        "required": true,
+        "evidence": "Consumed downstream (wcd9378.c:4726-4730) but absent upstream schema (qcom,wcd937x-sdw.yaml:17-100).",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": false,
+        "notes": "FAIL_CLOSED until deterministic semantic mapping is proven."
+      }
+    ],
+    "DTS_BOARD": [
+      {
+        "patch_scope": "Board DTS migration from legacy properties to upstream schema (`reset-gpios`, `qcom,rx-device`, `qcom,tx-device`, `qcom,*-port-mapping`, `qcom,micbias*-microvolt`).",
+        "required": true,
+        "evidence": "Legacy downstream properties in wcd9378.c:4346-4444,4618-4630,4717-4727; upstream property set in qcom,wcd93xx-common.yaml and qcom,wcd937x-sdw.yaml.",
+        "risk": "MEDIUM",
+        "can_start_before_runtime_validation": true,
+        "notes": "Board-specific property value conversion still needs runtime validation."
+      }
+    ],
+    "SOUNDWIRE_CORE": [
+      {
+        "patch_scope": "No immediate core patch; only escalate if runtime traces show missing behavior in upstream `bus.c`/`qcom.c`.",
+        "required": false,
+        "evidence": "Paging and message support already present in bus.c:380-406 and qcom.c transfer/IRQ paths:481-580,716-790,973-1002.",
+        "risk": "MEDIUM",
+        "can_start_before_runtime_validation": true,
+        "notes": "Friend-note controller-patch claims are FAIL_CLOSED."
+      }
+    ],
+    "LPASS_MACRO": [
+      {
+        "patch_scope": "Do not patch upstream LPASS macros for WCD9378 unless a new generic dependency is proven.",
+        "required": false,
+        "evidence": "No WCD9378 references in upstream lpass-rx-macro.c / lpass-tx-macro.c; downstream coupling is via lpass-cdc event APIs (lpass-cdc/internal.h:43-48, lpass-cdc.c:201-266).",
+        "risk": "MEDIUM",
+        "can_start_before_runtime_validation": true,
+        "notes": "Treat downstream lpass-cdc event wiring as vendor framework residue unless proven upstream-necessary."
+      }
+    ],
+    "WCD_COMMON_CLSH": [
+      {
+        "patch_scope": "Class-H shared module update (if required) for WCD9378 base/version handling.",
+        "required": true,
+        "evidence": "Shared class-h uses fixed base macros (wcd-clsh-v2.c:91-103) and enum versions up to WCD939X (wcd-clsh-v2.h:44-51).",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": false,
+        "notes": "Scope is FAIL_CLOSED until register-address behavior is runtime-verified."
+      }
+    ],
+    "WCD9378_CODEC": [
+      {
+        "patch_scope": "Introduce upstream-style WCD9378 main codec driver with upstream DT properties and MBHC/Class-H integration patterns.",
+        "required": true,
+        "evidence": "Downstream main driver exists (wcd9378.c) with vendor APIs and legacy DT parsing (4346-4444,4675-4699).",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": true,
+        "notes": "Must keep unresolved SDW ID and Class-H items FAIL_CLOSED."
+      }
+    ],
+    "WCD9378_SDW": [
+      {
+        "patch_scope": "Introduce upstream-style WCD9378 SDW slave driver with confirmed ID and paging support configuration.",
+        "required": true,
+        "evidence": "Downstream SWR slave file uses legacy SWR APIs and string IDs (wcd9378-slave.c:313-321,393-401); downstream enables paging in main codec (wcd9378.c:4509,4518).",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": false,
+        "notes": "Numeric SDW identity remains FAIL_CLOSED until hardware proof."
+      }
+    ],
+    "DEBUG_ONLY_DO_NOT_UPSTREAM": [
+      {
+        "patch_scope": "Exclude debugfs peek/poke/regdump and temporary bring-up print paths from upstream patchset.",
+        "required": true,
+        "evidence": "Downstream SDW debugfs hooks in wcd9378-slave.c:343-369 and extensive debug paths in legacy stack.",
+        "risk": "LOW",
+        "can_start_before_runtime_validation": true,
+        "notes": "Treat as bring-up tooling only."
+      }
+    ],
+    "FAIL_CLOSED": [
+      {
+        "patch_scope": "Determine verified SDW part ID and OF compatible string for WCD9378 (`0x110` / `sdw20217011000` currently unproven).",
+        "required": true,
+        "evidence": "No allowed-source proof for proposed values; upstream IDs are 0x10a/0x10d/0x10e in wcd937x/wcd938x/wcd939x SDW drivers.",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": false,
+        "notes": "Blocking item."
+      },
+      {
+        "patch_scope": "Decide `qcom,swr-tx-port-params` upstream strategy.",
+        "required": true,
+        "evidence": "Downstream requires property (wcd9378.c:4726-4730), upstream binding lacks it (qcom,wcd937x-sdw.yaml).",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": false,
+        "notes": "Blocking item."
+      },
+      {
+        "patch_scope": "Finalize Class-H base/version strategy for WCD9378.",
+        "required": true,
+        "evidence": "Address-domain mismatch risk between fixed 0x3000 class-h macros and WCD9378 register base definitions.",
+        "risk": "HIGH",
+        "can_start_before_runtime_validation": false,
+        "notes": "Blocking item."
+      }
+    ]
+  }
+}

@@ -1,0 +1,288 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "governance_mode": "audit-only",
+    "source_scope": "Allowed sources from Blocker Burndown 01 prompt",
+    "decision_labels": [
+      "RESOLVED_READY_FOR_CONVERSION",
+      "PARTIALLY_RESOLVED",
+      "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "REJECTED_NOT_UPSTREAMABLE",
+      "BOARD_SPECIFIC_ONLY",
+      "TEMP_DEBUG_ONLY"
+    ]
+  },
+  "question_answers": {
+    "downstream_sdw_device_ids": {
+      "answer": "Downstream identity is string-based (`wcd9378-slave` and `qcom,wcd9378-slave`), not numeric SDW_SLAVE_ENTRY IDs.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "313-321,393-401",
+          "supports": "Downstream SWR ID/OF match uses `wcd9378-slave` / `qcom,wcd9378-slave`."
+        }
+      ]
+    },
+    "upstream_equivalent_device_identity": {
+      "answer": "PARTIALLY_RESOLVED: upstream WCD family uses numeric SDW IDs, but no allowed-source proof maps WCD9378 to a specific part ID.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "1066-1068",
+          "supports": "WCD937x upstream uses `SDW_SLAVE_ENTRY(0x0217, 0x10a, 0)`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+          "line_or_page": "1227-1229",
+          "supports": "WCD938x upstream uses `0x10d`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c",
+          "line_or_page": "1413-1415",
+          "supports": "WCD939x upstream uses `0x10e`."
+        }
+      ]
+    },
+    "is_sdw_slave_entry_0x0217_0x110_0_justified": "FAIL_CLOSED_NEEDS_EVIDENCE",
+    "is_sdw20217011000_justified": "FAIL_CLOSED_NEEDS_EVIDENCE",
+    "is_paging_required": "RESOLVED_READY_FOR_CONVERSION",
+    "does_upstream_linux_sdw_core_support_paging": "RESOLVED_READY_FOR_CONVERSION",
+    "does_qcom_soundwire_controller_need_changes": "FAIL_CLOSED_NEEDS_EVIDENCE",
+    "should_set_pdev_prop_paging_support_true": "PARTIALLY_RESOLVED",
+    "friend_notes_claims_confirmed_vs_fail_closed": {
+      "confirmed": [
+        "Paging feature exists in upstream core model (`sdw_slave_prop.paging_support`) and message path (`sdw_fill_msg`).",
+        "Downstream actually enables paging on both RX/TX slaves and uses 4-byte reg addressing path."
+      ],
+      "fail_closed": [
+        "Specific new SDW part ID `0x110` and OF string `sdw20217011000`.",
+        "Need for Qualcomm controller (`qcom.c`) code patch before WCD9378 can function upstream."
+      ]
+    }
+  },
+  "blocker_decisions": [
+    {
+      "blocker": "Downstream SDW identity form (`wcd9378-slave` / `qcom,wcd9378-slave`)",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "313-321,393-401",
+          "supports": "Identity is explicitly encoded as string + OF compatible."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": true,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Translate downstream identity into upstream SDW numeric ID once verified from runtime enumeration or silicon docs."
+    },
+    {
+      "blocker": "Use `SDW_SLAVE_ENTRY(0x0217, 0x110, 0)`",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "1067",
+          "supports": "Existing WCD family IDs in upstream start from 0x10a for 937x."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+          "line_or_page": "1228",
+          "supports": "WCD938x uses 0x10d."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c",
+          "line_or_page": "1414",
+          "supports": "WCD939x uses 0x10e."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "313-321",
+          "supports": "No numeric 0x110 ID appears in downstream source."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": true,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Collect concrete SDW discoverable ID from hardware/logs before adding new SDW_SLAVE_ENTRY value."
+    },
+    {
+      "blocker": "Use `sdw20217011000` compatible",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "19",
+          "supports": "Current allowed compatible is `sdw20217010a00` for WCD937x family."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "66-67,77-78",
+          "supports": "Examples consistently use `sdw20217010a00`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "313-321",
+          "supports": "Downstream does not provide sdw20... compatible string to justify 11000 form."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": true,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Require hardware-enumerated SoundWire identity evidence before proposing new SDW compatible string."
+    },
+    {
+      "blocker": "Paging needed for WCD9378 address space",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "16,31",
+          "supports": "Analog base is defined as `WCD9378_BASE + 0x180001`; computed address is 0x40180000 (> 0xffff)."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4509,4518",
+          "supports": "Downstream explicitly enables `paging_support = true` for RX and TX SWR slaves."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/soc/regmap-swr.c",
+          "line_or_page": "36-63,199-207",
+          "supports": "When paging is enabled, regmap uses 4-byte addresses and programs SCP page registers."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Enable and validate paging in upstream-style WCD9378 SDW slave driver setup."
+    },
+    {
+      "blocker": "Upstream Linux SDW core paging support availability",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/include/linux/soundwire/sdw.h",
+          "line_or_page": "351-352,385",
+          "supports": "Core slave property model includes `paging_support`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+          "line_or_page": "380-406",
+          "supports": "Core transfer path sets page registers and errors if paging required but unsupported."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "LOW",
+      "next_action": "Use existing upstream core paging flow; no immediate core patch required by static evidence."
+    },
+    {
+      "blocker": "Need Qualcomm SoundWire controller (`qcom.c`) changes for WCD9378",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line_or_page": "481-580",
+          "supports": "Controller already has FIFO command/retry handling paths."
+        },
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line_or_page": "716-790",
+          "supports": "IRQ handling path already present for slave events and errors."
+        },
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line_or_page": "973-1002",
+          "supports": "Message transfer backend exists; no WCD9378-specific blocker is proven by static read."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Require reproducible runtime failure trace on upstream SDW stack before proposing qcom controller modifications."
+    },
+    {
+      "blocker": "Need `pdev->prop.paging_support = true` in upstream WCD9378 SDW driver",
+      "decision": "PARTIALLY_RESOLVED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4509,4518",
+          "supports": "Downstream explicitly sets paging_support true on both endpoints."
+        },
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+          "line_or_page": "397-400",
+          "supports": "Core rejects accesses requiring paging if `paging_support` is false."
+        },
+        {
+          "source": "track_b_corpora/linux-next/include/linux/soundwire/sdw.h",
+          "line_or_page": "351-352,385",
+          "supports": "Property is part of upstream slave model."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Set paging capability in upstream WCD9378 SDW probe path and validate high-address register access end-to-end."
+    },
+    {
+      "blocker": "Friend-note qcom_swrm paging/poll/IRQ claims",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line_or_page": "481-580,716-790,973-1002",
+          "supports": "Polling, FIFO retry, IRQ, and message transfer primitives are already implemented upstream."
+        },
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+          "line_or_page": "380-406",
+          "supports": "Core paging behavior is already implemented; no static proof that friend-specific workaround is mandatory."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Treat friend-note low-level workaround claims as unverified until hardware logs isolate a concrete upstream gap."
+    },
+    {
+      "blocker": "Downstream SDCA interrupt register usage",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4531-4533",
+          "supports": "Driver programs SDCA interrupt-type registers during bind."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c",
+          "line_or_page": "879-942",
+          "supports": "SDCA interrupt status/mask/type registers are explicitly modeled as readable/writeable/volatile."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Retain SDCA interrupt register support in converted SDW driver path using upstream regmap/IRQ idioms."
+    }
+  ]
+}

@@ -1,0 +1,191 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "governance_mode": "audit-only",
+    "source_scope": "Allowed sources from Blocker Burndown 01 prompt",
+    "decision_labels": [
+      "RESOLVED_READY_FOR_CONVERSION",
+      "PARTIALLY_RESOLVED",
+      "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "REJECTED_NOT_UPSTREAMABLE",
+      "BOARD_SPECIFIC_ONLY",
+      "TEMP_DEBUG_ONLY"
+    ]
+  },
+  "question_answers": {
+    "does_wcd9378_require_new_codec_version_enum_in_wcd_clsh_v2": "FAIL_CLOSED_NEEDS_EVIDENCE",
+    "is_analog_base_0x40180000_confirmed": {
+      "answer": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "16,31",
+          "supports": "`WCD9378_BASE` and `WCD9378_A_BASE` imply analog base 0x40180000 (0x3fffffff + 0x180001)."
+        }
+      ]
+    },
+    "is_old_base_0x3000_invalid_for_wcd9378_clsh": "PARTIALLY_RESOLVED",
+    "which_clsh_registers_are_wcd9378_specific": [
+      "WCD9378_CP_CLASSG_CP_CTRL_0..7",
+      "WCD9378_CP_VNEGDAC_CTRL_0..3",
+      "WCD9378_HPH_NEW_INT_PA_MISC2",
+      "WCD9378_RX_BIAS_HPH_LOWPOWER"
+    ],
+    "can_this_be_upstreamed_as_generic_dynamic_base_change": "FAIL_CLOSED_NEEDS_EVIDENCE",
+    "minimum_safe_clsh_change": "PARTIALLY_RESOLVED: first establish deterministic register-address mapping strategy (reuse existing WCD937X mode vs new WCD9378 variant) with runtime proof, then patch only the class-h layer required by that proof.",
+    "must_remain_fail_closed": [
+      "Whether WCD9378 can reuse WCD937X class-h version semantics unchanged.",
+      "Whether `wcd-clsh-v2` needs a new codec enum for WCD9378.",
+      "Whether dynamic analog base belongs in common class-h code or per-driver indirection."
+    ]
+  },
+  "blocker_decisions": [
+    {
+      "blocker": "`wcd_clsh_ctrl_alloc(component, WCD937X)` vs a WCD9378-specific version",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2528",
+          "supports": "Upstream WCD937x allocates Class-H control with enum value `WCD937X`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+          "line_or_page": "44-51",
+          "supports": "No `WCD9378` enum exists in current class-h version list."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_page": "878-893",
+          "supports": "Allocator stores only `codec_version`; no additional base/address context is provided."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Collect runtime evidence to determine if WCD9378 behaves identically to `WCD937X` class-h flow; if not, add explicit WCD9378 handling in class-h v2."
+    },
+    {
+      "blocker": "Analog base 0x40180000 for WCD9378",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "16,31",
+          "supports": "Defines calculate WCD9378 analog domain at 0x40180000."
+        },
+        {
+          "source": "/local/mnt/workspace/Datasheets/qualcomm_aqstic_wcd937x_specs.pdf",
+          "line_or_page": "page 1",
+          "supports": "Datasheet is feature-level only and does not contradict WCD9378 derivative context, but provides no register-map proof."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Preserve 0x40180000-domain evidence in conversion planning and verify translated runtime addresses in upstream regmap path."
+    },
+    {
+      "blocker": "Hardcoded `WCD9XXX_BASE_ADDRESS = 0x3000` suitability for WCD9378",
+      "decision": "PARTIALLY_RESOLVED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_page": "91-103",
+          "supports": "Class-H v2 currently hardcodes base-address-derived registers at 0x3000 domain."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/include/asoc/wcd-clsh.h",
+          "line_or_page": "57-69",
+          "supports": "Downstream legacy class-h header also hardcodes 0x3000 base."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "16,31",
+          "supports": "Downstream WCD9378 register model uses 0x40180000 analog base, indicating address-domain mismatch risk."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Validate effective runtime register addresses for class-h operations before deciding whether base abstraction update is required."
+    },
+    {
+      "blocker": "WCD9378-specific Class-H register surface",
+      "decision": "PARTIALLY_RESOLVED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "209-220,198,128",
+          "supports": "WCD9378 exposes Class-G/VNEGDAC and relevant PA/BIAS register names in its analog domain."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "640-664,3672-3674,4187",
+          "supports": "Downstream codec has dedicated Class-H DAPM supply handling and class-h initialization path."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Map required WCD9378 class-h register interactions onto upstream class-h v2 API once address semantics are proven."
+    },
+    {
+      "blocker": "Friend-note claim: add dynamic `ana_base` to class-h",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_page": "878-893",
+          "supports": "Control object stores only codec version; no dynamic base field exists."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+          "line_or_page": "44-51",
+          "supports": "Public enum/API has no base-address argument."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_page": "345-346,364-389",
+          "supports": "Register operations use fixed macros, not runtime-programmed base values."
+        }
+      ],
+      "conversion_impact": "wcd_common",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Do not introduce dynamic-base changes without concrete failing register trace proving fixed-base path is incorrect for WCD9378 upstream integration."
+    },
+    {
+      "blocker": "Placement of Class-H changes (WCD common vs WCD9378 driver-only)",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2528",
+          "supports": "Main driver calls shared class-h allocation API."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_page": "777-805",
+          "supports": "Class-H state machine behavior is centralized in shared module."
+        }
+      ],
+      "conversion_impact": "wcd_common",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Keep scope open but blocked until runtime evidence shows whether adaptation belongs entirely in shared class-h module or can be isolated in codec driver configuration."
+    }
+  ]
+}

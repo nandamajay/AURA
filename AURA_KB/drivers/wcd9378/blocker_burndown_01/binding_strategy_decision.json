@@ -1,0 +1,361 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "governance_mode": "audit-only",
+    "source_scope": "Allowed sources from Blocker Burndown 01 prompt",
+    "decision_labels": [
+      "RESOLVED_READY_FOR_CONVERSION",
+      "PARTIALLY_RESOLVED",
+      "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "REJECTED_NOT_UPSTREAMABLE",
+      "BOARD_SPECIFIC_ONLY",
+      "TEMP_DEBUG_ONLY"
+    ]
+  },
+  "question_answers": {
+    "does_wcd9378_require_new_main_codec_compatible": {
+      "answer": "PARTIALLY_RESOLVED: downstream declares `qcom,wcd9378-codec`, while upstream binding currently allows only `qcom,wcd9370-codec` and `qcom,wcd9375-codec`; binding extension is needed.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4591-4593",
+          "supports": "Downstream OF match includes `qcom,wcd9378-codec`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "21-27",
+          "supports": "Upstream schema currently enumerates only 9370/9375 codec compatibles."
+        }
+      ]
+    },
+    "can_reuse_qcom_wcd9370_or_qcom_wcd9375_fallback": {
+      "answer": "FAIL_CLOSED_NEEDS_EVIDENCE: no silicon-ID proof in allowed sources that WCD9378 is binding-compatible fallback-equivalent to 9370/9375.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "21-27",
+          "supports": "Fallback pattern exists only for 9375 -> 9370."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4591-4593",
+          "supports": "Downstream uses explicit 9378 compatible instead of 9370/9375."
+        }
+      ]
+    },
+    "board_specific_legacy_properties": [
+      "qcom,wcd-rst-gpio-node",
+      "qcom,rx-slave",
+      "qcom,tx-slave",
+      "qcom,rx_swr_ch_map",
+      "qcom,tx_swr_ch_map",
+      "qcom,cdc-micbias*-mv",
+      "qcom,swr-tx-port-params (currently unmodeled upstream)"
+    ],
+    "upstream_binding_properties_already_cover_needed_behavior": [
+      "reset-gpios",
+      "qcom,rx-device",
+      "qcom,tx-device",
+      "qcom,rx-port-mapping",
+      "qcom,tx-port-mapping",
+      "qcom,micbias1-microvolt .. qcom,micbias4-microvolt",
+      "vdd-*-supply properties"
+    ],
+    "new_binding_entries_required": [
+      "Extend `qcom,wcd937x.yaml` compatible list with `qcom,wcd9378-codec` (binding patch required)."
+    ],
+    "new_yaml_vs_extend_existing": "PARTIALLY_RESOLVED: evidence supports extending `qcom,wcd937x.yaml`; no evidence requires a brand-new `qcom,wcd9378.yaml`.",
+    "fail_closed_items": [
+      "Whether 9378 should declare fallback to 9370 or 9375 in DT compatible chain.",
+      "Whether `qcom,swr-tx-port-params` must become a new upstream binding property or can be removed/replaced."
+    ]
+  },
+  "property_decisions": [
+    {
+      "blocker": "qcom,wcd9378-codec",
+      "decision": "PARTIALLY_RESOLVED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4591-4593",
+          "supports": "Downstream match table names `qcom,wcd9378-codec`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "21-27",
+          "supports": "Upstream binding does not yet include 9378."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": true,
+      "binding_patch_needed": true,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Prepare binding extension to add `qcom,wcd9378-codec`; keep fallback semantics FAIL_CLOSED until silicon/runtime evidence is provided."
+    },
+    {
+      "blocker": "qcom,wcd-rst-gpio-node",
+      "decision": "BOARD_SPECIFIC_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4424-4431",
+          "supports": "Downstream parses legacy reset-node phandle."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "13-16,85-88",
+          "supports": "Upstream common binding uses standard `reset-gpios`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": false,
+      "risk": "LOW",
+      "next_action": "Use `reset-gpios` in board DTS; do not upstream `qcom,wcd-rst-gpio-node`."
+    },
+    {
+      "blocker": "qcom,rx-slave",
+      "decision": "BOARD_SPECIFIC_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4443,4618",
+          "supports": "Downstream uses `qcom,rx-slave` phandle."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "33-35,88",
+          "supports": "Upstream uses `qcom,rx-device`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": false,
+      "risk": "LOW",
+      "next_action": "Translate to `qcom,rx-device`; do not carry `qcom,rx-slave`."
+    },
+    {
+      "blocker": "qcom,tx-slave",
+      "decision": "BOARD_SPECIFIC_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4444,4629",
+          "supports": "Downstream uses `qcom,tx-slave` phandle."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "29-31,87",
+          "supports": "Upstream uses `qcom,tx-device`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": false,
+      "risk": "LOW",
+      "next_action": "Translate to `qcom,tx-device`; do not carry `qcom,tx-slave`."
+    },
+    {
+      "blocker": "qcom,rx_swr_ch_map",
+      "decision": "BOARD_SPECIFIC_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4717-4720",
+          "supports": "Downstream parses legacy RX/TX channel-map names."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "42-60",
+          "supports": "Upstream schema defines `qcom,rx-port-mapping` instead."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Map downstream channel-map semantics into upstream `qcom,rx-port-mapping` plus optional channel-mapping arrays if needed."
+    },
+    {
+      "blocker": "qcom,tx_swr_ch_map",
+      "decision": "BOARD_SPECIFIC_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4717-4720",
+          "supports": "Downstream parses legacy RX/TX channel-map names."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "24-40",
+          "supports": "Upstream schema defines `qcom,tx-port-mapping` instead."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Map downstream channel-map semantics into upstream `qcom,tx-port-mapping` plus optional channel-mapping arrays if needed."
+    },
+    {
+      "blocker": "qcom,cdc-micbias*-mv",
+      "decision": "BOARD_SPECIFIC_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4346-4378",
+          "supports": "Downstream expects legacy `qcom,cdc-micbias*-mv` properties."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "37-55,89-92",
+          "supports": "Upstream schema uses `qcom,micbias*-microvolt` and requires all four entries."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Convert board values to `qcom,micbias*-microvolt`; verify scaling semantics on hardware."
+    },
+    {
+      "blocker": "reset-gpios",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "13-16,85-88",
+          "supports": "Standard reset GPIO property is already defined and required upstream."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "45",
+          "supports": "Example uses `reset-gpios`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": false,
+      "risk": "LOW",
+      "next_action": "Use `reset-gpios` directly in DTS for WCD9378 boards."
+    },
+    {
+      "blocker": "qcom,rx-device",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "33-35,88",
+          "supports": "Upstream common schema property for RX phandle."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2883-2886",
+          "supports": "Upstream codec driver parses `qcom,rx-device`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": false,
+      "risk": "LOW",
+      "next_action": "Adopt `qcom,rx-device` in WCD9378 DT."
+    },
+    {
+      "blocker": "qcom,tx-device",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "29-31,87",
+          "supports": "Upstream common schema property for TX phandle."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2892-2895",
+          "supports": "Upstream codec driver parses `qcom,tx-device`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": false,
+      "risk": "LOW",
+      "next_action": "Adopt `qcom,tx-device` in WCD9378 DT."
+    },
+    {
+      "blocker": "qcom,*-port-mapping",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "24-60",
+          "supports": "Upstream SDW binding defines both TX and RX port mapping arrays."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "68-79",
+          "supports": "Upstream examples use these port-mapping properties."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Express WCD9378 routing via `qcom,rx-port-mapping` and `qcom,tx-port-mapping`; validate exact maps on hardware."
+    },
+    {
+      "blocker": "qcom,micbias*-microvolt",
+      "decision": "RESOLVED_READY_FOR_CONVERSION",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "37-55,89-92",
+          "supports": "Upstream micbias microvolt properties are defined and required."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "50-53",
+          "supports": "Upstream example uses micbias microvolt properties."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": false,
+      "runtime_validation_needed": true,
+      "risk": "MEDIUM",
+      "next_action": "Translate downstream mV values to microvolt properties and validate per-board rails."
+    },
+    {
+      "blocker": "qcom,swr-tx-port-params",
+      "decision": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4726-4730",
+          "supports": "Downstream parser requires `qcom,swr-tx-port-params`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "17-100",
+          "supports": "Property is not present in upstream SDW binding schema."
+        }
+      ],
+      "conversion_impact": "dt",
+      "upstream_patch_needed": false,
+      "binding_patch_needed": true,
+      "runtime_validation_needed": true,
+      "risk": "HIGH",
+      "next_action": "Obtain runtime trace proving whether this property is strictly needed or derive deterministic mapping into existing upstream properties before proposing binding change."
+    }
+  ]
+}

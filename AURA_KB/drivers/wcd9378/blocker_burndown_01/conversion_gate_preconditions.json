@@ -1,0 +1,84 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "governance_mode": "audit-only",
+    "source_scope": "Allowed sources from Blocker Burndown 01 prompt",
+    "decision_labels": [
+      "RESOLVED_READY_FOR_CONVERSION",
+      "PARTIALLY_RESOLVED",
+      "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "REJECTED_NOT_UPSTREAMABLE",
+      "BOARD_SPECIFIC_ONLY",
+      "TEMP_DEBUG_ONLY"
+    ]
+  },
+  "preconditions": [
+    {
+      "precondition": "Binding decision for main compatible (`qcom,wcd9378-codec`) finalized",
+      "status": "PARTIAL",
+      "blocking": true,
+      "evidence": "Need to extend qcom,wcd937x.yaml (upstream currently 9370/9375 only) and finalize fallback chain semantics.",
+      "next_action": "Prepare binding patch to add 9378; keep fallback semantics FAIL_CLOSED until silicon/runtime confirmation."
+    },
+    {
+      "precondition": "Legacy downstream DT property migration map is complete",
+      "status": "SATISFIED",
+      "blocking": true,
+      "evidence": "Legacy->upstream property correspondences are line-cited in binding_strategy_decision.json.",
+      "next_action": "Use only upstream schema properties in conversion inputs."
+    },
+    {
+      "precondition": "SDW numeric identity (part-id + compatible string) is proven for WCD9378",
+      "status": "FAIL_CLOSED",
+      "blocking": true,
+      "evidence": "No allowed-source proof for proposed `0x110` / `sdw20217011000`; downstream only has string slave IDs.",
+      "next_action": "Collect hardware enumeration evidence and map to upstream SDW ID conventions."
+    },
+    {
+      "precondition": "SDW paging policy for WCD9378 is fixed",
+      "status": "PARTIAL",
+      "blocking": true,
+      "evidence": "Downstream sets `paging_support=true` and high address space exists; upstream core supports paging. Upstream WCD9378 slave implementation still pending.",
+      "next_action": "Implement in converted SDW driver once identity is known; validate high-address read/write on hardware."
+    },
+    {
+      "precondition": "Class-H base/version decision is fixed",
+      "status": "FAIL_CLOSED",
+      "blocking": true,
+      "evidence": "Fixed-base class-h implementation exists; WCD9378 address-domain equivalence is not yet proven.",
+      "next_action": "Gather runtime register trace proving reuse vs required new class-h variant."
+    },
+    {
+      "precondition": "Friend-note claims have source-backed triage",
+      "status": "SATISFIED",
+      "blocking": true,
+      "evidence": "Unverified claims were fail-closed; only source-backed points were retained in blocker decisions.",
+      "next_action": "Do not consume any friend-note patch direction without explicit code/log evidence."
+    },
+    {
+      "precondition": "Runtime evidence for playback/capture/mute under upstream-style stack",
+      "status": "MISSING",
+      "blocking": true,
+      "evidence": "No reproducible runtime logs in allowed sources validating upstream SDW identity/paging/class-h behavior for WCD9378.",
+      "next_action": "Request hardware logs: enumeration IDs, reg accesses across paging boundary, playback/capture/mute outcomes."
+    },
+    {
+      "precondition": "Compile/checkpatch baseline for planned patch scope",
+      "status": "MISSING",
+      "blocking": true,
+      "evidence": "Audit-only run produced no source changes; baseline checks not executed in this blocker burn-down.",
+      "next_action": "When conversion begins, require clean build + checkpatch for each series stage."
+    },
+    {
+      "precondition": "Board DTS inputs for reset, regulators, rx/tx devices, and port mappings are available",
+      "status": "MISSING",
+      "blocking": true,
+      "evidence": "Only legacy downstream property usage is evidenced; final upstream-style DTS fragments are not provided in this audit set.",
+      "next_action": "Collect target board DTS snippets using upstream schema properties before starting conversion."
+    }
+  ],
+  "go_no_go": {
+    "conversion_start": "NO_GO",
+    "reason": "Blocking FAIL_CLOSED/MISSING items remain on SDW identity and Class-H strategy, with missing runtime evidence."
+  }
+}
