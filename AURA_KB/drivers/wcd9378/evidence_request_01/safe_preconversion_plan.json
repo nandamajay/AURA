@@ -1,0 +1,72 @@
+{
+  "artifact": "wcd9378_safe_preconversion_plan_01",
+  "generated_on": "2026-06-20",
+  "conversion_state": "NO_GO",
+  "rule": "Planning-only. No behavior-changing implementation before evidence checklist P0 blockers is satisfied.",
+  "blocked_behavior_changes": [
+    "SDW ID finalization (`SDW_SLAVE_ENTRY`, final sdw compatible)",
+    "Class-H behavior or version/base logic changes",
+    "SoundWire core controller changes",
+    "LPASS macro behavior changes",
+    "Runtime recovery/reset/mute workarounds",
+    "Any claim of playback/capture support"
+  ],
+  "safe_prep_items": [
+    {
+      "prep_item": "Vendor include/API removal inventory (planning only)",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Pure static analysis of downstream dependencies; no behavioral assumption is required.",
+      "future_dependency": "Apply only after SDW identity and Class-H blockers are resolved.",
+      "risk": "LOW"
+    },
+    {
+      "prep_item": "DT property normalization mapping table (legacy downstream names -> upstream schema names)",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Schema-level mapping can be prepared from existing binding/audit artifacts without selecting final runtime behavior.",
+      "future_dependency": "Needs WCD9378 compatible policy and board DTS evidence package.",
+      "risk": "LOW"
+    },
+    {
+      "prep_item": "Kconfig/Makefile skeleton plan for codec + SDW split",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Build topology planning is non-behavioral and reversible.",
+      "future_dependency": "Final symbol names and object list depend on SDW identity outcome.",
+      "risk": "LOW"
+    },
+    {
+      "prep_item": "File structure plan (`wcd9378.c`, `wcd9378-sdw.c`, `wcd9378.h`) with ownership boundaries",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Structural decomposition does not assert functional correctness.",
+      "future_dependency": "Runtime evidence needed before binding behavior to files.",
+      "risk": "LOW"
+    },
+    {
+      "prep_item": "Regulator/reset migration plan (interface-only)",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Regulator/reset interface migration can be planned from DT binding and existing audit data.",
+      "future_dependency": "Board DTS patch must confirm actual supply/reset wiring.",
+      "risk": "MEDIUM"
+    },
+    {
+      "prep_item": "Banned-symbol list and static grep validation rules",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Policy enforcement is static and does not rely on hardware behavior.",
+      "future_dependency": "None for plan generation; applied during conversion implementation phase.",
+      "risk": "LOW"
+    },
+    {
+      "prep_item": "Patch ordering proposal (bisect-safe sequence with runtime-gated phases)",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Ordering plan is procedural; no code behavior changes are made.",
+      "future_dependency": "Execution of runtime-sensitive phases blocked until evidence checklist P0 is satisfied.",
+      "risk": "LOW"
+    },
+    {
+      "prep_item": "Governance artifact templates for lineage/fail-closed/replay fields",
+      "allowed_now": true,
+      "why_safe_without_runtime_evidence": "Template preparation improves observability without changing driver behavior.",
+      "future_dependency": "Filled during implementation only after NO-GO is cleared.",
+      "risk": "LOW"
+    }
+  ]
+}

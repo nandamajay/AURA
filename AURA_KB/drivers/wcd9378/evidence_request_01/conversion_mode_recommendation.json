@@ -1,0 +1,61 @@
+{
+  "artifact": "wcd9378_conversion_mode_recommendation_01",
+  "generated_on": "2026-06-20",
+  "current_gate_state": "NO_GO",
+  "inputs": {
+    "wcd9378_blocker_state": [
+      "AURA_KB/drivers/wcd9378/blocker_burndown_01/conversion_gate_preconditions.json",
+      "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/conversion_gate_preconditions_delta.json"
+    ],
+    "wcd937x_baseline": [
+      "AURA_KB/drivers/wcd937x/variant_c/governance_gate/governance_verdict.json",
+      "AURA_KB/drivers/wcd937x/variant_c/variant_abc_comparison.json",
+      "AURA_KB/drivers/wcd937x/variant_c/lessons_learned.json"
+    ]
+  },
+  "recommended_mode": "HYBRID",
+  "mode_rationale": [
+    "WCD937x Variant C achieved strong low-category gains (FUNCTION/API/INCLUDE/LIFECYCLE) with WARN/no blockers, proving useful idiom transfer.",
+    "WCD9378 still has fail-closed blockers on SDW identity and Class-H base/version, so full skeleton-driven implementation is unsafe now.",
+    "A hybrid mode allows deterministic structure planning from WCD937x/WCD938x/WCD939x while preventing behavior finalization until hardware evidence arrives."
+  ],
+  "skeleton_base_reference": {
+    "primary": "WCD937x Variant C SDW lifecycle/API patterns",
+    "secondary": [
+      "wcd938x-sdw.c",
+      "wcd939x-sdw.c"
+    ],
+    "main_file_strategy": "Use WCD937x family structure as reference only; do not finalize WCD9378-specific behavior until SDW/Class-H blockers are resolved."
+  },
+  "is_wcd937x_variant_c_enough_as_base": {
+    "answer": "NO",
+    "reason": "Variant C itself is WARN with residual derivation/downstream-reuse warnings; it is a strong pattern baseline but not sufficient to close WCD9378 hardware-identity and Class-H unknowns."
+  },
+  "should_wcd938x_wcd939x_be_allowed": {
+    "answer": "YES_WITH_RESTRICTIONS",
+    "reason": "Allow only as architectural/API idiom references, not as rename templates; require adaptation audit and lineage for every retained hardware block."
+  },
+  "gate_mode_configuration": {
+    "required": true,
+    "policy": [
+      "Keep canonical conversion_gate as source of truth for acceptance.",
+      "Require allowed_sources.json and patch_lineage.json.",
+      "Treat any unresolved P0 evidence item as hard NO-GO for behavior-changing patches.",
+      "Fail on target-copy or unjustified reference-derivation blockers.",
+      "Run scoring only after SDW identity, paging, and Class-H evidence checklist items are satisfied."
+    ]
+  },
+  "blocked_until_runtime_evidence_arrives": [
+    "Final SDW ID tuple/compatible decisions",
+    "Final paging_support policy",
+    "Any SoundWire core patch proposal",
+    "Any Class-H enum/base abstraction decision",
+    "Any runtime workaround claims (mute/reset/recovery)",
+    "Any conversion claim beyond planning artifacts"
+  ],
+  "immediate_allowed_actions": [
+    "Evidence request execution",
+    "Static preconversion planning",
+    "Governance template preparation"
+  ]
+}

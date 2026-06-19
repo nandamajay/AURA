@@ -1,0 +1,209 @@
+{
+  "artifact": "wcd9378_evidence_checklist_01",
+  "generated_on": "2026-06-20",
+  "source_blockers": [
+    "AURA_KB/drivers/wcd9378/blocker_burndown_01/conversion_gate_preconditions.json",
+    "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/binding_strategy_delta.json",
+    "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/sdw_identity_paging_delta.json",
+    "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/clsh_base_version_delta.json"
+  ],
+  "items": [
+    {
+      "id": "WCD9378-EVID-001",
+      "blocker": "Use `SDW_SLAVE_ENTRY(0x0217, 0x110, 0)` remains UNCHANGED_FAIL_CLOSED",
+      "requested_evidence": "Boot-time SoundWire enumeration logs with numeric manufacturer/part/class/version/dev_num identity for WCD9378 RX/TX devices.",
+      "why_required": "Needed to replace guessed SDW ID tuple with hardware-proven identity.",
+      "acceptable_formats": [
+        "dmesg",
+        "sysfs"
+      ],
+      "acceptance_criteria": "At least one authoritative runtime source exposes numeric identity sufficient to derive final SDW_SLAVE_ENTRY tuple.",
+      "unblocks": [
+        "SDW_IDENTITY"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-002",
+      "blocker": "`sdw20217011000` compatible remains UNCHANGED_FAIL_CLOSED",
+      "requested_evidence": "Modalias/sysfs identity + DT match evidence linking WCD9378 runtime identity to Linux compatible naming convention.",
+      "why_required": "Needed to justify compatible string selection instead of guessing from neighboring codecs.",
+      "acceptable_formats": [
+        "sysfs",
+        "dmesg",
+        "DTS patch"
+      ],
+      "acceptance_criteria": "Evidence demonstrates deterministic mapping from detected hardware identity to final compatible string.",
+      "unblocks": [
+        "SDW_IDENTITY",
+        "DT"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-003",
+      "blocker": "SDW manufacturer/part/class evidence quality remains UNCHANGED_FAIL_CLOSED",
+      "requested_evidence": "Combined boot + sysfs snapshot for both RX/TX SoundWire endpoints on the target board.",
+      "why_required": "Needed to eliminate identity ambiguity between board naming and numeric SDW tuple.",
+      "acceptable_formats": [
+        "dmesg",
+        "sysfs"
+      ],
+      "acceptance_criteria": "Identity fields are present for both endpoints and are stable across reboot.",
+      "unblocks": [
+        "SDW_IDENTITY"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-004",
+      "blocker": "Paging requirement for high addresses (`0x40180000+`) is NOT_COVERED_BY_DATASHEET",
+      "requested_evidence": "Runtime trace showing register accesses that require paged SoundWire addressing (effective address > 0xffff).",
+      "why_required": "Needed to decide whether paging behavior is a true hardware/runtime requirement in upstream flow.",
+      "acceptable_formats": [
+        "trace-cmd",
+        "regmap dump",
+        "dmesg"
+      ],
+      "acceptance_criteria": "Trace or dump contains at least one high-address transaction correlated with codec activity.",
+      "unblocks": [
+        "PAGING"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-005",
+      "blocker": "`pdev->prop.paging_support = true` is NOT_COVERED_BY_DATASHEET",
+      "requested_evidence": "Function trace proving upstream `sdw_fill_msg` page fields are used for WCD9378 traffic, with controller transfer success.",
+      "why_required": "Needed to justify `paging_support` setting based on observed upstream path, not assumptions.",
+      "acceptable_formats": [
+        "trace-cmd",
+        "dmesg"
+      ],
+      "acceptance_criteria": "Trace includes `sdw_fill_msg` and `qcom_swrm_xfer_msg` in same operation window with successful transactions.",
+      "unblocks": [
+        "PAGING"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-006",
+      "blocker": "Need for Qualcomm SoundWire controller changes remains UNCHANGED_FAIL_CLOSED",
+      "requested_evidence": "Reproducible error trace proving controller limitation (or proof of no controller errors) during WCD9378 transfers.",
+      "why_required": "Controller patches are high-risk and must be justified by reproducible failure signatures.",
+      "acceptable_formats": [
+        "dmesg",
+        "trace-cmd"
+      ],
+      "acceptance_criteria": "Either no controller failure appears, or failure is reproducible with exact signature and steps.",
+      "unblocks": [
+        "PAGING"
+      ],
+      "priority": "P1",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-007",
+      "blocker": "Class-H version enum decision remains UNCHANGED_FAIL_CLOSED",
+      "requested_evidence": "Runtime register trace during HPH/Class-H enable and disable transitions.",
+      "why_required": "Needed to determine if existing WCD937X Class-H control path is sufficient or variant-specific versioning is required.",
+      "acceptable_formats": [
+        "regmap dump",
+        "trace-cmd",
+        "dmesg"
+      ],
+      "acceptance_criteria": "Observed transitions map to known Class-H control sequence with clear register/value deltas.",
+      "unblocks": [
+        "CLSH"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-008",
+      "blocker": "Class-H base/domain decisions are NOT_COVERED_BY_DATASHEET",
+      "requested_evidence": "Address-level proof for Class-H/flyback/HPH analog register domains used at runtime.",
+      "why_required": "Needed to confirm or reject base-address abstraction changes in `wcd-clsh-v2`.",
+      "acceptable_formats": [
+        "regmap dump",
+        "trace-cmd"
+      ],
+      "acceptance_criteria": "Data shows concrete address ranges touched by Class-H paths and links them to playback state changes.",
+      "unblocks": [
+        "CLSH"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-009",
+      "blocker": "Runtime playback validation precondition is MISSING",
+      "requested_evidence": "Headset playback run logs with full dmesg capture and mixer state before/after.",
+      "why_required": "Required to validate basic functional path and detect mute/regression behavior.",
+      "acceptable_formats": [
+        "dmesg",
+        "trace-cmd"
+      ],
+      "acceptance_criteria": "Playback succeeds or fails deterministically with complete logs and exact command sequence.",
+      "unblocks": [
+        "RUNTIME"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-010",
+      "blocker": "Runtime capture validation precondition is MISSING",
+      "requested_evidence": "AMIC1 capture run logs with dmesg and mixer state before/after.",
+      "why_required": "Required to validate capture path and confirm runtime behavior symmetry with playback.",
+      "acceptable_formats": [
+        "dmesg",
+        "trace-cmd"
+      ],
+      "acceptance_criteria": "Capture path behavior is reproducible and logged with exact control/stream settings.",
+      "unblocks": [
+        "RUNTIME"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-011",
+      "blocker": "Mute-path runtime issue remains unresolved",
+      "requested_evidence": "Mute issue reproduction matrix: steps, frequency, dmesg markers, and register snapshots before/after reset or runtime suspend.",
+      "why_required": "Required to prevent upstreaming temporary workaround logic for an uncharacterized runtime defect.",
+      "acceptable_formats": [
+        "dmesg",
+        "regmap dump",
+        "trace-cmd"
+      ],
+      "acceptance_criteria": "Issue status is explicit (PASS/FAIL/INTERMITTENT) with reproducible procedure.",
+      "unblocks": [
+        "RUNTIME",
+        "CLSH"
+      ],
+      "priority": "P1",
+      "current_status": "MISSING"
+    },
+    {
+      "id": "WCD9378-EVID-012",
+      "blocker": "Board DTS inputs precondition is MISSING",
+      "requested_evidence": "Exact DTS/DTSI patch containing reset GPIO, supplies, RX/TX phandles, port mappings, pinctrl, and DAI links.",
+      "why_required": "Needed to separate board-only wiring from generic binding/driver requirements.",
+      "acceptable_formats": [
+        "DTS patch"
+      ],
+      "acceptance_criteria": "Patch is replayable and complete for board wiring, with board-only properties clearly marked.",
+      "unblocks": [
+        "DT"
+      ],
+      "priority": "P0",
+      "current_status": "MISSING"
+    }
+  ]
+}
