@@ -1,0 +1,40 @@
+{
+  "artifact": "wcd9378_static_prototype_variant_a_compile_plan",
+  "generated_on": "2026-06-20",
+  "scope": "planning_only",
+  "kernel_tree_expected": "track_b_corpora/linux-next",
+  "expected_files_touched": [
+    "sound/soc/codecs/wcd9378.c",
+    "sound/soc/codecs/wcd9378-sdw.c",
+    "sound/soc/codecs/wcd9378.h",
+    "sound/soc/codecs/Kconfig",
+    "sound/soc/codecs/Makefile"
+  ],
+  "required_config_symbols": [
+    "CONFIG_SOUNDWIRE",
+    "CONFIG_REGMAP_SOUNDWIRE",
+    "CONFIG_REGMAP_IRQ",
+    "CONFIG_SND_SOC",
+    "CONFIG_SND_SOC_WCD_CLASSH",
+    "CONFIG_SND_SOC_WCD_COMMON",
+    "CONFIG_SND_SOC_WCD_MBHC",
+    "CONFIG_SND_SOC_WCD9378",
+    "CONFIG_SND_SOC_WCD9378_SDW"
+  ],
+  "compile_commands": [
+    "make O=out ARCH=arm64 defconfig",
+    "scripts/config --file out/.config -e SOUNDWIRE -e REGMAP_SOUNDWIRE -e SND_SOC -e SND_SOC_WCD_CLASSH -e SND_SOC_WCD_COMMON -e SND_SOC_WCD_MBHC -e SND_SOC_WCD9378 -e SND_SOC_WCD9378_SDW",
+    "make O=out ARCH=arm64 olddefconfig",
+    "make O=out ARCH=arm64 M=sound/soc/codecs W=1"
+  ],
+  "expected_missing_dependencies": [
+    "Kconfig/Makefile integration not applied in linux-next tree yet (fragment-only state)",
+    "No WCD9378 DT binding extension patch in this prototype scope",
+    "No board DTS artifacts in-tree"
+  ],
+  "blocker_classification": {
+    "compile_readiness": "PARTIAL",
+    "runtime_readiness": "NO_GO",
+    "reason": "Static prototype files are generated, but integration and runtime evidence are intentionally deferred."
+  }
+}

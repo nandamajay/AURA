@@ -1,0 +1,10 @@
+# RFC static prototype fragment for WCD9378 codec object wiring
+
+snd-soc-wcd9378-y := wcd9378.o
+snd-soc-wcd9378-sdw-y := wcd9378-sdw.o
+
+obj-$(CONFIG_SND_SOC_WCD9378)	+= snd-soc-wcd9378.o
+ifdef CONFIG_SND_SOC_WCD9378_SDW
+# Keep SDW aggregate side built with codec when SDW support is enabled.
+obj-$(CONFIG_SND_SOC_WCD9378) += snd-soc-wcd9378-sdw.o
+endif

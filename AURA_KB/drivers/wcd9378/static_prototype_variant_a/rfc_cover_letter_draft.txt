@@ -1,0 +1,39 @@
+Subject: [RFC PATCH 0/5] ASoC: codecs: WCD9378 static prototype (no runtime claims)
+
+This series is RFC only and introduces a static, compile-oriented WCD9378
+prototype driver split (main codec + SoundWire slave + shared header).
+
+Important limitations:
+- This is a static prototype only.
+- No hardware validation has been completed yet.
+- No playback/capture success claims are made.
+- SDW identity and paging remain runtime-gated.
+- Class-H handling remains runtime-gated.
+- No SoundWire core patches are included.
+- No LPASS macro patches are included.
+- No runtime recovery/re-enumeration workarounds are included.
+
+Current unresolved evidence requirements:
+1. Runtime-confirmed SDW manufacturer/part/class tuple for WCD9378 RX/TX.
+2. Runtime proof of paging behavior for high-address register transactions.
+3. Runtime traces to decide whether existing WCD937X Class-H enum/base is
+   sufficient or WCD9378-specific handling is needed.
+4. Playback/capture and mute-path runtime validation evidence.
+5. Final board DTS evidence package for reset/supplies/rx-tx mapping.
+
+Series content:
+- Add WCD9378 shared header/register subset.
+- Add WCD9378 SDW static prototype.
+- Add WCD9378 main codec static prototype.
+- Add Kconfig/Makefile fragments.
+- Add RFC limitations note.
+
+Request for maintainer guidance:
+- Preferred binding strategy for introducing `qcom,wcd9378-codec`.
+- Preferred SDW identity/compatible derivation workflow when runtime evidence
+  is pending.
+- Preferred Class-H approach (reuse WCD937X path vs dedicated WCD9378 path)
+  once runtime traces are available.
+
+This RFC is intentionally reversible and non-final. Full conversion remains
+blocked pending hardware/runtime evidence.

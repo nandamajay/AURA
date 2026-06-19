@@ -1,0 +1,69 @@
+{
+  "artifact": "wcd9378_runtime_fail_closed_register_variant_a",
+  "generated_on": "2026-06-20",
+  "items": [
+    {
+      "item": "SDW numeric identity final confirmation",
+      "status": "NEEDS_RUNTIME_CONFIRMATION",
+      "why_not_final": "Datasheet and allowed code evidence do not prove final Linux SDW manufacturer/part tuple for WCD9378.",
+      "what_static_prototype_does": "Uses candidate SDW ID tuple for compile-oriented RFC skeleton only.",
+      "evidence_needed_monday": "Boot enumeration + sysfs/modalias identity logs for RX/TX endpoints."
+    },
+    {
+      "item": "`sdw20217011000` compatible",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "Compatible derivation is not directly proven by bindings/datasheet for WCD9378.",
+      "what_static_prototype_does": "Keeps compatible candidate in planning scope only; no binding acceptance claim.",
+      "evidence_needed_monday": "Deterministic mapping from enumerated SDW identity to DT compatible naming."
+    },
+    {
+      "item": "`pdev->prop.paging_support = true`",
+      "status": "NEEDS_RUNTIME_CONFIRMATION",
+      "why_not_final": "Datasheet does not provide software-visible paging register behavior proof.",
+      "what_static_prototype_does": "Sets paging_support in SDW prototype based on downstream evidence with explicit runtime dependency.",
+      "evidence_needed_monday": "Trace showing paged accesses (`sdw_fill_msg` page fields) for WCD9378 traffic."
+    },
+    {
+      "item": "Class-H WCD9378 enum/base decision",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "No runtime proof that existing WCD937X class-h enum/base semantics are sufficient for WCD9378.",
+      "what_static_prototype_does": "Uses shared class-h API allocation path without modifying common class-h implementation.",
+      "evidence_needed_monday": "HPH/Class-H register traces proving whether WCD937X path can be reused unchanged."
+    },
+    {
+      "item": "SoundWire core changes",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "No reproducible upstream controller/core failure trace requiring qcom soundwire core patching.",
+      "what_static_prototype_does": "Implements no SoundWire core modifications.",
+      "evidence_needed_monday": "Reproducible controller failure trace or proof that core is sufficient."
+    },
+    {
+      "item": "LPASS macro volatile register changes",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "Current WCD9378 blocker scope has no deterministic evidence requiring LPASS macro code changes.",
+      "what_static_prototype_does": "Implements no LPASS macro changes.",
+      "evidence_needed_monday": "Cross-subsystem trace proving codec dependency on LPASS macro behavior changes."
+    },
+    {
+      "item": "Reset/re-enumeration recovery",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "Runtime mute/recovery issue is unresolved and workaround strategy is not root-cause proven.",
+      "what_static_prototype_does": "Excludes reset-in-hw_params and re-enumeration hacks.",
+      "evidence_needed_monday": "Reproducible mute/recovery failure matrix with before/after register traces."
+    },
+    {
+      "item": "Playback/capture validation",
+      "status": "NEEDS_RUNTIME_CONFIRMATION",
+      "why_not_final": "No validated playback/capture test evidence exists in current audit state.",
+      "what_static_prototype_does": "Makes no runtime success claims and keeps lifecycle static-only.",
+      "evidence_needed_monday": "Headset playback + AMIC1 capture logs with dmesg and mixer snapshots."
+    },
+    {
+      "item": "Board DTS finalization",
+      "status": "NEEDS_RUNTIME_CONFIRMATION",
+      "why_not_final": "Board-specific DTS patch set is still missing from evidence package.",
+      "what_static_prototype_does": "Uses generic DT property model from upstream binding without board-specific assertions.",
+      "evidence_needed_monday": "Exact board DTS/DTSI patch covering reset/supplies/rx-tx/port-map/DAI links."
+    }
+  ]
+}

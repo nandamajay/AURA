@@ -1,0 +1,114 @@
+{
+  "artifact": "wcd9378_static_prototype_variant_a_full_series_validation",
+  "generated_at_utc": "2026-06-20T00:00:00Z",
+  "series_apply": {
+    "status": "PASS",
+    "validation_repo": "/tmp/wcd9378_static_proto_apply",
+    "apply_log": "/tmp/wcd9378_static_proto_apply.log",
+    "applied_patch_count": 5,
+    "patches": [
+      "0001-RFC-ASoC-codecs-add-WCD9378-shared-header-static-pro.patch",
+      "0002-RFC-ASoC-codecs-add-WCD9378-SoundWire-static-prototy.patch",
+      "0003-RFC-ASoC-codecs-add-WCD9378-main-codec-static-protot.patch",
+      "0004-RFC-ASoC-codecs-add-WCD9378-Kconfig-Makefile-fragmen.patch",
+      "0005-RFC-ASoC-codecs-add-WCD9378-static-prototype-limitat.patch"
+    ],
+    "start_head": "2e699be",
+    "resulting_head": "54227f2"
+  },
+  "banned_symbol_check": {
+    "status": "PASS",
+    "total_occurrences": 0,
+    "files_checked": [
+      "wcd9378.c",
+      "wcd9378-sdw.c",
+      "wcd9378.h"
+    ],
+    "pattern_set": [
+      "CONFIG_BOLERO",
+      "SWR_DEVICE_SSR",
+      "SWR_REGISTER_WAKE_IRQ",
+      "SWR_SET_PORT_MAP",
+      "lpass_cdc_clk_rsc",
+      "lpass_cdc_register_macro",
+      "lpass_cdc_rsc_clk",
+      "lpass_cdc_unregister_macro",
+      "msm_cdc_pinctrl",
+      "swrm_wcd_notify",
+      "linux/version.h",
+      "lpass-cdc-clk-rsc.h",
+      "lpass-cdc-registers.h",
+      "lpass-cdc.h",
+      "msm-cdc-pinctrl.h",
+      "swr-common.h",
+      "swr-wcd.h",
+      "msm-cdc-supply",
+      "wcdcal-hwdep",
+      "bolero-slave-internal",
+      "audio-codec-port-types.h"
+    ]
+  },
+  "json_parse_validity": {
+    "status": "PASS",
+    "parsed_json_files_count": 12,
+    "paths_root": "AURA_KB/drivers/wcd9378/static_prototype_variant_a"
+  },
+  "lineage": {
+    "status": "PASS",
+    "lineage_file": "AURA_KB/drivers/wcd9378/static_prototype_variant_a/patches/patch_lineage.json",
+    "coverage": 100.0,
+    "converted_function_count": 26,
+    "covered_function_count": 26
+  },
+  "runtime_claim_check": {
+    "status": "PASS",
+    "forbidden_claim_hits": 0,
+    "checked_patterns": [
+      "playback works",
+      "capture works",
+      "fully working",
+      "upstream-ready"
+    ]
+  },
+  "static_gate_summary": {
+    "status": "WARN_ACCEPTED",
+    "governance_verdict": "WARN",
+    "reasons": [
+      "scoring_skipped_no_upstream_dir"
+    ],
+    "verifier_verdict": "PASS",
+    "blocking_count": 0,
+    "warning_count": 0,
+    "lineage_coverage": 100.0,
+    "gate_artifact": "AURA_KB/drivers/wcd9378/static_prototype_variant_a/static_gate/governance_verdict.json"
+  },
+  "line_count_report": {
+    "downstream": {
+      "wcd9378.c": 4883,
+      "wcd9378-slave.c": 418,
+      "wcd9378.h": 121
+    },
+    "static_variant_a_converted": {
+      "wcd9378.c": 443,
+      "wcd9378-sdw.c": 380,
+      "wcd9378.h": 232
+    }
+  },
+  "scope_guard": {
+    "status": "PASS",
+    "no_source_tree_modifications": true,
+    "expected_modified_root": "AURA_KB/drivers/wcd9378/static_prototype_variant_a/"
+  },
+  "fail_closed_register": "AURA_KB/drivers/wcd9378/static_prototype_variant_a/runtime_fail_closed_items.json",
+  "replay_inputs": [
+    "AURA_KB/drivers/wcd9378/static_prototype_variant_a/converted",
+    "AURA_KB/drivers/wcd9378/static_prototype_variant_a/patches",
+    "AURA_KB/drivers/wcd9378/static_prototype_variant_a/static_gate",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd937x*",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd938x*",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd939x*"
+  ],
+  "replay_deterministic": true,
+  "confidence_classification": "STATIC_ONLY"
+}

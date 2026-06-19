@@ -1,0 +1,20 @@
+# RFC static prototype fragment for WCD9378 codec enablement
+
+config SND_SOC_WCD9378
+	depends on SND_SOC_WCD9378_SDW
+	tristate
+	depends on SOUNDWIRE || !SOUNDWIRE
+	select SND_SOC_WCD_CLASSH
+	select SND_SOC_WCD_COMMON
+
+config SND_SOC_WCD9378_SDW
+	tristate "WCD9378 Codec - SDW (RFC static prototype)"
+	select SND_SOC_WCD9378
+	select SND_SOC_WCD_MBHC
+	select REGMAP_IRQ
+	depends on SOUNDWIRE
+	select REGMAP_SOUNDWIRE
+	help
+	  RFC static prototype for Qualcomm WCD9378 codec and SoundWire slave
+	  split driver layout. This fragment is compile-oriented and does not
+	  assert runtime validation.

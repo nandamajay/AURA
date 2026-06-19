@@ -1,0 +1,87 @@
+{
+  "artifact": "wcd9378_static_conversion_plan_variant_a",
+  "generated_on": "2026-06-20",
+  "mode": "RFC_STATIC_ONLY",
+  "plan_items": [
+    {
+      "area": "File structure",
+      "action": "Create split files `wcd9378.c`, `wcd9378-sdw.c`, `wcd9378.h` using upstream WCD family main/SDW decomposition pattern.",
+      "source_signal": "wcd937x/wcd938x/wcd939x upstream file split + downstream wcd9378 multi-file layout",
+      "confidence": "HIGH",
+      "runtime_dependency": "None",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "Kconfig/Makefile skeleton",
+      "action": "Draft `SND_SOC_WCD9378` and `SND_SOC_WCD9378_SDW` fragment entries mirroring WCD937x dependency structure.",
+      "source_signal": "linux-next codec Kconfig/Makefile WCD937x/938x/939x entries",
+      "confidence": "HIGH",
+      "runtime_dependency": "None",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "Main codec driver",
+      "action": "Implement platform probe/bind/unbind/component registration with SoundWire slave aggregation and runtime-PM scaffold.",
+      "source_signal": "upstream wcd937x main lifecycle + downstream wcd9378 probe/of-match/reset/regulator patterns",
+      "confidence": "STATIC_ONLY",
+      "runtime_dependency": "Playback/capture/mbhc runtime behavior not validated",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "SoundWire slave driver",
+      "action": "Implement SDW probe/remove, static port/channel parsing, regmap init, and runtime PM cache sync flow.",
+      "source_signal": "upstream wcd937x-sdw lifecycle + downstream wcd9378-slave identity/port model",
+      "confidence": "STATIC_ONLY",
+      "runtime_dependency": "SDW identity and paging behavior require runtime confirmation",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "Shared header/register definitions",
+      "action": "Provide compile-oriented header with WCD9378 register/mask subset, SDW topology enums, and shared structs.",
+      "source_signal": "downstream wcd9378-registers.h/internal.h + upstream wcd937x.h structure model",
+      "confidence": "STATIC_ONLY",
+      "runtime_dependency": "High-address register accessibility and class-h base usage remain unresolved",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "Regulator/reset migration",
+      "action": "Use upstream-style `devm_regulator_bulk_get_enable` + `devm_gpiod_get(\\\"reset\\\")` from DT common properties.",
+      "source_signal": "qcom,wcd93xx-common.yaml + upstream wcd937x probe",
+      "confidence": "HIGH",
+      "runtime_dependency": "Board DTS wiring still required",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "DT property normalization",
+      "action": "Use `reset-gpios`, `qcom,rx-device`, `qcom,tx-device`, `qcom,rx-port-mapping`, `qcom,tx-port-mapping`, channel mappings.",
+      "source_signal": "qcom,wcd937x.yaml + qcom,wcd937x-sdw.yaml + prior blocker binding decisions",
+      "confidence": "HIGH",
+      "runtime_dependency": "Final qcom,wcd9378-codec binding acceptance remains pending",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "MBHC/Class-H integration",
+      "action": "Integrate shared Class-H allocator path (`wcd_clsh_ctrl_alloc/free`) and keep MBHC in non-claiming minimal state.",
+      "source_signal": "upstream wcd937x class-h integration + blocker decisions for unresolved class-h base/version",
+      "confidence": "NEEDS_RUNTIME_CONFIRMATION",
+      "runtime_dependency": "Need runtime traces to confirm WCD937X enum reuse or WCD9378-specific handling",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "SDW identity/paging handling",
+      "action": "Carry candidate SDW ID tuple/compatible and paging flag in static prototype while keeping them explicitly runtime-gated.",
+      "source_signal": "downstream paging usage + blocker_burndown_01_datasheet_delta unresolved SDW identity items",
+      "confidence": "NEEDS_RUNTIME_CONFIRMATION",
+      "runtime_dependency": "Hardware-enumerated SDW IDs and paging traces",
+      "allowed_in_static_prototype": true
+    },
+    {
+      "area": "Runtime blockers",
+      "action": "Keep unresolved runtime and hardware-sensitive decisions in fail-closed register and RFC cover letter.",
+      "source_signal": "conversion_gate_preconditions_delta NO_GO + evidence_request_01",
+      "confidence": "FAIL_CLOSED",
+      "runtime_dependency": "All P0 evidence items from evidence_checklist",
+      "allowed_in_static_prototype": true
+    }
+  ]
+}

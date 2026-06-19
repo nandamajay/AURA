@@ -1,0 +1,23 @@
+{
+  "artifact": "wcd9378_static_prototype_variant_a_checkpatch_plan",
+  "generated_on": "2026-06-20",
+  "scope": "planning_only",
+  "kernel_tree_expected": "track_b_corpora/linux-next",
+  "checkpatch_command": "./scripts/checkpatch.pl --strict --show-types --codespell --max-line-length=100 --file sound/soc/codecs/wcd9378.c --file sound/soc/codecs/wcd9378-sdw.c --file sound/soc/codecs/wcd9378.h",
+  "expected_files_checked": [
+    "sound/soc/codecs/wcd9378.c",
+    "sound/soc/codecs/wcd9378-sdw.c",
+    "sound/soc/codecs/wcd9378.h"
+  ],
+  "known_false_positives": [
+    "RFC marker usage in commit subjects/cover letter may trigger style commentary but is intentional",
+    "Long register/macro identifiers may approach style limits in header sections"
+  ],
+  "expected_missing_dependencies": [
+    "Files currently exist under AURA_KB path and must be staged into kernel tree path for checkpatch execution"
+  ],
+  "blocker_classification": {
+    "checkpatch_readiness": "PARTIAL",
+    "reason": "Plan is deterministic, but execution requires staging prototype files into linux-next sound/soc/codecs path."
+  }
+}

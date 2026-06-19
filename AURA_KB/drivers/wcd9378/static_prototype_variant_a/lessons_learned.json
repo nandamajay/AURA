@@ -1,0 +1,40 @@
+{
+  "artifact": "wcd9378_static_prototype_variant_a_lessons",
+  "generated_on": "2026-06-20",
+  "what_could_be_statically_converted": [
+    "Upstream-style file split and lifecycle scaffold (platform codec + SDW slave)",
+    "DT property normalization to upstream common naming (`reset-gpios`, `qcom,rx-device`, `qcom,tx-device`, port mappings)",
+    "Regulator and reset migration to `devm_regulator_bulk_get_enable` and `devm_gpiod_get` model",
+    "Kconfig/Makefile skeleton for WCD9378 symbol wiring",
+    "Class-H API hook integration (`wcd_clsh_ctrl_alloc/free`) without common-code changes"
+  ],
+  "what_stayed_blocked": [
+    "Final SDW numeric identity/compatible",
+    "Paging policy finalization",
+    "Class-H enum/base final decision",
+    "SoundWire core patch necessity",
+    "Runtime playback/capture/mute claims",
+    "Board DTS finalization"
+  ],
+  "what_variant_c_helped_with": [
+    "Provided reusable SDW lifecycle/API structure (probe/remove/runtime PM/regmap)",
+    "Improved function/API boundary choices for bind/unbind and DAI plumbing",
+    "Reduced risk of vendor-framework carryover in static prototype code"
+  ],
+  "new_wcd9378_specific_patterns": [
+    "Downstream high analog base evidence (`0x40180000` path) exists but needs runtime verification for upstream usage policy",
+    "Downstream includes ADC4/DMIC7 channel model that extends beyond WCD937x baseline assumptions",
+    "Downstream paging support usage is explicit for RX/TX slaves and must be runtime-verified in upstream transaction path"
+  ],
+  "evidence_needed_monday": [
+    "Boot/runtime SDW enumeration logs with numeric identity for RX/TX endpoints",
+    "Trace evidence for paged (>0xffff) SoundWire register transactions",
+    "Class-H enable/disable register traces tied to HPH path transitions",
+    "Playback and AMIC1 capture logs with dmesg + mixer snapshots",
+    "Board DTS/DTSI patch package for reset/supply/rx-tx/port-map/DAI links"
+  ],
+  "final_readiness_statement": {
+    "status": "NO_GO_FOR_FULL_CONVERSION",
+    "reason": "Static prototype generation is complete, but runtime-sensitive blockers remain unresolved and intentionally fail-closed."
+  }
+}
