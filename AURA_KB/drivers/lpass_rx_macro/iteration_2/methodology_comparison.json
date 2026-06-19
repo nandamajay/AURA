@@ -1,0 +1,77 @@
+{
+  "artifact_name": "lpass_rx_macro_iteration_2_methodology_comparison",
+  "confidence_classification": "HIGH",
+  "driver": "lpass_rx_macro",
+  "generated_at_utc": "2026-06-19T11:47:05Z",
+  "methodologies": {
+    "downstream_strip": {
+      "description": "Start from downstream vendor driver and remove/replace vendor framework pieces to approximate upstream.",
+      "iteration_1_observed_outcome": {
+        "noted_gaps": [
+          "Very low register coverage",
+          "Control/lifecycle mismatch",
+          "Large fail-closed surface from unclear downstream logic"
+        ],
+        "overall_score_v3": 67.0
+      },
+      "risks": [
+        "Carries forward legacy abstractions and non-upstream lifecycle structure",
+        "High chance of retaining vendor-only symbols accidentally",
+        "Large structural churn makes review and validation harder"
+      ]
+    },
+    "upstream_first": {
+      "advantages": [
+        "Preserves upstream APIs, lifecycle, and structure by default",
+        "Converts effort into targeted additive deltas only",
+        "Minimizes vendor residue risk and patch volume"
+      ],
+      "applied_patch_count": 1,
+      "classification_counts": {
+        "DUPLICATE_OF_UPSTREAM": 38,
+        "FAIL_CLOSED": 65,
+        "NEEDED_FOR_NEW_SOC": 1,
+        "UNCLEAR": 65,
+        "VENDOR_ONLY": 6
+      },
+      "description": "Start from upstream lpass-rx-macro.c and add only validated downstream functional deltas.",
+      "ported_items": [
+        {
+          "confidence": "HIGH",
+          "downstream_source_line": "5035 (downstream only exposes generic qcom,lpass-cdc-rx-macro; no per-SoC mapping)",
+          "signal_source": "qcom,lpass-rx-macro.yaml compatibles + upstream rx_macro_dt_match",
+          "what_was_added": "Add binding-declared compatibles missing in upstream rx_macro_dt_match: qcom,kaanapali-lpass-rx-macro, qcom,sm8650-lpass-rx-macro, qcom,sm8750-lpass-rx-macro, qcom,x1e80100-lpass-rx-macro.",
+          "why_needed": "Binding declares these variants; upstream driver match table lacks them. Upstream-first additive support requires these entries."
+        }
+      ],
+      "score_v3_overall": 99.95
+    }
+  },
+  "replay_deterministic": true,
+  "replay_inputs": [
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/lpass_rx_macro/iteration_2/lpass-rx-macro_converted_iter2.c"
+  ],
+  "replay_signal_sources": [
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-wsa-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "AURA_KB/drivers/lpass_rx_macro/scoring_result_v3.json",
+    "AURA_KB/drivers/lpass_rx_macro/rx_macro_lessons_learned.json",
+    "AURA_KB/drivers/lpass_rx_macro/functional_comparison_report.json"
+  ],
+  "transferable_rules": [
+    "Start from upstream when a close driver already exists; treat downstream as logic donor only.",
+    "Port only items with direct evidence and HIGH confidence; mark unclear items FAIL_CLOSED.",
+    "Let DT binding vs upstream compatible delta drive the minimum safe additive patch.",
+    "Require anti-copy checks to prove the result is a new artifact (not byte-copy of either side)."
+  ]
+}

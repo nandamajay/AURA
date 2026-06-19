@@ -1,0 +1,377 @@
+{
+  "artifact_name": "LPASS_RX_MACRO_ITERATION_2_UPSTREAM_FIRST_CONVERSION_PLAN",
+  "generated_at_utc": "2026-06-19T11:42:17+00:00",
+  "methodology": "upstream_first",
+  "starting_point": "upstream lpass-rx-macro.c skeleton",
+  "planned_additions": [
+    {
+      "what": "Add four binding-declared compatibles to rx_macro_dt_match with same behavior profile as sm8550 (no HAS_NPL flag).",
+      "from_downstream_line": "5035",
+      "insertion_point_upstream": "rx_macro_dt_match table near existing sm8550/sc8280xp entries (~lines 3945-3966)",
+      "confidence": "HIGH",
+      "reason": "Binding includes these compatibles, upstream driver does not. This is deterministic additive support."
+    }
+  ],
+  "non_ported_items": {
+    "vendor_only": "Do not port downstream vendor framework coupling.",
+    "duplicate_of_upstream": "Do not port logic already present in upstream.",
+    "unclear": "FAIL_CLOSED; do not port without deterministic necessity evidence."
+  },
+  "api_policy": "Retain upstream APIs exactly; no legacy API introduction.",
+  "expected_patch_series": [
+    "0001: add missing binding-compatible entries in upstream match table"
+  ],
+  "fail_closed_items": [
+    {
+      "symbol": "for_each_available_child_of_node",
+      "downstream_line": 4744,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "get_impedance_index",
+      "downstream_line": 851,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_aif6_event",
+      "downstream_line": 1413,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_deinit",
+      "downstream_line": 4697,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_droop_setting",
+      "downstream_line": 1888,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_enable_vbat",
+      "downstream_line": 2586,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_find_playback_dai_id_for_port",
+      "downstream_line": 1635,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_audio_mixer_get",
+      "downstream_line": 3417,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_audio_mixer_put",
+      "downstream_line": 3641,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_coeff_num_get",
+      "downstream_line": 3730,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_coeff_num_put",
+      "downstream_line": 3759,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_filter_enable_get",
+      "downstream_line": 3305,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_filter_enable_put",
+      "downstream_line": 3325,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_fir_filter_info",
+      "downstream_line": 3405,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_get_data",
+      "downstream_line": 925,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_get_pcm_path",
+      "downstream_line": 2223,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_hph_idle_detect_get",
+      "downstream_line": 2189,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_hph_idle_detect_put",
+      "downstream_line": 2206,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_idle_detect_control",
+      "downstream_line": 2722,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_iir_band_audio_mixer_get",
+      "downstream_line": 3135,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_iir_band_audio_mixer_put",
+      "downstream_line": 3190,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_iir_enable_audio_mixer_get",
+      "downstream_line": 3023,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_iir_enable_audio_mixer_put",
+      "downstream_line": 3045,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_init",
+      "downstream_line": 4614,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_is_fractional_sample_rate",
+      "downstream_line": 1126,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_put_pcm_path",
+      "downstream_line": 2238,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_restore_iir_coeff",
+      "downstream_line": 2991,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_set_idle_detect_thr",
+      "downstream_line": 1648,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_vbat_bcl_gsm_mode_func_get",
+      "downstream_line": 2471,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_vbat_bcl_gsm_mode_func_put",
+      "downstream_line": 2488,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "lpass_cdc_rx_macro_wcd_clsh_imped_config",
+      "downstream_line": 889,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "lpass_cdc_rx_set_fir_capability",
+      "downstream_line": 4586,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "set_fir_filter_coeff",
+      "downstream_line": 3468,
+      "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals."
+    },
+    {
+      "symbol": "while",
+      "downstream_line": 1693,
+      "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant."
+    },
+    {
+      "symbol": "AUX_HPF Enable",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "HPH Idle Detect",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR0 Enable Band1",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR0 Enable Band2",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR0 Enable Band3",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR0 Enable Band4",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR0 Enable Band5",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR1 Enable Band1",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR1 Enable Band2",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR1 Enable Band3",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR1 Enable Band4",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "IIR1 Enable Band5",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "PCM_OUT",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX AIF5 PB",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX AIF6 PB",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX AUX VBAT Enable",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX INT2_1 VBAT",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX0 FIR Coeff Num",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX1 FIR Coeff Num",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX_EAR Mode",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "RX_FIR Filter",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX_GSM mode Enable",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "RX_HPH HD2 Mode",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "RX_HPH PCM",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "RX_HPH_PWR_MODE",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "RX_Softclip Enable",
+      "downstream_line": null,
+      "reason": "Downstream-only element without binding/upstream evidence of necessity."
+    },
+    {
+      "symbol": "PCM_OUT",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX AIF5 PB",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX AIF6 PB",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": "RX INT2_1 VBAT",
+      "downstream_line": null,
+      "reason": "No deterministic proof this downstream-only control/widget is required by new upstream SoC variant."
+    },
+    {
+      "symbol": {
+        "sink": "RX INT2_1 VBAT",
+        "control": "RX AUX VBAT Enable",
+        "source": "RX INT2_1 INTERP"
+      },
+      "downstream_line": null,
+      "reason": "Downstream-only route lacks deterministic SoC requirement evidence from allowed sources."
+    }
+  ],
+  "replay_inputs": [
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml"
+  ],
+  "replay_signal_sources": [
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-wsa-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "AURA_KB/drivers/lpass_rx_macro/scoring_result_v3.json",
+    "AURA_KB/drivers/lpass_rx_macro/rx_macro_lessons_learned.json",
+    "AURA_KB/drivers/lpass_rx_macro/functional_comparison_report.json"
+  ],
+  "replay_deterministic": true,
+  "confidence_classification": "HIGH_WITH_FAIL_CLOSED"
+}

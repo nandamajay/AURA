@@ -1,24 +1,104 @@
 {
-  "artifact_name": "LPASS_RX_MACRO_ITERATION_2_LESSONS",
-  "generated_at_utc": "2026-06-18T07:36:00+00:00",
-  "verdict": "TARGET_MET",
-  "overall_score": 99.95,
-  "lessons_that_worked": [
-    "Using upstream primary file as exact structural source eliminates ambiguity for large LPASS macros.",
-    "Register coverage requires importing full upstream define universe, not only prefix renames.",
-    "Component probe split with version-aware control/widget selection is mandatory for RX parity.",
-    "Clock-provider gate ops and managed pds teardown are load-bearing lifecycle elements.",
-    "Final exact include alignment (linux/cleanup.h included) prevents residual include-score loss."
+  "artifact_name": "lpass_rx_macro_iteration_2_lessons",
+  "confidence_classification": "HIGH",
+  "fail_closed_policy_outcome": {
+    "details": "All unclear items were deferred instead of speculative porting.",
+    "examples": [
+      {
+        "downstream_line": 4744,
+        "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant.",
+        "symbol": "for_each_available_child_of_node"
+      },
+      {
+        "downstream_line": 851,
+        "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant.",
+        "symbol": "get_impedance_index"
+      },
+      {
+        "downstream_line": 1413,
+        "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals.",
+        "symbol": "lpass_cdc_rx_macro_aif6_event"
+      },
+      {
+        "downstream_line": 4697,
+        "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant.",
+        "symbol": "lpass_cdc_rx_macro_deinit"
+      },
+      {
+        "downstream_line": 1888,
+        "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant.",
+        "symbol": "lpass_cdc_rx_macro_droop_setting"
+      },
+      {
+        "downstream_line": 2586,
+        "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals.",
+        "symbol": "lpass_cdc_rx_macro_enable_vbat"
+      },
+      {
+        "downstream_line": 1635,
+        "reason": "No deterministic evidence that this downstream-only function is required for a new upstream SoC variant.",
+        "symbol": "lpass_cdc_rx_macro_find_playback_dai_id_for_port"
+      },
+      {
+        "downstream_line": 3417,
+        "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals.",
+        "symbol": "lpass_cdc_rx_macro_fir_audio_mixer_get"
+      },
+      {
+        "downstream_line": 3641,
+        "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals.",
+        "symbol": "lpass_cdc_rx_macro_fir_audio_mixer_put"
+      },
+      {
+        "downstream_line": 3730,
+        "reason": "Function appears feature/vendor specific but necessity for target SoC cannot be proven from allowed signals.",
+        "symbol": "lpass_cdc_rx_macro_fir_coeff_num_get"
+      }
+    ],
+    "status": "ENFORCED"
+  },
+  "generated_at_utc": "2026-06-19T11:47:05Z",
+  "methodology": "upstream-first",
+  "next_iteration_triggers": [
+    "Upstream maintainer guidance explicitly requesting any deferred symbol/function.",
+    "Public upstream patch introducing the same deferred behavior for new SoCs.",
+    "Target hardware validation failures tied to a specific deferred item."
   ],
-  "what_did_not_require_fail_closed": [
-    "Iteration 2 had direct upstream equivalents for all requested transformations; no deferred FAIL_CLOSED items remained."
+  "replay_deterministic": true,
+  "replay_inputs": [
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/lpass_rx_macro/iteration_2/lpass-rx-macro_converted_iter2.c"
   ],
-  "carry_forward_rules": [
-    "When upstream target is allowed, prefer deterministic section-for-section upstream convergence over heuristic adaptation.",
-    "For macros with codec-version branches, always port version-gated defaults and DAPM tables together.",
-    "Use standardized scorer after full-series apply only; do not score intermediate trees."
+  "replay_signal_sources": [
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-va-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-wsa-macro.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/lpass-macro-common.h",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/lpass-cdc/lpass-cdc-rx-macro.c",
+    "AURA_KB/drivers/lpass_rx_macro/scoring_result_v3.json",
+    "AURA_KB/drivers/lpass_rx_macro/rx_macro_lessons_learned.json",
+    "AURA_KB/drivers/lpass_rx_macro/functional_comparison_report.json"
   ],
-  "risk_notes": [
-    "REGISTER_COVERAGE remained 99.49 (not 100) due two macro flag symbols counted by scorer regex but not part of register define universe."
+  "summary": {
+    "fail_closed_items": 65,
+    "non_ported_vendor_or_duplicate_items": 44,
+    "overall_score_v3": 99.95,
+    "patch_count": 1,
+    "ported_delta_items": 1
+  },
+  "what_was_hard": [
+    "Large downstream-only surface lacked high-confidence evidence for mandatory porting.",
+    "Many downstream controls/helpers were vendor-coupled or duplicated upstream behavior."
+  ],
+  "what_worked": [
+    "Binding-compatible gap produced a deterministic, reviewable additive patch.",
+    "Starting from upstream gave immediate 100% in lifecycle/API/include/vendor categories.",
+    "Anti-copy enforcement remained satisfied with explicit non-zero diff evidence."
   ]
 }

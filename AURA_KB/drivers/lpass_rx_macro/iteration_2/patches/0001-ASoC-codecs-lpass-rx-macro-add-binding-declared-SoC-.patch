@@ -1,0 +1,32 @@
+From 716267b600053f19fb4dca44a9dd2205ba371161 Mon Sep 17 00:00:00 2001
+From: AURA Conversion Engine <aura@example.invalid>
+Date: Fri, 19 Jun 2026 17:13:19 +0530
+Subject: [PATCH] ASoC: codecs: lpass-rx-macro: add binding-declared SoC
+ compatibles
+
+---
+ sound/soc/codecs/lpass-rx-macro.c | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
+index 6233aa9..fb232af 100644
+--- a/sound/soc/codecs/lpass-rx-macro.c
++++ b/sound/soc/codecs/lpass-rx-macro.c
+@@ -3958,6 +3958,14 @@ static const struct of_device_id rx_macro_dt_match[] = {
+ 		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
+ 	}, {
+ 		.compatible = "qcom,sm8550-lpass-rx-macro",
++	}, {
++		.compatible = "qcom,kaanapali-lpass-rx-macro",
++	}, {
++		.compatible = "qcom,sm8650-lpass-rx-macro",
++	}, {
++		.compatible = "qcom,sm8750-lpass-rx-macro",
++	}, {
++		.compatible = "qcom,x1e80100-lpass-rx-macro",
+ 	}, {
+ 		.compatible = "qcom,sc8280xp-lpass-rx-macro",
+ 		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
+-- 
+2.34.1
+

@@ -3959,6 +3959,14 @@ static const struct of_device_id rx_macro_dt_match[] = {
 	}, {
 		.compatible = "qcom,sm8550-lpass-rx-macro",
 	}, {
+		.compatible = "qcom,kaanapali-lpass-rx-macro",
+	}, {
+		.compatible = "qcom,sm8650-lpass-rx-macro",
+	}, {
+		.compatible = "qcom,sm8750-lpass-rx-macro",
+	}, {
+		.compatible = "qcom,x1e80100-lpass-rx-macro",
+	}, {
 		.compatible = "qcom,sc8280xp-lpass-rx-macro",
 		.data = (void *)LPASS_MACRO_FLAG_HAS_NPL_CLOCK,
 	},
