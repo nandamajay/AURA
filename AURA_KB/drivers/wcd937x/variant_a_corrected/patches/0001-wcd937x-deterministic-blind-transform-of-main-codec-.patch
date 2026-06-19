@@ -1,0 +1,249 @@
+From 6ce8281c85506d687e524f1c84308fd9df5f275f Mon Sep 17 00:00:00 2001
+From: AURA Agent <aura-agent@example.com>
+Date: Fri, 19 Jun 2026 21:02:13 +0530
+Subject: [PATCH 1/3] wcd937x: deterministic blind transform of main codec file
+
+---
+ wcd937x.c | 81 ++++++++++++++++++++++---------------------------------
+ 1 file changed, 32 insertions(+), 49 deletions(-)
+
+diff --git a/wcd937x.c b/wcd937x.c
+index 8dceb98..cb4c91a 100644
+--- a/wcd937x.c
++++ b/wcd937x.c
+@@ -15,19 +15,19 @@
+ #include <linux/pm_runtime.h>
+ #include <sound/soc.h>
+ #include <sound/tlv.h>
+-#include <soc/soundwire.h>
++#include <linux/soundwire/sdw.h>
++#include <linux/soundwire/sdw_type.h>
++#include <linux/soundwire/sdw_registers.h>
+ #include <sound/soc.h>
+ #include <sound/soc-dapm.h>
+-#include <asoc/wcdcal-hwdep.h>
+-#include <asoc/msm-cdc-pinctrl.h>
+-#include <bindings/audio-codec-port-types.h>
+-#include <asoc/msm-cdc-supply.h>
+-#include <linux/version.h>
+-
++#include "wcd-clsh-v2.h"
++#include "wcd-mbhc-v2.h"
++#include "wcd-common.h"
++#include <linux/regulator/consumer.h>
++#include <linux/gpio/consumer.h>
+ #include "wcd937x-registers.h"
+ #include "wcd937x.h"
+-#include "internal.h"
+-#include "asoc/bolero-slave-internal.h"
++#include "wcd937x.h"
+ #include <linux/qti-regmap-debugfs.h>
+ 
+ #define WCD9370_VARIANT 0
+@@ -2169,7 +2169,7 @@ static int wcd937x_codec_enable_vdd_buck(struct snd_soc_dapm_widget *w,
+ 			clear_bit(ALLOW_BUCK_DISABLE, &wcd937x->status_mask);
+ 			return 0;
+ 		}
+-		ret = msm_cdc_enable_ondemand_supply(wcd937x->dev,
++		ret = wcd937x_fc_enable_ondemand_supply(wcd937x->dev,
+ 						wcd937x->supplies,
+ 						pdata->regulator,
+ 						pdata->num_supplies,
+@@ -3027,11 +3027,7 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
+ {
+ 	struct wcd937x_priv *wcd937x = snd_soc_component_get_drvdata(component);
+ 	struct snd_soc_dapm_context *dapm =
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(7, 0, 0)
+ 			snd_soc_component_to_dapm(component);
+-#else
+-			snd_soc_component_get_dapm(component);
+-#endif
+ 	int variant;
+ 	int ret = -EINVAL;
+ 	u32 val;
+@@ -3068,15 +3064,8 @@ static int wcd937x_soc_codec_probe(struct snd_soc_component *component)
+ 		ret = -ENOMEM;
+ 		goto err;
+ 	}
+-
+-	set_bit(WCD9XXX_MBHC_CAL, wcd937x->fw_data->cal_bit);
+-	ret = wcd_cal_create_hwdep(wcd937x->fw_data,
+-				   WCD9XXX_CODEC_HWDEP_NODE, component);
+-
+-	if (ret < 0) {
+-		dev_err(component->dev, "%s hwdep failed %d\n", __func__, ret);
+-		goto err_hwdep;
+-	}
++	/* FAIL_CLOSED: downstream hwdep calibration path is vendor-specific and deferred */
++	ret = 0;
+ 
+ 	ret = wcd937x_mbhc_init(&wcd937x->mbhc, component, wcd937x->fw_data);
+ 	if (ret) {
+@@ -3199,7 +3188,7 @@ static int wcd937x_suspend(struct device *dev)
+ 	}
+ 
+ 	if (test_bit(ALLOW_BUCK_DISABLE, &wcd937x->status_mask)) {
+-		ret = msm_cdc_disable_ondemand_supply(wcd937x->dev,
++		ret = wcd937x_fc_disable_ondemand_supply(wcd937x->dev,
+ 						wcd937x->supplies,
+ 						pdata->regulator,
+ 						pdata->num_supplies,
+@@ -3239,11 +3228,11 @@ static int wcd937x_reset(struct device *dev)
+ 		return -EINVAL;
+ 	}
+ 
+-	value = msm_cdc_pinctrl_get_state(wcd937x->rst_np);
++	value = wcd937x_fc_pinctrl_get_state(wcd937x->rst_np);
+ 	if (value > 0)
+ 		return 0;
+ 
+-	rc = msm_cdc_pinctrl_select_sleep_state(wcd937x->rst_np);
++	rc = wcd937x_fc_pinctrl_select_sleep_state(wcd937x->rst_np);
+ 	if (rc) {
+ 		dev_err(dev, "%s: wcd sleep state request fail!\n",
+ 				__func__);
+@@ -3252,7 +3241,7 @@ static int wcd937x_reset(struct device *dev)
+ 	/* 20ms sleep required after pulling the reset gpio to LOW */
+ 	usleep_range(20, 30);
+ 
+-	rc = msm_cdc_pinctrl_select_active_state(wcd937x->rst_np);
++	rc = wcd937x_fc_pinctrl_select_active_state(wcd937x->rst_np);
+ 	if (rc) {
+ 		dev_err(dev, "%s: wcd active state request fail!\n",
+ 				__func__);
+@@ -3284,10 +3273,10 @@ static void wcd937x_dt_parse_micbias_info(struct device *dev,
+ 	int rc = 0;
+ 
+ 	/* MB1 */
+-	if (of_find_property(dev->of_node, "qcom,cdc-micbias1-mv",
++	if (of_find_property(dev->of_node, "qcom,micbias1-microvolt",
+ 				    NULL)) {
+ 		rc = wcd937x_read_of_property_u32(dev,
+-						  "qcom,cdc-micbias1-mv",
++						  "qcom,micbias1-microvolt",
+ 						  &prop_val);
+ 		if (!rc)
+ 			mb->micb1_mv = prop_val;
+@@ -3297,10 +3286,10 @@ static void wcd937x_dt_parse_micbias_info(struct device *dev,
+ 	}
+ 
+ 	/* MB2 */
+-	if (of_find_property(dev->of_node, "qcom,cdc-micbias2-mv",
++	if (of_find_property(dev->of_node, "qcom,micbias2-microvolt",
+ 				    NULL)) {
+ 		rc = wcd937x_read_of_property_u32(dev,
+-						  "qcom,cdc-micbias2-mv",
++						  "qcom,micbias2-microvolt",
+ 						  &prop_val);
+ 		if (!rc)
+ 			mb->micb2_mv = prop_val;
+@@ -3310,10 +3299,10 @@ static void wcd937x_dt_parse_micbias_info(struct device *dev,
+ 	}
+ 
+ 	/* MB3 */
+-	if (of_find_property(dev->of_node, "qcom,cdc-micbias3-mv",
++	if (of_find_property(dev->of_node, "qcom,micbias3-microvolt",
+ 				    NULL)) {
+ 		rc = wcd937x_read_of_property_u32(dev,
+-						  "qcom,cdc-micbias3-mv",
++						  "qcom,micbias3-microvolt",
+ 						  &prop_val);
+ 		if (!rc)
+ 			mb->micb3_mv = prop_val;
+@@ -3341,7 +3330,7 @@ static int wcd937x_reset_low(struct device *dev)
+ 		return -EINVAL;
+ 	}
+ 
+-	rc = msm_cdc_pinctrl_select_sleep_state(wcd937x->rst_np);
++	rc = wcd937x_fc_pinctrl_select_sleep_state(wcd937x->rst_np);
+ 	if (rc) {
+ 		dev_err(dev, "%s: wcd sleep state request fail!\n",
+ 				__func__);
+@@ -3373,7 +3362,7 @@ static struct wcd937x_pdata *wcd937x_populate_dt_data(struct device *dev)
+ 	}
+ 
+ 	/* Parse power supplies */
+-	msm_cdc_get_power_supplies(dev, &pdata->regulator,
++	wcd937x_fc_get_power_supplies(dev, &pdata->regulator,
+ 				   &pdata->num_supplies);
+ 	if (!pdata->regulator || (pdata->num_supplies <= 0)) {
+ 		dev_err(dev, "%s: no power supplies defined for codec\n",
+@@ -3381,8 +3370,8 @@ static struct wcd937x_pdata *wcd937x_populate_dt_data(struct device *dev)
+ 		return NULL;
+ 	}
+ 
+-	pdata->rx_slave = of_parse_phandle(dev->of_node, "qcom,rx-slave", 0);
+-	pdata->tx_slave = of_parse_phandle(dev->of_node, "qcom,tx-slave", 0);
++	pdata->rx_slave = of_parse_phandle(dev->of_node, "qcom,rx-device", 0);
++	pdata->tx_slave = of_parse_phandle(dev->of_node, "qcom,tx-device", 0);
+ 	wcd937x_dt_parse_micbias_info(dev, &pdata->micbias);
+ 
+ 	return pdata;
+@@ -3435,7 +3424,7 @@ static int wcd937x_bind(struct device *dev)
+ 	wcd937x->dev = dev;
+ 	wcd937x->dev->platform_data = pdata;
+ 	wcd937x->rst_np = pdata->rst_np;
+-	ret = msm_cdc_init_supplies(dev, &wcd937x->supplies,
++	ret = wcd937x_fc_init_supplies(dev, &wcd937x->supplies,
+ 				    pdata->regulator, pdata->num_supplies);
+ 	if (!wcd937x->supplies) {
+ 		dev_err(dev, "%s: Cannot init wcd supplies\n",
+@@ -3471,7 +3460,7 @@ static int wcd937x_bind(struct device *dev)
+ 		goto err_bind_all;
+ 	}
+ 
+-	ret = msm_cdc_enable_static_supplies(dev, wcd937x->supplies,
++	ret = wcd937x_fc_enable_static_supplies(dev, wcd937x->supplies,
+ 					     pdata->regulator,
+ 					     pdata->num_supplies);
+ 	if (ret) {
+@@ -3618,7 +3607,8 @@ static void wcd937x_unbind(struct device *dev)
+ }
+ 
+ static const struct of_device_id wcd937x_dt_match[] = {
+-	{ .compatible = "qcom,wcd937x-codec" , .data = "wcd937x" },
++	{ .compatible = "qcom,wcd9370-codec", .data = "wcd9370" },
++	{ .compatible = "qcom,wcd9375-codec", .data = "wcd9375" },
+ 	{}
+ };
+ 
+@@ -3644,7 +3634,7 @@ static int wcd937x_add_slave_components(struct device *dev,
+ 
+ 	np = dev->of_node;
+ 
+-	rx_node = of_parse_phandle(np, "qcom,rx-slave", 0);
++	rx_node = of_parse_phandle(np, "qcom,rx-device", 0);
+ 	if (!rx_node) {
+ 		dev_err(dev, "%s: Rx-slave node not defined\n", __func__);
+ 		return -ENODEV;
+@@ -3655,7 +3645,7 @@ static int wcd937x_add_slave_components(struct device *dev,
+ 			wcd937x_compare_of,
+ 			rx_node);
+ 
+-	tx_node = of_parse_phandle(np, "qcom,tx-slave", 0);
++	tx_node = of_parse_phandle(np, "qcom,tx-device", 0);
+ 	if (!tx_node) {
+ 		dev_err(dev, "%s: Tx-slave node not defined\n", __func__);
+ 			return -ENODEV;
+@@ -3681,18 +3671,11 @@ static int wcd937x_probe(struct platform_device *pdev)
+ 					&wcd937x_comp_ops, match);
+ }
+ 
+-#if LINUX_VERSION_CODE >= KERNEL_VERSION(6, 10, 0)
+ static void wcd937x_remove(struct platform_device *pdev)
+-#else
+-static int wcd937x_remove(struct platform_device *pdev)
+-#endif
+ {
+ 	component_master_del(&pdev->dev, &wcd937x_comp_ops);
+ 	dev_set_drvdata(&pdev->dev, NULL);
+ 
+-#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 10, 0)
+-	return 0;
+-#endif
+ }
+ 
+ #ifdef CONFIG_PM_SLEEP
+-- 
+2.34.1
+

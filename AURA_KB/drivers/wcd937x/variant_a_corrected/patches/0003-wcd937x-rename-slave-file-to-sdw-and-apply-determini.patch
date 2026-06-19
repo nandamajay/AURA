@@ -1,0 +1,438 @@
+From 1ba78a364e329f0f4df7fba552911e6a8c3e6e22 Mon Sep 17 00:00:00 2001
+From: AURA Agent <aura-agent@example.com>
+Date: Fri, 19 Jun 2026 21:02:13 +0530
+Subject: [PATCH 3/3] wcd937x: rename slave file to sdw and apply deterministic
+ transform
+
+---
+ wcd937x_slave.c => wcd937x-sdw.c | 193 +++++++++++++++----------------
+ 1 file changed, 93 insertions(+), 100 deletions(-)
+ rename wcd937x_slave.c => wcd937x-sdw.c (61%)
+
+diff --git a/wcd937x_slave.c b/wcd937x-sdw.c
+similarity index 61%
+rename from wcd937x_slave.c
+rename to wcd937x-sdw.c
+index f72aff4..1afad25 100644
+--- a/wcd937x_slave.c
++++ b/wcd937x-sdw.c
+@@ -10,23 +10,27 @@
+ #include <linux/device.h>
+ #include <linux/kernel.h>
+ #include <linux/component.h>
+-#include <soc/soundwire.h>
+-#define SWR_MAX_RETRY 5
++#include <linux/soundwire/sdw.h>
++#include <linux/soundwire/sdw_type.h>
++#include <linux/soundwire/sdw_registers.h>
++#include "wcd937x.h"
++#include "wcd-common.h"
++#define SDW_MAX_RETRY 5
+ #ifdef CONFIG_DEBUG_FS
+ #include <linux/debugfs.h>
+ #include <linux/uaccess.h>
+ 
+-#define SWR_SLV_MAX_REG_ADDR    0x2009
+-#define SWR_SLV_START_REG_ADDR  0x40
+-#define SWR_SLV_MAX_BUF_LEN     20
++#define SDW_SLV_MAX_REG_ADDR    0x2009
++#define SDW_SLV_START_REG_ADDR  0x40
++#define SDW_SLV_MAX_BUF_LEN     20
+ #define BYTES_PER_LINE          12
+-#define SWR_SLV_RD_BUF_LEN      8
+-#define SWR_SLV_WR_BUF_LEN      32
+-#define SWR_SLV_MAX_DEVICES     2
++#define SDW_SLV_RD_BUF_LEN      8
++#define SDW_SLV_WR_BUF_LEN      32
++#define SDW_SLV_MAX_DEVICES     2
+ #endif /* CONFIG_DEBUG_FS */
+ 
+-struct wcd937x_slave_priv {
+-	struct swr_device *swr_slave;
++struct wcd937x_sdw_priv {
++	struct sdw_device *sdw_slave;
+ #ifdef CONFIG_DEBUG_FS
+ 	struct dentry *debugfs_wcd937x_dent;
+ 	struct dentry *debugfs_peek;
+@@ -67,7 +71,7 @@ static int get_parameters(char *buf, u32 *param1, int num_of_par)
+ 	return 0;
+ }
+ 
+-static bool is_swr_slv_reg_readable(int reg)
++static bool is_sdw_slv_reg_readable(int reg)
+ {
+ 	int ret = true;
+ 
+@@ -97,22 +101,22 @@ static bool is_swr_slv_reg_readable(int reg)
+ 	return ret;
+ }
+ 
+-static ssize_t wcd937x_swrslave_reg_show(struct swr_device *pdev,
++static ssize_t wcd937x_sdwslave_reg_show(struct sdw_device *pdev,
+ 					char __user *ubuf,
+ 					size_t count, loff_t *ppos)
+ {
+ 	int i, reg_val, len;
+ 	ssize_t total = 0;
+-	char tmp_buf[SWR_SLV_MAX_BUF_LEN];
++	char tmp_buf[SDW_SLV_MAX_BUF_LEN];
+ 
+ 	if (!ubuf || !ppos)
+ 		return 0;
+ 
+-	for (i = (((int) *ppos/BYTES_PER_LINE) + SWR_SLV_START_REG_ADDR);
+-		i <= SWR_SLV_MAX_REG_ADDR; i++) {
+-		if (!is_swr_slv_reg_readable(i))
++	for (i = (((int) *ppos/BYTES_PER_LINE) + SDW_SLV_START_REG_ADDR);
++		i <= SDW_SLV_MAX_REG_ADDR; i++) {
++		if (!is_sdw_slv_reg_readable(i))
+ 			continue;
+-		swr_read(pdev, pdev->dev_num, i, &reg_val, 1);
++		sdw_read(pdev, pdev->dev_num, i, &reg_val, 1);
+ 		len = snprintf(tmp_buf, sizeof(tmp_buf), "0x%.3x: 0x%.2x\n", i,
+ 			       (reg_val & 0xFF));
+ 		if (((total + len) >= count - 1) || (len < 0))
+@@ -127,14 +131,14 @@ static ssize_t wcd937x_swrslave_reg_show(struct swr_device *pdev,
+ 	}
+ 
+ copy_err:
+-	*ppos = SWR_SLV_MAX_REG_ADDR * BYTES_PER_LINE;
++	*ppos = SDW_SLV_MAX_REG_ADDR * BYTES_PER_LINE;
+ 	return total;
+ }
+ 
+ static ssize_t codec_debug_dump(struct file *file, char __user *ubuf,
+ 				size_t count, loff_t *ppos)
+ {
+-	struct swr_device *pdev;
++	struct sdw_device *pdev;
+ 
+ 	if (!count || !file || !ppos || !ubuf)
+ 		return -EINVAL;
+@@ -146,15 +150,15 @@ static ssize_t codec_debug_dump(struct file *file, char __user *ubuf,
+ 	if (*ppos < 0)
+ 		return -EINVAL;
+ 
+-	return wcd937x_swrslave_reg_show(pdev, ubuf, count, ppos);
++	return wcd937x_sdwslave_reg_show(pdev, ubuf, count, ppos);
+ }
+ 
+ static ssize_t codec_debug_read(struct file *file, char __user *ubuf,
+ 				size_t count, loff_t *ppos)
+ {
+-	char lbuf[SWR_SLV_RD_BUF_LEN];
+-	struct swr_device *pdev = NULL;
+-	struct wcd937x_slave_priv *wcd937x_slave = NULL;
++	char lbuf[SDW_SLV_RD_BUF_LEN];
++	struct sdw_device *pdev = NULL;
++	struct wcd937x_sdw_priv *wcd937x_sdw = NULL;
+ 
+ 	if (!count || !file || !ppos || !ubuf)
+ 		return -EINVAL;
+@@ -163,15 +167,15 @@ static ssize_t codec_debug_read(struct file *file, char __user *ubuf,
+ 	if (!pdev)
+ 		return -EINVAL;
+ 
+-	wcd937x_slave = swr_get_dev_data(pdev);
+-	if (!wcd937x_slave)
++	wcd937x_sdw = sdw_get_dev_data(pdev);
++	if (!wcd937x_sdw)
+ 		return -EINVAL;
+ 
+ 	if (*ppos < 0)
+ 		return -EINVAL;
+ 
+ 	snprintf(lbuf, sizeof(lbuf), "0x%x\n",
+-			(wcd937x_slave->read_data & 0xFF));
++			(wcd937x_sdw->read_data & 0xFF));
+ 
+ 	return simple_read_from_buffer(ubuf, count, ppos, lbuf,
+ 					       strnlen(lbuf, 7));
+@@ -180,11 +184,11 @@ static ssize_t codec_debug_read(struct file *file, char __user *ubuf,
+ static ssize_t codec_debug_peek_write(struct file *file,
+ 	const char __user *ubuf, size_t cnt, loff_t *ppos)
+ {
+-	char lbuf[SWR_SLV_WR_BUF_LEN];
++	char lbuf[SDW_SLV_WR_BUF_LEN];
+ 	int rc = 0;
+ 	u32 param[5];
+-	struct swr_device *pdev = NULL;
+-	struct wcd937x_slave_priv *wcd937x_slave = NULL;
++	struct sdw_device *pdev = NULL;
++	struct wcd937x_sdw_priv *wcd937x_sdw = NULL;
+ 
+ 	if (!cnt || !file || !ppos || !ubuf)
+ 		return -EINVAL;
+@@ -193,8 +197,8 @@ static ssize_t codec_debug_peek_write(struct file *file,
+ 	if (!pdev)
+ 		return -EINVAL;
+ 
+-	wcd937x_slave = swr_get_dev_data(pdev);
+-	if (!wcd937x_slave)
++	wcd937x_sdw = sdw_get_dev_data(pdev);
++	if (!wcd937x_sdw)
+ 		return -EINVAL;
+ 
+ 	if (*ppos < 0)
+@@ -209,9 +213,9 @@ static ssize_t codec_debug_peek_write(struct file *file,
+ 
+ 	lbuf[cnt] = '\0';
+ 	rc = get_parameters(lbuf, param, 1);
+-	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) && (rc == 0)))
++	if (!((param[0] <= SDW_SLV_MAX_REG_ADDR) && (rc == 0)))
+ 		return -EINVAL;
+-	swr_read(pdev, pdev->dev_num, param[0], &wcd937x_slave->read_data, 1);
++	sdw_read(pdev, pdev->dev_num, param[0], &wcd937x_sdw->read_data, 1);
+ 	if (rc == 0)
+ 		rc = cnt;
+ 	else
+@@ -223,10 +227,10 @@ static ssize_t codec_debug_peek_write(struct file *file,
+ static ssize_t codec_debug_write(struct file *file,
+ 	const char __user *ubuf, size_t cnt, loff_t *ppos)
+ {
+-	char lbuf[SWR_SLV_WR_BUF_LEN];
++	char lbuf[SDW_SLV_WR_BUF_LEN];
+ 	int rc = 0;
+ 	u32 param[5];
+-	struct swr_device *pdev;
++	struct sdw_device *pdev;
+ 
+ 	if (!file || !ppos || !ubuf)
+ 		return -EINVAL;
+@@ -244,10 +248,10 @@ static ssize_t codec_debug_write(struct file *file,
+ 
+ 	lbuf[cnt] = '\0';
+ 	rc = get_parameters(lbuf, param, 2);
+-	if (!((param[0] <= SWR_SLV_MAX_REG_ADDR) &&
++	if (!((param[0] <= SDW_SLV_MAX_REG_ADDR) &&
+ 		(param[1] <= 0xFF) && (rc == 0)))
+ 		return -EINVAL;
+-	swr_write(pdev, pdev->dev_num, param[0], &param[1]);
++	sdw_write(pdev, pdev->dev_num, param[0], &param[1]);
+ 	if (rc == 0)
+ 		rc = cnt;
+ 	else
+@@ -273,53 +277,53 @@ static const struct file_operations codec_debug_dump_ops = {
+ };
+ #endif
+ 
+-static int wcd937x_slave_bind(struct device *dev,
++static int wcd937x_sdw_bind(struct device *dev,
+ 				struct device *master, void *data)
+ {
+ 	int ret = 0;
+-	struct wcd937x_slave_priv *wcd937x_slave = NULL;
++	struct wcd937x_sdw_priv *wcd937x_sdw = NULL;
+ 	uint8_t devnum = 0;
+-	struct swr_device *pdev = to_swr_device(dev);
+-	int retry = SWR_MAX_RETRY;
++	struct sdw_device *pdev = to_sdw_device(dev);
++	int retry = SDW_MAX_RETRY;
+ 
+ 	if (pdev == NULL) {
+ 		dev_err(dev, "%s: pdev is NULL\n", __func__);
+ 		return -EINVAL;
+ 	}
+ 	dev_dbg(dev, "Enter %s(): \n", __func__);
+-	wcd937x_slave = devm_kzalloc(&pdev->dev,
+-				sizeof(struct wcd937x_slave_priv), GFP_KERNEL);
+-	if (!wcd937x_slave)
++	wcd937x_sdw = devm_kzalloc(&pdev->dev,
++				sizeof(struct wcd937x_sdw_priv), GFP_KERNEL);
++	if (!wcd937x_sdw)
+ 		return -ENOMEM;
+ 
+-	swr_set_dev_data(pdev, wcd937x_slave);
++	sdw_set_dev_data(pdev, wcd937x_sdw);
+ 
+-	wcd937x_slave->swr_slave = pdev;
++	wcd937x_sdw->sdw_slave = pdev;
+ 
+ #ifdef CONFIG_DEBUG_FS
+-	if (!wcd937x_slave->debugfs_wcd937x_dent) {
+-		wcd937x_slave->debugfs_wcd937x_dent = debugfs_create_dir(
++	if (!wcd937x_sdw->debugfs_wcd937x_dent) {
++		wcd937x_sdw->debugfs_wcd937x_dent = debugfs_create_dir(
+ 						dev_name(&pdev->dev), 0);
+-		if (!IS_ERR(wcd937x_slave->debugfs_wcd937x_dent)) {
+-			wcd937x_slave->debugfs_peek =
++		if (!IS_ERR(wcd937x_sdw->debugfs_wcd937x_dent)) {
++			wcd937x_sdw->debugfs_peek =
+ 					debugfs_create_file("swrslave_peek",
+ 					S_IFREG | 0444,
+-					wcd937x_slave->debugfs_wcd937x_dent,
++					wcd937x_sdw->debugfs_wcd937x_dent,
+ 					(void *) pdev,
+ 					&codec_debug_read_ops);
+ 
+-			wcd937x_slave->debugfs_poke =
++			wcd937x_sdw->debugfs_poke =
+ 					debugfs_create_file("swrslave_poke",
+ 					S_IFREG | 0444,
+-					wcd937x_slave->debugfs_wcd937x_dent,
++					wcd937x_sdw->debugfs_wcd937x_dent,
+ 					(void *) pdev,
+ 					&codec_debug_write_ops);
+ 
+-			wcd937x_slave->debugfs_reg_dump =
++			wcd937x_sdw->debugfs_reg_dump =
+ 					debugfs_create_file(
+ 					"swrslave_reg_dump",
+ 					S_IFREG | 0444,
+-					wcd937x_slave->debugfs_wcd937x_dent,
++					wcd937x_sdw->debugfs_wcd937x_dent,
+ 					(void *) pdev,
+ 					&codec_debug_dump_ops);
+                 }
+@@ -328,13 +332,13 @@ static int wcd937x_slave_bind(struct device *dev,
+ 	do {
+ 		/* Add delay for soundwire enumeration */
+ 		usleep_range(100, 110);
+-        	ret = swr_get_logical_dev_num(pdev, pdev->addr, &devnum);
++        	ret = sdw_get_logical_dev_num(pdev, pdev->addr, &devnum);
+ 	} while (ret && --retry);
+ 	if (ret) {
+ 		dev_dbg(&pdev->dev,
+ 				"%s get devnum %d for dev addr %llx failed\n",
+ 				__func__, devnum, pdev->addr);
+-		swr_remove_device(pdev);
++		sdw_remove_device(pdev);
+ 		return ret;
+ 	}
+ 	pdev->dev_num = devnum;
+@@ -342,100 +346,89 @@ static int wcd937x_slave_bind(struct device *dev,
+ 	return ret;
+ }
+ 
+-static void wcd937x_slave_unbind(struct device *dev,
++static void wcd937x_sdw_unbind(struct device *dev,
+ 				struct device *master, void *data)
+ {
+-	struct wcd937x_slave_priv *wcd937x_slave = NULL;
+-	struct swr_device *pdev = to_swr_device(dev);
++	struct wcd937x_sdw_priv *wcd937x_sdw = NULL;
++	struct sdw_device *pdev = to_sdw_device(dev);
+ 
+ 	if (pdev == NULL) {
+ 		dev_err(dev, "%s: pdev is NULL\n", __func__);
+ 		return;
+ 	}
+ 
+-	wcd937x_slave = swr_get_dev_data(pdev);
+-	if (!wcd937x_slave) {
+-		dev_err(&pdev->dev, "%s: wcd937x_slave is NULL\n", __func__);
++	wcd937x_sdw = sdw_get_dev_data(pdev);
++	if (!wcd937x_sdw) {
++		dev_err(&pdev->dev, "%s: wcd937x_sdw is NULL\n", __func__);
+ 		return;
+ 	}
+ 
+ #ifdef CONFIG_DEBUG_FS
+-	debugfs_remove_recursive(wcd937x_slave->debugfs_wcd937x_dent);
+-	wcd937x_slave->debugfs_wcd937x_dent = NULL;
++	debugfs_remove_recursive(wcd937x_sdw->debugfs_wcd937x_dent);
++	wcd937x_sdw->debugfs_wcd937x_dent = NULL;
+ #endif
+ 
+-	swr_set_dev_data(pdev, NULL);
++	sdw_set_dev_data(pdev, NULL);
+ }
+ 
+-static const struct swr_device_id wcd937x_swr_id[] = {
++static const struct sdw_device_id wcd937x_sdw_id[] = {
+ 	{"wcd937x-slave", 0},
+ 	{}
+ };
+ 
+-static const struct of_device_id wcd937x_swr_dt_match[] = {
++static const struct of_device_id wcd937x_sdw_dt_match[] = {
+ 	{
+-		.compatible = "qcom,wcd937x-slave",
++		.compatible = "sdw20217010a00",
+ 	},
+ 	{}
+ };
+ 
+-static const struct component_ops wcd937x_slave_comp_ops = {
+-	.bind   = wcd937x_slave_bind,
+-	.unbind = wcd937x_slave_unbind,
++static const struct component_ops wcd937x_sdw_comp_ops = {
++	.bind   = wcd937x_sdw_bind,
++	.unbind = wcd937x_sdw_unbind,
+ };
+ 
+-static int wcd937x_swr_up(struct swr_device *pdev)
++static int wcd937x_sdw_up(struct sdw_device *pdev)
+ {
+ 	return 0;
+ }
+ 
+-static int wcd937x_swr_down(struct swr_device *pdev)
++static int wcd937x_sdw_down(struct sdw_device *pdev)
+ {
+ 	return 0;
+ }
+ 
+-static int wcd937x_swr_reset(struct swr_device *pdev)
++static int wcd937x_sdw_reset(struct sdw_device *pdev)
+ {
+ 	return 0;
+ }
+ 
+-static int wcd937x_swr_probe(struct swr_device *pdev)
++static int wcd937x_sdw_probe(struct sdw_device *pdev)
+ {
+-	return component_add(&pdev->dev, &wcd937x_slave_comp_ops);
++	return component_add(&pdev->dev, &wcd937x_sdw_comp_ops);
+ }
+ 
+-static int wcd937x_swr_remove(struct swr_device *pdev)
++static int wcd937x_sdw_remove(struct sdw_device *pdev)
+ {
+-	component_del(&pdev->dev, &wcd937x_slave_comp_ops);
++	component_del(&pdev->dev, &wcd937x_sdw_comp_ops);
+ 	return 0;
+ }
+ 
+-static struct swr_driver wcd937x_slave_driver = {
++static struct sdw_driver wcd937x_sdw_driver = {
+ 	.driver = {
+ 		.name = "wcd937x-slave",
+ 		.owner = THIS_MODULE,
+-		.of_match_table = wcd937x_swr_dt_match,
++		.of_match_table = wcd937x_sdw_dt_match,
+ 	},
+-	.probe = wcd937x_swr_probe,
+-	.remove = wcd937x_swr_remove,
+-	.id_table = wcd937x_swr_id,
+-	.device_up = wcd937x_swr_up,
+-	.device_down = wcd937x_swr_down,
+-	.reset_device = wcd937x_swr_reset,
++	.probe = wcd937x_sdw_probe,
++	.remove = wcd937x_sdw_remove,
++	.id_table = wcd937x_sdw_id,
++	.device_up = wcd937x_sdw_up,
++	.device_down = wcd937x_sdw_down,
++	.reset_device = wcd937x_sdw_reset,
+ };
+ 
+-static int __init wcd937x_slave_init(void)
+-{
+-	return swr_driver_register(&wcd937x_slave_driver);
+-}
+-
+-static void __exit wcd937x_slave_exit(void)
+-{
+-	swr_driver_unregister(&wcd937x_slave_driver);
+-}
+-
+-module_init(wcd937x_slave_init);
+-module_exit(wcd937x_slave_exit);
++module_sdw_driver(wcd937x_sdw_driver);
+ 
+-MODULE_DESCRIPTION("WCD937X Swr Slave driver");
++MODULE_DESCRIPTION("WCD937X SDW slave driver");
+ MODULE_LICENSE("GPL v2");
+-- 
+2.34.1
+

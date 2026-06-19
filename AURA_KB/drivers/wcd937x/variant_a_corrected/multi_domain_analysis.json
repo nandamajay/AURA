@@ -1,0 +1,379 @@
+{
+  "artifact_name": "WCD937X_VARIANT_A_CORRECTED_MULTI_DOMAIN_ANALYSIS",
+  "confidence_classification": "FAIL_CLOSED",
+  "downstream_inventory": {
+    "file_line_counts": {
+      "internal.h": 180,
+      "wcd937x-mbhc.c": 1159,
+      "wcd937x-mbhc.h": 67,
+      "wcd937x-registers.h": 438,
+      "wcd937x-regmap.c": 465,
+      "wcd937x-tables.c": 422,
+      "wcd937x.c": 3723,
+      "wcd937x.h": 111,
+      "wcd937x_slave.c": 441
+    },
+    "function_counts": {
+      "wcd937x-mbhc.c": 35,
+      "wcd937x-regmap.c": 3,
+      "wcd937x.c": 73,
+      "wcd937x_slave.c": 17
+    }
+  },
+  "dt_binding_facts": {
+    "main_compatibles": [
+      "qcom,wcd9370-codec",
+      "qcom,wcd9375-codec"
+    ],
+    "required_micbias": [
+      "qcom,micbias1-microvolt",
+      "qcom,micbias2-microvolt",
+      "qcom,micbias3-microvolt",
+      "qcom,micbias4-microvolt"
+    ],
+    "required_phandles": [
+      "qcom,rx-device",
+      "qcom,tx-device"
+    ],
+    "required_reset": "reset-gpios",
+    "required_supplies": [
+      "vdd-buck-supply",
+      "vdd-rxtx-supply",
+      "vdd-px-supply",
+      "vdd-mic-bias-supply"
+    ],
+    "sdw_compatible": "sdw20217010a00"
+  },
+  "fail_closed_items": [
+    {
+      "downstream_line": 160,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_request_irq"
+    },
+    {
+      "downstream_line": 169,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_irq_control"
+    },
+    {
+      "downstream_line": 180,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_free_irq"
+    },
+    {
+      "downstream_line": 190,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_clk_setup"
+    },
+    {
+      "downstream_line": 201,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_btn_to_num"
+    },
+    {
+      "downstream_line": 207,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_mbhc_bias_control"
+    },
+    {
+      "downstream_line": 218,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_program_btn_thr"
+    },
+    {
+      "downstream_line": 241,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_lock_sleep"
+    },
+    {
+      "downstream_line": 250,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_register_notifier"
+    },
+    {
+      "downstream_line": 266,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_micb_en_status"
+    },
+    {
+      "downstream_line": 280,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_hph_pa_on_status"
+    },
+    {
+      "downstream_line": 286,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_hph_l_pull_up_control"
+    },
+    {
+      "downstream_line": 303,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_request_micbias"
+    },
+    {
+      "downstream_line": 313,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_micb_ramp_control"
+    },
+    {
+      "downstream_line": 350,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_micb_ctrl_threshold_mic"
+    },
+    {
+      "downstream_line": 374,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_get_result_params"
+    },
+    {
+      "downstream_line": 432,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_zdet_ramp"
+    },
+    {
+      "downstream_line": 480,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_wcd_mbhc_qfuse_cal"
+    },
+    {
+      "downstream_line": 501,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_wcd_mbhc_calc_impedance"
+    },
+    {
+      "downstream_line": 697,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_gnd_det_ctrl"
+    },
+    {
+      "downstream_line": 713,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_hph_pull_down_ctrl"
+    },
+    {
+      "downstream_line": 729,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_moisture_config"
+    },
+    {
+      "downstream_line": 753,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_moisture_detect_en"
+    },
+    {
+      "downstream_line": 765,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_get_moisture_status"
+    },
+    {
+      "downstream_line": 803,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_moisture_polling_ctrl"
+    },
+    {
+      "downstream_line": 813,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_bcs_enable"
+    },
+    {
+      "downstream_line": 919,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_get_impedance"
+    },
+    {
+      "downstream_line": 941,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_hs_detect"
+    },
+    {
+      "downstream_line": 973,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_hs_detect_exit"
+    },
+    {
+      "downstream_line": 1005,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_ssr_down"
+    },
+    {
+      "downstream_line": 1032,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_post_ssr_init"
+    },
+    {
+      "downstream_line": 1070,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_init"
+    },
+    {
+      "downstream_line": 1137,
+      "downstream_source": "wcd937x-mbhc.c",
+      "reason": "MBHC behavior details depend on shared-module callbacks and cannot be proven equivalent blindly.",
+      "signal_needed": "upstream target implementation or maintainer confirmation",
+      "symbol": "wcd937x_mbhc_deinit"
+    }
+  ],
+  "generated_at_utc": "2026-06-19T15:30:04Z",
+  "governance": {
+    "bounded": true,
+    "replay_deterministic": true,
+    "upstream_wcd_target_read_before_task6": false
+  },
+  "kconfig_makefile_facts": {
+    "kconfig_main": "config SND_SOC_WCD937X depends on SND_SOC_WCD937X_SDW; selects WCD_CLASSH and WCD_COMMON",
+    "kconfig_sdw": "config SND_SOC_WCD937X_SDW selects SND_SOC_WCD937X, SND_SOC_WCD_MBHC, REGMAP_IRQ, REGMAP_SOUNDWIRE",
+    "makefile_objects": [
+      "snd-soc-wcd937x-y := wcd937x.o",
+      "snd-soc-wcd937x-sdw-y := wcd937x-sdw.o"
+    ]
+  },
+  "methodology": "true_blind_no_wcd_sibling_reference",
+  "non_wcd_pattern_signals": {
+    "lpass_rx_macro": {
+      "platform_lifecycle": "component_probe split, devm_snd_soc_register_component, runtime suspend/resume"
+    },
+    "wsa883x": {
+      "regulator_gpio": "devm_regulator_bulk_get/devm_gpiod_get_optional patterns",
+      "sdw_driver": "module_sdw_driver + sdw_driver + devm_regmap_init_sdw + runtime_pm_ops"
+    },
+    "wsa884x": {
+      "runtime_pm": "RUNTIME_PM_OPS in sdw device path",
+      "sdw_driver": "soundwire slave registration and component registration patterns"
+    }
+  },
+  "replay_inputs": [
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x_slave.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/internal.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-registers.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-regmap.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-tables.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-mbhc.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-mbhc.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/Kbuild",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/Makefile",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd-common.h",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "/local/mnt/workspace/Datasheets/qualcomm_aqstic_wcd937x_specs.pdf"
+  ],
+  "replay_signal_sources": [
+    "downstream wcd937x multi-file set",
+    "wsa883x/wsa884x soundwire idioms",
+    "lpass-rx-macro lifecycle idioms",
+    "wcd-mbhc-v2.h, wcd-clsh-v2.h, wcd-common.h interfaces",
+    "wcd937x DT bindings",
+    "linux-next Kconfig/Makefile wcd937x entries",
+    "WCD937x datasheet"
+  ],
+  "vendor_dependency_removals": [
+    {
+      "action": "removed include; replaced with fail-closed shim namespace wcd937x_fc_*",
+      "confidence": "HIGH",
+      "symbol": "asoc/msm-cdc-pinctrl.h"
+    },
+    {
+      "action": "removed include; replaced with fail-closed shim namespace wcd937x_fc_*",
+      "confidence": "HIGH",
+      "symbol": "asoc/msm-cdc-supply.h"
+    },
+    {
+      "action": "removed include; removed hwdep init block with explicit fail-closed comment",
+      "confidence": "HIGH",
+      "symbol": "asoc/wcdcal-hwdep.h"
+    },
+    {
+      "action": "removed include",
+      "confidence": "HIGH",
+      "symbol": "asoc/bolero-slave-internal.h"
+    },
+    {
+      "action": "removed include; localized channel enums in header",
+      "confidence": "HIGH",
+      "symbol": "bindings/audio-codec-port-types.h"
+    },
+    {
+      "action": "replaced with linux/soundwire/sdw*.h includes",
+      "confidence": "HIGH",
+      "symbol": "soc/soundwire.h"
+    },
+    {
+      "action": "removed include and version-guard branches",
+      "confidence": "HIGH",
+      "symbol": "linux/version.h"
+    }
+  ]
+}
