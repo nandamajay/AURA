@@ -1,0 +1,169 @@
+{
+  "artifact": "aura_architecture_inventory",
+  "generated_at_utc": "2026-06-19T21:08:33Z",
+  "repo": {
+    "path": "/local/mnt/workspace/AURA_V1_upstream",
+    "branch": "aura_upstream_learning",
+    "head": "7050662",
+    "linux_next_path": "track_b_corpora/linux-next",
+    "linux_next_head": "ec039126b",
+    "working_tree_observation": {
+      "status_lines": [
+        "?? AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/"
+      ],
+      "note": "Untracked WCD9378 A.1 compile-ready artifacts were present before this architecture audit and are not part of this audit commit."
+    }
+  },
+  "core_folders": [
+    {
+      "folder": "AURA/",
+      "role": "repo-local implementation for agents, gates, services, tests, and SDK experiments",
+      "source_of_truth_status": "ACTIVE_FOR_TOOLING"
+    },
+    {
+      "folder": "AURA_KB/",
+      "role": "driver conversion KB, evidence, prompts, gate outputs, and architecture audit artifacts",
+      "source_of_truth_status": "ACTIVE_FOR_KB"
+    },
+    {
+      "folder": "../AURA",
+      "role": "sibling repository/folder observed in workspace",
+      "source_of_truth_status": "RISK_ARCHIVE_OR_OTHER_WORKSTREAM"
+    },
+    {
+      "folder": "../AURA_V1",
+      "role": "sibling repository/folder observed with many dirty lines",
+      "source_of_truth_status": "RISK_NOT_CURRENT_SOURCE_OF_TRUTH"
+    },
+    {
+      "folder": "../AURA_V1_ops",
+      "role": "ops sibling repository/folder observed with many dirty lines",
+      "source_of_truth_status": "RISK_OPS_DRIFT"
+    },
+    {
+      "folder": "../AURA_V1_upstream",
+      "role": "current working repo for upstream-learning branch",
+      "source_of_truth_status": "CURRENT_CWD_SOURCE_OF_TRUTH"
+    }
+  ],
+  "active_source_of_truth": {
+    "cwd": "/local/mnt/workspace/AURA_V1_upstream",
+    "branch": "aura_upstream_learning",
+    "kb_root": "AURA_KB/",
+    "tooling_root": "AURA/agents/src/aura_agents/",
+    "kernel_corpus": "track_b_corpora/linux-next/"
+  },
+  "deterministic_modules": {
+    "single_file_scorer": "AURA/agents/src/aura_agents/conversion_scoring.py",
+    "multi_file_scorer_v4": "AURA/agents/src/aura_agents/multifile_scoring.py",
+    "conversion_verifier": "AURA/agents/src/aura_agents/conversion_verifier.py",
+    "canonical_gate": "AURA/agents/src/aura_agents/conversion_gate.py",
+    "noted_tests": [
+      "AURA/agents/tests/test_conversion_scoring.py",
+      "AURA/agents/tests/test_multifile_scoring.py",
+      "AURA/agents/tests/test_conversion_verifier.py",
+      "AURA/agents/tests/test_conversion_gate.py"
+    ]
+  },
+  "driver_workflows_observed": [
+    {
+      "driver": "WCD937x",
+      "modes": [
+        "variant_a_corrected blind",
+        "variant_b skeleton-informed",
+        "variant_c combined"
+      ],
+      "canonical_gate": true,
+      "score_range": "80.42-88.95 for valid variants"
+    },
+    {
+      "driver": "WCD9378",
+      "modes": [
+        "audit-only",
+        "evidence request",
+        "static prototype variant_a"
+      ],
+      "canonical_gate": true,
+      "score_status": "scoring skipped because no upstream target exists"
+    },
+    {
+      "driver": "lpass_rx_macro",
+      "modes": [
+        "iteration_1",
+        "iteration_2"
+      ],
+      "canonical_gate": false,
+      "score_status": "v3 scorer artifacts present"
+    },
+    {
+      "driver": "legacy WSA/LPASS set",
+      "modes": [
+        "patch/evaluation artifacts"
+      ],
+      "canonical_gate": "partial_or_absent",
+      "score_status": "mixed historical artifacts"
+    }
+  ],
+  "validation_flows": {
+    "current": [
+      "json parse validation",
+      "git am patch replay",
+      "single/multi-file scoring",
+      "conversion verifier similarity/lineage checks",
+      "canonical conversion gate"
+    ],
+    "partial_or_manual": [
+      "checkpatch",
+      "compile",
+      "runtime evidence ingestion",
+      "datasheet evidence extraction",
+      "PatchWise review integration"
+    ],
+    "missing_or_weak": [
+      "first-class no-target/new-driver gate mode",
+      "compile gate as canonical artifact",
+      "prompt registry",
+      "cross-terminal PM skill installation"
+    ]
+  },
+  "governance_artifacts": [
+    "allowed_sources.json",
+    "patch_lineage.json",
+    "governance_verdict.json",
+    "verifier_result.json",
+    "scoring_result_v4.json",
+    "runtime_fail_closed_items.json",
+    "evidence_checklist.json"
+  ],
+  "deterministic_today": [
+    "Scorer and gate outputs are repo-owned and reproducible for existing-upstream-target conversions.",
+    "Verifier detects byte-copy and high-similarity derivation risks and checks lineage coverage.",
+    "Allowed-sources file is required by conversion_gate.",
+    "JSON artifacts can be parse-validated and patch series can be replayed with git am."
+  ],
+  "manual_prompt_driven_today": [
+    "Conversion generation itself remains prompt-driven and agent-executed.",
+    "Conversion mode selection is PM judgment, not tool-enforced.",
+    "Compile/checkpatch are not yet canonical pass/fail gates.",
+    "Runtime/hardware evidence ingestion remains checklist-driven, not schema-enforced.",
+    "Architecture decisions are captured as KB artifacts but not yet enforced by a policy engine."
+  ],
+  "duplication_or_drift_risks": [
+    "Multiple AURA-named sibling folders can confuse source of truth.",
+    "Historical driver artifacts use different schemas and not all have canonical gate verdicts.",
+    "Prompts are embedded in conversation and artifacts, but not a central registry.",
+    "Execution in /tmp is useful for replay but can bypass audit unless manifests record commands and copied outputs."
+  ],
+  "missing_for_plug_and_play": [
+    "Driver input package schema",
+    "Run manifest schema",
+    "conversion mode selector",
+    "new-driver/no-target gate mode",
+    "compile gate",
+    "checkpatch gate",
+    "runtime evidence ingestion parser",
+    "global aura-pm skill installation",
+    "prompt registry",
+    "folder governance consolidation"
+  ]
+}

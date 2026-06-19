@@ -1,0 +1,196 @@
+{
+  "artifact": "aura_platform_roadmap",
+  "generated_at_utc": "2026-06-19T21:08:33Z",
+  "roadmap": [
+    {
+      "feature": "Unified run manifest schema",
+      "why_needed": "Every run must pin source paths, SHAs, mode, commands, outputs, and verdicts.",
+      "priority": "P0",
+      "implementation_type": "schema",
+      "owner_role": "architect",
+      "dependencies": [],
+      "success_metric": "100% of new runs include parse-valid manifest consumed by gate."
+    },
+    {
+      "feature": "Driver input package schema",
+      "why_needed": "Make downstream/upstream/datasheet/reference inputs explicit and reusable.",
+      "priority": "P0",
+      "implementation_type": "schema",
+      "owner_role": "architect",
+      "dependencies": [
+        "Unified run manifest schema"
+      ],
+      "success_metric": "New driver tasks start from a validated input package."
+    },
+    {
+      "feature": "Prompt registry",
+      "why_needed": "Stop losing validated prompts in chat history.",
+      "priority": "P0",
+      "implementation_type": "process",
+      "owner_role": "PM",
+      "dependencies": [],
+      "success_metric": "All production prompts are versioned under AURA_KB/prompts with IDs."
+    },
+    {
+      "feature": "Conversion mode selector",
+      "why_needed": "Choose blind, skeleton-informed, hybrid, static RFC, or production mode with rules.",
+      "priority": "P0",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Driver input package schema"
+      ],
+      "success_metric": "Mode decision artifact generated before conversion."
+    },
+    {
+      "feature": "No-target/new-driver gate mode",
+      "why_needed": "Avoid fake scores when upstream target does not exist.",
+      "priority": "P0",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Unified run manifest schema"
+      ],
+      "success_metric": "Gate emits explicit NEW_DRIVER_RFC verdict and alternate checks."
+    },
+    {
+      "feature": "Compile gate",
+      "why_needed": "Make compile result a canonical pass/fail/WARN artifact.",
+      "priority": "P0",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [],
+      "success_metric": "Gate consumes compile_result.json and blocks on compile failures for compile-ready scope."
+    },
+    {
+      "feature": "Checkpatch gate",
+      "why_needed": "Make checkpatch result canonical with severity policy.",
+      "priority": "P0",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [],
+      "success_metric": "Gate consumes checkpatch_report.json and classifies errors/checks."
+    },
+    {
+      "feature": "PatchWise/review integration proposal",
+      "why_needed": "Add maintainer-style review beyond mechanical gates.",
+      "priority": "P1",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Compile gate",
+        "Checkpatch gate"
+      ],
+      "success_metric": "PatchWise report linked in PM verdict for RFC candidates."
+    },
+    {
+      "feature": "Hardware evidence ingestion",
+      "why_needed": "Convert dmesg/sysfs/regmap/trace logs into blocker decisions.",
+      "priority": "P0",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Runtime evidence checklist parser"
+      ],
+      "success_metric": "Evidence package updates blockers deterministically."
+    },
+    {
+      "feature": "Runtime evidence checklist parser",
+      "why_needed": "Validate evidence against requested acceptance criteria.",
+      "priority": "P0",
+      "implementation_type": "schema",
+      "owner_role": "agent",
+      "dependencies": [],
+      "success_metric": "Each evidence checklist item becomes RESOLVED/PARTIAL/MISSING with citations."
+    },
+    {
+      "feature": "Datasheet evidence indexer",
+      "why_needed": "Make datasheet claims searchable and auditable.",
+      "priority": "P1",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [],
+      "success_metric": "Datasheet evidence index references pages/sections for each blocker."
+    },
+    {
+      "feature": "Architecture decision records",
+      "why_needed": "Capture PM architecture calls as durable ADRs.",
+      "priority": "P1",
+      "implementation_type": "process",
+      "owner_role": "PM",
+      "dependencies": [],
+      "success_metric": "All major policy changes have ADR markdown artifact."
+    },
+    {
+      "feature": "Folder governance cleanup",
+      "why_needed": "Remove ambiguity between AURA-named folders.",
+      "priority": "P0",
+      "implementation_type": "process",
+      "owner_role": "architect",
+      "dependencies": [],
+      "success_metric": "One declared source-of-truth repo and archive policy approved."
+    },
+    {
+      "feature": "Cross-terminal PM skill installation",
+      "why_needed": "Make AURA PM behavior available in new CLI sessions.",
+      "priority": "P0",
+      "implementation_type": "skill",
+      "owner_role": "PM",
+      "dependencies": [
+        "AURA PM skill draft review"
+      ],
+      "success_metric": "aura-pm skill installed and triggers on PM/governance requests."
+    },
+    {
+      "feature": "Adversarial verifier agent",
+      "why_needed": "Separate generation and challenge/audit roles.",
+      "priority": "P1",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Unified run manifest schema"
+      ],
+      "success_metric": "Every conversion has independent adversarial report before acceptance."
+    },
+    {
+      "feature": "Dashboard/report generator",
+      "why_needed": "Summarize runs, scores, gates, blockers, and trends.",
+      "priority": "P2",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Unified run manifest schema"
+      ],
+      "success_metric": "Generated dashboard shows latest canonical verdicts."
+    },
+    {
+      "feature": "Regression corpus for repeated conversions",
+      "why_needed": "Measure whether principles repeat across drivers and variants.",
+      "priority": "P1",
+      "implementation_type": "test",
+      "owner_role": "architect",
+      "dependencies": [
+        "Prompt registry"
+      ],
+      "success_metric": "Fixed corpus reruns produce comparable deterministic metrics."
+    },
+    {
+      "feature": "Production gate policy engine",
+      "why_needed": "Move PM judgment rules into machine-readable policy.",
+      "priority": "P1",
+      "implementation_type": "tooling",
+      "owner_role": "agent",
+      "dependencies": [
+        "Compile gate",
+        "Checkpatch gate",
+        "No-target/new-driver gate mode"
+      ],
+      "success_metric": "Gate verdict includes policy-rule IDs for each decision."
+    }
+  ],
+  "next_three_steps": [
+    "Finish WCD9378 A.1 compile-ready validation without runtime claims.",
+    "Review and install aura-pm skill after draft approval.",
+    "Implement P0 run manifest + compile/checkpatch/new-driver gate upgrades."
+  ]
+}

@@ -1,0 +1,109 @@
+{
+  "artifact": "plug_and_play_readiness",
+  "generated_at_utc": "2026-06-19T21:08:33Z",
+  "product_target": "Given a downstream driver and optional datasheet/reference upstream drivers, AURA can produce a bounded, observable, explainable, replayable, interruptible, reversible upstream-style conversion workflow with deterministic gates and PM oversight.",
+  "overall_verdict": "PARTIAL_NOT_PLUG_AND_PLAY_YET",
+  "summary": "AURA has strong deterministic verification/gating pieces and a proven WCD937x/WCD9378 learning loop, but generation, mode selection, compile/runtime gates, prompt reuse, and folder governance are not yet productized.",
+  "categories": [
+    {
+      "category": "Input package standardization",
+      "status": "PARTIAL",
+      "assessment": "Driver runs include allowed sources and evidence artifacts, but no single mandatory input package schema exists."
+    },
+    {
+      "category": "Source allowlist enforcement",
+      "status": "PARTIAL",
+      "assessment": "conversion_gate requires allowed_sources.json, but generation-time enforcement still depends on agent discipline."
+    },
+    {
+      "category": "Baseline pinning",
+      "status": "PARTIAL",
+      "assessment": "Artifacts can record SHAs; baseline pinning is not enforced by a run manifest for every conversion."
+    },
+    {
+      "category": "Conversion mode selection",
+      "status": "RISK",
+      "assessment": "Mode choice is currently PM/prompt judgment; no deterministic selector exists."
+    },
+    {
+      "category": "Multi-file conversion support",
+      "status": "READY",
+      "assessment": "multifile_scoring and gate support converted dirs and file maps."
+    },
+    {
+      "category": "No-target/new-driver support",
+      "status": "PARTIAL",
+      "assessment": "Gate can WARN when scoring is skipped, but no first-class new-driver mode or alternate score exists."
+    },
+    {
+      "category": "Existing-upstream-target scoring support",
+      "status": "READY",
+      "assessment": "v3/v4 scoring and gate support existing upstream targets."
+    },
+    {
+      "category": "Patch lineage",
+      "status": "PARTIAL",
+      "assessment": "Verifier checks function coverage when lineage exists; schema quality varies by run."
+    },
+    {
+      "category": "Anti-copy/derivation detection",
+      "status": "READY",
+      "assessment": "conversion_verifier flags target/reference derivation and downstream reuse risk."
+    },
+    {
+      "category": "Compile/checkpatch integration",
+      "status": "PARTIAL",
+      "assessment": "Plans and manual runs exist; canonical compile/checkpatch gates are not implemented."
+    },
+    {
+      "category": "Runtime evidence ingestion",
+      "status": "PARTIAL",
+      "assessment": "Evidence requests/checklists exist for WCD9378, but no parser/gate consumes logs yet."
+    },
+    {
+      "category": "Hardware evidence handling",
+      "status": "PARTIAL",
+      "assessment": "Hardware evidence requirements are documented, but acquisition and acceptance are manual."
+    },
+    {
+      "category": "PM decisioning",
+      "status": "PARTIAL",
+      "assessment": "PM behavior is strong in conversation but not yet packaged as an installed skill/policy."
+    },
+    {
+      "category": "Cross-terminal reproducibility",
+      "status": "RISK",
+      "assessment": "Future terminals need AGENTS plus skill/runbook; conversation memory is currently important."
+    },
+    {
+      "category": "Folder/repo governance",
+      "status": "RISK",
+      "assessment": "AURA, AURA_V1, AURA_V1_ops, and AURA_V1_upstream create source-of-truth ambiguity."
+    },
+    {
+      "category": "Prompt registry/reuse",
+      "status": "MISSING",
+      "assessment": "Prompts are not centrally versioned or discoverable as reusable templates."
+    },
+    {
+      "category": "Skill/runbook availability",
+      "status": "PARTIAL",
+      "assessment": "This audit creates a draft skill; it is not installed globally yet."
+    }
+  ],
+  "readiness_counts": {
+    "READY": 3,
+    "PARTIAL": 10,
+    "MISSING": 1,
+    "RISK": 3
+  },
+  "minimum_p0_to_be_plug_and_play": [
+    "driver input package schema",
+    "run manifest schema",
+    "conversion mode selector",
+    "new-driver gate mode",
+    "compile/checkpatch gates",
+    "aura-pm installed skill",
+    "folder governance consolidation"
+  ]
+}
