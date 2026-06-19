@@ -1,0 +1,238 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "mode": "audit-only delta update",
+    "base_reference": "AURA_KB/drivers/wcd9378/blocker_burndown_01",
+    "datasheet": "/local/mnt/workspace/Datasheets/80-71506-1_REV_AA_Qualcomm_Aqstic_WCD9378_Data_Sheet.pdf",
+    "decision_labels": [
+      "RESOLVED_BY_DATASHEET",
+      "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "UNCHANGED_FAIL_CLOSED",
+      "CONTRADICTED_BY_DATASHEET",
+      "NOT_COVERED_BY_DATASHEET",
+      "BOARD_SPECIFIC_ONLY"
+    ]
+  },
+  "decisions": [
+    {
+      "blocker": "Dedicated main codec compatible (`qcom,wcd9378-codec`)",
+      "previous_status": "PARTIALLY_RESOLVED",
+      "new_status": "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Device description (PDF page 1)",
+          "excerpt_summary": "Datasheet title and device description are specific to WCD9378.",
+          "what_it_proves": "Strengthens that WCD9378 is a distinct silicon target and not generic prose."
+        },
+        {
+          "page_or_section": "Section 4.4 Table 4-3 (PDF page 34)",
+          "excerpt_summary": "Lists WCD9378 sample identification with CHIP_ID bytes.",
+          "what_it_proves": "Provides concrete device-identification evidence for WCD9378 identity."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4592",
+          "supports_or_conflicts": "Downstream already uses `qcom,wcd9378-codec`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_symbol": "23-27",
+          "supports_or_conflicts": "Upstream binding currently only enumerates wcd9370/wcd9375."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "DT binding policy decision (extend existing vs new file) and compatible fallback semantics.",
+      "risk": "MEDIUM"
+    },
+    {
+      "blocker": "Fallback compatibility with `qcom,wcd9370-codec` / `qcom,wcd9375-codec`",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No statement that WCD9378 is DT-compatible fallback-equivalent to WCD9370/WCD9375.",
+          "what_it_proves": "Datasheet does not resolve fallback compatibility policy."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_symbol": "23-27",
+          "supports_or_conflicts": "Existing fallback pattern is defined for 9375->9370 only."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Silicon-level compatibility and maintainer-approved binding fallback policy.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "Supply naming and model alignment",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 2.2 Table 2-6 (PDF page 13)",
+          "excerpt_summary": "Lists physical supply pins: `VDD_CX`, `VDD_PX`, `VDD_MIC_BIAS`, `VDD_A`, `VDD_CP`, `PA_VPOS`, `PA_VNEG`.",
+          "what_it_proves": "Confirms required physical rails and strengthens board power-requirement traceability."
+        },
+        {
+          "page_or_section": "Section 3.2 Table 3-2 (PDF page 15)",
+          "excerpt_summary": "Provides operating voltage ranges for core supplies.",
+          "what_it_proves": "Supports regulator validation and DTS rail planning."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_symbol": "17-27",
+          "supports_or_conflicts": "Upstream binding has abstracted supply properties; datasheet confirms hardware rail existence but not 1:1 property naming."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4435-4440",
+          "supports_or_conflicts": "Downstream uses vendor supply helpers, requiring upstream mapping."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Board-level mapping from datasheet rails to upstream DT supply properties (`vdd-buck`, `vdd-rxtx`, etc.).",
+      "risk": "MEDIUM"
+    },
+    {
+      "blocker": "Reset requirement (`reset-gpios` strategy)",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 2.2 Table 2-4 (PDF page 13)",
+          "excerpt_summary": "`RESET_N` pin is explicitly described as WCD9378 IC-level reset.",
+          "what_it_proves": "Confirms a discrete reset signal is a real hardware requirement."
+        },
+        {
+          "page_or_section": "Section 3.3 table text (PDF page 16)",
+          "excerpt_summary": "Standby condition references device taken out of reset (`RESET_N` input).",
+          "what_it_proves": "Reset sequencing matters for operating state transitions."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4425-4431",
+          "supports_or_conflicts": "Downstream uses legacy `qcom,wcd-rst-gpio-node` handling."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_symbol": "13-16,85-88",
+          "supports_or_conflicts": "Upstream already models reset via `reset-gpios`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Board DTS reset wiring values and polarity confirmation.",
+      "risk": "LOW"
+    },
+    {
+      "blocker": "RX/TX phandle requirements (`qcom,rx-device` / `qcom,tx-device`)",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "NOT_COVERED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No Linux DT phandle model is defined in the datasheet.",
+          "what_it_proves": "Datasheet cannot directly validate DT phandle property names."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_symbol": "2883-2895",
+          "supports_or_conflicts": "Upstream implementation requires `qcom,rx-device` and `qcom,tx-device`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4443-4444,4618-4630",
+          "supports_or_conflicts": "Downstream uses legacy `qcom,rx-slave`/`qcom,tx-slave`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "No datasheet gap; this remains a software-schema conversion rule.",
+      "risk": "LOW"
+    },
+    {
+      "blocker": "Port mapping implications",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Device description (PDF page 1)",
+          "excerpt_summary": "States four analog Tx and four analog Rx ports.",
+          "what_it_proves": "Confirms broad port-capability shape for WCD9378."
+        },
+        {
+          "page_or_section": "Section 1.2 Table 1-1 (PDF page 8)",
+          "excerpt_summary": "Lists TX/RX SoundWire peripherals and lane information.",
+          "what_it_proves": "Strengthens multi-port SoundWire data-path expectation."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_symbol": "24-60",
+          "supports_or_conflicts": "Upstream requires explicit `qcom,tx-port-mapping` and `qcom,rx-port-mapping` arrays."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4717-4720,4726-4730",
+          "supports_or_conflicts": "Downstream uses legacy channel maps and extra port-params property."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Deterministic mapping from downstream channel-map and `qcom,swr-tx-port-params` semantics into upstream port mapping schema.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "`qcom,swr-tx-port-params` necessity",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No datasheet field maps to this software DT property.",
+          "what_it_proves": "Datasheet does not resolve whether this downstream-only property is required upstream."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4726-4730",
+          "supports_or_conflicts": "Downstream parser requires `qcom,swr-tx-port-params`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_symbol": "17-100",
+          "supports_or_conflicts": "Upstream binding has no such property."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Runtime capture proving exact semantic need, then either schema extension proposal or removal/mapping plan.",
+      "risk": "HIGH"
+    }
+  ],
+  "delta_answers": {
+    "datasheet_strengthened_dedicated_qcom_wcd9378_codec": true,
+    "datasheet_proved_compatibility_with_wcd9370_wcd9375_wcd937x": false,
+    "datasheet_justified_extend_qcom_wcd937x_yaml_vs_new_binding": "PARTIAL (extends case for adding 9378 entry; does not alone prove full binding strategy or fallback policy)",
+    "remaining_fail_closed": [
+      "Fallback compatibility policy with qcom,wcd9370-codec/qcom,wcd9375-codec",
+      "qcom,swr-tx-port-params strategy"
+    ]
+  }
+}

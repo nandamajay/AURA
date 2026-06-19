@@ -1,0 +1,149 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "mode": "audit-only delta update",
+    "base_reference": "AURA_KB/drivers/wcd9378/blocker_burndown_01",
+    "datasheet": "/local/mnt/workspace/Datasheets/80-71506-1_REV_AA_Qualcomm_Aqstic_WCD9378_Data_Sheet.pdf",
+    "decision_labels": [
+      "RESOLVED_BY_DATASHEET",
+      "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "UNCHANGED_FAIL_CLOSED",
+      "CONTRADICTED_BY_DATASHEET",
+      "NOT_COVERED_BY_DATASHEET",
+      "BOARD_SPECIFIC_ONLY"
+    ]
+  },
+  "precondition_deltas": [
+    {
+      "precondition": "Binding decision for main compatible (`qcom,wcd9378-codec`) finalized",
+      "previous_status": "PARTIAL",
+      "delta_classification": "IMPROVED",
+      "new_status": "PARTIAL",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "Page 1 and Table 4-3 (page 34)",
+          "detail": "Stronger silicon-identity evidence for WCD9378 product naming and chip-id bytes."
+        }
+      ],
+      "next_action": "Complete binding policy for fallback semantics; compatible extension still needed."
+    },
+    {
+      "precondition": "Legacy downstream DT property migration map is complete",
+      "previous_status": "SATISFIED",
+      "delta_classification": "UNCHANGED",
+      "new_status": "SATISFIED",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "Page 13 (pins/supplies) and page 8 (SWR features)",
+          "detail": "Datasheet does not invalidate prior migration map; no conflicting schema-level evidence found."
+        }
+      ],
+      "next_action": "Keep existing migration mapping."
+    },
+    {
+      "precondition": "SDW numeric identity (part-id + compatible string) is proven for WCD9378",
+      "previous_status": "FAIL_CLOSED",
+      "delta_classification": "UNCHANGED",
+      "new_status": "FAIL_CLOSED",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "Table 4-3 (page 34)",
+          "detail": "CHIP_ID bytes are provided but not mapped to Linux SDW part-id / compatible string format."
+        }
+      ],
+      "next_action": "Obtain hardware-enumerated SDW mfg/part ID tuple and compatible derivation."
+    },
+    {
+      "precondition": "SDW paging policy for WCD9378 is fixed",
+      "previous_status": "PARTIAL",
+      "delta_classification": "UNCHANGED",
+      "new_status": "PARTIAL",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "Section 3.7.1 (page 29)",
+          "detail": "Confirms SWR v1.2.1 compliance but does not provide software-visible register addressing/paging evidence."
+        }
+      ],
+      "next_action": "Keep paging decision tied to downstream/upstream code evidence plus runtime validation."
+    },
+    {
+      "precondition": "Class-H base/version decision is fixed",
+      "previous_status": "FAIL_CLOSED",
+      "delta_classification": "UNCHANGED",
+      "new_status": "FAIL_CLOSED",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "Pages 24-26",
+          "detail": "Class-H functionality appears in performance tables, but no class-h register base/version mapping exists."
+        }
+      ],
+      "next_action": "Retain fail-closed until register-domain behavior is proven."
+    },
+    {
+      "precondition": "Friend-note claims have source-backed triage",
+      "previous_status": "SATISFIED",
+      "delta_classification": "UNCHANGED",
+      "new_status": "SATISFIED",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "NOT_FOUND for friend-note-specific claims",
+          "detail": "No new datasheet evidence that would justify overriding existing fail-closed treatment of unverified friend claims."
+        }
+      ],
+      "next_action": "Keep existing governance treatment."
+    },
+    {
+      "precondition": "Runtime evidence for playback/capture/mute under upstream-style stack",
+      "previous_status": "MISSING",
+      "delta_classification": "UNCHANGED",
+      "new_status": "MISSING",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "N/A",
+          "detail": "Datasheet provides no runtime execution logs; cannot replace runtime validation."
+        }
+      ],
+      "next_action": "Collect reproducible runtime logs on target hardware/kernel."
+    },
+    {
+      "precondition": "Compile/checkpatch baseline for planned patch scope",
+      "previous_status": "MISSING",
+      "delta_classification": "UNCHANGED",
+      "new_status": "MISSING",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "N/A",
+          "detail": "Datasheet cannot satisfy build/checkpatch process requirements."
+        }
+      ],
+      "next_action": "Run baseline build and static checks when conversion starts."
+    },
+    {
+      "precondition": "Board DTS inputs for reset, regulators, rx/tx devices, and port mappings are available",
+      "previous_status": "MISSING",
+      "delta_classification": "UNCHANGED",
+      "new_status": "MISSING",
+      "evidence": [
+        {
+          "source": "datasheet",
+          "page_or_section": "Pages 10-13 and 15",
+          "detail": "Datasheet gives pin/rail requirements, but not board DTS instance data."
+        }
+      ],
+      "next_action": "Collect board DTS fragments and wiring-specific values."
+    }
+  ],
+  "conversion_start_decision": {
+    "can_start_conversion": false,
+    "decision": "NO_GO",
+    "reason": "Datasheet improved identity confidence, but SDW numeric identity and Class-H base/version blockers remain unresolved/fail-closed, and runtime evidence is still missing."
+  }
+}

@@ -1,0 +1,215 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "mode": "audit-only delta update",
+    "base_reference": "AURA_KB/drivers/wcd9378/blocker_burndown_01",
+    "datasheet": "/local/mnt/workspace/Datasheets/80-71506-1_REV_AA_Qualcomm_Aqstic_WCD9378_Data_Sheet.pdf",
+    "decision_labels": [
+      "RESOLVED_BY_DATASHEET",
+      "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "UNCHANGED_FAIL_CLOSED",
+      "CONTRADICTED_BY_DATASHEET",
+      "NOT_COVERED_BY_DATASHEET",
+      "BOARD_SPECIFIC_ONLY"
+    ]
+  },
+  "decisions": [
+    {
+      "blocker": "`SDW_SLAVE_ENTRY(0x0217, 0x110, 0)` justification",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 4.4 Table 4-3 (PDF page 34)",
+          "excerpt_summary": "Provides CHIP_ID_BYTE_* values (`0x00 0x00 0x10 0x01`) for WCD9378 sample types.",
+          "what_it_proves": "Proves chip-identification bytes exist, but does not define Linux SoundWire part-id encoding or SDW_SLAVE_ENTRY tuple."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_symbol": "1067",
+          "supports_or_conflicts": "Upstream WCD937x uses `SDW_SLAVE_ENTRY(0x0217, 0x10a, 0)`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+          "line_or_symbol": "1228",
+          "supports_or_conflicts": "Neighbor device uses part-id `0x10d`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c",
+          "line_or_symbol": "1414",
+          "supports_or_conflicts": "Neighbor device uses part-id `0x10e`."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Hardware enumeration trace mapping WCD9378 to exact SoundWire manufacturer/part ID tuple used by Linux SDW core.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "`sdw20217011000` compatible justification",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No `sdw20...` Linux-compatible string appears in the datasheet.",
+          "what_it_proves": "Datasheet does not validate this proposed compatible string."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_symbol": "19",
+          "supports_or_conflicts": "Existing upstream WCD937x SDW compatible is `sdw20217010a00`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Validated SDW compatible derivation from hardware enumeration and binding convention.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "SDW manufacturer ID / part ID / class evidence quality",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 4.4 Table 4-3 (PDF page 34)",
+          "excerpt_summary": "Provides WCD9378 CHIP_ID bytes by sample type.",
+          "what_it_proves": "Adds silicon identity context but still not a direct SDW manufacturer/part-id tuple for Linux SDW tables."
+        },
+        {
+          "page_or_section": "Section 3.7.1 (PDF page 29)",
+          "excerpt_summary": "States compliance with MIPI SoundWire v1.2.1.",
+          "what_it_proves": "Confirms SoundWire protocol generation, not the specific SDW part ID."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_symbol": "313-321",
+          "supports_or_conflicts": "Downstream identity is string-based (`wcd9378-slave`), not numeric SDW tuple."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Explicit mapping between datasheet CHIP_ID scheme and Linux SDW `part_id` value.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "Paging requirement for high register addresses (`0x40180000+` path)",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "NOT_COVERED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No software-visible register base or address-domain table is provided.",
+          "what_it_proves": "Datasheet does not directly prove high-address paging requirement."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_symbol": "16,31",
+          "supports_or_conflicts": "Downstream register model indicates high address-domain (`WCD9378_A_BASE`)."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4509,4518",
+          "supports_or_conflicts": "Downstream explicitly enables paging support on RX/TX slaves."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Runtime high-address access traces on upstream Linux SDW path.",
+      "risk": "MEDIUM"
+    },
+    {
+      "blocker": "SDCA interrupt address-space detail",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 1.2 Table 1-1 (PDF page 8)",
+          "excerpt_summary": "Interrupts are specified as going through the SoundWire interface.",
+          "what_it_proves": "Supports interrupt-over-SoundWire architecture, but not SDCA register addresses."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4531-4533",
+          "supports_or_conflicts": "Downstream programs SDCA interrupt type registers."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c",
+          "line_or_symbol": "879-942",
+          "supports_or_conflicts": "Downstream marks SDCA interrupt registers for readable/writeable/volatile handling."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Software-visible SDCA register mapping evidence for upstream representation.",
+      "risk": "MEDIUM"
+    },
+    {
+      "blocker": "Need for Qualcomm SoundWire controller (`qcom.c`) changes",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "Datasheet contains no controller-driver failure evidence or Linux qcom.c specific constraints.",
+          "what_it_proves": "Datasheet cannot justify controller code changes by itself."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line_or_symbol": "481-580,716-790,973-1002",
+          "supports_or_conflicts": "Core transfer, retry, and IRQ logic already exists upstream."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Reproducible runtime failure trace demonstrating missing controller behavior for WCD9378.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "`pdev->prop.paging_support = true` justification",
+      "previous_status": "PARTIALLY_RESOLVED",
+      "new_status": "NOT_COVERED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 3.7.1 (PDF page 29)",
+          "excerpt_summary": "Confirms SoundWire v1.2.1 compliance only.",
+          "what_it_proves": "Does not explicitly state paging register support in software terms."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "4509,4518",
+          "supports_or_conflicts": "Downstream sets paging_support true for both slaves."
+        },
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+          "line_or_symbol": "381-404",
+          "supports_or_conflicts": "Upstream core depends on `paging_support` for paged address transactions."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Runtime proof that WCD9378 accesses above non-paged range through upstream SDW transactions.",
+      "risk": "MEDIUM"
+    }
+  ],
+  "delta_answers": {
+    "datasheet_proves_exact_sdw_identity": false,
+    "datasheet_proves_high_address_paging": false,
+    "datasheet_proves_qcom_controller_changes_required": false,
+    "datasheet_justifies_paging_support_true": "PARTIAL (architectural SoundWire support only; no explicit paging register statement)"
+  }
+}

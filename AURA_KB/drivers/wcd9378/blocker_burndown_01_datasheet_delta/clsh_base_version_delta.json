@@ -1,0 +1,163 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "mode": "audit-only delta update",
+    "base_reference": "AURA_KB/drivers/wcd9378/blocker_burndown_01",
+    "datasheet": "/local/mnt/workspace/Datasheets/80-71506-1_REV_AA_Qualcomm_Aqstic_WCD9378_Data_Sheet.pdf",
+    "decision_labels": [
+      "RESOLVED_BY_DATASHEET",
+      "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "UNCHANGED_FAIL_CLOSED",
+      "CONTRADICTED_BY_DATASHEET",
+      "NOT_COVERED_BY_DATASHEET",
+      "BOARD_SPECIFIC_ONLY"
+    ]
+  },
+  "decisions": [
+    {
+      "blocker": "Need for a dedicated WCD9378 codec version enum in `wcd-clsh-v2`",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "Datasheet does not describe Linux class-h API versioning or enum policy.",
+          "what_it_proves": "Cannot resolve enum addition decision."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+          "line_or_symbol": "44-51",
+          "supports_or_conflicts": "Enum currently includes WCD937X/WCD938X/WCD939X but no WCD9378."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_symbol": "2528",
+          "supports_or_conflicts": "WCD937x allocates class-h control with `WCD937X`."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Runtime behavior comparison showing whether WCD9378 diverges from existing WCD937X class-h logic.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "Analog base `0x40180000` evidence",
+      "previous_status": "RESOLVED_READY_FOR_CONVERSION",
+      "new_status": "NOT_COVERED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No register base-address table found in datasheet.",
+          "what_it_proves": "Datasheet does not independently confirm `0x40180000` base."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_symbol": "16,31",
+          "supports_or_conflicts": "Downstream defines `WCD9378_BASE` and `WCD9378_A_BASE` consistent with high analog domain."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Authoritative software-visible register-map source (or validated runtime trace) to confirm base domain under upstream access model.",
+      "risk": "MEDIUM"
+    },
+    {
+      "blocker": "Invalidity of old `0x3000` Class-H base for WCD9378",
+      "previous_status": "PARTIALLY_RESOLVED",
+      "new_status": "NOT_COVERED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No datasheet register offsets are provided for class-h block.",
+          "what_it_proves": "Cannot directly validate or invalidate `0x3000` macro usage from datasheet alone."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_symbol": "91-102",
+          "supports_or_conflicts": "Class-h v2 uses hardcoded `WCD9XXX_BASE_ADDRESS = 0x3000` register macro model."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_symbol": "31,198,209-220",
+          "supports_or_conflicts": "Downstream WCD9378 class-g/class-h related registers are defined in `WCD9378_A_BASE` domain."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Runtime register access validation mapping class-h writes to effective WCD9378 addresses in upstream framework.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "WCD9378-specific Class-H register domain proof",
+      "previous_status": "PARTIALLY_RESOLVED",
+      "new_status": "NOT_COVERED_BY_DATASHEET",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "Section 3.6.2 Table 3-8 (PDF pages 24-26)",
+          "excerpt_summary": "Performance tables reference Class-H modes and HPH path behavior.",
+          "what_it_proves": "Confirms class-h functional mode existence, not register-domain details."
+        },
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No class-h register domain map appears in datasheet.",
+          "what_it_proves": "Register-domain decision remains unresolved by datasheet."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_symbol": "198,209-220",
+          "supports_or_conflicts": "Downstream defines WCD9378 class-g/vnegdac/int-pa misc register set."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_symbol": "3672-3674,4187",
+          "supports_or_conflicts": "Downstream has explicit class-h supply and initialization path."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Software-visible register documentation or validated runtime behavior proving which class-h registers must be driven upstream.",
+      "risk": "HIGH"
+    },
+    {
+      "blocker": "Dynamic `ana_base` claim in common Class-H",
+      "previous_status": "FAIL_CLOSED_NEEDS_EVIDENCE",
+      "new_status": "UNCHANGED_FAIL_CLOSED",
+      "datasheet_evidence": [
+        {
+          "page_or_section": "NOT_FOUND",
+          "excerpt_summary": "No datasheet guidance on Linux class-h internal abstraction model.",
+          "what_it_proves": "Dynamic-base design claim remains unverified."
+        }
+      ],
+      "code_crosscheck": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+          "line_or_symbol": "878-893",
+          "supports_or_conflicts": "Class-h alloc stores only codec version; no dynamic base argument/field."
+        }
+      ],
+      "conversion_impact": "wcd_common",
+      "can_start_conversion": false,
+      "remaining_evidence_needed": "Concrete failing trace showing fixed-base macro approach is insufficient and requires generic base abstraction.",
+      "risk": "HIGH"
+    }
+  ],
+  "delta_answers": {
+    "datasheet_proves_class_h_register_addresses": false,
+    "downstream_code_aligns_with_datasheet_class_h_functionality": true,
+    "upstream_common_class_h_needs_generic_base_abstraction": "UNRESOLVED",
+    "remaining_fail_closed": [
+      "Enum/version strategy in wcd-clsh-v2",
+      "Fixed-base vs dynamic-base decision",
+      "Definitive class-h register-domain mapping"
+    ]
+  }
+}

@@ -1,0 +1,88 @@
+{
+  "metadata": {
+    "generated_on": "2026-06-20",
+    "mode": "audit-only delta update",
+    "base_reference": "AURA_KB/drivers/wcd9378/blocker_burndown_01",
+    "datasheet": "/local/mnt/workspace/Datasheets/80-71506-1_REV_AA_Qualcomm_Aqstic_WCD9378_Data_Sheet.pdf",
+    "decision_labels": [
+      "RESOLVED_BY_DATASHEET",
+      "PARTIALLY_RESOLVED_BY_DATASHEET",
+      "UNCHANGED_FAIL_CLOSED",
+      "CONTRADICTED_BY_DATASHEET",
+      "NOT_COVERED_BY_DATASHEET",
+      "BOARD_SPECIFIC_ONLY"
+    ]
+  },
+  "evidence_items": [
+    {
+      "topic": "device identity / part number",
+      "page_or_section": "Section 4.4, Table 4-3 (PDF page 34)",
+      "evidence_summary": "Datasheet explicitly identifies device as WCD9378 and provides CHIP_ID_BYTE_0..3 values (`0x00 0x00 0x10 0x01`) for sample types.",
+      "strength": "STRONG",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "SoundWire identity (protocol-level)",
+      "page_or_section": "Section 3.7.1 (PDF page 29)",
+      "evidence_summary": "States SoundWire PHY timing is compliant with MIPI SoundWire v1.2.1.",
+      "strength": "MEDIUM",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "SoundWire identity (numeric mfg/part ID usable for SDW_SLAVE_ENTRY)",
+      "page_or_section": "NOT_FOUND",
+      "evidence_summary": "No explicit SoundWire manufacturer ID / SoundWire part ID tuple was found. CHIP_ID bytes in Table 4-3 are not mapped by datasheet text to Linux SDW part-id encoding.",
+      "strength": "WEAK",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "register address domains",
+      "page_or_section": "NOT_FOUND",
+      "evidence_summary": "No register offset/base domain tables were found in pages 1-46; document is feature/pin/electrical focused.",
+      "strength": "WEAK",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "analog register base address",
+      "page_or_section": "NOT_FOUND",
+      "evidence_summary": "No explicit analog register base (such as 0x40180000) is provided in the datasheet.",
+      "strength": "WEAK",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "Class-H / HPH / flyback / CLSH register domains",
+      "page_or_section": "NOT_FOUND (for register domains); Section 3.6.2 (PDF pages 24-26) for functional Class-H references",
+      "evidence_summary": "Class-H is referenced as an operating/performance mode for HPH path, but no software-visible Class-H register addresses or domain mapping is provided.",
+      "strength": "MEDIUM",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "SDCA / interrupt model",
+      "page_or_section": "Section 1.2 Table 1-1 (PDF page 8)",
+      "evidence_summary": "States interrupts go through SoundWire interface. No SDCA register list or SDCA interrupt register map details are provided.",
+      "strength": "MEDIUM",
+      "driver_relevance": "MEDIUM"
+    },
+    {
+      "topic": "supplies / reset requirements",
+      "page_or_section": "Section 2.2 Table 2-4/2-6 (PDF page 13); Section 3.2 Table 3-2 (PDF page 15)",
+      "evidence_summary": "Provides reset pin (`RESET_N`) and supply pins/rails (`VDD_CX`, `VDD_PX`, `VDD_A`, `VDD_CP`, `VDD_MIC_BIAS`, `PA_VPOS`, `PA_VNEG`) with operating voltages.",
+      "strength": "STRONG",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "port/channel information",
+      "page_or_section": "Device description and feature table (PDF pages 1 and 8)",
+      "evidence_summary": "States four analog Tx ports and four analog Rx ports; SoundWire peripheral info indicates TX and RX SoundWire peripherals with two data lanes each.",
+      "strength": "STRONG",
+      "driver_relevance": "HIGH"
+    },
+    {
+      "topic": "software-visible register map details",
+      "page_or_section": "NOT_FOUND",
+      "evidence_summary": "No software-visible register map tables/offset definitions were found.",
+      "strength": "WEAK",
+      "driver_relevance": "HIGH"
+    }
+  ]
+}
