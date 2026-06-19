@@ -1,0 +1,473 @@
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#794: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:794:
++config SND_SOC_CS35L32
++	tristate "Cirrus Logic CS35L32 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#798: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:798:
++config SND_SOC_CS35L33
++	tristate "Cirrus Logic CS35L33 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#802: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:802:
++config SND_SOC_CS35L34
++	tristate "Cirrus Logic CS35L34 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#806: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:806:
++config SND_SOC_CS35L35
++	tristate "Cirrus Logic CS35L35 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#810: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:810:
++config SND_SOC_CS35L36
++	tristate "Cirrus Logic CS35L36 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#821: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:821:
++config SND_SOC_CS35L41_SPI
++	tristate "Cirrus Logic CS35L41 CODEC (SPI)"
++	depends on SPI_MASTER
++	select SND_SOC_CS35L41_LIB
++	select SND_SOC_CS35L41
++	select REGMAP_SPI
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#828: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:828:
++config SND_SOC_CS35L41_I2C
++	tristate "Cirrus Logic CS35L41 CODEC (I2C)"
++	depends on I2C
++	select SND_SOC_CS35L41_LIB
++	select SND_SOC_CS35L41
++	select REGMAP_I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#840: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:840:
++config SND_SOC_CS35L45_SPI
++	tristate "Cirrus Logic CS35L45 CODEC (SPI)"
++	depends on SPI_MASTER
++	select REGMAP
++	select REGMAP_SPI
++	select SND_SOC_CS35L45
++	help
++	  Enable support for Cirrus Logic CS35L45 smart speaker amplifier
++	  with SPI control.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#850: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:850:
++config SND_SOC_CS35L45_I2C
++	tristate "Cirrus Logic CS35L45 CODEC (I2C)"
++	depends on I2C
++	select REGMAP
++	select REGMAP_I2C
++	select SND_SOC_CS35L45
++	help
++	  Enable support for Cirrus Logic CS35L45 smart speaker amplifier
++	  with I2C control.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#868: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:868:
++config SND_SOC_CS35L56_I2C
++	tristate "Cirrus Logic CS35L56 CODEC (I2C)"
++	depends on I2C
++	depends on SOUNDWIRE || !SOUNDWIRE
++	select REGMAP_I2C
++	select SND_SOC_CS35L56
++	select SND_SOC_CS35L56_SHARED
++	help
++	  Enable support for Cirrus Logic CS35L56 boosted amplifier with I2C control
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#878: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:878:
++config SND_SOC_CS35L56_SPI
++	tristate "Cirrus Logic CS35L56 CODEC (SPI)"
++	depends on SPI_MASTER
++	depends on SOUNDWIRE || !SOUNDWIRE
++	select REGMAP_SPI
++	select SND_SOC_CS35L56
++	select SND_SOC_CS35L56_SHARED
++	help
++	  Enable support for Cirrus Logic CS35L56 boosted amplifier with SPI control
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#888: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:888:
++config SND_SOC_CS35L56_SDW
++	tristate "Cirrus Logic CS35L56 CODEC (SDW)"
++	depends on SOUNDWIRE
++	select REGMAP_SOUNDWIRE
++	select SND_SOC_CS35L56
++	select SND_SOC_CS35L56_SHARED
++	help
++	  Enable support for Cirrus Logic CS35L56 boosted amplifier with SoundWire control
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#903: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:903:
++config SND_SOC_CS35L56_CAL_DEBUGFS
++	bool "CS35L56 create debugfs for factory calibration"
++	depends on DEBUG_FS
++	select SND_SOC_CS35L56_CAL_DEBUGFS_COMMON
++	help
++	  Create debugfs entries used during factory-line manufacture
++	  for factory calibration.
++
++	  If unsure select "N".
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#979: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:979:
++config SND_SOC_CS42L42
++	tristate "Cirrus Logic CS42L42 CODEC (I2C)"
++	depends on I2C
++	select REGMAP
++	select REGMAP_I2C
++	select SND_SOC_CS42L42_CORE
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#986: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:986:
++config SND_SOC_CS42L42_SDW
++	tristate "Cirrus Logic CS42L42 CODEC on Soundwire"
++	depends on SOUNDWIRE
++	select SND_SOC_CS42L42_CORE
++	help
++	  Enable support for Cirrus Logic CS42L42 codec with Soundwire control
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#993: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:993:
++config SND_SOC_CS42L43
++	tristate "Cirrus Logic CS42L43 CODEC"
++	depends on MFD_CS42L43
++	help
++	  Select this to support the audio functions of the Cirrus Logic
++	  CS42L43 PC CODEC.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1000: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1000:
++config SND_SOC_CS42L43_SDW
++	tristate "Cirrus Logic CS42L43 CODEC (SoundWire)"
++	depends on SND_SOC_CS42L43 && MFD_CS42L43_SDW
++	help
++	  Select this to support the audio functions of the Cirrus Logic
++	  CS42L43 PC CODEC over SoundWire.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1010: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1010:
++config SND_SOC_CS42L51_I2C
++	tristate "Cirrus Logic CS42L51 CODEC (I2C)"
++	depends on I2C
++	select SND_SOC_CS42L51
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1015: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1015:
++config SND_SOC_CS42L52
++	tristate "Cirrus Logic CS42L52 CODEC"
++	depends on I2C && INPUT
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1019: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1019:
++config SND_SOC_CS42L56
++	tristate "Cirrus Logic CS42L56 CODEC"
++	depends on I2C && INPUT
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1023: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1023:
++config SND_SOC_CS42L73
++	tristate "Cirrus Logic CS42L73 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1027: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1027:
++config SND_SOC_CS42L83
++	tristate "Cirrus Logic CS42L83 CODEC"
++	depends on I2C
++	select REGMAP
++	select REGMAP_I2C
++	select SND_SOC_CS42L42_CORE
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1034: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1034:
++config SND_SOC_CS42L84
++	tristate "Cirrus Logic CS42L84 CODEC"
++	depends on I2C
++	select REGMAP
++	select REGMAP_I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1040: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1040:
++config SND_SOC_CS4234
++	tristate "Cirrus Logic CS4234 CODEC"
++	depends on I2C
++	select REGMAP_I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1045: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1045:
++config SND_SOC_CS4265
++	tristate "Cirrus Logic CS4265 CODEC"
++	depends on I2C
++	select REGMAP_I2C
++
++# Cirrus Logic CS4270 Codec
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1051: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1051:
++config SND_SOC_CS4270
++	tristate "Cirrus Logic CS4270 CODEC"
++	depends on I2C
++
++# Cirrus Logic CS4270 Codec VD = 3.3V Errata
++# Select if you are affected by the errata where the part will not function
++# if MCLK divide-by-1.5 is selected and VD is set to 3.3V.  The driver will
++# not select any sample rates that require MCLK to be divided by 1.5.
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1066: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1066:
++config SND_SOC_CS4271_I2C
++	tristate "Cirrus Logic CS4271 CODEC (I2C)"
++	depends on I2C
++	select SND_SOC_CS4271
++	select REGMAP_I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1072: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1072:
++config SND_SOC_CS4271_SPI
++	tristate "Cirrus Logic CS4271 CODEC (SPI)"
++	depends on SPI_MASTER
++	select SND_SOC_CS4271
++	select REGMAP_SPI
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1081: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1081:
++config SND_SOC_CS42XX8_SPI
++	tristate "Cirrus Logic CS42448/CS42888 CODEC (SPI)"
++	depends on SPI_MASTER
++	select SND_SOC_CS42XX8
++	select REGMAP_SPI
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1087: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1087:
++config SND_SOC_CS42XX8_I2C
++	tristate "Cirrus Logic CS42448/CS42888 CODEC (I2C)"
++	depends on I2C
++	select SND_SOC_CS42XX8
++	select REGMAP_I2C
++
++# Cirrus Logic CS43130 HiFi DAC
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1094: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1094:
++config SND_SOC_CS43130
++	tristate "Cirrus Logic CS43130 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1098: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1098:
++config SND_SOC_CS4341
++	tristate "Cirrus Logic CS4341 CODEC"
++	depends on SND_SOC_I2C_AND_SPI
++	select REGMAP_I2C if I2C
++	select REGMAP_SPI if SPI_MASTER
++
++# Cirrus Logic CS4349 HiFi DAC
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1105: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1105:
++config SND_SOC_CS4349
++	tristate "Cirrus Logic CS4349 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1134: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1134:
++config SND_SOC_CS48L32
++	tristate "Cirrus Logic CS48L32 audio DSP"
++	depends on SPI_MASTER
++	select REGMAP_SPI
++	select SND_SOC_WM_ADSP
++	help
++	  Build the codec driver for the Cirrus Logic CS48L32 audio DSP.
++
++# Cirrus Logic Quad-Channel ADC
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1143: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1143:
++config SND_SOC_CS53L30
++	tristate "Cirrus Logic CS53L30 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1150: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1150:
++config SND_SOC_CS530X_I2C
++	tristate "Cirrus Logic CS530x ADCs (I2C)"
++	depends on I2C
++	select REGMAP
++	select REGMAP_I2C
++	select SND_SOC_CS530X
++	help
++	  Enable support for Cirrus Logic CS530X ADCs
++	  with I2C control.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1160: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1160:
++config SND_SOC_CS530X_SPI
++	tristate "Cirrus Logic CS530x ADCs (SPI)"
++	depends on SPI_MASTER
++	select REGMAP_SPI
++	select SND_SOC_CS530X
++	help
++	  Enable support for Cirrus Logic CS530X ADCs
++	  with SPI control.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1173: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1173:
++config SND_SOC_CX2072X
++	tristate "Conexant CX2072X CODEC"
++	depends on I2C
++	help
++	  Enable support for Conexant CX20721 and CX20723 codec chips.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1231: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1231:
++config SND_SOC_DA7213
++	tristate "Dialog DA7213 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1251: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1251:
++config SND_SOC_DMIC
++	tristate "Generic Digital Microphone CODEC"
++	help
++	  Enable support for the Generic Digital Microphone CODEC.
++	  Select this if your sound card has DMICs.
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1263: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1263:
++config SND_SOC_ES7134
++	tristate "Everest Semi ES7134 CODEC"
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1266: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1266:
++config SND_SOC_ES7241
++	tristate "Everest Semi ES7241 CODEC"
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1273: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1273:
++config SND_SOC_ES8311
++	tristate "Everest Semi ES8311 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1277: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1277:
++config SND_SOC_ES8316
++	tristate "Everest Semi ES8316 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1281: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1281:
++config SND_SOC_ES8323
++	tristate "Everest Semi ES8323 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1285: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1285:
++config SND_SOC_ES8326
++	tristate "Everest Semi ES8326 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1292: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1292:
++config SND_SOC_ES8328_I2C
++	tristate "Everest Semi ES8328 CODEC (I2C)"
++	depends on I2C
++	select SND_SOC_ES8328
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1297: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1297:
++config SND_SOC_ES8328_SPI
++	tristate "Everest Semi ES8328 CODEC (SPI)"
++	depends on SPI_MASTER
++	select SND_SOC_ES8328
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1302: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1302:
++config SND_SOC_ES8375
++	tristate "Everest Semi ES8375 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1306: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1306:
++config SND_SOC_ES8389
++	tristate "Everest Semi ES8389 CODEC"
++	depends on I2C
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1310: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1310:
++config SND_SOC_ES9356
++	tristate "Everest Semi ES9356 CODEC SDW"
++	depends on SND_SOC_SDCA
++	depends on SOUNDWIRE
++	select REGMAP_SOUNDWIRE
++	select REGMAP_SOUNDWIRE_MBQ
++
+
+WARNING:CONFIG_DESCRIPTION: please write a help paragraph that fully describes the config symbol with at least 4 lines
+#1346: FILE: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig:1346:
++config SND_SOC_GTM601
++	tristate 'GTM601 UMTS modem audio codec'
++
+
+total: 0 errors, 52 warnings, 0 checks, 2943 lines checked
+
+NOTE: For some of the reported defects, checkpatch may be able to
+      mechanically convert to the typical style using --fix or --fix-inplace.
+
+/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig has style problems, please review.
+
+NOTE: If any of the errors are false positives, please report
+      them to the maintainer, see CHECKPATCH in MAINTAINERS.

@@ -1,0 +1,445 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * Qualcomm WCD9378 codec static RFC prototype.
+ */
+
+#include <linux/component.h>
+#include <linux/delay.h>
+#include <linux/device.h>
+#include <linux/gpio/consumer.h>
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/of.h>
+#include <linux/pm_runtime.h>
+#include <linux/platform_device.h>
+#include <linux/regmap.h>
+#include <linux/regulator/consumer.h>
+#include <linux/slab.h>
+#include <linux/soundwire/sdw.h>
+#include <sound/soc.h>
+#include "wcd-clsh-v2.h"
+#include "wcd-common.h"
+#include "wcd-mbhc-v2.h"
+#include "wcd9378.h"
+
+#define WCD9378_HS_V_MAX_MV 1600
+
+static const char * const wcd9378_supplies[] = {
+	"vdd-buck",
+	"vdd-rxtx",
+	"vdd-px",
+	"vdd-mic-bias",
+};
+
+static int wcd9378_codec_hw_params(struct snd_pcm_substream *substream,
+				   struct snd_pcm_hw_params *params,
+				   struct snd_soc_dai *dai)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dai->dev);
+	struct wcd9378_sdw_priv *wcd = wcd9378->sdw_priv[dai->id];
+
+	if (!wcd)
+		return -EINVAL;
+
+	return wcd9378_sdw_hw_params(wcd, substream, params, dai);
+}
+
+static int wcd9378_codec_free(struct snd_pcm_substream *substream,
+			      struct snd_soc_dai *dai)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dai->dev);
+	struct wcd9378_sdw_priv *wcd = wcd9378->sdw_priv[dai->id];
+
+	if (!wcd)
+		return -EINVAL;
+
+	return wcd9378_sdw_free(wcd, substream, dai);
+}
+
+static int wcd9378_codec_set_sdw_stream(struct snd_soc_dai *dai,
+					void *stream, int direction)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dai->dev);
+	struct wcd9378_sdw_priv *wcd = wcd9378->sdw_priv[dai->id];
+
+	if (!wcd)
+		return -EINVAL;
+
+	return wcd9378_sdw_set_sdw_stream(wcd, dai, stream, direction);
+}
+
+static int wcd9378_get_channel_map(const struct snd_soc_dai *dai,
+				   unsigned int *tx_num,
+				   unsigned int *tx_slot,
+				   unsigned int *rx_num,
+				   unsigned int *rx_slot)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dai->dev);
+	struct wcd9378_sdw_priv *wcd = wcd9378->sdw_priv[dai->id];
+	int i;
+
+	if (!wcd)
+		return -EINVAL;
+
+	switch (dai->id) {
+	case AIF1_PB:
+		if (!rx_slot || !rx_num)
+			return -EINVAL;
+		for (i = 0; i < SDW_MAX_PORTS; i++)
+			rx_slot[i] = wcd->master_channel_map[i];
+		*rx_num = i;
+		break;
+	case AIF1_CAP:
+		if (!tx_slot || !tx_num)
+			return -EINVAL;
+		for (i = 0; i < SDW_MAX_PORTS; i++)
+			tx_slot[i] = wcd->master_channel_map[i];
+		*tx_num = i;
+		break;
+	default:
+		return -EINVAL;
+	}
+
+	return 0;
+}
+
+static const struct snd_soc_dai_ops wcd9378_sdw_dai_ops = {
+	.hw_params = wcd9378_codec_hw_params,
+	.hw_free = wcd9378_codec_free,
+	.set_stream = wcd9378_codec_set_sdw_stream,
+	.get_channel_map = wcd9378_get_channel_map,
+};
+
+static struct snd_soc_dai_driver wcd9378_dais[] = {
+	[0] = {
+		.name = "wcd9378-sdw-rx",
+		.playback = {
+			.stream_name = "WCD9378 AIF Playback",
+			.rates = WCD9378_RATES | WCD9378_FRAC_RATES,
+			.formats = WCD9378_FORMATS,
+			.rate_min = 8000,
+			.rate_max = 384000,
+			.channels_min = 1,
+			.channels_max = 4,
+		},
+		.ops = &wcd9378_sdw_dai_ops,
+	},
+	[1] = {
+		.name = "wcd9378-sdw-tx",
+		.capture = {
+			.stream_name = "WCD9378 AIF Capture",
+			.rates = WCD9378_RATES,
+			.formats = WCD9378_FORMATS,
+			.rate_min = 8000,
+			.rate_max = 192000,
+			.channels_min = 1,
+			.channels_max = 4,
+		},
+		.ops = &wcd9378_sdw_dai_ops,
+	},
+};
+
+static void wcd9378_reset(struct wcd9378_priv *wcd9378)
+{
+	gpiod_set_value(wcd9378->reset_gpio, 1);
+	usleep_range(20, 30);
+	gpiod_set_value(wcd9378->reset_gpio, 0);
+	usleep_range(20, 30);
+}
+
+static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
+{
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+	struct sdw_slave *tx_sdw_dev = wcd9378->tx_sdw_dev;
+	struct device *dev = component->dev;
+	unsigned long time_left;
+	int ret;
+
+	if (!tx_sdw_dev)
+		return -EINVAL;
+
+	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
+						msecs_to_jiffies(5000));
+	if (!time_left)
+		return -ETIMEDOUT;
+
+	snd_soc_component_init_regmap(component, wcd9378->regmap);
+
+	ret = pm_runtime_resume_and_get(dev);
+	if (ret < 0)
+		return ret;
+
+	wcd9378->clsh_info = wcd_clsh_ctrl_alloc(component, WCD937X);
+	if (IS_ERR(wcd9378->clsh_info)) {
+		ret = PTR_ERR(wcd9378->clsh_info);
+		wcd9378->clsh_info = NULL;
+		pm_runtime_put(dev);
+		return ret;
+	}
+
+	pm_runtime_put(dev);
+
+	return 0;
+}
+
+static void wcd9378_soc_codec_remove(struct snd_soc_component *component)
+{
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	if (wcd9378->wcd_mbhc)
+		wcd_mbhc_deinit(wcd9378->wcd_mbhc);
+
+	if (wcd9378->clsh_info)
+		wcd_clsh_ctrl_free(wcd9378->clsh_info);
+}
+
+static int wcd9378_codec_set_jack(struct snd_soc_component *comp,
+				  struct snd_soc_jack *jack,
+				  void *data)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(comp->dev);
+
+	if (!wcd9378->wcd_mbhc)
+		return -EOPNOTSUPP;
+
+	if (jack)
+		return wcd_mbhc_start(wcd9378->wcd_mbhc, &wcd9378->mbhc_cfg, jack);
+
+	wcd_mbhc_stop(wcd9378->wcd_mbhc);
+	return 0;
+}
+
+static const struct snd_soc_component_driver soc_codec_dev_wcd9378 = {
+	.name = "wcd9378_codec",
+	.probe = wcd9378_soc_codec_probe,
+	.remove = wcd9378_soc_codec_remove,
+	.set_jack = wcd9378_codec_set_jack,
+	.endianness = 1,
+};
+
+static int wcd9378_bind(struct device *dev)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dev);
+	int ret;
+
+	usleep_range(5000, 5010);
+
+	ret = component_bind_all(dev, wcd9378);
+	if (ret)
+		return ret;
+
+	wcd9378->rxdev = of_sdw_find_device_by_node(wcd9378->rxnode);
+	if (!wcd9378->rxdev) {
+		ret = -EINVAL;
+		goto err_component_unbind;
+	}
+
+	wcd9378->sdw_priv[AIF1_PB] = dev_get_drvdata(wcd9378->rxdev);
+	if (!wcd9378->sdw_priv[AIF1_PB]) {
+		ret = -EINVAL;
+		goto err_put_rxdev;
+	}
+
+	wcd9378->sdw_priv[AIF1_PB]->wcd9378 = wcd9378;
+	wcd9378->rx_sdw_dev = dev_to_sdw_dev(wcd9378->rxdev);
+
+	wcd9378->txdev = of_sdw_find_device_by_node(wcd9378->txnode);
+	if (!wcd9378->txdev) {
+		ret = -EINVAL;
+		goto err_put_rxdev;
+	}
+
+	wcd9378->sdw_priv[AIF1_CAP] = dev_get_drvdata(wcd9378->txdev);
+	if (!wcd9378->sdw_priv[AIF1_CAP]) {
+		ret = -EINVAL;
+		goto err_put_txdev;
+	}
+
+	wcd9378->sdw_priv[AIF1_CAP]->wcd9378 = wcd9378;
+	wcd9378->tx_sdw_dev = dev_to_sdw_dev(wcd9378->txdev);
+
+	if (!device_link_add(wcd9378->rxdev, wcd9378->txdev,
+			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
+		ret = -EINVAL;
+		goto err_put_txdev;
+	}
+
+	if (!device_link_add(dev, wcd9378->txdev,
+			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
+		ret = -EINVAL;
+		goto err_remove_link1;
+	}
+
+	if (!device_link_add(dev, wcd9378->rxdev,
+			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {
+		ret = -EINVAL;
+		goto err_remove_link2;
+	}
+
+	wcd9378->regmap = wcd9378->sdw_priv[AIF1_CAP]->regmap;
+	if (!wcd9378->regmap) {
+		ret = -EINVAL;
+		goto err_remove_link3;
+	}
+
+	ret = snd_soc_register_component(dev, &soc_codec_dev_wcd9378,
+					 wcd9378_dais,
+					 ARRAY_SIZE(wcd9378_dais));
+	if (ret)
+		goto err_remove_link3;
+
+	return 0;
+
+err_remove_link3:
+	device_link_remove(dev, wcd9378->rxdev);
+err_remove_link2:
+	device_link_remove(dev, wcd9378->txdev);
+err_remove_link1:
+	device_link_remove(wcd9378->rxdev, wcd9378->txdev);
+err_put_txdev:
+	put_device(wcd9378->txdev);
+err_put_rxdev:
+	put_device(wcd9378->rxdev);
+err_component_unbind:
+	component_unbind_all(dev, wcd9378);
+	return ret;
+}
+
+static void wcd9378_unbind(struct device *dev)
+{
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dev);
+
+	snd_soc_unregister_component(dev);
+	device_link_remove(dev, wcd9378->txdev);
+	device_link_remove(dev, wcd9378->rxdev);
+	device_link_remove(wcd9378->rxdev, wcd9378->txdev);
+	component_unbind_all(dev, wcd9378);
+	put_device(wcd9378->txdev);
+	put_device(wcd9378->rxdev);
+}
+
+static const struct component_master_ops wcd9378_comp_ops = {
+	.bind = wcd9378_bind,
+	.unbind = wcd9378_unbind,
+};
+
+static int wcd9378_add_slave_components(struct wcd9378_priv *wcd9378,
+					struct device *dev,
+					struct component_match **matchptr)
+{
+	struct device_node *np = dev->of_node;
+
+	wcd9378->rxnode = of_parse_phandle(np, "qcom,rx-device", 0);
+	if (!wcd9378->rxnode)
+		return -ENODEV;
+
+	component_match_add_release(dev, matchptr, component_release_of,
+				    component_compare_of, wcd9378->rxnode);
+
+	wcd9378->txnode = of_parse_phandle(np, "qcom,tx-device", 0);
+	if (!wcd9378->txnode)
+		return -ENODEV;
+
+	component_match_add_release(dev, matchptr, component_release_of,
+				    component_compare_of, wcd9378->txnode);
+
+	return 0;
+}
+
+static int wcd9378_probe(struct platform_device *pdev)
+{
+	struct component_match *match = NULL;
+	struct device *dev = &pdev->dev;
+	struct wcd9378_priv *wcd9378;
+	int ret;
+
+	wcd9378 = devm_kzalloc(dev, sizeof(*wcd9378), GFP_KERNEL);
+	if (!wcd9378)
+		return -ENOMEM;
+
+	dev_set_drvdata(dev, wcd9378);
+
+	mutex_init(&wcd9378->micb_lock);
+	wcd9378->common.dev = dev;
+	wcd9378->common.max_bias = WCD9378_MAX_MICBIAS;
+
+	ret = devm_regulator_bulk_get_enable(dev, ARRAY_SIZE(wcd9378_supplies),
+					     wcd9378_supplies);
+	if (ret)
+		return dev_err_probe(dev, ret, "Failed to get and enable supplies\n");
+
+	wcd9378->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
+	if (IS_ERR(wcd9378->reset_gpio))
+		return dev_err_probe(dev, PTR_ERR(wcd9378->reset_gpio),
+				     "failed to request reset gpio\n");
+
+	ret = wcd_dt_parse_micbias_info(&wcd9378->common);
+	if (ret)
+		return dev_err_probe(dev, ret, "Failed to parse micbias properties\n");
+
+	wcd9378->mbhc_cfg.mbhc_micbias = MIC_BIAS_2;
+	wcd9378->mbhc_cfg.anc_micbias = MIC_BIAS_2;
+	wcd9378->mbhc_cfg.v_hs_max = WCD9378_HS_V_MAX_MV;
+	wcd9378->mbhc_cfg.num_btn = WCD_MBHC_DEF_BUTTONS;
+	wcd9378->mbhc_cfg.micb_mv = wcd9378->common.micb_mv[1];
+	wcd9378->mbhc_cfg.linein_th = 5000;
+	wcd9378->mbhc_cfg.hs_thr = 1700;
+	wcd9378->mbhc_cfg.hph_thr = 50;
+
+	wcd_dt_parse_mbhc_data(dev, &wcd9378->mbhc_cfg);
+
+	ret = wcd9378_add_slave_components(wcd9378, dev, &match);
+	if (ret)
+		return ret;
+
+	wcd9378_reset(wcd9378);
+
+	ret = component_master_add_with_match(dev, &wcd9378_comp_ops, match);
+	if (ret)
+		return ret;
+
+	pm_runtime_set_autosuspend_delay(dev, 1000);
+	pm_runtime_use_autosuspend(dev);
+	pm_runtime_mark_last_busy(dev);
+	pm_runtime_set_active(dev);
+	pm_runtime_enable(dev);
+	pm_runtime_idle(dev);
+
+	return 0;
+}
+
+static void wcd9378_remove(struct platform_device *pdev)
+{
+	struct device *dev = &pdev->dev;
+	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dev);
+
+	component_master_del(dev, &wcd9378_comp_ops);
+
+	pm_runtime_disable(dev);
+	pm_runtime_set_suspended(dev);
+	pm_runtime_dont_use_autosuspend(dev);
+	mutex_destroy(&wcd9378->micb_lock);
+}
+
+#if defined(CONFIG_OF)
+static const struct of_device_id wcd9378_of_match[] = {
+	{ .compatible = "qcom,wcd9378-codec" },
+	{ }
+};
+MODULE_DEVICE_TABLE(of, wcd9378_of_match);
+#endif
+
+static struct platform_driver wcd9378_codec_driver = {
+	.probe = wcd9378_probe,
+	.remove = wcd9378_remove,
+	.driver = {
+		.name = WCD9378_DRV_NAME,
+		.of_match_table = of_match_ptr(wcd9378_of_match),
+		.suppress_bind_attrs = true,
+	},
+};
+
+module_platform_driver(wcd9378_codec_driver);
+
+MODULE_DESCRIPTION("WCD9378 codec static prototype driver");
+MODULE_LICENSE("GPL");

@@ -1,0 +1,294 @@
+{
+  "artifact": "wcd9378_static_prototype_variant_a1_patch_lineage",
+  "generated_at_utc": "2026-06-20T00:00:00Z",
+  "mode": "RFC_STATIC_COMPILE_READY",
+  "lineage_coverage": "ALL_GENERATED_FUNCTIONS_MAPPED_OR_FAIL_CLOSED",
+  "confidence_classification": "STATIC_ONLY",
+  "patches": [
+    {
+      "patch": "0001-ASoC-codecs-add-WCD9378-shared-header-RFC-static-pro.patch",
+      "what": "Introduced compile-oriented WCD9378 shared header with register subset, SDW topology enums, and shared private structures.",
+      "signal_source": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h:16-241",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/internal.h:191-218",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.h:490-620"
+      ],
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "patch": "0002-ASoC-codecs-add-WCD9378-SoundWire-scaffold-RFC-stati.patch",
+      "what": "Added WCD9378 SDW static scaffold (channel mapping, regmap setup, probe/remove, runtime PM).",
+      "signal_source": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c:313-401",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4509-4533",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:81-1145",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1152-1274",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c:1338-1457"
+      ],
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "patch": "0003-ASoC-codecs-add-WCD9378-codec-scaffold-RFC-static-pr.patch",
+      "what": "Added WCD9378 platform codec scaffold with bind/unbind, DAI ops, regulator/reset, MBHC/Class-H API integration points.",
+      "signal_source": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4282-4870",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2498-3004",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml:23-55",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml:13-92"
+      ],
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "patch": "0004-ASoC-codecs-wire-WCD9378-Kconfig-Makefile-entries-RF.patch",
+      "what": "Integrated WCD9378 and WCD9378_SDW symbols/objects in upstream codec Kconfig and Makefile.",
+      "signal_source": [
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig:2452-2518",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile:360-366,804-822"
+      ],
+      "confidence": "HIGH"
+    }
+  ],
+  "per_function_lineage": [
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_hw_params",
+      "output_line": 111,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:574-634",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:81-113",
+      "confidence": "HIGH",
+      "why": "Stream config and sdw_stream_add_slave lifecycle follows upstream SDW pattern with WCD9378 channel model."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_free",
+      "output_line": 145,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:2787-2800",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:123-141",
+      "confidence": "HIGH",
+      "why": "Uses upstream sdw_stream_remove_slave release sequence."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_set_sdw_stream",
+      "output_line": 155,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:2801-2810",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c:178-186",
+      "confidence": "HIGH",
+      "why": "Stream runtime handoff mirrors upstream SDW API expectations."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_interrupt_callback",
+      "output_line": 165,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:231-260",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:118-126",
+      "confidence": "HIGH",
+      "why": "Interrupt callback wiring uses wcd_interrupt_callback helper like upstream WCD SDW drivers."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_rdwr_register",
+      "output_line": 176,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c:879-965",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:486-956",
+      "confidence": "HIGH",
+      "why": "Regmap range filtering follows upstream readable/writeable gating idiom."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_readable_register",
+      "output_line": 184,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c:879-942",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:952-956",
+      "confidence": "HIGH",
+      "why": "Readable callback delegates to range helper exactly as in upstream patterns."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_writeable_register",
+      "output_line": 189,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c:879-942",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1011-1015",
+      "confidence": "HIGH",
+      "why": "Writeable callback shape is kept consistent with upstream SDW codecs."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_volatile_register",
+      "output_line": 194,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c:943-965",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:598-956",
+      "confidence": "HIGH",
+      "why": "Volatile register classification is mapped from downstream and represented using upstream callback structure."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_parse_channel_mapping",
+      "output_line": 231,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:490-573",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:958-1022",
+      "confidence": "HIGH",
+      "why": "DT channel-map parser keeps deterministic count/cap/read flow from upstream SDW codecs."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_probe",
+      "output_line": 254,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c:330-373",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:964-1057",
+      "confidence": "STATIC_ONLY",
+      "why": "Probe integrates upstream lifecycle while keeping runtime-sensitive ID/paging assumptions explicitly non-final."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_remove",
+      "output_line": 324,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c:376-401",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1255-1260",
+      "confidence": "HIGH",
+      "why": "Component removal path follows upstream component_del sequencing."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_runtime_suspend",
+      "output_line": 329,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4509-4518",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c:1072-1090",
+      "confidence": "HIGH",
+      "why": "Regcache cache_only+mark_dirty sequence mirrors upstream SDW runtime PM model."
+    },
+    {
+      "output_file": "wcd9378-sdw.c",
+      "output_function": "wcd9378_sdw_runtime_resume",
+      "output_line": 341,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4509-4518",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd939x-sdw.c:1431-1444",
+      "confidence": "HIGH",
+      "why": "Resume path uses upstream regcache sync + pm_runtime_mark_last_busy sequence."
+    },
+
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_codec_hw_params",
+      "output_line": 34,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:2774-2786",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2652-2667",
+      "confidence": "HIGH",
+      "why": "DAI hw_params bridge to SDW helper mirrors upstream family layering."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_codec_free",
+      "output_line": 47,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:2787-2800",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2659-2667",
+      "confidence": "HIGH",
+      "why": "DAI hw_free mapping to SDW free helper follows upstream convention."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_codec_set_sdw_stream",
+      "output_line": 59,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:2801-2810",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2669-2678",
+      "confidence": "HIGH",
+      "why": "Set-stream indirection preserved for upstream stream lifecycle compatibility."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_get_channel_map",
+      "output_line": 71,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:2812-2858",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2680-2722",
+      "confidence": "HIGH",
+      "why": "AIF1_PB/AIF1_CAP channel map reporting aligns with existing upstream WCD shape."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_reset",
+      "output_line": 142,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4282-4302",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:240-245",
+      "confidence": "HIGH",
+      "why": "GPIO pulse reset timing follows established upstream WCD reset idiom."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_soc_codec_probe",
+      "output_line": 150,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4482-4574",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2498-2595",
+      "confidence": "STATIC_ONLY",
+      "why": "Probe sequence follows upstream component/regmap/class-h ordering; runtime claims remain intentionally absent."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_soc_codec_remove",
+      "output_line": 185,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4579-4610",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2597-2608",
+      "confidence": "STATIC_ONLY",
+      "why": "Remove cleanup is mapped to upstream mbhc/class-h free pattern."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_codec_set_jack",
+      "output_line": 196,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4410-4445",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2609-2623",
+      "confidence": "STATIC_ONLY",
+      "why": "Jack hook retains upstream MBHC start/stop API boundary without runtime assertions."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_bind",
+      "output_line": 220,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4482-4574",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2756-2856",
+      "confidence": "STATIC_ONLY",
+      "why": "Component aggregation + device-link topology follows upstream WCD937x architecture."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_unbind",
+      "output_line": 308,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4579-4610",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2858-2871",
+      "confidence": "HIGH",
+      "why": "Unbind teardown order mirrors upstream component/device-link cleanup flow."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_add_slave_components",
+      "output_line": 326,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4642-4719",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2877-2903",
+      "confidence": "HIGH",
+      "why": "Phandle match setup follows upstream qcom,rx-device / qcom,tx-device flow."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_probe",
+      "output_line": 349,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4642-4760",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2904-2972",
+      "confidence": "STATIC_ONLY",
+      "why": "Probe adopts upstream-style regulator/reset/component setup and keeps runtime-sensitive assumptions gated."
+    },
+    {
+      "output_file": "wcd9378.c",
+      "output_function": "wcd9378_remove",
+      "output_line": 411,
+      "downstream_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c:4760-4870",
+      "reference_signal": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c:2974-2984",
+      "confidence": "HIGH",
+      "why": "Runtime PM teardown pattern follows upstream remove lifecycle."
+    }
+  ],
+  "lineage_statistics": {
+    "converted_function_count": 26,
+    "covered_function_count": 26,
+    "coverage_percent": 100.0
+  },
+  "fail_closed_items_source": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json"
+}

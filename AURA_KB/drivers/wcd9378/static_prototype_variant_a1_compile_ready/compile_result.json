@@ -1,0 +1,53 @@
+{
+  "artifact": "wcd9378_static_prototype_a1_compile_result",
+  "generated_at_utc": "2026-06-20T00:00:00Z",
+  "status": "COMPILE_NOT_RUN_ENVIRONMENT",
+  "linux_next_head_sha": "ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
+  "kernel_tree": "/tmp/wcd9378_a1_compile_linux_next",
+  "build_output_dir": "/tmp/wcd9378_a1_build_out",
+  "commands": [
+    "make -C /tmp/wcd9378_a1_compile_linux_next O=/tmp/wcd9378_a1_build_out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- defconfig",
+    "/tmp/wcd9378_a1_compile_linux_next/scripts/config --file /tmp/wcd9378_a1_build_out/.config -e SOUNDWIRE -e REGMAP_SOUNDWIRE -e REGMAP_IRQ -e SND_SOC -e SND_SOC_WCD_CLASSH -e SND_SOC_WCD_COMMON -e SND_SOC_WCD_MBHC -e SND_SOC_WCD9378 -e SND_SOC_WCD9378_SDW",
+    "make -C /tmp/wcd9378_a1_compile_linux_next O=/tmp/wcd9378_a1_build_out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- olddefconfig",
+    "make -C /tmp/wcd9378_a1_compile_linux_next O=/tmp/wcd9378_a1_build_out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- M=sound/soc/codecs W=1",
+    "make -C /tmp/wcd9378_a1_compile_linux_next O=/tmp/wcd9378_a1_build_out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- modules_prepare",
+    "make -C /tmp/wcd9378_a1_compile_linux_next O=/tmp/wcd9378_a1_build_out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- M=sound/soc/codecs W=1",
+    "KBUILD_MODPOST_WARN=1 make -C /tmp/wcd9378_a1_compile_linux_next O=/tmp/wcd9378_a1_build_out ARCH=arm64 CROSS_COMPILE=aarch64-linux-gnu- M=sound/soc/codecs W=1"
+  ],
+  "return_codes": {
+    "defconfig": 0,
+    "scripts_config": 0,
+    "olddefconfig": 0,
+    "module_build_requested": 2,
+    "modules_prepare": 0,
+    "module_build_after_prepare": 2,
+    "module_build_modpost_warn": 0
+  },
+  "stdout_stderr_log_paths": {
+    "defconfig": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/01_defconfig.log",
+    "scripts_config": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/02_scripts_config.log",
+    "olddefconfig": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/03_olddefconfig.log",
+    "module_build_requested": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/04_module_build_requested.log",
+    "modules_prepare": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/05_modules_prepare.log",
+    "module_build_after_prepare": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/06_module_build_after_prepare.log",
+    "module_build_modpost_warn": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/07_module_build_modpost_warn.log"
+  },
+  "first_error_summary": "Requested module build before modules_prepare fails due missing include/generated/asm-offsets.h and empty stack protector offset expansion; after modules_prepare, strict modpost fails because /tmp/wcd9378_a1_build_out/Module.symvers is absent in this partial-build environment.",
+  "warnings_summary": "With KBUILD_MODPOST_WARN=1, codec module set builds and links .ko files with unresolved-symbol warnings tolerated by modpost. This was used only as supplemental static evidence.",
+  "unresolved_symbols": {
+    "present_in_strict_modpost": true,
+    "reason": "Module.symvers missing in partial module-only build context",
+    "examples": [
+      "devm_kmalloc",
+      "platform_driver_unregister",
+      "devm_snd_soc_register_component",
+      "device_property_read_u32_array"
+    ]
+  },
+  "wcd9378_specific_evidence": {
+    "object_compile_in_strict_run": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/06_module_build_after_prepare.log lines 131-134",
+    "ko_link_in_modpost_warn_run": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/compile/07_module_build_modpost_warn.log lines 147-150"
+  },
+  "config_used": "/tmp/wcd9378_a1_build_out/.config",
+  "environment_blocker": "Full strict module verification is blocked by missing Module.symvers in this non-full-kernel-build environment."
+}

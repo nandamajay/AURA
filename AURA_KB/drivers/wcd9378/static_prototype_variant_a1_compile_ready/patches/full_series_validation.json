@@ -1,0 +1,92 @@
+{
+  "artifact": "wcd9378_static_prototype_a1_full_series_validation",
+  "generated_at_utc": "2026-06-20T00:00:00Z",
+  "series_apply": {
+    "status": "PASS",
+    "validation_repo": "/tmp/wcd9378_a1_compile_linux_next",
+    "start_head": "ec039126b",
+    "resulting_head": "e04ae5ba7",
+    "applied_patch_count": 4,
+    "patches": [
+      "0001-ASoC-codecs-add-WCD9378-shared-header-RFC-static-pro.patch",
+      "0002-ASoC-codecs-add-WCD9378-SoundWire-scaffold-RFC-stati.patch",
+      "0003-ASoC-codecs-add-WCD9378-codec-scaffold-RFC-static-pr.patch",
+      "0004-ASoC-codecs-wire-WCD9378-Kconfig-Makefile-entries-RF.patch"
+    ],
+    "apply_log": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/validation/git_am_apply.log",
+    "worktree_log": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/logs/validation/git_worktree_add.log",
+    "commands": [
+      "git -C track_b_corpora/linux-next worktree add /tmp/wcd9378_a1_compile_linux_next ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
+      "git -C /tmp/wcd9378_a1_compile_linux_next am AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/*.patch"
+    ]
+  },
+  "touched_files": [
+    "sound/soc/codecs/wcd9378.h",
+    "sound/soc/codecs/wcd9378-sdw.c",
+    "sound/soc/codecs/wcd9378.c",
+    "sound/soc/codecs/Kconfig",
+    "sound/soc/codecs/Makefile"
+  ],
+  "banned_symbol_check": {
+    "status": "PASS",
+    "total_occurrences": 0,
+    "checked_files": [
+      "converted/wcd9378.c",
+      "converted/wcd9378-sdw.c",
+      "converted/wcd9378.h"
+    ],
+    "pattern_set": [
+      "CONFIG_BOLERO",
+      "SWR_DEVICE_SSR",
+      "SWR_REGISTER_WAKE_IRQ",
+      "SWR_SET_PORT_MAP",
+      "lpass_cdc_clk_rsc",
+      "lpass_cdc_register_macro",
+      "lpass_cdc_rsc_clk",
+      "lpass_cdc_unregister_macro",
+      "msm_cdc_pinctrl",
+      "swrm_wcd_notify",
+      "linux/version.h",
+      "lpass-cdc-clk-rsc.h",
+      "lpass-cdc-registers.h",
+      "lpass-cdc.h",
+      "msm-cdc-pinctrl.h",
+      "swr-common.h",
+      "swr-wcd.h",
+      "msm-cdc-supply",
+      "wcdcal-hwdep",
+      "bolero-slave-internal",
+      "audio-codec-port-types.h"
+    ]
+  },
+  "lineage": {
+    "status": "PASS",
+    "lineage_file": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json",
+    "coverage_percent": 100.0,
+    "converted_function_count": 26,
+    "covered_function_count": 26
+  },
+  "runtime_claim_guard": {
+    "status": "PASS",
+    "forbidden_claim_hits": 0,
+    "checked_patterns": [
+      "playback works",
+      "capture works",
+      "fully working",
+      "upstream-ready"
+    ]
+  },
+  "scope_guard": {
+    "status": "PASS",
+    "expected_modified_root": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/",
+    "no_source_tree_modifications_outside_artifact": true
+  },
+  "determinism": {
+    "replayable": true,
+    "inputs": [
+      "track_b_corpora/linux-next @ ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
+      "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted",
+      "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches"
+    ]
+  }
+}

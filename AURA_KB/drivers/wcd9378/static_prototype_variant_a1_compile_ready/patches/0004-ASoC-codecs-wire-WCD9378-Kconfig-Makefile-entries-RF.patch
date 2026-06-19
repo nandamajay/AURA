@@ -1,0 +1,78 @@
+From 719ccef29e51c2093b11ddbf4e1175670a2ce297 Mon Sep 17 00:00:00 2001
+From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+Date: Sat, 20 Jun 2026 02:43:13 +0530
+Subject: [RFC PATCH 4/4] ASoC: codecs: wire WCD9378 Kconfig/Makefile entries
+ (RFC static prototype)
+
+Add compile integration entries for WCD9378 and WCD9378_SDW in codec
+Kconfig and Makefile, preserving existing WCD93xx symbol structure.
+
+The entries remain explicitly RFC/static-prototype scope without runtime
+claims.
+
+Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
+---
+ sound/soc/codecs/Kconfig  | 21 +++++++++++++++++++++
+ sound/soc/codecs/Makefile |  7 +++++++
+ 2 files changed, 28 insertions(+)
+
+diff --git a/sound/soc/codecs/Kconfig b/sound/soc/codecs/Kconfig
+index 252f683be..861d67c6c 100644
+--- a/sound/soc/codecs/Kconfig
++++ b/sound/soc/codecs/Kconfig
+@@ -2469,6 +2469,27 @@ config SND_SOC_WCD937X_SDW
+ 	  via soundwire.
+ 	  To compile this codec driver say Y or m.
+ 
++config SND_SOC_WCD9378
++	depends on SND_SOC_WCD9378_SDW
++	tristate
++	depends on SOUNDWIRE || !SOUNDWIRE
++	select SND_SOC_WCD_CLASSH
++	select SND_SOC_WCD_COMMON
++
++config SND_SOC_WCD9378_SDW
++	tristate "WCD9378 Codec - SDW (RFC static prototype)"
++	select SND_SOC_WCD9378
++	select SND_SOC_WCD_MBHC
++	select REGMAP_IRQ
++	depends on SOUNDWIRE
++	select REGMAP_SOUNDWIRE
++	help
++	  RFC static prototype for Qualcomm WCD9378 codec and SoundWire
++	  split driver layout. No runtime playback/capture validation claims.
++	  Runtime-sensitive identity, paging, and Class-H behaviors remain
++	  explicitly gated pending hardware validation evidence.
++	  To compile this codec driver say Y or m.
++
+ config SND_SOC_WCD938X
+ 	depends on SND_SOC_WCD938X_SDW
+ 	tristate
+diff --git a/sound/soc/codecs/Makefile b/sound/soc/codecs/Makefile
+index aa0396e5b..ef9874930 100644
+--- a/sound/soc/codecs/Makefile
++++ b/sound/soc/codecs/Makefile
+@@ -360,6 +360,8 @@ snd-soc-wcd9335-y := wcd9335.o
+ snd-soc-wcd934x-y := wcd934x.o
+ snd-soc-wcd937x-y := wcd937x.o
+ snd-soc-wcd937x-sdw-y := wcd937x-sdw.o
++snd-soc-wcd9378-y := wcd9378.o
++snd-soc-wcd9378-sdw-y := wcd9378-sdw.o
+ snd-soc-wcd938x-y := wcd938x.o
+ snd-soc-wcd938x-sdw-y := wcd938x-sdw.o
+ snd-soc-wcd939x-y := wcd939x.o
+@@ -804,6 +806,11 @@ ifdef CONFIG_SND_SOC_WCD937X_SDW
+ # avoid link failure by forcing sdw code built-in when needed
+ obj-$(CONFIG_SND_SOC_WCD937X) += snd-soc-wcd937x-sdw.o
+ endif
++obj-$(CONFIG_SND_SOC_WCD9378)	+= snd-soc-wcd9378.o
++ifdef CONFIG_SND_SOC_WCD9378_SDW
++# avoid link failure by forcing sdw code built-in when needed
++obj-$(CONFIG_SND_SOC_WCD9378) += snd-soc-wcd9378-sdw.o
++endif
+ obj-$(CONFIG_SND_SOC_WCD938X)	+= snd-soc-wcd938x.o
+ ifdef CONFIG_SND_SOC_WCD938X_SDW
+ # avoid link failure by forcing sdw code built-in when needed
+-- 
+2.34.1
+

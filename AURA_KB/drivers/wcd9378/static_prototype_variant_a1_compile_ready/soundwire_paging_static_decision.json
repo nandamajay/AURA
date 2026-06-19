@@ -1,0 +1,40 @@
+{
+  "artifact": "wcd9378_static_prototype_a1_soundwire_paging_static_decision",
+  "generated_at_utc": "2026-06-20T00:00:00Z",
+  "decision": "FAIL_CLOSED_NOT_IMPLEMENTED",
+  "downstream_evidence": [
+    {
+      "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+      "line_or_symbol": "4509,4518",
+      "supports": "Downstream WCD9378 enables RX/TX paging_support=true on SoundWire slave devices."
+    },
+    {
+      "source": "track_b_corpora/audio-kernel-ar/soc/regmap-swr.c",
+      "line_or_symbol": "199-208",
+      "supports": "Downstream regmap-SWR selects 4-byte register addressing when paging_support is true."
+    }
+  ],
+  "upstream_evidence": [
+    {
+      "source": "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+      "line_or_symbol": "362-407",
+      "supports": "Upstream SDW core fills msg->addr_page1/addr_page2 and msg->page when paging is required."
+    },
+    {
+      "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+      "line_or_symbol": "973-1001",
+      "supports": "qcom_swrm_xfer_msg() currently uses msg->addr only and does not explicitly act on msg->page/addr_page1/addr_page2."
+    }
+  ],
+  "risk": "HIGH",
+  "reason": "A generic qcom paging patch cannot be proven safe from static evidence alone without runtime/controller validation. Implementing controller-side paging handling here could regress existing SoundWire devices; therefore RFC paging-core change is fail-closed for A.1.",
+  "notes": {
+    "allowed_scope_applied": true,
+    "no_soundwire_core_patch_generated": true,
+    "runtime_evidence_required": [
+      "Controller transfer trace with paged accesses",
+      "Proof of required/absent qcom controller page handling",
+      "No-regression evidence on existing Qualcomm SoundWire users"
+    ]
+  }
+}
