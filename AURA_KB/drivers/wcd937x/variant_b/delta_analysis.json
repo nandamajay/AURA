@@ -1,0 +1,137 @@
+{
+  "artifact_name": "WCD937X_VARIANT_B_DELTA_ANALYSIS",
+  "dt_binding_constraints_used": {
+    "compatibles": [
+      "qcom,wcd9370-codec",
+      "qcom,wcd9375-codec",
+      "sdw20217010a00"
+    ],
+    "phandles": [
+      "qcom,rx-device",
+      "qcom,tx-device"
+    ],
+    "rx_ports": 5,
+    "supplies": [
+      "vdd-buck-supply",
+      "vdd-rxtx-supply",
+      "vdd-px-supply",
+      "vdd-mic-bias-supply"
+    ],
+    "tx_ports": 4
+  },
+  "fail_closed_items": [
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "is_sdw_slv_reg_readable",
+      "output_line": 73,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_bind",
+      "output_line": 279,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_down",
+      "output_line": 395,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_probe",
+      "output_line": 405,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_remove",
+      "output_line": 410,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_reset",
+      "output_line": 400,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_unbind",
+      "output_line": 348,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdw_up",
+      "output_line": 390,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    },
+    {
+      "confidence": "FAIL_CLOSED",
+      "downstream_source_file": null,
+      "downstream_source_line": null,
+      "output_file": "wcd937x-sdw.c",
+      "output_function": "wcd937x_sdwslave_reg_show",
+      "output_line": 103,
+      "why": "no deterministic downstream/skeleton lineage could be established"
+    }
+  ],
+  "gate_phase_1_verdict": {
+    "reasons": [
+      "COPY_RISK vs wcd938x.c",
+      "COPY_RISK vs wcd938x-sdw.c"
+    ],
+    "verdict": "FAIL"
+  },
+  "gate_phase_2_verdict": {
+    "blocking_count": 0,
+    "verdict": "WARN",
+    "warning_count": 2
+  },
+  "generated_at_utc": "2026-06-19T16:15:15Z",
+  "line_counts_final": {
+    "converted": {
+      "wcd937x-sdw.c": 434,
+      "wcd937x.c": 3706,
+      "wcd937x.h": 1154
+    },
+    "downstream": {
+      "wcd937x.c": 3723,
+      "wcd937x.h": 111,
+      "wcd937x_slave.c": 441
+    }
+  },
+  "methodology": "relative_informed_with_copy_risk_fail_closed_pivot",
+  "replay_deterministic": true,
+  "summary": {
+    "phase_1": "skeleton-heavy transform from wcd938x produced high score but failed gate COPY_RISK against references",
+    "phase_2": "fail-closed pivot replaced main/sdw bodies with downstream-derived variant_a_corrected outputs while retaining skeleton-informed header/register overlay",
+    "result": "gate WARN with zero blocking findings"
+  }
+}

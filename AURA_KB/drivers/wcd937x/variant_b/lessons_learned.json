@@ -1,0 +1,32 @@
+{
+  "artifact_name": "WCD937X_VARIANT_B_LESSONS_LEARNED",
+  "final_status": {
+    "blocking_findings": 0,
+    "gate_verdict": "WARN",
+    "lineage_coverage": 100.0,
+    "score_overall": 81.43,
+    "warning_findings": 2
+  },
+  "gate_driven_decisions": [
+    "Phase-1 FAIL prevented acceptance despite higher score (90.43).",
+    "Phase-2 WARN accepted as experimental baseline with transparent warnings and full lineage coverage."
+  ],
+  "generated_at_utc": "2026-06-19T16:15:15Z",
+  "methodology_summary": "relative-informed with strict gate-driven anti-copy correction",
+  "next_iteration_recommendations": [
+    "Port SDW function/lifecycle naming to upstream shape without token-equivalent copy.",
+    "Incrementally replace downstream APIs with upstream APIs using per-function fail-closed mapping tables.",
+    "Keep header overlay but reduce direct downstream body reuse to lower DOWNSTREAM_REUSE_RISK."
+  ],
+  "replay_deterministic": true,
+  "what_relative_informed_helped": [
+    "Skeleton references improved include/register alignment opportunities.",
+    "Header-level skeleton adaptation + downstream register overlay lifted REGISTER_COVERAGE significantly (+10.12 vs variant_a_corrected).",
+    "Canonical gate quickly detected rename-abuse risk (COPY_RISK) and enforced correction."
+  ],
+  "where_it_hurt": [
+    "Skeleton-heavy initial output exceeded copy threshold vs wcd938x and failed gate.",
+    "After fail-closed correction, main/sdw remained downstream-shaped so FUNCTION_MATCH/API_COVERAGE stayed low.",
+    "Final result is experimental WARN due downstream reuse risk and header derivation risk."
+  ]
+}

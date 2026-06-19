@@ -1,0 +1,127 @@
+{
+  "artifact_name": "WCD937X_VARIANT_A_CORRECTED_VS_VARIANT_B_COMPARISON",
+  "comparison_basis": "canonical scorer v4 + canonical conversion_gate verdicts",
+  "gate_delta": {
+    "net_change": "equivalent_gate_grade",
+    "variant_a": "WARN",
+    "variant_b": "WARN"
+  },
+  "generated_at_utc": "2026-06-19T16:15:15Z",
+  "interpretation": {
+    "key_gain": "register coverage increased via header overlay",
+    "key_losses": [
+      "function_match and api_coverage unchanged at low values because main/sdw stayed downstream-shaped"
+    ],
+    "score_trend": "variant_b_higher",
+    "warning_tradeoff": "variant_b has one additional verifier warning vs variant_a_corrected"
+  },
+  "overall_delta_variant_b_minus_a": 1.01,
+  "per_category_delta": [
+    {
+      "category": "FUNCTION_MATCH",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 38.52,
+      "variant_b": 38.52
+    },
+    {
+      "category": "API_COVERAGE",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 40.38,
+      "variant_b": 40.38
+    },
+    {
+      "category": "REGISTER_COVERAGE",
+      "delta_variant_b_minus_a": 10.12,
+      "variant_a_corrected": 86.32,
+      "variant_b": 96.44
+    },
+    {
+      "category": "DAPM_WIDGETS",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 95.89,
+      "variant_b": 95.89
+    },
+    {
+      "category": "DAPM_ROUTES",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 87.65,
+      "variant_b": 87.65
+    },
+    {
+      "category": "DAPM_CONTROLS",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 95.24,
+      "variant_b": 95.24
+    },
+    {
+      "category": "LIFECYCLE_PATTERN",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 84.56,
+      "variant_b": 84.56
+    },
+    {
+      "category": "DT_PROPERTY_COVERAGE",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 100.0,
+      "variant_b": 100.0
+    },
+    {
+      "category": "VENDOR_ELIMINATION",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 100.0,
+      "variant_b": 100.0
+    },
+    {
+      "category": "INCLUDE_ALIGNMENT",
+      "delta_variant_b_minus_a": 0.0,
+      "variant_a_corrected": 75.61,
+      "variant_b": 75.61
+    }
+  ],
+  "variant_a_corrected": {
+    "categories": {
+      "API_COVERAGE": 40.38,
+      "DAPM_CONTROLS": 95.24,
+      "DAPM_ROUTES": 87.65,
+      "DAPM_WIDGETS": 95.89,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "FUNCTION_MATCH": 38.52,
+      "INCLUDE_ALIGNMENT": 75.61,
+      "LIFECYCLE_PATTERN": 84.56,
+      "REGISTER_COVERAGE": 86.32,
+      "VENDOR_ELIMINATION": 100.0
+    },
+    "gate_blocking_count": 0,
+    "gate_verdict": "WARN",
+    "gate_verdict_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_a_corrected/governance_gate/governance_verdict.json",
+    "gate_warning_count": 1,
+    "per_file_overall": {
+      "wcd937x-sdw.c": 70.93,
+      "wcd937x.c": 83.93
+    },
+    "score_overall": 80.42
+  },
+  "variant_b": {
+    "categories": {
+      "API_COVERAGE": 40.38,
+      "DAPM_CONTROLS": 95.24,
+      "DAPM_ROUTES": 87.65,
+      "DAPM_WIDGETS": 95.89,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "FUNCTION_MATCH": 38.52,
+      "INCLUDE_ALIGNMENT": 75.61,
+      "LIFECYCLE_PATTERN": 84.56,
+      "REGISTER_COVERAGE": 96.44,
+      "VENDOR_ELIMINATION": 100.0
+    },
+    "gate_blocking_count": 0,
+    "gate_verdict": "WARN",
+    "gate_verdict_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/governance_gate/governance_verdict.json",
+    "gate_warning_count": 2,
+    "per_file_overall": {
+      "wcd937x-sdw.c": 71.96,
+      "wcd937x.c": 84.93
+    },
+    "score_overall": 81.43
+  }
+}

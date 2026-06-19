@@ -1,0 +1,131 @@
+{
+  "artifact_name": "WCD937X_VARIANT_B_WCD938X_ADAPTATION_AUDIT",
+  "difference_summary": {
+    "chip_id": {
+      "variant_b": "WCD9370_VARIANT/WCD9375_VARIANT",
+      "wcd938x": "CHIPID_WCD9380/9385"
+    },
+    "compatible": {
+      "variant_b": "qcom,wcd9370-codec + qcom,wcd9375-codec + sdw20217010a00",
+      "wcd938x": "wcd938x compatibles"
+    },
+    "dapm": {
+      "variant_b": "937x downstream topology retained",
+      "wcd938x": "938x topology baseline"
+    },
+    "mbhc_classh": {
+      "variant_b": "downstream codec behavior retained with upstream helper includes",
+      "wcd938x": "upstream helper model"
+    },
+    "port_map": {
+      "variant_b": "937x binding-constrained 5 RX / 4 TX model",
+      "wcd938x": "938x channel topology"
+    },
+    "regulator": {
+      "variant_b": "downstream-derived supply sequencing with binding-aligned property names",
+      "wcd938x": "upstream bulk model"
+    },
+    "sdw": {
+      "variant_b": "downstream-style sdw lifecycle (module_sdw_driver + component bind)",
+      "wcd938x": "upstream sdw runtime-stream model"
+    }
+  },
+  "gate_verdict": "WARN",
+  "gate_verdict_source_of_truth": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/governance_gate/governance_verdict.json",
+  "gate_warning_details": [
+    {
+      "byte_identical": false,
+      "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.h",
+      "converted_sha256": "51d047870abd8eb37061f799746a74894ad148e27572badeca793e57c7edf5b2",
+      "group": "references",
+      "max_similarity": 92.52,
+      "normalized_line_similarity": 74.87,
+      "normalized_token_similarity": 92.52,
+      "raw_line_similarity": 6.09,
+      "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h",
+      "reference_sha256": "e11e4aec14484f00d2733d57addec6b45164b7c0e00f31d50675f8bf6dd53594",
+      "severity": "DERIVATION_RISK"
+    },
+    {
+      "byte_identical": false,
+      "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c",
+      "converted_sha256": "59194326e6dac2d4e65a3bf37253d6ba0ee931aee698c572ec26f2a402a342e7",
+      "group": "downstream",
+      "max_similarity": 98.91,
+      "normalized_line_similarity": 98.77,
+      "normalized_token_similarity": 96.99,
+      "raw_line_similarity": 98.91,
+      "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c",
+      "reference_sha256": "f6be94dfbd3a6f940e697848ca8c89141b898b7f5ae0d2a4c8a801cb50735ef8",
+      "severity": "DOWNSTREAM_REUSE_RISK"
+    }
+  ],
+  "generated_at_utc": "2026-06-19T16:15:15Z",
+  "goal": "prove variant_b is adapted for WCD937x and not a pure wcd938x rename",
+  "hardware_block_evidence": {
+    "chip_id": {
+      "converted": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:33-34",
+      "datasheet": "/tmp/wcd937x_datasheet_text.txt:3,17",
+      "downstream": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c:33-34"
+    },
+    "compatible": {
+      "binding": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml:21-27 and qcom,wcd937x-sdw.yaml:18-20",
+      "converted": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:3610-3611 and wcd937x-sdw.c:381"
+    },
+    "dapm": {
+      "converted": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:2474-2604",
+      "downstream": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c:2474-2604"
+    },
+    "mbhc_classh": {
+      "converted_classh": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:796,842,948,1047,1099,1181",
+      "converted_mbhc": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:566-583, 3081-3086",
+      "downstream_refs": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x.c:566-583,1200+"
+    },
+    "port_map": {
+      "binding": "qcom,wcd937x.yaml:68,79 and qcom,wcd937x-sdw.yaml:42-90",
+      "converted": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:3492-3499 and wcd937x-sdw.c:381"
+    },
+    "regulator": {
+      "binding": "qcom,wcd937x.yaml:46-49 and qcom,wcd93xx-common.yaml:17-27",
+      "converted": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:3467 and 2172-2176"
+    },
+    "sdw": {
+      "binding": "qcom,wcd937x-sdw.yaml:18-123",
+      "converted": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x-sdw.c:374-431",
+      "downstream": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x_slave.c:370-434"
+    }
+  },
+  "register_header_evidence": {
+    "converted_overlay": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.h:732-1153",
+    "downstream_register_overlay_source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd937x/wcd937x-registers.h:9+",
+    "skeleton_header_base": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h:7+",
+    "strategy": "retain skeleton header scaffolding, append deterministic downstream WCD937X define overlay for register coverage"
+  },
+  "wcd938x_structures_removed_or_deemphasized": [
+    {
+      "action": "fail-closed pivot to downstream-derived bodies",
+      "phase_1_evidence": "variant_b/governance_gate(verdict FAIL at 2026-06-19T16:09:12Z), blocking findings against wcd938x.c and wcd938x-sdw.c",
+      "structure": "skeleton-heavy main/sdw bodies that triggered COPY_RISK",
+      "why": "avoid anti-rename violation and pass canonical gate"
+    },
+    {
+      "reason": "WCD937x binding tx-channel-map is 12 entries (adc1/2/3 + dmic/mbhc), no adc4 path",
+      "skeleton_source": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:34-40",
+      "structure": "ADC4-specific SDW tx channel entry from skeleton"
+    }
+  ],
+  "wcd938x_structures_reused": [
+    {
+      "converted_location": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.h:13",
+      "reason": "retain upstream-style register macro organization before 937x overlay",
+      "skeleton_source": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h:7",
+      "structure": "header register namespace and base layout pattern"
+    },
+    {
+      "converted_location": "AURA_KB/drivers/wcd937x/variant_b/converted/wcd937x.c:23-25",
+      "reason": "upstream idiom for MBHC/Class-H/common helpers",
+      "skeleton_source": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:23-26",
+      "structure": "shared module integration model (wcd-common / wcd-mbhc-v2 / wcd-clsh-v2 includes)"
+    }
+  ]
+}
