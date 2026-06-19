@@ -1,0 +1,182 @@
+{
+  "audit_metadata": {
+    "generated_at_utc": "2026-06-19T18:08:05Z",
+    "mode": "audit_only_no_code_changes",
+    "external_notes_source": "User prompt text in this thread; no separate external notes file was found in allowed sources",
+    "claim_extraction_method": "Atomicized from prompt-scoped bring-up themes into verifiable technical claims",
+    "fail_closed_policy": "If evidence is insufficient, mark UNVERIFIED"
+  },
+  "domains": [
+    "DT / board integration",
+    "SoundWire core",
+    "LPASS RX/TX macro",
+    "WCD Class-H common code",
+    "WCD9378 SDW slave",
+    "WCD9378 codec driver",
+    "AudioReach / debug helpers",
+    "Runtime playback/capture status",
+    "Amixer validation recipes"
+  ],
+  "claims": [
+    {
+      "claim_id": "DT-001",
+      "domain": "DT / board integration",
+      "claim": "Main codec compatible is `qcom,wcd9378-codec`."
+    },
+    {
+      "claim_id": "DT-002",
+      "domain": "DT / board integration",
+      "claim": "Reset wiring is modeled with `qcom,wcd-rst-gpio-node` phandle."
+    },
+    {
+      "claim_id": "DT-003",
+      "domain": "DT / board integration",
+      "claim": "Codec references SoundWire child nodes via `qcom,rx-slave` and `qcom,tx-slave`."
+    },
+    {
+      "claim_id": "DT-004",
+      "domain": "DT / board integration",
+      "claim": "SoundWire port/ch mapping is provided through `qcom,rx_swr_ch_map` and `qcom,tx_swr_ch_map`."
+    },
+    {
+      "claim_id": "DT-005",
+      "domain": "DT / board integration",
+      "claim": "`qcom,swr-tx-port-params` DT property is required for functional TX setup."
+    },
+    {
+      "claim_id": "DT-006",
+      "domain": "DT / board integration",
+      "claim": "Micbias values are expected as `qcom,cdc-micbias*-mv` properties."
+    },
+    {
+      "claim_id": "DT-007",
+      "domain": "DT / board integration",
+      "claim": "Upstream `qcom,wcd937x*.yaml` can be used as-is with no binding adjustments."
+    },
+    {
+      "claim_id": "SWR-001",
+      "domain": "SoundWire core",
+      "claim": "WCD9378 downstream path depends on Qualcomm SWR stack (`<soc/soundwire.h>`) rather than upstream Linux SDW APIs."
+    },
+    {
+      "claim_id": "SWR-002",
+      "domain": "SoundWire core",
+      "claim": "RX/TX slave paging must be enabled (`paging_support = true`)."
+    },
+    {
+      "claim_id": "SWR-003",
+      "domain": "SoundWire core",
+      "claim": "Legacy SWR APIs (`swr_driver_register`, `swr_get_logical_dev_num`) are required for probe/bind flow."
+    },
+    {
+      "claim_id": "SWR-004",
+      "domain": "SoundWire core",
+      "claim": "Upstream SoundWire core changes are required before WCD9378 can be upstreamed."
+    },
+    {
+      "claim_id": "LPASS-001",
+      "domain": "LPASS RX/TX macro",
+      "claim": "WCD9378 bring-up requires source changes in LPASS RX/TX macro drivers."
+    },
+    {
+      "claim_id": "LPASS-002",
+      "domain": "LPASS RX/TX macro",
+      "claim": "No direct WCD9378-specific coupling exists inside upstream LPASS RX/TX macro source files."
+    },
+    {
+      "claim_id": "CLSH-001",
+      "domain": "WCD Class-H common code",
+      "claim": "WCD9378 codec path requires Class-H control and routing."
+    },
+    {
+      "claim_id": "CLSH-002",
+      "domain": "WCD Class-H common code",
+      "claim": "Upstream `wcd-clsh-v2` must gain a dedicated WCD9378 codec version enum."
+    },
+    {
+      "claim_id": "CLSH-003",
+      "domain": "WCD Class-H common code",
+      "claim": "Downstream Class-H API usage must be mapped from legacy `wcd_cls_h_*` to upstream v2 control interface."
+    },
+    {
+      "claim_id": "SDW-001",
+      "domain": "WCD9378 SDW slave",
+      "claim": "Downstream SDW slave identity is `qcom,wcd9378-slave` / `wcd9378-slave`."
+    },
+    {
+      "claim_id": "SDW-002",
+      "domain": "WCD9378 SDW slave",
+      "claim": "Upstream-compatible SDW identity should align to `sdw20217010a00` style binding."
+    },
+    {
+      "claim_id": "SDW-003",
+      "domain": "WCD9378 SDW slave",
+      "claim": "Slave debugfs peek/poke/register-dump hooks are required for upstream functionality."
+    },
+    {
+      "claim_id": "SDW-004",
+      "domain": "WCD9378 SDW slave",
+      "claim": "SDW implementation should follow upstream pattern with `devm_regmap_init_sdw` and Linux SDW component flow."
+    },
+    {
+      "claim_id": "DRV-001",
+      "domain": "WCD9378 codec driver",
+      "claim": "Current codec file includes vendor-only dependencies that are not upstreamable."
+    },
+    {
+      "claim_id": "DRV-002",
+      "domain": "WCD9378 codec driver",
+      "claim": "Regulator handling must move from `msm_cdc_*` helpers to upstream regulator APIs."
+    },
+    {
+      "claim_id": "DRV-003",
+      "domain": "WCD9378 codec driver",
+      "claim": "Reset handling must move from vendor pinctrl/reset-node handling to upstream GPIO reset model."
+    },
+    {
+      "claim_id": "DRV-004",
+      "domain": "WCD9378 codec driver",
+      "claim": "MBHC behavior should be represented via shared `wcd-mbhc-v2` model with codec-specific callbacks only."
+    },
+    {
+      "claim_id": "DRV-005",
+      "domain": "WCD9378 codec driver",
+      "claim": "WCD9378 register and DAPM surface area is large and requires explicit triage before conversion."
+    },
+    {
+      "claim_id": "DBG-001",
+      "domain": "AudioReach / debug helpers",
+      "claim": "QTI regmap/debugfs and SDCA debugfs helpers are needed only for bring-up debug, not upstream driver function."
+    },
+    {
+      "claim_id": "DBG-002",
+      "domain": "AudioReach / debug helpers",
+      "claim": "Temporary bring-up prints/debug paths should be excluded from upstream patching scope."
+    },
+    {
+      "claim_id": "RT-001",
+      "domain": "Runtime playback/capture status",
+      "claim": "External bring-up playback is confirmed working."
+    },
+    {
+      "claim_id": "RT-002",
+      "domain": "Runtime playback/capture status",
+      "claim": "External bring-up capture is confirmed working."
+    },
+    {
+      "claim_id": "RT-003",
+      "domain": "Runtime playback/capture status",
+      "claim": "Any mute-path runtime issue is fully resolved."
+    },
+    {
+      "claim_id": "AMX-001",
+      "domain": "Amixer validation recipes",
+      "claim": "Provided amixer recipe(s) are sufficient to prove generic upstream readiness."
+    },
+    {
+      "claim_id": "AMX-002",
+      "domain": "Amixer validation recipes",
+      "claim": "amixer recipe(s) are board-specific smoke checks and not a full upstream validation substitute."
+    }
+  ]
+}

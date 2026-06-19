@@ -1,0 +1,304 @@
+{
+  "audit_metadata": {
+    "generated_at_utc": "2026-06-19T18:08:05Z",
+    "mode": "audit_only_no_code_changes",
+    "source_of_truth": "Allowed-source code/binding/datasheet evidence only"
+  },
+  "risk_buckets": {
+    "SAFE_DRIVER_REQUIREMENT": [
+      {
+        "item": "Replace vendor includes/APIs in codec path with upstream kernel APIs",
+        "why": "Vendor framework references are explicit and non-upstream.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "5, 18-21, 27"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "Migrate regulator handling to upstream bulk regulator model",
+        "why": "Downstream uses `msm_cdc_*`; upstream WCD uses regulator bulk get/enable.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4667-4670, 4708-4710"
+          },
+          {
+            "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+            "line_or_page": "111-113, 2934-2937"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "Migrate reset handling to `reset-gpios`/gpiod path",
+        "why": "Downstream reset-node + pinctrl model differs from common upstream schema/APIs.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4301-4315, 4424-4431"
+          },
+          {
+            "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+            "line_or_page": "2921-2924"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "Rework SDW slave path to upstream Linux SDW APIs",
+        "why": "Downstream stack is SWR-centric; upstream references use Linux SDW APIs and IDs.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+            "line_or_page": "283-286, 404-407"
+          },
+          {
+            "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+            "line_or_page": "1032-1035, 1066-1068"
+          }
+        ],
+        "blocking": true
+      }
+    ],
+    "SAFE_DT_REQUIREMENT": [
+      {
+        "item": "Use `reset-gpios`, `qcom,rx-device`, `qcom,tx-device` properties",
+        "why": "These are required in upstream WCD93xx common schema.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+            "line_or_page": "13-16, 29-35, 85-93"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "Use SDW property schema (`qcom,rx-port-mapping`, `qcom,tx-port-mapping`, channel maps)",
+        "why": "Upstream SDW binding defines these properties and constraints.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+            "line_or_page": "24-60, 61-99"
+          }
+        ],
+        "blocking": true
+      }
+    ],
+    "NEEDS_BINDING_EXTENSION": [
+      {
+        "item": "Determine whether `qcom,wcd9378-codec` should be added to upstream WCD937x compatible list",
+        "why": "Downstream uses 9378-compatible not present in current upstream schema.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4591-4593"
+          },
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+            "line_or_page": "21-27"
+          }
+        ],
+        "blocking": true,
+        "status": "FAIL_CLOSED"
+      },
+      {
+        "item": "Determine whether `qcom,swr-tx-port-params` is a true hardware requirement or removable downstream detail",
+        "why": "Property is consumed downstream but absent from upstream schema.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "422-465, 4726-4729"
+          },
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+            "line_or_page": "17-99"
+          }
+        ],
+        "blocking": true,
+        "status": "FAIL_CLOSED"
+      }
+    ],
+    "NEEDS_SOUNDWIRE_CORE_CHANGE": [
+      {
+        "item": "SoundWire core change requirement is not proven",
+        "why": "No WCD9378-specific hooks found in inspected upstream SoundWire core source; claim remains unverified.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+            "line_or_page": "1-220"
+          },
+          {
+            "source": "track_b_corpora/linux-next/drivers/soundwire/bus.c",
+            "line_or_page": "grep scan (no wcd9378/wcd937x hits)"
+          }
+        ],
+        "blocking": true,
+        "status": "FAIL_CLOSED"
+      }
+    ],
+    "NEEDS_LPASS_MACRO_CHANGE": [
+      {
+        "item": "No concrete LPASS macro source change requirement established",
+        "why": "No direct WCD9378 coupling found in allowed LPASS upstream sources.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+            "line_or_page": "grep scan (no WCD9378 hits)"
+          },
+          {
+            "source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+            "line_or_page": "grep scan (no WCD9378 hits)"
+          }
+        ],
+        "blocking": false,
+        "status": "FAIL_CLOSED"
+      }
+    ],
+    "NEEDS_WCD_COMMON_CHANGE": [
+      {
+        "item": "Class-H version/base selection for WCD9378 remains undecided",
+        "why": "Upstream class-h enum has WCD937X/WCD938X/WCD939X only; need evidence whether WCD937X mapping is sufficient.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+            "line_or_page": "44-51"
+          },
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/internal.h",
+            "line_or_page": "12"
+          }
+        ],
+        "blocking": true,
+        "status": "FAIL_CLOSED"
+      }
+    ],
+    "BOARD_SPECIFIC_ONLY": [
+      {
+        "item": "`qcom,wcd-rst-gpio-node`",
+        "why": "Board/property model differs from upstream `reset-gpios` schema.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4424-4431"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "`qcom,rx-slave` / `qcom,tx-slave`",
+        "why": "Downstream phandles differ from upstream `qcom,rx-device`/`qcom,tx-device` names.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4443-4444, 4618-4630"
+          },
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+            "line_or_page": "29-35"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "`qcom,rx_swr_ch_map` / `qcom,tx_swr_ch_map`",
+        "why": "Legacy SWR mapping properties are not in upstream SDW binding schema.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4717-4720"
+          },
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+            "line_or_page": "24-60"
+          }
+        ],
+        "blocking": true
+      },
+      {
+        "item": "`qcom,cdc-micbias*-mv`",
+        "why": "Unit/name differ from upstream common schema (`qcom,micbias*-microvolt`).",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4346-4378"
+          },
+          {
+            "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+            "line_or_page": "37-55"
+          }
+        ],
+        "blocking": true
+      }
+    ],
+    "TEMP_DEBUG_ONLY": [
+      {
+        "item": "Slave debugfs peek/poke/reg_dump",
+        "why": "Debug paths under `CONFIG_DEBUG_FS` are diagnostics, not core behavior.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+            "line_or_page": "343-369"
+          }
+        ],
+        "blocking": false
+      },
+      {
+        "item": "SDCA debugfs register poking helpers",
+        "why": "Direct register debugfs access is bring-up tooling.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/sdca-registers-api.c",
+            "line_or_page": "221-257"
+          }
+        ],
+        "blocking": false
+      }
+    ],
+    "BRINGUP_HACK_DO_NOT_UPSTREAM": [
+      {
+        "item": "Informational `dev_err` trace: `wcd irq init done`",
+        "why": "Severity/wording indicates bring-up style trace, not steady-state upstream log policy.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "4547-4548"
+          }
+        ],
+        "blocking": false
+      }
+    ],
+    "UNRESOLVED_RUNTIME_ISSUE": [
+      {
+        "item": "Playback/capture success claims lack reproducible evidence",
+        "why": "No runtime logs or validated test traces are present in allowed sources.",
+        "evidence": [
+          {
+            "source": "external notes in prompt",
+            "line_or_page": "not provided"
+          }
+        ],
+        "blocking": true,
+        "status": "UNVERIFIED"
+      },
+      {
+        "item": "Mute-path closure claim is unresolved",
+        "why": "Mute sequencing logic exists, but no runtime proof that mute issues are fully resolved.",
+        "evidence": [
+          {
+            "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+            "line_or_page": "1988-2000, 2096-2101, 2290-2293"
+          }
+        ],
+        "blocking": true,
+        "status": "UPSTREAM_RISK"
+      }
+    ]
+  },
+  "overall_assessment": {
+    "safe_to_start_conversion": false,
+    "reason": "Several high-risk FAIL_CLOSED items remain (compatible/binding decisions, SDW paging equivalence, runtime validation evidence)."
+  }
+}

@@ -1,0 +1,733 @@
+{
+  "audit_metadata": {
+    "generated_at_utc": "2026-06-19T18:08:05Z",
+    "mode": "audit_only_no_code_changes",
+    "claim_source": "external claims atomicized from prompt text; no separate notes file available",
+    "classification_labels": [
+      "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "CONFIRMED_BY_DATASHEET",
+      "CONFIRMED_BY_UPSTREAM_PATTERN",
+      "PARTIALLY_CONFIRMED",
+      "UNVERIFIED",
+      "CONTRADICTED",
+      "TEMP_DEBUG_ONLY",
+      "BOARD_SPECIFIC",
+      "UPSTREAM_RISK"
+    ]
+  },
+  "claim_audit": [
+    {
+      "claim_id": "DT-001",
+      "claim": "Main codec compatible is `qcom,wcd9378-codec`.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4591-4593",
+          "why_it_supports_or_rejects": "Downstream OF match table contains `.compatible = \"qcom,wcd9378-codec\"`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "MAYBE",
+      "risk": "MEDIUM",
+      "notes": "Compatibility addition is plausible but must be reconciled with upstream binding constraints."
+    },
+    {
+      "claim_id": "DT-002",
+      "claim": "Reset wiring is modeled with `qcom,wcd-rst-gpio-node` phandle.",
+      "classification": "BOARD_SPECIFIC",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4424-4431",
+          "why_it_supports_or_rejects": "Downstream parser requires `qcom,wcd-rst-gpio-node`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "13-16, 85-88",
+          "why_it_supports_or_rejects": "Upstream common schema requires `reset-gpios`, not `qcom,wcd-rst-gpio-node`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "MEDIUM",
+      "notes": "Treat as downstream board/property model; do not upstream as-is."
+    },
+    {
+      "claim_id": "DT-003",
+      "claim": "Codec references SoundWire child nodes via `qcom,rx-slave` and `qcom,tx-slave`.",
+      "classification": "BOARD_SPECIFIC",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4443-4444, 4618-4630",
+          "why_it_supports_or_rejects": "Downstream code resolves slave nodes via `qcom,rx-slave`/`qcom,tx-slave`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "29-35, 85-88",
+          "why_it_supports_or_rejects": "Upstream schema expects `qcom,rx-device`/`qcom,tx-device`."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "MEDIUM",
+      "notes": "Property namespace differs from upstream and must be translated."
+    },
+    {
+      "claim_id": "DT-004",
+      "claim": "SoundWire port/ch mapping is provided through `qcom,rx_swr_ch_map` and `qcom,tx_swr_ch_map`.",
+      "classification": "BOARD_SPECIFIC",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4717-4720",
+          "why_it_supports_or_rejects": "Downstream probe consumes legacy SWR mapping properties."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "24-60",
+          "why_it_supports_or_rejects": "Upstream SDW binding defines `qcom,tx-port-mapping` and `qcom,rx-port-mapping` instead."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "MEDIUM",
+      "notes": "Downstream map format is not schema-compatible with upstream SDW properties."
+    },
+    {
+      "claim_id": "DT-005",
+      "claim": "`qcom,swr-tx-port-params` DT property is required for functional TX setup.",
+      "classification": "UPSTREAM_RISK",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "422-465, 4726-4729",
+          "why_it_supports_or_rejects": "Downstream parser expects and validates `qcom,swr-tx-port-params`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "17-99",
+          "why_it_supports_or_rejects": "No `qcom,swr-tx-port-params` property is defined in upstream SDW schema."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "May imply binding extension or removable downstream detail; cannot decide without extra functional evidence."
+    },
+    {
+      "claim_id": "DT-006",
+      "claim": "Micbias values are expected as `qcom,cdc-micbias*-mv` properties.",
+      "classification": "BOARD_SPECIFIC",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4346-4378",
+          "why_it_supports_or_rejects": "Downstream parser reads `qcom,cdc-micbias[1-3]-mv`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "37-55, 89-92",
+          "why_it_supports_or_rejects": "Upstream schema names are `qcom,micbias*-microvolt` and includes micbias4."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "MEDIUM",
+      "notes": "Property naming/units differ; convert to common schema."
+    },
+    {
+      "claim_id": "DT-007",
+      "claim": "Upstream `qcom,wcd937x*.yaml` can be used as-is with no binding adjustments.",
+      "classification": "CONTRADICTED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "21-27",
+          "why_it_supports_or_rejects": "Upstream main compatible set is restricted to wcd9370/wcd9375 variants."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4591-4593",
+          "why_it_supports_or_rejects": "Downstream declares a distinct compatible `qcom,wcd9378-codec`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4424-4444, 4717-4727",
+          "why_it_supports_or_rejects": "Downstream uses DT properties absent from upstream binding set."
+        }
+      ],
+      "conversion_impact": "dt",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "HIGH",
+      "notes": "At minimum, compatibility and property mapping work is required before claiming schema coverage."
+    },
+    {
+      "claim_id": "SWR-001",
+      "claim": "WCD9378 downstream path depends on Qualcomm SWR stack (`<soc/soundwire.h>`) rather than upstream Linux SDW APIs.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "14",
+          "why_it_supports_or_rejects": "Includes downstream header `<soc/soundwire.h>`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "12",
+          "why_it_supports_or_rejects": "Slave driver also includes `<soc/soundwire.h>`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "14-16",
+          "why_it_supports_or_rejects": "Upstream reference uses Linux SDW headers (`<linux/soundwire/...>`)."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "MEDIUM",
+      "notes": "Confirms required API family migration, not necessarily SoundWire core modification."
+    },
+    {
+      "claim_id": "SWR-002",
+      "claim": "RX/TX slave paging must be enabled (`paging_support = true`).",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4509, 4518",
+          "why_it_supports_or_rejects": "Downstream explicitly sets `paging_support = true` on both slave devices."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/include/soc/soundwire.h",
+          "line_or_page": "275-285",
+          "why_it_supports_or_rejects": "Downstream SWR device struct contains `paging_support` field."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Requirement is confirmed only for downstream SWR stack; upstream SDW equivalent behavior is unclear."
+    },
+    {
+      "claim_id": "SWR-003",
+      "claim": "Legacy SWR APIs (`swr_driver_register`, `swr_get_logical_dev_num`) are required for probe/bind flow.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "283-286, 404-407",
+          "why_it_supports_or_rejects": "Slave bind/init path uses these downstream SWR APIs."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/soc/soundwire.c",
+          "line_or_page": "585-600, 922-935",
+          "why_it_supports_or_rejects": "Defines and exports the referenced SWR APIs."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "MEDIUM",
+      "notes": "Confirms downstream dependence; conversion must remove these calls in favor of upstream SDW model."
+    },
+    {
+      "claim_id": "SWR-004",
+      "claim": "Upstream SoundWire core changes are required before WCD9378 can be upstreamed.",
+      "classification": "UNVERIFIED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/drivers/soundwire/qcom.c",
+          "line_or_page": "1-220",
+          "why_it_supports_or_rejects": "No WCD9378-specific logic appears in core controller driver excerpt."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "964-1068",
+          "why_it_supports_or_rejects": "Upstream WCD937x uses existing SDW stack without codec-specific core patches in this flow."
+        }
+      ],
+      "conversion_impact": "soundwire_core",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Core-change necessity cannot be proven from available evidence; treat as fail-closed until concrete blocker is identified."
+    },
+    {
+      "claim_id": "LPASS-001",
+      "claim": "WCD9378 bring-up requires source changes in LPASS RX/TX macro drivers.",
+      "classification": "UNVERIFIED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+          "line_or_page": "1-80",
+          "why_it_supports_or_rejects": "No WCD9378-specific references are present in inspected LPASS RX macro content."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+          "line_or_page": "grep scan (no WCD9378 matches)",
+          "why_it_supports_or_rejects": "No direct WCD9378 coupling found in allowed LPASS TX source scan."
+        }
+      ],
+      "conversion_impact": "lpass_macro",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "No concrete LPASS modification requirement is evidenced in allowed sources."
+    },
+    {
+      "claim_id": "LPASS-002",
+      "claim": "No direct WCD9378-specific coupling exists inside upstream LPASS RX/TX macro source files.",
+      "classification": "PARTIALLY_CONFIRMED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-rx-macro.c",
+          "line_or_page": "1-80",
+          "why_it_supports_or_rejects": "Inspected sections are generic LPASS macro code, not WCD codec-specific wiring."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/lpass-tx-macro.c",
+          "line_or_page": "grep scan (no WCD9378 matches)",
+          "why_it_supports_or_rejects": "Search found no WCD9378 symbol references."
+        }
+      ],
+      "conversion_impact": "lpass_macro",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "LOW",
+      "notes": "Absence of direct references supports avoiding speculative LPASS edits."
+    },
+    {
+      "claim_id": "CLSH-001",
+      "claim": "WCD9378 codec path requires Class-H control and routing.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "640-663, 3672-3674, 4187",
+          "why_it_supports_or_rejects": "Downstream has Class-H DAPM supply/event and class-h init call."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "MEDIUM",
+      "notes": "Class-H behavior is real; API shape must be converted to upstream model."
+    },
+    {
+      "claim_id": "CLSH-002",
+      "claim": "Upstream `wcd-clsh-v2` must gain a dedicated WCD9378 codec version enum.",
+      "classification": "UNVERIFIED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+          "line_or_page": "44-51",
+          "why_it_supports_or_rejects": "Enum includes WCD937X/WCD938X/WCD939X but no explicit WCD9378 entry."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/internal.h",
+          "line_or_page": "12",
+          "why_it_supports_or_rejects": "Downstream uses legacy class-h header, so direct mapping choice is unclear."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Cannot assert enum extension necessity without proving WCD937X mode is insufficient."
+    },
+    {
+      "claim_id": "CLSH-003",
+      "claim": "Downstream Class-H API usage must be mapped from legacy `wcd_cls_h_*` to upstream v2 control interface.",
+      "classification": "PARTIALLY_CONFIRMED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4187",
+          "why_it_supports_or_rejects": "Uses legacy `wcd_cls_h_init` API."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+          "line_or_page": "54-63",
+          "why_it_supports_or_rejects": "Upstream class-h interface is `wcd_clsh_ctrl_*` based."
+        }
+      ],
+      "conversion_impact": "clsh",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "MAYBE",
+      "risk": "MEDIUM",
+      "notes": "API migration is likely required; exact per-event mapping still needs concrete conversion design."
+    },
+    {
+      "claim_id": "SDW-001",
+      "claim": "Downstream SDW slave identity is `qcom,wcd9378-slave` / `wcd9378-slave`.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "313-321, 395-401",
+          "why_it_supports_or_rejects": "Both id-table and OF match define the downstream slave identity."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "MAYBE",
+      "risk": "MEDIUM",
+      "notes": "Identity differs from upstream schema and requires compatibility strategy."
+    },
+    {
+      "claim_id": "SDW-002",
+      "claim": "Upstream-compatible SDW identity should align to `sdw20217010a00` style binding.",
+      "classification": "CONFIRMED_BY_UPSTREAM_PATTERN",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "18-20",
+          "why_it_supports_or_rejects": "Binding defines SDW compatible constant as `sdw20217010a00`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "1066-1068",
+          "why_it_supports_or_rejects": "Upstream WCD937x SDW device ID is represented via SDW slave entry table."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "MEDIUM",
+      "notes": "Whether WCD9378 shares the same SDW id still requires hardware evidence."
+    },
+    {
+      "claim_id": "SDW-003",
+      "claim": "Slave debugfs peek/poke/register-dump hooks are required for upstream functionality.",
+      "classification": "TEMP_DEBUG_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "343-369",
+          "why_it_supports_or_rejects": "Debugfs nodes are created only under `CONFIG_DEBUG_FS` (`swrslave_peek/poke/reg_dump`)."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/sdca-registers-api.c",
+          "line_or_page": "221-257",
+          "why_it_supports_or_rejects": "Additional SDCA debugfs register poking infrastructure is debug-centric."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "LOW",
+      "notes": "Keep for local bring-up only; exclude from upstream functional requirements."
+    },
+    {
+      "claim_id": "SDW-004",
+      "claim": "SDW implementation should follow upstream pattern with `devm_regmap_init_sdw` and Linux SDW component flow.",
+      "classification": "CONFIRMED_BY_UPSTREAM_PATTERN",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "1032-1035, 1049-1056",
+          "why_it_supports_or_rejects": "Upstream probe uses `devm_regmap_init_sdw` and component integration with runtime PM."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4523-4524",
+          "why_it_supports_or_rejects": "Downstream currently uses `devm_regmap_init_swr` (legacy stack), confirming migration target."
+        }
+      ],
+      "conversion_impact": "sdw",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "MEDIUM",
+      "notes": "This is a clear architectural migration item."
+    },
+    {
+      "claim_id": "DRV-001",
+      "claim": "Current codec file includes vendor-only dependencies that are not upstreamable.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "5, 18-21, 27",
+          "why_it_supports_or_rejects": "Includes kernel-version guards, MSM CDC frameworks, vendor bindings, QTI debugfs, bolero internals."
+        }
+      ],
+      "conversion_impact": "driver",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "LOW",
+      "notes": "High-confidence cleanup requirement for upstreamability."
+    },
+    {
+      "claim_id": "DRV-002",
+      "claim": "Regulator handling must move from `msm_cdc_*` helpers to upstream regulator APIs.",
+      "classification": "CONFIRMED_BY_UPSTREAM_PATTERN",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4667-4670, 4708-4710",
+          "why_it_supports_or_rejects": "Downstream probe uses MSM CDC supply init/enable helpers."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "111-113, 2934-2937",
+          "why_it_supports_or_rejects": "Upstream reference uses named supply list with `devm_regulator_bulk_get_enable`."
+        }
+      ],
+      "conversion_impact": "driver",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "LOW",
+      "notes": "Deterministic API migration item."
+    },
+    {
+      "claim_id": "DRV-003",
+      "claim": "Reset handling must move from vendor pinctrl/reset-node handling to upstream GPIO reset model.",
+      "classification": "CONFIRMED_BY_UPSTREAM_PATTERN",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4301-4315, 4424-4431",
+          "why_it_supports_or_rejects": "Downstream reset flow depends on vendor pinctrl state and reset-node phandle."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2921-2924",
+          "why_it_supports_or_rejects": "Upstream model uses `devm_gpiod_get` for reset handling."
+        }
+      ],
+      "conversion_impact": "driver",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "LOW",
+      "notes": "Deterministic model change with strong reference signal."
+    },
+    {
+      "claim_id": "DRV-004",
+      "claim": "MBHC behavior should be represented via shared `wcd-mbhc-v2` model with codec-specific callbacks only.",
+      "classification": "PARTIALLY_CONFIRMED",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-mbhc.c",
+          "line_or_page": "1118-1165",
+          "why_it_supports_or_rejects": "Downstream has local wrapper but still delegates to `wcd_mbhc_init` with callback table."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "1951-1966, 2029-2031",
+          "why_it_supports_or_rejects": "Upstream uses shared MBHC callback model and common init API."
+        }
+      ],
+      "conversion_impact": "driver",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "MAYBE",
+      "risk": "MEDIUM",
+      "notes": "Shared-module direction is clear, but exact callback set and wrapper retention still need triage."
+    },
+    {
+      "claim_id": "DRV-005",
+      "claim": "WCD9378 register and DAPM surface area is large and requires explicit triage before conversion.",
+      "classification": "CONFIRMED_BY_DOWNSTREAM_CODE",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "3371-3431, 3581-3786, 3788-3882",
+          "why_it_supports_or_rejects": "Controls/widgets/routes are large (27/129/72)."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "file-level count",
+          "why_it_supports_or_rejects": "`#define WCD9378_*` count is high (856), showing large register surface."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-reg-masks.h",
+          "line_or_page": "file-level count",
+          "why_it_supports_or_rejects": "Mask define count is 1736, reinforcing large register/mask footprint."
+        }
+      ],
+      "conversion_impact": "driver",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "YES",
+      "risk": "MEDIUM",
+      "notes": "Large-scale translation must be scoped and prioritized to avoid speculative carry-over."
+    },
+    {
+      "claim_id": "DBG-001",
+      "claim": "QTI regmap/debugfs and SDCA debugfs helpers are needed only for bring-up debug, not upstream driver function.",
+      "classification": "TEMP_DEBUG_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4144, 4220-4227",
+          "why_it_supports_or_rejects": "Registers QTI and SDCA debugfs hooks after probe."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/sdca-registers-api.c",
+          "line_or_page": "221-257",
+          "why_it_supports_or_rejects": "Implements debugfs address/data/register manipulation files."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "LOW",
+      "notes": "Treat as local diagnostics, not conversion target behavior."
+    },
+    {
+      "claim_id": "DBG-002",
+      "claim": "Temporary bring-up prints/debug paths should be excluded from upstream patching scope.",
+      "classification": "TEMP_DEBUG_ONLY",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4547-4548",
+          "why_it_supports_or_rejects": "Contains bring-up style `dev_err(... \"wcd irq init done\")` informational print."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "343-369",
+          "why_it_supports_or_rejects": "Debugfs bring-up entries reinforce debug-only nature."
+        }
+      ],
+      "conversion_impact": "none",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "LOW",
+      "notes": "Explicitly keep debug-only artifacts out of upstream patch plan."
+    },
+    {
+      "claim_id": "RT-001",
+      "claim": "External bring-up playback is confirmed working.",
+      "classification": "UNVERIFIED",
+      "evidence": [
+        {
+          "source": "external notes in prompt",
+          "line_or_page": "not provided",
+          "why_it_supports_or_rejects": "No concrete runtime logs, command output, or trace artifacts were provided in allowed sources."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/",
+          "line_or_page": "source review only",
+          "why_it_supports_or_rejects": "Driver source shows code paths but not proof of successful end-to-end playback on hardware."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Need reproducible runtime evidence before treating playback as validated."
+    },
+    {
+      "claim_id": "RT-002",
+      "claim": "External bring-up capture is confirmed working.",
+      "classification": "UNVERIFIED",
+      "evidence": [
+        {
+          "source": "external notes in prompt",
+          "line_or_page": "not provided",
+          "why_it_supports_or_rejects": "No capture logs or validated capture command traces were provided."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/",
+          "line_or_page": "source review only",
+          "why_it_supports_or_rejects": "Code existence is not equivalent to runtime capture proof."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Capture status must be validated with reproducible runtime evidence."
+    },
+    {
+      "claim_id": "RT-003",
+      "claim": "Any mute-path runtime issue is fully resolved.",
+      "classification": "UPSTREAM_RISK",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "1988-2000, 2096-2101, 2290-2293",
+          "why_it_supports_or_rejects": "Contains dedicated mute checks and conditional mute writes, indicating sensitivity in mute sequencing paths."
+        },
+        {
+          "source": "external notes in prompt",
+          "line_or_page": "not provided",
+          "why_it_supports_or_rejects": "No definitive runtime artifact demonstrates issue closure across playback/capture conditions."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Treat mute-status claims as unresolved until validated with deterministic runtime tests."
+    },
+    {
+      "claim_id": "AMX-001",
+      "claim": "Provided amixer recipe(s) are sufficient to prove generic upstream readiness.",
+      "classification": "UNVERIFIED",
+      "evidence": [
+        {
+          "source": "external notes in prompt",
+          "line_or_page": "not provided",
+          "why_it_supports_or_rejects": "No recipe text or measured results were supplied for audit."
+        },
+        {
+          "source": "allowed-source search",
+          "line_or_page": "grep for amixer/tinyplay/tinycap returned no matches",
+          "why_it_supports_or_rejects": "No command recipe artifacts are present in inspected source trees."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "FAIL_CLOSED",
+      "risk": "HIGH",
+      "notes": "Cannot accept recipe-based readiness claim without concrete commands + expected/actual outputs."
+    },
+    {
+      "claim_id": "AMX-002",
+      "claim": "amixer recipe(s) are board-specific smoke checks and not a full upstream validation substitute.",
+      "classification": "BOARD_SPECIFIC",
+      "evidence": [
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml",
+          "line_or_page": "37-80",
+          "why_it_supports_or_rejects": "Binding examples show board-specific node wiring and port maps, implying runtime controls are board-context dependent."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/audio_machine.c",
+          "line_or_page": "2598-2615",
+          "why_it_supports_or_rejects": "Machine driver selects codec variant at runtime, reinforcing platform-specific behavior layering."
+        }
+      ],
+      "conversion_impact": "runtime_validation",
+      "should_enter_conversion_checklist": true,
+      "should_enter_upstream_patch": "NO",
+      "risk": "MEDIUM",
+      "notes": "Use recipes as board smoke tests only; upstream acceptance requires schema/API/lifecycle correctness plus runtime evidence."
+    }
+  ],
+  "summary": {
+    "total_claims": 32,
+    "classification_counts": {
+      "CONFIRMED_BY_DOWNSTREAM_CODE": 8,
+      "CONFIRMED_BY_DATASHEET": 0,
+      "CONFIRMED_BY_UPSTREAM_PATTERN": 4,
+      "PARTIALLY_CONFIRMED": 3,
+      "UNVERIFIED": 6,
+      "CONTRADICTED": 1,
+      "TEMP_DEBUG_ONLY": 3,
+      "BOARD_SPECIFIC": 5,
+      "UPSTREAM_RISK": 2
+    }
+  }
+}

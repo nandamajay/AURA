@@ -1,0 +1,358 @@
+{
+  "audit_metadata": {
+    "generated_at_utc": "2026-06-19T18:08:05Z",
+    "mode": "audit_only_no_code_changes",
+    "scope": "Downstream WCD9378 logic characterization and upstream-equivalent candidate mapping",
+    "deterministic": true
+  },
+  "audited_inputs": {
+    "downstream_wcd9378_dir": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/",
+    "related_downstream_files": [
+      "track_b_corpora/audio-kernel-ar/asoc/audio_machine.c",
+      "track_b_corpora/audio-kernel-ar/soc/soundwire.c",
+      "track_b_corpora/audio-kernel-ar/include/soc/soundwire.h",
+      "track_b_corpora/audio-kernel-ar/asoc/codecs/sdca-registers-api.c"
+    ],
+    "expected_file_list_from_prompt": [
+      "wcd9378.c",
+      "wcd9378-sdw.c or wcd9378-slave.c",
+      "wcd9378.h",
+      "internal.h",
+      "wcd9378-registers.h",
+      "wcd9378-reg-masks.h",
+      "wcd9378-regmap.c",
+      "wcd9378-tables.c",
+      "wcd9378-mbhc.c",
+      "wcd9378-regulator.c"
+    ]
+  },
+  "file_presence": {
+    "present": [
+      "wcd9378.c",
+      "wcd9378-slave.c",
+      "wcd9378.h",
+      "internal.h",
+      "wcd9378-registers.h",
+      "wcd9378-reg-masks.h",
+      "wcd9378-regmap.c",
+      "wcd9378-tables.c",
+      "wcd9378-mbhc.c"
+    ],
+    "missing": [
+      {
+        "file": "wcd9378-regulator.c",
+        "status": "MISSING",
+        "impact": "Regulator behavior is embedded in main codec file and vendor helper stack; no dedicated regulator module exists."
+      }
+    ]
+  },
+  "major_subsystems": [
+    {
+      "subsystem": "register_domains",
+      "summary": "Large SDCA-oriented register space with explicit analog/TX/RX/MBHC/ClassH groups and SDCA function/register windows.",
+      "measured_scale": {
+        "define_count_wcd9378_registers_h": 856,
+        "define_count_wcd9378_reg_masks_h": 1736,
+        "reg_defaults_in_wcd9378_regmap": 839
+      },
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "16-33",
+          "why_it_supports_or_rejects": "Declares `WCD9378_BASE`, register addressing macro, and function/analog base regions."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h",
+          "line_or_page": "116-187",
+          "why_it_supports_or_rejects": "Shows RX/ClassH/MBHC/aux register domains, confirming broad functional coverage."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c",
+          "line_or_page": "956-963",
+          "why_it_supports_or_rejects": "Regmap config binds default table and max register to the register map model."
+        }
+      ],
+      "upstream_equivalent_candidate": "wcd937x.h + wcd937x-sdw.c register model with Linux regmap/soundwire APIs"
+    },
+    {
+      "subsystem": "regulator_model",
+      "summary": "Vendor supply model (`msm_cdc_*`, `cdc_regulator`) is used instead of upstream regulator bulk APIs.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "18-19",
+          "why_it_supports_or_rejects": "Includes vendor supply/pinctrl headers."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4435-4437",
+          "why_it_supports_or_rejects": "Uses `msm_cdc_get_power_supplies` and vendor supply description."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4667-4670",
+          "why_it_supports_or_rejects": "Uses `msm_cdc_init_supplies` instead of upstream regulator bulk APIs."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "111-113, 2934-2937",
+          "why_it_supports_or_rejects": "Upstream pattern uses named supplies with `devm_regulator_bulk_get_enable`."
+        }
+      ],
+      "upstream_equivalent_candidate": "wcd937x.c regulator model (`vdd-rxtx`, `vdd-px`, `vdd-mic-bias`, `vdd-buck`)"
+    },
+    {
+      "subsystem": "reset_model",
+      "summary": "Downstream reset is pinctrl-state driven via `qcom,wcd-rst-gpio-node`; upstream expects `reset-gpios` + gpiod.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4424-4431",
+          "why_it_supports_or_rejects": "Parses `qcom,wcd-rst-gpio-node` phandle from DT."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4301-4315",
+          "why_it_supports_or_rejects": "Reset sequence uses `msm_cdc_pinctrl_*` vendor APIs."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd93xx-common.yaml",
+          "line_or_page": "13-16, 85-88",
+          "why_it_supports_or_rejects": "Upstream common binding requires `reset-gpios`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2921-2924",
+          "why_it_supports_or_rejects": "Upstream codec obtains reset GPIO with `devm_gpiod_get`."
+        }
+      ],
+      "upstream_equivalent_candidate": "GPIO reset model from wcd937x/wcd938x/wcd939x"
+    },
+    {
+      "subsystem": "soundwire_identity_and_transport",
+      "summary": "Downstream is legacy SWR-style (`wcd9378-slave`) with Qualcomm SWR bus APIs; upstream WCD uses Linux SDW IDs and APIs.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "313-321",
+          "why_it_supports_or_rejects": "Defines slave id/compatible as `wcd9378-slave` / `qcom,wcd9378-slave`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4523-4524",
+          "why_it_supports_or_rejects": "Creates regmap with downstream SWR helper `devm_regmap_init_swr`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "283-286, 404-407",
+          "why_it_supports_or_rejects": "Uses `swr_get_logical_dev_num` and `swr_driver_register` flow."
+        },
+        {
+          "source": "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml",
+          "line_or_page": "18-20",
+          "why_it_supports_or_rejects": "Upstream SDW binding constrains compatible to `sdw20217010a00`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x-sdw.c",
+          "line_or_page": "1032-1035, 1066-1068",
+          "why_it_supports_or_rejects": "Upstream pattern uses `devm_regmap_init_sdw` and SDW slave IDs (`SDW_SLAVE_ENTRY`)."
+        }
+      ],
+      "upstream_equivalent_candidate": "wcd937x-sdw.c SDW slave implementation + qcom,wcd937x-sdw binding schema"
+    },
+    {
+      "subsystem": "paging_sdca",
+      "summary": "Downstream explicitly enables paging and programs SDCA interrupt registers; regmap callbacks include SDCA ranges.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4509, 4518",
+          "why_it_supports_or_rejects": "Sets `paging_support = true` on rx/tx slaves."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4531-4533",
+          "why_it_supports_or_rejects": "Writes SDCA intr type registers during bind."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "231-262",
+          "why_it_supports_or_rejects": "Post-IRQ handler acknowledges/reads SDCA status registers via regmap."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-regmap.c",
+          "line_or_page": "879-947",
+          "why_it_supports_or_rejects": "Read/write/volatile callbacks explicitly include SDCA status/mask/type windows."
+        }
+      ],
+      "upstream_equivalent_candidate": "Linux SDW + regmap callbacks from wcd937x-sdw/wcd-common patterns (needs variant-specific validation)"
+    },
+    {
+      "subsystem": "mbhc_classh",
+      "summary": "Downstream integrates MBHC and Class-H with Qualcomm-specific wrappers and legacy Class-H API symbols.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4160-4165, 4187",
+          "why_it_supports_or_rejects": "Codec probe performs MBHC init and Class-H init."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/internal.h",
+          "line_or_page": "10-12, 97-101",
+          "why_it_supports_or_rejects": "Includes MBHC/ClassH headers and embeds class-h + mbhc structures in private state."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-mbhc.c",
+          "line_or_page": "1118-1165",
+          "why_it_supports_or_rejects": "Local wrapper allocates/initializes MBHC using callback table and IRQ ids."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+          "line_or_page": "54-63",
+          "why_it_supports_or_rejects": "Upstream Class-H API surface is v2 control object based (`wcd_clsh_ctrl_*`)."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.h",
+          "line_or_page": "190-213, 232-260",
+          "why_it_supports_or_rejects": "Upstream MBHC model is shared and callback-driven."
+        }
+      ],
+      "upstream_equivalent_candidate": "Reuse shared `wcd-mbhc-v2` and `wcd-clsh-v2` with codec-specific callback tables"
+    },
+    {
+      "subsystem": "dapm_widgets_routes_controls",
+      "summary": "Codec exports a large topology surface with many controls/widgets/routes.",
+      "measured_scale": {
+        "controls": 27,
+        "widgets": 129,
+        "routes": 72
+      },
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "3371-3431",
+          "why_it_supports_or_rejects": "Control table declaration."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "3581-3786",
+          "why_it_supports_or_rejects": "DAPM widget table declaration."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "3788-3882",
+          "why_it_supports_or_rejects": "DAPM route table declaration."
+        }
+      ],
+      "upstream_equivalent_candidate": "Topology should be rebased against upstream WCD937x/WCD938x style and trimmed to evidence-backed behavior"
+    },
+    {
+      "subsystem": "vendor_dependencies",
+      "summary": "Main codec and slave include multiple vendor-only frameworks, debug plumbing, and version guards.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "5, 18-21, 27",
+          "why_it_supports_or_rejects": "Includes `linux/version.h`, `msm-cdc-*`, vendor binding headers, qti debugfs, bolero internal APIs."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4759-4763",
+          "why_it_supports_or_rejects": "Kernel-version guarded remove signature indicates downstream compatibility scaffolding."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-slave.c",
+          "line_or_page": "343-369",
+          "why_it_supports_or_rejects": "Slave debugfs create paths (`swrslave_peek/poke/reg_dump`) are bring-up/debug oriented."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/sdca-registers-api.c",
+          "line_or_page": "221-257",
+          "why_it_supports_or_rejects": "Global SDCA debugfs helper exposes direct register access."
+        }
+      ],
+      "upstream_equivalent_candidate": "Keep only generic kernel APIs and remove vendor debug/bind/version scaffolding"
+    },
+    {
+      "subsystem": "lifecycle_pm",
+      "summary": "Downstream lifecycle uses component master + manual bind/unbind + system PM hooks; runtime PM/autosuspend shape differs from upstream WCD model.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4482-4577",
+          "why_it_supports_or_rejects": "Bind path performs slave bind, regmap/IRQ setup, and non-devm component registration."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378.c",
+          "line_or_page": "4780-4865",
+          "why_it_supports_or_rejects": "System suspend/resume manipulates vendor supply state and bias flags."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+          "line_or_page": "2964-2969, 2980-2983",
+          "why_it_supports_or_rejects": "Upstream pattern enables runtime PM autosuspend in probe/remove."
+        }
+      ],
+      "upstream_equivalent_candidate": "Rebase lifecycle on upstream WCD937x component + runtime PM structure"
+    },
+    {
+      "subsystem": "related_platform_coupling",
+      "summary": "Machine driver includes explicit WCD9378 selection and MBHC hook paths, indicating board/platform coupling outside codec module.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/audio_machine.c",
+          "line_or_page": "252-253, 271-272",
+          "why_it_supports_or_rejects": "Selects WCD9378 codec name and `get_dev_num` callback based on platform state."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/audio_machine.c",
+          "line_or_page": "1902-1905",
+          "why_it_supports_or_rejects": "Routes MBHC headset detection to `wcd9378_mbhc_hs_detect`."
+        },
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/audio_machine.c",
+          "line_or_page": "2598-2615",
+          "why_it_supports_or_rejects": "Runtime component probing selects WCD9378 variant by available codec component."
+        }
+      ],
+      "upstream_equivalent_candidate": "Treat machine-level routing/selection as board integration, not core codec upstream requirement"
+    },
+    {
+      "subsystem": "build_system_entries",
+      "summary": "Downstream build splits codec/slave modules and includes extra sdca helper object; upstream build uses `wcd937x` + `wcd937x-sdw` objects under one Kconfig family.",
+      "evidence": [
+        {
+          "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/Kbuild",
+          "line_or_page": "72-82, 123-127",
+          "why_it_supports_or_rejects": "Defines `CONFIG_SND_SOC_WCD9378` and separate `CONFIG_SND_SOC_WCD9378_SLAVE` object lists, including `sdca-registers-api.o`."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+          "line_or_page": "2452-2466",
+          "why_it_supports_or_rejects": "Upstream Kconfig exposes `SND_SOC_WCD937X` and `SND_SOC_WCD937X_SDW` only."
+        },
+        {
+          "source": "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+          "line_or_page": "361-362, 802, 805",
+          "why_it_supports_or_rejects": "Upstream Makefile uses `wcd937x.o` and `wcd937x-sdw.o` object model."
+        }
+      ],
+      "upstream_equivalent_candidate": "Extend WCD937x Kconfig/OF/SDW matching carefully rather than importing downstream module split"
+    }
+  ],
+  "datasheet_note": {
+    "source": "/local/mnt/workspace/Datasheets/qualcomm_aqstic_wcd937x_specs.pdf",
+    "evidence": [
+      {
+        "source": "qualcomm_aqstic_wcd937x_specs.pdf",
+        "line_or_page": "pdfinfo: Pages=1",
+        "why_it_supports_or_rejects": "Only a one-page marketing/spec sheet; no WCD9378 register/probe/DT implementation guidance."
+      },
+      {
+        "source": "qualcomm_aqstic_wcd937x_specs.pdf",
+        "line_or_page": "page 1",
+        "why_it_supports_or_rejects": "Content enumerates WCD9370/WCD9375 playback/record specs, not WCD9378 software integration requirements."
+      }
+    ]
+  }
+}

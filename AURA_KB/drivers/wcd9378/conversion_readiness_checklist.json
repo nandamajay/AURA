@@ -1,0 +1,174 @@
+{
+  "checklist_metadata": {
+    "generated_at_utc": "2026-06-19T18:08:05Z",
+    "mode": "audit_only_no_code_changes",
+    "blocking_policy": "Any FAIL_CLOSED/MISSING blocking item prevents conversion start"
+  },
+  "items": [
+    {
+      "item": "Required source files identified and readable",
+      "blocking": true,
+      "evidence_required": "Presence of downstream codec/slave/header/regmap/mask/table/mbhc sources",
+      "current_status": "READY",
+      "source": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/ (directory listing)"
+    },
+    {
+      "item": "Expected `wcd9378-regulator.c` accounted for",
+      "blocking": true,
+      "evidence_required": "Either file exists or regulator logic is fully mapped from alternate location",
+      "current_status": "MISSING",
+      "source": "find scan: no `wcd9378-regulator.c` in downstream wcd9378 directory"
+    },
+    {
+      "item": "Main codec DT compatible strategy (`qcom,wcd9378-codec`) decided",
+      "blocking": true,
+      "evidence_required": "Binding-compatible plan for compatible strings and fallbacks",
+      "current_status": "FAIL_CLOSED",
+      "source": "wcd9378.c:4591-4593 vs qcom,wcd937x.yaml:21-27"
+    },
+    {
+      "item": "DT reset property migration plan (`qcom,wcd-rst-gpio-node` -> `reset-gpios`)",
+      "blocking": true,
+      "evidence_required": "Deterministic property/API mapping accepted by upstream schema",
+      "current_status": "PARTIAL",
+      "source": "wcd9378.c:4424-4431; qcom,wcd93xx-common.yaml:13-16,85-88"
+    },
+    {
+      "item": "DT SoundWire phandle/property migration plan (`rx/tx-slave`, `*_swr_ch_map`)",
+      "blocking": true,
+      "evidence_required": "Mapping to upstream SDW schema (`rx/tx-device`, `rx/tx-port-mapping`, channel maps)",
+      "current_status": "PARTIAL",
+      "source": "wcd9378.c:4443-4444,4717-4720; qcom,wcd937x-sdw.yaml:24-99"
+    },
+    {
+      "item": "Kconfig integration strategy",
+      "blocking": true,
+      "evidence_required": "Decision whether to extend existing WCD937X symbols or add new symbol family",
+      "current_status": "PARTIAL",
+      "source": "downstream Kbuild:72-82,123-127; upstream Kconfig:2452-2466"
+    },
+    {
+      "item": "Makefile object layout strategy",
+      "blocking": true,
+      "evidence_required": "Object split decision aligned with upstream `wcd937x`/`wcd937x-sdw` model",
+      "current_status": "PARTIAL",
+      "source": "downstream Kbuild object lists; upstream Makefile:361-362,802,805"
+    },
+    {
+      "item": "Register-map base decision",
+      "blocking": true,
+      "evidence_required": "Chosen register base/offset model and regmap callbacks validated against hardware evidence",
+      "current_status": "PARTIAL",
+      "source": "wcd9378-registers.h:16-33; wcd9378-regmap.c:879-970"
+    },
+    {
+      "item": "Register coverage triage (what to carry vs drop)",
+      "blocking": true,
+      "evidence_required": "Per-block keep/drop rationale over large register/mask/default tables",
+      "current_status": "PARTIAL",
+      "source": "define/default counts: 856/1736/839 from downstream files"
+    },
+    {
+      "item": "SDW device ID decision",
+      "blocking": true,
+      "evidence_required": "Proof whether WCD9378 should reuse `sdw20217010a00` identity or needs new ID",
+      "current_status": "FAIL_CLOSED",
+      "source": "wcd9378-slave.c:313-321 vs qcom,wcd937x-sdw.yaml:18-20"
+    },
+    {
+      "item": "SDW paging decision",
+      "blocking": true,
+      "evidence_required": "Proof of upstream-equivalent handling for downstream `paging_support` behavior",
+      "current_status": "FAIL_CLOSED",
+      "source": "wcd9378.c:4509,4518; downstream soundwire.h:275-285"
+    },
+    {
+      "item": "Class-H version/base decision",
+      "blocking": true,
+      "evidence_required": "Evidence-backed mapping to existing `wcd-clsh-v2` codec version or need for extension",
+      "current_status": "FAIL_CLOSED",
+      "source": "wcd-clsh-v2.h:44-51; wcd9378.c:4187"
+    },
+    {
+      "item": "MBHC integration decision",
+      "blocking": true,
+      "evidence_required": "Codec callback mapping to shared MBHC model without downstream-only wrappers unless justified",
+      "current_status": "PARTIAL",
+      "source": "wcd9378-mbhc.c:1118-1165; wcd937x.c:1951-1966,2029-2031"
+    },
+    {
+      "item": "LPASS macro dependency decision",
+      "blocking": true,
+      "evidence_required": "Concrete proof if LPASS macro code changes are required for WCD9378 support",
+      "current_status": "FAIL_CLOSED",
+      "source": "lpass-rx-macro.c / lpass-tx-macro.c scans (no direct WCD9378 coupling found)"
+    },
+    {
+      "item": "SoundWire core dependency decision",
+      "blocking": true,
+      "evidence_required": "Concrete blocking issue in upstream SoundWire core requiring core patch",
+      "current_status": "FAIL_CLOSED",
+      "source": "linux-next/drivers/soundwire/qcom.c,bus.c review shows no proven WCD9378-specific blocker"
+    },
+    {
+      "item": "Runtime playback validation plan",
+      "blocking": true,
+      "evidence_required": "Reproducible command matrix + expected outputs + pass/fail capture",
+      "current_status": "MISSING",
+      "source": "No runtime logs or command artifacts supplied in allowed sources"
+    },
+    {
+      "item": "Runtime capture validation plan",
+      "blocking": true,
+      "evidence_required": "Reproducible capture test matrix with deterministic evidence",
+      "current_status": "MISSING",
+      "source": "No runtime logs or command artifacts supplied in allowed sources"
+    },
+    {
+      "item": "Mute-path regression validation",
+      "blocking": true,
+      "evidence_required": "Targeted test proving mute/unmute and sequencer transitions are stable",
+      "current_status": "MISSING",
+      "source": "wcd9378.c has mute-path conditionals: 1988-2000, 2096-2101, 2290-2293"
+    },
+    {
+      "item": "Debug helper exclusion plan",
+      "blocking": true,
+      "evidence_required": "Explicit removal/containment decision for debugfs and bring-up-only traces",
+      "current_status": "PARTIAL",
+      "source": "wcd9378-slave.c:343-369; sdca-registers-api.c:221-257; wcd9378.c:4547-4548"
+    },
+    {
+      "item": "Board-specific property elimination plan",
+      "blocking": true,
+      "evidence_required": "Formal mapping from downstream board properties to upstream generic bindings",
+      "current_status": "PARTIAL",
+      "source": "wcd9378.c legacy properties around 4424-4444 and 4717-4727"
+    },
+    {
+      "item": "Datasheet sufficiency for WCD9378 implementation decisions",
+      "blocking": true,
+      "evidence_required": "Detailed WCD9378 programming/ID/register guidance",
+      "current_status": "FAIL_CLOSED",
+      "source": "qualcomm_aqstic_wcd937x_specs.pdf is 1-page WCD9370/9375 marketing spec only"
+    },
+    {
+      "item": "Known unresolved issues logged",
+      "blocking": true,
+      "evidence_required": "Explicit unresolved list captured for conversion gate",
+      "current_status": "READY",
+      "source": "external_attempt_audit.json + upstreamability_risk_matrix.json"
+    }
+  ],
+  "rollup": {
+    "total_items": 22,
+    "status_counts": {
+      "READY": 2,
+      "PARTIAL": 9,
+      "MISSING": 4,
+      "FAIL_CLOSED": 7
+    },
+    "conversion_start_recommendation": "NO",
+    "reason": "Blocking FAIL_CLOSED/MISSING items remain on compatibility, SDW identity/paging, runtime evidence, and datasheet adequacy."
+  }
+}
