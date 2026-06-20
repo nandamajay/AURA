@@ -1,0 +1,75 @@
+{
+  "artifact": "pinctrl_kodiak_sc7280_preflight_01_scoring_gate_gap_analysis",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "assessment": {
+    "existing_scoring_audio_biased": {
+      "answer": "YES",
+      "evidence": [
+        "AURA/agents/src/aura_agents/conversion_scoring.py (CATEGORY_ORDER includes DAPM_WIDGETS/DAPM_ROUTES/DAPM_CONTROLS)",
+        "AURA/agents/src/aura_agents/conversion_scoring.py (DEFAULT_BANNED_SYMBOL_PATTERNS heavily audio codec specific)"
+      ]
+    },
+    "irrelevant_or_weak_for_pinctrl": [
+      "DAPM_WIDGETS",
+      "DAPM_ROUTES",
+      "DAPM_CONTROLS",
+      "DT_PROPERTY_COVERAGE (too generic without pinctrl schema specifics)"
+    ],
+    "still_useful_generic_categories": [
+      "FUNCTION_MATCH",
+      "API_COVERAGE",
+      "INCLUDE_ALIGNMENT",
+      "LIFECYCLE_PATTERN",
+      "VENDOR_ELIMINATION"
+    ],
+    "needed_pinctrl_specific_categories": [
+      "PIN_TABLE_COVERAGE",
+      "GROUP_COVERAGE",
+      "FUNCTION_GROUP_MAPPING",
+      "WAKEIRQ_COVERAGE",
+      "DT_COMPATIBLE_ALIGNMENT",
+      "KCONFIG_MAKEFILE_ALIGNMENT",
+      "UPSTREAM_STYLE"
+    ],
+    "can_current_multifile_scorer_be_used_honestly": {
+      "answer": "PARTIAL",
+      "reason": "It can provide generic overlap metrics, but not pinctrl semantics unless extended with pinctrl-specific extraction logic."
+    },
+    "should_new_pinctrl_static_scorer_be_added": {
+      "answer": "YES",
+      "reason": "Pinctrl quality depends on pin/group/function/wakeirq tables that current scorer does not model."
+    },
+    "generic_gate_enforcement_now": [
+      "allowed_sources presence and integrity",
+      "hidden-target discipline audit",
+      "anti-copy/derivation risk check",
+      "lineage coverage check",
+      "fail-closed reporting for runtime-sensitive uncertainties"
+    ],
+    "manual_pm_review_needed": [
+      "pin table semantic correctness",
+      "function-to-group mapping correctness",
+      "wake IRQ and reserved range correctness",
+      "DT binding compliance depth beyond simple property overlap"
+    ]
+  },
+  "proposed_pinctrl_scoring_categories": [
+    "FUNCTION_MATCH",
+    "API_COVERAGE",
+    "PIN_TABLE_COVERAGE",
+    "GROUP_COVERAGE",
+    "FUNCTION_GROUP_MAPPING",
+    "WAKEIRQ_COVERAGE",
+    "DT_COMPATIBLE_ALIGNMENT",
+    "KCONFIG_MAKEFILE_ALIGNMENT",
+    "VENDOR_ELIMINATION",
+    "INCLUDE_ALIGNMENT",
+    "LIFECYCLE_PATTERN",
+    "UPSTREAM_STYLE"
+  ],
+  "pilot_readiness": "GO_WITH_LIMITATIONS_IF_LA_SOURCE_PROVIDED"
+}

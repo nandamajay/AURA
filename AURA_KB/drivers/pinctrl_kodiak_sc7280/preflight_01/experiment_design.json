@@ -1,0 +1,97 @@
+{
+  "artifact": "pinctrl_kodiak_sc7280_preflight_01_experiment_design",
+  "generated_on": "2026-06-20",
+  "experiment_name": "kodiak_sc7280_tlmm_pinctrl_three_variant",
+  "target_name": "LE SC7280 TLMM pinctrl driver in Kodiak DTS family context",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "preflight_verdict": "NO_GO",
+  "variants": [
+    {
+      "variant": "A",
+      "name": "baseline_blind",
+      "purpose": "Measure raw LA-to-LE pinctrl conversion without LE relative skeleton or family-specific rule packs.",
+      "allowed_sources": [
+        "LA TLMM source donor file (currently missing, required)",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-msm.h",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-msm.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/Kconfig",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/Makefile"
+      ],
+      "forbidden_until_scoring": [
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7280.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml",
+        "Any LE relative skeleton file"
+      ],
+      "status": "BLOCKED_MISSING_LA_SOURCE"
+    },
+    {
+      "variant": "B",
+      "name": "relative_skeleton",
+      "purpose": "Test nearest-driver architectural reuse with LE relative skeleton while keeping LE target hidden.",
+      "allowed_sources": [
+        "LA TLMM source donor file (currently missing, required)",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7180.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/pinctrl/qcom,sc7180-pinctrl.yaml",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-msm.h",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-msm.c",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/Kconfig",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/Makefile"
+      ],
+      "forbidden_until_scoring": [
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7280.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml"
+      ],
+      "status": "BLOCKED_MISSING_LA_SOURCE"
+    },
+    {
+      "variant": "C",
+      "name": "learning_informed",
+      "purpose": "Apply only generic AURA governance rules with LA donor + LE relative skeleton; reject audio-specific rules.",
+      "allowed_sources": [
+        "LA TLMM source donor file (currently missing, required)",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7180.c",
+        "AURA generic governance rules (hidden-target, lineage, anti-copy, vendor elimination, fail-closed, allowlists)",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-msm.h",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-msm.c",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/Kconfig",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/Makefile"
+      ],
+      "forbidden_until_scoring": [
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7280.c",
+        "Audio-specific WCD/WSA behavior rules"
+      ],
+      "status": "BLOCKED_MISSING_LA_SOURCE"
+    }
+  ],
+  "pinctrl_specific_success_metrics": [
+    "PIN_TABLE_COVERAGE: pin count and pin-name table alignment",
+    "GROUP_COVERAGE: pin groups presence and grouping completeness",
+    "FUNCTION_GROUP_MAPPING: function-to-group mapping parity",
+    "GPIO_RANGE_ALIGNMENT: gpio-ranges and npins consistency",
+    "WAKEIRQ_COVERAGE: wake IRQ map and wakeup interrupt handling parity",
+    "RESERVED_PIN_RANGE_ALIGNMENT: reserved pins/ranges behavior alignment",
+    "SOC_DATA_STRUCTURE_ALIGNMENT: SoC data tables and descriptor shape",
+    "DT_COMPATIBLE_ALIGNMENT: qcom,*-pinctrl compatible and schema alignment",
+    "KCONFIG_MAKEFILE_ALIGNMENT: symbol and object wiring correctness",
+    "VENDOR_ELIMINATION: no downstream-only macros/APIs"
+  ],
+  "scoring_strategy": "Use current multi-file scorer/verifier for generic categories plus a pinctrl static scorer extension for pin/group/function/wakeirq coverage; treat existing DAPM-centric categories as non-applicable.",
+  "gate_strategy": "Use canonical conversion_gate with verifier lineage/copy checks and explicit hidden-target audit; add manual PM review for pin table semantics until pinctrl scorer support exists.",
+  "limitations": [
+    "No LA TLMM donor source exists in provided corpora, so experiment cannot start honestly.",
+    "Current scoring categories are audio-biased and incomplete for pinctrl quality judgments.",
+    "LE target content remained unread during preflight selection and must stay hidden until scoring in any future run."
+  ],
+  "go_no_go_conditions": {
+    "required_for_go": [
+      "At least one LA TLMM donor source file for Kodiak/SC7280-family pinctrl",
+      "Locked LE hidden target path and relative skeleton path",
+      "Documented pinctrl-specific scoring addendum or manual-review rubric"
+    ],
+    "current_status": "NOT_MET"
+  }
+}

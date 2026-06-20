@@ -1,0 +1,117 @@
+{
+  "artifact": "pinctrl_kodiak_sc7280_preflight_01_generic_rule_extraction_non_audio",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "source_artifacts": [
+    "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/pm_review_01/wsa_rule_promotion_decision.json",
+    "AURA_KB/platform_tools/wcd_rule_pack_checker_01/design.md",
+    "AURA_KB/platform_tools/wcd_rule_pack_checker_gate_integration_01/policy_mapping.json"
+  ],
+  "allowed_generic_rules": [
+    {
+      "rule_id": "GENERIC-RULE-001",
+      "rule": "Hide LE target files until scoring/gate stage.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Core experiment-integrity guardrail."
+    },
+    {
+      "rule_id": "GENERIC-RULE-002",
+      "rule": "Use LA as content donor and LE references for structure; avoid near-copy.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "General LA-to-LE methodology rule."
+    },
+    {
+      "rule_id": "GENERIC-RULE-003",
+      "rule": "Require patch/function lineage and explainability artifacts.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Supports replayable governance and PM audits."
+    },
+    {
+      "rule_id": "GENERIC-RULE-004",
+      "rule": "Run anti-copy/derivation checks and surface warnings as governance risk.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Independent of subsystem domain."
+    },
+    {
+      "rule_id": "GENERIC-RULE-005",
+      "rule": "Enforce vendor include/API elimination with explicit mapping.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Prevents downstream lock-in patterns."
+    },
+    {
+      "rule_id": "GENERIC-RULE-006",
+      "rule": "Keep runtime-sensitive unknowns in FAIL_CLOSED until evidence exists.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "No static-only runtime claims."
+    },
+    {
+      "rule_id": "GENERIC-RULE-007",
+      "rule": "Use explicit source allowlists per variant and track forbidden sources.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Bounded and observable experiment constraint."
+    },
+    {
+      "rule_id": "GENERIC-RULE-008",
+      "rule": "Separate DT/schema alignment checks from runtime correctness claims.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Avoids overclaiming from static schema alignment."
+    },
+    {
+      "rule_id": "GENERIC-RULE-009",
+      "rule": "Compile/checkpatch/gate must report NOT_RUN honestly when not executed.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Prevents false PASS assumptions."
+    },
+    {
+      "rule_id": "GENERIC-RULE-010",
+      "rule": "Use LA/LE terminology consistently in plans, artifacts, and PM summaries.",
+      "classification": "ALLOW_GENERIC",
+      "applies_to_non_audio": true,
+      "notes": "Terminology consistency supports review quality."
+    }
+  ],
+  "explicit_rejections": [
+    {
+      "rule_class": "WCD Class-H/MBHC rules",
+      "classification": "REJECT_AUDIO_SPECIFIC",
+      "reason": "Audio codec analog/MBHC behavior is irrelevant to TLMM pinctrl."
+    },
+    {
+      "rule_class": "WCD SoundWire assumptions",
+      "classification": "REJECT_AUDIO_SPECIFIC",
+      "reason": "SoundWire topology and identity logic do not apply to pinctrl drivers."
+    },
+    {
+      "rule_class": "WSA amplifier topology rules",
+      "classification": "REJECT_AUDIO_SPECIFIC",
+      "reason": "Amplifier subsystem behavior is non-transferable to TLMM pinctrl."
+    },
+    {
+      "rule_class": "DAPM/control scoring rules",
+      "classification": "REJECT_AUDIO_SPECIFIC",
+      "reason": "DAPM/control metrics are codec-specific and not relevant to pinctrl semantics."
+    },
+    {
+      "rule_class": "Audio-specific runtime command sets",
+      "classification": "REJECT_AUDIO_SPECIFIC",
+      "reason": "Audio runtime checks are not valid for pinctrl pilot governance."
+    }
+  ],
+  "usage_policy_for_variant_c": {
+    "allowed": "Only ALLOW_GENERIC rules can influence non-audio Variant C behavior.",
+    "forbidden": "Any audio-specific behavioral rule transfer is disallowed."
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "artifact": "pinctrl_kodiak_sc7280_preflight_01_target_selection_analysis",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "target_decision": "NO_GO_MISSING_LA",
+  "candidate_experiment_name": "kodiak_sc7280_tlmm_pinctrl_three_variant",
+  "decision_points": [
+    {
+      "question": "Is the correct LE hidden target pinctrl-sc7280.c?",
+      "answer": "Yes, likely. LE provides drivers/pinctrl/qcom/pinctrl-sc7280.c and matching TLMM binding qcom,sc7280-pinctrl.yaml; no LE pinctrl-kodiak.c exists.",
+      "evidence": [
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7280.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-kodiak.c (missing)"
+      ],
+      "confidence": "HIGH",
+      "risk": "Kodiak codename could map to multiple market SKUs, but driver naming evidence points to SC7280 TLMM in LE."
+    },
+    {
+      "question": "Is Kodiak represented by DTS plus SC7280 TLMM driver rather than a standalone Kodiak TLMM driver?",
+      "answer": "Yes. LE DTS include graph shows kodiak.dtsi consumed by SC7280/QCM6490/QCS6490/SM7325 boards.",
+      "evidence": [
+        "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/kodiak.dtsi",
+        "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi",
+        "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/qcm6490-idp.dts",
+        "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/qcs6490-rb3gen2.dts",
+        "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/sm7325.dtsi"
+      ],
+      "confidence": "HIGH",
+      "risk": "DTS codename mapping does not guarantee an equivalent LA TLMM donor file exists in provided corpora."
+    },
+    {
+      "question": "Is there a distinct LA Kodiak/SC7280 TLMM source donor in provided downstream trees?",
+      "answer": "No. No LA TLMM driver source matching Kodiak/SC7280/QCM6490/QCS6490/SM7325 was found; only LA audio pinctrl helpers exist.",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/soc/pinctrl-lpi.c",
+        "track_b_corpora/audio-kernel-ar/soc/pinctrl-wcd.c",
+        "track_b_corpora/audio-kernel-ar/soc/pinctrl-utils.h",
+        "track_b_corpora/audio-kernel-ar/drivers/pinctrl/qcom/pinctrl-sc7280.c (missing)"
+      ],
+      "confidence": "HIGH",
+      "risk": "Without LA donor, hidden-target reconstruction cannot be evaluated honestly as LA-to-LE conversion."
+    },
+    {
+      "question": "What should the experiment target be named if run later?",
+      "answer": "LE target should be named SC7280 TLMM pinctrl (Kodiak DTS family context).",
+      "evidence": [
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7280.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/pinctrl/qcom,sc7280-pinctrl.yaml",
+        "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/kodiak.dtsi"
+      ],
+      "confidence": "HIGH",
+      "risk": "Name is clear for LE target, but still blocked by missing LA source package."
+    },
+    {
+      "question": "What is the nearest LE relative skeleton?",
+      "answer": "Primary relative skeleton candidate is pinctrl-sc7180.c; secondary candidates include pinctrl-sm6350.c/sc8180x.c for pattern checks.",
+      "evidence": [
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc7180.c",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sm6350.c",
+        "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-sc8180x.c"
+      ],
+      "confidence": "MEDIUM",
+      "risk": "Relative choice may influence score significantly; fair-policy must lock one baseline before variants."
+    },
+    {
+      "question": "Is this currently a fair hidden-target reconstruction experiment?",
+      "answer": "Not yet. LE target and relative skeleton are clear, but LA donor source is missing in provided LA corpora.",
+      "evidence": [
+        "AURA_KB/drivers/pinctrl_kodiak_sc7280/preflight_01/source_discovery.json"
+      ],
+      "confidence": "HIGH",
+      "risk": "Proceeding now would violate LA-content-donor principle and produce ungrounded conversion claims."
+    }
+  ],
+  "final_notes": [
+    "LE target content was not read during this preflight target selection phase.",
+    "Preflight outcome is NO_GO until LA TLMM donor source is added to allowed corpora."
+  ]
+}
