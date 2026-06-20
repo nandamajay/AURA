@@ -1,0 +1,128 @@
+{
+  "artifact": "wcd_codec_family_rule_promotion_01_evidence_inventory",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "consumed_artifacts": {
+    "wcd938x_learning": [
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/la_vs_le_architecture_delta.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/downstream_vendor_antipatterns.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/soundwire_regmap_lifecycle_audit.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_learning_summary.md",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/validation.json"
+    ],
+    "wcd9378_learning_impact_validation": [
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/monday_evidence_checklist_update.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/pm_learning_impact_summary.md",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/validation.json"
+    ],
+    "wcd939x_transfer_validation": [
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/learning_transfer_verdict.md",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_0_baseline/governance_gate/governance_verdict.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/governance_verdict.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/learning_rules_used.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/validation.json"
+    ],
+    "wcd9378_evidence_implications": [
+      "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json",
+      "AURA_KB/drivers/wcd9378/eliza_input_evidence_01/",
+      "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+    ],
+    "aura_architecture_context": [
+      "AURA_KB/platform_architecture/aura_architecture_inventory.json"
+    ]
+  },
+  "candidate_pool": {
+    "wcd938x_family_rules_draft_count": 14,
+    "wcd939x_transfer_promotion_candidates_count": 5,
+    "wcd9378_tooling_improvement_candidates_count": 8,
+    "unique_candidate_entries_evaluated": 22
+  },
+  "transfer_experiment_summary": {
+    "variant_0_score": 41.78,
+    "variant_1_score": 60.76,
+    "score_delta": 18.98,
+    "transfer_verdict": "TRANSFER_VALIDATED_HIGH",
+    "caveats": [
+      "Variant 1 introduced downstream derivation warnings",
+      "Variant 1 regressed VENDOR_ELIMINATION"
+    ]
+  },
+  "gate_verdicts": {
+    "variant_0": {
+      "governance_verdict": "PASS",
+      "gate_blockers": 0,
+      "gate_warnings": 0,
+      "lineage_coverage": 100.0
+    },
+    "variant_1": {
+      "governance_verdict": "WARN",
+      "gate_blockers": 0,
+      "gate_warnings": 2,
+      "lineage_coverage": 100.0,
+      "warning_classes": [
+        "DOWNSTREAM_REUSE_RISK",
+        "DERIVATION_RISK"
+      ]
+    }
+  },
+  "known_regressions_from_variant_1": [
+    {
+      "area": "vendor_elimination",
+      "signal": "VENDOR_ELIMINATION dropped from 100.0 to 28.73",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json"
+    },
+    {
+      "area": "derivation_risk",
+      "signal": "verifier warnings for downstream-near-copy in wcd939x.c and wcd939x.h",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json"
+    }
+  ],
+  "decision_sources_by_artifact": {
+    "rule_promotion_matrix.json": [
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/learning_transfer_verdict.md",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_0_baseline/governance_gate/governance_verdict.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/governance_verdict.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/learning_rules_used.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/pm_learning_impact_summary.md"
+    ],
+    "wcd_codec_family_rules_promoted.json": [
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/learning_transfer_verdict.md",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/monday_evidence_checklist_update.json",
+      "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+    ],
+    "quarantined_rejected_rules.json": [
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json"
+    ],
+    "gate_scorer_verifier_improvement_proposal.json": [
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json",
+      "AURA_KB/drivers/wcd9378/learning_impact_validation_01/monday_evidence_checklist_update.json",
+      "AURA_KB/platform_architecture/aura_architecture_inventory.json"
+    ]
+  }
+}

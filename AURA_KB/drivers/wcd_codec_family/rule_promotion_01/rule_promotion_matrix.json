@@ -1,0 +1,533 @@
+{
+  "artifact": "wcd_codec_family_rule_promotion_01_matrix",
+  "generated_on": "2026-06-20",
+  "classification_legend": [
+    "PROMOTE_NOW",
+    "PROMOTE_WITH_CONDITIONS",
+    "QUARANTINE",
+    "REJECT",
+    "LEARN_ONLY"
+  ],
+  "entries": [
+    {
+      "rule_id": "WCD-FAMILY-RULE-001",
+      "rule_summary": "Prefer LE split architecture: aggregate codec driver + SDW transport driver + shared helper libraries.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/learning_rules_used.json"
+      ],
+      "evidence_of_benefit": "Variant 1 improved lifecycle and include alignment while using LE split structure (LIFECYCLE_PATTERN +4.1, INCLUDE_ALIGNMENT +17.79).",
+      "evidence_of_risk": "Higher structure quality did not prevent downstream derivation warnings in Variant 1; split pattern must not justify LA-near-copy.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Use LE structure pattern only; prohibit large LA block carryover.",
+        "Pair with anti-copy verifier checks in every run."
+      ],
+      "recommended_enforcement": "prompt",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Benefit is repeatable across variants and does not require runtime evidence when applied as architecture-only guidance."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-002",
+      "rule_summary": "Drop vendor framework includes/APIs unless there is an LE equivalent.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json"
+      ],
+      "evidence_of_benefit": "Variant 0 showed strong vendor-elimination discipline and no verifier warnings.",
+      "evidence_of_risk": "Variant 1 regressed VENDOR_ELIMINATION by -71.27 when LA-heavy carryover increased.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Fail gate when VENDOR_ELIMINATION regresses below agreed threshold.",
+        "Require explicit replacement mapping for every removed vendor API."
+      ],
+      "recommended_enforcement": "gate",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Rule is correct but must be enforced with stronger penalties to avoid repeat regression."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-003",
+      "rule_summary": "Use shared wcd-mbhc-v2 and wcd-clsh-v2 patterns instead of codec-local reimplementation.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json"
+      ],
+      "evidence_of_benefit": "WCD938x LA-vs-LE audit shows maintainers accepted shared MBHC/Class-H integration model in LE.",
+      "evidence_of_risk": "Class-H behavior details remain runtime-sensitive for WCD9378 and cannot be finalized from static learning.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Reuse shared library interfaces only.",
+        "Keep codec-specific Class-H base/version decisions fail-closed until runtime traces."
+      ],
+      "recommended_enforcement": "manual_review",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Integration pattern is reusable; behavior assertions are not."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-004",
+      "rule_summary": "Map LA DT properties to LE schema names.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json"
+      ],
+      "evidence_of_benefit": "DT coverage remained 100.0 in both variants and transfer candidates recommend checklist promotion.",
+      "evidence_of_risk": "Property renaming can mask board-specific assumptions unless schema and schematic checks are explicit.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require mapping table from every LA DT key to LE schema key or explicit drop rationale."
+      ],
+      "recommended_enforcement": "checklist",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Low-risk normalization rule with direct evidence and clear quality benefit."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-005",
+      "rule_summary": "Treat SDW numeric identity as hardware-evidence gated; never infer new codec IDs from siblings.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/pm_learning_impact_summary.md"
+      ],
+      "evidence_of_benefit": "WCD9378 learning-impact and evidence packages repeatedly block sibling-ID inference and keep identity unresolved pending logs.",
+      "evidence_of_risk": "If relaxed, false SDW ID finalization can create irreversible binding errors and invalid runtime claims.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require board logs (dmesg/sysfs/modalias) before any SDW numeric identity finalization."
+      ],
+      "recommended_enforcement": "verifier",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Core fail-closed safety rule; directly tied to unresolved WCD9378 blockers."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-006",
+      "rule_summary": "Keep runtime-sensitive claims fail-closed until board traces exist.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/pm_learning_impact_summary.md"
+      ],
+      "evidence_of_benefit": "Transfer candidates marked this as high-confidence; runtime fail-closed posture stayed intact while score increased.",
+      "evidence_of_risk": "Without enforcement, high score can be misread as runtime readiness.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require explicit runtime blocker register in every RFC/static run.",
+        "Block runtime-ready claims unless evidence IDs are linked."
+      ],
+      "recommended_enforcement": "gate",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Transfer experiment and WCD9378 validation both show this rule prevents unsafe claims."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-007",
+      "rule_summary": "Use LE regcache lifecycle (cache-only early; sync on attach/resume).",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/soundwire_regmap_lifecycle_audit.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json"
+      ],
+      "evidence_of_benefit": "WCD938x LE pattern gives stable regmap lifecycle model and improves review consistency.",
+      "evidence_of_risk": "Paging/controller behavior for WCD9378 remains runtime-unproven, so regcache timing assumptions are partially constrained.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Apply lifecycle pattern statically, but do not infer paged-register or controller correctness.",
+        "Require runtime logs for suspend/resume cache-sync confirmation."
+      ],
+      "recommended_enforcement": "manual_review",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Useful architecture pattern, but runtime behavior must remain evidence-gated."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-008",
+      "rule_summary": "Normalize IRQ handling to regmap-irq + request_threaded_irq; avoid vendor IRQ wrappers.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/learning_rules_used.json"
+      ],
+      "evidence_of_benefit": "Learning rules report this as structurally desirable in LE style.",
+      "evidence_of_risk": "Variant 1 marked IRQ rule as NO_EFFECT and no runtime IRQ validation exists.",
+      "classification": "LEARN_ONLY",
+      "conditions": [
+        "Do not enforce as mandatory until additional transfer runs prove impact."
+      ],
+      "recommended_enforcement": "manual_review",
+      "applies_to": [
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Evidence is currently insufficient for promotion beyond advisory learning context."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-009",
+      "rule_summary": "Keep DAPM/control categories only with topology evidence; avoid name-only cloning.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json"
+      ],
+      "evidence_of_benefit": "Variant 1 achieved major DAPM improvements across widgets/routes/controls.",
+      "evidence_of_risk": "Same run also raised downstream similarity warnings, indicating topology gains can come with copy risk.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Require DAPM category mapping table with LA source and LE structural rationale.",
+        "Attach anti-copy verifier results for DAPM-heavy files."
+      ],
+      "recommended_enforcement": "scorer",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "High value for quality, but must be constrained to avoid LA derivation drift."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-010",
+      "rule_summary": "Use reset via gpiod and regulators via bulk APIs; do not port vendor supply-LPM policy.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json"
+      ],
+      "evidence_of_benefit": "LE pattern is consistent across WCD family and reduces vendor API dependence.",
+      "evidence_of_risk": "Reset sequencing behavior can still be runtime-sensitive; workaround-style reset hacks remain blocked.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Allow only LE gpiod/regulator framework migration.",
+        "Explicitly ban reset-in-hw_params and re-enumeration recovery hacks."
+      ],
+      "recommended_enforcement": "checklist",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Reusable for static integration, but runtime semantics remain evidence-gated."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-011",
+      "rule_summary": "Use LE two-symbol codec/SDW Kconfig pattern when transport split exists.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json"
+      ],
+      "evidence_of_benefit": "Variant learning and prior WCD family audits consistently use split Kconfig/Makefile integration.",
+      "evidence_of_risk": "Low direct risk; only integration consistency risk if symbols diverge.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require symbol naming consistency between Kconfig and Makefile objects."
+      ],
+      "recommended_enforcement": "prompt",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Compile/integration-oriented rule with stable evidence and low downside."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-012",
+      "rule_summary": "Ban debug-only artifacts (custom debugfs/hwdep hooks) from conversion output.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json"
+      ],
+      "evidence_of_benefit": "Rule intent matches LE cleanup goals.",
+      "evidence_of_risk": "Transfer candidate explicitly marked do_not_promote with low confidence because enforcement collapsed under LA-heavy carryover.",
+      "classification": "QUARANTINE",
+      "conditions": [
+        "Re-evaluate after adding stronger anti-copy and vendor-elimination gate penalties."
+      ],
+      "recommended_enforcement": "gate",
+      "applies_to": [
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "NO_CHANGE",
+      "pm_reason": "Rule is directionally correct but current implementation evidence is unstable."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-013",
+      "rule_summary": "Require evidence tags on each transformed subsystem.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/learning_value_scorecard.json"
+      ],
+      "evidence_of_benefit": "WCD9378 learning-impact validation improved PM quality by explicit area-by-area evidence tagging.",
+      "evidence_of_risk": "Tagging can become box-checking if not validated against runtime evidence updates.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Require traceable artifact path per tag.",
+        "Fail verifier if runtime-sensitive tag changes without evidence artifact."
+      ],
+      "recommended_enforcement": "verifier",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Governance-positive rule with modest implementation risk when automated."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-014",
+      "rule_summary": "When LA and LE disagree and runtime evidence is absent, choose FAIL_CLOSED.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/aura_rule_promotion_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/learning_transfer_verdict.md",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/pm_learning_impact_summary.md"
+      ],
+      "evidence_of_benefit": "Transfer candidate and verdict both report stronger PM reliability with fail-closed preference.",
+      "evidence_of_risk": "No meaningful risk when documented; risk is only accidental override.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require PM summary section listing unresolved fail-closed items and prohibited claims."
+      ],
+      "recommended_enforcement": "pm_skill",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Directly validated in both WCD9378 and transfer experiment governance results."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-001",
+      "rule_summary": "Gate check for artifact path mismatches with fallback path suggestions.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json"
+      ],
+      "evidence_of_benefit": "Reduces manual path reconciliation noise during validation and improves replayability.",
+      "evidence_of_risk": "Low; mainly implementation complexity in gate path resolver.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Log both requested and resolved artifact paths in gate output."
+      ],
+      "recommended_enforcement": "gate",
+      "applies_to": [
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Tooling-only improvement with no conversion behavior risk."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-002",
+      "rule_summary": "Scorer/PM rollups should reconcile partial compile artifacts with later full-build artifacts.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "evidence_of_benefit": "Prevents contradictory compile-state reporting and improves PM decision clarity.",
+      "evidence_of_risk": "Needs explicit precedence rules to avoid masking intermediate failures.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Define artifact precedence order and keep raw statuses preserved in report."
+      ],
+      "recommended_enforcement": "scorer",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Improves observability and avoids misreporting without touching driver behavior."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-003",
+      "rule_summary": "Prompt template rule forbidding sibling-codec SDW ID inference.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "evidence_of_benefit": "Directly aligns with unresolved WCD9378 SDW identity blockers and fail-closed governance.",
+      "evidence_of_risk": "No material downside; may increase NO-GO frequency when hardware evidence is delayed.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require explicit hardware evidence reference before any SDW ID claim."
+      ],
+      "recommended_enforcement": "prompt",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "High-priority safeguard and already proven useful in WCD9378 validation."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-004",
+      "rule_summary": "DT normalization checklist that blocks unresolved LA legacy properties.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json"
+      ],
+      "evidence_of_benefit": "DT mapping consistency stayed stable across transfer variants and improved review quality.",
+      "evidence_of_risk": "Could over-block board-specific features without schema escape hatch.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Allow explicit exception list with schematic/evidence rationale."
+      ],
+      "recommended_enforcement": "checklist",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": false,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "High-value normalization rule and low risk with controlled exceptions."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-005",
+      "rule_summary": "PM summaries must include explicit \"what must NOT be claimed\" section when runtime blockers exist.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/pm_learning_impact_summary.md"
+      ],
+      "evidence_of_benefit": "Prevents RFC compile-readiness from being interpreted as runtime readiness.",
+      "evidence_of_risk": "Low; documentation process change only.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Gate PM summary completeness when runtime blockers are non-empty."
+      ],
+      "recommended_enforcement": "pm_skill",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Directly improves governance clarity in blocked states."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-006",
+      "rule_summary": "Verifier must ensure runtime fail-closed items are unchanged unless new runtime evidence exists.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/learning_transfer_verdict.md"
+      ],
+      "evidence_of_benefit": "Codifies existing fail-closed discipline and blocks silent blocker relaxation.",
+      "evidence_of_risk": "Low; requires robust evidence-ID linking logic.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Require evidence artifact ID and path for every blocker status transition."
+      ],
+      "recommended_enforcement": "verifier",
+      "applies_to": [
+        "WCD9378",
+        "WCD939x",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Critical for interruptible governance and runtime safety."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-007",
+      "rule_summary": "Extend anti-hack detector for reset-in-hw_params and ad-hoc re-enumeration recovery logic.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/downstream_vendor_antipatterns.json"
+      ],
+      "evidence_of_benefit": "Both WCD938x learning and WCD9378 validation identify these as unsafe shortcuts.",
+      "evidence_of_risk": "False positives possible if patterns are too broad.",
+      "classification": "PROMOTE_NOW",
+      "conditions": [
+        "Support allowlisted exceptions only with explicit runtime waiver artifact."
+      ],
+      "recommended_enforcement": "verifier",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "WAIT_FOR_RUNTIME",
+      "pm_reason": "Prevents recurrence of known non-upstream runtime hacks."
+    },
+    {
+      "rule_id": "AURA-IMPROVE-008",
+      "rule_summary": "Standardize evidence checklist schema with command, output file, and acceptance criteria.",
+      "source_artifacts": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "evidence_of_benefit": "Improves replayability and handoff quality for hardware/runtime evidence capture.",
+      "evidence_of_risk": "Migration overhead for existing checklists lacking schema-complete fields.",
+      "classification": "PROMOTE_WITH_CONDITIONS",
+      "conditions": [
+        "Apply schema migration with backward-compatible validator phase first."
+      ],
+      "recommended_enforcement": "checklist",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codecs"
+      ],
+      "runtime_sensitive": true,
+      "wcd9378_before_monday": "CHECKLIST_ONLY",
+      "pm_reason": "Strong process improvement, but rollout should avoid breaking existing artifact consumers."
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+{
+  "artifact": "wcd_codec_family_rule_promotion_01_gate_scorer_verifier_improvement_proposal",
+  "generated_on": "2026-06-20",
+  "improvements": [
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-001",
+      "component": "scorer",
+      "description": "Downstream derivation warnings must reduce accepted confidence in PM rollups, not only score display.",
+      "why_needed": "Variant 1 score improved while governance quality risk increased due derivation warnings.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/governance_gate/verifier_result.json",
+      "priority": "P0",
+      "implementation_risk": "LOW",
+      "success_metric": "Runs with downstream warnings auto-downgrade confidence tier even when score improves."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-002",
+      "component": "gate",
+      "description": "Add vendor-elimination regression guardrail with configurable minimum acceptable floor/delta.",
+      "why_needed": "Variant 1 regressed VENDOR_ELIMINATION from 100.0 to 28.73 while overall score rose.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "priority": "P0",
+      "implementation_risk": "LOW",
+      "success_metric": "Gate emits WARN/FAIL when vendor-elimination crosses configured regression threshold."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-003",
+      "component": "scorer",
+      "description": "Add rule-impact attribution so score changes are linked to specific promoted rules.",
+      "why_needed": "Current aggregate deltas do not distinguish beneficial rule effects from risky carryover effects.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "priority": "P1",
+      "implementation_risk": "MEDIUM",
+      "success_metric": "Per-run report includes rule-level positive/negative contribution mapping."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-004",
+      "component": "verifier",
+      "description": "Implement hidden-target access audit that records pre-scoring target access violations.",
+      "why_needed": "Hidden-target discipline is central to transfer experiment validity and must be automatically auditable.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/validation.json",
+      "priority": "P0",
+      "implementation_risk": "MEDIUM",
+      "success_metric": "Verifier outputs PASS only when no forbidden LE target access occurs before scoring stage."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-005",
+      "component": "verifier",
+      "description": "Add runtime-sensitive rule fail-closed checker tied to evidence artifact IDs.",
+      "why_needed": "WCD9378 blockers must not silently transition without new hardware/runtime evidence.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+      "priority": "P0",
+      "implementation_risk": "LOW",
+      "success_metric": "Any runtime-sensitive status relaxation without evidence ID produces verifier FAIL."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-006",
+      "component": "schema",
+      "description": "Add DTS-vs-schematic cross-check candidate schema for board-level evidence ingestion.",
+      "why_needed": "DT normalization alone does not prove board wiring correctness for SoundWire/routing decisions.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd9378/learning_impact_validation_01/monday_evidence_checklist_update.json",
+      "priority": "P1",
+      "implementation_risk": "HIGH",
+      "success_metric": "Evidence package can link DT node, schematic reference, and runtime log for each critical signal path."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-007",
+      "component": "prompt",
+      "description": "Add LA/LE terminology consistency check in prompt templates and PM summaries.",
+      "why_needed": "Consistent terminology reduces ambiguity in architecture/risk reasoning across family audits.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/learning_transfer_verdict.md",
+      "priority": "P2",
+      "implementation_risk": "LOW",
+      "success_metric": "Generated artifacts avoid mixed downstream/upstream naming drift and pass terminology lint."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-008",
+      "component": "gate",
+      "description": "Strengthen multi-file lineage coverage check with subsystem-level minimums (codec, SDW, header).",
+      "why_needed": "Aggregate lineage can hide per-file gaps; family conversions need subsystem-granular observability.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "priority": "P1",
+      "implementation_risk": "LOW",
+      "success_metric": "Gate report shows lineage coverage per converted file class and fails missing classes."
+    },
+    {
+      "improvement_id": "AURA-GATE-IMPROVE-009",
+      "component": "prompt",
+      "description": "Provide an optional WCD family rule pack for conversion prompts (SoundWire, MBHC, Class-H, DAPM, anti-copy).",
+      "why_needed": "Transfer experiment shows family-specific guidance improves quality when guarded against copy risk.",
+      "evidence_from_transfer_validation": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/comparison/variant_comparison.json",
+      "priority": "P1",
+      "implementation_risk": "MEDIUM",
+      "success_metric": "Runs using rule pack improve quality without introducing verifier derivation warnings."
+    }
+  ]
+}

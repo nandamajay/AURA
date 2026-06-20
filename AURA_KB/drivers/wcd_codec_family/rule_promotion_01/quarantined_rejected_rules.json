@@ -1,0 +1,51 @@
+{
+  "artifact": "wcd_codec_family_rule_promotion_01_quarantined_rejected",
+  "generated_on": "2026-06-20",
+  "items": [
+    {
+      "rule_id": "WCD-FAMILY-RULE-012",
+      "rule_summary": "Ban debug-only artifacts from conversion output.",
+      "classification": "QUARANTINE",
+      "why_not_promoted": "Transfer candidate marked low-confidence do_not_promote because variant-level enforcement failed under LA-heavy carryover.",
+      "risk": "VENDOR_REGRESSION",
+      "future_validation_needed": "Re-run transfer experiment after adding hard gate penalties for vendor-elimination regression and downstream derivation warnings.",
+      "allowed_use": "CHECKLIST_ONLY"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-008",
+      "rule_summary": "Normalize IRQ handling to regmap-irq + request_threaded_irq.",
+      "classification": "LEARN_ONLY",
+      "why_not_promoted": "Variant 1 recorded NO_EFFECT and no runtime IRQ evidence exists to confirm transfer value.",
+      "risk": "LOW_EVIDENCE",
+      "future_validation_needed": "At least one additional family transfer run showing measurable quality/safety impact from IRQ normalization.",
+      "allowed_use": "PM_CONTEXT_ONLY"
+    },
+    {
+      "rule_id": "WCD-TRANSFER-HEURISTIC-001",
+      "rule_summary": "Maximize LA carryover depth to raise functional score quickly.",
+      "classification": "REJECT",
+      "why_not_promoted": "Variant 1 score gains came with downstream reuse/derivation warnings and vendor-elimination regression.",
+      "risk": "COPY_RISK",
+      "future_validation_needed": "None; this heuristic conflicts with anti-derivation governance and should stay disallowed.",
+      "allowed_use": "NONE"
+    },
+    {
+      "rule_id": "WCD-TRANSFER-HEURISTIC-002",
+      "rule_summary": "Finalize runtime-sensitive behavior based on sibling-codec static similarity.",
+      "classification": "REJECT",
+      "why_not_promoted": "Conflicts with proven fail-closed policy for SDW identity, paging, and Class-H decisions.",
+      "risk": "RUNTIME_UNPROVEN",
+      "future_validation_needed": "Hardware evidence must replace this heuristic; no static-only approval path.",
+      "allowed_use": "NONE"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-003-OVERFIT",
+      "rule_summary": "Assume MBHC/Class-H behavior is interchangeable across all WCD siblings once shared library APIs match.",
+      "classification": "LEARN_ONLY",
+      "why_not_promoted": "Shared integration style is reusable, but behavior-level equivalence is not proven across devices.",
+      "risk": "OVERFITTING",
+      "future_validation_needed": "Device-specific runtime traces for Class-H and MBHC edge paths.",
+      "allowed_use": "AFTER_RUNTIME_EVIDENCE"
+    }
+  ]
+}
