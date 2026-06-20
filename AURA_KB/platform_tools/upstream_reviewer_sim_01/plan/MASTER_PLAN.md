@@ -1,0 +1,321 @@
+# AURA Upstream Reviewer Simulation — Master Plan
+
+## Document Purpose
+
+This is the living master plan for the AURA Upstream Reviewer Simulation plugin.
+It is updated every time a phase step is completed, started, or changed.
+Progress cards are stored in `progress_cards/` and linked here.
+Do not delete history — append only.
+
+---
+
+## Terminology
+
+- `LA` = downstream / Linux Android
+- `LE` = upstream / Linux Embedded
+- `lore` = lore.kernel.org
+- `Patchwork` = patchwork.kernel.org
+- `RFC` = Request For Comments patch
+
+---
+
+## Overall Goal
+
+Simulate focused upstream Linux kernel reviewer behavior on AURA-generated patch series.
+Produce actionable, evidence-backed review comments grounded in real reviewer history.
+Advisory only — not a replacement for real upstream review.
+
+---
+
+## Phase Overview
+
+| Phase | Name | Status | Target Completion |
+|---|---|---|---|
+| 0 | Reviewer Pattern Learning | NOT_STARTED | Before Phase 1 |
+| 1 | Simulation Engine Prototype | NOT_STARTED | After Phase 0 |
+| 2 | Subsystem Simulation Integration | NOT_STARTED | After Phase 1 |
+| 3 | Profile Validation | NOT_STARTED | After Phase 2 |
+| 4 | Advisory Gate Integration | NOT_STARTED | After Phase 3 |
+| 5 | Warn Mode And Narrow Blocking | NOT_STARTED | After Phase 4 |
+
+---
+
+## Phase 0: Reviewer Pattern Learning
+
+### Purpose
+Build the real intelligence foundation.
+Without this, simulation is just a linter.
+With this, simulation is grounded in real reviewer behavior from lore/Patchwork history.
+
+### Status: NOT_STARTED
+
+### Steps
+
+| Step | Description | Status | Notes |
+|---|---|---|---|
+| 0.1 | Define subsystems and maintainers | NOT_STARTED | |
+| 0.2 | Define fetch parameters | NOT_STARTED | |
+| 0.3 | Fetch raw comment history | NOT_STARTED | |
+| 0.4 | Filter and clean raw data | NOT_STARTED | |
+| 0.5 | Extract objection/acceptance patterns | NOT_STARTED | |
+| 0.6 | Build per-reviewer behavioral profiles | NOT_STARTED | |
+| 0.7 | Build per-subsystem rule sets | NOT_STARTED | |
+| 0.8 | Validate profiles against known outcomes | NOT_STARTED | |
+| 0.9 | Store offline profiles in AURA_KB | NOT_STARTED | |
+| 0.10 | PM review and sign-off | NOT_STARTED | |
+
+### Target Subsystems
+
+| Subsystem | Scope Queries | Priority |
+|---|---|---|
+| ASoC/Qualcomm | `ASoC: qcom`, `ASoC: codecs` | P0 |
+| SoundWire | `ASoC: SoundWire`, `soundwire: qcom` | P0 |
+| DT Bindings Audio | `dt-bindings: sound: qcom`, `dt-bindings: sound` | P0 |
+| Pinctrl Qualcomm | `pinctrl: qcom` | P1 |
+| Qualcomm Platform | `arm64: dts: qcom`, `clk: qcom` | P2 |
+
+### Target Reviewers
+
+| Reviewer | Subsystem | Priority | Min Threads | Max Series |
+|---|---|---|---|---|
+| Mark Brown | ASoC/* | P0 | 50 | 500 |
+| Pierre-Louis Bossart | ASoC/SoundWire | P0 | 50 | 300 |
+| Krzysztof Kozlowski | dt-bindings/* | P0 | 50 | 400 |
+| Vinod Koul | ASoC/qcom/SoundWire | P0 | 50 | 200 |
+| Liam Girdwood | ASoC/* | P1 | 20 | 150 |
+| Bjorn Andersson | qcom/* | P1 | 20 | 200 |
+| Linus Walleij | pinctrl/* | P1 | 20 | 200 |
+| Rob Herring | dt-bindings/* | P1 | 20 | 200 |
+| Konrad Dybcio | qcom/* | P2 | 20 | 150 |
+
+### Fetch Parameters
+
+| Parameter | Value | Reason |
+|---|---|---|
+| Primary time window | 2023–2025 | Recent behavior most relevant |
+| Secondary time window | 2021–2025 | For low-activity reviewers |
+| Hard cutoff | Nothing before 2021 | Older rules may be outdated |
+| Patch states | accepted, rejected, changes-requested | Only resolved outcomes |
+| Minimum comment length | 20 words | Exclude trivial acks |
+| Minimum threads per profile | 50 for primary, 20 for secondary | Statistical significance |
+| Exclude | Bot comments, CI results, pure acks | Noise reduction |
+| Profile rebuild frequency | Every 6 months | Keep current |
+| Raw vs processed | Store separately | Re-process without re-fetch |
+
+### Profile Confidence Levels
+
+| Threads | Confidence |
+|---|---|
+| >= 50 | HIGH |
+| 20–49 | MEDIUM / LOW_CONFIDENCE |
+| < 20 | INSUFFICIENT_DATA |
+
+### Storage Layout
+
+```
+AURA_KB/reviewer_profiles/
+  raw/
+    {reviewer_slug}_raw_{year_start}_{year_end}.json
+  processed/
+    {reviewer_slug}_profile_v{N}.json
+  validation/
+    profile_validation_results.json
+    accuracy_report.md
+  metadata/
+    fetch_parameters.json
+    fetch_log.json
+    profile_versions.json
+```
+
+### Success Criteria
+
+- [ ] All P0 reviewers have HIGH confidence profiles.
+- [ ] All P1 reviewers have at least LOW_CONFIDENCE profiles.
+- [ ] Profiles validated against at least 3 known accepted patches.
+- [ ] Profiles validated against at least 3 known rejected patches.
+- [ ] Objection pattern precision >= 60%.
+- [ ] False positive rate on accepted patches <= 2 per run.
+- [ ] All profiles versioned and dated.
+- [ ] Raw data stored separately from processed profiles.
+
+### Known Limitations
+
+- Cannot fetch private email threads.
+- Cannot fetch IRC/Slack discussions.
+- Cannot get verbal agreements from conferences.
+- Patchwork API may have gaps in older data.
+- Reviewer behavior may change after profile is built.
+- Profile must be rebuilt every 6 months.
+
+---
+
+## Phase 1: Simulation Engine Prototype
+
+### Purpose
+Build the orchestrator using Phase 0 profiles.
+Run first pilots on WCD9378 A.1 and WSA884x Variant B.
+
+### Status: NOT_STARTED (blocked on Phase 0)
+
+### Steps
+
+| Step | Description | Status | Notes |
+|---|---|---|---|
+| 1.1 | Implement upstream_reviewer_sim.py orchestrator | NOT_STARTED | |
+| 1.2 | Implement Patch Structure Lens | NOT_STARTED | |
+| 1.3 | Implement Build/Compile Lens | NOT_STARTED | |
+| 1.4 | Integrate upstream_philosophy.py | NOT_STARTED | |
+| 1.5 | Integrate wcd_rule_pack_checker.py | NOT_STARTED | |
+| 1.6 | Implement Comment Aggregator | NOT_STARTED | |
+| 1.7 | Implement Output Writer | NOT_STARTED | |
+| 1.8 | Pilot run on WCD9378 A.1 | NOT_STARTED | |
+| 1.9 | Pilot run on WSA884x Variant B | NOT_STARTED | |
+| 1.10 | PM evaluation | NOT_STARTED | |
+
+### Success Criteria
+
+- [ ] Generates valid JSON report.
+- [ ] Surfaces known WCD9378 runtime blockers.
+- [ ] Does not claim runtime readiness.
+- [ ] Does not modify any source.
+- [ ] Produces actionable fix_plan.md.
+- [ ] PM can use output to improve patches before RFC.
+
+---
+
+## Phase 2: Subsystem Simulation Integration
+
+### Purpose
+Add deeper subsystem-specific checks using existing AURA simulation modules.
+
+### Status: NOT_STARTED (blocked on Phase 1)
+
+### Steps
+
+| Step | Description | Status | Notes |
+|---|---|---|---|
+| 2.1 | Integrate dts_bindings.py for DT Binding Lens | NOT_STARTED | |
+| 2.2 | Integrate simulation.py for audio subsystems | NOT_STARTED | |
+| 2.3 | Integrate reviewer_behavior_model_v1.py offline profiles | NOT_STARTED | |
+| 2.4 | Add subsystem focus profiles | NOT_STARTED | |
+| 2.5 | Pilot on WCD939x Variant 1 | NOT_STARTED | |
+| 2.6 | PM evaluation | NOT_STARTED | |
+
+### Success Criteria
+
+- [ ] Subsystem simulation adds >= 3 new useful comments per run vs Phase 1.
+- [ ] DT binding lens catches at least one real DT issue per pilot.
+- [ ] Maintainer style lens produces at least one useful style signal.
+
+---
+
+## Phase 3: Profile Validation
+
+### Purpose
+Prove simulation has real reviewer signal, not just heuristics.
+
+### Status: NOT_STARTED (blocked on Phase 2)
+
+### Steps
+
+| Step | Description | Status | Notes |
+|---|---|---|---|
+| 3.1 | Select 3 known-accepted patches from Patchwork | NOT_STARTED | |
+| 3.2 | Select 3 known-rejected patches from Patchwork | NOT_STARTED | |
+| 3.3 | Run simulation on all 6 | NOT_STARTED | |
+| 3.4 | Compare vs real reviewer comments | NOT_STARTED | |
+| 3.5 | Measure precision/recall | NOT_STARTED | |
+| 3.6 | Tune profiles and heuristics | NOT_STARTED | |
+| 3.7 | PM sign-off | NOT_STARTED | |
+
+### Success Criteria
+
+- [ ] Simulation catches >= 70% of real reviewer objections on rejected patches.
+- [ ] Simulation produces < 2 false BLOCKING_REVIEW_ISSUE on accepted patches.
+- [ ] PM trusts output as useful signal.
+
+---
+
+## Phase 4: Advisory Gate Integration
+
+### Purpose
+Embed simulation output into canonical gate in advisory mode.
+
+### Status: NOT_STARTED (blocked on Phase 3)
+
+### Steps
+
+| Step | Description | Status | Notes |
+|---|---|---|---|
+| 4.1 | Design gate integration schema extension | NOT_STARTED | |
+| 4.2 | Implement --reviewer-sim gate flag | NOT_STARTED | |
+| 4.3 | Embed reviewer_sim_summary in governance_verdict.json | NOT_STARTED | |
+| 4.4 | Verify gate verdict unchanged in advisory mode | NOT_STARTED | |
+| 4.5 | Regression tests | NOT_STARTED | |
+| 4.6 | PM sign-off | NOT_STARTED | |
+
+### Success Criteria
+
+- [ ] Gate runs cleanly with and without --reviewer-sim.
+- [ ] Simulation findings appear in gate verdict artifact.
+- [ ] No false gate failures introduced.
+- [ ] Regression tests pass.
+
+---
+
+## Phase 5: Warn Mode And Narrow Blocking
+
+### Purpose
+Promote narrow, high-confidence simulation findings to gate warnings or blockers.
+
+### Status: NOT_STARTED (blocked on Phase 4)
+
+### Steps
+
+| Step | Description | Status | Notes |
+|---|---|---|---|
+| 5.1 | Define narrow blocking criteria | NOT_STARTED | |
+| 5.2 | Implement warn mode for high-confidence checks | NOT_STARTED | |
+| 5.3 | Regression tests for all promoted checks | NOT_STARTED | |
+| 5.4 | False positive rate measurement | NOT_STARTED | |
+| 5.5 | PM sign-off | NOT_STARTED | |
+
+### Success Criteria
+
+- [ ] False positive rate < 10% for promoted checks.
+- [ ] Regression tests pass.
+- [ ] No good patches are blocked.
+- [ ] RUNTIME_EVIDENCE_REQUIRED never becomes blocking.
+
+---
+
+## Governance Guardrails (All Phases)
+
+- Simulation never modifies source or artifacts.
+- RUNTIME_EVIDENCE_REQUIRED never becomes blocking.
+- Every heuristic declares false positive risk.
+- PM reviews simulation output before acting.
+- Simulation never claims "maintainer will accept."
+- Phase N+1 cannot start until Phase N success criteria are met.
+- All profiles versioned and dated.
+- Raw data stored separately from processed profiles.
+
+---
+
+## Progress History
+
+| Date | Phase | Step | Action | Result |
+|---|---|---|---|---|
+| 2026-06-21 | - | - | Master plan created | DONE |
+
+---
+
+## Open Questions
+
+| ID | Question | Raised | Status |
+|---|---|---|---|
+| Q1 | Should Phase 1 include simulation.py or keep artifact-only? | 2026-06-21 | OPEN |
+| Q2 | First pilot: WCD9378 A.1 only or also WSA884x Variant B? | 2026-06-21 | OPEN |
+| Q3 | Should fix_plan.md include code suggestions or issue identification only? | 2026-06-21 | OPEN |
+| Q4 | Patchwork API rate limits — do we need caching strategy? | 2026-06-21 | OPEN |
+| Q5 | Should reviewer profiles be public in AURA_KB or private? | 2026-06-21 | OPEN |
