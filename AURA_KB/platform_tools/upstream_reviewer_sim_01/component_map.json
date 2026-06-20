@@ -1,0 +1,183 @@
+{
+  "artifact": "upstream_reviewer_sim_component_map",
+  "generated_at_local": "2026-06-21",
+  "plugin_name": "upstream_reviewer_sim",
+  "module_path": "AURA/agents/src/aura_agents/upstream_reviewer_sim.py",
+  "status": "DESIGN_PHASE",
+  "existing_modules_consumed": [
+    {
+      "module": "upstream_philosophy.py",
+      "role": "Upstream Philosophy Lens",
+      "integration": "direct_import",
+      "status": "EXISTS"
+    },
+    {
+      "module": "simulation.py",
+      "role": "Subsystem Simulation Lens",
+      "integration": "direct_import",
+      "status": "EXISTS"
+    },
+    {
+      "module": "reviewer_behavior_model_v1.py",
+      "role": "Maintainer Style Lens",
+      "integration": "profile_consumer",
+      "status": "EXISTS_NEEDS_OFFLINE_PROFILES"
+    },
+    {
+      "module": "review_coordinator.py",
+      "role": "Review packet builder",
+      "integration": "direct_import",
+      "status": "EXISTS_DB_DEPENDENT"
+    },
+    {
+      "module": "maintainer_intel.py",
+      "role": "Maintainer engagement brief",
+      "integration": "direct_import",
+      "status": "EXISTS_DB_DEPENDENT"
+    },
+    {
+      "module": "wcd_rule_pack_checker.py",
+      "role": "Rule Pack Lens",
+      "integration": "subprocess_or_import",
+      "status": "EXISTS"
+    },
+    {
+      "module": "dts_bindings.py",
+      "role": "DT Binding Lens",
+      "integration": "direct_import",
+      "status": "EXISTS_NEEDS_REVIEW"
+    },
+    {
+      "module": "conversion_gate.py",
+      "role": "Gate artifact consumer",
+      "integration": "artifact_reader",
+      "status": "EXISTS"
+    }
+  ],
+  "new_modules_needed": [
+    {
+      "module": "upstream_reviewer_sim.py",
+      "role": "Orchestrator + Patch Structure Lens + Build Lens + Comment Aggregator",
+      "status": "TO_BUILD",
+      "priority": "P0"
+    }
+  ],
+  "lenses": [
+    {
+      "lens_id": "patch-structure",
+      "name": "Patch Structure Lens",
+      "implemented_in": "upstream_reviewer_sim.py",
+      "depends_on": [],
+      "subsystems": ["all"],
+      "status": "TO_BUILD"
+    },
+    {
+      "lens_id": "dt-binding",
+      "name": "DT Binding Lens",
+      "implemented_in": "dts_bindings.py",
+      "depends_on": ["dts_bindings.py"],
+      "subsystems": ["all"],
+      "status": "EXISTS_NEEDS_REVIEW"
+    },
+    {
+      "lens_id": "upstream-philosophy",
+      "name": "Upstream Philosophy Lens",
+      "implemented_in": "upstream_philosophy.py",
+      "depends_on": ["upstream_philosophy.py"],
+      "subsystems": ["all"],
+      "status": "EXISTS"
+    },
+    {
+      "lens_id": "rule-pack",
+      "name": "Rule Pack Lens",
+      "implemented_in": "wcd_rule_pack_checker.py",
+      "depends_on": ["wcd_rule_pack_checker.py", "promoted_rules.json"],
+      "subsystems": ["wcd", "wsa", "audio-codec"],
+      "status": "EXISTS"
+    },
+    {
+      "lens_id": "subsystem-simulation",
+      "name": "Subsystem Simulation Lens",
+      "implemented_in": "simulation.py",
+      "depends_on": ["simulation.py"],
+      "subsystems": ["soundwire-codec", "audio-amplifier"],
+      "status": "EXISTS"
+    },
+    {
+      "lens_id": "maintainer-style",
+      "name": "Maintainer Style Lens",
+      "implemented_in": "reviewer_behavior_model_v1.py",
+      "depends_on": ["reviewer_behavior_model_v1.py", "offline_profiles.json"],
+      "subsystems": ["all"],
+      "status": "EXISTS_NEEDS_OFFLINE_PROFILES"
+    },
+    {
+      "lens_id": "build",
+      "name": "Build/Compile Lens",
+      "implemented_in": "upstream_reviewer_sim.py",
+      "depends_on": ["full_build_result.json", "checkpatch_report.json"],
+      "subsystems": ["all"],
+      "status": "TO_BUILD"
+    }
+  ],
+  "subsystem_focus_profiles": [
+    {
+      "focus": "soundwire-codec",
+      "active_lenses": ["patch-structure", "dt-binding", "upstream-philosophy", "rule-pack", "subsystem-simulation", "build"],
+      "key_checks": ["SDW identity", "paging", "regmap", "DAPM", "Class-H", "MBHC", "runtime PM"]
+    },
+    {
+      "focus": "audio-amplifier",
+      "active_lenses": ["patch-structure", "dt-binding", "upstream-philosophy", "rule-pack", "build"],
+      "key_checks": ["DAPM", "controls", "SoundWire", "vendor elimination"]
+    },
+    {
+      "focus": "pinctrl",
+      "active_lenses": ["patch-structure", "dt-binding", "upstream-philosophy", "build"],
+      "key_checks": ["pin table", "groups", "functions", "wake IRQ", "compatible"]
+    },
+    {
+      "focus": "generic",
+      "active_lenses": ["patch-structure", "upstream-philosophy", "build"],
+      "key_checks": ["minimal scope", "rationale", "style", "commit message"]
+    }
+  ],
+  "comment_classifications": [
+    "BLOCKING_REVIEW_ISSUE",
+    "SHOULD_FIX_BEFORE_RFC",
+    "QUESTION_FOR_MAINTAINER",
+    "STYLE_NIT",
+    "RUNTIME_EVIDENCE_REQUIRED",
+    "ALREADY_ADDRESSED",
+    "FALSE_POSITIVE_RISK"
+  ],
+  "output_artifacts": [
+    "upstream_review_report.json",
+    "review_comments.md",
+    "maintainer_questions.md",
+    "fix_plan.md",
+    "pm_review_verdict.md"
+  ],
+  "cli_design": {
+    "module": "aura_agents.upstream_reviewer_sim",
+    "required_args": ["--run-dir", "--output"],
+    "optional_args": ["--subsystem", "--lenses", "--rules", "--strict", "--no-simulation", "--focus"]
+  },
+  "governance_guardrails": [
+    "Advisory only until validated on historical patches",
+    "BLOCKING_REVIEW_ISSUE does not block AURA gate unless explicitly configured",
+    "RUNTIME_EVIDENCE_REQUIRED must never become blocking",
+    "False-positive risk must be declared for every heuristic check",
+    "PM must review simulation output before acting on it",
+    "Simulation must not modify any source or artifact"
+  ],
+  "rollout_phases": [
+    {"phase": 1, "name": "Prototype standalone", "status": "CURRENT"},
+    {"phase": 2, "name": "Validate on historical patches", "status": "PENDING"},
+    {"phase": 3, "name": "Advisory gate integration", "status": "PENDING"},
+    {"phase": 4, "name": "Warn mode for known subsystems", "status": "PENDING"},
+    {"phase": 5, "name": "Blocking for narrow criteria", "status": "PENDING"}
+  ],
+  "first_pilot_target": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready",
+  "pm_readiness_verdict": "READY_TO_IMPLEMENT_PHASE_1"
+}
