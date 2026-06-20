@@ -1,0 +1,119 @@
+{
+  "artifact": "wcd9378_a1_full_build_result",
+  "generated_at_local": "2026-06-20T10:29:04+05:30",
+  "status": "FULL_BUILD_PASS",
+  "pm_classification": "COMPILE_READY_RFC_NOT_RUNTIME_READY",
+  "source_repo": "/local/mnt/workspace/AURA_V1_upstream",
+  "aura_branch": "aura_upstream_learning",
+  "aura_patch_artifact_dir": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches",
+  "kernel_source_worktree": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux",
+  "kernel_output_dir": "/local/mnt/workspace/aura_builds/wcd9378_a1_out",
+  "kernel_baseline_sha": "ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
+  "patched_kernel_head_sha": "c34b5d1b7bfede66d560a5aed9bc8b354883c8d5",
+  "kernel_release": "7.1.0-rc7-next-20260611-00004-gc34b5d1b7bfe",
+  "toolchain": {
+    "arch": "arm64",
+    "cross_compile": "aarch64-linux-gnu-",
+    "compiler": "aarch64-linux-gnu-gcc (Ubuntu 11.4.0-1ubuntu1~22.04) 11.4.0",
+    "pahole_available": false,
+    "btf_note": "DEBUG_INFO_BTF and DEBUG_INFO_BTF_MODULES were disabled for this build environment because pahole was not available."
+  },
+  "patch_series": [
+    "0001-ASoC-codecs-add-WCD9378-shared-header-RFC-static-pro.patch",
+    "0002-ASoC-codecs-add-WCD9378-SoundWire-scaffold-RFC-stati.patch",
+    "0003-ASoC-codecs-add-WCD9378-codec-scaffold-RFC-static-pr.patch",
+    "0004-ASoC-codecs-wire-WCD9378-Kconfig-Makefile-entries-RF.patch"
+  ],
+  "commands_run": [
+    "git am AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/*.patch",
+    "mkdir -p modules_dir firmwares_dir test_utils logs",
+    "export ARCH=arm64",
+    "export CROSS_COMPILE=aarch64-linux-gnu-",
+    "make O=/local/mnt/workspace/aura_builds/wcd9378_a1_out -j$(nproc) defconfig",
+    "./scripts/config --file /local/mnt/workspace/aura_builds/wcd9378_a1_out/.config -e SOUNDWIRE -e REGMAP_SOUNDWIRE -e REGMAP_IRQ -e SND_SOC -e SND_SOC_WCD_CLASSH -e SND_SOC_WCD_COMMON -e SND_SOC_WCD_MBHC -e SND_SOC_WCD9378 -e SND_SOC_WCD9378_SDW -d DEBUG_INFO_BTF -d DEBUG_INFO_BTF_MODULES",
+    "make O=/local/mnt/workspace/aura_builds/wcd9378_a1_out -j$(nproc) olddefconfig",
+    "make O=/local/mnt/workspace/aura_builds/wcd9378_a1_out -j$(nproc) Image.gz dtbs modules",
+    "make O=/local/mnt/workspace/aura_builds/wcd9378_a1_out -j$(nproc) modules_install INSTALL_MOD_PATH=/local/mnt/workspace/aura_builds/wcd9378_a1_linux/modules_dir INSTALL_MOD_STRIP=1",
+    "cd /local/mnt/workspace/aura_builds/wcd9378_a1_linux/modules_dir && find . | cpio -o -H newc | gzip -9 > ../modules.cpio.gz"
+  ],
+  "config_evidence": {
+    "CONFIG_REGMAP_SOUNDWIRE": "m",
+    "CONFIG_SND_SOC_WCD9378": "m",
+    "CONFIG_SND_SOC_WCD9378_SDW": "m",
+    "CONFIG_SOUNDWIRE": "m",
+    "CONFIG_SOUNDWIRE_QCOM": "m"
+  },
+  "build_outputs": {
+    "image_gz": {
+      "path": "/local/mnt/workspace/aura_builds/wcd9378_a1_out/arch/arm64/boot/Image.gz",
+      "size_bytes": 15284799,
+      "sha256": "7027d027532a6c301e5ff8d7c1f62456c11c0695ff2b37fb3a211af340f1f3e3"
+    },
+    "module_symvers": {
+      "path": "/local/mnt/workspace/aura_builds/wcd9378_a1_out/Module.symvers",
+      "size_bytes": 1430831
+    },
+    "modules_cpio_gz": {
+      "path": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/modules.cpio.gz",
+      "size_bytes": 21930013,
+      "sha256": "8630d139a3c305b7d817b05809d10b516dd6da61c42acfd4f6d6c96753e63ca9"
+    },
+    "wcd9378_codec_module": {
+      "path": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/modules_dir/lib/modules/7.1.0-rc7-next-20260611-00004-gc34b5d1b7bfe/kernel/sound/soc/codecs/snd-soc-wcd9378.ko",
+      "size_bytes": 15720,
+      "sha256": "4a726a47f3bdcdfa854933a081485d6c796ea90bf6a37b89dc3d45793ba21b61",
+      "elf_check": "ELF64 little-endian AArch64 relocatable"
+    },
+    "wcd9378_sdw_module": {
+      "path": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/modules_dir/lib/modules/7.1.0-rc7-next-20260611-00004-gc34b5d1b7bfe/kernel/sound/soc/codecs/snd-soc-wcd9378-sdw.ko",
+      "size_bytes": 14024,
+      "sha256": "6dc32429ed1aaa5165079f02e0ff682ac961468a4ec0cda7a0cf41fcdeaed03c",
+      "elf_check": "ELF64 little-endian AArch64 relocatable"
+    }
+  },
+  "log_evidence": {
+    "defconfig_log": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/logs/01_defconfig.log",
+    "olddefconfig_log": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/logs/03_olddefconfig.log",
+    "full_build_log": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/logs/04_full_build.log",
+    "modules_install_log": "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/logs/05_modules_install.log",
+    "wcd9378_compile_lines": [
+      "04_full_build.log:4357: CC [M] sound/soc/codecs/wcd9378.o",
+      "04_full_build.log:4371: CC [M] sound/soc/codecs/wcd9378-sdw.o",
+      "04_full_build.log:4770: LD [M] sound/soc/codecs/snd-soc-wcd9378.o",
+      "04_full_build.log:4771: LD [M] sound/soc/codecs/snd-soc-wcd9378-sdw.o",
+      "04_full_build.log:15955: LD [M] sound/soc/codecs/snd-soc-wcd9378.ko",
+      "04_full_build.log:15956: LD [M] sound/soc/codecs/snd-soc-wcd9378-sdw.ko"
+    ],
+    "wcd9378_install_lines": [
+      "05_modules_install.log:2881: INSTALL .../kernel/sound/soc/codecs/snd-soc-wcd9378.ko",
+      "05_modules_install.log:2882: INSTALL .../kernel/sound/soc/codecs/snd-soc-wcd9378-sdw.ko",
+      "05_modules_install.log:2887: STRIP .../kernel/sound/soc/codecs/snd-soc-wcd9378.ko",
+      "05_modules_install.log:2889: STRIP .../kernel/sound/soc/codecs/snd-soc-wcd9378-sdw.ko"
+    ],
+    "fatal_error_search": "No compiler/linker fatal error signatures found in full build or modules_install logs."
+  },
+  "engineer_handoff": {
+    "can_hand_to_engineer": true,
+    "recommended_bundle": [
+      "/local/mnt/workspace/aura_builds/wcd9378_a1_out/arch/arm64/boot/Image.gz",
+      "/local/mnt/workspace/aura_builds/wcd9378_a1_linux/modules.cpio.gz",
+      "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/"
+    ],
+    "handoff_classification": "RFC compile-passing driver bundle for board/runtime evidence collection"
+  },
+  "explicit_non_claims": [
+    "This does not prove playback works.",
+    "This does not prove capture works.",
+    "This does not prove SDW paging/controller behavior on hardware.",
+    "This does not prove Class-H analog base behavior on hardware.",
+    "This is not upstream-ready until runtime evidence and review blockers are resolved."
+  ],
+  "remaining_fail_closed_items": [
+    "WCD9378 RX/TX SoundWire identity and modalias evidence",
+    "Paged register access evidence above 0xffff on target hardware",
+    "Class-H/HPH/flyback register trace evidence",
+    "Board DTS and pinctrl/supply/port-map validation",
+    "Playback and capture dmesg plus amixer/aplay/arecord validation",
+    "Any detach/re-enumeration behavior and acceptable upstream recovery strategy"
+  ]
+}

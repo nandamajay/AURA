@@ -1,0 +1,42 @@
+WCD9378 A.1 full arm64 kernel build evidence
+
+Source worktree:
+/local/mnt/workspace/aura_builds/wcd9378_a1_linux
+
+Output directory:
+/local/mnt/workspace/aura_builds/wcd9378_a1_out
+
+Kernel baseline and applied patch HEAD:
+- Baseline: ec039126b7fac4e3af35ebccaa7c6f9b6875ba81
+- Patched HEAD: c34b5d1b7bfede66d560a5aed9bc8b354883c8d5
+
+Patch stack:
+- 9cc247708 ASoC: codecs: add WCD9378 shared header (RFC static prototype)
+- 74b0dc1bb ASoC: codecs: add WCD9378 SoundWire scaffold (RFC static prototype)
+- cb674be3a ASoC: codecs: add WCD9378 codec scaffold (RFC static prototype)
+- c34b5d1b7 ASoC: codecs: wire WCD9378 Kconfig/Makefile entries (RFC static prototype)
+
+Config evidence:
+- CONFIG_REGMAP_SOUNDWIRE=m
+- CONFIG_SND_SOC_WCD9378=m
+- CONFIG_SND_SOC_WCD9378_SDW=m
+- CONFIG_SOUNDWIRE=m
+- CONFIG_SOUNDWIRE_QCOM=m
+
+Build log evidence:
+- 04_full_build.log:4357:  CC [M]  sound/soc/codecs/wcd9378.o
+- 04_full_build.log:4371:  CC [M]  sound/soc/codecs/wcd9378-sdw.o
+- 04_full_build.log:4770:  LD [M]  sound/soc/codecs/snd-soc-wcd9378.o
+- 04_full_build.log:4771:  LD [M]  sound/soc/codecs/snd-soc-wcd9378-sdw.o
+- 04_full_build.log:14296:  CC [M]  sound/soc/codecs/snd-soc-wcd9378.mod.o
+- 04_full_build.log:14297:  CC [M]  sound/soc/codecs/snd-soc-wcd9378-sdw.mod.o
+- 04_full_build.log:15955:  LD [M]  sound/soc/codecs/snd-soc-wcd9378.ko
+- 04_full_build.log:15956:  LD [M]  sound/soc/codecs/snd-soc-wcd9378-sdw.ko
+
+Install log evidence:
+- 05_modules_install.log:2881:  INSTALL .../kernel/sound/soc/codecs/snd-soc-wcd9378.ko
+- 05_modules_install.log:2882:  INSTALL .../kernel/sound/soc/codecs/snd-soc-wcd9378-sdw.ko
+- 05_modules_install.log:2887:  STRIP   .../kernel/sound/soc/codecs/snd-soc-wcd9378.ko
+- 05_modules_install.log:2889:  STRIP   .../kernel/sound/soc/codecs/snd-soc-wcd9378-sdw.ko
+
+No compiler/linker fatal error signatures found in full build or modules_install logs.
