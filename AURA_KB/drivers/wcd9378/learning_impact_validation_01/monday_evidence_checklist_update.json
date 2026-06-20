@@ -1,0 +1,137 @@
+{
+  "artifact": "wcd9378_learning_impact_validation_01_monday_evidence_checklist_update",
+  "generated_on": "2026-06-20",
+  "updates": [
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-001",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Collect deterministic RX/TX SoundWire identity tuple for both WCD9378 endpoints, including modalias and numeric fields.",
+      "why_needed": "WCD938x confirms the LE SDW matching model but not WCD9378 values; both endpoints must be proven, not inferred.",
+      "blocks_or_unblocks": [
+        "SDW_IDENTITY",
+        "DT_COMPATIBLE"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "journalctl -b -k > dmesg_boot.log; for d in /sys/bus/soundwire/devices/*; do [ -d \"$d\" ] || continue; echo \"## $d\"; for f in modalias mfg_id manf_id part_id class_id version_id dev_num unique_id; do [ -f \"$d/$f\" ] && echo \"$f=$(cat $d/$f)\"; done; done > sysfs_soundwire_snapshot.txt",
+      "acceptance_criteria": "Both RX and TX nodes expose stable tuple fields sufficient to defend final `SDW_SLAVE_ENTRY(...)` and modalias mapping."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-002",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Capture explicit mapping evidence from runtime tuple to DT compatible naming used on target board.",
+      "why_needed": "Prevents LA-style string guessing and keeps LE binding decisions evidence-backed.",
+      "blocks_or_unblocks": [
+        "DT_COMPATIBLE",
+        "BINDING_DECISION"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "cat /sys/bus/soundwire/devices/*/modalias > sdw_modalias.txt; git diff -- '*.dts' '*.dtsi' > board_dts.patch",
+      "acceptance_criteria": "Runtime modalias plus DTS patch provide a deterministic compatible derivation path."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-003",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Trace paged register traffic above 0xffff and correlate with active codec operations.",
+      "why_needed": "WCD938x learning shows regcache lifecycle reuse but cannot prove WCD9378 paging requirement.",
+      "blocks_or_unblocks": [
+        "PAGING",
+        "SOUNDWIRE_CORE"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "echo function > /sys/kernel/debug/tracing/current_tracer; echo sdw_fill_msg > /sys/kernel/debug/tracing/set_ftrace_filter; echo qcom_swrm_xfer_msg >> /sys/kernel/debug/tracing/set_ftrace_filter; echo 1 > /sys/kernel/debug/tracing/tracing_on; # run playback/capture; echo 0 > /sys/kernel/debug/tracing/tracing_on; cat /sys/kernel/debug/tracing/trace > trace_sdw_paging.log",
+      "acceptance_criteria": "Trace demonstrates paged-access path usage during WCD9378 activity with success/failure outcomes visible."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-004",
+      "source": "new_from_wcd938x_learning",
+      "request": "Add regcache transition proof around suspend/resume and SDW attach lifecycle.",
+      "why_needed": "WCD938x LE pattern relies on cache-only and cache-sync transitions; confirm same assumptions hold for WCD9378 runtime.",
+      "blocks_or_unblocks": [
+        "RUNTIME_PM",
+        "PAGING"
+      ],
+      "priority": "P1",
+      "exact_command_or_log": "capture dmesg with dynamic debug for regmap/sdw around runtime suspend/resume and codec attach; include timestamps in dmesg_runtime.log",
+      "acceptance_criteria": "Logs show ordered cache-only/cache-sync transitions without unexpected I/O failures."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-005",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Collect controller-side error/no-error evidence while paged transactions are exercised.",
+      "why_needed": "Determines whether Qualcomm SoundWire controller patch is truly required or should remain fail-closed.",
+      "blocks_or_unblocks": [
+        "SOUNDWIRE_CORE",
+        "PAGING"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "journalctl -b -k | grep -Ei 'soundwire|swrm|timeout|xfer|nack|error|irq' > dmesg_swrm_errors.log",
+      "acceptance_criteria": "Either clear absence of controller failures or reproducible failure signature with replay steps."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-006",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Capture Class-H/HPH/flyback register transitions during headset enable and disable.",
+      "why_needed": "WCD938x confirms shared Class-H style but WCD9378 enum/base choice remains runtime-gated.",
+      "blocks_or_unblocks": [
+        "CLSH",
+        "PLAYBACK_PATH"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "amixer -c <card> contents > amixer_before.txt; # enable HPH + playback; cat /sys/kernel/debug/regmap/<wcd9378>/registers > regmap_before_after/registers_after_enable.txt; # disable path; cat /sys/kernel/debug/regmap/<wcd9378>/registers > regmap_before_after/registers_after_disable.txt",
+      "acceptance_criteria": "Register deltas clearly map to Class-H and HPH transitions and support final enum/base decision."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-007",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Record playback and AMIC1 capture with full control snapshots and dmesg timeline.",
+      "why_needed": "WCD938x topology lessons should not be applied to WCD9378 unless actual paths are proven on board.",
+      "blocks_or_unblocks": [
+        "PLAYBACK_PATH",
+        "CAPTURE_PATH",
+        "MUTE_TRIAGE"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "amixer -c <card> contents > amixer_before.txt; aplay -D <playback_dev> -r 48000 -c 2 -f S16_LE <known.wav> > playback.log 2>&1; arecord -D <capture_dev> -r 48000 -c 1 -f S16_LE -d 10 amic1.wav > capture.log 2>&1; amixer -c <card> contents > amixer_after.txt; journalctl -k > dmesg_runtime.log",
+      "acceptance_criteria": "Replayable command set with deterministic pass/fail and complete pre/post state capture."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-008",
+      "source": "refined_by_wcd938x_learning",
+      "request": "Provide full board DTS/DTSI patch with RX/TX nodes, port mapping, reset, supplies, and DAI links.",
+      "why_needed": "LE DT normalization from WCD938x is only safe if board-level wiring is known and separated from generic driver needs.",
+      "blocks_or_unblocks": [
+        "BOARD_DTS",
+        "BINDING_DECISION",
+        "PORT_MAPPING"
+      ],
+      "priority": "P0",
+      "exact_command_or_log": "git diff -- '*.dts' '*.dtsi' > board_dts.patch; include pinctrl snippets and referenced include files",
+      "acceptance_criteria": "Patch is replayable, complete, and clearly distinguishes board-only values from generic LE binding properties."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-009",
+      "source": "new_from_wcd938x_learning",
+      "request": "Capture bind ordering and device-link lifecycle logs for aggregate codec and SDW children.",
+      "why_needed": "WCD938x LE split relies on strict bind/unbind ordering; confirms A.1 lifecycle assumptions on board.",
+      "blocks_or_unblocks": [
+        "LIFECYCLE_VALIDATION"
+      ],
+      "priority": "P1",
+      "exact_command_or_log": "dmesg with driver core and SoundWire logs during probe/remove cycles; include repeated module unload/reload if available",
+      "acceptance_criteria": "Logs show stable child-before-parent availability and clean teardown without orphan links."
+    },
+    {
+      "evidence_id": "WCD9378-MONDAY-EVID-010",
+      "source": "new_from_wcd938x_learning",
+      "request": "Add mute issue reproduction matrix with explicit pass/fail/intermittent classification.",
+      "why_needed": "Prevents unsafe workaround insertion and aligns with LE anti-hack lesson from WCD938x.",
+      "blocks_or_unblocks": [
+        "MUTE_TRIAGE",
+        "RUNTIME_RECOVERY_POLICY"
+      ],
+      "priority": "P1",
+      "exact_command_or_log": "runtime_playback_capture_report.md must include sequence, frequency, expected vs observed behavior, and supporting dmesg/regmap snippets",
+      "acceptance_criteria": "Issue state is reproducible and decisionable as APPLY/REJECT/KEEP_FAIL_CLOSED for workaround proposals."
+    }
+  ]
+}

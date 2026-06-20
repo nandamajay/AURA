@@ -1,0 +1,382 @@
+{
+  "artifact": "wcd9378_learning_impact_validation_01_rule_applicability_matrix",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "la": "downstream / Linux Android",
+    "le": "upstream / Linux Embedded"
+  },
+  "entries": [
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-001",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Prefer LE split architecture with aggregate codec plus SDW transport plus shared helpers.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json"
+      ],
+      "why": "A.1 is already split into codec and SDW files with lineage mapped to LE family patterns.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-002",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Drop LA vendor framework includes and APIs unless upstream equivalents exist.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c"
+      ],
+      "why": "A.1 banned-symbol check passed with zero hits, and generated code uses LE headers/APIs.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-003",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Use shared MBHC/Class-H integration instead of codec-local reimplementation.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json"
+      ],
+      "why": "A.1 calls shared MBHC/Class-H interfaces while still keeping runtime-sensitive Class-H decisions fail-closed.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-004",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Map LA DT properties to LE schema names and avoid LA-only bindings.",
+      "classification": "STATIC_FIX_CANDIDATE",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "why": "A.1 already uses LE-style DT names, but checkpatch still flags undocumented DT strings pending binding-side follow-up.",
+      "recommended_action": "PLAN_STATIC_FIX",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-005",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Treat SDW numeric identity as runtime evidence-gated.",
+      "classification": "BLOCKED_RUNTIME_EVIDENCE",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "why": "A.1 intentionally keeps SDW numeric identity unresolved until board enumeration evidence is provided.",
+      "recommended_action": "WAIT_FOR_RUNTIME",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-006",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Keep runtime-sensitive claims fail-closed until traces exist.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "A.1 artifacts explicitly preserve fail-closed state for paging, Class-H, identity, and runtime playback/capture.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-007",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Use LE regcache lifecycle: cache-only early, sync on attach/resume.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json"
+      ],
+      "why": "A.1 SDW runtime suspend/resume toggles cache-only and sync following LE lifecycle shape.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-008",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Normalize IRQ handling to regmap-irq plus request_threaded_irq.",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json"
+      ],
+      "why": "A.1 codec scaffold does not fully implement/validate complete IRQ topology; runtime interrupt behavior is still not evidenced.",
+      "recommended_action": "NO_ACTION",
+      "priority": "P2",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-009",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Keep DAPM/control categories only when topology evidence exists.",
+      "classification": "BLOCKED_RUNTIME_EVIDENCE",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "why": "A.1 is intentionally conservative; full control topology requires board/runtime confirmation for WCD9378.",
+      "recommended_action": "WAIT_FOR_RUNTIME",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-010",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Use reset via gpiod and regulators via bulk APIs.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "A.1 probe path uses gpiod-based reset and bulk regulator enable patterns that compile and link in full build.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-011",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Use LE two-symbol Kconfig model for codec and SDW split.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Makefile",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "A.1 integrates separate WCD9378 core and SDW symbols and both modules build/install.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-012",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Ban debug-only and hwdep artifacts from conversion output.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "why": "No debug-only LA hooks were emitted in A.1 and banned symbol scan is clean.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-013",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "Require evidence tags per transformed subsystem.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/static_gate/verifier_result.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json"
+      ],
+      "why": "A.1 includes per-function lineage and explicit fail-closed registers tied to subsystem-level evidence.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD-FAMILY-RULE-014",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json",
+      "rule_summary": "When LA and LE disagree without runtime evidence, choose fail-closed.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/soundwire_paging_static_decision.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/pm_compile_ready_summary.md"
+      ],
+      "why": "A.1 explicitly fail-closes paging core changes, identity finalization, and Class-H base/version decisions.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-001",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Use runtime PM autosuspend for aggregate codec and SDW children.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c"
+      ],
+      "why": "A.1 sets autosuspend and runtime PM hooks in both codec and SDW sides.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-002",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Cache-only until SDW attach and cache sync on attach/resume.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json"
+      ],
+      "why": "A.1 SDW probe/resume uses regcache cache-only and sync transitions aligned with LE pattern.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-003",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Reset should use GPIO descriptors, not vendor pinctrl APIs.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "why": "A.1 follows gpiod reset model and avoids LA pinctrl wrappers.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-004",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "MBHC should be integrated through shared wcd-mbhc-v2 API.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "A.1 uses shared MBHC lifecycle calls in codec set_jack/probe/remove paths.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-005",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Class-H should use shared controller, but variant/base decisions remain runtime-sensitive.",
+      "classification": "BLOCKED_RUNTIME_EVIDENCE",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "why": "A.1 wires shared Class-H API but final WCD9378 enum/base behavior remains explicitly blocked.",
+      "recommended_action": "WAIT_FOR_RUNTIME",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-006",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Remove LA parent callback coupling and platform private handle dependencies.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json"
+      ],
+      "why": "A.1 uses LE component/bind model without LA parent callback glue.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-007",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Use regmap-irq plus threaded IRQ instead of LA IRQ wrappers.",
+      "classification": "INSUFFICIENT_EVIDENCE",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "Compile is clean, but IRQ behavior parity against LE expectations is not fully audited in A.1 artifacts.",
+      "recommended_action": "NO_ACTION",
+      "priority": "P2",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-008",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Maintain split Kconfig symbols for core and SDW transport.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Makefile",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "A.1 follows the LE two-symbol integration and both modules are built/installed.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-009",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Do not carry LA debug-only features (debugfs peek/poke, hwdep calib) into LE.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "why": "A.1 artifacts contain no LA debug-only interfaces and banned symbol checks are clean.",
+      "recommended_action": "KEEP",
+      "priority": "P1",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-010",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "Do not carry enumeration-delay or runtime recovery hacks without evidence.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "why": "A.1 explicitly rejects reset-in-hw_params and re-enumeration workaround logic.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-011",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "LA-to-LE regmap shape differences should be treated as adaptation, not byte-copy targets.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/static_gate/verifier_result.json"
+      ],
+      "why": "A.1 uses LE-style regmap API/lifecycle and avoids direct LA regmap code copying.",
+      "recommended_action": "KEEP",
+      "priority": "P2",
+      "would_change_wcd9378_before_monday": false
+    },
+    {
+      "rule_or_lesson_id": "WCD938X-PM-LESSON-012",
+      "source_artifact": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json",
+      "rule_summary": "WCD938x patterns do not prove WCD9378 SDW identity or paging behavior.",
+      "classification": "APPLIED_ALREADY",
+      "wcd9378_a1_evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/soundwire_paging_static_decision.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "why": "A.1 keeps both SDW identity and paging validation explicitly runtime-gated.",
+      "recommended_action": "KEEP",
+      "priority": "P0",
+      "would_change_wcd9378_before_monday": false
+    }
+  ]
+}

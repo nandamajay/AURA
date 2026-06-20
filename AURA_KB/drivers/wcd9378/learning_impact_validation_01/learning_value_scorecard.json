@@ -1,0 +1,78 @@
+{
+  "artifact": "wcd9378_learning_impact_validation_01_learning_value_scorecard",
+  "generated_on": "2026-06-20",
+  "categories": [
+    {
+      "category": "Found actionable static fixes",
+      "score": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/static_fix_candidates.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "explanation": "Actionable non-behavioral static fixes were identified, but no runtime-sensitive code fix is safe pre-Monday."
+    },
+    {
+      "category": "Improved runtime evidence checklist",
+      "score": "HIGH",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/monday_evidence_checklist_update.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/soundwire_regmap_lifecycle_audit.json"
+      ],
+      "explanation": "WCD938x learning sharpened evidence ordering and added missing observability asks for lifecycle/regcache/controller triage."
+    },
+    {
+      "category": "Prevented unsafe change",
+      "score": "HIGH",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/soundwire_paging_static_decision.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_runtime_reset_clsh_mbhc_lessons.json"
+      ],
+      "explanation": "Learning reinforced fail-closed boundaries for SDW identity, paging, and Class-H base/version decisions."
+    },
+    {
+      "category": "Improved PM decision quality",
+      "score": "HIGH",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/wcd9378_a1_gap_review.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_pm_summary.md",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_learning_summary.md"
+      ],
+      "explanation": "Gap statuses now separate compile-ready matches from runtime-blocked areas with explicit PM actions."
+    },
+    {
+      "category": "Improved AURA generic rules",
+      "score": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/aura_tooling_improvement_candidates.json",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/wcd_codec_family_rules_draft.json"
+      ],
+      "explanation": "Multiple gate/scorer/checklist improvements were identified; they still require implementation in tooling."
+    },
+    {
+      "category": "Improved confidence in current A.1",
+      "score": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/static_gate/governance_verdict.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "explanation": "Confidence improved for compile/integration quality, while runtime readiness remains intentionally unchanged."
+    },
+    {
+      "category": "Improved future WCD939x validation design",
+      "score": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/pm_learning_summary.md",
+        "AURA_KB/drivers/wcd9378/learning_impact_validation_01/monday_evidence_checklist_update.json"
+      ],
+      "explanation": "This validation clarifies which checks should be reused as family-level rules in a future WCD939x learning pass."
+    }
+  ],
+  "overall": {
+    "overall_learning_value": "MEDIUM",
+    "recommend_wcd939x_reconstruction_validation": true,
+    "why": "WCD938x learning materially improved WCD9378 review discipline and evidence planning, but most remaining blockers still depend on Monday hardware logs."
+  }
+}

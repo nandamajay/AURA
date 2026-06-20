@@ -1,0 +1,78 @@
+{
+  "artifact": "wcd9378_learning_impact_validation_01_aura_tooling_improvement_candidates",
+  "generated_on": "2026-06-20",
+  "improvements": [
+    {
+      "improvement_id": "AURA-IMPROVE-001",
+      "type": "gate",
+      "description": "Add a gate check that flags artifact path mismatches (for example expected root-level lineage file vs actual `patches/` location) with auto-suggested fallback paths.",
+      "why_needed": "This validation required manual path reconciliation for `patch_lineage.json` and `full_series_validation.json`.",
+      "source_learning": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/validation.json",
+      "priority": "P1",
+      "success_metric": "No manual path workaround needed in downstream validation runs."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-002",
+      "type": "scorer",
+      "description": "Teach scoring/PM rollups to reconcile partial compile artifacts with later full-build artifacts and emit a single effective compile status.",
+      "why_needed": "A.1 has both `COMPILE_NOT_RUN_ENVIRONMENT` and `FULL_BUILD_PASS`, which can be misread without explicit precedence.",
+      "source_learning": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/compile_result.json and full_build_validation/full_build_result.json",
+      "priority": "P1",
+      "success_metric": "One canonical compile verdict per run with documented evidence precedence."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-003",
+      "type": "prompt",
+      "description": "Add a reusable LA-to-LE rule block in conversion/review prompts that explicitly forbids sibling-codec SDW ID inference.",
+      "why_needed": "WCD938x learning repeatedly shows identity pattern reuse is valid but numeric tuple reuse is not.",
+      "source_learning": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/soundwire_regmap_lifecycle_audit.json",
+      "priority": "P0",
+      "success_metric": "All future WCD-family prompts include explicit identity fail-closed instruction."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-004",
+      "type": "checklist",
+      "description": "Add a DT normalization checklist item set that maps LA property names to LE property names and blocks unresolved legacy properties.",
+      "why_needed": "DT property translation remains a recurring risk area and drives checkpatch undocumented-string warnings.",
+      "source_learning": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/la_vs_le_architecture_delta.json",
+      "priority": "P0",
+      "success_metric": "No LA-only DT properties remain unclassified in AURA conversion outputs."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-005",
+      "type": "pm_skill",
+      "description": "Require PM summaries to include an explicit `what must NOT be claimed` section whenever runtime blockers exist.",
+      "why_needed": "This keeps RFC compile-readiness from being misinterpreted as runtime readiness.",
+      "source_learning": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_pm_summary.md",
+      "priority": "P1",
+      "success_metric": "Every PM summary for blocked runs has explicit non-claims section."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-006",
+      "type": "verifier",
+      "description": "Add a verifier rule that ensures runtime fail-closed items are carried forward unchanged unless new runtime evidence artifacts are present.",
+      "why_needed": "Prevents silent relaxation of SDW/Class-H/runtime blockers based on static pattern mining alone.",
+      "source_learning": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+      "priority": "P0",
+      "success_metric": "Any blocker status change requires linked runtime evidence ID and source path."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-007",
+      "type": "verifier",
+      "description": "Extend anti-hack detector patterns for reset-in-hw_params and ad-hoc re-enumeration recovery logic in codec conversions.",
+      "why_needed": "WCD938x learning and WCD9378 A.1 both confirm these are common unsafe bring-up shortcuts.",
+      "source_learning": "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/downstream_vendor_antipatterns.json",
+      "priority": "P0",
+      "success_metric": "No converted output includes blocked workaround signatures without explicit runtime waiver."
+    },
+    {
+      "improvement_id": "AURA-IMPROVE-008",
+      "type": "schema",
+      "description": "Standardize evidence checklist schema to always require command, output file, and acceptance criteria fields per evidence item.",
+      "why_needed": "Improves replayability of Monday evidence collection and reduces ambiguity for hardware engineers.",
+      "source_learning": "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json",
+      "priority": "P1",
+      "success_metric": "All evidence packages are directly executable with no missing command details."
+    }
+  ]
+}

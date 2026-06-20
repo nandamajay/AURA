@@ -1,0 +1,70 @@
+{
+  "artifact": "wcd9378_learning_impact_validation_01_runtime_blocked_learning",
+  "generated_on": "2026-06-20",
+  "items": [
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-001",
+      "lesson": "LE WCD938x SDW tuple usage pattern is reusable, but WCD9378 numeric identity is not inferable from sibling codecs.",
+      "why_relevant": "A.1 still carries candidate SDW identity constants.",
+      "why_blocked": "No WCD9378 RX/TX runtime enumeration tuple is available yet.",
+      "exact_monday_evidence_needed": "Boot dmesg plus sysfs/modalias identity for both RX and TX SoundWire devices with manufacturer/part/class/version/dev_num.",
+      "decision_after_evidence": "APPLY"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-002",
+      "lesson": "LA-to-LE DT compatible mapping must be evidence-backed, not guessed from nearby codec names.",
+      "why_relevant": "`sdw20217011000` remains fail-closed in A.1.",
+      "why_blocked": "Binding-compatible derivation from real board identity is still missing.",
+      "exact_monday_evidence_needed": "Modalias/sysfs identity plus board DTS patch showing matched compatible strings used for bring-up.",
+      "decision_after_evidence": "APPLY"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-003",
+      "lesson": "Regcache lifecycle can be reused, but paging correctness across controller path must be hardware-proven.",
+      "why_relevant": "A.1 intentionally fail-closed the optional Qualcomm SoundWire paging-core patch.",
+      "why_blocked": "No trace proving end-to-end page field handling for >0xffff accesses.",
+      "exact_monday_evidence_needed": "Function trace covering `sdw_fill_msg` and `qcom_swrm_xfer_msg` during high-address register operations with success/failure markers.",
+      "decision_after_evidence": "INVESTIGATE"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-004",
+      "lesson": "Shared Class-H integration pattern is reusable only if WCD9378 base/version behavior matches expectations.",
+      "why_relevant": "A.1 calls shared Class-H APIs but keeps enum/base decision fail-closed.",
+      "why_blocked": "No runtime register trace for HPH/CLSH/flyback domains is available.",
+      "exact_monday_evidence_needed": "Before/after regmap dumps and runtime trace while toggling headset playback with Class-H related controls.",
+      "decision_after_evidence": "APPLY"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-005",
+      "lesson": "WCD938x DAPM/control categories help structure, but final WCD9378 topology cannot be cloned without board validation.",
+      "why_relevant": "A.1 intentionally leaves DAPM/routes/controls minimal.",
+      "why_blocked": "No verified playback/capture route activation data for ELIZA board.",
+      "exact_monday_evidence_needed": "amixer/aplay/arecord logs with control snapshots and dmesg that show active path selection for HPH and AMIC1.",
+      "decision_after_evidence": "INVESTIGATE"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-006",
+      "lesson": "LE runtime PM sequencing avoids hacks, but detach/re-enumeration policy must be based on observed failures.",
+      "why_relevant": "A.1 rejects reset-in-hw_params and re-enumeration workarounds.",
+      "why_blocked": "No reproducible runtime failure signature has been collected to justify any recovery path.",
+      "exact_monday_evidence_needed": "Deterministic failure reproduction logs showing detach/re-enumeration conditions and controller/codec error signatures.",
+      "decision_after_evidence": "KEEP_FAIL_CLOSED"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-007",
+      "lesson": "LE regulator/reset model is reusable, but board DTS wiring must prove real rails and GPIO mapping.",
+      "why_relevant": "A.1 compile readiness does not validate board-level DTS correctness.",
+      "why_blocked": "Authenticated LA DTS change contents and final board DTS patch are still incomplete.",
+      "exact_monday_evidence_needed": "Exact DTS/DTSI patch with reset-gpios, supplies, RX/TX nodes, port mapping, pinctrl, and DAI links.",
+      "decision_after_evidence": "APPLY"
+    },
+    {
+      "blocked_item_id": "WCD9378-RUNTIME-BLOCKED-008",
+      "lesson": "WCD938x learning emphasizes anti-hack policy; mute/reliability issues must be characterized before any workaround proposal.",
+      "why_relevant": "Mute issue is still listed unresolved in WCD9378 evidence backlog.",
+      "why_blocked": "No complete reproduction matrix exists for mute persistence/intermittence.",
+      "exact_monday_evidence_needed": "Structured mute issue matrix (pass/fail/intermittent), timestamps, dmesg, and register snapshots before/after reset or runtime suspend.",
+      "decision_after_evidence": "INVESTIGATE"
+    }
+  ]
+}

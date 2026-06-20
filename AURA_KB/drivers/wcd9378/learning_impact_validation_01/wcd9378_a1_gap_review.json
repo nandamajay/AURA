@@ -1,0 +1,255 @@
+{
+  "artifact": "wcd9378_learning_impact_validation_01_gap_review",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "la": "downstream / Linux Android",
+    "le": "upstream / Linux Embedded"
+  },
+  "areas": [
+    {
+      "area": "File structure",
+      "wcd938x_expected_pattern": "LE split into aggregate codec file plus SDW child file and shared header.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.h"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "SoundWire RX/TX split",
+      "wcd938x_expected_pattern": "LE uses rx/tx child handling with tx-side regmap owner and component matching.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "SDW identity handling",
+      "wcd938x_expected_pattern": "LE IDs use SDW_SLAVE_ENTRY with hardware-backed tuple.",
+      "wcd9378_a1_status": "BLOCKED",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "gap": "Final WCD9378 numeric tuple and compatible mapping are not runtime-confirmed.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "SDW paging",
+      "wcd938x_expected_pattern": "LE enables only proven addressing paths and avoids speculative controller changes.",
+      "wcd9378_a1_status": "BLOCKED",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/soundwire_paging_static_decision.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json"
+      ],
+      "gap": "Controller-side paging behavior remains unproven on target hardware.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "Regmap config and defaults",
+      "wcd938x_expected_pattern": "LE SDW file defines regmap config, access callbacks, and register defaults cleanly.",
+      "wcd9378_a1_status": "PARTIAL",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json"
+      ],
+      "gap": "Static scaffold compiles but runtime-complete default/access coverage still needs hardware-backed confidence.",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "FOLLOW_UP_REVIEW"
+    },
+    {
+      "area": "Regcache/cache-only/cache-sync",
+      "wcd938x_expected_pattern": "Cache-only before attach; mark dirty on suspend; sync on resume.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/patch_lineage.json"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "Component lifecycle",
+      "wcd938x_expected_pattern": "LE bind/unbind with device links and unwind-safe ordering.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "MBHC integration",
+      "wcd938x_expected_pattern": "LE shared MBHC init/start/stop/deinit usage.",
+      "wcd9378_a1_status": "PARTIAL",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json"
+      ],
+      "gap": "Static API integration is present, but runtime jack/mic behavior remains unverified.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "Class-H integration",
+      "wcd938x_expected_pattern": "LE shared Class-H controller use with codec-appropriate enum/base.",
+      "wcd9378_a1_status": "BLOCKED",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/runtime_fail_closed_items.json",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "gap": "WCD9378-specific Class-H enum/base decision is explicitly fail-closed.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "Runtime PM",
+      "wcd938x_expected_pattern": "LE runtime PM on both aggregate and SDW child devices.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "Reset handling",
+      "wcd938x_expected_pattern": "LE reset-gpios + gpiod pulse sequence.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "DAPM widgets",
+      "wcd938x_expected_pattern": "LE keeps structured widgets for HPH/AUX/EAR/ADC/DMIC with shared callbacks.",
+      "wcd9378_a1_status": "MISSING",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/dapm_controls_routes_mapping.json"
+      ],
+      "gap": "A.1 is scaffold-focused and does not include final DAPM widget inventory.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "DAPM routes",
+      "wcd938x_expected_pattern": "LE route graph preserves topology with removed LA-only extras.",
+      "wcd9378_a1_status": "MISSING",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd_codec_family/wcd938x_learning/dapm_controls_routes_mapping.json"
+      ],
+      "gap": "Final route map is pending runtime-backed topology confirmation.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "Controls",
+      "wcd938x_expected_pattern": "LE controls are kept where evidence exists; callbacks use shared helpers.",
+      "wcd9378_a1_status": "MISSING",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+      ],
+      "gap": "Control population is intentionally deferred to avoid speculative topology cloning.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "Supplies/regulators",
+      "wcd938x_expected_pattern": "LE bulk regulator usage without LA supply-LPM wrappers.",
+      "wcd9378_a1_status": "PARTIAL",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json",
+        "AURA_KB/drivers/wcd9378/eliza_input_evidence_01/eliza_static_evidence_summary.json"
+      ],
+      "gap": "Generic regulator model is present, but board rail mapping and DTS proof remain pending.",
+      "safe_to_fix_without_runtime": false,
+      "pm_action": "MONDAY_EVIDENCE_REQUIRED"
+    },
+    {
+      "area": "DT compatibility",
+      "wcd938x_expected_pattern": "LE DT model uses reset-gpios, qcom,rx-device/tx-device, and LE port mappings.",
+      "wcd9378_a1_status": "PARTIAL",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "gap": "DT strings are present in code but binding-side acceptance and board DTS proof are not complete.",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "STATIC_FIX_CANDIDATE"
+    },
+    {
+      "area": "Includes/vendor dependency removal",
+      "wcd938x_expected_pattern": "LE avoids LA vendor include/API dependencies.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/full_series_validation.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "Kconfig/Makefile",
+      "wcd938x_expected_pattern": "LE integrates codec and SDW symbols in main codec Kconfig/Makefile.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Kconfig",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/Makefile",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json"
+      ],
+      "gap": "none",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    },
+    {
+      "area": "Checkpatch/upstream style",
+      "wcd938x_expected_pattern": "LE-ready patches should have no errors and only justified warnings.",
+      "wcd9378_a1_status": "PARTIAL",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/checkpatch_report.json"
+      ],
+      "gap": "Patch series has 0 errors, but warnings remain (FILE_PATH_CHANGES and UNDOCUMENTED_DT_STRING).",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "STATIC_FIX_CANDIDATE"
+    },
+    {
+      "area": "Compile readiness",
+      "wcd938x_expected_pattern": "LE-style integration should compile cleanly in kernel build flow.",
+      "wcd9378_a1_status": "MATCHES",
+      "evidence": [
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_result.json",
+        "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/full_build_validation/full_build_pm_summary.md"
+      ],
+      "gap": "none for compile readiness; runtime readiness remains blocked.",
+      "safe_to_fix_without_runtime": true,
+      "pm_action": "NO_ACTION"
+    }
+  ]
+}
