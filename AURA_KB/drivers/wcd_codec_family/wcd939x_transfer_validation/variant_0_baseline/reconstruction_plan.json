@@ -1,0 +1,29 @@
+{
+  "artifact": "variant_0_baseline_reconstruction_plan",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "la": "downstream / Linux Android",
+    "le": "upstream / Linux Embedded"
+  },
+  "steps": [
+    {
+      "area": "File split",
+      "action": "Generate LE-style split files wcd939x.c, wcd939x-sdw.c, wcd939x.h from LA donors.",
+      "source_signal": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd939x",
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "area": "API/lifecycle shaping",
+      "action": "Apply LE family lifecycle patterns from WCD937x/WCD938x references.",
+      "source_signal": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wcd937x.c",
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "area": "Runtime safety",
+      "action": "Keep unknown runtime behavior fail-closed and avoid runtime hacks.",
+      "source_signal": "governance rule",
+      "confidence": "HIGH"
+    }
+  ],
+  "learning_mode": "BASELINE"
+}

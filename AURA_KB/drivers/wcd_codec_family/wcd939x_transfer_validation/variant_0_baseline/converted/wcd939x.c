@@ -1,0 +1,162 @@
+// SPDX-License-Identifier: GPL-2.0
+/*
+ * WCD939x baseline codec reconstruction (Variant 0).
+ * LA donor with minimal LE normalization.
+ */
+
+#include <linux/module.h>
+#include <linux/component.h>
+#include <linux/device.h>
+#include <linux/of.h>
+#include <linux/platform_device.h>
+#include <linux/regulator/consumer.h>
+#include <sound/soc.h>
+#include <sound/soc-dapm.h>
+#include "wcd939x.h"
+
+static const struct snd_soc_dai_ops wcd939x_dai_ops;
+
+static struct snd_soc_dai_driver wcd939x_dai[] = {
+    {
+        .name = "wcd939x_rx",
+        .playback = {
+            .stream_name = "WCD939x Playback",
+            .rates = WCD939X_CODEC_RATES,
+            .formats = WCD939X_CODEC_FORMATS,
+            .rate_min = 8000,
+            .rate_max = 48000,
+            .channels_min = 1,
+            .channels_max = 2,
+        },
+        .ops = &wcd939x_dai_ops,
+    },
+    {
+        .name = "wcd939x_tx",
+        .capture = {
+            .stream_name = "WCD939x Capture",
+            .rates = WCD939X_CODEC_RATES,
+            .formats = WCD939X_CODEC_FORMATS,
+            .rate_min = 8000,
+            .rate_max = 48000,
+            .channels_min = 1,
+            .channels_max = 4,
+        },
+        .ops = &wcd939x_dai_ops,
+    },
+};
+
+static int wcd939x_codec_hw_params(struct snd_pcm_substream *substream,
+                                   struct snd_pcm_hw_params *params,
+                                   struct snd_soc_dai *dai)
+{
+    struct wcd939x_priv *wcd939x = snd_soc_component_get_drvdata(dai->component);
+
+    if (!wcd939x)
+        return -EINVAL;
+
+    return 0;
+}
+
+static int wcd939x_codec_free(struct snd_pcm_substream *substream,
+                              struct snd_soc_dai *dai)
+{
+    return 0;
+}
+
+static int wcd939x_codec_set_sdw_stream(struct snd_soc_dai *dai,
+                                        void *stream,
+                                        int direction)
+{
+    struct wcd939x_priv *wcd939x = snd_soc_component_get_drvdata(dai->component);
+
+    if (!wcd939x)
+        return -EINVAL;
+
+    return 0;
+}
+
+static const struct snd_soc_dai_ops wcd939x_dai_ops = {
+    .hw_params = wcd939x_codec_hw_params,
+    .hw_free = wcd939x_codec_free,
+    .set_stream = wcd939x_codec_set_sdw_stream,
+};
+
+static int wcd939x_soc_codec_probe(struct snd_soc_component *component)
+{
+    struct wcd939x_priv *wcd939x = snd_soc_component_get_drvdata(component);
+
+    if (!wcd939x)
+        return -EINVAL;
+
+    wcd939x->component = component;
+    return 0;
+}
+
+static void wcd939x_soc_codec_remove(struct snd_soc_component *component)
+{
+}
+
+static const struct snd_soc_component_driver soc_codec_dev_wcd939x = {
+    .name = "wcd939x-codec",
+    .probe = wcd939x_soc_codec_probe,
+    .remove = wcd939x_soc_codec_remove,
+    .endianness = 1,
+};
+
+static int wcd939x_add_slave_components(struct wcd939x_priv *wcd939x)
+{
+    if (!wcd939x->dev || !wcd939x->dev->of_node)
+        return -EINVAL;
+
+    wcd939x->rxnode = of_parse_phandle(wcd939x->dev->of_node, "qcom,rx-slave", 0);
+    wcd939x->txnode = of_parse_phandle(wcd939x->dev->of_node, "qcom,tx-slave", 0);
+    if (!wcd939x->rxnode || !wcd939x->txnode)
+        return -EINVAL;
+
+    return 0;
+}
+
+static int wcd939x_probe(struct platform_device *pdev)
+{
+    struct wcd939x_priv *wcd939x;
+    int ret;
+
+    wcd939x = devm_kzalloc(&pdev->dev, sizeof(*wcd939x), GFP_KERNEL);
+    if (!wcd939x)
+        return -ENOMEM;
+
+    wcd939x->dev = &pdev->dev;
+    platform_set_drvdata(pdev, wcd939x);
+
+    ret = wcd939x_add_slave_components(wcd939x);
+    if (ret)
+        return ret;
+
+    return devm_snd_soc_register_component(&pdev->dev,
+                                           &soc_codec_dev_wcd939x,
+                                           wcd939x_dai,
+                                           ARRAY_SIZE(wcd939x_dai));
+}
+
+static void wcd939x_remove(struct platform_device *pdev)
+{
+}
+
+static const struct of_device_id wcd939x_of_match[] = {
+    { .compatible = "qcom,wcd939x-codec" },
+    { }
+};
+MODULE_DEVICE_TABLE(of, wcd939x_of_match);
+
+static struct platform_driver wcd939x_codec_driver = {
+    .probe = wcd939x_probe,
+    .remove_new = wcd939x_remove,
+    .driver = {
+        .name = "wcd939x-codec",
+        .of_match_table = wcd939x_of_match,
+    },
+};
+module_platform_driver(wcd939x_codec_driver);
+
+MODULE_DESCRIPTION("WCD939x baseline codec driver");
+MODULE_LICENSE("GPL");

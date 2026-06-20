@@ -1,0 +1,176 @@
+From 85e257c43609b8b2a49410cfc118308c0a84b7a8 Mon Sep 17 00:00:00 2001
+From: AURA Bot <aura@example.com>
+Date: Sat, 20 Jun 2026 12:26:05 +0530
+Subject: [PATCH 2/3] ASoC: codecs: add variant_1_learning_informed WCD939x SDW
+ source
+
+---
+ sound/soc/codecs/wcd939x-sdw.c | 156 +++++++++++++++++++++++++++++++++
+ 1 file changed, 156 insertions(+)
+ create mode 100644 sound/soc/codecs/wcd939x-sdw.c
+
+diff --git a/sound/soc/codecs/wcd939x-sdw.c b/sound/soc/codecs/wcd939x-sdw.c
+new file mode 100644
+index 0000000..f97f691
+--- /dev/null
++++ b/sound/soc/codecs/wcd939x-sdw.c
+@@ -0,0 +1,156 @@
++// SPDX-License-Identifier: GPL-2.0-only
++/*
++ * Copyright (c) 2018-2019, The Linux Foundation. All rights reserved.
++ * Copyright (c) Qualcomm Technologies, Inc. and/or its subsidiaries.
++ */
++
++#include <linux/module.h>
++#include <linux/slab.h>
++#include <linux/platform_device.h>
++#include <linux/device.h>
++#include <linux/kernel.h>
++#include <linux/component.h>
++#include <linux/soundwire/sdw.h>
++#include <linux/soundwire/sdw_type.h>
++#include <linux/soundwire/sdw_registers.h>
++
++	int (*rst_notify)(void *);
++	void *slv_handle;
++};
++
++int wcd939x_slave_register_notify(struct sdw_slave *pdev, int (*rst_notify)(void *), void *handle);
++
++int wcd939x_slave_register_notify(struct sdw_slave *pdev, int (*rst_notify)(void *), void *handle)
++{
++	struct wcd939x_slave_priv *wcd939x_slave = dev_get_drvdata(pdev);
++	int ret = 0;
++
++	dev_dbg(&pdev->dev, "%s: called to register\n", __func__);
++	if (wcd939x_slave) {
++		dev_dbg(&pdev->dev,
++			"%s: got wcd slave device info, called to register\n",
++				__func__);
++		wcd939x_slave->slv_handle = handle;
++		wcd939x_slave->rst_notify = rst_notify;
++		ret = 1;
++	}
++	return ret;
++}
++EXPORT_SYMBOL_GPL(wcd939x_slave_register_notify);
++
++static int wcd939x_slave_bind(struct device *dev,
++				struct device *master, void *data)
++{
++	int ret = 0;
++	uint8_t devnum = 0;
++	struct sdw_slave *pdev = to_swr_device(dev);
++	int retry = SDW_MAX_RETRY;
++
++	if (!pdev) {
++		pr_err_ratelimited("%s: invalid swr device handle\n", __func__);
++		return -EINVAL;
++	}
++
++	do {
++		/* Add delay for soundwire enumeration */
++		usleep_range(100, 110);
++		ret = sdw_get_logical_dev_num(pdev, pdev->addr, &devnum);
++	} while (ret && --retry);
++
++	if (ret) {
++		dev_dbg(&pdev->dev,
++			"%s get devnum %d for dev addr %llx failed\n",
++			__func__, devnum, pdev->addr);
++		ret = -EPROBE_DEFER;
++		return ret;
++	}
++	pdev->dev_num = devnum;
++
++	return ret;
++}
++
++static void wcd939x_slave_unbind(struct device *dev,
++				struct device *master, void *data)
++{
++	struct wcd939x_slave_priv *wcd939x_slave = NULL;
++	struct sdw_slave *pdev = to_swr_device(dev);
++
++	wcd939x_slave = dev_get_drvdata(pdev);
++	if (!wcd939x_slave) {
++		dev_err_ratelimited(&pdev->dev, "%s: wcd939x_slave is NULL\n", __func__);
++		return;
++	}
++}
++
++static const struct sdw_device_id wcd939x_sdw_id[] = {
++	{"wcd939x-sdw", 0},
++	{}
++};
++
++static const struct of_device_id wcd939x_sdw_dt_match[] = {
++	{
++		.compatible = "qcom,wcd939x-sdw",
++	},
++	{}
++};
++
++static const struct component_ops wcd939x_slave_comp_ops = {
++	.bind   = wcd939x_slave_bind,
++	.unbind = wcd939x_slave_unbind,
++};
++
++static int wcd939x_sdw_probe(struct sdw_slave *pdev)
++{
++	struct wcd939x_slave_priv *wcd939x_slave = NULL;
++
++	wcd939x_slave = devm_kzalloc(&pdev->dev,
++				sizeof(struct wcd939x_slave_priv), GFP_KERNEL);
++	if (!wcd939x_slave)
++		return -ENOMEM;
++
++	dev_set_drvdata(pdev, wcd939x_slave);
++
++	wcd939x_slave->sdw_slave = pdev;
++
++	return component_add(&pdev->dev, &wcd939x_slave_comp_ops);
++}
++
++
++static int wcd939x_sdw_reset(struct sdw_slave *pdev)
++{
++	struct wcd939x_slave_priv *wcd939x_slave = dev_get_drvdata(pdev);
++
++	dev_dbg(&pdev->dev, "%s called to swr slave reset\n", __func__);
++	if (wcd939x_slave) {
++		if (wcd939x_slave->rst_notify)
++			wcd939x_slave->rst_notify(wcd939x_slave->slv_handle);
++	}
++
++	return 0;
++}
++
++static int wcd939x_sdw_remove(struct sdw_slave *pdev)
++{
++	component_del(&pdev->dev, &wcd939x_slave_comp_ops);
++	dev_set_drvdata(pdev, NULL);
++	sdw_remove_device(pdev);
++
++	return 0;
++}
++
++static struct sdw_driver wcd939x_sdw_driver = {
++	.driver = {
++		.name = "wcd939x-sdw",
++		.owner = THIS_MODULE,
++		.of_match_table = wcd939x_sdw_dt_match,
++	},
++	.probe = wcd939x_sdw_probe,
++	.remove = wcd939x_sdw_remove,
++	.reset_device = wcd939x_sdw_reset,
++	.id_table = wcd939x_sdw_id,
++};
++
++module_sdw_driver(wcd939x_sdw_driver);
++
++MODULE_DESCRIPTION("WCD939X SDW driver (learning-informed)");
++MODULE_LICENSE("GPL v2");
+-- 
+2.34.1
+

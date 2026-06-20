@@ -1,0 +1,51 @@
+{
+  "artifact": "wcd939x_transfer_rule_promotion_candidates",
+  "generated_on": "2026-06-20",
+  "candidates": [
+    {
+      "rule_id": "WCD-FAMILY-RULE-001",
+      "source_learning": "WCD938x split architecture",
+      "evidence_from_variant_1": "Higher lifecycle/include quality with LE-style split outputs.",
+      "improvement_over_variant_0": "LIFECYCLE_PATTERN +4.1, INCLUDE_ALIGNMENT +17.79",
+      "promote_to": "prompt_template",
+      "confidence": "HIGH",
+      "reason": "Clear quality gain without reference/target copy risk."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-004",
+      "source_learning": "LA->LE DT property normalization",
+      "evidence_from_variant_1": "Property names normalized toward LE model; DT coverage held at 100.",
+      "improvement_over_variant_0": "DT_PROPERTY_COVERAGE +0.00",
+      "promote_to": "checklist",
+      "confidence": "MEDIUM",
+      "reason": "Useful normalization guardrail with low adoption risk."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-006",
+      "source_learning": "Fail-closed runtime policy",
+      "evidence_from_variant_1": "No runtime claims; fail-closed items preserved.",
+      "improvement_over_variant_0": "Safety discipline maintained under higher-scoring reconstruction.",
+      "promote_to": "gate",
+      "confidence": "HIGH",
+      "reason": "Prevents unsafe runtime assertions independent of score."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-012",
+      "source_learning": "Vendor/debug artifact elimination",
+      "evidence_from_variant_1": "Vendor elimination regressed due broad LA carryover despite some include cleanup.",
+      "improvement_over_variant_0": "VENDOR_ELIMINATION -71.27",
+      "promote_to": "do_not_promote",
+      "confidence": "LOW",
+      "reason": "Needs stronger implementation constraints before promotion."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-014",
+      "source_learning": "Choose fail-closed when uncertain",
+      "evidence_from_variant_1": "Runtime-sensitive items remained unresolved/fail-closed.",
+      "improvement_over_variant_0": "Safety-positive, quality-neutral.",
+      "promote_to": "pm_skill",
+      "confidence": "HIGH",
+      "reason": "Improves PM decision reliability for hidden-target experiments."
+    }
+  ]
+}

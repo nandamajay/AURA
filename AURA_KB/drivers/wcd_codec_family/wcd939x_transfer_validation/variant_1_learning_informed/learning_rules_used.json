@@ -1,0 +1,36 @@
+{
+  "artifact": "variant_1_learning_rules_used",
+  "generated_on": "2026-06-20",
+  "rules": [
+    {
+      "rule_id": "WCD-FAMILY-RULE-001",
+      "rule": "Use LE split architecture for codec and SDW transport.",
+      "effect_on_variant_1": "APPLIED",
+      "difference_vs_variant_0": "Variant 1 keeps richer LA content but aligns naming and split for LE-style structure."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-004",
+      "rule": "Normalize LA DT properties to LE naming.",
+      "effect_on_variant_1": "APPLIED",
+      "difference_vs_variant_0": "Variant 1 maps rx/tx slave and *_swr_ch_map properties toward rx/tx-device and *-port-mapping."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-006",
+      "rule": "Fail-close runtime-sensitive claims.",
+      "effect_on_variant_1": "APPLIED",
+      "difference_vs_variant_0": "Variant 1 records explicit fail-closed guardrails in artifacts."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-012",
+      "rule": "Ban debug-only artifacts and vendor hooks.",
+      "effect_on_variant_1": "APPLIED",
+      "difference_vs_variant_0": "Variant 1 strips several vendor/debug include hooks that remain in baseline."
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-008",
+      "rule": "Normalize IRQ stack to LE conventions where feasible.",
+      "effect_on_variant_1": "NO_EFFECT",
+      "difference_vs_variant_0": "No runtime IRQ validation was run; this remains static-only."
+    }
+  ]
+}

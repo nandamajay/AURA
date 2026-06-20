@@ -1,0 +1,44 @@
+{
+  "artifact": "variant_1_learning_informed_anti_copy_audit",
+  "generated_on": "2026-06-20",
+  "verifier_verdict": "WARN",
+  "blocking_findings_count": 0,
+  "warning_findings_count": 2,
+  "lineage_coverage": 100.0,
+  "copy_risk_summary": {
+    "blocking": [],
+    "warnings": [
+      {
+        "group": "downstream",
+        "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/converted/wcd939x.c",
+        "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd939x/wcd939x.c",
+        "raw_line_similarity": 98.76,
+        "normalized_line_similarity": 98.54,
+        "normalized_token_similarity": 96.19,
+        "max_similarity": 98.76,
+        "converted_sha256": "b0e1cee7bc60a155368d60de8b41a16939618afa54ae1c2a362caa398cfdbf27",
+        "reference_sha256": "ac912edaecd3964af6b225b7c5e08274ab4d9a4ff0e3da819176bb58c3be62e9",
+        "byte_identical": false,
+        "severity": "DOWNSTREAM_REUSE_RISK"
+      },
+      {
+        "group": "downstream",
+        "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/converted/wcd939x.h",
+        "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd939x/wcd939x-registers.h",
+        "raw_line_similarity": 90.23,
+        "normalized_line_similarity": 91.72,
+        "normalized_token_similarity": 80.88,
+        "max_similarity": 91.72,
+        "converted_sha256": "be6bae8e09ddec9ed5baaeecb59cc941ea09b692fa1675c865b830ab8039a2a5",
+        "reference_sha256": "593e4c2c6a294e3c4e18d0445185208523ac818a546f967d62c934591fbf03ef",
+        "byte_identical": false,
+        "severity": "DERIVATION_RISK"
+      }
+    ]
+  },
+  "assessment": "NO_BLOCKING_COPY_RISK",
+  "notes": [
+    "Warnings are acceptable for comparison analysis but must be tracked.",
+    "No runtime readiness claim is made."
+  ]
+}

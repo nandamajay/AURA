@@ -1,0 +1,150 @@
+{
+  "artifact": "wcd939x_transfer_variant_comparison",
+  "generated_on": "2026-06-20",
+  "variant_0": {
+    "name": "baseline",
+    "overall_score": 41.78,
+    "gate_verdict": "PASS",
+    "gate_blockers": 0,
+    "gate_warnings": 0,
+    "lineage_coverage": 100.0,
+    "fail_closed_count": 5,
+    "anti_copy_warning_count": 0,
+    "patch_count": 3
+  },
+  "variant_1": {
+    "name": "learning_informed",
+    "overall_score": 60.76,
+    "gate_verdict": "WARN",
+    "gate_blockers": 0,
+    "gate_warnings": 2,
+    "lineage_coverage": 100.0,
+    "fail_closed_count": 5,
+    "anti_copy_warning_count": 2,
+    "patch_count": 3
+  },
+  "category_scores": {
+    "variant_0": {
+      "FUNCTION_MATCH": 12.19,
+      "API_COVERAGE": 6.2,
+      "REGISTER_COVERAGE": 0.12,
+      "DAPM_WIDGETS": 28.73,
+      "DAPM_ROUTES": 28.73,
+      "DAPM_CONTROLS": 28.73,
+      "LIFECYCLE_PATTERN": 79.48,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 100.0,
+      "INCLUDE_ALIGNMENT": 33.64
+    },
+    "variant_1": {
+      "FUNCTION_MATCH": 31.47,
+      "API_COVERAGE": 40.47,
+      "REGISTER_COVERAGE": 5.64,
+      "DAPM_WIDGETS": 90.45,
+      "DAPM_ROUTES": 83.27,
+      "DAPM_CONTROLS": 92.54,
+      "LIFECYCLE_PATTERN": 83.58,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 28.73,
+      "INCLUDE_ALIGNMENT": 51.43
+    },
+    "delta_variant1_minus_variant0": {
+      "FUNCTION_MATCH": 19.28,
+      "API_COVERAGE": 34.27,
+      "REGISTER_COVERAGE": 5.52,
+      "DAPM_WIDGETS": 61.72,
+      "DAPM_ROUTES": 54.54,
+      "DAPM_CONTROLS": 63.81,
+      "LIFECYCLE_PATTERN": 4.1,
+      "DT_PROPERTY_COVERAGE": 0.0,
+      "VENDOR_ELIMINATION": -71.27,
+      "INCLUDE_ALIGNMENT": 17.79
+    },
+    "improved_categories": [
+      "FUNCTION_MATCH",
+      "API_COVERAGE",
+      "REGISTER_COVERAGE",
+      "DAPM_WIDGETS",
+      "DAPM_ROUTES",
+      "DAPM_CONTROLS",
+      "LIFECYCLE_PATTERN",
+      "INCLUDE_ALIGNMENT"
+    ],
+    "regressed_categories": [
+      "VENDOR_ELIMINATION"
+    ]
+  },
+  "quality_differences": {
+    "function_api_register_delta": {
+      "FUNCTION_MATCH_delta": 19.28,
+      "API_COVERAGE_delta": 34.27,
+      "REGISTER_COVERAGE_delta": 5.52
+    },
+    "dapm_controls_routes_delta": {
+      "DAPM_WIDGETS_delta": 61.72,
+      "DAPM_ROUTES_delta": 54.54,
+      "DAPM_CONTROLS_delta": 63.81
+    },
+    "lifecycle_include_dt_vendor_delta": {
+      "LIFECYCLE_PATTERN_delta": 4.1,
+      "INCLUDE_ALIGNMENT_delta": 17.79,
+      "DT_PROPERTY_COVERAGE_delta": 0.0,
+      "VENDOR_ELIMINATION_delta": -71.27
+    },
+    "file_size_signal": {
+      "variant_0_lines": {
+        "wcd939x.c": 162,
+        "wcd939x-sdw.c": 93,
+        "wcd939x.h": 55
+      },
+      "variant_1_lines": {
+        "wcd939x.c": 5973,
+        "wcd939x-sdw.c": 156,
+        "wcd939x.h": 809
+      }
+    }
+  },
+  "copy_derivation_risk": {
+    "variant_0": {
+      "assessment": "NO_BLOCKING_COPY_RISK",
+      "warning_findings_count": 0
+    },
+    "variant_1": {
+      "assessment": "NO_BLOCKING_COPY_RISK",
+      "warning_findings_count": 2,
+      "warnings": [
+        {
+          "group": "downstream",
+          "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/converted/wcd939x.c",
+          "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd939x/wcd939x.c",
+          "raw_line_similarity": 98.76,
+          "normalized_line_similarity": 98.54,
+          "normalized_token_similarity": 96.19,
+          "max_similarity": 98.76,
+          "converted_sha256": "b0e1cee7bc60a155368d60de8b41a16939618afa54ae1c2a362caa398cfdbf27",
+          "reference_sha256": "ac912edaecd3964af6b225b7c5e08274ab4d9a4ff0e3da819176bb58c3be62e9",
+          "byte_identical": false,
+          "severity": "DOWNSTREAM_REUSE_RISK"
+        },
+        {
+          "group": "downstream",
+          "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/converted/wcd939x.h",
+          "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wcd939x/wcd939x-registers.h",
+          "raw_line_similarity": 90.23,
+          "normalized_line_similarity": 91.72,
+          "normalized_token_similarity": 80.88,
+          "max_similarity": 91.72,
+          "converted_sha256": "be6bae8e09ddec9ed5baaeecb59cc941ea09b692fa1675c865b830ab8039a2a5",
+          "reference_sha256": "593e4c2c6a294e3c4e18d0445185208523ac818a546f967d62c934591fbf03ef",
+          "byte_identical": false,
+          "severity": "DERIVATION_RISK"
+        }
+      ]
+    }
+  },
+  "learning_improved_result": true,
+  "improvement_confidence": "HIGH",
+  "score_delta": 18.98,
+  "quality_delta_summary": "Variant 1 improved core reconstruction metrics but regressed vendor-elimination and increased downstream derivation warnings.",
+  "pm_interpretation": "Learning transfer improved structural/functional reconstruction quality; governance must further constrain downstream-near-copy behavior."
+}
