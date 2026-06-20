@@ -1,0 +1,147 @@
+{
+  "artifact": "wcd938x_pm_runtime_reset_clsh_mbhc_lessons",
+  "generated_on": "2026-06-20",
+  "lessons": [
+    {
+      "lesson": "Use runtime PM autosuspend for aggregate codec and SDW children instead of PM_SLEEP-only supply policy.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3512-3517",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1233-1261",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4670-4756"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "Keep runtime outcomes fail-closed until board logs are available.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "Cache-only until SDW attach + cache sync on attach/resume is an upstream-accepted lifecycle pattern.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1206-1208",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:102-113",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1249-1252"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "WCD9378 SDW identity/paging confirmation is still required.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "Reset should be modeled through reset GPIO descriptors, not vendor pinctrl state APIs.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3211-3214",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3261-3270",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4186-4203"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "Board DTS must provide valid reset-gpios wiring.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "MBHC should be integrated via shared wcd-mbhc-v2 API, with codec-specific field/IRQ mapping only.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2547-2583",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3158-3160",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.c:1503-1632",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-mbhc.c:20-23"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "WCD9378 field/register mapping must come from downstream + datasheet evidence.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "Class-H should be controlled through shared controller allocation and state transitions.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3042",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:613-887",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c:844-899"
+      ],
+      "applies_to_wcd9378": "CONDITIONAL",
+      "condition": "WCD9378 class-H enum/base decision remains blocked pending runtime evidence.",
+      "pm_verdict": "REQUIRES_RUNTIME_EVIDENCE"
+    },
+    {
+      "lesson": "LE accepted architecture removes parent callback coupling and platform private handles used by LA.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4576-4600",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3488-3500"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "Conversion should reject vendor callback plumbing.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "LE replace of custom IRQ wrappers with regmap-irq + threaded IRQ is maintainable and reviewable.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3010-3013",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3065-3087",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4431-4461"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "IRQ map must match WCD9378 interrupt layout.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "Maintainers accepted split Kconfig symbols (core + SDW) and Makefile wiring for WCD family codecs.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig:2472-2488",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile:807-810"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "Symbols must reflect real helper dependencies and transport split.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "LA debug-only facilities (debugfs peek/poke, hwdep cal) were not carried into LE and should remain non-upstream.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c:15-273",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4030-4032"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "Any debug-only aid must stay out of upstream patch scope.",
+      "pm_verdict": "REUSE"
+    },
+    {
+      "lesson": "LA uses explicit enumeration delays/retries; LE still has bounded waits but no ad-hoc recovery hacks.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4386-4392",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c:288-299",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3025-3030"
+      ],
+      "applies_to_wcd9378": "CONDITIONAL",
+      "condition": "Do not derive WCD9378 recovery policy without Monday runtime logs.",
+      "pm_verdict": "FAIL_CLOSED"
+    },
+    {
+      "lesson": "Regmap shape changed LA->LE (16-bit/RBTREE to 32-bit/MAPLE); conversion should treat this as an intentional upstream adaptation pattern.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-regmap.c:503-516",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1133-1138"
+      ],
+      "applies_to_wcd9378": "CONDITIONAL",
+      "condition": "Only apply when downstream register-domain evidence supports address width and cache behavior.",
+      "pm_verdict": "LEARN_ONLY"
+    },
+    {
+      "lesson": "WCD938x LE pattern does not prove WCD9378 SDW identity or paging behavior.",
+      "source_family": "WCD938x",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1227-1231",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h:7",
+        "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/pm_datasheet_delta_summary.md"
+      ],
+      "applies_to_wcd9378": "YES",
+      "condition": "Keep SDW identity/paging blockers as runtime-evidence gated.",
+      "pm_verdict": "FAIL_CLOSED"
+    }
+  ]
+}

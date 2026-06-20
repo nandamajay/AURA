@@ -1,0 +1,61 @@
+{
+  "artifact": "wcd938x_la_vs_le_source_inventory",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "la": "downstream Linux Android/vendor implementation",
+    "le": "upstream Linux Embedded (linux-next) implementation",
+    "la_le_terminology_applied": true
+  },
+  "la_wcd938x_files_found": [
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/Kbuild",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/internal.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-mbhc.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-mbhc.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-registers.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-regmap.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-tables.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.h"
+  ],
+  "le_wcd938x_files_found": [
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h"
+  ],
+  "le_shared_codec_library_files_used": [
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.h",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c",
+    "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.h"
+  ],
+  "supporting_build_integration_files_used": [
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile"
+  ],
+  "prior_aura_learning_files_used": [
+    "AURA_KB/drivers/wcd937x/variant_c/lessons_learned.json",
+    "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/conversion_gate_preconditions_delta.json",
+    "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/pm_datasheet_delta_summary.md",
+    "AURA_KB/drivers/wcd9378/evidence_request_01/evidence_checklist.json"
+  ],
+  "missing_expected_files": [],
+  "intentionally_excluded": [
+    {
+      "path": "track_b_corpora/linux-next/sound/soc/codecs/wcd939x*.{c,h}",
+      "reason": "This task is WCD938x LA-vs-LE pattern mining only; WCD939x audit is a separate follow-up decision."
+    },
+    {
+      "path": "Any WCD9378 source under track_b_corpora/linux-next/sound/soc/codecs/",
+      "reason": "Forbidden by task scope: no WCD9378 conversion or source modification in this learning run."
+    }
+  ],
+  "inventory_observations": [
+    "LA implementation is split across codec, slave, regmap, MBHC, and vendor-internal headers.",
+    "LE implementation is split into main codec + SoundWire driver + shared helper libraries.",
+    "LE build integration is centralized in common codec Kconfig/Makefile entries."
+  ]
+}

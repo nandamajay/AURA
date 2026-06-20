@@ -1,0 +1,160 @@
+{
+  "artifact": "wcd_codec_family_rules_draft_from_wcd938x_la_vs_le",
+  "generated_on": "2026-06-20",
+  "rules": [
+    {
+      "rule_id": "WCD-FAMILY-RULE-001",
+      "rule": "Prefer LE split architecture: aggregate codec driver + SDW transport driver + shared helper libraries.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "prompt",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-002",
+      "rule": "Drop vendor framework includes/APIs (msm-cdc/bolero/qti debugfs/hwdep) unless there is an upstream equivalent.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "gate",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-003",
+      "rule": "Use shared wcd-mbhc-v2 and wcd-clsh-v2 integration patterns instead of codec-local reimplementation.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "manual_review",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-004",
+      "rule": "Map LA DT properties to LE schema names (reset-gpios, qcom,rx-device/tx-device, qcom,micbias*-microvolt, qcom,*-port-mapping).",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "gate",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-005",
+      "rule": "Treat SDW numeric identity as hardware evidence-gated; never infer new codec IDs from sibling codec IDs.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "runtime_evidence",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-006",
+      "rule": "Keep runtime-sensitive claims fail-closed (paging, class-H base/version, recovery workarounds) until board traces exist.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "runtime_evidence",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-007",
+      "rule": "Use LE regcache lifecycle: cache-only during early probe, sync on attach/resume.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "manual_review",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-008",
+      "rule": "Normalize IRQ handling to regmap-irq + request_threaded_irq; avoid vendor IRQ wrapper layers.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "manual_review",
+      "confidence": "MEDIUM"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-009",
+      "rule": "Keep DAPM/control categories only when supported by downstream hardware topology evidence; avoid name-only control cloning.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "scorer",
+      "confidence": "MEDIUM"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-010",
+      "rule": "Use reset via gpiod and regulators via bulk APIs; do not port vendor supply-LPM policy directly.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "manual_review",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-011",
+      "rule": "Build integration should follow LE two-symbol codec/SDW Kconfig pattern when transport split exists.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "prompt",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-012",
+      "rule": "Ban debug-only artifacts (custom debugfs peek/poke and hwdep calibration hooks) from conversion output.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "gate",
+      "confidence": "HIGH"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-013",
+      "rule": "Require evidence tags on each transformed subsystem: lifecycle, SDW, DT, MBHC, Class-H, regulators, DAPM.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "gate",
+      "confidence": "MEDIUM"
+    },
+    {
+      "rule_id": "WCD-FAMILY-RULE-014",
+      "rule": "When LA and LE disagree and runtime evidence is absent, choose FAIL_CLOSED instead of speculative synthesis.",
+      "source": "WCD938x LA-vs-LE audit",
+      "applies_to": [
+        "WCD9378",
+        "future WCD codec conversions"
+      ],
+      "enforcement": "runtime_evidence",
+      "confidence": "HIGH"
+    }
+  ]
+}

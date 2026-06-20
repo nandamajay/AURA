@@ -1,0 +1,123 @@
+{
+  "artifact": "wcd938x_soundwire_regmap_lifecycle_audit",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "la": "downstream Linux Android/vendor",
+    "le": "upstream linux-next"
+  },
+  "le_binding_flow": {
+    "summary": "LE aggregate codec resolves SDW rx/tx phandles, binds child components, then wires device links and uses TX regmap as CSR interface.",
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3342-3393",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3461-3477"
+    ]
+  },
+  "le_sdw_probe_flow": {
+    "summary": "LE SDW probe determines tx/rx role from port-mapping DT property, sets SDW port properties, and initializes regmap for tx role only.",
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1167-1198",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1200-1208"
+    ]
+  },
+  "regmap_initialization": {
+    "summary": "LE regmap is created via devm_regmap_init_sdw with 32-bit register addressing and MAPLE cache.",
+    "details": {
+      "api": "devm_regmap_init_sdw",
+      "reg_bits": 32,
+      "cache_type": "REGCACHE_MAPLE"
+    },
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1133-1144",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1200-1204"
+    ]
+  },
+  "register_defaults_representation": {
+    "summary": "LE keeps register defaults as a static reg_default table in SDW file, coupled with readable/writeable/volatile callbacks.",
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:152-220",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1103-1144"
+    ]
+  },
+  "cache_only_and_cache_sync": {
+    "summary": "LE starts tx regmap in cache-only mode pre-enumeration, then uses common attach callback and runtime resume/suspend to sync cache transitions.",
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1206-1208",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:102-113",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1233-1252"
+    ]
+  },
+  "enumeration_assumptions": {
+    "summary": "LE waits for tx SDW initialization completion before codec component probe proceeds; timeout is treated as error.",
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3025-3030"
+    ]
+  },
+  "paging_assessment": {
+    "summary": "No explicit paging configuration is visible in LE WCD938x driver path.",
+    "findings": [
+      "No use of paging_support or SDW page fields in wcd938x.c/wcd938x-sdw.c.",
+      "Register range appears below 0x10000 for WCD938x (base 0x3000 and max register macro in header)."
+    ],
+    "evidence": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h:7",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h:586"
+    ]
+  },
+  "la_vs_le_regmap_delta": {
+    "summary": "LA regmap uses 16-bit register addressing and RBTREE cache, while LE uses 32-bit register addressing and MAPLE cache.",
+    "evidence": [
+      "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-regmap.c:503-516",
+      "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1133-1138"
+    ]
+  },
+  "safe_reuse_for_wcd9378": [
+    {
+      "item": "Aggregate codec + SDW child component bind/unbind pattern",
+      "status": "SAFE_WITH_EVIDENCE",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3337-3451"
+      ]
+    },
+    {
+      "item": "Regcache cache-only pre-attach and sync-on-attach/runtime-resume",
+      "status": "SAFE_WITH_EVIDENCE",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:102-113",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1233-1252"
+      ]
+    },
+    {
+      "item": "DT port mapping split by tx/rx SDW child",
+      "status": "SAFE_WITH_EVIDENCE",
+      "evidence": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1167-1175"
+      ]
+    }
+  ],
+  "wcd9378_fail_closed_items": [
+    {
+      "item": "Final SDW numeric identity for WCD9378",
+      "reason": "WCD938x SDW tuple (0x0217, 0x10d, 0) does not prove WCD9378 tuple.",
+      "supporting_reference": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1227-1231"
+    },
+    {
+      "item": "Paged register behavior for WCD9378 high-address ranges",
+      "reason": "WCD938x code path does not demonstrate paged-register requirements.",
+      "supporting_reference": "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.h:7"
+    },
+    {
+      "item": "Runtime audio reliability inference",
+      "reason": "Static LE structure cannot prove playback/capture correctness for WCD9378.",
+      "supporting_reference": "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/pm_datasheet_delta_summary.md"
+    }
+  ],
+  "explicit_answers": {
+    "does_wcd938x_teach_anything_useful_about_wcd9378_sdw_identity": "PARTIAL_ONLY. It teaches the LE matching model (use sdw_device_id and SDW_SLAVE_ENTRY) but not WCD9378 numeric IDs.",
+    "does_wcd938x_teach_anything_useful_about_wcd9378_paged_registers": "LIMITED. It shows regmap+cache lifecycle patterns, but does not prove WCD9378 paging requirements.",
+    "what_cannot_be_inferred_from_wcd938x": [
+      "WCD9378 exact SDW tuple/modalias",
+      "Whether WCD9378 requires paging_support=true at runtime",
+      "Whether controller-level SoundWire changes are required for WCD9378"
+    ]
+  }
+}

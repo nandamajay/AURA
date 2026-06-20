@@ -1,0 +1,168 @@
+{
+  "artifact": "wcd938x_upstream_pattern_inventory",
+  "generated_on": "2026-06-20",
+  "terminology_policy": "LA vs LE naming enforced",
+  "patterns": [
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-001",
+      "pattern_name": "Component master + SDW child split lifecycle",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3337-3451",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3481-3535"
+      ],
+      "description": "LE codec driver acts as component master and binds SDW rx/tx children before component registration.",
+      "why_upstreamable": "Uses upstream component framework and deterministic bind/unbind ordering.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Requires rx/tx SDW device nodes and valid child probe order.",
+      "anti_copy_warning": "Copy lifecycle shape, not WCD938x-specific symbols or IDs."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-002",
+      "pattern_name": "SDW probe with tx-only regmap bring-up",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1167-1212",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1200-1208"
+      ],
+      "description": "LE SDW probe derives rx/tx role from DT port-mapping and initializes regmap on tx side with cache-only bootstrap.",
+      "why_upstreamable": "Matches SDW framework behavior before attach/interrupt readiness.",
+      "reuse_for_wcd9378": "CONDITIONAL",
+      "conditions_or_caveats": "Only valid if WCD9378 also uses tx-side CSR access.",
+      "anti_copy_warning": "Do not assume WCD9378 uses identical channel counts/port maps without downstream proof."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-003",
+      "pattern_name": "Regcache state transitions on attach and runtime PM",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:102-113",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1233-1261"
+      ],
+      "description": "LE enables cache-only during early bring-up, clears cache-only on attach/resume, and syncs cache to hardware.",
+      "why_upstreamable": "Uses regcache APIs instead of custom synchronization logic.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Identity/paging still require runtime evidence for WCD9378.",
+      "anti_copy_warning": "Do not interpret cache-sync success as proof of runtime audio correctness."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-004",
+      "pattern_name": "Shared DT micbias parsing via wcd-common",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:36-76",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3243-3252"
+      ],
+      "description": "LE reads qcom,micbias*-microvolt through common helper and stores converted vout values in shared state.",
+      "why_upstreamable": "Avoids codec-local duplicated DT parsing for micbias rails.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Micbias count and index mapping must match WCD9378 hardware definition.",
+      "anti_copy_warning": "Do not carry over LA qcom,cdc-micbias*-mv properties."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-005",
+      "pattern_name": "MBHC via shared v2 library",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2547-2583",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3119-3123",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.c:1433-1453",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.c:1503-1632"
+      ],
+      "description": "LE wires MBHC interrupt IDs from regmap-irq virtual IRQs and relies on shared start/stop/init/deinit APIs.",
+      "why_upstreamable": "Common MBHC behavior is centralized and reusable across codecs.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Field mapping must be register-accurate for WCD9378.",
+      "anti_copy_warning": "Do not import LA-specific MBHC wrapper APIs."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-006",
+      "pattern_name": "Class-H shared state controller",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3042",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:613-887",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.h:44-51",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-clsh-v2.c:844-899"
+      ],
+      "description": "LE allocates class-H controller with codec version enum and drives state transitions from DAPM callbacks.",
+      "why_upstreamable": "Single shared class-H engine reduces per-codec divergence.",
+      "reuse_for_wcd9378": "CONDITIONAL",
+      "conditions_or_caveats": "WCD9378 enum/base decision remains runtime-sensitive and currently fail-closed.",
+      "anti_copy_warning": "Do not assume WCD9378 can reuse WCD937X/WCD938X enum without Monday evidence."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-007",
+      "pattern_name": "Runtime PM on both codec and SDW device",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3512-3517",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3527-3532",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1233-1261",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:78-99"
+      ],
+      "description": "LE enables autosuspend and PM runtime for aggregate and SDW children, with explicit suspend/resume hooks for regcache.",
+      "why_upstreamable": "Consistent with kernel PM model and avoids vendor PM sleep hooks.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Audio path behavior still requires runtime validation.",
+      "anti_copy_warning": "Do not convert PM-only success into playback/capture success claims."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-008",
+      "pattern_name": "Reset GPIO descriptor model",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3211-3214",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3261-3270"
+      ],
+      "description": "LE uses devm_gpiod_get/reset toggling rather than vendor pinctrl-state APIs.",
+      "why_upstreamable": "Portable and binding-compliant reset handling.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Requires DTS reset-gpios wiring on target board.",
+      "anti_copy_warning": "Do not preserve LA qcom,wcd-rst-gpio-node dependency."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-009",
+      "pattern_name": "Regulator bulk-enable in DT population",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3238-3241"
+      ],
+      "description": "LE enables required supplies with devm_regulator_bulk_get_enable during probe setup.",
+      "why_upstreamable": "Removes custom regulator orchestrators and board-specific supply states.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Supply names and count must match WCD9378 bindings/runtime evidence.",
+      "anti_copy_warning": "Do not copy LA msm_cdc supply-lpm policy directly."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-010",
+      "pattern_name": "Device-link ordering between aggregate codec and SDW children",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3368-3389"
+      ],
+      "description": "LE creates stateless PM runtime links to guarantee tx/rx dependency and suspend ordering.",
+      "why_upstreamable": "Framework-consistent dependency declaration replaces implicit ordering assumptions.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Must preserve valid unwind path on any link creation failure.",
+      "anti_copy_warning": "Do not add fixed delays as a substitute for dependency links."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-011",
+      "pattern_name": "Structured DAPM/event callback organization",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2588-2753",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:430-1470"
+      ],
+      "description": "LE keeps controls/widgets/routes centralized and links power events to shared MBHC/Class-H helpers.",
+      "why_upstreamable": "Maintainers can review topology and event effects in a consistent file layout.",
+      "reuse_for_wcd9378": "CONDITIONAL",
+      "conditions_or_caveats": "Topology can be reused only where downstream/datasheet prove equivalent blocks.",
+      "anti_copy_warning": "Avoid name-only cloning of control lists."
+    },
+    {
+      "pattern_id": "WCD938X-UPSTREAM-PATTERN-012",
+      "pattern_name": "Two-symbol Kconfig model (core + SDW)",
+      "where_seen": [
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig:2472-2488",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile:363-364",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile:807-810"
+      ],
+      "description": "LE separates codec core and SDW transport symbols while ensuring linked object inclusion when SDW symbol is enabled.",
+      "why_upstreamable": "Build ordering and link dependencies are explicit and reproducible.",
+      "reuse_for_wcd9378": "YES",
+      "conditions_or_caveats": "Feature dependencies must match actual helper/library usage.",
+      "anti_copy_warning": "Do not replicate LA external-module Kbuild conditionals."
+    }
+  ]
+}

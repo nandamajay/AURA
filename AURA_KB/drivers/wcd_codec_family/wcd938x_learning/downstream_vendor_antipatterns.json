@@ -1,0 +1,165 @@
+{
+  "artifact": "wcd938x_downstream_vendor_antipatterns",
+  "generated_on": "2026-06-20",
+  "terminology_policy": "LA examples are downstream/vendor only; LE replacements are upstream patterns",
+  "antipatterns": [
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-001",
+      "area": "Vendor includes",
+      "la_example": "LA includes asoc/wcdcal-hwdep.h, asoc/msm-cdc-pinctrl.h, asoc/msm-cdc-supply.h, asoc/bolero-slave-internal.h, linux/qti-regmap-debugfs.h.",
+      "why_not_upstreamable": "These headers tie the codec driver to vendor frameworks absent in LE kernel.",
+      "le_replacement_pattern": "Use standard gpio/regulator/component/regmap/soundwire helpers + wcd-common/wcd-mbhc-v2/wcd-clsh-v2.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:20-31",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:24-27"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-002",
+      "area": "Debugfs-only bring-up hooks",
+      "la_example": "LA slave driver adds large debugfs peek/poke/reg_dump surface and direct swr_read/swr_write.",
+      "why_not_upstreamable": "Debug hooks bypass normal control interfaces and create maintenance/security burden.",
+      "le_replacement_pattern": "No codec-specific debugfs; rely on standard tracing/regmap debug infrastructure if needed.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c:15-273",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c:349-375"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-003",
+      "area": "Legacy SWR identity model",
+      "la_example": "LA identifies slave via string id \"wcd938x-slave\" and OF compatible qcom,wcd938x-slave.",
+      "why_not_upstreamable": "LE SDW subsystem expects numeric manufacturer/part tuple for matching.",
+      "le_replacement_pattern": "Use sdw_device_id with SDW_SLAVE_ENTRY and sdw_driver registration.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c:319-327",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1227-1231"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-004",
+      "area": "Manual enumeration retry/delay loops",
+      "la_example": "LA slave bind polls swr_get_logical_dev_num with retry loop and usleep.",
+      "why_not_upstreamable": "Hardcoded polling retries are fragile and board-dependent.",
+      "le_replacement_pattern": "Use SDW attach/update_status and framework-driven initialization completion.",
+      "wcd9378_risk_if_copied": "MEDIUM",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-slave.c:288-299",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3025-3030",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:102-113"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-005",
+      "area": "Parent platform callback coupling",
+      "la_example": "LA probe depends on parent platform_data handle/update_wcd_event/register_notifier.",
+      "why_not_upstreamable": "Parent callback contracts are vendor-specific and not part of LE codec interfaces.",
+      "le_replacement_pattern": "Use local component data and shared helper libraries without parent callback contracts.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4576-4600",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/internal.h:139-145",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3488-3500"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-006",
+      "area": "Vendor reset/supply wrappers",
+      "la_example": "LA uses msm_cdc_pinctrl_select_* and msm_cdc_*supply helpers for reset and regulator policy.",
+      "why_not_upstreamable": "Wrapper APIs are not available in LE and encode downstream power policy.",
+      "le_replacement_pattern": "Use reset-gpios via gpiod and devm_regulator_bulk_get_enable.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4186-4203",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4568-4604",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3211-3214",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3238-3241"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-007",
+      "area": "Downstream-only DT properties",
+      "la_example": "LA consumes qcom,wcd-rst-gpio-node, qcom,rx-slave, qcom,tx-slave, qcom,rx_swr_ch_map, qcom,tx_swr_ch_map, qcom,cdc-micbias*-mv.",
+      "why_not_upstreamable": "These properties are legacy/vendor conventions and conflict with LE property model.",
+      "le_replacement_pattern": "Use qcom,rx-device/qcom,tx-device, qcom,rx-port-mapping/qcom,tx-port-mapping, reset-gpios, qcom,micbias*-microvolt.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4231-4273",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4322-4343",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4610-4613",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3461-3471",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1167-1175",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-common.c:41-49"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-008",
+      "area": "Custom IRQ wrapper stack",
+      "la_example": "LA uses wcd_irq_init/wcd_request_irq/wcd_disable_irq wrappers and private irq_info object.",
+      "why_not_upstreamable": "Custom wrappers hide irq-domain semantics and increase conversion ambiguity.",
+      "le_replacement_pattern": "Use regmap-irq + request_threaded_irq + regmap_irq_get_virq.",
+      "wcd9378_risk_if_copied": "MEDIUM",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4431-4461",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3010-3013",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3057-3067"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-009",
+      "area": "LA PM sleep supply-LPM policy",
+      "la_example": "LA suspend/resume toggles buck and supply LPM state via status bits and vendor supply APIs.",
+      "why_not_upstreamable": "Policy is platform-specific and not directly portable.",
+      "le_replacement_pattern": "Use runtime PM callbacks and regcache sync path.",
+      "wcd9378_risk_if_copied": "MEDIUM",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4691-4747",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3512-3532",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:1233-1261"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-010",
+      "area": "Duplicated MBHC scaffolding",
+      "la_example": "LA carries codec-local MBHC implementation layer (wcd938x-mbhc.c/h) on top of vendor API types.",
+      "why_not_upstreamable": "Duplicates common behavior already upstream in wcd-mbhc-v2.",
+      "le_replacement_pattern": "Use shared wcd-mbhc-v2 init/start/stop/deinit and DT parser.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-mbhc.c:20-23",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x-mbhc.h:16-27",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2547-2583",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd-mbhc-v2.c:1433-1453"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-011",
+      "area": "LA external-module Kbuild assumptions",
+      "la_example": "LA Kbuild depends on target architecture configs and external AUDIO_ROOT build environment.",
+      "why_not_upstreamable": "Mainline build must be architecture-agnostic and Kconfig-driven.",
+      "le_replacement_pattern": "Use standard Kconfig symbols and codec Makefile object lists in sound/soc/codecs.",
+      "wcd9378_risk_if_copied": "MEDIUM",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/Kbuild:1-46",
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig:2472-2488",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile:807-810"
+      ]
+    },
+    {
+      "antipattern_id": "WCD938X-LA-ANTIPATTERN-012",
+      "area": "Runtime workaround signaling as static truth",
+      "la_example": "LA includes explicit timing delays for enumeration and PA sequencing that may be board/hardware tuned.",
+      "why_not_upstreamable": "Static extraction cannot prove these delays are universally required on future codecs/boards.",
+      "le_replacement_pattern": "Preserve only proven LE lifecycle APIs and mark runtime-sensitive behavior fail-closed.",
+      "wcd9378_risk_if_copied": "HIGH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:4386-4392",
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:724-773",
+        "AURA_KB/drivers/wcd9378/blocker_burndown_01_datasheet_delta/pm_datasheet_delta_summary.md"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+{
+  "artifact": "wcd938x_dapm_controls_routes_mapping",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "la": "downstream Linux Android/vendor",
+    "le": "upstream linux-next"
+  },
+  "la_vs_le_mapping": [
+    {
+      "category": "Widgets",
+      "la_pattern": "LA defines broad analog/digital widget set including AMIC, VA AMIC, RX dummy, HPH/AUX/EAR, and TX/RX dummy endpoints.",
+      "le_pattern": "LE defines equivalent families (AMIC/DMIC/RX/HPH/AUX/EAR) with simplified organization and event callbacks.",
+      "decision": "KEEP_WITH_REFACTOR",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3362-3664",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2644-2873"
+      ]
+    },
+    {
+      "category": "Routes",
+      "la_pattern": "LA route map includes VA_AMIC mixers and WCD_TX_OUTPUT/WCD_RX_DUMMY staging nodes.",
+      "le_pattern": "LE route map keeps equivalent ADC/DMIC and HPH/AUX/EAR topology with a smaller route graph.",
+      "decision": "KEEP_WITH_FILTER",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3666-3777",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2875-2964"
+      ]
+    },
+    {
+      "category": "Mixer controls",
+      "la_pattern": "LA exposes extensive channel-map and switch controls including HPH compander, ADC/DMIC maps, and LDOH/BCS toggles.",
+      "le_pattern": "LE exposes similar switch/volume/ch-map controls but with streamlined callbacks and shared helper usage.",
+      "decision": "KEEP_WITH_API_NORMALIZATION",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3126-3172",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2588-2641"
+      ]
+    },
+    {
+      "category": "Event callbacks",
+      "la_pattern": "LA event handlers embed vendor status bits and custom callbacks around PA and watchdog behavior.",
+      "le_pattern": "LE event handlers drive class-H and MBHC through shared APIs and standard component field writes.",
+      "decision": "REPLACE",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:694-940",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:430-1125"
+      ]
+    },
+    {
+      "category": "HPH path",
+      "la_pattern": "LA HPH PA callbacks include delay logic plus vendor status mask operations.",
+      "le_pattern": "LE HPH PA callbacks use wcd_clsh_ctrl_set_state, wcd_clsh_set_hph_mode, and MBHC event notifications via shared APIs.",
+      "decision": "KEEP_PATH_REPLACE_CALLBACK_IMPL",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:686-893",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:694-868"
+      ]
+    },
+    {
+      "category": "AUX path",
+      "la_pattern": "LA AUX callback drives watchdog and class-H through vendor state handling.",
+      "le_pattern": "LE AUX callback keeps watchdog + class-H state transitions with shared class-H control object.",
+      "decision": "KEEP_WITH_SHARED_CLSH",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:898-940",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:906-989"
+      ]
+    },
+    {
+      "category": "EAR path",
+      "la_pattern": "LA EAR path multiplexes RX source and controls gain override with vendor event sequencing.",
+      "le_pattern": "LE EAR callback has same functional intent but uses component field helpers and class-H state API.",
+      "decision": "KEEP_WITH_REVIEW",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:942-1040",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:578-646"
+      ]
+    },
+    {
+      "category": "ADC/AMIC path",
+      "la_pattern": "LA uses AMIC mixers + HDR mux controls with VA AMIC parallel widgets.",
+      "le_pattern": "LE keeps ADC/HDR/AMIC mux graph without LA-specific VA AMIC duplication.",
+      "decision": "CONDITIONAL",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3677-3718",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2881-2905"
+      ]
+    },
+    {
+      "category": "DMIC path",
+      "la_pattern": "LA provides DMIC1..DMIC8 mixer/output routes tied to tx channel mapping.",
+      "le_pattern": "LE provides DMIC1..DMIC8 routes with equivalent mixer structure and SDW channel handling.",
+      "decision": "KEEP",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3720-3742",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2906-2929",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x-sdw.c:39-48"
+      ]
+    },
+    {
+      "category": "Compander controls",
+      "la_pattern": "LA exposes HPHL/HPHR compander switch controls via local callbacks.",
+      "le_pattern": "LE keeps HPHL/HPHR compander controls and invokes LE callback implementations.",
+      "decision": "KEEP",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3127-3131",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2589-2593"
+      ]
+    },
+    {
+      "category": "Class-H controls",
+      "la_pattern": "LA exposes CLSH switch but ties event control to legacy class-H APIs and status bits.",
+      "le_pattern": "LE exposes CLSH switch and routes behavior through shared wcd-clsh-v2 controller.",
+      "decision": "REPLACE_BACKEND_KEEP_CONTROL",
+      "evidence": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd938x/wcd938x.c:3131-3134",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:2597-2599",
+        "track_b_corpora/linux-next/sound/soc/codecs/wcd938x.c:3042"
+      ]
+    }
+  ],
+  "rules_for_wcd9378": {
+    "likely_reusable_control_categories": [
+      "HPH/AUX/EAR output path widget families",
+      "ADC/DMIC mixer and route organization",
+      "Basic switch/volume/ch-map control categories",
+      "DAPM event-driven class-H/MBHC hooks using shared helper APIs"
+    ],
+    "requires_datasheet_or_runtime_confirmation": [
+      "Exact channel count and SDW port/channel mapping for each control",
+      "PA timing values and watchdog sequencing sensitivity",
+      "Class-H state behavior differences that may depend on codec version/base",
+      "Any board-dependent VA mic or external mux topology"
+    ],
+    "must_be_omitted_unless_evidenced": [
+      "LA-only VA_AMIC duplication if not present in WCD9378 topology",
+      "Vendor debug/control interfaces (debugfs/hwdep/private notifiers)",
+      "Board-specific route nodes or workaround controls"
+    ],
+    "fail_closed_statement": "Topology categories are reusable patterns only. Runtime function (playback/capture/mute behavior) remains FAIL_CLOSED until hardware validation."
+  }
+}
