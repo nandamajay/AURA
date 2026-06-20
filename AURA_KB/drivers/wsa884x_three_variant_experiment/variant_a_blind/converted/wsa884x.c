@@ -1,0 +1,147 @@
+// SPDX-License-Identifier: GPL-2.0-only
+/*
+ * WSA884x amplifier baseline-blind static reconstruction.
+ *
+ * Scope: static conversion experiment artifact only.
+ * Runtime behavior is intentionally fail-closed where uncertain.
+ */
+
+#include <linux/device.h>
+#include <linux/err.h>
+#include <linux/kernel.h>
+#include <linux/module.h>
+#include <linux/mod_devicetable.h>
+#include <linux/pm_runtime.h>
+#include <linux/regmap.h>
+#include <linux/slab.h>
+#include <linux/soundwire/sdw.h>
+#include <sound/soc.h>
+
+struct wsa884x_priv {
+	struct device *dev;
+	struct regmap *regmap;
+	bool runtime_validated;
+};
+
+static int wsa884x_hw_params(struct snd_pcm_substream *substream,
+			     struct snd_pcm_hw_params *params,
+			     struct snd_soc_dai *dai)
+{
+	/* Fail-closed: runtime stream programming intentionally deferred. */
+	return -EOPNOTSUPP;
+}
+
+static int wsa884x_set_stream(struct snd_soc_dai *dai, void *stream, int dir)
+{
+	/* Fail-closed: no runtime claim for stream routing support yet. */
+	return -EOPNOTSUPP;
+}
+
+static int wsa884x_mute_stream(struct snd_soc_dai *dai, int mute, int stream)
+{
+	/* Keep side effects minimal in static baseline. */
+	return 0;
+}
+
+static const struct snd_soc_dai_ops wsa884x_dai_ops = {
+	.hw_params = wsa884x_hw_params,
+	.set_stream = wsa884x_set_stream,
+	.mute_stream = wsa884x_mute_stream,
+};
+
+static struct snd_soc_dai_driver wsa884x_dai_driver = {
+	.name = "wsa884x-aif",
+	.playback = {
+		.stream_name = "WSA884x Playback",
+		.rates = SNDRV_PCM_RATE_8000_192000,
+		.formats = SNDRV_PCM_FMTBIT_S16_LE | SNDRV_PCM_FMTBIT_S24_LE,
+		.channels_min = 1,
+		.channels_max = 2,
+	},
+	.ops = &wsa884x_dai_ops,
+};
+
+static int wsa884x_component_probe(struct snd_soc_component *component)
+{
+	struct wsa884x_priv *wsa884x = snd_soc_component_get_drvdata(component);
+
+	if (!wsa884x)
+		return -EINVAL;
+
+	return 0;
+}
+
+static const struct snd_soc_component_driver wsa884x_component_drv = {
+	.probe = wsa884x_component_probe,
+	.idle_bias_on = 1,
+	.use_pmdown_time = 1,
+	.endianness = 1,
+};
+
+static int wsa884x_runtime_suspend(struct device *dev)
+{
+	return 0;
+}
+
+static int wsa884x_runtime_resume(struct device *dev)
+{
+	return 0;
+}
+
+static const struct dev_pm_ops wsa884x_pm_ops = {
+	RUNTIME_PM_OPS(wsa884x_runtime_suspend, wsa884x_runtime_resume, NULL)
+};
+
+static int wsa884x_sdw_probe(struct sdw_slave *pdev,
+			    const struct sdw_device_id *id)
+{
+	struct wsa884x_priv *wsa884x;
+	int ret;
+
+	wsa884x = devm_kzalloc(&pdev->dev, sizeof(*wsa884x), GFP_KERNEL);
+	if (!wsa884x)
+		return -ENOMEM;
+
+	wsa884x->dev = &pdev->dev;
+	sdw_set_slave_drvdata(pdev, wsa884x);
+
+	ret = devm_snd_soc_register_component(&pdev->dev,
+				      &wsa884x_component_drv,
+				      &wsa884x_dai_driver, 1);
+	if (ret)
+		return ret;
+
+	pm_runtime_set_autosuspend_delay(&pdev->dev, 3000);
+	pm_runtime_use_autosuspend(&pdev->dev);
+	pm_runtime_mark_last_busy(&pdev->dev);
+	pm_runtime_enable(&pdev->dev);
+
+	return 0;
+}
+
+static int wsa884x_sdw_remove(struct sdw_slave *pdev)
+{
+	pm_runtime_disable(&pdev->dev);
+	return 0;
+}
+
+static const struct sdw_device_id wsa884x_slave_id[] = {
+	/* Candidate only: identity finalization requires runtime evidence. */
+	SDW_SLAVE_ENTRY(0x0217, 0x8840, 0),
+	{},
+};
+MODULE_DEVICE_TABLE(sdw, wsa884x_slave_id);
+
+static struct sdw_driver wsa884x_sdw_driver = {
+	.driver = {
+		.name = "wsa884x",
+		.pm = pm_ptr(&wsa884x_pm_ops),
+	},
+	.probe = wsa884x_sdw_probe,
+	.remove = wsa884x_sdw_remove,
+	.id_table = wsa884x_slave_id,
+};
+module_sdw_driver(wsa884x_sdw_driver);
+
+MODULE_DESCRIPTION("WSA884x amplifier baseline-blind static prototype");
+MODULE_LICENSE("GPL");

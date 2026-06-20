@@ -1,0 +1,30 @@
+{
+  "artifact": "wsa884x_three_variant_variant_b_conversion_plan",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "variant": "B",
+  "purpose": "Nearest-relative skeleton adaptation from LE WSA883x with LA WSA884x donor context.",
+  "steps": [
+    {
+      "area": "Skeleton reuse",
+      "action": "Use LE WSA883x architecture as the base driver structure.",
+      "source_signal": "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+      "confidence": "HIGH"
+    },
+    {
+      "area": "Family adaptation",
+      "action": "Adapt identifiers and compatibles for WSA884x family while preserving LE style.",
+      "source_signal": "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "area": "Safety",
+      "action": "Keep unknown runtime claims fail-closed.",
+      "source_signal": "preflight governance invariants",
+      "confidence": "HIGH"
+    }
+  ]
+}

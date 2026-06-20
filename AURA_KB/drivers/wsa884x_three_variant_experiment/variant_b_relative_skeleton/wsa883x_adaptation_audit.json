@@ -1,0 +1,37 @@
+{
+  "artifact": "wsa884x_three_variant_variant_b_wsa883x_adaptation_audit",
+  "generated_on": "2026-06-20",
+  "skeleton_source": "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+  "adaptation_rules": [
+    {
+      "type": "namespace",
+      "from": "wsa883x",
+      "to": "wsa884x"
+    },
+    {
+      "type": "upper_namespace",
+      "from": "WSA883X",
+      "to": "WSA884X"
+    },
+    {
+      "type": "part_id",
+      "from": "wsa8830/wsa8835",
+      "to": "wsa8840/wsa8845"
+    },
+    {
+      "type": "compatible",
+      "from": "qcom,wsa883x",
+      "to": "qcom,wsa8840"
+    }
+  ],
+  "guardrails": [
+    "LE WSA884x target remained hidden pre-scoring.",
+    "No WCD-specific behavior rules were used.",
+    "Unknown runtime behavior remains fail-closed."
+  ],
+  "summary": {
+    "total_converted_functions": 24,
+    "functions_with_la_name_match": 2,
+    "strategy": "relative_skeleton_adaptation_not_target_copy"
+  }
+}

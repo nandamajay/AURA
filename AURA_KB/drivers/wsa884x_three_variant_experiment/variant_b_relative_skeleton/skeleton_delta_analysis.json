@@ -1,0 +1,28 @@
+{
+  "artifact": "wsa884x_three_variant_variant_b_skeleton_delta_analysis",
+  "generated_on": "2026-06-20",
+  "skeleton_source": "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+  "target_generation_file": "converted/wsa884x.c",
+  "reuse_summary": {
+    "architecture_reused": [
+      "component lifecycle patterns",
+      "regmap/regcache scaffolding shape",
+      "SoundWire probe/remove skeleton",
+      "runtime PM hook structure",
+      "DAPM/control registration skeleton"
+    ],
+    "adapted_for_wsa884x": [
+      "symbol and type namespace migrated wsa883x -> wsa884x",
+      "compatible string family updated toward qcom,wsa8840",
+      "module/description strings aligned to WSA884x family naming"
+    ],
+    "removed_or_deferred": [
+      "runtime-specific behavior claims not backed by experiment evidence",
+      "any WCD-family-specific rule transfer"
+    ]
+  },
+  "notes": [
+    "Relative skeleton reused for architecture only; target file remained hidden pre-scoring.",
+    "Unknown runtime behavior remains fail-closed."
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "artifact": "wsa884x_three_variant_variant_c_wsa883x_adaptation_audit",
+  "generated_on": "2026-06-20",
+  "skeleton_source": "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+  "adaptation_rules": [
+    {
+      "type": "namespace",
+      "from": "wsa883x",
+      "to": "wsa884x"
+    },
+    {
+      "type": "compatible",
+      "from": "qcom,wsa883x",
+      "to": "qcom,wsa8840"
+    },
+    {
+      "type": "learning_guardrail",
+      "detail": "WCD-specific behavior rules rejected"
+    },
+    {
+      "type": "learning_guardrail",
+      "detail": "debug/proc token pruning applied"
+    }
+  ],
+  "guardrails": [
+    "No LE WSA884x target access during generation.",
+    "Generic-rule extraction file used as gating policy.",
+    "No runtime readiness claims or runtime hack insertion."
+  ],
+  "summary": {
+    "total_converted_functions": 24,
+    "functions_with_la_name_match": 2,
+    "strategy": "relative_skeleton_plus_generic_learning_constraints"
+  }
+}

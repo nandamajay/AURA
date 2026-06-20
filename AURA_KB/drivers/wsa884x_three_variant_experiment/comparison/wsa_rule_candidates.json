@@ -1,0 +1,102 @@
+{
+  "artifact": "wsa884x_three_variant_wsa_rule_candidates",
+  "generated_on": "2026-06-20",
+  "rules": [
+    {
+      "rule_id": "WSA-RULE-001",
+      "rule": "Keep LE hidden target files inaccessible until scoring stage in controlled experiments.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/source_inventory.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/source_inventory.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/source_inventory.json"
+      ],
+      "supported_by_variant": "comparison",
+      "promote": "YES",
+      "why": "Core experiment integrity rule validated across A/B/C.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-002",
+      "rule": "Use nearest LE sibling as architectural skeleton for WSA family conversion when target is hidden.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+      ],
+      "supported_by_variant": "B",
+      "promote": "YES",
+      "why": "Variant B materially improved score over blind baseline.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-003",
+      "rule": "Keep runtime-sensitive behavior fail-closed for static conversion runs.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/fail_closed_items.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/fail_closed_items.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/fail_closed_items.json"
+      ],
+      "supported_by_variant": "comparison",
+      "promote": "YES",
+      "why": "All variants preserved no-runtime-claim posture consistently.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-004",
+      "rule": "Require per-function lineage mapping for converted outputs.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/patch_lineage.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/patch_lineage.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/patch_lineage.json"
+      ],
+      "supported_by_variant": "comparison",
+      "promote": "YES",
+      "why": "Lineage enabled explainable and replayable variant analysis.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-005",
+      "rule": "Do not directly use sibling skeleton file as verifier reference when skeleton reuse is the intended strategy.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+      ],
+      "supported_by_variant": "B",
+      "promote": "QUARANTINE",
+      "why": "Initial B run blocked due verifier copy finding against skeleton reference; policy needs formalization.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-006",
+      "rule": "Use generic learning rules as governance overlays; do not expect automatic score gains.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/learning_rules_used.json"
+      ],
+      "supported_by_variant": "C",
+      "promote": "YES",
+      "why": "C preserved quality/risk posture but showed neutral score delta over B.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-007",
+      "rule": "Reject WCD-specific MBHC/Class-H/SDW/DAPM behavior assumptions when converting WSA amplifiers.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/generic_rule_extraction.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/learning_rules_used.json"
+      ],
+      "supported_by_variant": "C",
+      "promote": "YES",
+      "why": "Separation prevented cross-family overfitting risk.",
+      "applies_beyond_wsa": true
+    },
+    {
+      "rule_id": "WSA-RULE-008",
+      "rule": "Treat compile/checkpatch absence as NOT_RUN, never as implied PASS.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+      ],
+      "supported_by_variant": "comparison",
+      "promote": "YES",
+      "why": "Maintains honest PM interpretation and fail-closed reporting discipline.",
+      "applies_beyond_wsa": true
+    }
+  ]
+}

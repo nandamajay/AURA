@@ -1,0 +1,122 @@
+{
+  "verifier_engine": "aura_conversion_verifier_v1",
+  "verifier_version": "1.0.0",
+  "verdict": "PASS",
+  "thresholds": {
+    "derived_threshold": 85.0,
+    "copy_threshold": 95.0,
+    "lineage_threshold": 80.0
+  },
+  "inputs": {
+    "converted_paths": [
+      "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted"
+    ],
+    "reference_paths": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-wsa-macro.c"
+    ],
+    "target_paths": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c"
+    ],
+    "downstream_paths": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x"
+    ],
+    "lineage_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/patch_lineage.json"
+  },
+  "collected_files": {
+    "converted": [
+      "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted/wsa884x.c"
+    ],
+    "references": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/lpass-wsa-macro.c",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c"
+    ],
+    "targets": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c"
+    ],
+    "downstream": [
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/internal.h",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-masks.h",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-shifts.h",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-registers.h",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-regmap.c",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-tables.c",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+      "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.h"
+    ]
+  },
+  "derivation_check": {
+    "references": {
+      "candidate_file_count": 2,
+      "best_matches": [
+        {
+          "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted/wsa884x.c",
+          "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa881x.c",
+          "raw_line_similarity": 16.64,
+          "normalized_line_similarity": 20.76,
+          "normalized_token_similarity": 30.72,
+          "max_similarity": 30.72,
+          "converted_sha256": "e99a23a64c1b5497546ce63bc1179d60ec45ab6f00741b648f4474cf30882abc",
+          "reference_sha256": "8ad2477437277a7c253274f10f9501017d410e71e97f65f3a03ea0b84075b32a",
+          "byte_identical": false
+        }
+      ],
+      "findings": []
+    },
+    "targets": {
+      "candidate_file_count": 1,
+      "best_matches": [
+        {
+          "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted/wsa884x.c",
+          "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+          "raw_line_similarity": 34.91,
+          "normalized_line_similarity": 51.36,
+          "normalized_token_similarity": 48.95,
+          "max_similarity": 51.36,
+          "converted_sha256": "e99a23a64c1b5497546ce63bc1179d60ec45ab6f00741b648f4474cf30882abc",
+          "reference_sha256": "1a642229730fb47c69013df93aef3bf7b11d8ea672925e6d8fa5e551a1f630e3",
+          "byte_identical": false
+        }
+      ],
+      "findings": []
+    },
+    "downstream": {
+      "candidate_file_count": 8,
+      "best_matches": [
+        {
+          "converted_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted/wsa884x.c",
+          "reference_file": "/local/mnt/workspace/AURA_V1_upstream/track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+          "raw_line_similarity": 10.0,
+          "normalized_line_similarity": 8.15,
+          "normalized_token_similarity": 9.61,
+          "max_similarity": 10.0,
+          "converted_sha256": "e99a23a64c1b5497546ce63bc1179d60ec45ab6f00741b648f4474cf30882abc",
+          "reference_sha256": "c4fff1dbfb7fc6d8bee3fe19c750c8b58ee1e729f8d3f712d0fb694de6e6d902",
+          "byte_identical": false
+        }
+      ],
+      "findings": []
+    }
+  },
+  "lineage_check": {
+    "status": "CHECKED",
+    "lineage_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/patch_lineage.json",
+    "converted_function_count": 27,
+    "covered_function_count": 24,
+    "coverage": 88.89,
+    "uncovered_functions": [
+      "wsa884x_hwmon_is_visible",
+      "wsa_dev_mode_get",
+      "wsa_dev_mode_put"
+    ]
+  },
+  "findings": {
+    "blocking": [],
+    "warnings": [],
+    "all_derivation_findings": []
+  },
+  "metadata": {
+    "deterministic": true,
+    "verifier_logic_sha256": "c9afad9a2f936529a62d93594b4f2da749f5cefcb4c798f5d26dcc5244097ce0"
+  }
+}

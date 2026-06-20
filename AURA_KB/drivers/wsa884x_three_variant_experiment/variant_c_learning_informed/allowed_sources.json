@@ -1,0 +1,34 @@
+{
+  "artifact": "wsa884x_three_variant_variant_c_allowed_sources",
+  "generated_on": "2026-06-20",
+  "variant": "C",
+  "name": "learning_informed",
+  "allowed_sources": [
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x",
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+    "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+    "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+    "track_b_corpora/linux-next/include/linux/soundwire/",
+    "track_b_corpora/linux-next/drivers/soundwire/",
+    "track_b_corpora/linux-next/drivers/base/regmap/",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/generic_rule_extraction.json",
+    "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json",
+    "AURA/agents/src/aura_agents/conversion_gate.py",
+    "AURA/agents/src/aura_agents/conversion_verifier.py",
+    "AURA/agents/src/aura_agents/multifile_scoring.py",
+    "AURA/agents/src/aura_agents/conversion_scoring.py"
+  ],
+  "forbidden_until_scoring": [
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+    "WCD-specific MBHC rules",
+    "WCD-specific Class-H rules",
+    "WCD-specific SoundWire register/paging assumptions",
+    "WCD-specific DAPM/control assumptions"
+  ],
+  "notes": [
+    "Variant C uses only generic rules from preflight extraction.",
+    "Explicitly rejects WCD-specific behavior transfer."
+  ]
+}

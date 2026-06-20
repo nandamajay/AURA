@@ -1,0 +1,30 @@
+{
+  "artifact": "wsa884x_three_variant_variant_c_conversion_plan",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "variant": "C",
+  "purpose": "Learning-informed conversion with generic governance rules only.",
+  "steps": [
+    {
+      "area": "Base architecture",
+      "action": "Start from LE WSA883x skeleton architecture and adapt namespace/compatible for WSA884x.",
+      "source_signal": "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+      "confidence": "HIGH"
+    },
+    {
+      "area": "Learning transfer",
+      "action": "Apply only generic extracted rules (hidden target, lineage, anti-copy, vendor elimination, fail-closed runtime).",
+      "source_signal": "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/generic_rule_extraction.json",
+      "confidence": "HIGH"
+    },
+    {
+      "area": "WCD-specific rejection",
+      "action": "Reject WCD-specific MBHC/Class-H/WSA-unrelated SoundWire assumptions.",
+      "source_signal": "preflight generic_rule_extraction explicit rejections",
+      "confidence": "HIGH"
+    }
+  ]
+}

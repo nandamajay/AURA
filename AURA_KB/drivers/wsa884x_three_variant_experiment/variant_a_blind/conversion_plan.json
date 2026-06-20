@@ -1,0 +1,30 @@
+{
+  "artifact": "wsa884x_three_variant_variant_a_conversion_plan",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "variant": "A",
+  "purpose": "Baseline blind reconstruction without relative skeleton influence.",
+  "steps": [
+    {
+      "area": "File generation",
+      "action": "Generate a single upstream-style wsa884x.c scaffold from LA semantic signals only.",
+      "source_signal": "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+      "confidence": "STATIC_ONLY"
+    },
+    {
+      "area": "Runtime-sensitive behavior",
+      "action": "Keep stream/runtime behavior fail-closed where uncertain.",
+      "source_signal": "preflight governance invariants",
+      "confidence": "HIGH"
+    },
+    {
+      "area": "Policy bounds",
+      "action": "Avoid LE WSA884x target and LE WSA883x skeleton during generation.",
+      "source_signal": "variant A allowlist/forbidden rules",
+      "confidence": "HIGH"
+    }
+  ]
+}

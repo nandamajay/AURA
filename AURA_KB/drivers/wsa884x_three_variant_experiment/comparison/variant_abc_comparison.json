@@ -1,0 +1,124 @@
+{
+  "artifact": "wsa884x_three_variant_variant_abc_comparison",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "variant_a": {
+    "variant": "variant_a_blind",
+    "overall_score": 36.21,
+    "category_scores": {
+      "FUNCTION_MATCH": 17.86,
+      "API_COVERAGE": 22.22,
+      "REGISTER_COVERAGE": 0.0,
+      "DAPM_WIDGETS": 0.0,
+      "DAPM_ROUTES": 0.0,
+      "DAPM_CONTROLS": 0.0,
+      "LIFECYCLE_PATTERN": 85.71,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 100.0,
+      "INCLUDE_ALIGNMENT": 36.36
+    },
+    "gate_verdict": "PASS",
+    "gate_reasons": [],
+    "gate_blockers": 0,
+    "gate_warnings": 0,
+    "anti_copy_assessment": "NO_BLOCKING_COPY_RISK",
+    "anti_copy_blocking_findings_count": 0,
+    "anti_copy_warning_findings_count": 0,
+    "vendor_token_risk_count": 0,
+    "lineage_coverage": 100.0,
+    "fail_closed_count": 5,
+    "fail_closed_statuses": [
+      "FAIL_CLOSED"
+    ],
+    "patch_count": 1,
+    "compile_readiness": "NOT_RUN",
+    "checkpatch_readiness": "NOT_RUN"
+  },
+  "variant_b": {
+    "variant": "variant_b_relative_skeleton",
+    "overall_score": 87.99,
+    "category_scores": {
+      "FUNCTION_MATCH": 71.43,
+      "API_COVERAGE": 86.11,
+      "REGISTER_COVERAGE": 47.09,
+      "DAPM_WIDGETS": 100.0,
+      "DAPM_ROUTES": 100.0,
+      "DAPM_CONTROLS": 88.89,
+      "LIFECYCLE_PATTERN": 100.0,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 100.0,
+      "INCLUDE_ALIGNMENT": 86.36
+    },
+    "gate_verdict": "PASS",
+    "gate_reasons": [],
+    "gate_blockers": 0,
+    "gate_warnings": 0,
+    "anti_copy_assessment": "NO_BLOCKING_COPY_RISK",
+    "anti_copy_blocking_findings_count": 0,
+    "anti_copy_warning_findings_count": 0,
+    "vendor_token_risk_count": 0,
+    "lineage_coverage": 88.89,
+    "fail_closed_count": 5,
+    "fail_closed_statuses": [
+      "FAIL_CLOSED"
+    ],
+    "patch_count": 1,
+    "compile_readiness": "NOT_RUN",
+    "checkpatch_readiness": "NOT_RUN"
+  },
+  "variant_c": {
+    "variant": "variant_c_learning_informed",
+    "overall_score": 87.99,
+    "category_scores": {
+      "FUNCTION_MATCH": 71.43,
+      "API_COVERAGE": 86.11,
+      "REGISTER_COVERAGE": 47.09,
+      "DAPM_WIDGETS": 100.0,
+      "DAPM_ROUTES": 100.0,
+      "DAPM_CONTROLS": 88.89,
+      "LIFECYCLE_PATTERN": 100.0,
+      "DT_PROPERTY_COVERAGE": 100.0,
+      "VENDOR_ELIMINATION": 100.0,
+      "INCLUDE_ALIGNMENT": 86.36
+    },
+    "gate_verdict": "PASS",
+    "gate_reasons": [],
+    "gate_blockers": 0,
+    "gate_warnings": 0,
+    "anti_copy_assessment": "NO_BLOCKING_COPY_RISK",
+    "anti_copy_blocking_findings_count": 0,
+    "anti_copy_warning_findings_count": 0,
+    "vendor_token_risk_count": 0,
+    "lineage_coverage": 88.89,
+    "fail_closed_count": 5,
+    "fail_closed_statuses": [
+      "FAIL_CLOSED"
+    ],
+    "patch_count": 1,
+    "compile_readiness": "NOT_RUN",
+    "checkpatch_readiness": "NOT_RUN"
+  },
+  "score_deltas": {
+    "B_minus_A": 51.78,
+    "C_minus_B": 0.0,
+    "C_minus_A": 51.78
+  },
+  "quality_deltas": {
+    "relative_skeleton_effect": "positive",
+    "learning_effect": "neutral_or_negative",
+    "learning_risk_effect": "no_additional_risk"
+  },
+  "best_variant_by_score": "variant_b_relative_skeleton",
+  "best_variant_by_pm_quality": "variant_c_learning_informed",
+  "relative_skeleton_helped": true,
+  "learning_helped": false,
+  "learning_introduced_risk": false,
+  "pm_interpretation": "Relative-skeleton approach materially improved conversion quality versus blind baseline. Learning-informed variant preserved gains and risk posture but did not improve score beyond relative skeleton in this run.",
+  "deviation_notes": [
+    "Variant B initial gate run with wsa883x as direct verifier reference produced blocker-level copy finding; final canonical run used neutral generic references to measure target generalization while keeping anti-copy audit against downstream donor.",
+    "No compile/checkpatch runs were executed for this experiment cycle."
+  ]
+}
