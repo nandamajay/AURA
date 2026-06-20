@@ -1,0 +1,60 @@
+{
+  "artifact": "wcd_rule_pack_checker_gate_integration_01_gate_schema_extension_proposal",
+  "generated_on": "2026-06-20",
+  "schema_extension": {
+    "rule_pack_summary": {
+      "enabled": true,
+      "family": "wcd",
+      "mode": "advisory",
+      "report_path": "<run_dir>/rule_pack/wcd_rule_pack_compliance_report.json",
+      "overall_verdict": "PASS",
+      "rules_loaded": 13,
+      "checks_run": 9,
+      "pass_count": 7,
+      "warn_count": 2,
+      "fail_count": 0,
+      "gate_effect": "NONE"
+    }
+  },
+  "backward_compatibility": {
+    "strategy": "additive_fields_only",
+    "guarantee": "Existing consumers that ignore unknown JSON fields continue to parse canonical verdict.",
+    "versioning": "No immediate gate_version bump required for additive optional fields; bump when behavior changes.",
+    "failure_behavior": "If rule-pack cannot run, gate keeps canonical behavior and records rule_pack_summary.enabled=false with diagnostic reason."
+  },
+  "report_path_conventions": {
+    "single_rule_pack": "<run_dir>/rule_pack/<family>_rule_pack_compliance_report.json",
+    "explicit_override": "--rule-pack-output path takes precedence",
+    "path_requirements": [
+      "Path must be under run-dir unless explicit policy override is approved.",
+      "Output path must be deterministic for replayability."
+    ]
+  },
+  "multiple_rule_packs_representation": {
+    "proposed_field": "rule_packs",
+    "shape": [
+      {
+        "family": "wcd",
+        "enabled": true,
+        "mode": "advisory",
+        "report_path": "<run_dir>/rule_pack/wcd_rule_pack_compliance_report.json",
+        "overall_verdict": "WARN",
+        "gate_effect": "WARN"
+      }
+    ],
+    "aggregation": {
+      "default": "most_severe_gate_effect_wins",
+      "severity_order": [
+        "NONE",
+        "INFO",
+        "WARN",
+        "BLOCK"
+      ]
+    }
+  },
+  "old_gate_ignore_unknown_fields": {
+    "assumption": "JSON object consumers are tolerant of unknown keys.",
+    "proposal": "Keep existing top-level required fields unchanged and append rule_pack_summary/rule_packs.",
+    "migration_note": "Downstream parsers expecting strict schemas should be updated to allow additive extensions."
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "artifact": "wcd_rule_pack_checker_gate_integration_01_policy_mapping",
+  "generated_on": "2026-06-20",
+  "policy_defaults": {
+    "recommended_default_mode": "advisory",
+    "production_safe_modes": [
+      "off",
+      "advisory"
+    ],
+    "modes_requiring_policy_review": [
+      "warn",
+      "blocking"
+    ]
+  },
+  "required_policy_assertions": [
+    "off mode has no gate effect",
+    "advisory mode never changes gate verdict",
+    "warn mode never blocks",
+    "blocking mode allows checker FAIL to block but WARN cannot block",
+    "FAIL_CLOSED_OK never blocks",
+    "runtime-sensitive warnings require explicit runtime policy before blocking"
+  ],
+  "entries": [
+    {
+      "mode": "off",
+      "checker_status": "PASS",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "off",
+      "checker_status": "WARN",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "off",
+      "checker_status": "FAIL",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "off",
+      "checker_status": "UNKNOWN",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "off",
+      "checker_status": "MISSING",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "off",
+      "checker_status": "FAIL_CLOSED_OK",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "off",
+      "checker_status": "INFO",
+      "gate_effect": "IGNORE",
+      "reason": "Rule-pack disabled.",
+      "default_for_production": false
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "PASS",
+      "gate_effect": "INFO",
+      "reason": "Record checker outcome only; no gate verdict change.",
+      "default_for_production": true
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "WARN",
+      "gate_effect": "INFO",
+      "reason": "Record checker warning only; no gate verdict change.",
+      "default_for_production": true
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "FAIL",
+      "gate_effect": "INFO",
+      "reason": "Record checker failure for PM/manual review; no gate verdict change.",
+      "default_for_production": true
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "UNKNOWN",
+      "gate_effect": "INFO",
+      "reason": "Record unknown status for follow-up; no gate verdict change.",
+      "default_for_production": true
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "MISSING",
+      "gate_effect": "INFO",
+      "reason": "Record missing check result; no gate verdict change.",
+      "default_for_production": true
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "FAIL_CLOSED_OK",
+      "gate_effect": "INFO",
+      "reason": "Fail-closed preservation is informational in advisory mode.",
+      "default_for_production": true
+    },
+    {
+      "mode": "advisory",
+      "checker_status": "INFO",
+      "gate_effect": "INFO",
+      "reason": "Informational check state only.",
+      "default_for_production": true
+    },
+    {
+      "mode": "warn",
+      "checker_status": "PASS",
+      "gate_effect": "INFO",
+      "reason": "No warning propagation needed.",
+      "default_for_production": false
+    },
+    {
+      "mode": "warn",
+      "checker_status": "WARN",
+      "gate_effect": "WARN",
+      "reason": "Checker warning propagates to gate warning only.",
+      "default_for_production": false
+    },
+    {
+      "mode": "warn",
+      "checker_status": "FAIL",
+      "gate_effect": "WARN",
+      "reason": "Checker failure becomes gate warning in warn mode.",
+      "default_for_production": false
+    },
+    {
+      "mode": "warn",
+      "checker_status": "UNKNOWN",
+      "gate_effect": "WARN",
+      "reason": "Unknown checker status is surfaced as warning, not blocker.",
+      "default_for_production": false
+    },
+    {
+      "mode": "warn",
+      "checker_status": "MISSING",
+      "gate_effect": "WARN",
+      "reason": "Missing checker coverage is surfaced as warning, not blocker.",
+      "default_for_production": false
+    },
+    {
+      "mode": "warn",
+      "checker_status": "FAIL_CLOSED_OK",
+      "gate_effect": "INFO",
+      "reason": "Fail-closed preservation remains non-blocking.",
+      "default_for_production": false
+    },
+    {
+      "mode": "warn",
+      "checker_status": "INFO",
+      "gate_effect": "INFO",
+      "reason": "Informational check state only.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "PASS",
+      "gate_effect": "INFO",
+      "reason": "No blocking impact.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "WARN",
+      "gate_effect": "WARN",
+      "reason": "Warnings remain warnings; cannot block in blocking mode policy.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "FAIL",
+      "gate_effect": "BLOCK",
+      "reason": "Checker fail may block only in blocking mode.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "UNKNOWN",
+      "gate_effect": "WARN",
+      "reason": "Unknown must not block by default; requires follow-up.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "MISSING",
+      "gate_effect": "WARN",
+      "reason": "Missing coverage must not block by default.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "FAIL_CLOSED_OK",
+      "gate_effect": "INFO",
+      "reason": "Fail-closed preservation must never block.",
+      "default_for_production": false
+    },
+    {
+      "mode": "blocking",
+      "checker_status": "INFO",
+      "gate_effect": "INFO",
+      "reason": "Informational check state only.",
+      "default_for_production": false
+    }
+  ]
+}

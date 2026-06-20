@@ -1,0 +1,78 @@
+{
+  "artifact": "wcd_rule_pack_checker_gate_integration_01_blocking_criteria_proposal",
+  "generated_on": "2026-06-20",
+  "criteria": [
+    {
+      "criterion_id": "WCD-GATE-BLOCK-001",
+      "criterion": "Hidden target access violation before scoring stage.",
+      "current_recommendation": "BLOCK_AFTER_MATURITY",
+      "why": "Strong governance violation in hidden-target experiments, but requires robust audit trail to avoid false positives.",
+      "false_positive_risk": "MEDIUM",
+      "required_evidence_before_blocking": "Deterministic access-audit artifact proving forbidden target path access timestamped pre-scoring.",
+      "test_required": "Mode=blocking integration test with controlled forbidden access fixture."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-002",
+      "criterion": "Kernel/source modification outside allowed scope.",
+      "current_recommendation": "BLOCK_AFTER_MATURITY",
+      "why": "High-severity integrity risk, but checker currently lacks authoritative repo-diff normalization.",
+      "false_positive_risk": "MEDIUM",
+      "required_evidence_before_blocking": "Canonical changed-path classifier aligned with run scope and repo root.",
+      "test_required": "Fixture with deliberate out-of-scope file edit and expected BLOCK in blocking mode."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-003",
+      "criterion": "Runtime-sensitive rule applied without runtime evidence.",
+      "current_recommendation": "BLOCK_AFTER_MATURITY",
+      "why": "Essential fail-closed invariant; requires stronger semantic detection than phrase heuristics.",
+      "false_positive_risk": "HIGH",
+      "required_evidence_before_blocking": "Evidence-ID linkage and blocker-state transition tracking integrated with verifier.",
+      "test_required": "Fixture with blocker relaxation absent evidence IDs must BLOCK; FAIL_CLOSED_OK fixture must not BLOCK."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-004",
+      "criterion": "Banned vendor API/token above threshold.",
+      "current_recommendation": "WARN_ONLY",
+      "why": "Current scan is heuristic token matching; semantic API checks are not yet implemented.",
+      "false_positive_risk": "HIGH",
+      "required_evidence_before_blocking": "AST/symbol-aware vendor API detector and allowlist override mechanism.",
+      "test_required": "Precision/recall regression suite over known false-positive and true-positive corpora."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-005",
+      "criterion": "Missing lineage for generated patch series.",
+      "current_recommendation": "BLOCK_AFTER_MATURITY",
+      "why": "Lineage is central to explainability, but schema variation handling must be normalized first.",
+      "false_positive_risk": "MEDIUM",
+      "required_evidence_before_blocking": "Unified lineage schema contract or schema adapters validated across historical runs.",
+      "test_required": "Fixtures for root-lineage, patches-lineage, and malformed lineage paths."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-006",
+      "criterion": "Downstream derivation/copy risk above threshold.",
+      "current_recommendation": "BLOCK_AFTER_MATURITY",
+      "why": "Variant-1 caveats show real risk; blocking requires calibrated thresholds and exception workflow.",
+      "false_positive_risk": "MEDIUM",
+      "required_evidence_before_blocking": "Threshold policy tied to verifier severities and normalized similarity metrics.",
+      "test_required": "Historical replay on variant_0/variant_1 with expected PASS/WARN split before blocking enablement."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-007",
+      "criterion": "Rule file invalid (parse/schema failure).",
+      "current_recommendation": "BLOCK_NOW",
+      "why": "Deterministic hard dependency for rule-pack execution; low ambiguity.",
+      "false_positive_risk": "LOW",
+      "required_evidence_before_blocking": "Strict JSON schema + required field set for enabled rule-pack mode.",
+      "test_required": "Invalid rules fixture should produce FAIL and BLOCK in blocking mode."
+    },
+    {
+      "criterion_id": "WCD-GATE-BLOCK-008",
+      "criterion": "Checker internal error/crash.",
+      "current_recommendation": "WARN_ONLY",
+      "why": "Do not let optional add-on availability destabilize canonical gate until maturity; degrade gracefully first.",
+      "false_positive_risk": "LOW",
+      "required_evidence_before_blocking": "Crash taxonomy and auto-retry/fallback policy proving deterministic behavior.",
+      "test_required": "Injected checker exception fixture in advisory/warn/blocking modes."
+    }
+  ]
+}

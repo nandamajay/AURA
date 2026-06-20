@@ -1,0 +1,125 @@
+{
+  "artifact": "wcd_rule_pack_checker_gate_integration_01_existing_gate_architecture_review",
+  "generated_on": "2026-06-20",
+  "scope": "proposal_only_no_behavior_change",
+  "conversion_gate_module": "AURA/agents/src/aura_agents/conversion_gate.py",
+  "current_cli_inputs": {
+    "required": [
+      "--run-dir",
+      "--allowed-sources",
+      "--converted-dir"
+    ],
+    "optional": [
+      "--upstream-dir",
+      "--file-map",
+      "--reference",
+      "--target",
+      "--downstream",
+      "--lineage",
+      "--banned-symbols",
+      "--dt-binding",
+      "--derived-threshold",
+      "--copy-threshold",
+      "--lineage-threshold"
+    ],
+    "notes": [
+      "Gate requires allowed_sources.json and validates non-empty allowed_sources list.",
+      "Scoring is skipped when no upstream target is available; gate degrades PASS to WARN in that path."
+    ]
+  },
+  "current_output_schema": {
+    "primary_artifact": "governance_verdict.json",
+    "top_level_fields": [
+      "gate_engine",
+      "gate_version",
+      "generated_at_utc",
+      "verdict",
+      "reasons",
+      "run_dir",
+      "inputs_manifest",
+      "artifacts",
+      "score_summary",
+      "verifier_summary",
+      "policy"
+    ],
+    "artifact_links": [
+      "artifacts.scoring_result",
+      "artifacts.verifier_result",
+      "artifacts.staged_upstream_dir"
+    ]
+  },
+  "current_verdict_logic": {
+    "initial_state": "PASS",
+    "verifier_fail": {
+      "verdict": "FAIL",
+      "reason": "verifier_failed"
+    },
+    "verifier_warn": {
+      "verdict": "WARN",
+      "reason": "verifier_warned"
+    },
+    "scoring_skipped": {
+      "condition": "no upstream_dir and no staged target",
+      "effect": "PASS downgraded to WARN",
+      "reason": "scoring_skipped_no_upstream_dir"
+    },
+    "gate_exception": {
+      "verdict": "FAIL",
+      "reason": "gate_error"
+    }
+  },
+  "current_scorer_verifier_integration": {
+    "scorer": {
+      "module": "aura_agents.multifile_scoring.score_multifile",
+      "artifact": "scoring_result_v4.json",
+      "execution_condition": "upstream_dir or staged target directory exists"
+    },
+    "verifier": {
+      "module": "aura_agents.conversion_verifier.verify_conversion",
+      "artifact": "verifier_result.json",
+      "execution_condition": "always executes for provided converted_dir"
+    },
+    "lineage_usage": "passed into verifier via --lineage when available"
+  },
+  "warning_and_blocker_representation": {
+    "blockers": {
+      "source": "verifier_result.findings.blocking",
+      "gate_view": "verifier_summary.blocking_count"
+    },
+    "warnings": {
+      "source": "verifier_result.findings.warnings",
+      "gate_view": "verifier_summary.warning_count"
+    },
+    "score_signals": "score_summary contains metrics but does not directly set BLOCK unless verifier fails"
+  },
+  "optional_rule_pack_integration_points": [
+    {
+      "hook": "post_verifier_pre_verdict_finalize",
+      "why": "Allows rule-pack findings to influence verdict mapping with full scorer/verifier context.",
+      "risk": "Must preserve canonical verifier precedence and deterministic ordering."
+    },
+    {
+      "hook": "post_verdict_augmentation",
+      "why": "Advisory embedding path with zero verdict change.",
+      "risk": "Lower risk, but less useful for warn/block policy modes."
+    },
+    {
+      "hook": "external companion run referenced by gate",
+      "why": "No coupling to gate internals; easiest rollback.",
+      "risk": "Dual-run orchestration complexity and path drift risk."
+    }
+  ],
+  "family_specific_coupling_risks": [
+    "Generic gate may become WCD-specific if family rules are hardcoded instead of plugin-driven.",
+    "Heuristic checks (vendor-token, terminology) can over-warn unrelated driver families.",
+    "Runtime-sensitive LA-to-LE policies differ by subsystem; generic blocking could overreach.",
+    "Rule-pack versioning drift can destabilize deterministic gate output unless rules are pinned by path+hash."
+  ],
+  "evidence_sources": [
+    "AURA/agents/src/aura_agents/conversion_gate.py",
+    "AURA/agents/src/aura_agents/wcd_rule_pack_checker.py",
+    "AURA_KB/platform_tools/wcd_rule_pack_checker_01/wcd9378_a1_rule_compliance_report.json",
+    "AURA_KB/platform_tools/wcd_rule_pack_checker_01/wcd939x_variant_0_rule_compliance_report.json",
+    "AURA_KB/platform_tools/wcd_rule_pack_checker_01/wcd939x_variant_1_rule_compliance_report.json"
+  ]
+}

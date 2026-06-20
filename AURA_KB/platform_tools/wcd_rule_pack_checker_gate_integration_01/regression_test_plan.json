@@ -1,0 +1,105 @@
+{
+  "artifact": "wcd_rule_pack_checker_gate_integration_01_regression_test_plan",
+  "generated_on": "2026-06-20",
+  "tests": [
+    {
+      "test_id": "WCD-GATE-TEST-001",
+      "description": "rule-pack off mode causes no gate behavior change",
+      "input_fixture": "baseline gate fixture with verifier PASS and scoring present",
+      "mode": "off",
+      "expected_gate_effect": "IGNORE",
+      "expected_verdict_change": false,
+      "why_needed": "Confirms backward compatibility and opt-out safety."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-002",
+      "description": "advisory mode embeds checker report without verdict mutation",
+      "input_fixture": "checker WARN fixture + gate PASS baseline",
+      "mode": "advisory",
+      "expected_gate_effect": "INFO",
+      "expected_verdict_change": false,
+      "why_needed": "Ensures advisory rollout cannot unexpectedly block or warn canonical gate."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-003",
+      "description": "warn mode maps checker WARN to gate WARN",
+      "input_fixture": "checker WARN fixture + gate PASS baseline",
+      "mode": "warn",
+      "expected_gate_effect": "WARN",
+      "expected_verdict_change": true,
+      "why_needed": "Validates warn-mode policy behavior before production enablement."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-004",
+      "description": "blocking mode maps checker FAIL to gate BLOCK",
+      "input_fixture": "invalid rules file or checker FAIL fixture + gate PASS baseline",
+      "mode": "blocking",
+      "expected_gate_effect": "BLOCK",
+      "expected_verdict_change": true,
+      "why_needed": "Validates strictest policy path and fail-safe handling."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-005",
+      "description": "FAIL_CLOSED_OK status never blocks",
+      "input_fixture": "runtime-sensitive rules with preserved fail_closed_items and no runtime evidence",
+      "mode": "blocking",
+      "expected_gate_effect": "INFO",
+      "expected_verdict_change": false,
+      "why_needed": "Protects interruptible governance and prevents false runtime-blocking escalation."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-006",
+      "description": "invalid rules file behavior",
+      "input_fixture": "rules JSON missing required fields",
+      "mode": "warn",
+      "expected_gate_effect": "WARN",
+      "expected_verdict_change": true,
+      "why_needed": "Ensures bad rule-pack inputs are observable without crashing gate."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-007",
+      "description": "missing run-dir behavior",
+      "input_fixture": "non-existent run directory path",
+      "mode": "warn",
+      "expected_gate_effect": "WARN",
+      "expected_verdict_change": true,
+      "why_needed": "Confirms deterministic failure reporting for bad invocation inputs."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-008",
+      "description": "hidden target violation behavior",
+      "input_fixture": "allowed_sources includes target file while forbidden_until_scoring present",
+      "mode": "warn",
+      "expected_gate_effect": "WARN",
+      "expected_verdict_change": true,
+      "why_needed": "Covers transfer-experiment integrity constraints."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-009",
+      "description": "WCD9378 A.1 fixture expected WARN profile",
+      "input_fixture": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready",
+      "mode": "warn",
+      "expected_gate_effect": "WARN",
+      "expected_verdict_change": false,
+      "why_needed": "Regression-lock checker behavior for known runtime-blocked RFC compile-ready run."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-010",
+      "description": "WCD939x Variant 0 fixture expected PASS profile",
+      "input_fixture": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_0_baseline",
+      "mode": "warn",
+      "expected_gate_effect": "INFO",
+      "expected_verdict_change": false,
+      "why_needed": "Protects non-regressing baseline behavior."
+    },
+    {
+      "test_id": "WCD-GATE-TEST-011",
+      "description": "WCD939x Variant 1 fixture expected WARN profile",
+      "input_fixture": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed",
+      "mode": "warn",
+      "expected_gate_effect": "WARN",
+      "expected_verdict_change": false,
+      "why_needed": "Ensures known derivation/vendor caveats remain visible in integrated mode."
+    }
+  ]
+}
