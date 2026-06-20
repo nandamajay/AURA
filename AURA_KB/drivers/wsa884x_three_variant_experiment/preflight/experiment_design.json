@@ -1,0 +1,178 @@
+{
+  "artifact": "wsa884x_three_variant_experiment_preflight_experiment_design",
+  "generated_on": "2026-06-20",
+  "target": "WSA884X amplifier driver (LE: wsa884x.c + qcom,wsa8840.yaml metadata-hidden until scoring)",
+  "la_source_paths": [
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/Kbuild",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/Makefile",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/internal.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-masks.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-reg-shifts.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-registers.h",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-regmap.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x-tables.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.c",
+    "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x/wsa884x.h"
+  ],
+  "le_hidden_target_paths": [
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml"
+  ],
+  "relative_skeleton_paths": [
+    "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+    "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml"
+  ],
+  "variants": [
+    {
+      "variant": "A",
+      "name": "baseline_blind",
+      "purpose": "Measure raw LA-to-LE conversion quality without nearest-driver skeleton or WCD family rule transfer.",
+      "allowed_sources": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x",
+        "track_b_corpora/linux-next/include/linux/soundwire/",
+        "track_b_corpora/linux-next/drivers/soundwire/",
+        "track_b_corpora/linux-next/drivers/base/regmap/",
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/",
+        "AURA/agents/src/aura_agents/conversion_gate.py",
+        "AURA/agents/src/aura_agents/conversion_verifier.py",
+        "AURA/agents/src/aura_agents/multifile_scoring.py"
+      ],
+      "forbidden_until_scoring": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+        "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+        "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/",
+        "AURA_KB/drivers/wsa884x/",
+        "AURA_KB/accepted_commits/wsa884x.md"
+      ],
+      "expected_value": "Lower baseline score but strongest leakage resistance for blind capability measurement."
+    },
+    {
+      "variant": "B",
+      "name": "relative_skeleton",
+      "purpose": "Test nearest-driver reuse strategy via LE WSA883x skeleton while keeping LE WSA884x target hidden.",
+      "allowed_sources": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x",
+        "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+        "track_b_corpora/linux-next/include/linux/soundwire/",
+        "track_b_corpora/linux-next/drivers/soundwire/",
+        "track_b_corpora/linux-next/drivers/base/regmap/",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+        "AURA/agents/src/aura_agents/conversion_gate.py",
+        "AURA/agents/src/aura_agents/conversion_verifier.py",
+        "AURA/agents/src/aura_agents/multifile_scoring.py"
+      ],
+      "forbidden_until_scoring": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+        "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json",
+        "AURA_KB/drivers/wsa884x/",
+        "AURA_KB/accepted_commits/wsa884x.md"
+      ],
+      "expected_value": "Higher structural alignment than A with maintainers-style nearest-sibling reuse signal."
+    },
+    {
+      "variant": "C",
+      "name": "learning_informed",
+      "purpose": "Apply only generic governance/audio rules from prior learning while explicitly rejecting WCD-specific behavior transfer.",
+      "allowed_sources": [
+        "track_b_corpora/audio-kernel-ar/asoc/codecs/wsa884x",
+        "track_b_corpora/linux-next/sound/soc/codecs/wsa883x.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa883x.yaml",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/generic_rule_extraction.json",
+        "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json",
+        "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_family_conversion_checklist.md",
+        "track_b_corpora/linux-next/sound/soc/codecs/Kconfig",
+        "track_b_corpora/linux-next/sound/soc/codecs/Makefile",
+        "track_b_corpora/linux-next/include/linux/soundwire/",
+        "track_b_corpora/linux-next/drivers/soundwire/",
+        "track_b_corpora/linux-next/drivers/base/regmap/",
+        "AURA/agents/src/aura_agents/conversion_gate.py",
+        "AURA/agents/src/aura_agents/conversion_verifier.py",
+        "AURA/agents/src/aura_agents/multifile_scoring.py",
+        "AURA/agents/src/aura_agents/wcd_rule_pack_checker.py"
+      ],
+      "forbidden_until_scoring": [
+        "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+        "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml",
+        "WCD-specific MBHC/Class-H rule transfer",
+        "WCD-specific SoundWire register assumptions",
+        "WCD-specific control naming assumptions",
+        "AURA_KB/drivers/wsa884x/",
+        "AURA_KB/accepted_commits/wsa884x.md"
+      ],
+      "expected_value": "Best governance quality if learning transfer is truly generic and not WCD-overfit."
+    }
+  ],
+  "scoring_strategy": {
+    "engine": "canonical conversion_gate + multifile_scoring + conversion_verifier",
+    "target_reveal_timing": "Only after generation completion per variant",
+    "hidden_target_artifacts": [
+      "track_b_corpora/linux-next/sound/soc/codecs/wsa884x.c",
+      "track_b_corpora/linux-next/Documentation/devicetree/bindings/sound/qcom,wsa8840.yaml"
+    ],
+    "primary_metrics": [
+      "overall_score",
+      "FUNCTION_MATCH",
+      "API_COVERAGE",
+      "REGISTER_COVERAGE",
+      "LIFECYCLE_PATTERN",
+      "VENDOR_ELIMINATION",
+      "INCLUDE_ALIGNMENT",
+      "verifier warning/block counts",
+      "lineage coverage"
+    ]
+  },
+  "gate_strategy": {
+    "tool": "aura_agents.conversion_gate",
+    "policy": "No self-reported scores accepted; governance_verdict.json is source of truth.",
+    "acceptance_baseline": "PASS or WARN with zero blockers; WARNs must be explainable and non-runtime."
+  },
+  "anti_copy_strategy": {
+    "verifier": "Use conversion_verifier downstream/reference/target checks",
+    "requirements": [
+      "Hidden target audit per variant allowlist",
+      "Record anti_copy_audit.json",
+      "Escalate DOWNSTREAM_REUSE_RISK/DERIVATION_RISK findings in comparison"
+    ]
+  },
+  "compile_checkpatch_strategy": {
+    "scope": "Post-generation static validation only; no preflight compile execution required.",
+    "compile_command_template": "make O=<out> ARCH=arm64 M=sound/soc/codecs W=1",
+    "checkpatch_command_template": "scripts/checkpatch.pl --strict --show-types --max-line-length=100 <patches>",
+    "honesty_rule": "If environment/toolchain missing, record NOT_RUN without faking PASS."
+  },
+  "success_metrics": {
+    "required": [
+      "LE target hidden until scoring for all variants",
+      "No kernel source modifications",
+      "No WCD9378 modifications",
+      "Deterministic artifacts with lineage",
+      "Canonical gate/scoring artifacts generated"
+    ],
+    "comparative": [
+      "Variant B should improve structure metrics over A",
+      "Variant C should maintain or improve quality without increasing derivation/copy risk over B",
+      "No variant may claim runtime readiness"
+    ]
+  },
+  "expected_risks": [
+    "Target leakage risk from existing WSA884x knowledge artifacts in AURA_KB if allowlists are not strict.",
+    "Overfitting risk if WCD-specific assumptions leak into WSA Variant C.",
+    "Single-source LE target (wsa884x.c) may reduce scoring granularity compared with multi-file families.",
+    "Variant A may underperform due lack of nearest-skeleton guidance.",
+    "Heuristic vendor/derivation checks may require PM interpretation before hard conclusions."
+  ],
+  "preflight_verdict": "GO_WITH_LIMITATIONS",
+  "preflight_limitations": [
+    "Strict exclusion of legacy AURA_KB/drivers/wsa884x conversion artifacts is required during generation.",
+    "LE target files must remain hidden until each variant scoring stage.",
+    "WCD-specific behavior transfer must remain prohibited in Variant C."
+  ]
+}

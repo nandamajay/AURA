@@ -1,0 +1,113 @@
+{
+  "artifact": "wsa884x_three_variant_experiment_preflight_generic_rule_extraction",
+  "generated_on": "2026-06-20",
+  "source_artifacts": [
+    "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json",
+    "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_family_conversion_checklist.md"
+  ],
+  "extracted_rules": [
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-001",
+      "rule_summary": "LE-first architecture pattern.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Architecture reuse pattern is generic LA->LE governance, not codec-family specific behavior.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-002",
+      "rule_summary": "LA content donor, LE structure, no near-copy.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Anti-derivation discipline is family-agnostic.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-003",
+      "rule_summary": "Hidden target until scoring.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Core experiment integrity rule across any driver family.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-004",
+      "rule_summary": "Multi-file lineage coverage requirements.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Explainability and replayability requirements are generic governance constraints.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-005",
+      "rule_summary": "SoundWire structure + identity evidence gating.",
+      "classification_for_wsa": "ALLOW_WITH_CONDITIONS",
+      "why": "Identity evidence gating is generic; WCD RX/TX split and tuple specifics are not transferable as-is.",
+      "variant_c_usage": "USE_WITH_CONDITIONS"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-006",
+      "rule_summary": "Regmap/regcache lifecycle with fail-closed runtime evidence.",
+      "classification_for_wsa": "ALLOW_WITH_CONDITIONS",
+      "why": "Lifecycle governance is generic; WCD-specific paging/register assumptions must be rejected.",
+      "variant_c_usage": "USE_WITH_CONDITIONS"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-007",
+      "rule_summary": "DAPM/control mapping discipline with anti-copy penalties.",
+      "classification_for_wsa": "ALLOW_WITH_CONDITIONS",
+      "why": "Mapping discipline is generic; WCD control names/topology assumptions must not be imported.",
+      "variant_c_usage": "USE_WITH_CONDITIONS"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-008",
+      "rule_summary": "Reuse MBHC/Class-H shared libraries while preserving fail-closed behavior.",
+      "classification_for_wsa": "REJECT_WCD_SPECIFIC",
+      "why": "MBHC/Class-H guidance is WCD codec specific and not relevant to WSA amplifier family baseline design.",
+      "variant_c_usage": "DO_NOT_USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-009",
+      "rule_summary": "Reject runtime hacks (reset-in-hw_params/re-enumeration shortcuts).",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "No-runtime-hacks policy is a generic upstream hygiene guardrail.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-010",
+      "rule_summary": "Vendor include/API elimination with replacement mapping.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Vendor dependency elimination is generic across Qualcomm audio drivers.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-011",
+      "rule_summary": "Anti-copy/anti-derivation audit as governance signal.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Applies directly to hidden-target conversion experiments regardless of family.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-012",
+      "rule_summary": "DTS/schema normalization separated from runtime proof.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "DT/schema vs runtime-evidence separation is generic governance.",
+      "variant_c_usage": "USE"
+    },
+    {
+      "source_rule_id": "WCD-FAMILY-PROMOTED-013",
+      "rule_summary": "Runtime-sensitive decisions fail-closed until evidence unblocks them.",
+      "classification_for_wsa": "ALLOW_GENERIC",
+      "why": "Core interruptible governance invariant independent of family.",
+      "variant_c_usage": "USE"
+    }
+  ],
+  "explicit_rejections": [
+    "WCD-specific MBHC rule transfer",
+    "WCD-specific Class-H base/version assumptions",
+    "WCD-specific SoundWire register/paging assumptions",
+    "WCD-specific DAPM/control naming assumptions"
+  ],
+  "variant_c_policy": {
+    "allowed_generic_rule_count": 9,
+    "allowed_with_conditions_count": 3,
+    "rejected_wcd_specific_count": 1,
+    "enforcement": "Only ALLOW_GENERIC and ALLOW_WITH_CONDITIONS rules may influence Variant C generation."
+  }
+}
