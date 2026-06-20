@@ -1,0 +1,148 @@
+{
+  "phase": "phase_0",
+  "phase_name": "Foundation Audit & Baseline Lock",
+  "completed_at": "2026-06-20T20:21:53.840042+00:00",
+  "tasks_completed": 11,
+  "tasks_total": 11,
+  "week_1_summary": {
+    "architecture_violations": 0,
+    "adversarial_test_gaps": 1,
+    "router_contract_violations": 0,
+    "agents_missing_replay_hooks": 0,
+    "sql_integrity_issues": 0,
+    "tech_debt_items": 32
+  },
+  "week_2_summary": {
+    "implicit_contracts_found": 7,
+    "contracts_versioned": 7,
+    "contracts_untested": 0,
+    "breaking_changes_in_phase_1": 7,
+    "schema_files_created": 5
+  },
+  "critical_gaps": [
+    {
+      "gap_id": "GAP-009",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "Orchestrator._run_agent \u2192 agent run.sh",
+      "file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "line": 95,
+      "description": "Contract IC-002 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-012",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "Orchestrator \u2192 approval gate artifact",
+      "file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "line": 432,
+      "description": "Contract IC-007 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-010",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "rule_engine.py \u2192 rules YAML",
+      "file": "/local/mnt/workspace/AURA/aura/core/rule_engine.py",
+      "line": 1,
+      "description": "Contract IC-004 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-011",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "state.py \u2192 orchestration.db",
+      "file": "/local/mnt/workspace/AURA/aura/core/state.py",
+      "line": 12,
+      "description": "Contract IC-005 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-003",
+      "category": "IMPLICIT_CONTRACT",
+      "severity": "HIGH",
+      "component": "cli.py \u2192 Orchestrator.run_module",
+      "file": "/local/mnt/workspace/AURA/aura/cli.py",
+      "line": 85,
+      "description": "Implicit unformalized contract: module: str, dry_run: bool; return dict containing status and run_id-like fields.",
+      "remediation": "Create a JSON Schema/Pydantic v1 contract and enforce it at the caller/callee boundary.",
+      "status": "OPEN",
+      "effort": "L"
+    }
+  ],
+  "phase_1_blockers": [
+    {
+      "gap_id": "GAP-009",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "Orchestrator._run_agent \u2192 agent run.sh",
+      "file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "line": 95,
+      "description": "Contract IC-002 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-012",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "Orchestrator \u2192 approval gate artifact",
+      "file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "line": 432,
+      "description": "Contract IC-007 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-010",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "rule_engine.py \u2192 rules YAML",
+      "file": "/local/mnt/workspace/AURA/aura/core/rule_engine.py",
+      "line": 1,
+      "description": "Contract IC-004 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-011",
+      "category": "CONTRACT_TEST_COVERAGE",
+      "severity": "HIGH",
+      "component": "state.py \u2192 orchestration.db",
+      "file": "/local/mnt/workspace/AURA/aura/core/state.py",
+      "line": 12,
+      "description": "Contract IC-005 is PARTIALLY_TESTED with missing edge cases: malformed input, missing required fields, invalid output shape, fail-closed behavior.",
+      "remediation": "Add tests for malformed input, missing required fields, invalid output shape, and fail-closed behavior.",
+      "status": "OPEN",
+      "effort": "L"
+    },
+    {
+      "gap_id": "GAP-003",
+      "category": "IMPLICIT_CONTRACT",
+      "severity": "HIGH",
+      "component": "cli.py \u2192 Orchestrator.run_module",
+      "file": "/local/mnt/workspace/AURA/aura/cli.py",
+      "line": 85,
+      "description": "Implicit unformalized contract: module: str, dry_run: bool; return dict containing status and run_id-like fields.",
+      "remediation": "Create a JSON Schema/Pydantic v1 contract and enforce it at the caller/callee boundary.",
+      "status": "OPEN",
+      "effort": "L"
+    }
+  ],
+  "pm_verdict": "PHASE_0_COMPLETE_WITH_WARNINGS",
+  "recommendation": "Proceed to Phase 1 only with warnings acknowledged: formalize the high-severity implicit contracts, add edge-case contract tests, and implement replay manifests before changing dispatcher behavior."
+}

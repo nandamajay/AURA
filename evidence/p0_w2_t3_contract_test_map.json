@@ -1,0 +1,89 @@
+{
+  "task_id": "p0_w2_t3",
+  "task_name": "Map every contract to tests",
+  "execution_timestamp": "2026-06-20T20:20:51.427472+00:00",
+  "status": "COMPLETED",
+  "total_contracts": 7,
+  "tested": 3,
+  "partially_tested": 4,
+  "untested": 0,
+  "test_coverage_pct": 71.43,
+  "contract_test_map": [
+    {
+      "contract_id": "IC-001",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_orchestrator.py",
+      "test_function": "test_dry_run_completes",
+      "coverage_status": "TESTED",
+      "missing_edge_cases": []
+    },
+    {
+      "contract_id": "IC-002",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_dashboard.py",
+      "test_function": "test_dashboard_routes",
+      "coverage_status": "PARTIALLY_TESTED",
+      "missing_edge_cases": [
+        "malformed input",
+        "missing required fields",
+        "invalid output shape",
+        "fail-closed behavior"
+      ]
+    },
+    {
+      "contract_id": "IC-003",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_orchestrator.py",
+      "test_function": "test_dry_run_completes",
+      "coverage_status": "TESTED",
+      "missing_edge_cases": []
+    },
+    {
+      "contract_id": "IC-004",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_rule_engine.py",
+      "test_function": "test_rule_layer_is_valid",
+      "coverage_status": "PARTIALLY_TESTED",
+      "missing_edge_cases": [
+        "malformed input",
+        "missing required fields",
+        "invalid output shape",
+        "fail-closed behavior"
+      ]
+    },
+    {
+      "contract_id": "IC-005",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_state.py",
+      "test_function": "test_approval_lifecycle",
+      "coverage_status": "PARTIALLY_TESTED",
+      "missing_edge_cases": [
+        "malformed input",
+        "missing required fields",
+        "invalid output shape",
+        "fail-closed behavior"
+      ]
+    },
+    {
+      "contract_id": "IC-006",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_dashboard.py",
+      "test_function": "test_dashboard_routes",
+      "coverage_status": "TESTED",
+      "missing_edge_cases": []
+    },
+    {
+      "contract_id": "IC-007",
+      "test_file": "/local/mnt/workspace/AURA/tests/test_dashboard.py",
+      "test_function": "test_dashboard_routes",
+      "coverage_status": "PARTIALLY_TESTED",
+      "missing_edge_cases": [
+        "malformed input",
+        "missing required fields",
+        "invalid output shape",
+        "fail-closed behavior"
+      ]
+    }
+  ],
+  "critical_untested_contracts": [],
+  "evidence_files": [
+    "evidence/p0_w2_t3_test_files.txt"
+  ],
+  "next_steps": [
+    "Add edge-case tests for every PARTIALLY_TESTED contract before implementing Phase 1 changes."
+  ]
+}

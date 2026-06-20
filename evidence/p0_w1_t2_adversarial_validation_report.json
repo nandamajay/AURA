@@ -1,0 +1,51 @@
+{
+  "task_id": "p0_w1_t2",
+  "task_name": "Run adversarial validation suite",
+  "execution_timestamp": "2026-06-20T20:18:09.180538+00:00",
+  "status": "COMPLETED",
+  "test_runner": "pytest",
+  "total_tests_found": 15,
+  "total_tests_passed": 15,
+  "total_tests_failed": 0,
+  "adversarial_tests_found": 4,
+  "adversarial_tests_passed": 4,
+  "governance_gate_test_coverage": "PARTIAL",
+  "scorer_edge_case_coverage": "NO",
+  "adversarial_tests": [
+    {
+      "file": "/local/mnt/workspace/AURA/tests/test_orchestrator.py",
+      "line": 132,
+      "test": "test_missing_special_include_blocks_approval"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/tests/test_orchestrator.py",
+      "line": 180,
+      "test": "test_include_remediation_rewrites_and_drops_non_upstream"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/tests/test_pilot_worker.py",
+      "line": 90,
+      "test": "test_wsa_profile_and_unknown_module"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/tests/test_state.py",
+      "line": 35,
+      "test": "test_invalid_approval_status_rejected"
+    }
+  ],
+  "gaps": [
+    {
+      "gap_id": "ADV-003",
+      "description": "No scorer component was found in the bounded AURA tree, so scorer edge-case coverage is not applicable and should be treated as TOOL_MISSING for this target.",
+      "severity": "MEDIUM",
+      "remediation": "If scoring is expected in this AURA version, add or link the scorer module and tests for empty files, zero-line diffs, and missing upstream references."
+    }
+  ],
+  "evidence_files": [
+    "evidence/p0_w1_t2_aura_tests.log"
+  ],
+  "next_steps": [
+    "Add explicit fail-closed governance-gate tests for invalid verdict and malformed task states.",
+    "Add scorer edge-case tests if scoring remains part of production scope."
+  ]
+}

@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AURA CLI Contract v1",
+  "description": "CLI command request and response envelope for AURA v1.0.0.",
+  "type": "object",
+  "properties": {
+    "command": {
+      "type": "string"
+    },
+    "module": {
+      "type": "string"
+    },
+    "dry_run": {
+      "type": "boolean"
+    },
+    "options": {
+      "type": "object"
+    },
+    "response": {
+      "type": "object",
+      "properties": {
+        "status": {
+          "type": "string"
+        },
+        "run_id": {
+          "type": [
+            "integer",
+            "null"
+          ]
+        },
+        "payload": {
+          "type": "object"
+        },
+        "errors": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "status"
+      ]
+    }
+  },
+  "required": [
+    "command"
+  ]
+}

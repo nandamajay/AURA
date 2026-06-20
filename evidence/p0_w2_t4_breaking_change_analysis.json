@@ -1,0 +1,321 @@
+{
+  "task_id": "p0_w2_t4",
+  "task_name": "Identify breaking changes vs safe additions",
+  "execution_timestamp": "2026-06-20T20:20:51.427824+00:00",
+  "status": "COMPLETED",
+  "phase_1_tasks_analyzed": 22,
+  "breaking_changes": 7,
+  "additive_changes": 7,
+  "internal_changes": 4,
+  "unknown_changes": 4,
+  "changes": [
+    {
+      "phase_1_task": "Define canonical task states",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Implement state machine with allowed transitions",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add state transition audit events",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Add state-based API filters",
+      "classification": "INTERNAL",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "No external migration expected."
+    },
+    {
+      "phase_1_task": "Add state-based CLI commands",
+      "classification": "INTERNAL",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "No external migration expected."
+    },
+    {
+      "phase_1_task": "Formalize CLI to Core request schema",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Formalize Core to LLM request schema",
+      "classification": "UNKNOWN",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Define contract first, then classify."
+    },
+    {
+      "phase_1_task": "Formalize LLM to Core response schema",
+      "classification": "UNKNOWN",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Define contract first, then classify."
+    },
+    {
+      "phase_1_task": "Formalize Core to CLI response schema",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add schema validation at every boundary",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-002",
+        "IC-004",
+        "IC-007"
+      ],
+      "callers_affected": [
+        "Orchestrator._run_agent \u2192 agent run.sh",
+        "rule_engine.py \u2192 rules YAML",
+        "Orchestrator \u2192 approval gate artifact"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add contract version negotiation",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Add execution stages",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Emit stage events to event bus",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Add stage timing metrics",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Add stage failure reasons",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Add stage replay boundaries",
+      "classification": "ADDITIVE",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Add without changing v1 caller expectations."
+    },
+    {
+      "phase_1_task": "Audit all LLM response paths",
+      "classification": "UNKNOWN",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Define contract first, then classify."
+    },
+    {
+      "phase_1_task": "Add schema validation after every LLM call",
+      "classification": "UNKNOWN",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "Define contract first, then classify."
+    },
+    {
+      "phase_1_task": "Add evidence requirement checks",
+      "classification": "INTERNAL",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "No external migration expected."
+    },
+    {
+      "phase_1_task": "Add confidence threshold checks",
+      "classification": "INTERNAL",
+      "contracts_affected": [],
+      "callers_affected": [],
+      "migration_strategy": "No external migration expected."
+    },
+    {
+      "phase_1_task": "Add governance verdict enforcement",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-002",
+        "IC-004",
+        "IC-007"
+      ],
+      "callers_affected": [
+        "Orchestrator._run_agent \u2192 agent run.sh",
+        "rule_engine.py \u2192 rules YAML",
+        "Orchestrator \u2192 approval gate artifact"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add fail-closed audit events",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-002",
+        "IC-004",
+        "IC-007"
+      ],
+      "callers_affected": [
+        "Orchestrator._run_agent \u2192 agent run.sh",
+        "rule_engine.py \u2192 rules YAML",
+        "Orchestrator \u2192 approval gate artifact"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    }
+  ],
+  "high_risk_breaking_changes": [
+    {
+      "phase_1_task": "Define canonical task states",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Implement state machine with allowed transitions",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Formalize CLI to Core request schema",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Formalize Core to CLI response schema",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-001",
+        "IC-005"
+      ],
+      "callers_affected": [
+        "cli.py \u2192 Orchestrator.run_module",
+        "state.py \u2192 orchestration.db"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add schema validation at every boundary",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-002",
+        "IC-004",
+        "IC-007"
+      ],
+      "callers_affected": [
+        "Orchestrator._run_agent \u2192 agent run.sh",
+        "rule_engine.py \u2192 rules YAML",
+        "Orchestrator \u2192 approval gate artifact"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add governance verdict enforcement",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-002",
+        "IC-004",
+        "IC-007"
+      ],
+      "callers_affected": [
+        "Orchestrator._run_agent \u2192 agent run.sh",
+        "rule_engine.py \u2192 rules YAML",
+        "Orchestrator \u2192 approval gate artifact"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    },
+    {
+      "phase_1_task": "Add fail-closed audit events",
+      "classification": "BREAKING",
+      "contracts_affected": [
+        "IC-002",
+        "IC-004",
+        "IC-007"
+      ],
+      "callers_affected": [
+        "Orchestrator._run_agent \u2192 agent run.sh",
+        "rule_engine.py \u2192 rules YAML",
+        "Orchestrator \u2192 approval gate artifact"
+      ],
+      "migration_strategy": "Use v1 adapter compatibility and introduce v1.1/v2 schemas with deprecation window."
+    }
+  ],
+  "evidence_files": [
+    "PRODUCTION_ROADMAP.md",
+    "evidence/p0_w2_t1_implicit_contracts.json"
+  ],
+  "next_steps": [
+    "Prioritize adapter layers for IC-001, IC-002, IC-005, and IC-007 during Phase 1."
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "task_id": "p0_w1_t3",
+  "task_name": "Audit all routers for contract violations",
+  "execution_timestamp": "2026-06-20T20:20:48.336100+00:00",
+  "status": "COMPLETED",
+  "total_routers_found": 2,
+  "routers_with_contracts": 2,
+  "routers_without_contracts": 0,
+  "routers": [
+    {
+      "file": "/local/mnt/workspace/AURA/tests/test_dashboard.py",
+      "function_or_class": "DashboardTests",
+      "line": 15,
+      "has_input_validation": true,
+      "has_output_contract": true,
+      "has_error_handling": true,
+      "has_observability": true,
+      "violations": [],
+      "severity": "NONE"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/tests/test_dashboard.py",
+      "function_or_class": "test_dashboard_routes",
+      "line": 21,
+      "has_input_validation": true,
+      "has_output_contract": true,
+      "has_error_handling": true,
+      "has_observability": true,
+      "violations": [],
+      "severity": "NONE"
+    }
+  ],
+  "critical_violations": [],
+  "evidence_files": [
+    "evidence/p0_w1_t3_router_files.txt"
+  ],
+  "next_steps": [
+    "Add explicit Pydantic/JSON contracts for CLI, orchestrator task payloads, worker payloads, and dashboard query outputs.",
+    "Add structured routing decision events for every dispatcher boundary."
+  ]
+}

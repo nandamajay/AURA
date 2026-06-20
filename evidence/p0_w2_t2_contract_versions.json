@@ -1,0 +1,124 @@
+{
+  "task_id": "p0_w2_t2",
+  "task_name": "Version every contract with semver",
+  "execution_timestamp": "2026-06-20T20:20:51.425546+00:00",
+  "status": "COMPLETED",
+  "versioned_contracts": [
+    {
+      "id": "IC-001",
+      "name": "cli.py \u2192 Orchestrator.run_module",
+      "version": "v1.0.0",
+      "stability": "STABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": true
+    },
+    {
+      "id": "IC-002",
+      "name": "Orchestrator._run_agent \u2192 agent run.sh",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": false
+    },
+    {
+      "id": "IC-003",
+      "name": "worker_entry.py \u2192 worker_runner.run_worker",
+      "version": "v1.0.0",
+      "stability": "STABLE",
+      "breaking_change_risk": "MEDIUM",
+      "shared_callers": 1,
+      "external_facing": false
+    },
+    {
+      "id": "IC-004",
+      "name": "rule_engine.py \u2192 rules YAML",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": false
+    },
+    {
+      "id": "IC-005",
+      "name": "state.py \u2192 orchestration.db",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 2,
+      "external_facing": false
+    },
+    {
+      "id": "IC-006",
+      "name": "dashboard.py \u2192 orchestration.db queries",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "MEDIUM",
+      "shared_callers": 1,
+      "external_facing": true
+    },
+    {
+      "id": "IC-007",
+      "name": "Orchestrator \u2192 approval gate artifact",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": false
+    }
+  ],
+  "high_risk_contracts": [
+    {
+      "id": "IC-001",
+      "name": "cli.py \u2192 Orchestrator.run_module",
+      "version": "v1.0.0",
+      "stability": "STABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": true
+    },
+    {
+      "id": "IC-002",
+      "name": "Orchestrator._run_agent \u2192 agent run.sh",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": false
+    },
+    {
+      "id": "IC-004",
+      "name": "rule_engine.py \u2192 rules YAML",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": false
+    },
+    {
+      "id": "IC-005",
+      "name": "state.py \u2192 orchestration.db",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 2,
+      "external_facing": false
+    },
+    {
+      "id": "IC-007",
+      "name": "Orchestrator \u2192 approval gate artifact",
+      "version": "v1.0.0",
+      "stability": "UNSTABLE",
+      "breaking_change_risk": "HIGH",
+      "shared_callers": 1,
+      "external_facing": false
+    }
+  ],
+  "evidence_files": [
+    "evidence/p0_w2_t1_implicit_contracts.json"
+  ],
+  "next_steps": [
+    "Freeze v1.0.0 schemas in contracts/ and require adapters for breaking Phase 1 changes."
+  ]
+}

@@ -1,0 +1,236 @@
+{
+  "task_id": "p0_w1_t5",
+  "task_name": "Audit all SQL migrations for integrity",
+  "execution_timestamp": "2026-06-20T20:20:49.563899+00:00",
+  "status": "COMPLETED",
+  "migration_files_found": 0,
+  "schema_defined_in": "PYTHON_SOURCE",
+  "tables": [
+    {
+      "name": "approvals",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "queue",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "item_ref",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "requested_by",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "decided_by",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "ts",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "has_primary_key": true,
+      "has_foreign_keys": false,
+      "has_not_null_constraints": true,
+      "has_indexes": false,
+      "row_count": 5,
+      "integrity_issues": []
+    },
+    {
+      "name": "events",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "run_id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "actor",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "event_type",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "payload_json",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "ts",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "has_primary_key": true,
+      "has_foreign_keys": true,
+      "has_not_null_constraints": true,
+      "has_indexes": false,
+      "row_count": 1220,
+      "integrity_issues": [
+        {
+          "category": "PERFORMANCE",
+          "description": "Table has no secondary indexes despite non-trivial row count.",
+          "severity": "MEDIUM"
+        }
+      ]
+    },
+    {
+      "name": "runs",
+      "columns": [
+        {
+          "cid": 0,
+          "name": "id",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 1
+        },
+        {
+          "cid": 1,
+          "name": "module",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 2,
+          "name": "phase",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 3,
+          "name": "status",
+          "type": "TEXT",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 4,
+          "name": "round_num",
+          "type": "INTEGER",
+          "notnull": 0,
+          "dflt_value": "0",
+          "pk": 0
+        },
+        {
+          "cid": 5,
+          "name": "upstream_sha",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 6,
+          "name": "downstream_sha",
+          "type": "TEXT",
+          "notnull": 0,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 7,
+          "name": "created_ts",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        },
+        {
+          "cid": 8,
+          "name": "updated_ts",
+          "type": "REAL",
+          "notnull": 1,
+          "dflt_value": null,
+          "pk": 0
+        }
+      ],
+      "has_primary_key": true,
+      "has_foreign_keys": false,
+      "has_not_null_constraints": true,
+      "has_indexes": false,
+      "row_count": 58,
+      "integrity_issues": []
+    }
+  ],
+  "orphaned_data_found": false,
+  "orphaned_data_details": [],
+  "schema_version_tracked": false,
+  "critical_issues": [],
+  "evidence_files": [
+    "evidence/p0_w1_t5_migration_files.txt"
+  ],
+  "next_steps": [
+    "Add explicit schema migrations and a schema version table.",
+    "Add foreign keys from events.run_id to runs.id and indexes on high-read dashboard query fields."
+  ]
+}

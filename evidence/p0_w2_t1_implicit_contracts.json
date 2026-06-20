@@ -1,0 +1,424 @@
+{
+  "task_id": "p0_w2_t1",
+  "task_name": "Extract all implicit contracts",
+  "execution_timestamp": "2026-06-20T20:20:51.425066+00:00",
+  "status": "COMPLETED",
+  "total_contracts_found": 7,
+  "contracts": [
+    {
+      "id": "IC-001",
+      "boundary": "cli.py \u2192 Orchestrator.run_module",
+      "caller_file": "/local/mnt/workspace/AURA/aura/cli.py",
+      "caller_line": 85,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "assumed_shape": "module: str, dry_run: bool; return dict containing status and run_id-like fields.",
+      "validated": true,
+      "break_impact": "CLI returns non-zero or prints misleading JSON if status shape changes.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "IC-002",
+      "boundary": "Orchestrator._run_agent \u2192 agent run.sh",
+      "caller_file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "caller_line": 95,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/worker_runner.py",
+      "assumed_shape": "Agent process must accept --task/--module/--round and emit JSON on stdout.",
+      "validated": false,
+      "break_impact": "Agent output parse failure blocks orchestration or causes fail-open/opaque errors.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "IC-003",
+      "boundary": "worker_entry.py \u2192 worker_runner.run_worker",
+      "caller_file": "/local/mnt/workspace/AURA/aura/core/worker_entry.py",
+      "caller_line": 1,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/worker_runner.py",
+      "assumed_shape": "argparse namespace values agent/task/module/round map to run_worker parameters and JSON result.",
+      "validated": true,
+      "break_impact": "Worker entry can invoke wrong agent behavior or produce non-contract stdout.",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "IC-004",
+      "boundary": "rule_engine.py \u2192 rules YAML",
+      "caller_file": "/local/mnt/workspace/AURA/aura/core/rule_engine.py",
+      "caller_line": 1,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/rule_engine.py",
+      "assumed_shape": "YAML file must contain expected rule layer/list fields consumed by rule validation.",
+      "validated": false,
+      "break_impact": "Malformed rules can silently reduce validation coverage.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "IC-005",
+      "boundary": "state.py \u2192 orchestration.db",
+      "caller_file": "/local/mnt/workspace/AURA/aura/core/state.py",
+      "caller_line": 12,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/state.py",
+      "assumed_shape": "runs/events/approvals tables with id, run_id, status, payload_json and timestamp columns.",
+      "validated": false,
+      "break_impact": "Dashboard and orchestrator queries fail or miss audit linkage when schema drifts.",
+      "severity": "HIGH"
+    },
+    {
+      "id": "IC-006",
+      "boundary": "dashboard.py \u2192 orchestration.db queries",
+      "caller_file": "/local/mnt/workspace/AURA/aura/core/dashboard.py",
+      "caller_line": 597,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/state.py",
+      "assumed_shape": "Dashboard assumes runs/events payload_json contains structured JSON with latest patch and score fields.",
+      "validated": false,
+      "break_impact": "Dashboard pages can show stale/empty data or crash on unexpected payload shape.",
+      "severity": "MEDIUM"
+    },
+    {
+      "id": "IC-007",
+      "boundary": "Orchestrator \u2192 approval gate artifact",
+      "caller_file": "/local/mnt/workspace/AURA/aura/core/orchestrator.py",
+      "caller_line": 432,
+      "callee_file": "/local/mnt/workspace/AURA/aura/core/state.py",
+      "assumed_shape": "Patch artifact quality dict must include approval_gate_passed boolean and status PASS/FAIL.",
+      "validated": false,
+      "break_impact": "Unsafe artifacts can bypass or block approval incorrectly.",
+      "severity": "HIGH"
+    }
+  ],
+  "unvalidated_contracts": 5,
+  "high_severity_contracts": 5,
+  "observed_output_shapes": [
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_32/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "review_results",
+        "run_id"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_33/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "review_results",
+        "run_id"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_35/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "review_results",
+        "run_id"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_36/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "review_results",
+        "run_id"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_37/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "review_results",
+        "run_id"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_39/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_40/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_41/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_42/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_43/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_44/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_45/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_46/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_47/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_49/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_51/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_53/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_54/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_55/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_57/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    },
+    {
+      "file": "/local/mnt/workspace/AURA/data/outputs/run_58/run_summary.json",
+      "top_level_keys": [
+        "conversion_rounds",
+        "final_round",
+        "module",
+        "patch_has_real_text",
+        "patch_path",
+        "patch_quality",
+        "patch_text_source",
+        "patch_validation",
+        "review_results",
+        "run_id",
+        "source_diff_meta"
+      ],
+      "type": "dict"
+    }
+  ],
+  "evidence_files": [],
+  "next_steps": [
+    "Formalize these implicit boundaries as JSON Schema/Pydantic contracts before Phase 1 state-machine work."
+  ]
+}

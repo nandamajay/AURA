@@ -1,0 +1,25 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.5, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: /local/mnt/workspace/AURA
+configfile: pyproject.toml
+plugins: anyio-4.13.0, mock-3.14.0, cov-5.0.0, flask-1.3.0
+collecting ... collected 15 items
+
+tests/test_dashboard.py::DashboardTests::test_dashboard_routes PASSED    [  6%]
+tests/test_dashboard_ctl.py::DashboardCtlTests::test_start_status_stop_background_dashboard PASSED [ 13%]
+tests/test_orchestrator.py::OrchestratorTests::test_dry_run_completes PASSED [ 20%]
+tests/test_orchestrator.py::OrchestratorTests::test_full_run_completes PASSED [ 26%]
+tests/test_orchestrator.py::OrchestratorTests::test_full_run_synthesizes_patch_and_creates_approval PASSED [ 33%]
+tests/test_orchestrator.py::OrchestratorTests::test_include_remediation_rewrites_and_drops_non_upstream PASSED [ 40%]
+tests/test_orchestrator.py::OrchestratorTests::test_missing_special_include_blocks_approval PASSED [ 46%]
+tests/test_pilot_worker.py::PilotWorkerTests::test_build_pilot_payload_for_anvil_rounds PASSED [ 53%]
+tests/test_pilot_worker.py::PilotWorkerTests::test_resolve_pilot_context_for_wcd937x PASSED [ 60%]
+tests/test_pilot_worker.py::PilotWorkerTests::test_wsa_profile_and_unknown_module PASSED [ 66%]
+tests/test_rule_engine.py::RuleEngineTests::test_rule_layer_is_valid PASSED [ 73%]
+tests/test_source_sync.py::SourceSyncTests::test_sync_local_git_mode PASSED [ 80%]
+tests/test_source_sync.py::SourceSyncTests::test_sync_local_snapshot_mode PASSED [ 86%]
+tests/test_state.py::StateTests::test_approval_lifecycle PASSED          [ 93%]
+tests/test_state.py::StateTests::test_invalid_approval_status_rejected PASSED [100%]
+
+============================== 15 passed in 6.15s ==============================

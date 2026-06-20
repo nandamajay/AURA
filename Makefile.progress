@@ -1,0 +1,132 @@
+# AURA Production Progress Tracking Makefile
+
+.PHONY: progress-report progress-dashboard progress-update-task progress-update-deliverable progress-help
+
+progress-help: ## Show progress tracking commands
+	@echo "AURA Production Progress Tracking"
+	@echo "=================================="
+	@echo ""
+	@echo "Commands:"
+	@echo "  make progress-report              Show current progress report"
+	@echo "  make progress-dashboard           Generate visual dashboard"
+	@echo "  make progress-update-task         Update task status (interactive)"
+	@echo "  make progress-update-deliverable  Update deliverable status (interactive)"
+	@echo "  make progress-phase0-start        Start Phase 0"
+	@echo "  make progress-phase0-complete     Complete Phase 0"
+	@echo ""
+	@echo "Examples:"
+	@echo "  make progress-report"
+	@echo "  make progress-dashboard"
+	@echo "  make progress-phase0-start"
+	@echo ""
+	@echo "Manual usage:"
+	@echo "  python3 scripts/progress/update_progress.py task p0_w1_t1 COMPLETED evidence.json"
+	@echo "  python3 scripts/progress/update_progress.py deliverable PRODUCTION_GAP_MATRIX.md COMPLETED"
+
+progress-report: ## Show current progress report
+	@python3 scripts/progress/update_progress.py report
+
+progress-dashboard: ## Generate visual dashboard
+	@python3 scripts/progress/generate_dashboard.py
+	@echo ""
+	@echo "Dashboard generated: PRODUCTION_DASHBOARD.md"
+	@echo "View with: cat PRODUCTION_DASHBOARD.md"
+
+progress-update-task: ## Update task status (interactive)
+	@echo "Update Task Status"
+	@echo "=================="
+	@echo ""
+	@read -p "Task ID (e.g., p0_w1_t1): " task_id; \
+	read -p "Status (NOT_STARTED/IN_PROGRESS/COMPLETED/BLOCKED): " status; \
+	read -p "Evidence file (optional, press Enter to skip): " evidence; \
+	if [ -z "$$evidence" ]; then \
+		python3 scripts/progress/update_progress.py task $$task_id $$status; \
+	else \
+		python3 scripts/progress/update_progress.py task $$task_id $$status $$evidence; \
+	fi; \
+	python3 scripts/progress/generate_dashboard.py
+
+progress-update-deliverable: ## Update deliverable status (interactive)
+	@echo "Update Deliverable Status"
+	@echo "========================="
+	@echo ""
+	@read -p "Deliverable path (e.g., PRODUCTION_GAP_MATRIX.md): " path; \
+	read -p "Status (NOT_STARTED/IN_PROGRESS/COMPLETED): " status; \
+	python3 scripts/progress/update_progress.py deliverable $$path $$status; \
+	python3 scripts/progress/generate_dashboard.py
+
+# Quick shortcuts for common operations
+progress-phase0-start: ## Mark Phase 0 as started
+	@echo "Starting Phase 0..."
+	@python3 scripts/progress/start_phase.py phase_0
+	@python3 scripts/progress/generate_dashboard.py
+	@echo ""
+	@echo "✅ Phase 0 is now IN_PROGRESS"
+	@echo ""
+	@echo "Next steps:"
+	@echo "  1. Read the roadmap: cat PRODUCTION_ROADMAP.md"
+	@echo "  2. Start first task: python3 scripts/progress/update_progress.py task p0_w1_t1 IN_PROGRESS"
+	@echo "  3. View progress: make progress-report"
+
+progress-phase0-complete: ## Mark Phase 0 as completed
+	@echo "Completing Phase 0..."
+	@python3 scripts/progress/complete_phase.py phase_0
+	@python3 scripts/progress/generate_dashboard.py
+	@echo ""
+	@echo "✅ Phase 0 is now COMPLETED"
+
+progress-phase1-start: ## Mark Phase 1 as started
+	@python3 scripts/progress/start_phase.py phase_1
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase1-complete: ## Mark Phase 1 as completed
+	@python3 scripts/progress/complete_phase.py phase_1
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase2-start: ## Mark Phase 2 as started
+	@python3 scripts/progress/start_phase.py phase_2
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase2-complete: ## Mark Phase 2 as completed
+	@python3 scripts/progress/complete_phase.py phase_2
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase3-start: ## Mark Phase 3 as started
+	@python3 scripts/progress/start_phase.py phase_3
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase3-complete: ## Mark Phase 3 as completed
+	@python3 scripts/progress/complete_phase.py phase_3
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase4-start: ## Mark Phase 4 as started
+	@python3 scripts/progress/start_phase.py phase_4
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase4-complete: ## Mark Phase 4 as completed
+	@python3 scripts/progress/complete_phase.py phase_4
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase5-start: ## Mark Phase 5 as started
+	@python3 scripts/progress/start_phase.py phase_5
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase5-complete: ## Mark Phase 5 as completed
+	@python3 scripts/progress/complete_phase.py phase_5
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase6-start: ## Mark Phase 6 as started
+	@python3 scripts/progress/start_phase.py phase_6
+	@python3 scripts/progress/generate_dashboard.py
+
+progress-phase6-complete: ## Mark Phase 6 as completed
+	@python3 scripts/progress/complete_phase.py phase_6
+	@python3 scripts/progress/generate_dashboard.py
+
+.PHONY: progress-phase0-start progress-phase0-complete \
+        progress-phase1-start progress-phase1-complete \
+        progress-phase2-start progress-phase2-complete \
+        progress-phase3-start progress-phase3-complete \
+        progress-phase4-start progress-phase4-complete \
+        progress-phase5-start progress-phase5-complete \
+        progress-phase6-start progress-phase6-complete
