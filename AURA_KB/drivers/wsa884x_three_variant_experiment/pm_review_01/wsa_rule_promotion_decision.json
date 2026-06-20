@@ -1,0 +1,122 @@
+{
+  "artifact": "wsa884x_three_variant_pm_review_01_wsa_rule_promotion_decision",
+  "generated_on": "2026-06-20",
+  "decisions": [
+    {
+      "rule_id": "WSA-RULE-001",
+      "rule_summary": "Keep LE hidden target files inaccessible until scoring stage in controlled experiments.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_NOW",
+      "evidence_of_benefit": "Hidden-target discipline held across A/B/C and preserves experiment integrity.",
+      "evidence_of_risk": "No direct risk observed in this run; only future enforcement drift risk.",
+      "scope": "GENERIC_AURA",
+      "enforcement": "checker",
+      "conditions": [
+        "Any pre-scoring LE target access invalidates experiment comparability."
+      ],
+      "reason": "Core governance invariant validated in both WCD and WSA experiments."
+    },
+    {
+      "rule_id": "WSA-RULE-002",
+      "rule_summary": "Use nearest LE sibling as architectural skeleton for WSA family conversion when target is hidden.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_WITH_CONDITIONS",
+      "evidence_of_benefit": "Variant B improved score +51.78 over Variant A with zero final blockers/warnings.",
+      "evidence_of_risk": "Initial Variant B verifier path produced copy blocker when sibling was used as direct reference.",
+      "scope": "AUDIO_AMPLIFIER",
+      "enforcement": "manual_review",
+      "conditions": [
+        "Skeleton must be architectural reference only, not direct copy template.",
+        "Verifier-reference selection policy must avoid direct sibling-as-target copy trap.",
+        "Anti-copy audit must remain mandatory."
+      ],
+      "reason": "Strong quality gain, but needs guardrails to avoid skeleton-overuse and verifier-policy ambiguity."
+    },
+    {
+      "rule_id": "WSA-RULE-003",
+      "rule_summary": "Keep runtime-sensitive behavior fail-closed for static conversion runs.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_NOW",
+      "evidence_of_benefit": "All variants preserved 5 fail-closed items and avoided runtime claims.",
+      "evidence_of_risk": "Risk exists only if future runs bypass fail-closed posture.",
+      "scope": "GENERIC_AURA",
+      "enforcement": "runtime_evidence",
+      "conditions": [
+        "Runtime state changes require explicit hardware evidence artifacts."
+      ],
+      "reason": "This rule directly prevents unsafe static-to-runtime overclaiming."
+    },
+    {
+      "rule_id": "WSA-RULE-004",
+      "rule_summary": "Require per-function lineage mapping for converted outputs.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_NOW",
+      "evidence_of_benefit": "A/B/C all emitted lineage artifacts enabling explainability and replayability.",
+      "evidence_of_risk": "Lineage schema variation may reduce automation precision if not standardized.",
+      "scope": "GENERIC_AURA",
+      "enforcement": "checker",
+      "conditions": [
+        "Lineage coverage thresholds and schema notes must be recorded in validation."
+      ],
+      "reason": "Lineage is foundational for governance and post-hoc auditing."
+    },
+    {
+      "rule_id": "WSA-RULE-005",
+      "rule_summary": "Do not directly use sibling skeleton file as verifier reference when skeleton reuse is the intended strategy.",
+      "candidate_promote": "QUARANTINE",
+      "pm_decision": "QUARANTINE",
+      "evidence_of_benefit": "Deviation documentation reveals this policy can prevent false blocker noise and misinterpretation.",
+      "evidence_of_risk": "Current evidence is one incident; rule wording and canonical policy integration are still immature.",
+      "scope": "GENERIC_AURA",
+      "enforcement": "manual_review",
+      "conditions": [
+        "Formalize verifier-reference selection standard before promotion.",
+        "Validate on at least one additional non-WSA experiment."
+      ],
+      "reason": "Important insight, but not yet stable enough for immediate platform-wide enforcement."
+    },
+    {
+      "rule_id": "WSA-RULE-006",
+      "rule_summary": "Use generic learning rules as governance overlays; do not expect automatic score gains.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_WITH_CONDITIONS",
+      "evidence_of_benefit": "Variant C preserved B-level quality while explicitly strengthening rule traceability and WCD-specific rejection logging.",
+      "evidence_of_risk": "No measured score lift over B, so misuse risk exists if treated as guaranteed optimizer.",
+      "scope": "GENERIC_AURA",
+      "enforcement": "prompt",
+      "conditions": [
+        "Learning overlays must report USED_CHANGED_OUTPUT vs NO_EFFECT outcomes.",
+        "PM review required when overlays claim quality improvement without measurable delta."
+      ],
+      "reason": "Useful governance pattern with honest expectations about impact."
+    },
+    {
+      "rule_id": "WSA-RULE-007",
+      "rule_summary": "Reject WCD-specific MBHC/Class-H/SDW/DAPM behavior assumptions when converting WSA amplifiers.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_NOW",
+      "evidence_of_benefit": "Preflight extraction and Variant C rule-use logs show explicit behavior-rule separation and no cross-family leakage.",
+      "evidence_of_risk": "Residual risk if future prompts omit explicit family-specific rejection lists.",
+      "scope": "GENERIC_AUDIO",
+      "enforcement": "checker",
+      "conditions": [
+        "Family-specific rejection list must be included in allowed-source and learning-rule artifacts."
+      ],
+      "reason": "Critical anti-overfitting rule for cross-family transfer quality."
+    },
+    {
+      "rule_id": "WSA-RULE-008",
+      "rule_summary": "Treat compile/checkpatch absence as NOT_RUN, never as implied PASS.",
+      "candidate_promote": "YES",
+      "pm_decision": "PROMOTE_NOW",
+      "evidence_of_benefit": "Experiment artifacts preserved NOT_RUN honesty and avoided false production-readiness signals.",
+      "evidence_of_risk": "If downgraded to optional reporting, PM could misread score/gate PASS as completeness.",
+      "scope": "GENERIC_AURA",
+      "enforcement": "checker",
+      "conditions": [
+        "PM summary must include explicit compile/checkpatch status line."
+      ],
+      "reason": "Essential reporting integrity rule that generalizes beyond audio drivers."
+    }
+  ]
+}

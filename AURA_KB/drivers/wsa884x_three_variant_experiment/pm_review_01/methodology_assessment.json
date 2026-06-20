@@ -1,0 +1,84 @@
+{
+  "artifact": "wsa884x_three_variant_pm_review_01_methodology_assessment",
+  "generated_on": "2026-06-20",
+  "assessments": [
+    {
+      "question": "Did relative skeleton help over blind?",
+      "answer": "Yes. Variant B materially improved over Variant A.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+      ],
+      "confidence": "HIGH",
+      "pm_interpretation": "Nearest LE sibling skeleton is the strongest quality lever observed in this experiment."
+    },
+    {
+      "question": "Did learning-informed help over relative skeleton?",
+      "answer": "No measurable score improvement. Variant C matched Variant B.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/learning_rules_used.json"
+      ],
+      "confidence": "HIGH",
+      "pm_interpretation": "Learning-informed rules helped governance discipline but did not raise static score beyond relative-skeleton baseline."
+    },
+    {
+      "question": "Did learning introduce risk?",
+      "answer": "No additional risk was observed in Variant C versus Variant B in final canonical artifacts.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/anti_copy_audit.json"
+      ],
+      "confidence": "MEDIUM",
+      "pm_interpretation": "Risk stayed stable, but confidence is medium because one prior Variant B verifier-path deviation existed."
+    },
+    {
+      "question": "Which variant is best by score?",
+      "answer": "Variant B and Variant C tie at 87.99.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+      ],
+      "confidence": "HIGH",
+      "pm_interpretation": "Score alone does not distinguish B from C."
+    },
+    {
+      "question": "Which variant is best by PM quality?",
+      "answer": "Variant C by governance posture, with Variant B equally strong on technical score.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/learning_rules_used.json"
+      ],
+      "confidence": "MEDIUM",
+      "pm_interpretation": "C explicitly documents generic-rule usage and WCD-specific rejections, improving audit quality."
+    },
+    {
+      "question": "Which variant would be closest to maintainer-preferred method?",
+      "answer": "Variant B, because it uses nearest LE sibling architecture without hidden-target leakage.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/source_inventory.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/skeleton_delta_analysis.json"
+      ],
+      "confidence": "MEDIUM",
+      "pm_interpretation": "Sibling-based architecture adaptation aligns with common upstream bring-up practice."
+    },
+    {
+      "question": "Which variant should be used for future WSA work?",
+      "answer": "Use Variant B as baseline generation method, then apply Variant C-style generic governance overlays as validation controls.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/generic_rule_extraction.json"
+      ],
+      "confidence": "HIGH",
+      "pm_interpretation": "This combines strongest score outcome with strongest process safeguards."
+    },
+    {
+      "question": "Did this validate generalization beyond WCD?",
+      "answer": "Partially yes. Governance/process transfer validated at medium confidence; behavior-specific transfer remains constrained.",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/wsa_generalization_verdict.md",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/pm_experiment_summary.md"
+      ],
+      "confidence": "MEDIUM",
+      "pm_interpretation": "Generalization is real for method and controls, not yet proven for runtime behavior inference."
+    }
+  ]
+}

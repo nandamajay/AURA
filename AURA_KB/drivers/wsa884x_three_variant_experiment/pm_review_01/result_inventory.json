@@ -1,0 +1,78 @@
+{
+  "artifact": "wsa884x_three_variant_pm_review_01_result_inventory",
+  "generated_on": "2026-06-20",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "variant_results": {
+    "A": {
+      "name": "variant_a_blind",
+      "overall_score": 36.21,
+      "gate_verdict": "PASS",
+      "gate_blockers": 0,
+      "gate_warnings": 0,
+      "anti_copy_assessment": "NO_BLOCKING_COPY_RISK",
+      "anti_copy_blocking_findings": 0,
+      "anti_copy_warning_findings": 0,
+      "vendor_token_risk_count": 0,
+      "fail_closed_count": 5,
+      "lineage_coverage": 100.0,
+      "patch_count": 1
+    },
+    "B": {
+      "name": "variant_b_relative_skeleton",
+      "overall_score": 87.99,
+      "gate_verdict": "PASS",
+      "gate_blockers": 0,
+      "gate_warnings": 0,
+      "anti_copy_assessment": "NO_BLOCKING_COPY_RISK",
+      "anti_copy_blocking_findings": 0,
+      "anti_copy_warning_findings": 0,
+      "vendor_token_risk_count": 0,
+      "fail_closed_count": 5,
+      "lineage_coverage": 88.89,
+      "patch_count": 1
+    },
+    "C": {
+      "name": "variant_c_learning_informed",
+      "overall_score": 87.99,
+      "gate_verdict": "PASS",
+      "gate_blockers": 0,
+      "gate_warnings": 0,
+      "anti_copy_assessment": "NO_BLOCKING_COPY_RISK",
+      "anti_copy_blocking_findings": 0,
+      "anti_copy_warning_findings": 0,
+      "vendor_token_risk_count": 0,
+      "fail_closed_count": 5,
+      "lineage_coverage": 88.89,
+      "patch_count": 1
+    }
+  },
+  "score_deltas": {
+    "A_to_B": 51.78,
+    "B_to_C": 0.0,
+    "A_to_C": 51.78
+  },
+  "documented_deviations": [
+    {
+      "deviation": "Variant B initial gate run used LE WSA883x as direct verifier reference and produced blocker-level copy finding.",
+      "final_handling": "Canonical rerun used neutral generic references; final artifact set is PASS and deviation remains documented.",
+      "source": "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+    },
+    {
+      "deviation": "Compile/checkpatch were not executed in this experiment cycle.",
+      "final_handling": "Recorded as NOT_RUN; no implied PASS.",
+      "source": "AURA_KB/drivers/wsa884x_three_variant_experiment/validation.json"
+    }
+  ],
+  "final_experiment_verdict": "WSA_GENERALIZATION_VALIDATED_MEDIUM",
+  "evidence_sources": [
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/wsa_generalization_verdict.md",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/validation.json",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/anti_copy_audit.json",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/anti_copy_audit.json",
+    "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/anti_copy_audit.json"
+  ]
+}

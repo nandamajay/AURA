@@ -1,0 +1,146 @@
+{
+  "artifact": "wsa884x_three_variant_pm_review_01_risk_review",
+  "generated_on": "2026-06-20",
+  "risks": [
+    {
+      "risk_id": "WSA-RISK-001",
+      "risk": "Copy/derivation risk from skeleton-heavy conversions",
+      "affected_variants": [
+        "B",
+        "C"
+      ],
+      "severity": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/validation.json"
+      ],
+      "mitigation": "Keep anti-copy audit mandatory and forbid sibling skeleton as direct verifier reference in final scoring policy.",
+      "promotion_impact": "PROMOTE_WITH_CONDITIONS"
+    },
+    {
+      "risk_id": "WSA-RISK-002",
+      "risk": "Downstream LA reuse depth can hide architectural debt",
+      "affected_variants": [
+        "A",
+        "B",
+        "C"
+      ],
+      "severity": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/source_inventory.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/skeleton_delta_analysis.json"
+      ],
+      "mitigation": "Require per-subsystem LA donor mapping and explicit LE structure rationale in conversion plans.",
+      "promotion_impact": "PROMOTE_WITH_CONDITIONS"
+    },
+    {
+      "risk_id": "WSA-RISK-003",
+      "risk": "Vendor elimination regression could be missed when scores are high",
+      "affected_variants": [
+        "B",
+        "C"
+      ],
+      "severity": "LOW",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json"
+      ],
+      "mitigation": "Keep vendor-token and banned-symbol checks active and add explicit non-regression thresholds in gate policy.",
+      "promotion_impact": "PROMOTE_OK"
+    },
+    {
+      "risk_id": "WSA-RISK-004",
+      "risk": "Runtime unsupported behavior claims from static-only artifacts",
+      "affected_variants": [
+        "A",
+        "B",
+        "C"
+      ],
+      "severity": "HIGH",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/fail_closed_items.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/fail_closed_items.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/fail_closed_items.json"
+      ],
+      "mitigation": "Keep runtime-sensitive items in FAIL_CLOSED state until hardware logs exist; never mark runtime-ready in PM outputs.",
+      "promotion_impact": "PROMOTE_OK"
+    },
+    {
+      "risk_id": "WSA-RISK-005",
+      "risk": "Hidden-target access discipline erosion",
+      "affected_variants": [
+        "A",
+        "B",
+        "C"
+      ],
+      "severity": "HIGH",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_a_blind/source_inventory.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/source_inventory.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/source_inventory.json"
+      ],
+      "mitigation": "Enforce allowlist plus hidden-target audits in checker/gate and invalidate runs with pre-scoring target access.",
+      "promotion_impact": "PROMOTE_OK"
+    },
+    {
+      "risk_id": "WSA-RISK-006",
+      "risk": "Skeleton overuse (namespace find/replace) reducing true adaptation quality",
+      "affected_variants": [
+        "B",
+        "C"
+      ],
+      "severity": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/wsa883x_adaptation_audit.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json"
+      ],
+      "mitigation": "Require skeleton adaptation audit with reuse/removed/adapted breakdown and manual review for high-similarity outputs.",
+      "promotion_impact": "PROMOTE_WITH_CONDITIONS"
+    },
+    {
+      "risk_id": "WSA-RISK-007",
+      "risk": "WCD rule leakage into WSA behavior",
+      "affected_variants": [
+        "C"
+      ],
+      "severity": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/generic_rule_extraction.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/learning_rules_used.json"
+      ],
+      "mitigation": "Keep explicit rejected-rule classes for MBHC/Class-H/WCD-specific SoundWire/DAPM behavior and audit for leakage.",
+      "promotion_impact": "PROMOTE_WITH_CONDITIONS"
+    },
+    {
+      "risk_id": "WSA-RISK-008",
+      "risk": "Scoring blind spots when compile/checkpatch are NOT_RUN",
+      "affected_variants": [
+        "A",
+        "B",
+        "C"
+      ],
+      "severity": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/validation.json"
+      ],
+      "mitigation": "Treat compile/checkpatch as separate quality gates and keep NOT_RUN visible in PM verdicting.",
+      "promotion_impact": "PROMOTE_OK"
+    },
+    {
+      "risk_id": "WSA-RISK-009",
+      "risk": "Gate blind spots from verifier-reference selection and single-file target pairing",
+      "affected_variants": [
+        "B",
+        "C"
+      ],
+      "severity": "MEDIUM",
+      "evidence": [
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/comparison/variant_abc_comparison.json",
+        "AURA_KB/drivers/wsa884x_three_variant_experiment/preflight/experiment_design.json"
+      ],
+      "mitigation": "Add policy for verifier reference neutrality and expand fixtures to multi-file families before stronger blocking enforcement.",
+      "promotion_impact": "QUARANTINE"
+    }
+  ]
+}
