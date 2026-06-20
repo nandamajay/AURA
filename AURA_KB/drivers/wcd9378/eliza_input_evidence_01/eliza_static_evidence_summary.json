@@ -1,0 +1,134 @@
+{
+  "artifact": "wcd9378_eliza_static_evidence_summary",
+  "generated_at_local": "2026-06-20T10:55:00+05:30",
+  "scope": "Static extraction from local WCD9378 datasheet and ELIZA schematic only; Gerrit patch content unavailable without authentication.",
+  "terminology": {
+    "downstream": "LA / Linux Android",
+    "upstream": "LE / Linux Embedded"
+  },
+  "schematic_evidence": {
+    "source": "/local/mnt/workspace/Datasheets/ELIZA_schematic_wcd9378.pdf",
+    "title_hits": [
+      "SCHEMATIC, CCA, EVK AUDIO DC, WCD9378, 2XWSA884X"
+    ],
+    "component": {
+      "part_ref": "U6",
+      "part_number": "CD90-58923-1",
+      "evidence_lines": [1020, 1104]
+    },
+    "reset": {
+      "signal": "WCD9378_RST_N",
+      "codec_pin": "RESET_N / pin 33",
+      "evidence_lines": [232, 1110, 1112]
+    },
+    "soundwire": {
+      "rx": {
+        "signals": [
+          "WCD9378_SWR_RX_CLK -> CDC_SWR_RX_CLK / pin 19",
+          "WCD9378_SWR_RX_DATA0 -> CDC_SWR_RX_D0 / pin 28",
+          "WCD9378_SWR_RX_DATA1 -> CDC_SWR_RX_D1 / pin 10"
+        ],
+        "evidence_lines": [474, 478, 482, 1125, 1128, 1131]
+      },
+      "tx": {
+        "signals": [
+          "WCD9378_SWR_TX_CLK -> CDC_SWR_TX_CLK / pin 20",
+          "WCD9378_SWR_TX_DATA0 -> CDC_SWR_TX_D0 / pin 15",
+          "WCD9378_SWR_TX_DATA1 -> CDC_SWR_TX_D1 / pin 16"
+        ],
+        "evidence_lines": [462, 466, 470, 1142, 1145, 1148]
+      }
+    },
+    "analog_inputs": {
+      "signals": [
+        "WCD9378_AMIC1_IN_P/M",
+        "WCD9378_AMIC2_IN_P/M",
+        "WCD9378_AMIC3_IN_P/M",
+        "WCD9378_AMIC4_IN_P/M"
+      ],
+      "evidence_lines": [1111, 1114, 1119, 1122, 1129, 1134, 1140, 1143]
+    },
+    "analog_outputs": {
+      "signals": [
+        "WCD9378_HPH_L",
+        "WCD9378_HPH_R",
+        "WCD9378_HPH_REF",
+        "WCD9378_AUX_P",
+        "WCD9378_AUX_M",
+        "WCD9378_EAR_OUT_P",
+        "WCD9378_EAR_OUT_M"
+      ],
+      "evidence_lines": [1152, 1155, 1162, 1165, 1175, 1178, 1180]
+    },
+    "mic_bias_and_supplies": {
+      "mic_bias_signals": [
+        "VREG_WCD9378_MIC_BIAS1 -> MIC_BIAS1 / pin 18",
+        "VREG_WCD9378_MIC_BIAS2 -> MIC_BIAS2 / pin 23",
+        "VREG_WCD9378_MIC_BIAS3 -> MIC_BIAS3 / pin 14"
+      ],
+      "supply_signals": [
+        "VREG_WCD9378_MIC_BIAS_3P3 -> VDD_MIC_BIAS / pin 9",
+        "VREG_WCD9378_A_1P8 -> VDD_A / pin 25",
+        "VREG_WCD9378_IO_1P2_1P8 -> VDD_IO / pin 24",
+        "VREG_WCD9378_CP_1P8 -> VDD_CP / pin 50"
+      ],
+      "evidence_lines": [945, 970, 1031, 1036, 1042, 1047, 1175, 1178, 1181]
+    }
+  },
+  "datasheet_evidence": {
+    "source": "/local/mnt/workspace/Datasheets/80-71506-1_REV_AA_Qualcomm_Aqstic_WCD9378_Data_Sheet.pdf",
+    "interfaces": {
+      "soundwire": "SoundWire access to on-chip digital audio channels with 1.2V/1.8V support; Tx and Rx SoundWire peripherals with two data lanes each.",
+      "evidence_lines": [13, 317, 318, 322, 535, 549, 550, 551, 552]
+    },
+    "audio_capability": {
+      "tx_rx_ports": "Four analog input Tx ports and four analog output Rx ports; three ADCs and four DACs.",
+      "outputs": "Earpiece, stereo HPH PA, and AUX PA are described as analog output ports.",
+      "evidence_lines": [15, 17, 344, 351, 523, 524, 525, 526, 527, 528]
+    },
+    "pin_mapping": {
+      "reset_pin": "RESET_N is pin 33 and described as WCD9378 IC level reset.",
+      "rx_swr_pins": "SWR_RX_CLK pin 19, SWR_RX_DATA0 pin 28, SWR_RX_DATA1 pin 10.",
+      "tx_swr_pins": "SWR_TX_CLK pin 20, SWR_TX_DATA0 pin 15, SWR_TX_DATA1 pin 16.",
+      "evidence_lines": [535, 549, 550, 551, 552, 553]
+    },
+    "power_pins": {
+      "pins": [
+        "VDD_CX pin 6",
+        "VDD_PX pin 24",
+        "VDD_MIC_BIAS pin 9",
+        "VDD_A pin 25",
+        "VDD_CP pin 50",
+        "PA_VPOS pin 39",
+        "PA_VNEG pin 43"
+      ],
+      "evidence_lines": [578, 582, 583, 584, 585, 586, 587, 588]
+    },
+    "mic_bias": {
+      "description": "Three microphone bias voltage sources, programmable from 1.05V to 2.85V in 50mV steps; normal operation typ 1.8V and max 2.85V.",
+      "evidence_lines": [390, 391, 392, 568, 570, 571, 572, 1513, 1521, 1522]
+    },
+    "device_identification": {
+      "chip_id_bytes": "WCD9378 sample table shows CHIP_ID_BYTE_0..3 as 0x00, 0x00, 0x10, 0x01 for ES/CS rows.",
+      "evidence_lines": [1677, 1679, 1680, 1685, 1687, 1691],
+      "pm_note": "This is useful but does not by itself prove Linux SoundWire SDW_SLAVE_ENTRY manufacturer/part/class values; runtime/sysfs/modalias evidence remains required."
+    }
+  },
+  "blocked_or_missing": [
+    {
+      "item": "Gerrit DTS patch contents",
+      "status": "MISSING_AUTH_REQUIRED",
+      "impact": "Cannot verify exact LA downstream DTS changes, compatible strings, GPIO numbering, port mapping, or DAI links from the Gerrit links directly."
+    },
+    {
+      "item": "Runtime enumeration evidence",
+      "status": "MISSING_BOARD_REQUIRED",
+      "impact": "Cannot accept final SDW identity, paging behavior, or attach/re-enumeration behavior without ELIZA board logs."
+    },
+    {
+      "item": "Register traces for paging and Class-H",
+      "status": "MISSING_BOARD_REQUIRED",
+      "impact": "Static datasheet/schematic evidence does not prove controller/runtime register access correctness."
+    }
+  ]
+}
