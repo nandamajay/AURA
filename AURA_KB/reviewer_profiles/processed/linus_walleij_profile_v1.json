@@ -1,0 +1,476 @@
+{
+  "reviewer": "Linus Walleij",
+  "profile_version": "v1",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "LOW_CONFIDENCE",
+  "series_analyzed": 69,
+  "comment_threads_analyzed": 25,
+  "subsystems_covered": [
+    "pinctrl_qcom"
+  ],
+  "objection_patterns": [
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-019",
+      "reviewer": "Linus Walleij",
+      "category": "objection",
+      "pattern": "\\bfix\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        826722,
+        747252,
+        728030
+      ],
+      "example_comment_excerpts": [
+        "On Fri, Feb 16, 2024 at 11:25 AM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch applied as non-urgent fix. Yours, Linus Walleij",
+        "On Sat, May 13, 2023 at 1:35 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch applied as non-urgent fix. Yours, Linus Walleij",
+        "Patch applied as nonurgent fix, tell me if it should rather be treated as urgent (for the -rc:s and/or stable tags) Yours, Linus Walleij"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-031",
+      "reviewer": "Linus Walleij",
+      "category": "objection",
+      "pattern": "\\bwrong\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        808395
+      ],
+      "example_comment_excerpts": [
+        "On Fri, Dec 8, 2023 at 10:55 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch 9/10 was missing from my inbox (and presumably Rob's too since he didn't ACK it) but there is absolutely nothing wrong wit"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-001",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 26,
+      "example_series_ids": [
+        826722,
+        808395,
+        805332,
+        797084,
+        794371,
+        793041,
+        753176,
+        747252
+      ],
+      "example_comment_excerpts": [
+        "On Fri, Feb 16, 2024 at 11:25 AM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch applied as non-urgent fix. Yours, Linus Walleij",
+        "On Fri, Dec 8, 2023 at 10:55 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch 9/10 was missing from my inbox (and presumably Rob's too since he didn't ACK it) but there is absolutely nothing wrong wit",
+        "On Wed, Nov 29, 2023 at 4:57 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch applied! Yours, Linus Walleij"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-002",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "linus walleij",
+      "frequency": 19,
+      "example_series_ids": [
+        844666,
+        826722,
+        808395,
+        805332,
+        797084,
+        794371,
+        793041,
+        753176
+      ],
+      "example_comment_excerpts": [
+        "On Mon, Apr 15, 2024 at 4:17 PM Herman van Hazendonk <github.com@herrie.org> wrote: Patch applied, fixing subject. Yours, Linus Walleij",
+        "On Fri, Feb 16, 2024 at 11:25 AM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch applied as non-urgent fix. Yours, Linus Walleij",
+        "On Fri, Dec 8, 2023 at 10:55 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch 9/10 was missing from my inbox (and presumably Rob's too since he didn't ACK it) but there is absolutely nothing wrong wit"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-003",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "\\bapplied\\b",
+      "frequency": 18,
+      "example_series_ids": [
+        844666,
+        826722,
+        808395,
+        805332,
+        797084,
+        794371,
+        793041,
+        793040
+      ],
+      "example_comment_excerpts": [
+        "On Mon, Apr 15, 2024 at 4:17 PM Herman van Hazendonk <github.com@herrie.org> wrote: Patch applied, fixing subject. Yours, Linus Walleij",
+        "On Fri, Feb 16, 2024 at 11:25 AM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch applied as non-urgent fix. Yours, Linus Walleij",
+        "On Fri, Dec 8, 2023 at 10:55 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Patch 9/10 was missing from my inbox (and presumably Rob's too since he didn't ACK it) but there is absolutely nothing wrong wit"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-004",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "yours linus",
+      "frequency": 17,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-005",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "yours linus walleij",
+      "frequency": 17,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-006",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "linaro org",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-007",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "org wrote",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-008",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "kozlowski krzysztof",
+      "frequency": 13,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-009",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "kozlowski linaro",
+      "frequency": 13,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-026",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "\\blgtm\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        726155
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Mar 2, 2023 at 4:52 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: LGTM, is this something I should just apply or will you collect a larger series of Qcom DT patches this time around as well? Your"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-027",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "\\blooks\\s+good\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        767533
+      ],
+      "example_comment_excerpts": [
+        "On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: This sure looks good to me. Krzystof, can you collect a branch with pin control changes for Qualcomm chips that I can pull? If i"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-028",
+      "reviewer": "Linus Walleij",
+      "category": "acceptance",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        753176
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Jun 1, 2023 at 5:21 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: This makes things look much better. Reviewed-by: Linus Walleij <linus.walleij@linaro.org> Yours, Linus Walleij"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-010",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 10,
+      "example_series_ids": [
+        793040,
+        767533,
+        726155
+      ],
+      "example_comment_excerpts": [
+        "On Fri, Oct 13, 2023 at 4:57 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: What a mess, I applied the patch for fixes so I try to cram in a last pull request before the merge window. Yours, Linus Walleij",
+        "On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: This sure looks good to me. Krzystof, can you collect a branch with pin control changes for Qualcomm chips that I can pull? If i",
+        "On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Thanks, I think you know better than me what is the stuff that is reviewed and ready for merge. I have this on my devel branch s"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-011",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "pinctrl qcom",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-012",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "kozlowski krzysztof",
+      "frequency": 5,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-013",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "kozlowski linaro",
+      "frequency": 5,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-014",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "linaro org",
+      "frequency": 5,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-015",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "org wrote",
+      "frequency": 5,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-016",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "pm krzysztof",
+      "frequency": 5,
+      "example_series_ids": [
+        793040,
+        767533,
+        726155
+      ],
+      "example_comment_excerpts": [
+        "On Fri, Oct 13, 2023 at 4:57 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: What a mess, I applied the patch for fixes so I try to cram in a last pull request before the merge window. Yours, Linus Walleij",
+        "On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: This sure looks good to me. Krzystof, can you collect a branch with pin control changes for Qualcomm chips that I can pull? If i",
+        "On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Thanks, I think you know better than me what is the stuff that is reviewed and ready for merge. I have this on my devel branch s"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-017",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "yours linus",
+      "frequency": 5,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-020",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "\\?+",
+      "frequency": 3,
+      "example_series_ids": [
+        767533,
+        726155
+      ],
+      "example_comment_excerpts": [
+        "On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: This sure looks good to me. Krzystof, can you collect a branch with pin control changes for Qualcomm chips that I can pull? If i",
+        "On Thu, Mar 2, 2023 at 4:52 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: LGTM, is this something I should just apply or will you collect a larger series of Qcom DT patches this time around as well? Your",
+        "On Tue, Mar 7, 2023 at 2:40 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: OK patch applied! Also: good job! The Qualcomm bindings look very nice now. But what about these oldskool bindings? $ ls Document"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-021",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "\\bwhat\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        793040,
+        767533,
+        726155
+      ],
+      "example_comment_excerpts": [
+        "On Fri, Oct 13, 2023 at 4:57 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: What a mess, I applied the patch for fixes so I try to cram in a last pull request before the merge window. Yours, Linus Walleij",
+        "On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Thanks, I think you know better than me what is the stuff that is reviewed and ready for merge. I have this on my devel branch s",
+        "On Tue, Mar 7, 2023 at 2:40 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: OK patch applied! Also: good job! The Qualcomm bindings look very nice now. But what about these oldskool bindings? $ ls Document"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-032",
+      "reviewer": "Linus Walleij",
+      "category": "question",
+      "pattern": "\\bcan\\s+you\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        767533
+      ],
+      "example_comment_excerpts": [
+        "On Wed, Jul 19, 2023 at 9:21 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: This sure looks good to me. Krzystof, can you collect a branch with pin control changes for Qualcomm chips that I can pull? If i"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [],
+  "subsystem_specific_rules": [
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-018",
+      "reviewer": "Linus Walleij",
+      "category": "subsystem_rule",
+      "pattern": "\\bpinctrl\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        767533,
+        739127,
+        726155,
+        719599,
+        714226
+      ],
+      "example_comment_excerpts": [
+        "On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Thanks, I think you know better than me what is the stuff that is reviewed and ready for merge. I have this on my devel branch s",
+        "On Wed, Apr 12, 2023 at 1:48 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Pulled into the pinctrl devel branch for v6.4! Great work as always, thanks! Linus Walleij",
+        "On Tue, Mar 7, 2023 at 2:40 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: OK patch applied! Also: good job! The Qualcomm bindings look very nice now. But what about these oldskool bindings? $ ls Document"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-022",
+      "reviewer": "Linus Walleij",
+      "category": "subsystem_rule",
+      "pattern": "\\bqcom\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        767533,
+        726155
+      ],
+      "example_comment_excerpts": [
+        "On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Thanks, I think you know better than me what is the stuff that is reviewed and ready for merge. I have this on my devel branch s",
+        "On Thu, Mar 2, 2023 at 4:52 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: LGTM, is this something I should just apply or will you collect a larger series of Qcom DT patches this time around as well? Your",
+        "On Tue, Mar 7, 2023 at 2:40 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: OK patch applied! Also: good job! The Qualcomm bindings look very nice now. But what about these oldskool bindings? $ ls Document"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "LINUS_WALLEIJ-PAT-034",
+      "reviewer": "Linus Walleij",
+      "category": "subsystem_rule",
+      "pattern": "dt-binding",
+      "frequency": 1,
+      "example_series_ids": [
+        767533
+      ],
+      "example_comment_excerpts": [
+        "On Mon, Jul 24, 2023 at 9:06 PM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: Thanks, I think you know better than me what is the stuff that is reviewed and ready for merge. I have this on my devel branch s"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "top_objection_topics": [
+    "\\bfix\\b",
+    "\\bwrong\\b"
+  ],
+  "top_acceptance_signals": [
+    "krzysztof kozlowski",
+    "linus walleij",
+    "\\bapplied\\b",
+    "yours linus",
+    "yours linus walleij",
+    "linaro org",
+    "org wrote",
+    "kozlowski krzysztof",
+    "kozlowski linaro",
+    "\\blgtm\\b"
+  ],
+  "typical_review_iterations": 4,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "HIGH",
+  "known_limitations": [
+    "Limited thread coverage for HIGH-confidence generalization."
+  ],
+  "profile_notes": "Derived from Patchwork review comments using deterministic filters and regex/ngram extraction."
+}

@@ -1,0 +1,188 @@
+{
+  "artifact": "reviewer_profile_validation_results_v1",
+  "generated_date": "2026-06-21",
+  "selected_validation_cases": {
+    "accepted_count": 3,
+    "rejected_or_changes_requested_count": 1,
+    "accepted_series_ids": [
+      709170,
+      713180,
+      713328
+    ],
+    "rejected_series_ids": [
+      760884
+    ]
+  },
+  "cases": [
+    {
+      "series_id": 709170,
+      "subject": "[1/2] ASoC: dt-bindings: fsl-sai: Simplify the VFxxx dmas binding",
+      "reviewer": "Krzysztof Kozlowski",
+      "reviewer_slug": "krzysztof_kozlowski",
+      "state": "accepted",
+      "expected_blocking_objection": false,
+      "patterns_fired": [
+        {
+          "section": "objection_patterns",
+          "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-019",
+          "pattern": "best regards",
+          "severity": "BLOCKING"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-045",
+          "pattern": "\\basoc\\b",
+          "severity": "INFO"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-046",
+          "pattern": "dt-binding",
+          "severity": "INFO"
+        },
+        {
+          "section": "question_patterns",
+          "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-003",
+          "pattern": "best regards",
+          "severity": "INFO"
+        },
+        {
+          "section": "question_patterns",
+          "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-014",
+          "pattern": "krzysztof kozlowski",
+          "severity": "INFO"
+        }
+      ],
+      "blocking_fired": true,
+      "real_comment_classifications": [
+        "acceptance"
+      ]
+    },
+    {
+      "series_id": 713180,
+      "subject": "[1/2] ASoC: dt-bindings: qcom, sm8250: use fallback for SDM845 sound cards",
+      "reviewer": "Mark Brown",
+      "reviewer_slug": "mark_brown",
+      "state": "accepted",
+      "expected_blocking_objection": false,
+      "patterns_fired": [
+        {
+          "section": "objection_patterns",
+          "pattern_id": "MARK_BROWN-PAT-005",
+          "pattern": "\\bfix\\b",
+          "severity": "BLOCKING"
+        },
+        {
+          "section": "objection_patterns",
+          "pattern_id": "MARK_BROWN-PAT-006",
+          "pattern": "\\bshould\\s+be\\b",
+          "severity": "BLOCKING"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "MARK_BROWN-PAT-007",
+          "pattern": "\\basoc\\b",
+          "severity": "INFO"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "MARK_BROWN-PAT-008",
+          "pattern": "\\bqcom\\b",
+          "severity": "INFO"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "MARK_BROWN-PAT-016",
+          "pattern": "dt-binding",
+          "severity": "INFO"
+        },
+        {
+          "section": "nit_patterns",
+          "pattern_id": "MARK_BROWN-PAT-018",
+          "pattern": "applied to",
+          "severity": "INFO"
+        }
+      ],
+      "blocking_fired": true,
+      "real_comment_classifications": [
+        "acceptance"
+      ]
+    },
+    {
+      "series_id": 760884,
+      "subject": "ASoC: qcom: get tplg firmware-name from device tree",
+      "reviewer": "Mark Brown",
+      "reviewer_slug": "mark_brown",
+      "state": "changes-requested",
+      "expected_blocking_objection": true,
+      "patterns_fired": [
+        {
+          "section": "objection_patterns",
+          "pattern_id": "MARK_BROWN-PAT-026",
+          "pattern": "\\bdon\\'t\\b",
+          "severity": "BLOCKING"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "MARK_BROWN-PAT-007",
+          "pattern": "\\basoc\\b",
+          "severity": "INFO"
+        },
+        {
+          "section": "subsystem_specific_rules",
+          "pattern_id": "MARK_BROWN-PAT-008",
+          "pattern": "\\bqcom\\b",
+          "severity": "INFO"
+        },
+        {
+          "section": "question_patterns",
+          "pattern_id": "MARK_BROWN-PAT-037",
+          "pattern": "\\?+",
+          "severity": "INFO"
+        },
+        {
+          "section": "question_patterns",
+          "pattern_id": "MARK_BROWN-PAT-042",
+          "pattern": "\\bwhy\\b",
+          "severity": "INFO"
+        }
+      ],
+      "blocking_fired": true,
+      "real_comment_classifications": [
+        "question"
+      ]
+    }
+  ],
+  "metrics": {
+    "per_reviewer": {
+      "krzysztof_kozlowski": {
+        "reviewer": "Krzysztof Kozlowski",
+        "precision": 0.0,
+        "recall": 0.0,
+        "false_positive_count": 1,
+        "false_negative_count": 0,
+        "accepted_cases": 1,
+        "rejected_cases": 0,
+        "false_positive_rate": 1.0
+      },
+      "mark_brown": {
+        "reviewer": "Mark Brown",
+        "precision": 0.5,
+        "recall": 1.0,
+        "false_positive_count": 1,
+        "false_negative_count": 0,
+        "accepted_cases": 1,
+        "rejected_cases": 1,
+        "false_positive_rate": 1.0
+      }
+    },
+    "overall": {
+      "precision": 0.3333,
+      "recall": 1.0,
+      "false_positive_total": 2,
+      "false_negative_total": 0,
+      "objection_pattern_precision_target_met": false,
+      "accepted_patch_false_positive_target_met": true
+    }
+  }
+}

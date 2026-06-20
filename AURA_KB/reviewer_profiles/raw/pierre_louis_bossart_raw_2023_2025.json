@@ -1,0 +1,508 @@
+{
+  "reviewer": "Pierre-Louis Bossart",
+  "fetch_date": "2026-06-20T20:17:17Z",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "scope_queries_used": [
+    "ASoC: SoundWire",
+    "soundwire: qcom",
+    "ASoC: qcom",
+    "ASoC: codecs"
+  ],
+  "series_fetched": 300,
+  "series_with_reviewer_comments": 10,
+  "comments_fetched": 483,
+  "comments_after_filter": 29,
+  "series": [
+    {
+      "series_id": 808030,
+      "subject": "soundwire/ASoC: speed-up downloads with BTP/BRA protocol",
+      "state": "unknown",
+      "date": "2023-12-07T22:29:28",
+      "patch_count": 16,
+      "patch_ids": [
+        13484422,
+        13484421,
+        13484423,
+        13484424,
+        13484425,
+        13484426,
+        13484428,
+        13484427,
+        13484429,
+        13484431,
+        13484430,
+        13484432,
+        13484433,
+        13484434,
+        13484435,
+        13484436
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25643379,
+          "date": "2023-12-18T12:58:47",
+          "word_count": 109,
+          "classification": "question",
+          "text": "Yes, we can split the Cadence parts out. System suspend (which can also mean S0i1). I don't think we can have a case where a peripheral driver waits on something without having done a pm_runtime_get_sync() to prevent runtime_pm suspend. Symmetry is the only thing that comes to my mind. Open - close and send - wait are natural matches, aren't they? We do need a wait(), so bundling open() and send() would be odd. But you have a point that the open() is not generic in that it also prepares the DMA buffers for transmission. Maybe it's more natural to follow the traditional open(), hw_params(), hw_free, close() from ALSA.",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25643381,
+          "date": "2023-12-18T13:20:23",
+          "word_count": 142,
+          "classification": "objection",
+          "text": "Yes for now there is a BTP/BRA single stream active when there are no audio transfers taking place. This is the only way to guarantee predictable download/resume times. There is no mechanism to queue up transfers, be it from the same peripheral device or different ones. It would be up to the peripheral driver to wait for the BTP stream to be available. Adding a queuing mechanism is a bridge too far for now, most platforms only have 1 or 2 devices only, and a peripheral driver may or may not be ok with delayed downloads. For now the main ask is to reduce download times, a single stream is already a good start. There are other refinements we need to add as well, such as changing clocks to use the fastest gear. I'd like to proceed with baby steps...",
+          "patch_id": 13484427,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25643382,
+          "date": "2023-12-18T13:26:15",
+          "word_count": 58,
+          "classification": "question",
+          "text": "The table is going to be the same for all hosts, it's simpler if everyone uses a constant table, no? We're talking about 256 bytes added for the common bus parts, be it with dynamically allocated memory or a static table. I don't mind reverting to a dynamically allocated table populated at boot if that was the consensus.",
+          "patch_id": 13484429,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25644877,
+          "date": "2023-12-18T16:33:02",
+          "word_count": 73,
+          "classification": "neutral",
+          "text": "Fair enough, send()/wait() would work indeed. I guess I wanted to keep the callbacks reasonably small (already 200 lines for the open), but we can split the 'send' callback into smaller helpers to keep the code readable. There's no good reason to expose these smaller helpers to codec drivers. That's right, the open was not compatible with multiple operations. Collapsing open/send and wait/close sounds more logical, thanks for the feedback.",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25644878,
+          "date": "2023-12-18T16:44:15",
+          "word_count": 83,
+          "classification": "question",
+          "text": "SoundWire has lots of fancy and borderline nebulous concepts, my take is \"let's do few things and do them well\". We can always revisit new usages later, for now my main objective is \"speed up downloads\". I don't have any information on other controllers, but I wouldn't be surprised if most of the quirks are due to peripheral limitations and ambiguous interpretations of what 'ACK' means. I tried writing to reserved parts of the memory or non-existent registers and nothing bad was reported...",
+          "patch_id": 13484428,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25645387,
+          "date": "2023-12-19T17:08:15",
+          "word_count": 80,
+          "classification": "neutral",
+          "text": "ok. I am starting to think that we could have a new type of regmap, say \"regmap-sdw-bra\", where the use of write_raw_async() would rely on the send/wait bus primitives, and write_raw() would fallback to the regular read/write commands. We'd need a mutual exclusion to prevent parallel async/sync access to the same regmap. In other words, \"memory\" areas that are used for firmware downloads would be moved to a different regmap with async capabilities and no caching support.",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25647199,
+          "date": "2023-12-20T18:26:24",
+          "word_count": 101,
+          "classification": "question",
+          "text": "Right, I was probably going too far down in the details for a December 20 post. The point I was trying to make it seems there's consensus that regmap with the async parts would be the API used by SoundWire/ASoC codecs, and the regmap implementation would rely on the bus/host send/wait routines. The regmap stuff will need joint work with codec driver folks so it should indeed be done in a second step when the SoundWire bus/host parts are available. Put differently: is there any sustained objection to the proposal of extending regmap with async BRA transfers?",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25648583,
+          "date": "2023-12-21T17:09:40",
+          "word_count": 88,
+          "classification": "acceptance",
+          "text": "On paper queueing is nice/elegant. In practice it's likely that there's a bit of configuration needed before/after each download, e.g. restart the DSP. It would also be an absolute horror to deal with error flow if one of the queued transfers did not succeed. I would be more than happy if we successfully enable a single transfer across multiple platforms, and look at queueing as a optimization. BTW even if there are multiple transfers queued, there's still only one stream active at a given time.",
+          "patch_id": 13484427,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25648584,
+          "date": "2023-12-21T17:15:05",
+          "word_count": 56,
+          "classification": "objection",
+          "text": "All Intel hardware supports BTP/BRA, we just didn't have a compelling reason to enable it so far. I've seen AMD stating that they also have BTP/BRA. That's 2/3 of controllers. I don't mind reverting to a devm_ allocated table, I am not sure I see the benefits for 256 bytes of constant data.",
+          "patch_id": 13484429,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25984561,
+          "date": "2024-08-20T07:48:05",
+          "word_count": 206,
+          "classification": "question",
+          "text": "Hi Mark, I am now revisiting this entire patchset to try to enable firmware downloads with this SoundWire BPT/BRA protocol. I re-looked at regmap_raw_write_async()/regmap_async_complete() and they seem to map well with my initial write/wait_async proposal. Do I get this right that these async capabilities could be used to enable this faster SoundWire protocol, but the regular regmap_write() could still happen in parallel with these async transfers? This could be useful if e.g. there's a jack detection while downloading firmware for another function. I don't see any locking that would prevent such a dual operation - with the caveat that it would be up to the codec driver to make sure they don't try to access the same register with the two modes of operation. The only thing that would need to be extended is that we'd need additional callbacks to check if the protocol is supported on a given hardware/firmware platform, and if there's no audio stream. In these cases the async writes would be demoted to regular writes. Otherwise the bus would be locked to make sure no reconfiguration takes place while the firmware download happens, and unlocked when the transfer ends. Thanks for your help on all this, -Pierre",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25985342,
+          "date": "2024-08-20T14:58:30",
+          "word_count": 84,
+          "classification": "objection",
+          "text": "ok. I am struggling a bit to adjust the plumbing that was obviously defined for SPI. The regmap async_write() doesn't have any wait, but there's a notifier that needs to be called by *something* that waits. I think the SPI layer has a set of kthreads but in our case we could just rely on a a workqueue after 1ms or something and do the wait then for the DMAs to complete and finally call the notifier to wake-up the regmap stuff. sounds good.",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 804934,
+      "subject": "[1/2] ASoC: qcom: Add helper for allocating Soundwire stream runtime",
+      "state": "unknown",
+      "date": "2023-11-28T16:56:37",
+      "patch_count": 2,
+      "patch_ids": [
+        13471449,
+        13471450
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25611877,
+          "date": "2023-11-28T17:39:57",
+          "word_count": 46,
+          "classification": "question",
+          "text": "I know this is existing code moved into a helper, but out of curiosity why is -ENOTSUPP ignored? Isn't this problematic? Also should the CPU DAIs also be used to set the stream information? it's not clear to me why only the CODEC DAIs are used.",
+          "patch_id": 13471449,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25614052,
+          "date": "2023-11-29T16:46:52",
+          "word_count": 79,
+          "classification": "question",
+          "text": "Humm, it was my understanding that the substream is mapped 1:1 with a dailink, so not sure how SoundWire and non-SoundWire DAIs could be part of the same dailink? I am not saying this test is silly, just wondering if there is any case where this error code is returned. Worst-case it's always false but harmless. Fair enough, I've been in your shoes :-) Not always easy to grade 3+ yr code as 'miss', 'bug', 'optimization' or 'feature'...",
+          "patch_id": 13471449,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 804936,
+      "subject": "[1/2] ASoC: qcom: Add helper for allocating Soundwire stream runtime",
+      "state": "accepted",
+      "date": "2023-11-28T16:56:37",
+      "patch_count": 2,
+      "patch_ids": [
+        13471452,
+        13471453
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25611863,
+          "date": "2023-11-28T17:39:57",
+          "word_count": 46,
+          "classification": "question",
+          "text": "I know this is existing code moved into a helper, but out of curiosity why is -ENOTSUPP ignored? Isn't this problematic? Also should the CPU DAIs also be used to set the stream information? it's not clear to me why only the CODEC DAIs are used.",
+          "patch_id": 13471452,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25614050,
+          "date": "2023-11-29T16:46:52",
+          "word_count": 79,
+          "classification": "question",
+          "text": "Humm, it was my understanding that the substream is mapped 1:1 with a dailink, so not sure how SoundWire and non-SoundWire DAIs could be part of the same dailink? I am not saying this test is silly, just wondering if there is any case where this error code is returned. Worst-case it's always false but harmless. Fair enough, I've been in your shoes :-) Not always easy to grade 3+ yr code as 'miss', 'bug', 'optimization' or 'feature'...",
+          "patch_id": 13471452,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 804904,
+      "subject": "soundwire: qcom: allow multi-link on newer devices",
+      "state": "unknown",
+      "date": "2023-11-28T15:00:49",
+      "patch_count": 1,
+      "patch_ids": [
+        13471342
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25611876,
+          "date": "2023-11-28T15:35:56",
+          "word_count": 58,
+          "classification": "nit",
+          "text": "nit-pick: read_prop() literally means \"read platform properties\". The functionality implemented in this callback looks more like an initialization done in a probe, no? just realizing this now, are you sure the 'port_lock' is the proper means to protecting the stream->master_list? I don't see this used anywhere else in stream.c. I think you need to use bus_lock.",
+          "patch_id": 13471342,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 796487,
+      "subject": "[1/3] soundwire: qcom: drop unneeded DAI .set_stream callback",
+      "state": "unknown",
+      "date": "2023-10-25T14:45:59",
+      "patch_count": 3,
+      "patch_ids": [
+        13436310,
+        13436311,
+        13436359
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25570431,
+          "date": "2023-10-25T15:03:09",
+          "word_count": 58,
+          "classification": "question",
+          "text": "Sorry, maybe I am really thick or need coffee, but I can't figure out why this is necessary. Each amplifier has its own \"wsa884x_priv\" context and should have its own DAI, not following why the set_stream would mix-up the two dais? We've been using two buses for two amplifiers since CometLake (2019?) and I don't see what's different?",
+          "patch_id": 13436359,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25570430,
+          "date": "2023-10-25T15:08:50",
+          "word_count": 54,
+          "classification": "neutral",
+          "text": "A stream connects multiple managers and multiple peripherals. The definition above does not make a lot of sense and doesn't work in general since there's no 'owner' really. And nothing prevents the use of multiple controllers, there are not restrictions in the MIPI DisCo spec that prevent a stream from relying on different controllers.",
+          "patch_id": 13436311,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25570432,
+          "date": "2023-10-25T15:12:23",
+          "word_count": 64,
+          "classification": "nit",
+          "text": "This last sentence is confusing at best. A controller can have one or more managers, each of whom can have one or more peripherals. only peripherals should expose codec DAIs, managers should expose CPU DAIs. Put differently, the controller is the host part while the peripheral is the codec part. \"controllers passed as codec DAIs\" is not really possible, or this was a typo?",
+          "patch_id": 13436310,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25582944,
+          "date": "2023-11-03T15:29:13",
+          "word_count": 62,
+          "classification": "question",
+          "text": "Is this a case where the SoundWire manager is part of a codec? In that case, how are the SoundWire peripheral modeled? The .set_stream callback was really meant to be used when you have a CPU DAI for the manager and a codec DAI for the peripheral(s). This seems to be a different configuration where CPU and codec DAIs are mixed.",
+          "patch_id": 13436310,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 756223,
+      "subject": "ASoC: amd: ps: add SoundWire support",
+      "state": "accepted",
+      "date": "2023-06-12T09:58:54",
+      "patch_count": 9,
+      "patch_ids": [
+        13276217,
+        13276214,
+        13276215,
+        13276216,
+        13276218,
+        13276220,
+        13276219,
+        13276221,
+        13276222
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25378783,
+          "date": "2023-06-12T18:09:26",
+          "word_count": 25,
+          "classification": "nit",
+          "text": "= nit-pick: the count is not enough, you should also check that only bits 0 and 1 are set in mipi-sdw-manager-list... ... otherwise this will be wrong.",
+          "patch_id": 13276217,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25384959,
+          "date": "2023-06-15T16:21:55",
+          "word_count": 83,
+          "classification": "question",
+          "text": "That reply was \" Currently, SDW0 instance uses 3 TX, 3 RX ports whereas SDW1 instance uses 1 TX, 1 RX ports. For SDW1 instance, It uses AUDIO1 register set as per our register spec. We have mantained similar mapping convention here for enums as well. \" It wouldn't hurt to add a comment in the code to remind the reviewer that this is intentional and aligned with the hardware documentation. This is surprising, I thought this was already ensured by the hw_info stuff? ok",
+          "patch_id": 13276216,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 748558,
+      "subject": "[1/2] soundwire: qcom: fix unbalanced pm_runtime_put()",
+      "state": "unknown",
+      "date": "2023-05-17T16:37:49",
+      "patch_count": 2,
+      "patch_ids": [
+        13245326,
+        13245327
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25339668,
+          "date": "2023-05-17T16:47:20",
+          "word_count": 23,
+          "classification": "acceptance",
+          "text": "Yes, this resume_and_get() added more problems indeed. One of those well-intended changes that went sideways. Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "patch_id": 13245326,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 741664,
+      "subject": "ASoC/soundwire: qcom: correctly probe devices after link init",
+      "state": "unknown",
+      "date": "2023-04-20T10:16:11",
+      "patch_count": 6,
+      "patch_ids": [
+        13218417,
+        13218418,
+        13218419,
+        13218420,
+        13218421,
+        13218422
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25307600,
+          "date": "2023-04-20T14:18:15",
+          "word_count": 200,
+          "classification": "objection",
+          "text": "That last sentence isn't aligned with the way enumeration works in general for SoundWire. The Manager starts the clock, usually after a bus reset, and waits for Peripherals to signal their presence with Device0 Attached. If multiple Peripherals are attached as Device0, the enumeration will resolve conflicts at the hardware level, and the Manager *cannot* control the order of enumeration; the order is defined by the values in the devID registers, whichever Peripheral has the highest value in the DevID registers wins the enumeration, and others have to back-off and be enumerated later. Probing and enumeration are also different concepts. The SoundWire design allows for drivers to be probed even in the absence of any active hardware. This was added on purpose so that the driver could e.g. program a GPIO or talk to a power-management chip to allow SoundWire devices to start interacting with the bus. see also suggestion below... ... the alternative is to move regmap to be cache-only in the probe and remove the cache-only property when the device is enumerated. That's a trick that's used for all resume cases in codecs in Intel platforms, and we need to extend it for the startup cases as well.",
+          "patch_id": 13218419,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25307949,
+          "date": "2023-04-20T21:13:11",
+          "word_count": 143,
+          "classification": "question",
+          "text": "The Soundwire 1.2.1 spec moved away from master/slave and uses manager/peripheral. It's the same concepts, just different terms. At some point we'll update the code, it's just been too busy in 2022/2023 to do this replacement. It doesn't hurt to use the new terms. will do. I really don't have any understanding or background on what this does. Is there actually a precedent for this? I mean, dealing with the device/driver model is already complicated, if now we have to be careful on when the device pointer is stored it adds a whole new element of complexity or skillset required to understand the bus operation. Re-looking at the code, the 'md' variable is allocated in sdw_master_device_add(), initialized with all kinds of values, used by device_register() so presumably when you store the value it's stored somewhere consistent, no?",
+          "patch_id": 13218421,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25321597,
+          "date": "2023-05-03T14:11:15",
+          "word_count": 96,
+          "classification": "question",
+          "text": "I thought you were talking about ASoC \"struct snd_soc_component\" but no, that's \"struct component_ops\" in wcd938x-sdw.c Now I think I get the scope of the problem, I didn't click on the fact that it's a platform driver that registers ASoC components, and not the SoundWire codec driver. That's certainly more complicated than any other SoundWire-based systems I've seen so far. It's already difficult to keep track of the SoundWire peripheral driver .probe(), the ASoC component .probe(), the SoundWire bus .update_status() callback and now there's the component .bind() added. Wow. What could possibly go wrong, eh?",
+          "patch_id": 13218422,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 716323,
+      "subject": "ASoC: cs42l42: Add SoundWire support",
+      "state": "accepted",
+      "date": "2023-01-27T16:51:04",
+      "patch_count": 8,
+      "patch_ids": [
+        13119039,
+        13119043,
+        13119042,
+        13119051,
+        13119041,
+        13119048,
+        13119049,
+        13119050
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25188019,
+          "date": "2023-01-30T16:45:14",
+          "word_count": 49,
+          "classification": "nit",
+          "text": "nit-pick: It's more that the Intel controller has a power optimization where the context is lost when stopping the clock, which requires a bus reset and full re-enumeration/initialization when the clock resumes. The rest of the patch is fine so Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "patch_id": 13119050,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 713328,
+      "subject": "ASoC: cs42l42: Add Soundwire support",
+      "state": "accepted",
+      "date": "2023-01-18T16:04:45",
+      "patch_count": 8,
+      "patch_ids": [
+        13106623,
+        13106624,
+        13106628,
+        13106627,
+        13106629,
+        13106630,
+        13106631,
+        13106625
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25168898,
+          "date": "2023-01-18T16:41:18",
+          "word_count": 57,
+          "classification": "question",
+          "text": "Humm, you probably want to clarify the terminology, the 'soft reset' is defined in the SoundWire spec as the case where the peripheral device loses sync. Bus reset is a Severe Reset, but there's also a Hard Reset. does this 'SOFT_RESET_REBOOT' need to be accessed when there's a soft reset, or only after a Severe/Hard Reset?",
+          "patch_id": 13106624,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25168897,
+          "date": "2023-01-18T16:46:59",
+          "word_count": 49,
+          "classification": "acceptance",
+          "text": "The explanation is a bit convoluted, clearly the 147-row configuration was only meant to be used with 44100 kHz. I don't think 48kHz can be supported without using the source- or sink-controlled async modes. This is still a valid change so: Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "patch_id": 13106628,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    }
+  ],
+  "fetch_errors": [],
+  "api_rate_limit_hits": 0
+}

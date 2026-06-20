@@ -31,7 +31,7 @@ Advisory only — not a replacement for real upstream review.
 
 | Phase | Name | Status | Target Completion |
 |---|---|---|---|
-| 0 | Reviewer Pattern Learning | NOT_STARTED | Before Phase 1 |
+| 0 | Reviewer Pattern Learning | FAILED | Before Phase 1 |
 | 1 | Simulation Engine Prototype | NOT_STARTED | After Phase 0 |
 | 2 | Subsystem Simulation Integration | NOT_STARTED | After Phase 1 |
 | 3 | Profile Validation | NOT_STARTED | After Phase 2 |
@@ -53,16 +53,16 @@ With this, simulation is grounded in real reviewer behavior from lore/Patchwork 
 
 | Step | Description | Status | Notes |
 |---|---|---|---|
-| 0.1 | Define subsystems and maintainers | NOT_STARTED | |
-| 0.2 | Define fetch parameters | NOT_STARTED | |
-| 0.3 | Fetch raw comment history | NOT_STARTED | |
-| 0.4 | Filter and clean raw data | NOT_STARTED | |
-| 0.5 | Extract objection/acceptance patterns | NOT_STARTED | |
-| 0.6 | Build per-reviewer behavioral profiles | NOT_STARTED | |
-| 0.7 | Build per-subsystem rule sets | NOT_STARTED | |
-| 0.8 | Validate profiles against known outcomes | NOT_STARTED | |
-| 0.9 | Store offline profiles in AURA_KB | NOT_STARTED | |
-| 0.10 | PM review and sign-off | NOT_STARTED | |
+| 0.1 | Define subsystems and maintainers | COMPLETED | reviewer list and subsystem map finalized |
+| 0.2 | Define fetch parameters | COMPLETED | fetch_parameters.json created |
+| 0.3 | Fetch raw comment history | COMPLETED | raw artifacts generated for P0/P1/P2 |
+| 0.4 | Filter and clean raw data | COMPLETED | min-word/bot/ack/CI/duplicate filters applied |
+| 0.5 | Extract objection/acceptance patterns | COMPLETED | per-reviewer pattern sets extracted |
+| 0.6 | Build per-reviewer behavioral profiles | COMPLETED | processed profiles generated where data available |
+| 0.7 | Build per-subsystem rule sets | COMPLETED | rule files created for target subsystems |
+| 0.8 | Validate profiles against known outcomes | COMPLETED | validation report + accuracy metrics generated |
+| 0.9 | Store offline profiles in AURA_KB | COMPLETED | raw/processed/metadata separation enforced |
+| 0.10 | PM review and sign-off | FAILED | see pm_phase0_summary.md |
 
 ### Target Subsystems
 
@@ -319,3 +319,10 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 | Q3 | Should fix_plan.md include code suggestions or issue identification only? | 2026-06-21 | OPEN |
 | Q4 | Patchwork API rate limits — do we need caching strategy? | 2026-06-21 | OPEN |
 | Q5 | Should reviewer profiles be public in AURA_KB or private? | 2026-06-21 | OPEN |
+
+
+### Phase 0 Update (2026-06-21)
+- Verdict: `PHASE_0_FAILED_RETRY_REQUIRED`
+- P0 HIGH confidence reviewers: 1/4
+- P1 LOW/HIGH confidence reviewers: 2/4
+- Artifacts: `AURA_KB/reviewer_profiles/`

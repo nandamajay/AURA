@@ -1,0 +1,422 @@
+{
+  "reviewer": "Bjorn Andersson",
+  "profile_version": "v1",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "LOW_CONFIDENCE",
+  "series_analyzed": 157,
+  "comment_threads_analyzed": 25,
+  "subsystems_covered": [
+    "pinctrl_qcom",
+    "qcom_platform"
+  ],
+  "objection_patterns": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-012",
+      "reviewer": "Bjorn Andersson",
+      "category": "objection",
+      "pattern": "\\bdon\\'t\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        713131,
+        712395,
+        708746
+      ],
+      "example_comment_excerpts": [
+        "Does this imply that switching resolution in runtime is not possible for any of these DSI->HDMI/DP/eDP bridges? The immediate worry is that we need 4k and non-4k variants of every mezzanine (unless we start doing overlay",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sdm630-nile: Don't use underscores in node names commit: 305db81657b47cbf041a45aa4c0845ed600e3157 [2/2] arm64: dts: qcom: sdm630-nile: Reserve simplefb memory commit: 2f20f276dd4f",
+        "I was under the impression that you where working on some updates to EUD and was going to resend this, but I don't find a new version, and I don't see an on-list reply from me. So just to make sure this isn't lost any lo"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-013",
+      "reviewer": "Bjorn Andersson",
+      "category": "objection",
+      "pattern": "\\bfix\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        726610,
+        723382,
+        717021
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8250-xiaomi-elish: fix USB maximum speed property commit: 613f14a3a9d7e12a832ff822f85a33ad0ebee952 [2/2] arm64: dts: qcom: sm8350-microsoft-surface: fix USB dual-role mode prope",
+        "Applied, thanks! [1/2] arm64: dts: qcom: msm8996: move WCD9335 audio codec to boards commit: 5a1816cc2d8caa054aa8b254efea9739aa8a68c6 [2/2] arm64: dts: qcom: apq8096-db820c: fix indentation commit: aec576821e6fd233ae895f",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sa8540p-ride: Fix some i2c pinctrl settings commit: f187e989305a2d57dc0f750ebb63959151b66924 [2/2] arm64: dts: qcom: sa8540p-ride: Document i2c busses commit: f1d6f9d227a0fe887d6a"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-021",
+      "reviewer": "Bjorn Andersson",
+      "category": "objection",
+      "pattern": "\\bbreaks?\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        726788
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sdm845-db845c: drop empty node override commit: e225d56042e3a02aa3ee60c96da687ac3c690a37 [2/2] arm64: dts: qcom: drop redundant line breaks commit: e18b829549793f706c6c8a39f24ba93"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-022",
+      "reviewer": "Bjorn Andersson",
+      "category": "objection",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        713131
+      ],
+      "example_comment_excerpts": [
+        "Does this imply that switching resolution in runtime is not possible for any of these DSI->HDMI/DP/eDP bridges? The immediate worry is that we need 4k and non-4k variants of every mezzanine (unless we start doing overlay"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-001",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "arm64 dts",
+      "frequency": 54,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-002",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "arm64 dts qcom",
+      "frequency": 54,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-003",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "dts qcom",
+      "frequency": 54,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-004",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "\\bapplied\\b",
+      "frequency": 22,
+      "example_series_ids": [
+        727442,
+        726788,
+        726610,
+        726604,
+        726101,
+        723384,
+        723382,
+        723013
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8350: Mark UFS controller as cache coherent commit: e607b3c1fa0e1579951acd00f9559a77f97d0927 [2/2] arm64: dts: qcom: sm8450: Mark UFS controller as cache coherent commit: 8ba961",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sdm845-db845c: drop empty node override commit: e225d56042e3a02aa3ee60c96da687ac3c690a37 [2/2] arm64: dts: qcom: drop redundant line breaks commit: e18b829549793f706c6c8a39f24ba93",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8250-xiaomi-elish: fix USB maximum speed property commit: 613f14a3a9d7e12a832ff822f85a33ad0ebee952 [2/2] arm64: dts: qcom: sm8350-microsoft-surface: fix USB dual-role mode prope"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-005",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "applied thanks",
+      "frequency": 22,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-006",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "best regards",
+      "frequency": 22,
+      "example_series_ids": [
+        727442,
+        726788,
+        726610,
+        726604,
+        726101,
+        723384,
+        723382,
+        723013
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8350: Mark UFS controller as cache coherent commit: e607b3c1fa0e1579951acd00f9559a77f97d0927 [2/2] arm64: dts: qcom: sm8450: Mark UFS controller as cache coherent commit: 8ba961",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sdm845-db845c: drop empty node override commit: e225d56042e3a02aa3ee60c96da687ac3c690a37 [2/2] arm64: dts: qcom: drop redundant line breaks commit: e18b829549793f706c6c8a39f24ba93",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8250-xiaomi-elish: fix USB maximum speed property commit: 613f14a3a9d7e12a832ff822f85a33ad0ebee952 [2/2] arm64: dts: qcom: sm8350-microsoft-surface: fix USB dual-role mode prope"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-009",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "applied thanks arm64",
+      "frequency": 21,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-010",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "thanks arm64",
+      "frequency": 21,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-011",
+      "reviewer": "Bjorn Andersson",
+      "category": "acceptance",
+      "pattern": "thanks arm64 dts",
+      "frequency": 21,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-014",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "\\?+",
+      "frequency": 3,
+      "example_series_ids": [
+        719155,
+        713131,
+        708746
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it would be nice to have that expressed in the message. If nothing else for others to know what such agreed order might be. Unfortunately this doesn't ap",
+        "Does this imply that switching resolution in runtime is not possible for any of these DSI->HDMI/DP/eDP bridges? The immediate worry is that we need 4k and non-4k variants of every mezzanine (unless we start doing overlay",
+        "I was under the impression that you where working on some updates to EUD and was going to resend this, but I don't find a new version, and I don't see an on-list reply from me. So just to make sure this isn't lost any lo"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-015",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "agreed order",
+      "frequency": 2,
+      "example_series_ids": [
+        719155
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it would be nice to have that expressed in the message. If nothing else for others to know what such agreed order might be. Unfortunately this doesn't ap"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-016",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "going to",
+      "frequency": 2,
+      "example_series_ids": [
+        713131,
+        708746
+      ],
+      "example_comment_excerpts": [
+        "Does this imply that switching resolution in runtime is not possible for any of these DSI->HDMI/DP/eDP bridges? The immediate worry is that we need 4k and non-4k variants of every mezzanine (unless we start doing overlay",
+        "I was under the impression that you where working on some updates to EUD and was going to resend this, but I don't find a new version, and I don't see an on-list reply from me. So just to make sure this isn't lost any lo"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-017",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "thanks bjorn",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-023",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "\\bcan\\s+you\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        708746
+      ],
+      "example_comment_excerpts": [
+        "I was under the impression that you where working on some updates to EUD and was going to resend this, but I don't find a new version, and I don't see an on-list reply from me. So just to make sure this isn't lost any lo"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-024",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "\\bcould\\s+you\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        719155
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it would be nice to have that expressed in the message. If nothing else for others to know what such agreed order might be. Unfortunately this doesn't ap"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-025",
+      "reviewer": "Bjorn Andersson",
+      "category": "question",
+      "pattern": "\\bwhat\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        719155
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it would be nice to have that expressed in the message. If nothing else for others to know what such agreed order might be. Unfortunately this doesn't ap"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [],
+  "subsystem_specific_rules": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-007",
+      "reviewer": "Bjorn Andersson",
+      "category": "subsystem_rule",
+      "pattern": "\\bqcom\\b",
+      "frequency": 22,
+      "example_series_ids": [
+        727442,
+        726788,
+        726610,
+        726604,
+        726101,
+        723384,
+        723382,
+        723013
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8350: Mark UFS controller as cache coherent commit: e607b3c1fa0e1579951acd00f9559a77f97d0927 [2/2] arm64: dts: qcom: sm8450: Mark UFS controller as cache coherent commit: 8ba961",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sdm845-db845c: drop empty node override commit: e225d56042e3a02aa3ee60c96da687ac3c690a37 [2/2] arm64: dts: qcom: drop redundant line breaks commit: e18b829549793f706c6c8a39f24ba93",
+        "Applied, thanks! [1/2] arm64: dts: qcom: sm8250-xiaomi-elish: fix USB maximum speed property commit: 613f14a3a9d7e12a832ff822f85a33ad0ebee952 [2/2] arm64: dts: qcom: sm8350-microsoft-surface: fix USB dual-role mode prope"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-018",
+      "reviewer": "Bjorn Andersson",
+      "category": "subsystem_rule",
+      "pattern": "\\bpinctrl\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        717021,
+        714615
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sa8540p-ride: Fix some i2c pinctrl settings commit: f187e989305a2d57dc0f750ebb63959151b66924 [2/2] arm64: dts: qcom: sa8540p-ride: Document i2c busses commit: f1d6f9d227a0fe887d6a",
+        "Applied, thanks! [1/6] arm64: dts: qcom: sdm845-db845c: add generic sound compatible commit: 077d29e81963b415e49216878563e933d346efa2 [2/6] arm64: dts: qcom: sdm845-xiaomi-beryllium: add generic sound compatible commit: "
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-027",
+      "reviewer": "Bjorn Andersson",
+      "category": "subsystem_rule",
+      "pattern": "\\bsdw\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        723384
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [1/2] arm64: dts: qcom: sc7280-idp: drop incorrect dai-cells from WCD938x SDW commit: ca8fc6814844d8787e7fec61b2544a871ea8b675 [2/2] arm64: dts: qcom: sc7280-qcard: drop incorrect dai-cells from WCD938x "
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-PAT-028",
+      "reviewer": "Bjorn Andersson",
+      "category": "subsystem_rule",
+      "pattern": "dt-binding",
+      "frequency": 1,
+      "example_series_ids": [
+        719886
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks! [6/7] dt-bindings: remoteproc: qcom,glink-rpm-edge: convert to DT schema commit: fdafdddf7b2f5cab8d233ef97f1fad8ec7d2e7a0 [7/7] dt-bindings: remoteproc: qcom,glink-edge: correct label description commit:"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "top_objection_topics": [
+    "\\bdon\\'t\\b",
+    "\\bfix\\b",
+    "\\bbreaks?\\b",
+    "\\bneeds?\\s+to\\b"
+  ],
+  "top_acceptance_signals": [
+    "arm64 dts",
+    "arm64 dts qcom",
+    "dts qcom",
+    "\\bapplied\\b",
+    "applied thanks",
+    "best regards",
+    "applied thanks arm64",
+    "thanks arm64",
+    "thanks arm64 dts"
+  ],
+  "typical_review_iterations": 3,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "LOW",
+  "known_limitations": [
+    "Limited thread coverage for HIGH-confidence generalization."
+  ],
+  "profile_notes": "Derived from Patchwork review comments using deterministic filters and regex/ngram extraction."
+}

@@ -1,0 +1,45 @@
+{
+  "card_id": "PC-P0-COMPLETE-20260621",
+  "date": "2026-06-21",
+  "phase": 0,
+  "step": "0.10",
+  "step_name": "Phase 0 completion and PM sign-off",
+  "status": "FAILED",
+  "previous_status": "IN_PROGRESS",
+  "what_was_done": "Fetched raw reviewer comments, extracted patterns, built profiles and subsystem rules, and validated outputs.",
+  "artifacts_created": [
+    "AURA_KB/reviewer_profiles/raw/",
+    "AURA_KB/reviewer_profiles/processed/",
+    "AURA_KB/reviewer_profiles/subsystem_rules/",
+    "AURA_KB/reviewer_profiles/validation/",
+    "AURA_KB/reviewer_profiles/metadata/"
+  ],
+  "artifacts_modified": [
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/progress_tracker.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/MASTER_PLAN.md"
+  ],
+  "success_criteria_met": [
+    "objection_patterns_extracted_high_reviewers",
+    "acceptance_patterns_extracted_high_reviewers",
+    "subsystem_rules_created_p0",
+    "validation_accepted_ge_3",
+    "false_positive_le_2",
+    "profiles_versioned",
+    "raw_processed_separated"
+  ],
+  "success_criteria_not_met": [
+    "all_p0_high",
+    "all_p1_low_or_high",
+    "validation_rejected_ge_3",
+    "objection_precision_ge_60pct"
+  ],
+  "blockers": [
+    "Profile confidence/validation thresholds not met"
+  ],
+  "deviations_from_plan": [
+    "Series state inferred from patch states because series endpoint does not provide explicit consolidated state."
+  ],
+  "pm_verdict": "BLOCKED",
+  "next_step": "Close Phase 0 confidence and validation gaps",
+  "notes": "Phase 0 verdict: PHASE_0_FAILED_RETRY_REQUIRED"
+}

@@ -1,0 +1,168 @@
+{
+  "artifact": "reviewer_profile_fetch_parameters_v1",
+  "generated_date": "2026-06-21",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "sources": {
+    "patchwork_api": "https://patchwork.kernel.org/api/1.2",
+    "lore": "https://lore.kernel.org",
+    "reference_model": "AURA/agents/src/aura_agents/reviewer_behavior_model_v1.py",
+    "master_plan": "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/MASTER_PLAN.md"
+  },
+  "time_windows": {
+    "primary": {
+      "start": "2023-01-01",
+      "end": "2025-12-31"
+    },
+    "secondary_low_activity": {
+      "start": "2021-01-01",
+      "end": "2025-12-31"
+    },
+    "hard_cutoff_start": "2021-01-01"
+  },
+  "patch_state_filters": {
+    "include": [
+      "accepted",
+      "mainlined",
+      "rejected",
+      "changes-requested"
+    ],
+    "exclude": [
+      "new",
+      "under-review",
+      "superseded",
+      "deferred"
+    ]
+  },
+  "comment_filters": {
+    "min_words": 20,
+    "exclude_bot_or_automated": true,
+    "exclude_pure_acks": [
+      "thanks",
+      "applied",
+      "queued"
+    ],
+    "exclude_ci_comments": true,
+    "exclude_duplicates_in_same_thread": true
+  },
+  "confidence_thresholds": {
+    "HIGH": ">=50 comment threads",
+    "LOW_CONFIDENCE": "20-49 comment threads",
+    "INSUFFICIENT_DATA": "<20 comment threads"
+  },
+  "reviewer_limits": {
+    "mark_brown": {
+      "max_series": 500,
+      "max_comments": 2000
+    },
+    "pierre_louis_bossart": {
+      "max_series": 300,
+      "max_comments": 1500
+    },
+    "krzysztof_kozlowski": {
+      "max_series": 400,
+      "max_comments": 2000
+    },
+    "vinod_koul": {
+      "max_series": 200,
+      "max_comments": 1000
+    },
+    "liam_girdwood": {
+      "max_series": 150,
+      "max_comments": 800
+    },
+    "bjorn_andersson": {
+      "max_series": 200,
+      "max_comments": 1000
+    },
+    "linus_walleij": {
+      "max_series": 200,
+      "max_comments": 1000
+    },
+    "rob_herring": {
+      "max_series": 200,
+      "max_comments": 1000
+    },
+    "konrad_dybcio": {
+      "max_series": 150,
+      "max_comments": 800
+    }
+  },
+  "target_reviewers": {
+    "P0": [
+      "Mark Brown",
+      "Pierre-Louis Bossart",
+      "Krzysztof Kozlowski",
+      "Vinod Koul"
+    ],
+    "P1": [
+      "Liam Girdwood",
+      "Bjorn Andersson",
+      "Linus Walleij",
+      "Rob Herring"
+    ],
+    "P2": [
+      "Konrad Dybcio"
+    ]
+  },
+  "subsystem_scope_queries": {
+    "P0": {
+      "asoc_qcom": [
+        "ASoC: qcom",
+        "ASoC: codecs"
+      ],
+      "soundwire": [
+        "ASoC: SoundWire",
+        "soundwire: qcom"
+      ],
+      "dt_bindings_audio": [
+        "dt-bindings: sound: qcom",
+        "dt-bindings: sound",
+        "ASoC: dt-bindings"
+      ]
+    },
+    "P1": {
+      "pinctrl_qcom": [
+        "pinctrl: qcom"
+      ],
+      "qcom_platform": [
+        "arm64: dts: qcom"
+      ]
+    }
+  },
+  "patchwork_query_template": "GET /series/?q={scope_query}&state={state}&since={since}&per_page=100",
+  "profile_rebuild_frequency": "6 months",
+  "raw_processed_separation_policy": "Raw fetch artifacts and processed profiles must stay in separate directories; no mixing of raw and derived structures.",
+  "storage_layout": {
+    "root": "AURA_KB/reviewer_profiles/",
+    "raw": "AURA_KB/reviewer_profiles/raw/{reviewer_slug}_raw_{year_start}_{year_end}.json",
+    "processed": "AURA_KB/reviewer_profiles/processed/{reviewer_slug}_profile_v1.json",
+    "subsystem_rules": [
+      "AURA_KB/reviewer_profiles/subsystem_rules/asoc_qcom_rules_v1.json",
+      "AURA_KB/reviewer_profiles/subsystem_rules/soundwire_rules_v1.json",
+      "AURA_KB/reviewer_profiles/subsystem_rules/dt_bindings_audio_rules_v1.json",
+      "AURA_KB/reviewer_profiles/subsystem_rules/pinctrl_qcom_rules_v1.json"
+    ],
+    "validation": [
+      "AURA_KB/reviewer_profiles/validation/profile_validation_results.json",
+      "AURA_KB/reviewer_profiles/validation/accuracy_report.md"
+    ],
+    "metadata": [
+      "AURA_KB/reviewer_profiles/metadata/fetch_parameters.json",
+      "AURA_KB/reviewer_profiles/metadata/fetch_log.json",
+      "AURA_KB/reviewer_profiles/metadata/profile_versions.json",
+      "AURA_KB/reviewer_profiles/metadata/phase0_validation.json"
+    ]
+  },
+  "governance_invariants": [
+    "BOUNDED",
+    "OBSERVABLE",
+    "EXPLAINABLE",
+    "REPLAYABLE",
+    "INTERRUPTIBLE",
+    "REVERSIBLE"
+  ],
+  "deviation_policy": "Any deviation from these parameters must be recorded in AURA_KB/reviewer_profiles/metadata/fetch_log.json."
+}

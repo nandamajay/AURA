@@ -1,0 +1,687 @@
+{
+  "reviewer": "Krzysztof Kozlowski",
+  "profile_version": "v1",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "LOW_CONFIDENCE",
+  "series_analyzed": 400,
+  "comment_threads_analyzed": 25,
+  "subsystems_covered": [
+    "dt_bindings_audio",
+    "qcom_platform"
+  ],
+  "objection_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-013",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 8,
+      "example_series_ids": [
+        853882,
+        845886,
+        838018,
+        747431,
+        746711,
+        738847,
+        737643,
+        721140
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not fe",
+        "Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by ",
+        "Thank you for your patch. There are no DTS users of this binding, so while such conversions are useful, they have significantly smaller impact. In the future, please consider converting bindings from active platforms (ar"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-015",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        853882,
+        845886,
+        747431,
+        746711,
+        738847,
+        737643
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not fe",
+        "Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by ",
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you do not know the process, here is a short explanatio"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-019",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "best regards",
+      "frequency": 6,
+      "example_series_ids": [
+        825328,
+        825330,
+        760849,
+        737643,
+        717205
+      ],
+      "example_comment_excerpts": [
+        "Apologies, wrong link: https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/ This is not a dependency, just providing relevant work for reference. Best regards, Krzysztof",
+        "Apologies, wrong link: https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/ This is not a dependency, just providing relevant work for reference. Best regards, Krzysztof",
+        "This is not v1. Please write proper changelog and version your patches. You did not respond to my comment and you did not fully implement it. With lack of changelog it looks like it was ignored Please fix everything I as"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-020",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "best regards krzysztof",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-021",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "regards krzysztof",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-023",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bdon\\'t\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        873172,
+        873175,
+        721140
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "What did you change here? I still need to read 4 different discussions/links to have understanding why? What details are here? There is a patch with gen4 but I don't understand how does it answer anything here. This is p"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-029",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bfix\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        760849,
+        717205
+      ],
+      "example_comment_excerpts": [
+        "This is not v1. Please write proper changelog and version your patches. You did not respond to my comment and you did not fully implement it. With lack of changelog it looks like it was ignored Please fix everything I as",
+        "I would actually prefer to revert... patch was never reviewed (never CC'ed to all maintainers as requested by get_maintainer.pl) and will need more fixes after that fix. Eh, more patches to come. Best regards, Krzysztof",
+        "BTW, so not only original patch was not tested but also fix was not tested at all. This still fails next. Best regards, Krzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-031",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        763326,
+        747854
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC: ASoC: dt-bindings: Update.... Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> Best regards, Krzysztof",
+        "The only thing driver is doing is to toggle this pin. If it is missing the entire driver is noop, thus above comment is a bit funny. It probably should be mandatory pin. But I see it was there since beginning so ok. Revi"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-032",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bwrong\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        825328,
+        825330
+      ],
+      "example_comment_excerpts": [
+        "Apologies, wrong link: https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/ This is not a dependency, just providing relevant work for reference. Best regards, Krzysztof",
+        "Apologies, wrong link: https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/ This is not a dependency, just providing relevant work for reference. Best regards, Krzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-033",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "apologies wrong",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-034",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "https lore",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-035",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "link https",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-036",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "lore kernel",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-037",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "wrong link",
+      "frequency": 2,
+      "example_series_ids": [
+        825328,
+        825330
+      ],
+      "example_comment_excerpts": [
+        "Apologies, wrong link: https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/ This is not a dependency, just providing relevant work for reference. Best regards, Krzysztof",
+        "Apologies, wrong link: https://lore.kernel.org/linux-devicetree/20240212184403.246299-1-krzysztof.kozlowski@linaro.org/ This is not a dependency, just providing relevant work for reference. Best regards, Krzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-041",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "objection",
+      "pattern": "\\bmust\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        721140
+      ],
+      "example_comment_excerpts": [
+        "No, you did not do it in v2. The top-level property is a must, we talk now about constraints. Yes, with else my concern will never happen. However you have there multiple ifs, thus finding the one related to clocks is no"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 17,
+      "example_series_ids": [
+        853882,
+        845886,
+        838018,
+        763326,
+        747854,
+        747852,
+        747431,
+        746711
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not fe",
+        "Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by ",
+        "Thank you for your patch. There are no DTS users of this binding, so while such conversions are useful, they have significantly smaller impact. In the future, please consider converting bindings from active platforms (ar"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 12,
+      "example_series_ids": [
+        853882,
+        845886,
+        838018,
+        747854,
+        747852,
+        747431,
+        746711,
+        740072
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not fe",
+        "Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by ",
+        "Thank you for your patch. There are no DTS users of this binding, so while such conversions are useful, they have significantly smaller impact. In the future, please consider converting bindings from active platforms (ar"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-006",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "best regards",
+      "frequency": 9,
+      "example_series_ids": [
+        853882,
+        845886,
+        838018,
+        763326,
+        747854,
+        747852,
+        747431,
+        746711
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not fe",
+        "Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by ",
+        "Thank you for your patch. There are no DTS users of this binding, so while such conversions are useful, they have significantly smaller impact. In the future, please consider converting bindings from active platforms (ar"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-007",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "best regards krzysztof",
+      "frequency": 9,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-008",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "linaro org",
+      "frequency": 9,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-009",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "regards krzysztof",
+      "frequency": 9,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-010",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "kozlowski krzysztof",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-011",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "kozlowski linaro",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-012",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "reviewed-by krzysztof",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-018",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "acceptance",
+      "pattern": "\\backed-by\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        853882,
+        845886,
+        763326,
+        747431,
+        746711,
+        738847
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not fe",
+        "Reviewed-by: Krzysztof Kozlowski <krzk@kernel.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by ",
+        "The subject prefix should be different for ASoC: ASoC: dt-bindings: Update.... Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> Best regards, Krzysztof"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "best regards",
+      "frequency": 10,
+      "example_series_ids": [
+        873172,
+        873175,
+        740072,
+        738847,
+        737643,
+        721140,
+        719715
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "Guys, You choose unusual bindings to convert to DT schema. It is fine but honestly, less useful, with limited impact. This is an old, 12 year old binding without users. Maybe it would be even removed by now... I suggest "
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "best regards krzysztof",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-005",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "regards krzysztof",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-014",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 8,
+      "example_series_ids": [
+        740072,
+        738847,
+        721140,
+        719715
+      ],
+      "example_comment_excerpts": [
+        "Guys, You choose unusual bindings to convert to DT schema. It is fine but honestly, less useful, with limited impact. This is an old, 12 year old binding without users. Maybe it would be even removed by now... I suggest ",
+        "This is a friendly reminder during the review process. It looks like you received a tag and forgot to add it. If you do not know the process, here is a short explanation: Please add Acked-by/Reviewed-by/Tested-by tags wh",
+        "No, you did not do it in v2. The top-level property is a must, we talk now about constraints. Yes, with else my concern will never happen. However you have there multiple ifs, thus finding the one related to clocks is no"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-016",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "\\?+",
+      "frequency": 7,
+      "example_series_ids": [
+        873172,
+        873175,
+        740072,
+        721140
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "Guys, You choose unusual bindings to convert to DT schema. It is fine but honestly, less useful, with limited impact. This is an old, 12 year old binding without users. Maybe it would be even removed by now... I suggest "
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-017",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "\\bwhat\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        740072,
+        738847,
+        721140,
+        719715
+      ],
+      "example_comment_excerpts": [
+        "Guys, You choose unusual bindings to convert to DT schema. It is fine but honestly, less useful, with limited impact. This is an old, 12 year old binding without users. Maybe it would be even removed by now... I suggest ",
+        "In general it is fine. I wonder if we can change the goal of GSoC? I am surprised that such goal was chosen in the first place. Converting old, unused bindings to DT schema is okay, but it would be much better to do this",
+        "This is a friendly reminder during the review process. It looks like you received a tag and forgot to add it. If you do not know the process, here is a short explanation: Please add Acked-by/Reviewed-by/Tested-by tags wh"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-022",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "\\bwhy\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        873172,
+        873175,
+        738847,
+        737643,
+        721140
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This is a friendly reminder during the review process. It looks like you received a tag and forgot to add it. If you do not know the process, here is a short explanation: Please add Acked-by/Reviewed-by/Tested-by tags wh"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-024",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "added to",
+      "frequency": 4,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-025",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "added to common",
+      "frequency": 4,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-026",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "common driver",
+      "frequency": 4,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-027",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "to common",
+      "frequency": 4,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and",
+        "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-042",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "question",
+      "pattern": "\\bhow\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        721140
+      ],
+      "example_comment_excerpts": [
+        "What did you change here? I still need to read 4 different discussions/links to have understanding why? What details are here? There is a patch with gen4 but I don't understand how does it answer anything here. This is p"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [],
+  "subsystem_specific_rules": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-045",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "subsystem_rule",
+      "pattern": "\\basoc\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        763326
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC: ASoC: dt-bindings: Update.... Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> Best regards, Krzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-PAT-046",
+      "reviewer": "Krzysztof Kozlowski",
+      "category": "subsystem_rule",
+      "pattern": "dt-binding",
+      "frequency": 1,
+      "example_series_ids": [
+        763326
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC: ASoC: dt-bindings: Update.... Acked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> Best regards, Krzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "top_objection_topics": [
+    "\\bneeds?\\s+to\\b",
+    "\\bdo\\s+not\\b",
+    "best regards",
+    "best regards krzysztof",
+    "regards krzysztof",
+    "\\bdon\\'t\\b",
+    "\\bfix\\b",
+    "\\bshould\\s+be\\b",
+    "\\bwrong\\b",
+    "apologies wrong"
+  ],
+  "top_acceptance_signals": [
+    "krzysztof kozlowski",
+    "\\breviewed-by\\b",
+    "best regards",
+    "best regards krzysztof",
+    "linaro org",
+    "regards krzysztof",
+    "kozlowski krzysztof",
+    "kozlowski linaro",
+    "reviewed-by krzysztof",
+    "\\backed-by\\b"
+  ],
+  "typical_review_iterations": 3,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "HIGH",
+  "known_limitations": [
+    "Limited thread coverage for HIGH-confidence generalization."
+  ],
+  "profile_notes": "Derived from Patchwork review comments using deterministic filters and regex/ngram extraction."
+}

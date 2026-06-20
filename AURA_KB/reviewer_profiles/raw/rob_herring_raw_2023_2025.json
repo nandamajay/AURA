@@ -1,0 +1,105 @@
+{
+  "reviewer": "Rob Herring",
+  "fetch_date": "2026-06-20T20:17:17Z",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "scope_queries_used": [
+    "dt-bindings: sound: qcom",
+    "dt-bindings: sound",
+    "ASoC: dt-bindings",
+    "arm64: dts: qcom"
+  ],
+  "series_fetched": 200,
+  "series_with_reviewer_comments": 3,
+  "comments_fetched": 302,
+  "comments_after_filter": 4,
+  "series": [
+    {
+      "series_id": 778451,
+      "subject": "[1/2] ASoC: dt-bindings: nau8821: Add single-ended input feature",
+      "state": "accepted",
+      "date": "2023-08-23T07:12:43",
+      "patch_count": 2,
+      "patch_ids": [
+        13361722,
+        13361723
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25482887,
+          "date": "2023-08-23T12:59:08",
+          "word_count": 36,
+          "classification": "question",
+          "text": "This is the second v1 I've gotten. Is there some change? Please version your patches. I acked the last one which you should add when sending a new version. Acked-by: Rob Herring <robh@kernel.org> Rob",
+          "patch_id": 13361722,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 735082,
+      "subject": "[v5] ASoC: dt-bindings: ak4458: Convert to dtschema",
+      "state": "accepted",
+      "date": "2023-03-28T09:18:31",
+      "patch_count": 1,
+      "patch_ids": [
+        13192890
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25288129,
+          "date": "2023-04-06T13:12:09",
+          "word_count": 62,
+          "classification": "objection",
+          "text": "'#' (with a space or newline before) is a comment, so these need to be quoted. I only noticed because yamllint now requires a space after as well: ./Documentation/devicetree/bindings/sound/asahi-kasei,ak4458.yaml:40:30: [error] missing starting space in comment (comments) ./Documentation/devicetree/bindings/sound/asahi-kasei,ak4458.yaml:42:30: [error] missing starting space in comment (comments) Rob",
+          "patch_id": 13192890,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring",
+          "submitter_email": "robh+dt@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 711836,
+      "subject": "[1/3] ASoC: dt-bindings: qcom,wsa881x: Allow sound-name-prefix",
+      "state": "accepted",
+      "date": "2023-01-13T16:22:12",
+      "patch_count": 3,
+      "patch_ids": [
+        13101052,
+        13101082,
+        13101083
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25166368,
+          "date": "2023-01-17T19:27:24",
+          "word_count": 23,
+          "classification": "objection",
+          "text": "Yes, but it is common, so it should be in a common schema. Though there's only one other binding using it (wcd9335.txt).",
+          "patch_id": 13101082,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        },
+        {
+          "comment_id": 25168035,
+          "date": "2023-01-18T13:19:34",
+          "word_count": 53,
+          "classification": "acceptance",
+          "text": "On Wed, Jan 18, 2023 at 5:25 AM Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> wrote: By common, I only mean used by more than 1 binding. That's already the case, there's just not a schema for the 2nd one. In any case, can address that later. Acked-by: Rob Herring <robh@kernel.org>",
+          "patch_id": 13101082,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    }
+  ],
+  "fetch_errors": [],
+  "api_rate_limit_hits": 0
+}

@@ -1,0 +1,186 @@
+{
+  "reviewer": "Vinod Koul",
+  "fetch_date": "2026-06-20T20:17:17Z",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "scope_queries_used": [
+    "ASoC: SoundWire",
+    "soundwire: qcom",
+    "ASoC: qcom",
+    "ASoC: codecs"
+  ],
+  "series_fetched": 200,
+  "series_with_reviewer_comments": 4,
+  "comments_fetched": 358,
+  "comments_after_filter": 9,
+  "series": [
+    {
+      "series_id": 841838,
+      "subject": "[v2] soundwire: qcom: allow multi-link on newer devices",
+      "state": "unknown",
+      "date": "2024-04-05T14:41:41",
+      "patch_count": 1,
+      "patch_ids": [
+        13619129
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25802341,
+          "date": "2024-04-11T09:49:27",
+          "word_count": 37,
+          "classification": "neutral",
+          "text": "Applying /tmp/v2_20240405_krzysztof_kozlowski_soundwire_qcom_allow_multi_link_on_newer_devices.mbx Applying: soundwire: qcom: allow multi-link on newer devices error: drivers/soundwire/qcom.c: does not match index Patch failed at 0001 soundwire: qcom: allow multi-link on newer devices This fails as well :-(",
+          "patch_id": 13619129,
+          "patch_state": "not-applicable",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 808030,
+      "subject": "soundwire/ASoC: speed-up downloads with BTP/BRA protocol",
+      "state": "unknown",
+      "date": "2023-12-07T22:29:28",
+      "patch_count": 16,
+      "patch_ids": [
+        13484422,
+        13484421,
+        13484423,
+        13484424,
+        13484425,
+        13484426,
+        13484428,
+        13484427,
+        13484429,
+        13484431,
+        13484430,
+        13484432,
+        13484433,
+        13484434,
+        13484435,
+        13484436
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25643233,
+          "date": "2023-12-18T11:55:55",
+          "word_count": 21,
+          "classification": "question",
+          "text": "So we are limiting to single stream? Can we have multiple transfers queued up, which I guess might imply multiple streams?",
+          "patch_id": 13484427,
+          "patch_state": "rfc",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 25643242,
+          "date": "2023-12-18T12:01:04",
+          "word_count": 38,
+          "classification": "question",
+          "text": "Good that you found this API, so next question would be why should we have this static table in kernel and not generate on probe if bpt is supported..? Many subsystems use these APIs to generate the tables..",
+          "patch_id": 13484429,
+          "patch_state": "rfc",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 25648343,
+          "date": "2023-12-21T14:39:42",
+          "word_count": 31,
+          "classification": "neutral",
+          "text": "Since the API is async in nature, I think it is very reasonable that we add the queue support (a simple list would do) and notify when the transfer is complete..",
+          "patch_id": 13484427,
+          "patch_state": "rfc",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 25648344,
+          "date": "2023-12-21T14:42:05",
+          "word_count": 37,
+          "classification": "question",
+          "text": "Most of the kernel users I looked have dynamically allocated table populated at boot, also out of many users how many would support BTP.? Your older platforms, current qcom dont, so not point is adding for everyone...",
+          "patch_id": 13484429,
+          "patch_state": "rfc",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 25648353,
+          "date": "2023-12-21T14:44:09",
+          "word_count": 49,
+          "classification": "question",
+          "text": "Great Why have symmetry to DAI apis, why not symmetry to regmap write APIs..? This is data transfer, so I am not sure why would we model it as a DAI. (Internal implementation may rely on that but from API design, i dont think that should be a concern)",
+          "patch_id": 13484422,
+          "patch_state": "rfc",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 25648364,
+          "date": "2023-12-21T14:49:58",
+          "word_count": 83,
+          "classification": "question",
+          "text": "I would think that it is better to have capablities registered by the driver and those are checked at registration, so we know if bpt is supported or not for a particular platform. This make more sense to me as some driver, depending on the SoC may or maynot support this, so easy way would be to turn off caps, what do you think? Ofcourse, it is entrely reasonable thing to do, event across x86/arm64 Lets revisit when we have new API",
+          "patch_id": 13484428,
+          "patch_state": "rfc",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 802601,
+      "subject": "[1/2] soundwire: qcom: drop unneeded qcom_swrm_stream_alloc_ports() cleanup",
+      "state": "unknown",
+      "date": "2023-11-20T19:07:40",
+      "patch_count": 2,
+      "patch_ids": [
+        13461938,
+        13461937
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25604320,
+          "date": "2023-11-23T07:21:15",
+          "word_count": 28,
+          "classification": "acceptance",
+          "text": "Applied, thanks! [1/2] soundwire: qcom: drop unneeded qcom_swrm_stream_alloc_ports() cleanup commit: 5c68b66d4d7eff8cdb6f508f8537faa30c5faa6d [2/2] soundwire: qcom: move sconfig in qcom_swrm_stream_alloc_ports() out of critical section commit: 5bdc61ef45007908df9d8587111c7a5a552bdd46 Best regards,",
+          "patch_id": 13461938,
+          "patch_state": "not-applicable",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 770538,
+      "subject": "[1/2] soundwire: qcom: use newer link status tregister on v2.0.0",
+      "state": "unknown",
+      "date": "2023-07-28T11:28:47",
+      "patch_count": 2,
+      "patch_ids": [
+        13331727,
+        13331728
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25521069,
+          "date": "2023-09-21T09:38:02",
+          "word_count": 29,
+          "classification": "acceptance",
+          "text": "Applied, thanks! [1/2] soundwire: qcom: use newer link status tregister on v2.0.0 commit: 5d78c7d684192e42241593a936ee60003d8ac064 [2/2] soundwire: qcom: handle command ignored interrupt commit: 16d568c8f646933710c980783d87d3f59a89b563 Best regards,",
+          "patch_id": 13331727,
+          "patch_state": "not-applicable",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    }
+  ],
+  "fetch_errors": [],
+  "api_rate_limit_hits": 0
+}

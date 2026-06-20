@@ -1,0 +1,698 @@
+{
+  "reviewer": "Mark Brown",
+  "profile_version": "v1",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 128,
+  "comment_threads_analyzed": 55,
+  "subsystems_covered": [
+    "asoc_qcom",
+    "dt_bindings_audio",
+    "soundwire"
+  ],
+  "objection_patterns": [
+    {
+      "pattern_id": "MARK_BROWN-PAT-005",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "\\bfix\\b",
+      "frequency": 54,
+      "example_series_ids": [
+        897447,
+        897449,
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-006",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 54,
+      "example_series_ids": [
+        897447,
+        897449,
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-026",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "\\bdon\\'t\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        873172,
+        873175,
+        760884
+      ],
+      "example_comment_excerpts": [
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Why not try a series of firmware names/locations generated using the identifying information for the card/system? That way we don't have to put a filename in the ABI which has fun scaling issues."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-029",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "aux devices",
+      "frequency": 2,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-030",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "cover more",
+      "frequency": 2,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-031",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "dai link",
+      "frequency": 2,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-032",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "devices may",
+      "frequency": 2,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-033",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "if codec",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-034",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "may cover",
+      "frequency": 2,
+      "example_series_ids": [
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a CODEC that can do mixing and they're connected to an analog output) or may in rare cases not fit with one at all (there's use cases where you have a s"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-035",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "more one",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-036",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "right aux",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-039",
+      "reviewer": "Mark Brown",
+      "category": "objection",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        762690
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: q6apm: do not close GPR port before closing graph commit: c1be62923d4d86e7c06b1224626e27eb8d9ab32e All being"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "MARK_BROWN-PAT-001",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "asoc dt-bindings",
+      "frequency": 62,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-002",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "asoc dt-bindings qcom",
+      "frequency": 62,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-003",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "dt-bindings qcom",
+      "frequency": 62,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-004",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "\\bapplied\\b",
+      "frequency": 54,
+      "example_series_ids": [
+        897447,
+        897449,
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-010",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "applied to",
+      "frequency": 51,
+      "example_series_ids": [
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071,
+        877036,
+        877037
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe() commit: 49da1463c9e3d2082276c3e0e2a8b65a88711cd"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-011",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "broonie sound",
+      "frequency": 51,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-012",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "for-next thanks",
+      "frequency": 51,
+      "example_series_ids": [
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071,
+        877036,
+        877037
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe() commit: 49da1463c9e3d2082276c3e0e2a8b65a88711cd"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-013",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "git for-next",
+      "frequency": 51,
+      "example_series_ids": [
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071,
+        877036,
+        877037
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: Fix NULL Dereference in asoc_qcom_lpass_cpu_platform_probe() commit: 49da1463c9e3d2082276c3e0e2a8b65a88711cd"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-014",
+      "reviewer": "Mark Brown",
+      "category": "acceptance",
+      "pattern": "sound git",
+      "frequency": 51,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "MARK_BROWN-PAT-037",
+      "reviewer": "Mark Brown",
+      "category": "question",
+      "pattern": "\\?+",
+      "frequency": 2,
+      "example_series_ids": [
+        858471,
+        760884
+      ],
+      "example_comment_excerpts": [
+        "Is anyone getting any value from these MODULE_DESCRIPTION()s? This all just seems like a huge amount of noise and I'm having trouble thinking of a use case.",
+        "Why not try a series of firmware names/locations generated using the identifying information for the card/system? That way we don't have to put a filename in the ABI which has fun scaling issues."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-040",
+      "reviewer": "Mark Brown",
+      "category": "question",
+      "pattern": "\\bhow\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        858471
+      ],
+      "example_comment_excerpts": [
+        "Yeah, adding the warning seems premature without having first added the descriptions and I'm not clear in what situation anyone would actually care given how rare it is for someone to manually interact with module loadin"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-041",
+      "reviewer": "Mark Brown",
+      "category": "question",
+      "pattern": "\\bwhat\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        858471
+      ],
+      "example_comment_excerpts": [
+        "Yeah, adding the warning seems premature without having first added the descriptions and I'm not clear in what situation anyone would actually care given how rare it is for someone to manually interact with module loadin"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-042",
+      "reviewer": "Mark Brown",
+      "category": "question",
+      "pattern": "\\bwhy\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        760884
+      ],
+      "example_comment_excerpts": [
+        "Why not try a series of firmware names/locations generated using the identifying information for the card/system? That way we don't have to put a filename in the ABI which has fun scaling issues."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern_id": "MARK_BROWN-PAT-018",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "applied to",
+      "frequency": 3,
+      "example_series_ids": [
+        897447,
+        897449,
+        806541
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: Fix trivial code style issues commit: bb3392453d3ba44e60b85381e3bfa3c551a44e5d All being well this means tha"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-019",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "git kernel",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-020",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "https git",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-021",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "kernel git",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-022",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "kernel org",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-023",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "linux kernel",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-024",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "scm linux",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-025",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "to https",
+      "frequency": 3,
+      "example_series_ids": [
+        897447,
+        897449,
+        806541
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: Fix trivial code style issues commit: bb3392453d3ba44e60b85381e3bfa3c551a44e5d All being well this means tha"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-028",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "\\btypo\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        897447,
+        897449
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-038",
+      "reviewer": "Mark Brown",
+      "category": "nit",
+      "pattern": "\\bstyle\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        806541
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: Fix trivial code style issues commit: bb3392453d3ba44e60b85381e3bfa3c551a44e5d All being well this means tha"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "subsystem_specific_rules": [
+    {
+      "pattern_id": "MARK_BROWN-PAT-007",
+      "reviewer": "Mark Brown",
+      "category": "subsystem_rule",
+      "pattern": "\\basoc\\b",
+      "frequency": 54,
+      "example_series_ids": [
+        897447,
+        897449,
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-008",
+      "reviewer": "Mark Brown",
+      "category": "subsystem_rule",
+      "pattern": "\\bqcom\\b",
+      "frequency": 53,
+      "example_series_ids": [
+        897447,
+        897449,
+        897379,
+        897381,
+        895999,
+        896000,
+        880070,
+        880071
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sm8250: correct typo in shutdown function name commit: 2aab7d186bf10d1591e7645ca32cddeeb4dcaf20 All being we",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-016",
+      "reviewer": "Mark Brown",
+      "category": "subsystem_rule",
+      "pattern": "dt-binding",
+      "frequency": 33,
+      "example_series_ids": [
+        880070,
+        880071,
+        877036,
+        877037,
+        873172,
+        873175,
+        825328,
+        825330
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct clocks on SM8250 commit: d08ea4193a72c5e3090240872ff7ed60a70716e6 All b",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: dt-bindings: qcom,lpass-wsa-macro: correct clocks on SM8250 commit: d08ea4193a72c5e3090240872ff7ed60a70716e6 All b",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/4] ASoC: dt-bindings: qcom,wcd937x: Correct reset GPIO polarity in example commit: 2f3e2c9eaafc272266344d777f8de44f8632e247"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "MARK_BROWN-PAT-017",
+      "reviewer": "Mark Brown",
+      "category": "subsystem_rule",
+      "pattern": "soundwire",
+      "frequency": 4,
+      "example_series_ids": [
+        897379,
+        897381,
+        804934,
+        804936
+      ],
+      "example_comment_excerpts": [
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc commit: d0e806b0cc6260b59c65e606034a63145169c04c All bein",
+        "Applied to https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next Thanks! [1/2] ASoC: qcom: Add helper for allocating Soundwire stream runtime commit: d32bac9cb09cce4dc3131ec5d0b6ba3c277502ac [2/2] AS"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "top_objection_topics": [
+    "\\bfix\\b",
+    "\\bshould\\s+be\\b",
+    "\\bdon\\'t\\b",
+    "aux devices",
+    "cover more",
+    "dai link",
+    "devices may",
+    "if codec",
+    "may cover",
+    "more one"
+  ],
+  "top_acceptance_signals": [
+    "asoc dt-bindings",
+    "asoc dt-bindings qcom",
+    "dt-bindings qcom",
+    "\\bapplied\\b",
+    "applied to",
+    "broonie sound",
+    "for-next thanks",
+    "git for-next",
+    "sound git"
+  ],
+  "typical_review_iterations": 4,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "HIGH",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "LOW",
+  "known_limitations": [],
+  "profile_notes": "Derived from Patchwork review comments using deterministic filters and regex/ngram extraction."
+}
