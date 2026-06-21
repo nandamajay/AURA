@@ -1,0 +1,55 @@
+{
+  "phase": "phase_2",
+  "phase_name": "LLM Gateway Hardening",
+  "completed_at": "2026-06-21T17:21:50.966672Z",
+  "tasks_completed": 20,
+  "tasks_total": 20,
+  "week_7_summary": {
+    "per_agent_config_loading": true,
+    "provider_interface_defined": true,
+    "providers_implemented": [
+      "CLIAgentProvider",
+      "PilotProvider",
+      "MockProvider"
+    ],
+    "health_checks_added": true,
+    "new_tests_added": 7
+  },
+  "week_8_summary": {
+    "retry_with_backoff_added": true,
+    "provider_fallback_chain_added": true,
+    "circuit_breaker_added": true,
+    "rate_limit_added": true,
+    "new_tests_added": 7
+  },
+  "week_9_summary": {
+    "budget_schema_added": true,
+    "budget_logging_added": true,
+    "per_agent_budget_limits_added": true,
+    "budget_dashboard_added": true,
+    "new_tests_added": 7
+  },
+  "week_10_summary": {
+    "cache_schema_added": true,
+    "cache_integration_added": true,
+    "cache_invalidation_added": true,
+    "new_tests_added": 9
+  },
+  "total_new_tests": 30,
+  "total_tests_passing": 69,
+  "baseline_regression": false,
+  "phase_1_warnings_addressed": [
+    "worker_runner now loads per-agent timeout_seconds and max_retries from rules.json",
+    "LLM gateway subprocess interface now has provider abstraction, retry/fallback, budget accounting, and response cache"
+  ],
+  "new_gaps_found": [
+    "Production repository has no remote configured, so production commits are local only; tracking repository is pushed to origin."
+  ],
+  "production_git_sha": "2cfaf95e6f99626363fa287b258b00b4f35cbc86",
+  "tracking_git_sha_before_phase2_report": "3ff0c0912c8688c6769f1165ae2afed196769b35",
+  "pm_verdict": "PHASE_2_COMPLETE_WITH_WARNINGS",
+  "recommendation": "Proceed to Phase 3 after reviewing local production commits and confirming whether production repo should receive a remote push target.",
+  "roadmap_tasks_completed": 18,
+  "roadmap_tasks_total": 18,
+  "task_count_note": "Phase 2 prompt listed 18 roadmap tasks plus p2_final_t1 and p2_final_t2, for 20 tracked task IDs."
+}

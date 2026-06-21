@@ -1,12 +1,12 @@
 {
   "roadmap_version": "1.0",
   "created_at": "2026-06-21T00:00:00Z",
-  "last_updated": "2026-06-21T12:43:01.679304Z",
+  "last_updated": "2026-06-21T17:21:51.233078Z",
   "status": "IN_PROGRESS",
-  "current_phase": "phase_2",
+  "current_phase": "phase_3",
   "overall_progress": {
-    "total_tasks": 39,
-    "completed_tasks": 39,
+    "total_tasks": 59,
+    "completed_tasks": 59,
     "in_progress_tasks": 0,
     "blocked_tasks": 0,
     "percentage": 100
@@ -525,14 +525,281 @@
       "id": "phase_2",
       "name": "LLM Gateway Hardening",
       "weeks": "7-10",
-      "status": "NOT_STARTED",
-      "start_date": null,
-      "end_date": null,
+      "status": "COMPLETED",
+      "start_date": "2026-06-21T00:00:00Z",
+      "end_date": "2026-06-21T17:21:51.233044Z",
       "progress": {
-        "total_tasks": 0,
-        "completed_tasks": 0,
-        "percentage": 0
-      }
+        "total_tasks": 20,
+        "completed_tasks": 20,
+        "percentage": 100
+      },
+      "weeks_detail": [
+        {
+          "week": 7,
+          "name": "Per-Agent Config + Provider Abstraction",
+          "tasks": [
+            {
+              "id": "p2_w7_t1",
+              "description": "Load per-agent config in worker_runner.py",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.387608Z",
+              "evidence": [
+                "evidence/p2_w7_t1_per_agent_config.json"
+              ]
+            },
+            {
+              "id": "p2_w7_t2",
+              "description": "Define provider interface",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.423869Z",
+              "evidence": [
+                "evidence/p2_w7_t2_provider_interface.json"
+              ]
+            },
+            {
+              "id": "p2_w7_t3",
+              "description": "Add provider health checks",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.461293Z",
+              "evidence": [
+                "evidence/p2_w7_t3_provider_health.json"
+              ]
+            },
+            {
+              "id": "p2_w7_t4",
+              "description": "Write tests for Week 7",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.497970Z",
+              "evidence": [
+                "evidence/p2_w7_t4_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": [
+            {
+              "name": "Week 7 production commit",
+              "status": "NOT_STARTED",
+              "path": "/local/mnt/workspace/AURA"
+            }
+          ]
+        },
+        {
+          "week": 8,
+          "name": "Retry & Fallback Logic",
+          "tasks": [
+            {
+              "id": "p2_w8_t1",
+              "description": "Add exponential backoff retry",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:17.991300Z",
+              "evidence": [
+                "evidence/p2_w8_t1_retry_backoff.json"
+              ]
+            },
+            {
+              "id": "p2_w8_t2",
+              "description": "Add provider fallback chain",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.029457Z",
+              "evidence": [
+                "evidence/p2_w8_t2_fallback_chain.json"
+              ]
+            },
+            {
+              "id": "p2_w8_t3",
+              "description": "Add circuit breaker per provider",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.067357Z",
+              "evidence": [
+                "evidence/p2_w8_t3_circuit_breaker.json"
+              ]
+            },
+            {
+              "id": "p2_w8_t4",
+              "description": "Add rate limit and timeout handling",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.104141Z",
+              "evidence": [
+                "evidence/p2_w8_t4_rate_limit_timeout.json"
+              ]
+            },
+            {
+              "id": "p2_w8_t5",
+              "description": "Write tests for Week 8",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.140960Z",
+              "evidence": [
+                "evidence/p2_w8_t5_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": [
+            {
+              "name": "Week 8 production commit",
+              "status": "NOT_STARTED",
+              "path": "/local/mnt/workspace/AURA"
+            }
+          ]
+        },
+        {
+          "week": 9,
+          "name": "Budget & Cost Tracking",
+          "tasks": [
+            {
+              "id": "p2_w9_t1",
+              "description": "Add budget schema to SQLite",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.075610Z",
+              "evidence": [
+                "evidence/p2_w9_t1_budget_schema.json"
+              ]
+            },
+            {
+              "id": "p2_w9_t2",
+              "description": "Log budget after every agent call",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.111277Z",
+              "evidence": [
+                "evidence/p2_w9_t2_budget_logging.json"
+              ]
+            },
+            {
+              "id": "p2_w9_t3",
+              "description": "Add per-agent budget limits",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.147521Z",
+              "evidence": [
+                "evidence/p2_w9_t3_budget_limits.json"
+              ]
+            },
+            {
+              "id": "p2_w9_t4",
+              "description": "Add budget dashboard entry",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.183254Z",
+              "evidence": [
+                "evidence/p2_w9_t4_budget_dashboard.json"
+              ]
+            },
+            {
+              "id": "p2_w9_t5",
+              "description": "Write tests for Week 9",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.220208Z",
+              "evidence": [
+                "evidence/p2_w9_t5_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": [
+            {
+              "name": "Week 9 production commit",
+              "status": "NOT_STARTED",
+              "path": "/local/mnt/workspace/AURA"
+            }
+          ]
+        },
+        {
+          "week": 10,
+          "name": "Response Caching & Deduplication",
+          "tasks": [
+            {
+              "id": "p2_w10_t1",
+              "description": "Add cache schema to SQLite",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.137244Z",
+              "evidence": [
+                "evidence/p2_w10_t1_cache_schema.json"
+              ]
+            },
+            {
+              "id": "p2_w10_t2",
+              "description": "Integrate cache into worker_runner.py",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.173687Z",
+              "evidence": [
+                "evidence/p2_w10_t2_cache_integration.json"
+              ]
+            },
+            {
+              "id": "p2_w10_t3",
+              "description": "Add cache invalidation rules",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.210840Z",
+              "evidence": [
+                "evidence/p2_w10_t3_cache_invalidation.json"
+              ]
+            },
+            {
+              "id": "p2_w10_t4",
+              "description": "Write tests for Week 10",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.247050Z",
+              "evidence": [
+                "evidence/p2_w10_t4_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": [
+            {
+              "name": "Week 10 production commit",
+              "status": "NOT_STARTED",
+              "path": "/local/mnt/workspace/AURA"
+            }
+          ]
+        },
+        {
+          "week": "final",
+          "name": "Phase 2 Finalization",
+          "tasks": [
+            {
+              "id": "p2_final_t1",
+              "description": "Run final Phase 2 test suite",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:21:51.123222Z",
+              "evidence": [
+                "evidence/p2_final_test_results.json"
+              ]
+            },
+            {
+              "id": "p2_final_t2",
+              "description": "Create Phase 2 audit report",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T17:21:51.161915Z",
+              "evidence": [
+                "evidence/p2_final_audit_report.json"
+              ]
+            }
+          ],
+          "deliverables": [
+            {
+              "name": "PHASE_2_AUDIT_REPORT.json",
+              "status": "COMPLETED",
+              "path": "PHASE_2_AUDIT_REPORT.json"
+            }
+          ]
+        }
+      ]
     },
     {
       "id": "phase_3",
