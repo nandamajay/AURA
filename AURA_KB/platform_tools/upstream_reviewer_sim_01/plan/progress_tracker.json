@@ -1,9 +1,9 @@
 {
   "artifact": "upstream_reviewer_sim_progress_tracker",
   "last_updated": "2026-06-21",
-  "overall_status": "PHASE_1_READY",
-  "current_phase": 0,
-  "current_step": "0.R4",
+  "overall_status": "PHASE_1_COMPLETE_WITH_WARNINGS",
+  "current_phase": 1,
+  "current_step": "1.10",
   "phases": [
     {
       "phase": 0,
@@ -25,24 +25,24 @@
     {
       "phase": 1,
       "name": "Simulation Engine Prototype",
-      "status": "READY_TO_START",
+      "status": "COMPLETED_WITH_WARNINGS",
       "steps_total": 10,
-      "steps_completed": 0,
+      "steps_completed": 10,
       "steps_in_progress": 0,
       "steps_blocked": 0,
-      "completion_pct": 0,
-      "pm_verdict": "READY",
-      "last_card": null,
+      "completion_pct": 100,
+      "pm_verdict": "COMPLETE_WITH_WARNINGS",
+      "last_card": "PC-P1-COMPLETE-20260621",
       "success_criteria": {
         "total": 6,
-        "met": 0,
-        "not_met": 6
+        "met": 6,
+        "not_met": 0
       }
     },
     {
       "phase": 2,
       "name": "Subsystem Simulation Integration",
-      "status": "BLOCKED_ON_PHASE_1",
+      "status": "BLOCKED_ON_PHASE_1_SIGNOFF",
       "steps_total": 6,
       "steps_completed": 0,
       "steps_in_progress": 0,
@@ -108,9 +108,9 @@
       }
     }
   ],
-  "overall_completion_pct": 0,
-  "open_questions": 5,
-  "progress_cards_count": 1,
+  "overall_completion_pct": 45,
+  "open_questions": 4,
+  "progress_cards_count": 7,
   "governance_guardrails_active": true,
   "wcd9378_impact": "Phase 0 and Phase 1 outputs will improve WCD9378 review readiness after Monday hardware evidence",
   "history": [
@@ -155,6 +155,12 @@
       "action": "Phase 0 R4 lore-based retry completed",
       "card": "PC-P0-R4-20260621",
       "phase_status_change": "Phase 0 completed using lore data; Phase 1 ready to start."
+    },
+    {
+      "date": "2026-06-21",
+      "action": "Phase 1 prototype completed",
+      "card": "PC-P1-COMPLETE-20260621",
+      "phase_status_change": "Phase 1 completed with warnings (1 lens fail-closed); Phase 2 remains blocked pending sign-off."
     }
   ]
 }

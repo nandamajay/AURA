@@ -1,0 +1,44 @@
+{
+  "card_id": "PC-P1-COMPLETE-20260621",
+  "date": "2026-06-21",
+  "phase": 1,
+  "step": "1.10",
+  "step_name": "Phase 1 simulation engine prototype",
+  "status": "COMPLETED_WITH_WARNINGS",
+  "previous_status": "READY_TO_START",
+  "what_was_done": "Implemented upstream_reviewer_sim.py with 5 lenses, deterministic aggregation, and output writers; executed pilots for WCD9378 A.1 and WSA884x Variant B; generated PM evaluation artifact.",
+  "artifacts_created": [
+    "AURA/agents/src/aura_agents/upstream_reviewer_sim.py",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wcd9378_a1_review/upstream_review_report.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wcd9378_a1_review/review_comments.md",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wcd9378_a1_review/fix_plan.md",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wcd9378_a1_review/pm_review_verdict.md",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wsa884x_variant_b_review/upstream_review_report.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wsa884x_variant_b_review/review_comments.md",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wsa884x_variant_b_review/fix_plan.md",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/wsa884x_variant_b_review/pm_review_verdict.md",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/pm_phase1_evaluation.json"
+  ],
+  "artifacts_modified": [
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/progress_tracker.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/MASTER_PLAN.md"
+  ],
+  "success_criteria_met": [
+    "Generates valid JSON report",
+    "Surfaces known WCD9378 runtime blockers",
+    "Does not claim runtime readiness",
+    "Does not modify any source",
+    "Produces actionable fix_plan.md",
+    "PM can use output"
+  ],
+  "success_criteria_not_met": [],
+  "blockers": [
+    "upstream-philosophy lens executed FAIL_CLOSED due runtime dependency mismatch (ImportError: StrEnum)."
+  ],
+  "deviations_from_plan": [
+    "Phase 2 remains blocked pending sign-off because Phase 1 verdict is COMPLETE_WITH_WARNINGS, not COMPLETE."
+  ],
+  "pm_verdict": "REPLANNED",
+  "next_step": "Obtain phase-1 sign-off or resolve upstream_philosophy dependency mismatch before unblocking Phase 2.",
+  "notes": "Simulation remains advisory-only; runtime-sensitive items stayed fail-closed."
+}

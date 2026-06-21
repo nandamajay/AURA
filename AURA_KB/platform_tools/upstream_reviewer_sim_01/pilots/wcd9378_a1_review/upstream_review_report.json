@@ -1,0 +1,210 @@
+{
+  "run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted",
+  "subsystem": "soundwire-codec",
+  "lenses_run": [
+    "patch-structure",
+    "dt-binding",
+    "upstream-philosophy",
+    "rule-pack",
+    "build"
+  ],
+  "lenses_failed": [
+    "upstream-philosophy"
+  ],
+  "findings": [
+    {
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern_id": "DT-001",
+      "severity": "WARN",
+      "text": "No DT binding YAML found - required for upstream submission",
+      "evidence": "run_dir=/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted",
+      "file": "",
+      "lens_name": "dt-binding",
+      "suggested_action": "Add DT schema YAML for compatible strings used by this driver.",
+      "occurrences": 1,
+      "lenses": [
+        "dt-binding"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-001"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "BUILD-005",
+      "severity": "WARN",
+      "text": "Compile not fully executed: COMPILE_NOT_RUN_ENVIRONMENT",
+      "evidence": "compile_result.json",
+      "file": "compile_result.json",
+      "lens_name": "build",
+      "suggested_action": "Run full compile validation in an environment with full kernel build prerequisites.",
+      "occurrences": 1,
+      "lenses": [
+        "build"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-002"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_BUILD_GATE_STATUS_SUMMARY",
+      "severity": "WARN",
+      "text": "Build/gate/scoring status summary (WARN)",
+      "evidence": "static_gate/governance_verdict.json, compile_result.json, full_build_validation/full_build_result.json",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "Review WARN findings; do not treat run as runtime-ready.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-003"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_HIDDEN_TARGET_AUDIT",
+      "severity": "WARN",
+      "text": "Hidden target access audit (UNKNOWN)",
+      "evidence": "allowed_sources.json",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "No forbidden_until_scoring list detected; hidden-target discipline cannot be confirmed.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-004"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_LA_LE_TERMINOLOGY",
+      "severity": "WARN",
+      "text": "LA/LE terminology presence (WARN)",
+      "evidence": "allowed_sources.json, baseline_manifest.json, checkpatch_report.json, compile_result.json, full_build_validation/engineer_handoff.md",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "Add explicit LA/LE terminology definitions in planning/governance artifacts.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-005"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_RUNTIME_SENSITIVE_RULE_EVIDENCE",
+      "severity": "WARN",
+      "text": "Runtime-sensitive rule evidence (FAIL_CLOSED_OK)",
+      "evidence": "runtime_fail_closed_items.json",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "No runtime evidence found; fail-closed posture preserved as expected.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-006"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "BUILD-PASS-001",
+      "severity": "INFO",
+      "text": "Kconfig has SND_SOC dependency.",
+      "evidence": "converted/Kconfig",
+      "file": "converted/Kconfig",
+      "lens_name": "build",
+      "suggested_action": "",
+      "occurrences": 1,
+      "lenses": [
+        "build"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-007"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "BUILD-PASS-002",
+      "severity": "INFO",
+      "text": "Makefile uses obj-$(CONFIG_...) pattern.",
+      "evidence": "converted/Makefile",
+      "file": "converted/Makefile",
+      "lens_name": "build",
+      "suggested_action": "",
+      "occurrences": 1,
+      "lenses": [
+        "build"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-008"
+    }
+  ],
+  "reviewer_verdicts": {
+    "Krzysztof Kozlowski": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 1,
+      "info_count": 0
+    },
+    "Mark Brown": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 1,
+      "info_count": 2
+    },
+    "wcd_rule_pack": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 4,
+      "info_count": 0
+    }
+  },
+  "overall_verdict": "NEEDS_WORK",
+  "fix_plan": [
+    {
+      "priority": "P1",
+      "finding_id": "F-001",
+      "action": "Add DT schema YAML for compatible strings used by this driver.",
+      "owner": "driver_author",
+      "reviewer_signal": "Krzysztof Kozlowski (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-002",
+      "action": "Run full compile validation in an environment with full kernel build prerequisites.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-003",
+      "action": "Review WARN findings; do not treat run as runtime-ready.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-004",
+      "action": "No forbidden_until_scoring list detected; hidden-target discipline cannot be confirmed.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-005",
+      "action": "Add explicit LA/LE terminology definitions in planning/governance artifacts.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-006",
+      "action": "No runtime evidence found; fail-closed posture preserved as expected.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    }
+  ],
+  "advisory_note": "Advisory only - not a replacement for real upstream review."
+}

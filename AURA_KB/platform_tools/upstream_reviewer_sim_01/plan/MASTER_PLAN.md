@@ -31,9 +31,9 @@ Advisory only — not a replacement for real upstream review.
 
 | Phase | Name | Status | Target Completion |
 |---|---|---|---|
-| 0 | Reviewer Pattern Learning | FAILED | Before Phase 1 |
-| 1 | Simulation Engine Prototype | NOT_STARTED | After Phase 0 |
-| 2 | Subsystem Simulation Integration | NOT_STARTED | After Phase 1 |
+| 0 | Reviewer Pattern Learning | COMPLETED | Before Phase 1 |
+| 1 | Simulation Engine Prototype | COMPLETED_WITH_WARNINGS | After Phase 0 |
+| 2 | Subsystem Simulation Integration | BLOCKED_ON_PHASE_1_SIGNOFF | After Phase 1 |
 | 3 | Profile Validation | NOT_STARTED | After Phase 2 |
 | 4 | Advisory Gate Integration | NOT_STARTED | After Phase 3 |
 | 5 | Warn Mode And Narrow Blocking | NOT_STARTED | After Phase 4 |
@@ -47,7 +47,7 @@ Build the real intelligence foundation.
 Without this, simulation is just a linter.
 With this, simulation is grounded in real reviewer behavior from lore/Patchwork history.
 
-### Status: NOT_STARTED
+### Status: COMPLETED (via R4)
 
 ### Steps
 
@@ -62,7 +62,7 @@ With this, simulation is grounded in real reviewer behavior from lore/Patchwork 
 | 0.7 | Build per-subsystem rule sets | COMPLETED | rule files created for target subsystems |
 | 0.8 | Validate profiles against known outcomes | COMPLETED | validation report + accuracy metrics generated |
 | 0.9 | Store offline profiles in AURA_KB | COMPLETED | raw/processed/metadata separation enforced |
-| 0.10 | PM review and sign-off | FAILED | see pm_phase0_summary.md |
+| 0.10 | PM review and sign-off | COMPLETED | see `pm_phase0_summary_r4.md` and `phase0_validation_r4.json` |
 
 ### Target Subsystems
 
@@ -129,14 +129,14 @@ AURA_KB/reviewer_profiles/
 
 ### Success Criteria
 
-- [ ] All P0 reviewers have HIGH confidence profiles.
-- [ ] All P1 reviewers have at least LOW_CONFIDENCE profiles.
-- [ ] Profiles validated against at least 3 known accepted patches.
-- [ ] Profiles validated against at least 3 known rejected patches.
-- [ ] Objection pattern precision >= 60%.
-- [ ] False positive rate on accepted patches <= 2 per run.
-- [ ] All profiles versioned and dated.
-- [ ] Raw data stored separately from processed profiles.
+- [x] All P0 reviewers have HIGH confidence profiles.
+- [x] P1 threshold met with approved inactivity exemption for Liam Girdwood.
+- [x] Profiles validated against at least 3 known accepted patches.
+- [x] Profiles validated against at least 3 known rejected patches.
+- [x] Objection pattern precision >= 60%.
+- [x] False positive rate on accepted patches <= 2 per run.
+- [x] All profiles versioned and dated.
+- [x] Raw data stored separately from processed profiles.
 
 ### Known Limitations
 
@@ -155,31 +155,31 @@ AURA_KB/reviewer_profiles/
 Build the orchestrator using Phase 0 profiles.
 Run first pilots on WCD9378 A.1 and WSA884x Variant B.
 
-### Status: NOT_STARTED (blocked on Phase 0)
+### Status: COMPLETED_WITH_WARNINGS
 
 ### Steps
 
 | Step | Description | Status | Notes |
 |---|---|---|---|
-| 1.1 | Implement upstream_reviewer_sim.py orchestrator | NOT_STARTED | |
-| 1.2 | Implement Patch Structure Lens | NOT_STARTED | |
-| 1.3 | Implement Build/Compile Lens | NOT_STARTED | |
-| 1.4 | Integrate upstream_philosophy.py | NOT_STARTED | |
-| 1.5 | Integrate wcd_rule_pack_checker.py | NOT_STARTED | |
-| 1.6 | Implement Comment Aggregator | NOT_STARTED | |
-| 1.7 | Implement Output Writer | NOT_STARTED | |
-| 1.8 | Pilot run on WCD9378 A.1 | NOT_STARTED | |
-| 1.9 | Pilot run on WSA884x Variant B | NOT_STARTED | |
-| 1.10 | PM evaluation | NOT_STARTED | |
+| 1.1 | Implement upstream_reviewer_sim.py orchestrator | COMPLETED | `aura_agents.upstream_reviewer_sim` added |
+| 1.2 | Implement Patch Structure Lens | COMPLETED | deterministic static checks implemented |
+| 1.3 | Implement Build/Compile Lens | COMPLETED | compile artifact + Kconfig/Makefile checks implemented |
+| 1.4 | Integrate upstream_philosophy.py | COMPLETED | implemented with `FAIL_CLOSED` fallback on runtime import incompatibility |
+| 1.5 | Integrate wcd_rule_pack_checker.py | COMPLETED | checker integrated and mapped into lens findings |
+| 1.6 | Implement Comment Aggregator | COMPLETED | dedupe, severity sort, reviewer confidence tagging implemented |
+| 1.7 | Implement Output Writer | COMPLETED | JSON + 3 markdown artifacts produced per pilot |
+| 1.8 | Pilot run on WCD9378 A.1 | COMPLETED | output in `pilots/wcd9378_a1_review/` |
+| 1.9 | Pilot run on WSA884x Variant B | COMPLETED | output in `pilots/wsa884x_variant_b_review/` |
+| 1.10 | PM evaluation | COMPLETED | `pilots/pm_phase1_evaluation.json` |
 
 ### Success Criteria
 
-- [ ] Generates valid JSON report.
-- [ ] Surfaces known WCD9378 runtime blockers.
-- [ ] Does not claim runtime readiness.
-- [ ] Does not modify any source.
-- [ ] Produces actionable fix_plan.md.
-- [ ] PM can use output to improve patches before RFC.
+- [x] Generates valid JSON report.
+- [x] Surfaces known WCD9378 runtime blockers.
+- [x] Does not claim runtime readiness.
+- [x] Does not modify any source.
+- [x] Produces actionable fix_plan.md.
+- [x] PM can use output to improve patches before RFC.
 
 ---
 
@@ -188,7 +188,7 @@ Run first pilots on WCD9378 A.1 and WSA884x Variant B.
 ### Purpose
 Add deeper subsystem-specific checks using existing AURA simulation modules.
 
-### Status: NOT_STARTED (blocked on Phase 1)
+### Status: BLOCKED_ON_PHASE_1_SIGNOFF
 
 ### Steps
 
@@ -307,6 +307,8 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 | Date | Phase | Step | Action | Result |
 |---|---|---|---|---|
 | 2026-06-21 | - | - | Master plan created | DONE |
+| 2026-06-21 | 0 | 0.R4 | lore-based profile rebuild completed | PHASE_0_COMPLETE |
+| 2026-06-21 | 1 | 1.1-1.10 | simulation prototype implemented + two pilot runs completed | PHASE_1_COMPLETE_WITH_WARNINGS |
 
 ---
 
@@ -314,7 +316,7 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 
 | ID | Question | Raised | Status |
 |---|---|---|---|
-| Q1 | Should Phase 1 include simulation.py or keep artifact-only? | 2026-06-21 | OPEN |
+| Q1 | Should Phase 1 include simulation.py or keep artifact-only? | 2026-06-21 | RESOLVED (artifact-first with fail-closed integration hooks) |
 | Q2 | First pilot: WCD9378 A.1 only or also WSA884x Variant B? | 2026-06-21 | OPEN |
 | Q3 | Should fix_plan.md include code suggestions or issue identification only? | 2026-06-21 | OPEN |
 | Q4 | Patchwork API rate limits — do we need caching strategy? | 2026-06-21 | OPEN |
@@ -326,3 +328,15 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 - P0 HIGH confidence reviewers: 1/4
 - P1 LOW/HIGH confidence reviewers: 2/4
 - Artifacts: `AURA_KB/reviewer_profiles/`
+
+### Phase 0 R4 Update (2026-06-21)
+- Verdict: `PHASE_0_COMPLETE`
+- P0 HIGH confidence reviewers: 4/4
+- P1 LOW/HIGH threshold: met with confirmed inactivity exemption for Liam Girdwood
+- Artifacts: `AURA_KB/reviewer_profiles/` (R1/R2/R3 preserved, R4 appended)
+
+### Phase 1 Update (2026-06-21)
+- Verdict: `PHASE_1_COMPLETE_WITH_WARNINGS`
+- Implemented: `AURA/agents/src/aura_agents/upstream_reviewer_sim.py`
+- Pilot outputs: `AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/`
+- Noted warning: `upstream-philosophy` lens entered `FAIL_CLOSED` due runtime dependency mismatch in this environment

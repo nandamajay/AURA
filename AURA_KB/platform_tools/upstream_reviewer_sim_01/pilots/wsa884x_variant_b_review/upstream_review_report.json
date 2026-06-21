@@ -1,0 +1,138 @@
+{
+  "run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted",
+  "subsystem": "audio-amplifier",
+  "lenses_run": [
+    "patch-structure",
+    "dt-binding",
+    "upstream-philosophy",
+    "rule-pack",
+    "build"
+  ],
+  "lenses_failed": [
+    "upstream-philosophy"
+  ],
+  "findings": [
+    {
+      "reviewer": "Vinod Koul",
+      "pattern_id": "PATCH_STRUCT-004",
+      "severity": "BLOCKING",
+      "text": "Missing Signed-off-by trailer.",
+      "evidence": "patches/0001-ASoC-codecs-add-variant_b_relative_skeleton-wsa884x-source.patch has no Signed-off-by",
+      "file": "patches/0001-ASoC-codecs-add-variant_b_relative_skeleton-wsa884x-source.patch",
+      "lens_name": "patch-structure",
+      "suggested_action": "Add a valid Signed-off-by trailer as required by DCO.",
+      "occurrences": 1,
+      "lenses": [
+        "patch-structure"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-001"
+    },
+    {
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern_id": "DT-001",
+      "severity": "WARN",
+      "text": "No DT binding YAML found - required for upstream submission",
+      "evidence": "run_dir=/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/converted",
+      "file": "",
+      "lens_name": "dt-binding",
+      "suggested_action": "Add DT schema YAML for compatible strings used by this driver.",
+      "occurrences": 1,
+      "lenses": [
+        "dt-binding"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-002"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "BUILD-007",
+      "severity": "WARN",
+      "text": "compile_result.json not found.",
+      "evidence": "Checked run_dir and parents for compile_result.json.",
+      "file": "",
+      "lens_name": "build",
+      "suggested_action": "Attach compile_result.json artifact from validation run.",
+      "occurrences": 1,
+      "lenses": [
+        "build"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-003"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_RUNTIME_SENSITIVE_RULE_EVIDENCE",
+      "severity": "WARN",
+      "text": "Runtime-sensitive rule evidence (FAIL_CLOSED_OK)",
+      "evidence": "fail_closed_items.json",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "No runtime evidence found; fail-closed posture preserved as expected.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-004"
+    }
+  ],
+  "reviewer_verdicts": {
+    "Vinod Koul": {
+      "verdict": "BLOCKED",
+      "blocking_count": 1,
+      "warning_count": 0,
+      "info_count": 0
+    },
+    "Krzysztof Kozlowski": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 1,
+      "info_count": 0
+    },
+    "Mark Brown": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 1,
+      "info_count": 0
+    },
+    "wcd_rule_pack": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 1,
+      "info_count": 0
+    }
+  },
+  "overall_verdict": "BLOCKED",
+  "fix_plan": [
+    {
+      "priority": "P0",
+      "finding_id": "F-001",
+      "action": "Add a valid Signed-off-by trailer as required by DCO.",
+      "owner": "driver_author",
+      "reviewer_signal": "Vinod Koul (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-002",
+      "action": "Add DT schema YAML for compatible strings used by this driver.",
+      "owner": "driver_author",
+      "reviewer_signal": "Krzysztof Kozlowski (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-003",
+      "action": "Attach compile_result.json artifact from validation run.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-004",
+      "action": "No runtime evidence found; fail-closed posture preserved as expected.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    }
+  ],
+  "advisory_note": "Advisory only - not a replacement for real upstream review."
+}

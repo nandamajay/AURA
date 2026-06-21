@@ -1,0 +1,237 @@
+{
+  "artifact": "wcd_rule_pack_compliance_report",
+  "generated_at_utc": "2026-06-21T18:04:39Z",
+  "checker_version": "prototype-0.1",
+  "rules_path": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json",
+  "run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton",
+  "driver_family": "audio-amplifier",
+  "summary": {
+    "overall_verdict": "PASS",
+    "rules_loaded": 13,
+    "checks_run": 9,
+    "pass_count": 8,
+    "warn_count": 0,
+    "fail_count": 0,
+    "info_count": 0,
+    "fail_closed_ok_count": 1,
+    "missing_count": 0,
+    "unknown_count": 0
+  },
+  "checks": [
+    {
+      "check_id": "CHECK_RULE_FILE_PARSE",
+      "name": "Rule file parse and schema",
+      "status": "PASS",
+      "evidence": [
+        "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json"
+      ],
+      "details": "{\"rules_loaded\": 13}",
+      "recommended_action": "No action."
+    },
+    {
+      "check_id": "CHECK_RUN_ARTIFACT_PRESENCE",
+      "name": "Run directory artifact presence",
+      "status": "PASS",
+      "evidence": [
+        "patch_lineage.json",
+        "full_series_validation.json",
+        "governance_gate/governance_verdict.json",
+        "allowed_sources.json",
+        "fail_closed_items.json",
+        "scoring_result_v4.json",
+        "anti_copy_audit.json",
+        "governance_gate/verifier_result.json"
+      ],
+      "details": "{\"missing\": [\"static_gate_governance\", \"full_build_result\", \"runtime_fail_closed_items\"], \"present\": {\"allowed_sources\": \"allowed_sources.json\", \"fail_closed_items\": \"fail_closed_items.json\", \"full_series_validation\": \"full_series_validation.json\", \"governance_gate_governance\": \"governance_gate/governance_verdict.json\", \"patch_lineage\": \"patch_lineage.json\", \"scoring_result\": \"scoring_result_v4.json\"}}",
+      "recommended_action": "No action required; optional artifacts can improve coverage depth."
+    },
+    {
+      "check_id": "CHECK_LINEAGE_COVERAGE",
+      "name": "Lineage coverage inference",
+      "status": "PASS",
+      "evidence": [
+        "patch_lineage.json"
+      ],
+      "details": "{\"has_patches\": true, \"has_per_function_lineage\": true, \"lineage_coverage_field\": \"FUNCTION_NAME_COVERAGE\", \"patch_entries\": 1, \"per_function_entries\": 24}",
+      "recommended_action": "No action."
+    },
+    {
+      "check_id": "CHECK_RUNTIME_SENSITIVE_RULE_EVIDENCE",
+      "name": "Runtime-sensitive rule evidence",
+      "status": "FAIL_CLOSED_OK",
+      "evidence": [
+        "fail_closed_items.json"
+      ],
+      "details": "{\"fail_closed_items_count\": 5, \"fail_closed_preserved\": true, \"runtime_evidence_artifact_count\": 0, \"runtime_evidence_artifacts\": [], \"runtime_rule_count\": 7, \"suspicious_runtime_claim_artifacts\": []}",
+      "recommended_action": "No runtime evidence found; fail-closed posture preserved as expected."
+    },
+    {
+      "check_id": "CHECK_VENDOR_ELIMINATION_HEURISTIC",
+      "name": "Vendor token heuristic scan",
+      "status": "PASS",
+      "evidence": [
+        "converted/wsa884x.c"
+      ],
+      "details": "{\"files_scanned\": 1, \"heuristic_only\": true, \"token_counts\": {\"CONFIG_SND_SOC_QDSP6V2\": 0, \"asoc_msm\": 0, \"bolero\": 0, \"msm_\": 0, \"qcom,msm\": 0, \"wcd9xxx\": 0}, \"token_locations\": {}}",
+      "recommended_action": "No vendor-token matches detected by heuristic scan."
+    },
+    {
+      "check_id": "CHECK_HIDDEN_TARGET_AUDIT",
+      "name": "Hidden target access audit",
+      "status": "PASS",
+      "evidence": [
+        "allowed_sources.json"
+      ],
+      "details": "{\"allowed_sources_count\": 12, \"forbidden_in_allowed\": [], \"forbidden_until_scoring_count\": 3}",
+      "recommended_action": "No action."
+    },
+    {
+      "check_id": "CHECK_DOWNSTREAM_DERIVATION_RISK",
+      "name": "Downstream derivation risk surfacing",
+      "status": "PASS",
+      "evidence": [
+        "anti_copy_audit.json",
+        "governance_gate/governance_verdict.json",
+        "governance_gate/verifier_result.json"
+      ],
+      "details": "{\"warning_count\": 0, \"warning_sources\": []}",
+      "recommended_action": "No derivation warnings detected in existing audit artifacts."
+    },
+    {
+      "check_id": "CHECK_LA_LE_TERMINOLOGY",
+      "name": "LA/LE terminology presence",
+      "status": "PASS",
+      "evidence": [
+        "allowed_sources.json",
+        "anti_copy_audit.json",
+        "conversion_plan.json",
+        "fail_closed_items.json",
+        "file_map_v4.json",
+        "full_series_validation.json",
+        "governance_gate/gate_input_manifest.json",
+        "governance_gate/governance_verdict.json",
+        "governance_gate/scoring_result_v4.json",
+        "governance_gate/verifier_result.json",
+        "patch_lineage.json",
+        "scoring_result_v4.json",
+        "skeleton_delta_analysis.json",
+        "source_inventory.json",
+        "static_validation.json",
+        "wsa883x_adaptation_audit.json"
+      ],
+      "details": "{\"files_scanned\": 16, \"has_LA\": true, \"has_LE\": true, \"sample_scanned_files\": [\"allowed_sources.json\", \"anti_copy_audit.json\", \"conversion_plan.json\", \"fail_closed_items.json\", \"file_map_v4.json\", \"full_series_validation.json\", \"governance_gate/gate_input_manifest.json\", \"governance_gate/governance_verdict.json\", \"governance_gate/scoring_result_v4.json\", \"governance_gate/verifier_result.json\", \"patch_lineage.json\", \"scoring_result_v4.json\", \"skeleton_delta_analysis.json\", \"source_inventory.json\", \"static_validation.json\", \"wsa883x_adaptation_audit.json\"]}",
+      "recommended_action": "No action."
+    },
+    {
+      "check_id": "CHECK_BUILD_GATE_STATUS_SUMMARY",
+      "name": "Build/gate/scoring status summary",
+      "status": "PASS",
+      "evidence": [
+        "governance_gate/governance_verdict.json",
+        "scoring_result_v4.json"
+      ],
+      "details": "{\"compile_status\": null, \"full_build_status\": null, \"gate_source\": \"governance_gate/governance_verdict.json\", \"gate_verdict\": \"PASS\", \"scoring_summary\": {\"categories\": {\"API_COVERAGE\": 86.11, \"DAPM_CONTROLS\": 88.89, \"DAPM_ROUTES\": 100.0, \"DAPM_WIDGETS\": 100.0, \"DT_PROPERTY_COVERAGE\": 100.0, \"FUNCTION_MATCH\": 71.43, \"INCLUDE_ALIGNMENT\": 86.36, \"LIFECYCLE_PATTERN\": 100.0, \"REGISTER_COVERAGE\": 47.09, \"VENDOR_ELIMINATION\": 100.0}, \"overall_score\": 87.99}}",
+      "recommended_action": "No action; summary artifacts indicate non-failing static governance state."
+    }
+  ],
+  "rule_mapping": [
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-001",
+      "rule_summary": "Use upstream-first LE architecture: codec aggregate driver + SoundWire transport split + shared helper libraries.",
+      "enforcement": "prompt",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Architecture reuse is inferred via artifact/governance context, not structural AST validation."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-002",
+      "rule_summary": "Use LA as content donor and LE as structure/reference pattern; never copy LA structure verbatim.",
+      "enforcement": "manual_review",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Downstream derivation warnings are surfaced from verifier/anti-copy artifacts."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-003",
+      "rule_summary": "Keep LE target files hidden until scoring/gate stage in controlled reconstruction experiments.",
+      "enforcement": "verifier",
+      "prototype_check_coverage": "FULL",
+      "notes": "Hidden-target allowlist/forbidden-until-scoring checks are implemented."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-004",
+      "rule_summary": "Require multi-file lineage coverage for converted codec, SDW, and header files.",
+      "enforcement": "gate",
+      "prototype_check_coverage": "FULL",
+      "notes": "Lineage artifact presence and entry inference are implemented."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-005",
+      "rule_summary": "Preserve SoundWire RX/TX split structure in LE style and treat identity tuple finalization as runtime-evidence gated.",
+      "enforcement": "verifier",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Runtime evidence gating and fail-closed posture checks are implemented; SDW semantics are not re-verified."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-006",
+      "rule_summary": "Use LE regmap/regcache lifecycle patterns but keep paging/controller assumptions fail-closed until runtime traces.",
+      "enforcement": "manual_review",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Runtime-sensitive fail-closed check is present; regmap lifecycle correctness is not deep-inspected."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-007",
+      "rule_summary": "Map DAPM widgets/routes/controls with topology evidence and penalize name-only cloning.",
+      "enforcement": "scorer",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Derivation risk surfacing is implemented; DAPM topology mapping quality is not recomputed."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-008",
+      "rule_summary": "Reuse MBHC/Class-H shared libraries while keeping codec-specific Class-H base/version decisions fail-closed.",
+      "enforcement": "manual_review",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Runtime-sensitive fail-closed checks cover MBHC/Class-H gating only at artifact level."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-009",
+      "rule_summary": "Reject reset-in-hw_params and ad-hoc runtime recovery workarounds in conversion outputs.",
+      "enforcement": "verifier",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Runtime claim and heuristic scans may catch workaround language but do not parse semantics fully."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-010",
+      "rule_summary": "Enforce vendor include/API elimination with explicit replacement mapping to LE frameworks.",
+      "enforcement": "gate",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Vendor-token heuristic scan is implemented, not a full semantic API-elimination proof."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-011",
+      "rule_summary": "Run anti-copy/anti-derivation checks and treat downstream warning findings as governance risk.",
+      "enforcement": "verifier",
+      "prototype_check_coverage": "FULL",
+      "notes": "Existing derivation/downstream reuse warnings are surfaced from verifier/anti-copy artifacts."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-012",
+      "rule_summary": "Separate DTS/schema normalization from runtime proof; keep evidence checklists explicit and executable.",
+      "enforcement": "checklist",
+      "prototype_check_coverage": "PARTIAL",
+      "notes": "Evidence and runtime-gating signals are checked; DTS/schema correctness is not re-validated."
+    },
+    {
+      "rule_id": "WCD-FAMILY-PROMOTED-013",
+      "rule_summary": "Runtime-sensitive decisions must remain fail-closed until evidence artifacts explicitly unblock them.",
+      "enforcement": "gate",
+      "prototype_check_coverage": "FULL",
+      "notes": "Runtime-sensitive fail-closed policy check is implemented against blocker artifacts."
+    }
+  ],
+  "limitations": [
+    "Vendor elimination and runtime-claim checks are heuristic scans and may produce false positives/negatives.",
+    "Checker surfaces existing derivation risk from artifacts; it does not recompute full similarity scoring.",
+    "Runtime-evidence detection is artifact-name based and does not validate evidence quality.",
+    "Lineage check tolerates schema variation and therefore reports inferred coverage only.",
+    "Prototype does not modify canonical gate/scorer/verifier verdicts."
+  ]
+}

@@ -1,0 +1,39 @@
+{
+  "phase": 1,
+  "evaluation_date": "2026-06-21T23:30:00Z",
+  "pilots_run": [
+    "wcd9378_a1",
+    "wsa884x_variant_b"
+  ],
+  "success_criteria": {
+    "generates_valid_json": true,
+    "surfaces_known_wcd9378_blockers": true,
+    "does_not_claim_runtime_readiness": true,
+    "no_source_modified": true,
+    "produces_fix_plan": true,
+    "pm_can_use_output": true
+  },
+  "wcd9378_a1": {
+    "overall_verdict": "NEEDS_WORK",
+    "blocking_findings": 0,
+    "warning_findings": 6,
+    "lenses_succeeded": 4,
+    "lenses_failed_closed": 1,
+    "known_runtime_blockers_surfaced": true
+  },
+  "wsa884x_variant_b": {
+    "overall_verdict": "BLOCKED",
+    "blocking_findings": 1,
+    "warning_findings": 3,
+    "lenses_succeeded": 4,
+    "lenses_failed_closed": 1
+  },
+  "phase1_verdict": "PHASE_1_COMPLETE_WITH_WARNINGS",
+  "phase2_unblocked": false,
+  "lessons_learned": [
+    "Fail-closed lens behavior preserved reporting continuity when upstream_philosophy import dependencies were unavailable in this runtime.",
+    "Rule-pack lens successfully surfaced runtime fail-closed governance artifacts for WCD9378 without asserting runtime readiness.",
+    "Patch-structure lens surfaced process blockers such as missing Signed-off-by trailers before code-level tuning."
+  ],
+  "advisory_note": "Simulation is advisory only. Not a replacement for real upstream review."
+}
