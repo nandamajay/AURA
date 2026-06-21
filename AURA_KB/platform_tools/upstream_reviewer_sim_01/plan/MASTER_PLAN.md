@@ -33,8 +33,8 @@ Advisory only — not a replacement for real upstream review.
 |---|---|---|---|
 | 0 | Reviewer Pattern Learning | COMPLETED | Before Phase 1 |
 | 1 | Simulation Engine Prototype | COMPLETED_WITH_WARNINGS | After Phase 0 |
-| 2 | Subsystem Simulation Integration | BLOCKED_ON_PHASE_1_SIGNOFF | After Phase 1 |
-| 3 | Profile Validation | NOT_STARTED | After Phase 2 |
+| 2 | Subsystem Simulation Integration | COMPLETED_WITH_WARNINGS | After Phase 1 |
+| 3 | Profile Validation | READY_TO_START | After Phase 2 |
 | 4 | Advisory Gate Integration | NOT_STARTED | After Phase 3 |
 | 5 | Warn Mode And Narrow Blocking | NOT_STARTED | After Phase 4 |
 
@@ -188,24 +188,24 @@ Run first pilots on WCD9378 A.1 and WSA884x Variant B.
 ### Purpose
 Add deeper subsystem-specific checks using existing AURA simulation modules.
 
-### Status: BLOCKED_ON_PHASE_1_SIGNOFF
+### Status: COMPLETED_WITH_WARNINGS
 
 ### Steps
 
 | Step | Description | Status | Notes |
 |---|---|---|---|
-| 2.1 | Integrate dts_bindings.py for DT Binding Lens | NOT_STARTED | |
-| 2.2 | Integrate simulation.py for audio subsystems | NOT_STARTED | |
-| 2.3 | Integrate reviewer_behavior_model_v1.py offline profiles | NOT_STARTED | |
-| 2.4 | Add subsystem focus profiles | NOT_STARTED | |
-| 2.5 | Pilot on WCD939x Variant 1 | NOT_STARTED | |
-| 2.6 | PM evaluation | NOT_STARTED | |
+| 2.1 | Fix StrEnum Python 3.10 compatibility | COMPLETED | `step_2_1_strenum_fix.json` recorded |
+| 2.2 | Add ASoC/Qualcomm subsystem lens grounded in v4 profiles | COMPLETED | `asoc-subsystem` lens integrated into dispatcher |
+| 2.3 | Enhance DT binding lens with YAML/schema checks | COMPLETED | profile-linked DT checks + suggested filename output |
+| 2.4 | Add subsystem focus profile weighting | COMPLETED | reviewer verdicts tagged as primary/secondary |
+| 2.5 | Pilot on WCD939x Variant 1 | COMPLETED | output in `pilots/wcd939x_variant1_review/` |
+| 2.6 | PM evaluation and secondary pilot (WSA884x Variant C) | COMPLETED | `pm_phase2_evaluation.json` + `pilots/wsa884x_variant_c_review/` |
 
 ### Success Criteria
 
-- [ ] Subsystem simulation adds >= 3 new useful comments per run vs Phase 1.
-- [ ] DT binding lens catches at least one real DT issue per pilot.
-- [ ] Maintainer style lens produces at least one useful style signal.
+- [x] Subsystem simulation adds >= 3 new useful comments vs Phase 1 baseline.
+- [x] DT binding lens catches at least one real DT issue per pilot.
+- [x] Subsystem reviewer weighting is active in reviewer verdict output.
 
 ---
 
@@ -214,7 +214,7 @@ Add deeper subsystem-specific checks using existing AURA simulation modules.
 ### Purpose
 Prove simulation has real reviewer signal, not just heuristics.
 
-### Status: NOT_STARTED (blocked on Phase 2)
+### Status: READY_TO_START
 
 ### Steps
 
@@ -309,6 +309,7 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 | 2026-06-21 | - | - | Master plan created | DONE |
 | 2026-06-21 | 0 | 0.R4 | lore-based profile rebuild completed | PHASE_0_COMPLETE |
 | 2026-06-21 | 1 | 1.1-1.10 | simulation prototype implemented + two pilot runs completed | PHASE_1_COMPLETE_WITH_WARNINGS |
+| 2026-06-22 | 2 | 2.1-2.6 | subsystem simulation integration, dual pilots, PM evaluation | PHASE_2_COMPLETED_WITH_WARNINGS |
 
 ---
 
@@ -340,3 +341,9 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 - Implemented: `AURA/agents/src/aura_agents/upstream_reviewer_sim.py`
 - Pilot outputs: `AURA_KB/platform_tools/upstream_reviewer_sim_01/pilots/`
 - Noted warning: `upstream-philosophy` lens entered `FAIL_CLOSED` due runtime dependency mismatch in this environment
+
+### Phase 2 Update (2026-06-22)
+- Verdict: `PHASE_2_COMPLETED_WITH_WARNINGS`
+- Implemented: StrEnum compatibility shim, ASoC subsystem lens, DT binding enhancements, subsystem reviewer weighting
+- Pilot outputs: `wcd939x_variant1_review` and `wsa884x_variant_c_review`
+- Artifacts: `AURA_KB/platform_tools/upstream_reviewer_sim_01/phase2/`

@@ -7,14 +7,24 @@ directory and emits machine/human-readable artifacts for PM and engineers.
 from __future__ import annotations
 
 import argparse
+import enum
 import json
 import re
 import sys
 import time
 from dataclasses import asdict, dataclass
+from datetime import datetime, timezone
 from pathlib import Path
 from types import SimpleNamespace
 from typing import Any, Callable
+
+
+# Python 3.10 compatibility shim for modules expecting enum.StrEnum (3.11+).
+if not hasattr(enum, "StrEnum"):
+    class _CompatStrEnum(str, enum.Enum):
+        """Compatibility replacement for enum.StrEnum on Python < 3.11."""
+
+    enum.StrEnum = _CompatStrEnum  # type: ignore[attr-defined]
 
 
 ADVISORY_NOTE = "Advisory only - not a replacement for real upstream review."
@@ -34,6 +44,29 @@ BANNED_SYMBOLS = [
     "audio_notifier",
     "q6core_",
 ]
+
+DEFAULT_LENS_SEQUENCE = [
+    "patch-structure",
+    "dt-binding",
+    "upstream-philosophy",
+    "rule-pack",
+    "build",
+]
+
+SUBSYSTEM_REVIEWER_MAP = {
+    "asoc": ["Mark Brown", "Liam Girdwood", "Pierre-Louis Bossart", "Vinod Koul"],
+    "soundwire-codec": ["Mark Brown", "Pierre-Louis Bossart", "Vinod Koul"],
+    "dt-bindings": ["Krzysztof Kozlowski", "Rob Herring"],
+    "pinctrl": ["Linus Walleij", "Bjorn Andersson"],
+    "qcom-platform": ["Bjorn Andersson", "Konrad Dybcio"],
+}
+
+PROFILE_SOURCE_MAP = {
+    "Mark Brown": "mark_brown_profile_v4",
+    "Pierre-Louis Bossart": "pierre_louis_bossart_profile_v4",
+    "Vinod Koul": "vinod_koul_profile_v4",
+    "Krzysztof Kozlowski": "krzysztof_kozlowski_profile_v4",
+}
 
 
 @dataclass
@@ -56,6 +89,10 @@ class SimulationReport:
     overall_verdict: str
     fix_plan: list[dict[str, Any]]
     advisory_note: str
+
+
+def _utc_now_iso() -> str:
+    return datetime.now(timezone.utc).replace(microsecond=0).isoformat().replace("+00:00", "Z")
 
 
 def _read_text(path: Path) -> str:
@@ -94,8 +131,10 @@ def _make_finding(
     file_path: str = "",
     lens_name: str = "",
     suggested_action: str = "",
+    profile_source: str = "",
+    suggested_filename: str = "",
 ) -> dict[str, Any]:
-    return {
+    finding = {
         "reviewer": reviewer,
         "pattern_id": pattern_id,
         "severity": _normalize_severity(severity),
@@ -105,6 +144,11 @@ def _make_finding(
         "lens_name": lens_name,
         "suggested_action": suggested_action,
     }
+    if profile_source:
+        finding["profile_source"] = profile_source
+    if suggested_filename:
+        finding["suggested_filename"] = suggested_filename
+    return finding
 
 
 def _status_from_findings(findings: list[dict[str, Any]]) -> str:
@@ -197,6 +241,81 @@ def _resolve_patch_root(run_dir: Path) -> Path:
     return run_dir
 
 
+def _preferred_code_roots(run_dir: Path) -> list[Path]:
+    roots: list[Path] = []
+    converted = run_dir / "converted"
+    governance_target = run_dir / "governance_gate/upstream_target"
+    if converted.exists() and converted.is_dir():
+        roots.append(converted)
+    if governance_target.exists() and governance_target.is_dir():
+        roots.append(governance_target)
+    if not roots:
+        roots.append(run_dir)
+    return roots
+
+
+def _collect_code_files(run_dir: Path, suffixes: tuple[str, ...]) -> list[Path]:
+    files: dict[str, Path] = {}
+    for root in _preferred_code_roots(run_dir):
+        for path in sorted(root.rglob("*")):
+            if not path.is_file():
+                continue
+            if path.suffix.lower() not in suffixes:
+                continue
+            files[str(path.resolve())] = path
+    return [files[key] for key in sorted(files.keys())]
+
+
+def _collect_patch_files(run_dir: Path) -> list[Path]:
+    patch_root = _resolve_patch_root(run_dir)
+    candidates = [
+        patch_root / "patches",
+        run_dir / "patches",
+        run_dir.parent / "patches",
+    ]
+    files: dict[str, Path] = {}
+    for directory in candidates:
+        if not directory.exists() or not directory.is_dir():
+            continue
+        for patch_file in sorted(directory.glob("*.patch")):
+            files[str(patch_file.resolve())] = patch_file
+    return [files[key] for key in sorted(files.keys())]
+
+
+def _normalize_subsystem(subsystem: str) -> str:
+    return subsystem.strip().lower().replace("_", "-")
+
+
+def _primary_reviewers_for_subsystem(subsystem: str) -> set[str]:
+    normalized = _normalize_subsystem(subsystem)
+    for key, reviewers in SUBSYSTEM_REVIEWER_MAP.items():
+        if key in normalized or normalized in key:
+            return set(reviewers)
+    return set()
+
+
+def _resolve_requested_lenses(lenses_arg: str | None, subsystem: str) -> list[str]:
+    requested: list[str] = []
+    if lenses_arg and lenses_arg.strip().lower() != "auto":
+        requested = [part.strip() for part in lenses_arg.split(",") if part.strip()]
+    else:
+        requested = list(DEFAULT_LENS_SEQUENCE)
+
+    normalized_subsystem = _normalize_subsystem(subsystem)
+    if ("asoc" in normalized_subsystem or "soundwire-codec" in normalized_subsystem) and (
+        "asoc-subsystem" not in requested
+    ):
+        requested.append("asoc-subsystem")
+    return requested
+
+
+def _default_rules_path(repo_root: Path) -> Path:
+    return (
+        repo_root
+        / "AURA_KB/drivers/wcd_codec_family/rule_promotion_01/wcd_codec_family_rules_promoted.json"
+    )
+
+
 def _consume_offline_helpers(subsystem: str, repo_root: Path) -> None:
     """Best-effort invocation of existing offline helpers required for Phase 1.
 
@@ -225,6 +344,15 @@ def _consume_offline_helpers(subsystem: str, repo_root: Path) -> None:
 
         coordinator = ReviewCoordinatorAgent()
         coordinator._build_packet(db_path=":memory:", patch_id="", limit=5)
+    except Exception:
+        pass
+
+    try:
+        from aura_agents.dts_bindings import DTSBindingsAgent
+
+        dts_agent = DTSBindingsAgent()
+        dts_agent.rules_path = str(repo_root / "AURA_KB/platform_tools")
+        dts_agent._load_rule_mappings()
     except Exception:
         pass
 
@@ -605,6 +733,329 @@ def run_build_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
     return LensResult("build", status, findings, summary, duration_ms)
 
 
+def run_asoc_subsystem_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
+    start = time.perf_counter()
+    findings: list[dict[str, Any]] = []
+    subsystem = _normalize_subsystem(str(context.get("subsystem", "")))
+
+    c_files = _collect_code_files(run_dir, (".c",))
+    h_files = _collect_code_files(run_dir, (".h",))
+    if not c_files and not h_files:
+        duration_ms = (time.perf_counter() - start) * 1000.0
+        return LensResult(
+            "asoc-subsystem",
+            "FAIL_CLOSED",
+            [],
+            "No .c/.h files found for ASoC subsystem checks.",
+            duration_ms,
+        )
+
+    all_c_text = "\n\n".join(_read_text(path) for path in c_files)
+    has_component_driver = False
+    has_dapm_widgets = False
+    has_dapm_routes = False
+    has_devm_usage = False
+    has_sdw_ops = False
+    compatible_strings: set[str] = set()
+    seen_bad_compat: set[str] = set()
+
+    for c_file in c_files:
+        text = _read_text(c_file)
+        rel_path = _safe_rel(c_file, run_dir)
+
+        # Mark Brown profile checks.
+        if "MODULE_LICENSE(" not in text:
+            findings.append(
+                _make_finding(
+                    reviewer="Mark Brown",
+                    pattern_id="ASOC-MARK-001",
+                    severity="BLOCKING",
+                    text="MODULE_LICENSE() is missing from module source.",
+                    evidence=rel_path,
+                    file_path=rel_path,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Add MODULE_LICENSE() to satisfy module metadata requirements.",
+                    profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                )
+            )
+        if "MODULE_DESCRIPTION(" not in text:
+            findings.append(
+                _make_finding(
+                    reviewer="Mark Brown",
+                    pattern_id="ASOC-MARK-002",
+                    severity="WARN",
+                    text="MODULE_DESCRIPTION() is missing from module source.",
+                    evidence=rel_path,
+                    file_path=rel_path,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Add MODULE_DESCRIPTION() for maintainability and clarity.",
+                    profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                )
+            )
+        if "MODULE_AUTHOR(" not in text:
+            findings.append(
+                _make_finding(
+                    reviewer="Mark Brown",
+                    pattern_id="ASOC-MARK-003",
+                    severity="WARN",
+                    text="MODULE_AUTHOR() is missing from module source.",
+                    evidence=rel_path,
+                    file_path=rel_path,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Add MODULE_AUTHOR() to preserve attribution metadata.",
+                    profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                )
+            )
+
+        if "snd_soc_component_driver" in text:
+            has_component_driver = True
+        if "snd_soc_codec_driver" in text:
+            findings.append(
+                _make_finding(
+                    reviewer="Mark Brown",
+                    pattern_id="ASOC-MARK-004",
+                    severity="BLOCKING",
+                    text="Legacy snd_soc_codec_driver detected; use snd_soc_component_driver.",
+                    evidence=rel_path,
+                    file_path=rel_path,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Migrate legacy codec driver registration to snd_soc_component_driver.",
+                    profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                )
+            )
+
+        if "snd_soc_dapm_widget" in text:
+            has_dapm_widgets = True
+            if re.search(r"snd_soc_dapm_widget[\s\S]*?\[[^\]]*\]\s*=\s*\{\s*\}", text):
+                findings.append(
+                    _make_finding(
+                        reviewer="Mark Brown",
+                        pattern_id="ASOC-MARK-005",
+                        severity="WARN",
+                        text="DAPM widget array is empty.",
+                        evidence=rel_path,
+                        file_path=rel_path,
+                        lens_name="asoc-subsystem",
+                        suggested_action="Populate snd_soc_dapm_widget entries or remove unused array.",
+                        profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                    )
+                )
+        if "snd_soc_dapm_route" in text:
+            has_dapm_routes = True
+            if re.search(r"snd_soc_dapm_route[\s\S]*?\[[^\]]*\]\s*=\s*\{\s*\}", text):
+                findings.append(
+                    _make_finding(
+                        reviewer="Mark Brown",
+                        pattern_id="ASOC-MARK-006",
+                        severity="WARN",
+                        text="DAPM route array is empty.",
+                        evidence=rel_path,
+                        file_path=rel_path,
+                        lens_name="asoc-subsystem",
+                        suggested_action="Populate snd_soc_dapm_route entries or remove unused array.",
+                        profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                    )
+                )
+
+        # Pierre-Louis Bossart profile checks.
+        if "sdw_slave_ops" in text:
+            has_sdw_ops = True
+            required_callbacks = {
+                "update_status": "ASOC-BOSSART-001",
+                "bus_config": "ASOC-BOSSART-002",
+                "hw_params": "ASOC-BOSSART-003",
+            }
+            for callback, pattern_id in required_callbacks.items():
+                if f".{callback}" not in text:
+                    findings.append(
+                        _make_finding(
+                            reviewer="Pierre-Louis Bossart",
+                            pattern_id=pattern_id,
+                            severity="WARN",
+                            text=f"sdw_slave_ops missing .{callback} callback.",
+                            evidence=rel_path,
+                            file_path=rel_path,
+                            lens_name="asoc-subsystem",
+                            suggested_action=f"Add .{callback} callback to sdw_slave_ops implementation.",
+                            profile_source=PROFILE_SOURCE_MAP["Pierre-Louis Bossart"],
+                        )
+                    )
+
+        # Vinod Koul profile checks.
+        enable_count = len(re.findall(r"\bpm_runtime_enable\s*\(", text))
+        disable_count = len(re.findall(r"\bpm_runtime_disable\s*\(", text))
+        if enable_count > 0 and disable_count == 0:
+            findings.append(
+                _make_finding(
+                    reviewer="Vinod Koul",
+                    pattern_id="ASOC-VINOD-001",
+                    severity="BLOCKING",
+                    text="pm_runtime_enable() found without matching pm_runtime_disable().",
+                    evidence=f"{rel_path} enable_count={enable_count} disable_count={disable_count}",
+                    file_path=rel_path,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Ensure pm_runtime_disable() is called in remove/error paths.",
+                    profile_source=PROFILE_SOURCE_MAP["Vinod Koul"],
+                )
+            )
+        if disable_count > 0 and enable_count == 0:
+            findings.append(
+                _make_finding(
+                    reviewer="Vinod Koul",
+                    pattern_id="ASOC-VINOD-002",
+                    severity="WARN",
+                    text="pm_runtime_disable() found without pm_runtime_enable().",
+                    evidence=f"{rel_path} enable_count={enable_count} disable_count={disable_count}",
+                    file_path=rel_path,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Ensure runtime PM lifecycle is balanced in probe/remove flow.",
+                    profile_source=PROFILE_SOURCE_MAP["Vinod Koul"],
+                )
+            )
+        if "devm_" in text:
+            has_devm_usage = True
+
+        # Krzysztof Kozlowski profile checks.
+        for match in re.finditer(r'"([A-Za-z0-9][A-Za-z0-9._+-]*,[A-Za-z0-9][A-Za-z0-9._+-]*)"', text):
+            compatible = match.group(1)
+            compatible_strings.add(compatible)
+            if not re.fullmatch(r"[a-z0-9]+(?:-[a-z0-9]+)*,[a-z0-9]+(?:-[a-z0-9]+)*", compatible):
+                seen_bad_compat.add(compatible)
+                findings.append(
+                    _make_finding(
+                        reviewer="Krzysztof Kozlowski",
+                        pattern_id="ASOC-KRZYSZTOF-001",
+                        severity="WARN",
+                        text=f"Non-canonical DT compatible format: {compatible}",
+                        evidence=rel_path,
+                        file_path=rel_path,
+                        lens_name="asoc-subsystem",
+                        suggested_action="Use vendor,device lowercase compatible format with hyphen-separated tokens.",
+                        profile_source=PROFILE_SOURCE_MAP["Krzysztof Kozlowski"],
+                    )
+                )
+
+    if not has_component_driver:
+        findings.append(
+            _make_finding(
+                reviewer="Mark Brown",
+                pattern_id="ASOC-MARK-007",
+                severity="WARN",
+                text="snd_soc_component_driver definition not detected.",
+                evidence="No snd_soc_component_driver symbol in scanned C files.",
+                lens_name="asoc-subsystem",
+                suggested_action="Use snd_soc_component_driver for modern ASoC codec integration.",
+                profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+            )
+        )
+
+    if not has_dapm_widgets:
+        findings.append(
+            _make_finding(
+                reviewer="Mark Brown",
+                pattern_id="ASOC-MARK-008",
+                severity="WARN",
+                text="No snd_soc_dapm_widget array found.",
+                evidence="DAPM widgets were not detected in scanned codec sources.",
+                lens_name="asoc-subsystem",
+                suggested_action="Define snd_soc_dapm_widget entries for power graph visibility.",
+                profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+            )
+        )
+    if not has_dapm_routes:
+        findings.append(
+            _make_finding(
+                reviewer="Mark Brown",
+                pattern_id="ASOC-MARK-009",
+                severity="WARN",
+                text="No snd_soc_dapm_route array found.",
+                evidence="DAPM routes were not detected in scanned codec sources.",
+                lens_name="asoc-subsystem",
+                suggested_action="Define snd_soc_dapm_route entries to connect audio paths explicitly.",
+                profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+            )
+        )
+
+    if ("soundwire" in subsystem or "sdw" in all_c_text.lower()) and not has_sdw_ops:
+        findings.append(
+            _make_finding(
+                reviewer="Pierre-Louis Bossart",
+                pattern_id="ASOC-BOSSART-004",
+                severity="WARN",
+                text="No sdw_slave_ops structure detected in SoundWire-oriented subsystem run.",
+                evidence="Expected sdw_slave_ops callbacks were not found in codec C files.",
+                lens_name="asoc-subsystem",
+                suggested_action="Provide sdw_slave_ops callbacks for SoundWire slave behavior.",
+                profile_source=PROFILE_SOURCE_MAP["Pierre-Louis Bossart"],
+            )
+        )
+
+    if not re.search(r"\b(?:devm_)?sdw_register_slave\s*\(", all_c_text):
+        findings.append(
+            _make_finding(
+                reviewer="Pierre-Louis Bossart",
+                pattern_id="ASOC-BOSSART-005",
+                severity="WARN",
+                text="No sdw_register_slave()/devm_sdw_register_slave() call detected.",
+                evidence="SoundWire slave registration helper was not observed in C sources.",
+                lens_name="asoc-subsystem",
+                suggested_action="Ensure SoundWire slave registration helper is used during probe.",
+                profile_source=PROFILE_SOURCE_MAP["Pierre-Louis Bossart"],
+            )
+        )
+
+    if not has_devm_usage:
+        findings.append(
+            _make_finding(
+                reviewer="Vinod Koul",
+                pattern_id="ASOC-VINOD-003",
+                severity="WARN",
+                text="No devm_* managed resource APIs detected.",
+                evidence="devm_ prefix calls were not observed in scanned C files.",
+                lens_name="asoc-subsystem",
+                suggested_action="Prefer devm_* managed APIs for resource lifecycle cleanup.",
+                profile_source=PROFILE_SOURCE_MAP["Vinod Koul"],
+            )
+        )
+
+    if compatible_strings and not re.search(r"\bstruct\s+of_device_id\b", all_c_text):
+        findings.append(
+            _make_finding(
+                reviewer="Krzysztof Kozlowski",
+                pattern_id="ASOC-KRZYSZTOF-002",
+                severity="WARN",
+                text="DT compatible strings found but struct of_device_id table is missing.",
+                evidence=f"compatible_count={len(compatible_strings)}",
+                lens_name="asoc-subsystem",
+                suggested_action="Add struct of_device_id table and bind it via of_match_table.",
+                profile_source=PROFILE_SOURCE_MAP["Krzysztof Kozlowski"],
+            )
+        )
+
+    for patch_file in _collect_patch_files(run_dir):
+        patch_text = _read_text(patch_file)
+        rel_patch = _safe_rel(patch_file, _resolve_patch_root(run_dir))
+        if not re.search(r"^Signed-off-by:\s+.+", patch_text, re.MULTILINE):
+            findings.append(
+                _make_finding(
+                    reviewer="Mark Brown",
+                    pattern_id="ASOC-MARK-010",
+                    severity="BLOCKING",
+                    text="Patch is missing Signed-off-by trailer.",
+                    evidence=rel_patch,
+                    file_path=rel_patch,
+                    lens_name="asoc-subsystem",
+                    suggested_action="Add Signed-off-by trailer to comply with submission process requirements.",
+                    profile_source=PROFILE_SOURCE_MAP["Mark Brown"],
+                )
+            )
+
+    status = _status_from_findings(findings)
+    duration_ms = (time.perf_counter() - start) * 1000.0
+    summary = f"asoc-subsystem findings={len(findings)}"
+    return LensResult("asoc-subsystem", status, findings, summary, duration_ms)
+
+
 def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
     start = time.perf_counter()
     findings: list[dict[str, Any]] = []
@@ -621,12 +1072,13 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
             duration_ms,
         )
 
+    profile_source = PROFILE_SOURCE_MAP["Krzysztof Kozlowski"]
     dt_rules = profile.get("dt_rules", [])
     threshold = float(profile.get("blocking_threshold", DEFAULT_BLOCKING_THRESHOLD))
 
     dt_tokens = ["compatible", "reg", "#address-cells", "of_match", "device tree", "dt-bindings"]
     candidate_files: list[Path] = []
-    for path in sorted(run_dir.rglob("*")):
+    for path in sorted(_resolve_patch_root(run_dir).rglob("*")):
         if path.suffix.lower() not in {".yaml", ".yml", ".c", ".h"}:
             continue
         text = _read_text(path)
@@ -634,7 +1086,7 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
             candidate_files.append(path)
 
     for path in candidate_files:
-        rel_path = _safe_rel(path, run_dir)
+        rel_path = _safe_rel(path, _resolve_patch_root(run_dir))
         text = _read_text(path)
         score, fired = _compute_weighted_score(text, dt_rules)
         if score >= threshold and fired:
@@ -648,15 +1100,29 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
                     file_path=rel_path,
                     lens_name="dt-binding",
                     suggested_action="Address DT schema and binding objections before submission.",
+                    profile_source=profile_source,
                 )
             )
 
-    source_texts = []
-    for src in sorted(run_dir.rglob("*.c")) + sorted(run_dir.rglob("*.h")):
-        source_texts.append(_read_text(src))
+    code_files = _collect_code_files(run_dir, (".c", ".h"))
+    source_texts = [_read_text(src) for src in code_files]
     has_compatible = any("compatible" in text.lower() for text in source_texts)
-    yaml_files = sorted(run_dir.rglob("*.yaml")) + sorted(run_dir.rglob("*.yml"))
-    has_dt_bindings_dir = (run_dir / "dt-bindings").exists() or (run_dir.parent / "dt-bindings").exists()
+    root_dir = _resolve_patch_root(run_dir)
+    yaml_files = sorted(root_dir.rglob("*.yaml")) + sorted(root_dir.rglob("*.yml"))
+    has_dt_bindings_dir = (root_dir / "dt-bindings").exists() or (run_dir / "dt-bindings").exists()
+
+    def _suggest_binding_filename() -> str:
+        match = re.search(r'"([a-z0-9]+(?:-[a-z0-9]+)*,[a-z0-9]+(?:-[a-z0-9]+)*)"', "\n".join(source_texts))
+        if match:
+            compatible = match.group(1)
+        else:
+            basename = next((path.stem for path in code_files if re.search(r"(wcd|wsa)\d+", path.stem, re.IGNORECASE)), "")
+            if basename:
+                compatible = f"qcom,{basename.lower()}"
+            else:
+                compatible = "qcom,unknown-codec"
+        return f"Documentation/devicetree/bindings/sound/{compatible}.yaml"
+
     if has_compatible and not yaml_files and not has_dt_bindings_dir:
         findings.append(
             _make_finding(
@@ -667,8 +1133,86 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
                 evidence=f"run_dir={run_dir}",
                 lens_name="dt-binding",
                 suggested_action="Add DT schema YAML for compatible strings used by this driver.",
+                profile_source=profile_source,
+                suggested_filename=_suggest_binding_filename(),
             )
         )
+
+    for yaml_path in yaml_files:
+        rel_yaml = _safe_rel(yaml_path, root_dir)
+        yaml_text = _read_text(yaml_path)
+
+        if not re.search(r"^\s*\$schema\s*:\s*.+", yaml_text, re.MULTILINE):
+            findings.append(
+                _make_finding(
+                    reviewer="Krzysztof Kozlowski",
+                    pattern_id="DT-003",
+                    severity="WARN",
+                    text="DT binding YAML missing $schema field.",
+                    evidence=rel_yaml,
+                    file_path=rel_yaml,
+                    lens_name="dt-binding",
+                    suggested_action="Add $schema reference at top-level of YAML binding.",
+                    profile_source=profile_source,
+                )
+            )
+        if not re.search(r"^\s*title\s*:\s*.+", yaml_text, re.MULTILINE):
+            findings.append(
+                _make_finding(
+                    reviewer="Krzysztof Kozlowski",
+                    pattern_id="DT-004",
+                    severity="WARN",
+                    text="DT binding YAML missing title field.",
+                    evidence=rel_yaml,
+                    file_path=rel_yaml,
+                    lens_name="dt-binding",
+                    suggested_action="Add descriptive title for the DT binding.",
+                    profile_source=profile_source,
+                )
+            )
+
+        maintainers_match = re.search(
+            r"^\s*maintainers\s*:\s*(?:\n\s*-\s+.+)+",
+            yaml_text,
+            re.MULTILINE,
+        )
+        if not maintainers_match:
+            findings.append(
+                _make_finding(
+                    reviewer="Krzysztof Kozlowski",
+                    pattern_id="DT-005",
+                    severity="WARN",
+                    text="DT binding YAML missing non-empty maintainers list.",
+                    evidence=rel_yaml,
+                    file_path=rel_yaml,
+                    lens_name="dt-binding",
+                    suggested_action="Add maintainers list with at least one maintainer entry.",
+                    profile_source=profile_source,
+                )
+            )
+
+        has_compatible_field = bool(re.search(r"^\s*compatible\s*:\s*", yaml_text, re.MULTILINE))
+        has_compatible_constraint = bool(
+            re.search(
+                r"^\s*compatible\s*:\s*(?:\n[ \t]+[^\n]*){0,20}\n[ \t]+(?:const|enum)\s*:",
+                yaml_text,
+                re.MULTILINE,
+            )
+        )
+        if has_compatible_field and not has_compatible_constraint:
+            findings.append(
+                _make_finding(
+                    reviewer="Krzysztof Kozlowski",
+                    pattern_id="DT-006",
+                    severity="BLOCKING",
+                    text="compatible property is unconstrained; expected const:/enum: constraint.",
+                    evidence=rel_yaml,
+                    file_path=rel_yaml,
+                    lens_name="dt-binding",
+                    suggested_action="Constrain compatible with const: or enum: in binding schema.",
+                    profile_source=profile_source,
+                )
+            )
 
     has_schema_constraints = False
     for yaml_path in yaml_files:
@@ -681,9 +1225,10 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
                     pattern_id="DT-PASS-002",
                     severity="INFO",
                     text="DT schema constrains additional/unevaluated properties.",
-                    evidence=_safe_rel(yaml_path, run_dir),
-                    file_path=_safe_rel(yaml_path, run_dir),
+                    evidence=_safe_rel(yaml_path, root_dir),
+                    file_path=_safe_rel(yaml_path, root_dir),
                     lens_name="dt-binding",
+                    profile_source=profile_source,
                 )
             )
             break
@@ -697,6 +1242,7 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
                 evidence=f"yaml_files={len(yaml_files)}",
                 lens_name="dt-binding",
                 suggested_action="Tighten schema with additionalProperties:false or unevaluatedProperties:false when applicable.",
+                profile_source=profile_source,
             )
         )
 
@@ -704,6 +1250,89 @@ def run_dt_binding_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
     duration_ms = (time.perf_counter() - start) * 1000.0
     summary = f"dt-binding findings={len(findings)}"
     return LensResult("dt-binding", status, findings, summary, duration_ms)
+
+
+def _fallback_philosophy_principles() -> list[dict[str, str]]:
+    return [
+        {
+            "id": "minimal_scope",
+            "title": "Minimal and reviewable scope",
+            "expectation": "Change set should be small, targeted, and split logically.",
+        },
+        {
+            "id": "clear_rationale",
+            "title": "Clear rationale",
+            "expectation": "Proposal should explain why the change is required.",
+        },
+        {
+            "id": "generic_abstractions",
+            "title": "Prefer generic abstractions",
+            "expectation": "Avoid vendor-only hooks when kernel abstractions exist.",
+        },
+        {
+            "id": "dt_binding_hygiene",
+            "title": "Device-tree binding hygiene",
+            "expectation": "DT bindings should map to documented YAML schema expectations.",
+        },
+        {
+            "id": "test_evidence",
+            "title": "Test evidence present",
+            "expectation": "Validation evidence should be included (build/runtime/checks).",
+        },
+        {
+            "id": "maintainability",
+            "title": "Long-term maintainability",
+            "expectation": "Avoid temporary hacks and hidden behavior.",
+        },
+    ]
+
+
+def _fallback_philosophy_assess(text: str, principles: list[dict[str, str]]) -> dict[str, Any]:
+    lower = text.lower()
+    checks: list[dict[str, Any]] = []
+
+    def has_any(*terms: str) -> bool:
+        return any(term in lower for term in terms)
+
+    for principle in principles:
+        pid = principle["id"]
+        if pid == "minimal_scope":
+            ok = has_any("minimal", "small", "incremental", "split")
+            confidence = 0.8 if ok else 0.45
+        elif pid == "clear_rationale":
+            ok = has_any("because", "rationale", "reason", "motivation")
+            confidence = 0.85 if ok else 0.5
+        elif pid == "generic_abstractions":
+            bad = has_any("vendor-only", "private api", "downstream-only", "hack")
+            ok = not bad
+            confidence = 0.75 if ok else 0.25
+        elif pid == "dt_binding_hygiene":
+            ok = has_any("binding", "yaml", "device-tree", "dt")
+            confidence = 0.8 if ok else 0.45
+        elif pid == "test_evidence":
+            ok = has_any("test", "checkpatch", "sparse", "dtbs_check", "validated")
+            confidence = 0.9 if ok else 0.35
+        elif pid == "maintainability":
+            bad = has_any("temporary", "workaround", "quick fix", "hack")
+            ok = not bad
+            confidence = 0.8 if ok else 0.2
+        else:
+            ok = False
+            confidence = 0.0
+
+        checks.append(
+            {
+                "id": pid,
+                "title": principle["title"],
+                "expectation": principle["expectation"],
+                "pass": ok,
+                "confidence": round(confidence, 2),
+            }
+        )
+
+    passed = sum(1 for check in checks if check["pass"])
+    score = int(round((passed / max(len(checks), 1)) * 100))
+    return {"score": score, "checks": checks}
 
 
 def run_upstream_philosophy_lens(run_dir: Path, context: dict[str, Any]) -> LensResult:
@@ -732,32 +1361,31 @@ def run_upstream_philosophy_lens(run_dir: Path, context: dict[str, Any]) -> Lens
     if aura_sdk_src.exists() and str(aura_sdk_src) not in sys.path:
         sys.path.insert(0, str(aura_sdk_src))
 
+    import_mode = "agent"
     try:
         from aura_agents.upstream_philosophy import UpstreamPhilosophyAgent
-    except Exception as exc:  # noqa: BLE001
-        duration_ms = (time.perf_counter() - start) * 1000.0
-        return LensResult(
-            "upstream-philosophy",
-            "FAIL_CLOSED",
-            [],
-            f"Unable to import UpstreamPhilosophyAgent: {exc}",
-            duration_ms,
-        )
 
-    try:
         agent = UpstreamPhilosophyAgent()
         principles = agent._principles()
         assessment = agent._assess(proposal_text, principles)
         score = int(assessment.get("score", 0))
-    except Exception as exc:  # noqa: BLE001
-        duration_ms = (time.perf_counter() - start) * 1000.0
-        return LensResult(
-            "upstream-philosophy",
-            "FAIL_CLOSED",
-            [],
-            f"lens failed: {exc}",
-            duration_ms,
-        )
+    except Exception:
+        # Python 3.10 compatibility fallback: evaluate with the same rubric
+        # without importing BaseAgent/aura_sdk runtime dependencies.
+        import_mode = "fallback"
+        try:
+            principles = _fallback_philosophy_principles()
+            assessment = _fallback_philosophy_assess(proposal_text, principles)
+            score = int(assessment.get("score", 0))
+        except Exception as exc:  # noqa: BLE001
+            duration_ms = (time.perf_counter() - start) * 1000.0
+            return LensResult(
+                "upstream-philosophy",
+                "FAIL_CLOSED",
+                [],
+                f"lens failed: {exc}",
+                duration_ms,
+            )
 
     if score >= 70:
         status = "PASS"
@@ -786,7 +1414,7 @@ def run_upstream_philosophy_lens(run_dir: Path, context: dict[str, Any]) -> Lens
         )
 
     duration_ms = (time.perf_counter() - start) * 1000.0
-    summary = f"score={score}/100 failed_checks={len(findings)}"
+    summary = f"score={score}/100 failed_checks={len(findings)} mode={import_mode}"
     return LensResult("upstream-philosophy", status, findings, summary, duration_ms)
 
 
@@ -914,8 +1542,12 @@ def aggregate_findings(
     return ordered
 
 
-def _build_reviewer_verdicts(findings: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+def _build_reviewer_verdicts(
+    findings: list[dict[str, Any]],
+    subsystem: str,
+) -> dict[str, dict[str, Any]]:
     verdicts: dict[str, dict[str, Any]] = {}
+    primary_reviewers = _primary_reviewers_for_subsystem(subsystem)
     for finding in findings:
         reviewer = str(finding.get("reviewer", "unknown"))
         severity = _normalize_severity(str(finding.get("severity", "WARN")))
@@ -926,6 +1558,7 @@ def _build_reviewer_verdicts(findings: list[dict[str, Any]]) -> dict[str, dict[s
                 "blocking_count": 0,
                 "warning_count": 0,
                 "info_count": 0,
+                "focus_role": "primary" if reviewer in primary_reviewers else "secondary",
             },
         )
         if severity == "BLOCKING":
@@ -936,6 +1569,7 @@ def _build_reviewer_verdicts(findings: list[dict[str, Any]]) -> dict[str, dict[s
             verdicts[reviewer]["info_count"] += 1
 
     for reviewer, stats in verdicts.items():
+        stats["focus_role"] = "primary" if reviewer in primary_reviewers else "secondary"
         if stats["blocking_count"] > 0:
             stats["verdict"] = "BLOCKED"
         elif stats["warning_count"] > 0:
@@ -1019,6 +1653,8 @@ def write_outputs(report: SimulationReport, output_dir: Path) -> None:
     plan_lines = [
         "## Fix Plan (Priority Order)",
         "",
+        f"> {ADVISORY_NOTE}",
+        "",
         "| Priority | ID | Action | Reviewer Signal |",
         "|---|---|---|---|",
     ]
@@ -1046,7 +1682,8 @@ def write_outputs(report: SimulationReport, output_dir: Path) -> None:
     for reviewer in sorted(report.reviewer_verdicts.keys()):
         rv = report.reviewer_verdicts[reviewer]
         pm_lines.append(
-            f"- {reviewer}: {rv['blocking_count']} blocking, {rv['warning_count']} warnings ({rv['verdict']})"
+            f"- {reviewer} [{rv.get('focus_role', 'secondary')}]: "
+            f"{rv['blocking_count']} blocking, {rv['warning_count']} warnings ({rv['verdict']})"
         )
     pm_lines.extend(
         [
@@ -1061,6 +1698,7 @@ def write_outputs(report: SimulationReport, output_dir: Path) -> None:
 
 LENS_REGISTRY: dict[str, Callable[[Path, dict[str, Any]], LensResult]] = {
     "patch-structure": run_patch_structure_lens,
+    "asoc-subsystem": run_asoc_subsystem_lens,
     "dt-binding": run_dt_binding_lens,
     "upstream-philosophy": run_upstream_philosophy_lens,
     "rule-pack": run_rule_pack_lens,
@@ -1090,33 +1728,53 @@ def parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser = argparse.ArgumentParser(description="Offline upstream reviewer simulation prototype")
     parser.add_argument("--run-dir", required=True, help="Driver run directory to review")
     parser.add_argument("--subsystem", required=True, help="Subsystem label (e.g. soundwire-codec)")
-    parser.add_argument("--lenses", required=True, help="Comma-separated lens list")
-    parser.add_argument("--profiles", required=True, help="Directory containing reviewer profiles")
-    parser.add_argument("--rules", required=True, help="Promoted WCD rule pack JSON path")
-    parser.add_argument("--output", required=True, help="Output directory for report artifacts")
+    parser.add_argument(
+        "--lenses",
+        default="auto",
+        help="Comma-separated lens list. Use 'auto' (default) for subsystem-aware selection.",
+    )
+    parser.add_argument(
+        "--profiles",
+        "--profiles-dir",
+        dest="profiles",
+        required=True,
+        help="Directory containing reviewer profiles",
+    )
+    parser.add_argument(
+        "--rules",
+        default="",
+        help="Promoted WCD rule pack JSON path (optional; defaults to promoted rules in repository).",
+    )
+    parser.add_argument(
+        "--output",
+        "--output-dir",
+        dest="output",
+        required=True,
+        help="Output directory for report artifacts",
+    )
     return parser.parse_args(argv)
 
 
 def main(argv: list[str] | None = None) -> int:
     args = parse_args(argv)
+    repo_root = Path(__file__).resolve().parents[4]
     run_dir = Path(args.run_dir).resolve()
     profiles_dir = Path(args.profiles).resolve()
-    rules_path = Path(args.rules).resolve()
+    rules_path = Path(args.rules).resolve() if str(args.rules).strip() else _default_rules_path(repo_root).resolve()
     output_dir = Path(args.output).resolve()
 
     if not run_dir.exists():
         raise SystemExit(f"run directory not found: {run_dir}")
     if not profiles_dir.exists():
         raise SystemExit(f"profiles directory not found: {profiles_dir}")
-    if not rules_path.exists():
+    if not rules_path.exists() and ("rule-pack" in str(args.lenses).lower() or str(args.lenses).strip().lower() == "auto"):
         raise SystemExit(f"rules file not found: {rules_path}")
 
-    requested_lenses = [item.strip() for item in str(args.lenses).split(",") if item.strip()]
+    requested_lenses = _resolve_requested_lenses(str(args.lenses), str(args.subsystem))
     unsupported = [item for item in requested_lenses if item not in LENS_REGISTRY]
     if unsupported:
         raise SystemExit(f"unsupported lenses: {', '.join(unsupported)}")
 
-    repo_root = Path(__file__).resolve().parents[4]
     profiles = _load_profiles(profiles_dir)
     _consume_offline_helpers(str(args.subsystem), repo_root)
     context = {
@@ -1125,6 +1783,7 @@ def main(argv: list[str] | None = None) -> int:
         "profiles": profiles,
         "rules_path": str(rules_path),
         "subsystem": str(args.subsystem),
+        "subsystem_focus_profiles": SUBSYSTEM_REVIEWER_MAP,
         "output_dir": str(output_dir),
     }
 
@@ -1132,7 +1791,7 @@ def main(argv: list[str] | None = None) -> int:
     lenses_failed = [item.lens_name for item in lens_results if item.status == "FAIL_CLOSED"]
 
     aggregated = aggregate_findings(lens_results=lens_results, profiles=profiles)
-    reviewer_verdicts = _build_reviewer_verdicts(aggregated)
+    reviewer_verdicts = _build_reviewer_verdicts(aggregated, str(args.subsystem))
     fix_plan = _build_fix_plan(aggregated)
     overall_verdict = _compute_overall_verdict(aggregated, lenses_failed)
 

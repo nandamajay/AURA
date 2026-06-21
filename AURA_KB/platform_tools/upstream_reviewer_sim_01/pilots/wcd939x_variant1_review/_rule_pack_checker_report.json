@@ -1,0 +1,603 @@
+{
+    "run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed",
+    "subsystem": "soundwire-codec",
+    "lenses_run": [
+        "patch-structure",
+        "dt-binding",
+        "upstream-philosophy",
+        "rule-pack",
+        "build",
+        "asoc-subsystem"
+    ],
+    "lenses_failed": [],
+    "findings": [
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "PATCH_STRUCT-002",
+            "severity": "BLOCKING",
+            "text": "Banned vendor symbol: msm_cdc_supply",
+            "evidence": "converted/wcd939x.c contains 'msm_cdc_supply'",
+            "file": "converted/wcd939x.c",
+            "lens_name": "patch-structure",
+            "suggested_action": "Replace 'msm_cdc_supply' with upstream subsystem abstraction.",
+            "occurrences": 1,
+            "lenses": [
+                "patch-structure"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-001"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-010",
+            "severity": "BLOCKING",
+            "text": "Patch is missing Signed-off-by trailer.",
+            "evidence": "patches/0001-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "file": "patches/0001-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add Signed-off-by trailer to comply with submission process requirements.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-002"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-010",
+            "severity": "BLOCKING",
+            "text": "Patch is missing Signed-off-by trailer.",
+            "evidence": "patches/0002-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "file": "patches/0002-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add Signed-off-by trailer to comply with submission process requirements.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-003"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-010",
+            "severity": "BLOCKING",
+            "text": "Patch is missing Signed-off-by trailer.",
+            "evidence": "patches/0003-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "file": "patches/0003-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add Signed-off-by trailer to comply with submission process requirements.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-004"
+        },
+        {
+            "reviewer": "Vinod Koul",
+            "pattern_id": "PATCH_STRUCT-004",
+            "severity": "BLOCKING",
+            "text": "Missing Signed-off-by trailer.",
+            "evidence": "variant_1_learning_informed/patches/0001-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch has no Signed-off-by",
+            "file": "variant_1_learning_informed/patches/0001-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "lens_name": "patch-structure",
+            "suggested_action": "Add a valid Signed-off-by trailer as required by DCO.",
+            "occurrences": 1,
+            "lenses": [
+                "patch-structure"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-005"
+        },
+        {
+            "reviewer": "Vinod Koul",
+            "pattern_id": "PATCH_STRUCT-004",
+            "severity": "BLOCKING",
+            "text": "Missing Signed-off-by trailer.",
+            "evidence": "variant_1_learning_informed/patches/0002-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch has no Signed-off-by",
+            "file": "variant_1_learning_informed/patches/0002-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "lens_name": "patch-structure",
+            "suggested_action": "Add a valid Signed-off-by trailer as required by DCO.",
+            "occurrences": 1,
+            "lenses": [
+                "patch-structure"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-006"
+        },
+        {
+            "reviewer": "Vinod Koul",
+            "pattern_id": "PATCH_STRUCT-004",
+            "severity": "BLOCKING",
+            "text": "Missing Signed-off-by trailer.",
+            "evidence": "variant_1_learning_informed/patches/0003-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch has no Signed-off-by",
+            "file": "variant_1_learning_informed/patches/0003-ASoC-codecs-add-variant_1_learning_informed-WCD939x-.patch",
+            "lens_name": "patch-structure",
+            "suggested_action": "Add a valid Signed-off-by trailer as required by DCO.",
+            "occurrences": 1,
+            "lenses": [
+                "patch-structure"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-007"
+        },
+        {
+            "reviewer": "Krzysztof Kozlowski",
+            "pattern_id": "DT-001",
+            "severity": "WARN",
+            "text": "No DT binding YAML found - required for upstream submission",
+            "evidence": "run_dir=/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed",
+            "file": "",
+            "lens_name": "dt-binding",
+            "suggested_action": "Add DT schema YAML for compatible strings used by this driver.",
+            "profile_source": "krzysztof_kozlowski_profile_v4",
+            "suggested_filename": "Documentation/devicetree/bindings/sound/qcom,wcd939x-sdw.yaml",
+            "occurrences": 1,
+            "lenses": [
+                "dt-binding"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-008"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "BUILD-007",
+            "severity": "WARN",
+            "text": "compile_result.json not found.",
+            "evidence": "Checked run_dir and parents for compile_result.json.",
+            "file": "",
+            "lens_name": "build",
+            "suggested_action": "Attach compile_result.json artifact from validation run.",
+            "occurrences": 1,
+            "lenses": [
+                "build"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-009"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-003",
+            "severity": "WARN",
+            "text": "MODULE_AUTHOR() is missing from module source.",
+            "evidence": "converted/wcd939x-sdw.c",
+            "file": "converted/wcd939x-sdw.c",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-010"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-003",
+            "severity": "WARN",
+            "text": "MODULE_AUTHOR() is missing from module source.",
+            "evidence": "converted/wcd939x.c",
+            "file": "converted/wcd939x.c",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-011"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "PATCH_STRUCT-006",
+            "severity": "WARN",
+            "text": "Include path uses vendor namespace: asoc/wcd-mbhc-v2-api.h",
+            "evidence": "converted/wcd939x.c:22",
+            "file": "converted/wcd939x.c",
+            "lens_name": "patch-structure",
+            "suggested_action": "Replace with upstream include path or isolate vendor-only dependencies.",
+            "occurrences": 1,
+            "lenses": [
+                "patch-structure"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-012"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-003",
+            "severity": "WARN",
+            "text": "MODULE_AUTHOR() is missing from module source.",
+            "evidence": "governance_gate/upstream_target/wcd939x-sdw.c",
+            "file": "governance_gate/upstream_target/wcd939x-sdw.c",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-013"
+        },
+        {
+            "reviewer": "Mark Brown",
+            "pattern_id": "ASOC-MARK-003",
+            "severity": "WARN",
+            "text": "MODULE_AUTHOR() is missing from module source.",
+            "evidence": "governance_gate/upstream_target/wcd939x.c",
+            "file": "governance_gate/upstream_target/wcd939x.c",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "profile_source": "mark_brown_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-014"
+        },
+        {
+            "reviewer": "Pierre-Louis Bossart",
+            "pattern_id": "ASOC-BOSSART-005",
+            "severity": "WARN",
+            "text": "No sdw_register_slave()/devm_sdw_register_slave() call detected.",
+            "evidence": "SoundWire slave registration helper was not observed in C sources.",
+            "file": "",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Ensure SoundWire slave registration helper is used during probe.",
+            "profile_source": "pierre_louis_bossart_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-015"
+        },
+        {
+            "reviewer": "Pierre-Louis Bossart",
+            "pattern_id": "ASOC-BOSSART-003",
+            "severity": "WARN",
+            "text": "sdw_slave_ops missing .hw_params callback.",
+            "evidence": "governance_gate/upstream_target/wcd939x-sdw.c",
+            "file": "governance_gate/upstream_target/wcd939x-sdw.c",
+            "lens_name": "asoc-subsystem",
+            "suggested_action": "Add .hw_params callback to sdw_slave_ops implementation.",
+            "profile_source": "pierre_louis_bossart_profile_v4",
+            "occurrences": 1,
+            "lenses": [
+                "asoc-subsystem"
+            ],
+            "reviewer_confidence": "HIGH",
+            "finding_id": "F-016"
+        },
+        {
+            "reviewer": "upstream_philosophy",
+            "pattern_id": "UPSTREAM-PHILOSOPHY-clear_rationale",
+            "severity": "WARN",
+            "text": "Clear rationale: Proposal should explain why the change is required.",
+            "evidence": "score=50",
+            "file": "",
+            "lens_name": "upstream-philosophy",
+            "suggested_action": "Address principle gap: Clear rationale.",
+            "occurrences": 1,
+            "lenses": [
+                "upstream-philosophy"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-017"
+        },
+        {
+            "reviewer": "upstream_philosophy",
+            "pattern_id": "UPSTREAM-PHILOSOPHY-minimal_scope",
+            "severity": "WARN",
+            "text": "Minimal and reviewable scope: Change set should be small, targeted, and split logically.",
+            "evidence": "score=50",
+            "file": "",
+            "lens_name": "upstream-philosophy",
+            "suggested_action": "Address principle gap: Minimal and reviewable scope.",
+            "occurrences": 1,
+            "lenses": [
+                "upstream-philosophy"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-018"
+        },
+        {
+            "reviewer": "upstream_philosophy",
+            "pattern_id": "UPSTREAM-PHILOSOPHY-test_evidence",
+            "severity": "WARN",
+            "text": "Test evidence present: Validation evidence should be included (build/runtime/checks).",
+            "evidence": "score=50",
+            "file": "",
+            "lens_name": "upstream-philosophy",
+            "suggested_action": "Address principle gap: Test evidence present.",
+            "occurrences": 1,
+            "lenses": [
+                "upstream-philosophy"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-019"
+        },
+        {
+            "reviewer": "wcd_rule_pack",
+            "pattern_id": "CHECK_BUILD_GATE_STATUS_SUMMARY",
+            "severity": "WARN",
+            "text": "Build/gate/scoring status summary (WARN)",
+            "evidence": "governance_gate/governance_verdict.json, scoring_result_v4.json",
+            "file": "",
+            "lens_name": "rule-pack",
+            "suggested_action": "Review WARN findings; do not treat run as runtime-ready.",
+            "occurrences": 1,
+            "lenses": [
+                "rule-pack"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-020"
+        },
+        {
+            "reviewer": "wcd_rule_pack",
+            "pattern_id": "CHECK_DOWNSTREAM_DERIVATION_RISK",
+            "severity": "WARN",
+            "text": "Downstream derivation risk surfacing (WARN)",
+            "evidence": "anti_copy_audit.json, governance_gate/governance_verdict.json, governance_gate/verifier_result.json",
+            "file": "",
+            "lens_name": "rule-pack",
+            "suggested_action": "Treat downstream derivation warnings as governance caveats and review anti-copy controls.",
+            "occurrences": 1,
+            "lenses": [
+                "rule-pack"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-021"
+        },
+        {
+            "reviewer": "wcd_rule_pack",
+            "pattern_id": "CHECK_RUNTIME_SENSITIVE_RULE_EVIDENCE",
+            "severity": "WARN",
+            "text": "Runtime-sensitive rule evidence (FAIL_CLOSED_OK)",
+            "evidence": "fail_closed_items.json",
+            "file": "",
+            "lens_name": "rule-pack",
+            "suggested_action": "No runtime evidence found; fail-closed posture preserved as expected.",
+            "occurrences": 1,
+            "lenses": [
+                "rule-pack"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-022"
+        },
+        {
+            "reviewer": "wcd_rule_pack",
+            "pattern_id": "CHECK_VENDOR_ELIMINATION_HEURISTIC",
+            "severity": "WARN",
+            "text": "Vendor token heuristic scan (WARN)",
+            "evidence": "converted/wcd939x-sdw.c, converted/wcd939x.c, converted/wcd939x.h",
+            "file": "",
+            "lens_name": "rule-pack",
+            "suggested_action": "Review flagged files; remove vendor-only dependencies or document intentional usage.",
+            "occurrences": 1,
+            "lenses": [
+                "rule-pack"
+            ],
+            "reviewer_confidence": "N/A",
+            "finding_id": "F-023"
+        }
+    ],
+    "reviewer_verdicts": {
+        "Mark Brown": {
+            "verdict": "BLOCKED",
+            "blocking_count": 4,
+            "warning_count": 6,
+            "info_count": 0,
+            "focus_role": "primary"
+        },
+        "Vinod Koul": {
+            "verdict": "BLOCKED",
+            "blocking_count": 3,
+            "warning_count": 0,
+            "info_count": 0,
+            "focus_role": "primary"
+        },
+        "Krzysztof Kozlowski": {
+            "verdict": "NEEDS_WORK",
+            "blocking_count": 0,
+            "warning_count": 1,
+            "info_count": 0,
+            "focus_role": "secondary"
+        },
+        "Pierre-Louis Bossart": {
+            "verdict": "NEEDS_WORK",
+            "blocking_count": 0,
+            "warning_count": 2,
+            "info_count": 0,
+            "focus_role": "primary"
+        },
+        "upstream_philosophy": {
+            "verdict": "NEEDS_WORK",
+            "blocking_count": 0,
+            "warning_count": 3,
+            "info_count": 0,
+            "focus_role": "secondary"
+        },
+        "wcd_rule_pack": {
+            "verdict": "NEEDS_WORK",
+            "blocking_count": 0,
+            "warning_count": 4,
+            "info_count": 0,
+            "focus_role": "secondary"
+        }
+    },
+    "overall_verdict": "BLOCKED",
+    "fix_plan": [
+        {
+            "priority": "P0",
+            "finding_id": "F-001",
+            "action": "Replace 'msm_cdc_supply' with upstream subsystem abstraction.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P0",
+            "finding_id": "F-002",
+            "action": "Add Signed-off-by trailer to comply with submission process requirements.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P0",
+            "finding_id": "F-003",
+            "action": "Add Signed-off-by trailer to comply with submission process requirements.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P0",
+            "finding_id": "F-004",
+            "action": "Add Signed-off-by trailer to comply with submission process requirements.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P0",
+            "finding_id": "F-005",
+            "action": "Add a valid Signed-off-by trailer as required by DCO.",
+            "owner": "driver_author",
+            "reviewer_signal": "Vinod Koul (HIGH)"
+        },
+        {
+            "priority": "P0",
+            "finding_id": "F-006",
+            "action": "Add a valid Signed-off-by trailer as required by DCO.",
+            "owner": "driver_author",
+            "reviewer_signal": "Vinod Koul (HIGH)"
+        },
+        {
+            "priority": "P0",
+            "finding_id": "F-007",
+            "action": "Add a valid Signed-off-by trailer as required by DCO.",
+            "owner": "driver_author",
+            "reviewer_signal": "Vinod Koul (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-008",
+            "action": "Add DT schema YAML for compatible strings used by this driver.",
+            "owner": "driver_author",
+            "reviewer_signal": "Krzysztof Kozlowski (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-009",
+            "action": "Attach compile_result.json artifact from validation run.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-010",
+            "action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-011",
+            "action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-012",
+            "action": "Replace with upstream include path or isolate vendor-only dependencies.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-013",
+            "action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-014",
+            "action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+            "owner": "driver_author",
+            "reviewer_signal": "Mark Brown (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-015",
+            "action": "Ensure SoundWire slave registration helper is used during probe.",
+            "owner": "driver_author",
+            "reviewer_signal": "Pierre-Louis Bossart (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-016",
+            "action": "Add .hw_params callback to sdw_slave_ops implementation.",
+            "owner": "driver_author",
+            "reviewer_signal": "Pierre-Louis Bossart (HIGH)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-017",
+            "action": "Address principle gap: Clear rationale.",
+            "owner": "driver_author",
+            "reviewer_signal": "upstream_philosophy (N/A)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-018",
+            "action": "Address principle gap: Minimal and reviewable scope.",
+            "owner": "driver_author",
+            "reviewer_signal": "upstream_philosophy (N/A)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-019",
+            "action": "Address principle gap: Test evidence present.",
+            "owner": "driver_author",
+            "reviewer_signal": "upstream_philosophy (N/A)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-020",
+            "action": "Review WARN findings; do not treat run as runtime-ready.",
+            "owner": "driver_author",
+            "reviewer_signal": "wcd_rule_pack (N/A)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-021",
+            "action": "Treat downstream derivation warnings as governance caveats and review anti-copy controls.",
+            "owner": "driver_author",
+            "reviewer_signal": "wcd_rule_pack (N/A)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-022",
+            "action": "No runtime evidence found; fail-closed posture preserved as expected.",
+            "owner": "driver_author",
+            "reviewer_signal": "wcd_rule_pack (N/A)"
+        },
+        {
+            "priority": "P1",
+            "finding_id": "F-023",
+            "action": "Review flagged files; remove vendor-only dependencies or document intentional usage.",
+            "owner": "driver_author",
+            "reviewer_signal": "wcd_rule_pack (N/A)"
+        }
+    ],
+    "advisory_note": "Advisory only - not a replacement for real upstream review."
+}
