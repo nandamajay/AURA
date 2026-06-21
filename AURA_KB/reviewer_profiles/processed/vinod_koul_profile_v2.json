@@ -1,0 +1,164 @@
+{
+  "reviewer": "Vinod Koul",
+  "profile_version": "v2",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "INSUFFICIENT_DATA",
+  "series_analyzed": 200,
+  "comment_threads_analyzed": 6,
+  "subsystems_covered": [
+    "asoc_qcom",
+    "dmaengine_soundwire"
+  ],
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "objection_patterns": [],
+  "acceptance_patterns": [
+    {
+      "pattern": "\\bapplied\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        427323
+      ],
+      "example_comment_excerpts": [
+        "Reverts also need proper tagging, so pls ensure that is done. I have\nadded the subsystem and driver tags and applied"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "VINOD_KOUL-ACCEPTANCE_PATTERNS-001",
+      "reviewer": "Vinod Koul"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern": "\\?+",
+      "frequency": 4,
+      "example_series_ids": [
+        507031,
+        486089,
+        410777
+      ],
+      "example_comment_excerpts": [
+        "You are also changing the init call here, there is a reason why\ndmaengine drivers are subsys_initcall.. have you tested this?",
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not ",
+        "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "VINOD_KOUL-QUESTION_PATTERNS-001",
+      "reviewer": "Vinod Koul"
+    },
+    {
+      "pattern": "\\bwhy\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        507031,
+        486089,
+        410777
+      ],
+      "example_comment_excerpts": [
+        "You are also changing the init call here, there is a reason why\ndmaengine drivers are subsys_initcall.. have you tested this?",
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not ",
+        "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "VINOD_KOUL-QUESTION_PATTERNS-002",
+      "reviewer": "Vinod Koul"
+    },
+    {
+      "pattern": "be dropped",
+      "frequency": 2,
+      "example_series_ids": [
+        486089
+      ],
+      "example_comment_excerpts": [
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not "
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "VINOD_KOUL-QUESTION_PATTERNS-003",
+      "reviewer": "Vinod Koul"
+    },
+    {
+      "pattern": "driver is",
+      "frequency": 2,
+      "example_series_ids": [
+        486089
+      ],
+      "example_comment_excerpts": [
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not ",
+        "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "VINOD_KOUL-QUESTION_PATTERNS-004",
+      "reviewer": "Vinod Koul"
+    },
+    {
+      "pattern": "\\bhow\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        486089
+      ],
+      "example_comment_excerpts": [
+        "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "VINOD_KOUL-QUESTION_PATTERNS-005",
+      "reviewer": "Vinod Koul"
+    },
+    {
+      "pattern": "\\bwhat\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        471445
+      ],
+      "example_comment_excerpts": [
+        "What do you mean by rework, what changes.. Please details out changes\ndone and the reasons behind them, so that we can review accordingly\nAnd One change per patch please"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "VINOD_KOUL-QUESTION_PATTERNS-006",
+      "reviewer": "Vinod Koul"
+    }
+  ],
+  "nit_patterns": [],
+  "subsystem_specific_rules": [],
+  "commit_message_rules": [],
+  "dt_rules": [],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [],
+  "vendor_code_rules": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [],
+  "top_acceptance_signals": [
+    "\\bapplied\\b"
+  ],
+  "typical_review_iterations": 2,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "HIGH",
+  "false_positive_risk_mitigations": [
+    "Acceptance email detector applied before objection classification.",
+    "Sign-off lines stripped (last up to 3 matching lines) before pattern extraction.",
+    "Sign-off phrases separated into signoff_patterns section.",
+    "Objection pattern extraction excludes acceptance-email comments."
+  ],
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads).",
+    "INSUFFICIENT_DATA threshold not met; use advisory-only."
+  ],
+  "profile_notes": "R2 profile from Patchwork comments with acceptance-email and sign-off false-positive mitigations.",
+  "comment_statistics": {
+    "total_comments_after_filter": 9,
+    "acceptance_email_count": 0,
+    "non_acceptance_comment_count": 9,
+    "signoff_lines_removed_count": 0
+  }
+}

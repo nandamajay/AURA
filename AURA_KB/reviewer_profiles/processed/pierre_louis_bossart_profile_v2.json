@@ -1,0 +1,607 @@
+{
+  "reviewer": "Pierre-Louis Bossart",
+  "profile_version": "v2",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "INSUFFICIENT_DATA",
+  "series_analyzed": 300,
+  "comment_threads_analyzed": 8,
+  "subsystems_covered": [
+    "asoc_qcom",
+    "soundwire_broad"
+  ],
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "objection_patterns": [
+    {
+      "pattern": "\\bissue\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        651180,
+        429919
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o",
+        "Adding Vinod, Takashi, Mark and Jaroslav in CC: to make sure this patch\ndoes not fall between the cracks.\nThis issue may impact all HDaudio platforms and this patch needs to\nreach Linus' tree and 5.10-stable. Thanks!"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        741664,
+        429919
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached.",
+        "Adding Vinod, Takashi, Mark and Jaroslav in CC: to make sure this patch\ndoes not fall between the cracks.\nThis issue may impact all HDaudio platforms and this patch needs to\nreach Linus' tree and 5.10-stable. Thanks!"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-002",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "devid registers",
+      "frequency": 2,
+      "example_series_ids": [
+        741664
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-003",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "in devid",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-004",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "in devid registers",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-005",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "use pm_runtime_resume_and_get",
+      "frequency": 2,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-006",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-007",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bdon't\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        667410
+      ],
+      "example_comment_excerpts": [
+        "The suggestion is to remove the TODO and leave the code as is: the\ncapabilities enabled for multi-link are required as part of the\nprogramming sequences, even when a stream uses a single link we still\nuse the syncArm/syn"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-008",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bfix\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-009",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bproblem\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJECTION_PATTERNS-010",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern": "pierre-louis bossart",
+      "frequency": 4,
+      "example_series_ids": [
+        757497,
+        748558
+      ],
+      "example_comment_excerpts": [
+        "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing re",
+        "Yes, this resume_and_get() added more problems indeed. One of those\nwell-intended changes that went sideways.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        757497,
+        748558
+      ],
+      "example_comment_excerpts": [
+        "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing re",
+        "Yes, this resume_and_get() added more problems indeed. One of those\nwell-intended changes that went sideways.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-002",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "bossart linux",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-003",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "bossart pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-004",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "bossart pierre-louis bossart",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-005",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "intel com",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-006",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "linux intel",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-007",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "pierre-louis bossart linux",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-008",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "pierre-louis bossart pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-009",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "reviewed-by pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-010",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "reviewed-by pierre-louis bossart",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACCEPTANCE_PATTERNS-011",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern": "\\?+",
+      "frequency": 5,
+      "example_series_ids": [
+        796487,
+        741664,
+        618060
+      ],
+      "example_comment_excerpts": [
+        "Sorry, maybe I am really thick or need coffee, but I can't figure out\nwhy this is necessary. Each amplifier has its own \"wsa884x_priv\" context\nand should have its own DAI, not following why the set_stream would\nmix-up th",
+        "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a co",
+        "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replac"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bwhat\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        796487,
+        741664,
+        618060
+      ],
+      "example_comment_excerpts": [
+        "Sorry, maybe I am really thick or need coffee, but I can't figure out\nwhy this is necessary. Each amplifier has its own \"wsa884x_priv\" context\nand should have its own DAI, not following why the set_stream would\nmix-up th",
+        "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replac",
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-002",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "ctrl- enumeration",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-003",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "soundwire peripheral",
+      "frequency": 2,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a co"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-004",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "struct completion",
+      "frequency": 2,
+      "example_series_ids": [
+        618060
+      ],
+      "example_comment_excerpts": [
+        "I don't get the idea, sorry.\nIf you look at the code, these are the cases where this 'struct\ncompletion' is used\nstruct completion enumeration;\ncomplete(&ctrl->enumeration);\n/* Enable Auto enumeration */\ninit_completion("
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-005",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bhow\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a co"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-006",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bwhy\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "Sorry, maybe I am really thick or need coffee, but I can't figure out\nwhy this is necessary. Each amplifier has its own \"wsa884x_priv\" context\nand should have its own DAI, not following why the set_stream would\nmix-up th"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-QUESTION_PATTERNS-007",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern": "codec dais",
+      "frequency": 2,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT_PATTERNS-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "one or more",
+      "frequency": 2,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT_PATTERNS-002",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\btypo\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT_PATTERNS-003",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "subsystem_specific_rules": [
+    {
+      "pattern": "soundwire",
+      "frequency": 4,
+      "example_series_ids": [
+        796487,
+        741664
+      ],
+      "example_comment_excerpts": [
+        "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a co",
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached.",
+        "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replac"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SUBSYSTEM_SPECIFIC_RULES-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\basoc\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        741664,
+        651180
+      ],
+      "example_comment_excerpts": [
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t",
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SUBSYSTEM_SPECIFIC_RULES-002",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bsdw\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        741664
+      ],
+      "example_comment_excerpts": [
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SUBSYSTEM_SPECIFIC_RULES-003",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "commit_message_rules": [],
+  "dt_rules": [],
+  "runtime_pm_rules": [
+    {
+      "pattern": "\\bresume\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        741664,
+        651180
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached.",
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RUNTIME_PM_RULES-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "pm_runtime",
+      "frequency": 2,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive",
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RUNTIME_PM_RULES-002",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "runtime\\s*pm",
+      "frequency": 2,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "please wait for merges, we're chasing two regressions with nonsensical\nmixer values\nnumid=5,iface=MIXER,name='PGA4.0 4 Master Capture Volume'\n; type=BOOLEAN,access=rw---R--,values=2\n: values=on,on\n| dBscale-min=-50.00dB,",
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RUNTIME_PM_RULES-003",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "series_structure_rules": [
+    {
+      "pattern": "\\border\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        757497,
+        741664
+      ],
+      "example_comment_excerpts": [
+        "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing re",
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES_STRUCTURE_RULES-001",
+      "reviewer": "Pierre-Louis Bossart"
+    },
+    {
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES_STRUCTURE_RULES-002",
+      "reviewer": "Pierre-Louis Bossart"
+    }
+  ],
+  "vendor_code_rules": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "\\bissue\\b",
+    "\\bneeds?\\s+to\\b",
+    "devid registers",
+    "in devid",
+    "in devid registers",
+    "use pm_runtime_resume_and_get",
+    "\\bdo\\s+not\\b",
+    "\\bdon't\\b",
+    "\\bfix\\b",
+    "\\bproblem\\b"
+  ],
+  "top_acceptance_signals": [
+    "pierre-louis bossart",
+    "\\breviewed-by\\b",
+    "bossart linux",
+    "bossart pierre-louis",
+    "bossart pierre-louis bossart",
+    "intel com",
+    "linux intel",
+    "pierre-louis bossart linux",
+    "pierre-louis bossart pierre-louis",
+    "reviewed-by pierre-louis"
+  ],
+  "typical_review_iterations": 2,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "HIGH",
+  "false_positive_risk_mitigations": [
+    "Acceptance email detector applied before objection classification.",
+    "Sign-off lines stripped (last up to 3 matching lines) before pattern extraction.",
+    "Sign-off phrases separated into signoff_patterns section.",
+    "Objection pattern extraction excludes acceptance-email comments."
+  ],
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads).",
+    "INSUFFICIENT_DATA threshold not met; use advisory-only."
+  ],
+  "profile_notes": "R2 profile from Patchwork comments with acceptance-email and sign-off false-positive mitigations.",
+  "comment_statistics": {
+    "total_comments_after_filter": 15,
+    "acceptance_email_count": 0,
+    "non_acceptance_comment_count": 15,
+    "signoff_lines_removed_count": 0
+  }
+}

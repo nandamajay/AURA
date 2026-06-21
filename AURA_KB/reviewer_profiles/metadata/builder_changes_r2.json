@@ -1,0 +1,108 @@
+{
+  "artifact": "builder_changes_r2",
+  "generated_date": "2026-06-21T12:41:10Z",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "changes": [
+    {
+      "change_id": "R2-FIX-001",
+      "root_cause": "Mark Brown acceptance emails triggered objection patterns (fix/should be).",
+      "old_behavior": "All comment text could contribute objection patterns regardless of acceptance-email structure.",
+      "new_behavior": "Acceptance email detector runs before objection classification; acceptance emails are excluded from objection extraction.",
+      "implementation": [
+        "ACCEPTANCE_MARKERS",
+        "is_acceptance_email()",
+        "classify_comment() pre-check"
+      ],
+      "why_changed": "Reduce false positives from applied/queued maintainer emails.",
+      "evidence_reference": "R1 pm_phase0_summary.md + validation false-positive analysis."
+    },
+    {
+      "change_id": "R2-FIX-002",
+      "root_cause": "Krzysztof sign-offs (best regards) extracted as blocking objections.",
+      "old_behavior": "Pattern extraction used full comment text including closing sign-off lines.",
+      "new_behavior": "strip_signoff() removes trailing sign-off lines; sign-off phrases stored separately in signoff_patterns.",
+      "implementation": [
+        "SIGNOFF_PATTERNS",
+        "strip_signoff()",
+        "signoff_patterns profile field"
+      ],
+      "why_changed": "Prevent sign-off phrases from polluting objection signal.",
+      "evidence_reference": "R1 objection pattern list included best regards variants."
+    },
+    {
+      "change_id": "R2-FIX-003",
+      "root_cause": "Pierre-Louis Bossart scope too narrow for Intel/general SoundWire activity.",
+      "old_behavior": "Scope limited to soundwire qcom + narrow ASoC.",
+      "new_behavior": "Added soundwire_broad scope and forced 2021-2025 window for Bossart.",
+      "implementation": [
+        "SUBSYSTEM_QUERIES.soundwire_broad",
+        "ReviewerCfg scope/window update"
+      ],
+      "why_changed": "Increase thread coverage for true reviewer activity footprint.",
+      "evidence_reference": "R1 fetch_log showed 10 threads for Bossart."
+    },
+    {
+      "change_id": "R2-FIX-004",
+      "root_cause": "Vinod Koul scope too narrow; dmaengine activity missed.",
+      "old_behavior": "Scope mostly SoundWire qcom + ASoC qcom.",
+      "new_behavior": "Added dmaengine_soundwire scope and forced 2021-2025 window for Koul.",
+      "implementation": [
+        "SUBSYSTEM_QUERIES.dmaengine_soundwire",
+        "ReviewerCfg scope/window update"
+      ],
+      "why_changed": "Capture Koul maintainer reviews outside qcom-only patches.",
+      "evidence_reference": "R1 fetch_log showed 4 threads for Vinod Koul."
+    },
+    {
+      "change_id": "R2-FIX-005",
+      "root_cause": "Liam Girdwood post-2022 activity sparse in narrow window.",
+      "old_behavior": "Primary 2023-2025 window only.",
+      "new_behavior": "Forced 2021-2025 window and asoc_broad scope.",
+      "implementation": [
+        "SUBSYSTEM_QUERIES.asoc_broad",
+        "ReviewerCfg scope/window update"
+      ],
+      "why_changed": "Improve chance of reaching P1 LOW_CONFIDENCE threshold.",
+      "evidence_reference": "R1 fetch_log showed 0 threads for Liam Girdwood."
+    },
+    {
+      "change_id": "R2-FIX-006",
+      "root_cause": "Rob Herring scope narrowed to audio dt-bindings only.",
+      "old_behavior": "Only dt-bindings sound/audio + qcom platform query.",
+      "new_behavior": "Added dt_bindings_broad scope and forced 2021-2025 window for Rob Herring.",
+      "implementation": [
+        "SUBSYSTEM_QUERIES.dt_bindings_broad",
+        "ReviewerCfg scope/window update"
+      ],
+      "why_changed": "Reflect broad dt-bindings review footprint.",
+      "evidence_reference": "R1 fetch_log showed 3 threads for Rob Herring."
+    },
+    {
+      "change_id": "R2-FIX-007",
+      "root_cause": "Konrad Dybcio had 0 threads in narrow qcom scope.",
+      "old_behavior": "Only arm64 dts qcom/pinctrl scope in short window.",
+      "new_behavior": "Added clk: qcom scope and forced 2021-2025 window.",
+      "implementation": [
+        "SUBSYSTEM_QUERIES.clk_qcom",
+        "ReviewerCfg scope/window update"
+      ],
+      "why_changed": "Retry with broader likely-reviewed domains before marking inactive.",
+      "evidence_reference": "R1 fetch_log showed 0 threads for Konrad Dybcio."
+    },
+    {
+      "change_id": "R2-FIX-008",
+      "root_cause": "Validation sample size too small (3 accepted, 1 rejected).",
+      "old_behavior": "Selected only up to 3 accepted + 3 rejected candidates; ended with 4 total.",
+      "new_behavior": "Validation target set to exactly 5 accepted + 5 rejected/changes-requested, excluding known R1 series IDs.",
+      "implementation": [
+        "choose_validation_candidates()",
+        "run_validation_v2() selection logic"
+      ],
+      "why_changed": "Provide statistically meaningful precision/recall estimate.",
+      "evidence_reference": "R1 profile_validation_results.json had rejected_count=1."
+    }
+  ]
+}

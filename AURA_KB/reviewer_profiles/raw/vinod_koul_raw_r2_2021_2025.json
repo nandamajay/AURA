@@ -1,0 +1,227 @@
+{
+  "reviewer": "Vinod Koul",
+  "fetch_date": "2026-06-21T12:41:10Z",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "scope_queries_used": [
+    "dmaengine:",
+    "soundwire:",
+    "soundwire: qcom",
+    "ASoC: SoundWire",
+    "ASoC: qcom",
+    "ASoC: codecs"
+  ],
+  "series_fetched": 200,
+  "series_with_reviewer_comments": 6,
+  "comments_fetched": 201,
+  "comments_after_filter": 9,
+  "series": [
+    {
+      "series_id": 507031,
+      "subject": "dmaengine: at_xdmac: use module_platform_driver",
+      "state": "changes-requested",
+      "date": "2021-06-25T09:00:42",
+      "patch_count": 1,
+      "patch_ids": [
+        12344391
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24341679,
+          "date": "2021-07-28T06:56:50",
+          "word_count": 21,
+          "classification": "question",
+          "text": "You are also changing the init call here, there is a reason why\ndmaengine drivers are subsys_initcall.. have you tested this?",
+          "text_signoff_stripped": "You are also changing the init call here, there is a reason why\ndmaengine drivers are subsys_initcall.. have you tested this?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12344391,
+          "patch_state": "changes-requested",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 24341931,
+          "date": "2021-07-28T08:23:48",
+          "word_count": 49,
+          "classification": "objection",
+          "text": "That is correct\nHeh, clocks should get probed even earlier\nOK would then recommend making it like module_platform_driver ie remove\nplatform_driver_probe, so the defer probe would work, but keep the init\nat subsys level. That should work for you while keeping this sane for\nfolks that dont need this",
+          "text_signoff_stripped": "That is correct\nHeh, clocks should get probed even earlier\nOK would then recommend making it like module_platform_driver ie remove\nplatform_driver_probe, so the defer probe would work, but keep the init\nat subsys level. That should work for you while keeping this sane for\nfolks that dont need this",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12344391,
+          "patch_state": "changes-requested",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 504081,
+      "subject": "[v1] dmaengine: mediatek: Return the correct errno code",
+      "state": "changes-requested",
+      "date": "2021-06-21T06:20:48",
+      "patch_count": 1,
+      "patch_ids": [
+        12333861
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24263933,
+          "date": "2021-06-21T08:29:31",
+          "word_count": 26,
+          "classification": "objection",
+          "text": "Patch was sent by angkery <angkery@163.com> and signed off by Junlin\nYang <yangjunlin@yulong.com>. I would need s-o-b by sender as well...\nThanks",
+          "text_signoff_stripped": "Patch was sent by angkery <angkery@163.com> and signed off by Junlin\nYang <yangjunlin@yulong.com>. I would need s-o-b by sender as well...\nThanks",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12333861,
+          "patch_state": "changes-requested",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 486089,
+      "subject": "[V4,RESEND] dmaengine: Loongson1: Add Loongson1 dmaengine driver",
+      "state": "unknown",
+      "date": "2021-05-20T23:02:25",
+      "patch_count": 1,
+      "patch_ids": [
+        12271509
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24229151,
+          "date": "2021-06-07T11:07:07",
+          "word_count": 109,
+          "classification": "question",
+          "text": "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not be checked before you dereference this to get chan\nHmm, I would not log that... this is called from\nls1x_dma_issue_pending() and which can be called from client driver but\nprevious completion would push and this can find empty queue so it can\nhappen quite frequently\nsingle line pls\nnot submitting next txn, defeats the purpose of dma if we dont push txns\nas fast as possible..\nNo device tree?",
+          "text_signoff_stripped": "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not be checked before you dereference this to get chan\nHmm, I would not log that... this is called from\nls1x_dma_issue_pending() and which can be called from client driver but\nprevious completion would push and this can find empty queue so it can\nhappen quite frequently\nsingle line pls\nnot submitting next txn, defeats the purpose of dma if we dont push txns\nas fast as possible..\nNo device tree?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12271509,
+          "patch_state": "not-applicable",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 24290735,
+          "date": "2021-07-05T03:49:12",
+          "word_count": 28,
+          "classification": "question",
+          "text": "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?",
+          "text_signoff_stripped": "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12271509,
+          "patch_state": "not-applicable",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 471445,
+      "subject": "[v2,1/3] dmaengine: fsl-dpaa2-qdma: Fix the size of dma pools",
+      "state": "changes-requested",
+      "date": "2021-04-22T08:44:12",
+      "patch_count": 3,
+      "patch_ids": [
+        12218007,
+        12218009,
+        12218011
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24212597,
+          "date": "2021-05-31T04:35:35",
+          "word_count": 30,
+          "classification": "question",
+          "text": "What do you mean by rework, what changes.. Please details out changes\ndone and the reasons behind them, so that we can review accordingly\nAnd One change per patch please",
+          "text_signoff_stripped": "What do you mean by rework, what changes.. Please details out changes\ndone and the reasons behind them, so that we can review accordingly\nAnd One change per patch please",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12218009,
+          "patch_state": "changes-requested",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 427323,
+      "subject": "[v2] Revert \"dmaengine: dw: Enable runtime PM\"",
+      "state": "accepted",
+      "date": "2021-02-03T19:19:24",
+      "patch_count": 1,
+      "patch_ids": [
+        12065175
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 23961871,
+          "date": "2021-02-08T12:06:09",
+          "word_count": 21,
+          "classification": "acceptance",
+          "text": "Reverts also need proper tagging, so pls ensure that is done. I have\nadded the subsystem and driver tags and applied",
+          "text_signoff_stripped": "Reverts also need proper tagging, so pls ensure that is done. I have\nadded the subsystem and driver tags and applied",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12065175,
+          "patch_state": "accepted",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 410777,
+      "subject": "dmaengine: rcar-dmac: Add support for R-Car V3U",
+      "state": "changes-requested",
+      "date": "2021-01-07T18:15:23",
+      "patch_count": 4,
+      "patch_ids": [
+        12004629,
+        12004627,
+        12004623,
+        12004631
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 23888949,
+          "date": "2021-01-12T10:36:48",
+          "word_count": 41,
+          "classification": "question",
+          "text": "do you forsee many more memory regions, if not then why not add second\nregion, that way changes in this patch will be lesser..?\nand it would be better to refer to a region by its name rather than\niomem[1]..",
+          "text_signoff_stripped": "do you forsee many more memory regions, if not then why not add second\nregion, that way changes in this patch will be lesser..?\nand it would be better to refer to a region by its name rather than\niomem[1]..",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12004631,
+          "patch_state": "changes-requested",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        },
+        {
+          "comment_id": 23888951,
+          "date": "2021-01-12T10:38:31",
+          "word_count": 32,
+          "classification": "objection",
+          "text": "In cases where it helps, I certainly recommend.. I feel in this case it\nmakes a better read to have it in a single line..\nDid we err in choosing 100 :D",
+          "text_signoff_stripped": "In cases where it helps, I certainly recommend.. I feel in this case it\nmakes a better read to have it in a single line..\nDid we err in choosing 100 :D",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12004627,
+          "patch_state": "changes-requested",
+          "submitter_name": "Vinod Koul",
+          "submitter_email": "vkoul@kernel.org"
+        }
+      ]
+    }
+  ],
+  "fetch_errors": [],
+  "api_rate_limit_hits": 0
+}

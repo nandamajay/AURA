@@ -1,0 +1,33 @@
+{
+  "card_id": "PC-P0-R2-20260621",
+  "date": "2026-06-21",
+  "phase": 0,
+  "step": "0.R2",
+  "step_name": "Phase 0 retry (R2) completion",
+  "status": "RETRY_R3_REQUIRED",
+  "previous_status": "FAILED",
+  "what_was_done": "Applied R2 false-positive fixes, expanded reviewer scopes/windows, rebuilt profiles, and revalidated on expanded case set.",
+  "artifacts_created": [
+    "AURA_KB/reviewer_profiles/metadata/builder_changes_r2.json",
+    "AURA_KB/reviewer_profiles/metadata/fetch_log_r2.json",
+    "AURA_KB/reviewer_profiles/metadata/profile_versions_r2.json",
+    "AURA_KB/reviewer_profiles/metadata/phase0_validation_r2.json",
+    "AURA_KB/reviewer_profiles/metadata/pm_phase0_summary_r2.md",
+    "AURA_KB/reviewer_profiles/validation/profile_validation_results_r2.json",
+    "AURA_KB/reviewer_profiles/validation/accuracy_report_r2.md",
+    "AURA_KB/reviewer_profiles/processed/*_profile_v2.json",
+    "AURA_KB/reviewer_profiles/raw/*_raw_r2_*.json",
+    "AURA_KB/reviewer_profiles/subsystem_rules/*_rules_v2.json"
+  ],
+  "success_criteria_met": [
+    "rejected_validation_cases"
+  ],
+  "success_criteria_not_met": [
+    "p0_high_profiles",
+    "p1_low_or_high_profiles",
+    "objection_precision"
+  ],
+  "pm_verdict": "BLOCKED",
+  "next_step": "Run Phase 0 retry R3 with further data expansion/tuning",
+  "notes": "R2 verdict: PHASE_0_FAILED_RETRY_REQUIRED"
+}

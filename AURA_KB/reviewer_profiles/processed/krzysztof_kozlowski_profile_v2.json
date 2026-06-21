@@ -1,0 +1,1028 @@
+{
+  "reviewer": "Krzysztof Kozlowski",
+  "profile_version": "v2",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 400,
+  "comment_threads_analyzed": 53,
+  "subsystems_covered": [
+    "dt_bindings_audio",
+    "dt_bindings_broad",
+    "qcom_platform"
+  ],
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "objection_patterns": [
+    {
+      "pattern": "\\bfix\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        760849,
+        759772,
+        740507,
+        717205,
+        713958,
+        713662
+      ],
+      "example_comment_excerpts": [
+        "This is not v1. Please write proper changelog and version your patches.\nYou did not respond to my comment and you did not fully implement it.\nWith lack of changelog it looks like it was ignored\nPlease fix everything I as",
+        "The 6115 is even older - from October:\nhttps://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/\nLet's go with your patch, but you anyway need to fix reg-names.\nBest regards,\nKrzysztof",
+        "Your change makes the code easier to read (more obvious), so I am okay\nwith the change, but I am not okay with commit msg and Fixes tag. Issue\nis described inaccurately. There is nothing to fix here, because\noriginal cod"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        765066,
+        751628,
+        737643,
+        716373
+      ],
+      "example_comment_excerpts": [
+        "No, because the child node already has it. We do not need to extcons for\none USB. Also another reason is that it should be deprecated.\nBest regards,\nKrzysztof",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc",
+        "Please squash all your three WM bindings (wm8711, wm8580 and wm8523)\ninto one binding, if they are the same. Probably other WM from your\nprevious submissions as well. We really do not need binding per each of\nthis simple"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "against bindings",
+      "frequency": 4,
+      "example_series_ids": [
+        751628,
+        716373
+      ],
+      "example_comment_excerpts": [
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc",
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-003",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "dts against",
+      "frequency": 4,
+      "example_series_ids": [
+        751628,
+        716373
+      ],
+      "example_comment_excerpts": [
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc",
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-004",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "dts against bindings",
+      "frequency": 4,
+      "example_series_ids": [
+        751628,
+        716373
+      ],
+      "example_comment_excerpts": [
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc",
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-005",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        765066,
+        759772,
+        737643
+      ],
+      "example_comment_excerpts": [
+        "No, because the child node already has it. We do not need to extcons for\none USB. Also another reason is that it should be deprecated.\nBest regards,\nKrzysztof",
+        "The 6115 is even older - from October:\nhttps://lore.kernel.org/all/20221030094258.486428-2-iskren.chernev@gmail.com/\nLet's go with your patch, but you anyway need to fix reg-names.\nBest regards,\nKrzysztof",
+        "Please squash all your three WM bindings (wm8711, wm8580 and wm8523)\ninto one binding, if they are the same. Probably other WM from your\nprevious submissions as well. We really do not need binding per each of\nthis simple"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-006",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bplease\\s+use\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        751628,
+        748748,
+        739801
+      ],
+      "example_comment_excerpts": [
+        "Please use subject prefixes matching the subsystem. You can get them for\nexample with `git log --oneline -- DIRECTORY_OR_FILE` on the directory\nyour patch is touching.\nBest regards,\nKrzysztof",
+        "Please use scripts/get_maintainers.pl to get a list of necessary people\nand lists to CC. It might happen, that command when run on an older\nkernel, gives you outdated entries. Therefore please be sure you base\nyour patch",
+        "Please use scripts/get_maintainers.pl to get a list of necessary people\nand lists to CC. It might happen, that command when run on an older\nkernel, gives you outdated entries. Therefore please be sure you base\nyour patch"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-007",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        765066,
+        759772,
+        722903
+      ],
+      "example_comment_excerpts": [
+        "No, because the child node already has it. We do not need to extcons for\none USB. Also another reason is that it should be deprecated.\nBest regards,\nKrzysztof",
+        "reg-names looks like a new property, so it should be defined in\ntop-level and just constrained per-variant.\nAlso there was similar approach:\nhttps://lore.kernel.org/all/20221209-dt-binding-ufs-v2-2-dc7a04699579@fairphone",
+        "OK, then there was no intention to deprecate qcom,mdss-dsi-ctrl and it\nshould be left as allowed compatible.\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-008",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "bindings run",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-009",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "like tested",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-010",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "look like",
+      "frequency": 3,
+      "example_series_ids": [
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-011",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "tested dts",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-012",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bdon't\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        709744
+      ],
+      "example_comment_excerpts": [
+        "I don't think it is maintainable to keep sm6375 once here and once in\nsm6350 file. If it does not fit one family, then probably it deserves\nits own file.\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-013",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bissue\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        740507
+      ],
+      "example_comment_excerpts": [
+        "Your change makes the code easier to read (more obvious), so I am okay\nwith the change, but I am not okay with commit msg and Fixes tag. Issue\nis described inaccurately. There is nothing to fix here, because\noriginal cod"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJECTION_PATTERNS-014",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern": "krzysztof kozlowski",
+      "frequency": 28,
+      "example_series_ids": [
+        763326,
+        747854,
+        747852,
+        747431,
+        746711,
+        741006,
+        740072,
+        738847
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "The only thing driver is doing is to toggle this pin. If it is missing\nthe entire driver is noop, thus above comment is a bit funny. It\nprobably should be mandatory pin. But I see it was there since beginning\nso ok.\nRevi",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease put sound-dai-cells at the end. In DTS convention is to have\ncompatible first, reg second.\nWith this:\nReviewed-by: Krzysztof Kozlowski <krzysztof.ko"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "best regards",
+      "frequency": 17,
+      "example_series_ids": [
+        769228,
+        763326,
+        757519,
+        747854,
+        747852,
+        747431,
+        746711,
+        741006
+      ],
+      "example_comment_excerpts": [
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s",
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "Please split patches per subsystem, so this could be applied. Or send it\nthrough soc tree, but you chosen the middle way - neither per subsystem\nnor via soc tree - so it went nowhere :(\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "best regards krzysztof",
+      "frequency": 17,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-003",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "regards krzysztof",
+      "frequency": 17,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-004",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bapplied\\b",
+      "frequency": 15,
+      "example_series_ids": [
+        769228,
+        767718,
+        767533,
+        757519,
+        738055,
+        718651,
+        718105,
+        714205
+      ],
+      "example_comment_excerpts": [
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s",
+        "Applied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-gpio: document PMC8180 and PMC8180C\nhttps://git.kernel.org/krzk/linux-dt/c/2422f74eb9dc99097c9537c30ef50f88a0b54acb",
+        "Applied, thanks!\n[1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/2b4e7a87276eb90c562e84450ced77f17f98b8b5"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-005",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "linaro org",
+      "frequency": 15,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-006",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "kozlowski krzysztof",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-007",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "kozlowski krzysztof kozlowski",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-008",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "kozlowski linaro",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-009",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "krzysztof kozlowski krzysztof",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-010",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "krzysztof kozlowski linaro",
+      "frequency": 14,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-011",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 11,
+      "example_series_ids": [
+        747854,
+        747852,
+        747431,
+        746711,
+        741006,
+        740072,
+        738847,
+        721414
+      ],
+      "example_comment_excerpts": [
+        "The only thing driver is doing is to toggle this pin. If it is missing\nthe entire driver is noop, thus above comment is a bit funny. It\nprobably should be mandatory pin. But I see it was there since beginning\nso ok.\nRevi",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease put sound-dai-cells at the end. In DTS convention is to have\ncompatible first, reg second.\nWith this:\nReviewed-by: Krzysztof Kozlowski <krzysztof.ko",
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\n---\nThis is an automated instruction, just in case, because many review tags\nare being ignored. If you do not know the process, here is a short\nexplanatio"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-012",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\backed-by\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        763326,
+        747431,
+        746711,
+        738847,
+        716373,
+        713643
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\n---\nThis is an automated instruction, just in case, because many review tags\nare being ignored. If you do not know the process, here is a short\nexplanatio",
+        "Usually we put the changes under ---.\nReviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\n---\nThis is an automated instruction, just in case, because many review tags\nare being ignored. If you do not know t"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACCEPTANCE_PATTERNS-013",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern": "best regards",
+      "frequency": 15,
+      "example_series_ids": [
+        769228,
+        764862,
+        741006,
+        740080,
+        740072,
+        737643,
+        735753,
+        721140
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "Please keep consistent versioning, so this is new patch in v4.\nYour description says nothing new. It's entirely redundant/obvious.\nInstead please describe what reserved memory is expected to be here.\nBest regards,\nKrzysz",
+        "Current Linux implementation uses it as a generic pinconf param\npinconf_generic_params which is parsed by:\npinconf_generic_parse_dt_config() -> parse_dt_cfg() ->\nof_property_read_u32()\nThe pinctrl-spmi-mpp.c driver, usin"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "best regards krzysztof",
+      "frequency": 15,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "regards krzysztof",
+      "frequency": 15,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-003",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\?+",
+      "frequency": 12,
+      "example_series_ids": [
+        769228,
+        741006,
+        740072,
+        735753,
+        721140,
+        719425,
+        711906,
+        711813
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "Current Linux implementation uses it as a generic pinconf param\npinconf_generic_params which is parsed by:\npinconf_generic_parse_dt_config() -> parse_dt_cfg() ->\nof_property_read_u32()\nThe pinctrl-spmi-mpp.c driver, usin",
+        "In general it is fine. I wonder if we can change the goal of GSoC? I am\nsurprised that such goal was chosen in the first place. Converting old,\nunused bindings to DT schema is okay, but it would be much better to do\nthis"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-004",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bwhat\\b",
+      "frequency": 8,
+      "example_series_ids": [
+        769228,
+        764862,
+        740080,
+        740072,
+        721140,
+        719425,
+        711906
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "Please keep consistent versioning, so this is new patch in v4.\nYour description says nothing new. It's entirely redundant/obvious.\nInstead please describe what reserved memory is expected to be here.\nBest regards,\nKrzysz",
+        "(Trimmed cc list)\nThanks for letting me know, I wonder what's the problem. I am sending\nwith send-email exactly the same way every day, but somehow this series\nhave such header in Patchwork:\nhttps://patchwork.kernel.org/"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-005",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bwhy\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        769228,
+        740080,
+        737643,
+        721140,
+        719425,
+        711813
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "(Trimmed cc list)\nThanks for letting me know, I wonder what's the problem. I am sending\nwith send-email exactly the same way every day, but somehow this series\nhave such header in Patchwork:\nhttps://patchwork.kernel.org/",
+        "Good point. The bindings are incomplete that's why they look so similar.\nTherefore maybe we should not merge them, just like we do not add\nnon-trivial-devices to trivial-devices schema, just because device is\nincomplete."
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-006",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "kernel org",
+      "frequency": 4,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-007",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "linaro org",
+      "frequency": 4,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-008",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bhow\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        741006,
+        721140,
+        711906
+      ],
+      "example_comment_excerpts": [
+        "Current Linux implementation uses it as a generic pinconf param\npinconf_generic_params which is parsed by:\npinconf_generic_parse_dt_config() -> parse_dt_cfg() ->\nof_property_read_u32()\nThe pinctrl-spmi-mpp.c driver, usin",
+        "What did you change here? I still need to read 4 different\ndiscussions/links to have understanding why?\nWhat details are here? There is a patch with gen4 but I don't understand\nhow does it answer anything here.\nThis is p",
+        "Hm, which device of that SoC cannot be used with address/size cells 2?\nHow USB device - so entirely different device, not MMIO! - is related here?\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-009",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "kozlowski linaro",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-010",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "kozlowski linaro org",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-011",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "krzysztof kozlowski",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-012",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "krzysztof kozlowski linaro",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-013",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "more details",
+      "frequency": 3,
+      "example_series_ids": [
+        721140
+      ],
+      "example_comment_excerpts": [
+        "What did you change here? I still need to read 4 different\ndiscussions/links to have understanding why?\nWhat details are here? There is a patch with gen4 but I don't understand\nhow does it answer anything here.\nThis is p"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-QUESTION_PATTERNS-014",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern": "\\btypo\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        710579
+      ],
+      "example_comment_excerpts": [
+        "Subject: drop second/last, redundant \"bindings for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nSubject: typo - Document\nSubject: shorten it, use some shorter user descriptive model name\nReal ha"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-NIT_PATTERNS-001",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "subsystem_specific_rules": [
+    {
+      "pattern": "\\bpinctrl\\b",
+      "frequency": 17,
+      "example_series_ids": [
+        767718,
+        767533,
+        741006,
+        738055,
+        726155,
+        718651,
+        714205,
+        713958
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-gpio: document PMC8180 and PMC8180C\nhttps://git.kernel.org/krzk/linux-dt/c/2422f74eb9dc99097c9537c30ef50f88a0b54acb",
+        "Applied, thanks!\n[1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/2b4e7a87276eb90c562e84450ced77f17f98b8b5",
+        "Applied, thanks!\n[2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/be9f6d56381d995f600524ad99fa8a9cc5bd5c49"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SUBSYSTEM_SPECIFIC_RULES-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bqcom\\b",
+      "frequency": 16,
+      "example_series_ids": [
+        767718,
+        767533,
+        751628,
+        741006,
+        738055,
+        722903,
+        718651,
+        714205
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-gpio: document PMC8180 and PMC8180C\nhttps://git.kernel.org/krzk/linux-dt/c/2422f74eb9dc99097c9537c30ef50f88a0b54acb",
+        "Applied, thanks!\n[1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/2b4e7a87276eb90c562e84450ced77f17f98b8b5",
+        "Applied, thanks!\n[2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/be9f6d56381d995f600524ad99fa8a9cc5bd5c49"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SUBSYSTEM_SPECIFIC_RULES-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "dt-binding",
+      "frequency": 16,
+      "example_series_ids": [
+        767718,
+        767533,
+        763326,
+        759772,
+        741006,
+        738055,
+        718651,
+        714205
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-gpio: document PMC8180 and PMC8180C\nhttps://git.kernel.org/krzk/linux-dt/c/2422f74eb9dc99097c9537c30ef50f88a0b54acb",
+        "Applied, thanks!\n[1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/2b4e7a87276eb90c562e84450ced77f17f98b8b5",
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SUBSYSTEM_SPECIFIC_RULES-003",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\basoc\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        763326
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SUBSYSTEM_SPECIFIC_RULES-004",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "commit_message_rules": [
+    {
+      "pattern": "subject",
+      "frequency": 4,
+      "example_series_ids": [
+        763326,
+        751628,
+        713643,
+        710579
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "Please use subject prefixes matching the subsystem. You can get them for\nexample with `git log --oneline -- DIRECTORY_OR_FILE` on the directory\nyour patch is touching.\nBest regards,\nKrzysztof",
+        "Subject: drop second/last, redundant \"binding for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nWith above:\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-COMMIT_MESSAGE_RULES-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "changelog",
+      "frequency": 1,
+      "example_series_ids": [
+        760849
+      ],
+      "example_comment_excerpts": [
+        "This is not v1. Please write proper changelog and version your patches.\nYou did not respond to my comment and you did not fully implement it.\nWith lack of changelog it looks like it was ignored\nPlease fix everything I as"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-COMMIT_MESSAGE_RULES-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "fixes:",
+      "frequency": 1,
+      "example_series_ids": [
+        741006
+      ],
+      "example_comment_excerpts": [
+        "Linus,\nCould you take it for current fixes? The code was wrong and dtschema is\nwarning now about this.\nFixes: f9a06b810951 (\"dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom\npmic mpp bindings to YAML\")\nReviewed-by: Krzy"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-COMMIT_MESSAGE_RULES-003",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "dt_rules": [
+    {
+      "pattern": "dt-binding",
+      "frequency": 16,
+      "example_series_ids": [
+        767718,
+        767533,
+        763326,
+        759772,
+        741006,
+        738055,
+        718651,
+        714205
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-gpio: document PMC8180 and PMC8180C\nhttps://git.kernel.org/krzk/linux-dt/c/2422f74eb9dc99097c9537c30ef50f88a0b54acb",
+        "Applied, thanks!\n[1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/2b4e7a87276eb90c562e84450ced77f17f98b8b5",
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT_RULES-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "compatible",
+      "frequency": 6,
+      "example_series_ids": [
+        747852,
+        722903,
+        722517,
+        721140,
+        716373
+      ],
+      "example_comment_excerpts": [
+        "Thank you for your patch. There is something to discuss/improve.\nPlease put sound-dai-cells at the end. In DTS convention is to have\ncompatible first, reg second.\nWith this:\nReviewed-by: Krzysztof Kozlowski <krzysztof.ko",
+        "OK, then there was no intention to deprecate qcom,mdss-dsi-ctrl and it\nshould be left as allowed compatible.\nBest regards,\nKrzysztof",
+        "You should rather keep old compatible as deprecated (so oneOf with two\noptions - items and const with deprecated).\nBest regards,\nKrzysztof"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT_RULES-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "unevaluatedproperties",
+      "frequency": 4,
+      "example_series_ids": [
+        738055
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[04/40] dt-bindings: pinctrl: qcom,ipq9574-tlmm: simplify with unevaluatedProperties\nhttps://git.kernel.org/krzk/linux-dt/c/8625372628afd9627a28427427037e2b13b75949",
+        "Applied, thanks!\n[18/40] dt-bindings: pinctrl: qcom,qcm2290-tlmm: simplify with unevaluatedProperties\nhttps://git.kernel.org/krzk/linux-dt/c/f69ba355d32e50a19f37ae6c3a7ee56cfae3e6d8",
+        "Applied, thanks!\n[25/40] dt-bindings: pinctrl: qcom,sc8280xp-tlmm: simplify with unevaluatedProperties\nhttps://git.kernel.org/krzk/linux-dt/c/aeffc733e66fb40491ff79c1a53ef8cf6390ee13"
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT_RULES-003",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "dtbs_check",
+      "frequency": 2,
+      "example_series_ids": [
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the\nfollowing warnings. Consider if they are expected or the schema is\nincorrect. These may not be new warnings.\nNote that it is not yet a requirement to have",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT_RULES-004",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\byaml\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        741006
+      ],
+      "example_comment_excerpts": [
+        "Linus,\nCould you take it for current fixes? The code was wrong and dtschema is\nwarning now about this.\nFixes: f9a06b810951 (\"dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom\npmic mpp bindings to YAML\")\nReviewed-by: Krzy"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT_RULES-005",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [
+    {
+      "pattern": "\\bsplit\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        757519,
+        737643
+      ],
+      "example_comment_excerpts": [
+        "Please split patches per subsystem, so this could be applied. Or send it\nthrough soc tree, but you chosen the middle way - neither per subsystem\nnor via soc tree - so it went nowhere :(\nBest regards,\nKrzysztof",
+        "You create multiple patches per each DTS subdirectory. Then you send\nentire patchset to all people (might create too many Cc addresses) or\npatch-per-maintainers.\nYes, and they can only Ack it. If you wanted it to go via ",
+        "Please squash all your three WM bindings (wm8711, wm8580 and wm8523)\ninto one binding, if they are the same. Probably other WM from your\nprevious submissions as well. We really do not need binding per each of\nthis simple"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SERIES_STRUCTURE_RULES-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\border\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        709170
+      ],
+      "example_comment_excerpts": [
+        "Assuming that Linux implementation does not care about the order of\nthese (and takes by name):\nReviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nAlthough other users might not be happy about change of ord"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SERIES_STRUCTURE_RULES-002",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        740080
+      ],
+      "example_comment_excerpts": [
+        "(Trimmed cc list)\nThanks for letting me know, I wonder what's the problem. I am sending\nwith send-email exactly the same way every day, but somehow this series\nhave such header in Patchwork:\nhttps://patchwork.kernel.org/"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SERIES_STRUCTURE_RULES-003",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "vendor_code_rules": [
+    {
+      "pattern": "\\bqcom\\b",
+      "frequency": 16,
+      "example_series_ids": [
+        767718,
+        767533,
+        751628,
+        741006,
+        738055,
+        722903,
+        718651,
+        714205
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-gpio: document PMC8180 and PMC8180C\nhttps://git.kernel.org/krzk/linux-dt/c/2422f74eb9dc99097c9537c30ef50f88a0b54acb",
+        "Applied, thanks!\n[1/3] dt-bindings: pinctrl: qcom,sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/2b4e7a87276eb90c562e84450ced77f17f98b8b5",
+        "Applied, thanks!\n[2/3] pinctrl: qcom: sm8350-lpass-lpi: add SM8350 LPASS TLMM\nhttps://git.kernel.org/krzk/linux-dt/c/be9f6d56381d995f600524ad99fa8a9cc5bd5c49"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-VENDOR_CODE_RULES-001",
+      "reviewer": "Krzysztof Kozlowski"
+    },
+    {
+      "pattern": "\\bmsm\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        769228,
+        765064,
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s",
+        "I also now resent (again) my previous, old set:\nhttps://lore.kernel.org/linux-arm-msm/20230713072242.11268-1-krzysztof.kozlowski@linaro.org/T/#t\nBest regards,\nKrzysztof",
+        "Running 'make dtbs_check' with the schema in this patch gives the\nfollowing warnings. Consider if they are expected or the schema is\nincorrect. These may not be new warnings.\nNote that it is not yet a requirement to have"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-VENDOR_CODE_RULES-002",
+      "reviewer": "Krzysztof Kozlowski"
+    }
+  ],
+  "signoff_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SIGNOFF-001",
+      "pattern": "best regards",
+      "frequency": 12,
+      "example_series_ids": [
+        767718,
+        767533,
+        738055,
+        718651,
+        714205
+      ],
+      "example_comment_excerpts": [
+        "Best regards,",
+        "Best regards,",
+        "Best regards,"
+      ],
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "top_objection_topics": [
+    "\\bfix\\b",
+    "\\bdo\\s+not\\b",
+    "against bindings",
+    "dts against",
+    "dts against bindings",
+    "\\bneeds?\\s+to\\b",
+    "\\bplease\\s+use\\b",
+    "\\bshould\\s+be\\b",
+    "bindings run",
+    "like tested"
+  ],
+  "top_acceptance_signals": [
+    "krzysztof kozlowski",
+    "best regards",
+    "best regards krzysztof",
+    "regards krzysztof",
+    "\\bapplied\\b",
+    "linaro org",
+    "kozlowski krzysztof",
+    "kozlowski krzysztof kozlowski",
+    "kozlowski linaro",
+    "krzysztof kozlowski krzysztof"
+  ],
+  "typical_review_iterations": 2,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "HIGH",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "LOW",
+  "false_positive_risk_mitigations": [
+    "Acceptance email detector applied before objection classification.",
+    "Sign-off lines stripped (last up to 3 matching lines) before pattern extraction.",
+    "Sign-off phrases separated into signoff_patterns section.",
+    "Objection pattern extraction excludes acceptance-email comments."
+  ],
+  "known_limitations": [],
+  "profile_notes": "R2 profile from Patchwork comments with acceptance-email and sign-off false-positive mitigations.",
+  "comment_statistics": {
+    "total_comments_after_filter": 82,
+    "acceptance_email_count": 0,
+    "non_acceptance_comment_count": 82,
+    "signoff_lines_removed_count": 12
+  }
+}

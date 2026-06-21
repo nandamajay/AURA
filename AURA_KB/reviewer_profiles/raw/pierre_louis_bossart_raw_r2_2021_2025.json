@@ -1,0 +1,343 @@
+{
+  "reviewer": "Pierre-Louis Bossart",
+  "fetch_date": "2026-06-21T12:41:10Z",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "scope_queries_used": [
+    "soundwire:",
+    "ASoC: Intel",
+    "ASoC: SoundWire",
+    "soundwire: qcom",
+    "soundwire: amd",
+    "soundwire: cadence",
+    "ASoC: qcom",
+    "ASoC: codecs"
+  ],
+  "series_fetched": 300,
+  "series_with_reviewer_comments": 8,
+  "comments_fetched": 162,
+  "comments_after_filter": 15,
+  "series": [
+    {
+      "series_id": 796487,
+      "subject": "[1/3] soundwire: qcom: drop unneeded DAI .set_stream callback",
+      "state": "unknown",
+      "date": "2023-10-25T14:45:59",
+      "patch_count": 3,
+      "patch_ids": [
+        13436310,
+        13436311,
+        13436359
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25570431,
+          "date": "2023-10-25T15:03:09",
+          "word_count": 58,
+          "classification": "question",
+          "text": "Sorry, maybe I am really thick or need coffee, but I can't figure out\nwhy this is necessary. Each amplifier has its own \"wsa884x_priv\" context\nand should have its own DAI, not following why the set_stream would\nmix-up the two dais?\nWe've been using two buses for two amplifiers since CometLake (2019?)\nand I don't see what's different?",
+          "text_signoff_stripped": "Sorry, maybe I am really thick or need coffee, but I can't figure out\nwhy this is necessary. Each amplifier has its own \"wsa884x_priv\" context\nand should have its own DAI, not following why the set_stream would\nmix-up the two dais?\nWe've been using two buses for two amplifiers since CometLake (2019?)\nand I don't see what's different?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13436359,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25570430,
+          "date": "2023-10-25T15:08:50",
+          "word_count": 54,
+          "classification": "neutral",
+          "text": "A stream connects multiple managers and multiple peripherals. The\ndefinition above does not make a lot of sense and doesn't work in\ngeneral since there's no 'owner' really.\nAnd nothing prevents the use of multiple controllers, there are not\nrestrictions in the MIPI DisCo spec that prevent a stream from relying\non different controllers.",
+          "text_signoff_stripped": "A stream connects multiple managers and multiple peripherals. The\ndefinition above does not make a lot of sense and doesn't work in\ngeneral since there's no 'owner' really.\nAnd nothing prevents the use of multiple controllers, there are not\nrestrictions in the MIPI DisCo spec that prevent a stream from relying\non different controllers.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13436311,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25570432,
+          "date": "2023-10-25T15:12:23",
+          "word_count": 64,
+          "classification": "nit",
+          "text": "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differently, the controller is the host part while the peripheral is\nthe codec part. \"controllers passed as codec DAIs\" is not really\npossible, or this was a typo?",
+          "text_signoff_stripped": "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differently, the controller is the host part while the peripheral is\nthe codec part. \"controllers passed as codec DAIs\" is not really\npossible, or this was a typo?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13436310,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25582944,
+          "date": "2023-11-03T15:29:13",
+          "word_count": 62,
+          "classification": "question",
+          "text": "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a codec DAI for the peripheral(s). This seems to\nbe a different configuration where CPU and codec DAIs are mixed.",
+          "text_signoff_stripped": "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a codec DAI for the peripheral(s). This seems to\nbe a different configuration where CPU and codec DAIs are mixed.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13436310,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 757497,
+      "subject": "[1/2] soundwire: bus: Prevent lockdep asserts when stream has multiple buses",
+      "state": "accepted",
+      "date": "2023-06-15T14:12:07",
+      "patch_count": 2,
+      "patch_ids": [
+        13281335,
+        13281336
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25384991,
+          "date": "2023-06-15T16:46:06",
+          "word_count": 83,
+          "classification": "acceptance",
+          "text": "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing really defines how dailinks include the dais, and in a\nhypothetical case with multiple controllers, each with multiple links,\nthere would be an ambiguity anyways so using the ida-allocated bus->id\nis a good solution indeed.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "text_signoff_stripped": "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing really defines how dailinks include the dais, and in a\nhypothetical case with multiple controllers, each with multiple links,\nthere would be an ambiguity anyways so using the ida-allocated bus->id\nis a good solution indeed.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13281336,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 748558,
+      "subject": "[1/2] soundwire: qcom: fix unbalanced pm_runtime_put()",
+      "state": "unknown",
+      "date": "2023-05-17T16:37:49",
+      "patch_count": 2,
+      "patch_ids": [
+        13245326,
+        13245327
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25339668,
+          "date": "2023-05-17T16:47:20",
+          "word_count": 23,
+          "classification": "acceptance",
+          "text": "Yes, this resume_and_get() added more problems indeed. One of those\nwell-intended changes that went sideways.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "text_signoff_stripped": "Yes, this resume_and_get() added more problems indeed. One of those\nwell-intended changes that went sideways.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13245326,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 741664,
+      "subject": "ASoC/soundwire: qcom: correctly probe devices after link init",
+      "state": "unknown",
+      "date": "2023-04-20T10:16:11",
+      "patch_count": 6,
+      "patch_ids": [
+        13218417,
+        13218418,
+        13218419,
+        13218420,
+        13218421,
+        13218422
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 25307600,
+          "date": "2023-04-20T14:18:15",
+          "word_count": 200,
+          "classification": "objection",
+          "text": "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached.\nIf multiple Peripherals are attached as Device0, the enumeration will\nresolve conflicts at the hardware level, and the Manager *cannot*\ncontrol the order of enumeration; the order is defined by the values in\nthe devID registers, whichever Peripheral has the highest value in the\nDevID registers wins the enumeration, and others have to back-off and be\nenumerated later.\nProbing and enumeration are also different concepts. The SoundWire\ndesign allows for drivers to be probed even in the absence of any active\nhardware. This was added on purpose so that the driver could e.g.\nprogram a GPIO or talk to a power-management chip to allow SoundWire\ndevices to start interacting with the bus.\nsee also suggestion below...\n...\nthe alternative is to move regmap to be cache-only in the probe and\nremove the cache-only property when the device is enumerated.\nThat's a trick that's used for all resume cases in codecs in Intel\nplatforms, and we need to extend it for the startup cases as well.",
+          "text_signoff_stripped": "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached.\nIf multiple Peripherals are attached as Device0, the enumeration will\nresolve conflicts at the hardware level, and the Manager *cannot*\ncontrol the order of enumeration; the order is defined by the values in\nthe devID registers, whichever Peripheral has the highest value in the\nDevID registers wins the enumeration, and others have to back-off and be\nenumerated later.\nProbing and enumeration are also different concepts. The SoundWire\ndesign allows for drivers to be probed even in the absence of any active\nhardware. This was added on purpose so that the driver could e.g.\nprogram a GPIO or talk to a power-management chip to allow SoundWire\ndevices to start interacting with the bus.\nsee also suggestion below...\n...\nthe alternative is to move regmap to be cache-only in the probe and\nremove the cache-only property when the device is enumerated.\nThat's a trick that's used for all resume cases in codecs in Intel\nplatforms, and we need to extend it for the startup cases as well.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13218419,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25307949,
+          "date": "2023-04-20T21:13:11",
+          "word_count": 143,
+          "classification": "question",
+          "text": "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replacement. It doesn't hurt to use the new terms.\nwill do.\nI really don't have any understanding or background on what this does.\nIs there actually a precedent for this? I mean, dealing with the\ndevice/driver model is already complicated, if now we have to be careful\non when the device pointer is stored it adds a whole new element of\ncomplexity or skillset required to understand the bus operation.\nRe-looking at the code, the 'md' variable is allocated in\nsdw_master_device_add(), initialized with all kinds of values, used by\ndevice_register() so presumably when you store the value it's stored\nsomewhere consistent, no?",
+          "text_signoff_stripped": "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replacement. It doesn't hurt to use the new terms.\nwill do.\nI really don't have any understanding or background on what this does.\nIs there actually a precedent for this? I mean, dealing with the\ndevice/driver model is already complicated, if now we have to be careful\non when the device pointer is stored it adds a whole new element of\ncomplexity or skillset required to understand the bus operation.\nRe-looking at the code, the 'md' variable is allocated in\nsdw_master_device_add(), initialized with all kinds of values, used by\ndevice_register() so presumably when you store the value it's stored\nsomewhere consistent, no?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13218421,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 25321597,
+          "date": "2023-05-03T14:11:15",
+          "word_count": 96,
+          "classification": "question",
+          "text": "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver that registers ASoC components, and not the\nSoundWire codec driver.\nThat's certainly more complicated than any other SoundWire-based systems\nI've seen so far. It's already difficult to keep track of the SoundWire\nperipheral driver .probe(), the ASoC component .probe(), the SoundWire\nbus .update_status() callback and now there's\nthe component .bind() added.\nWow. What could possibly go wrong, eh?",
+          "text_signoff_stripped": "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver that registers ASoC components, and not the\nSoundWire codec driver.\nThat's certainly more complicated than any other SoundWire-based systems\nI've seen so far. It's already difficult to keep track of the SoundWire\nperipheral driver .probe(), the ASoC component .probe(), the SoundWire\nbus .update_status() callback and now there's\nthe component .bind() added.\nWow. What could possibly go wrong, eh?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 13218422,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 667410,
+      "subject": "[RFC] Soundwire: Initialize multi_link with fwnode props",
+      "state": "unknown",
+      "date": "2022-08-14T08:04:15",
+      "patch_count": 1,
+      "patch_ids": [
+        12942872
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24970277,
+          "date": "2022-08-15T08:16:39",
+          "word_count": 45,
+          "classification": "objection",
+          "text": "The suggestion is to remove the TODO and leave the code as is: the\ncapabilities enabled for multi-link are required as part of the\nprogramming sequences, even when a stream uses a single link we still\nuse the syncArm/syncGo sequences.\nPlease don't change this.",
+          "text_signoff_stripped": "The suggestion is to remove the TODO and leave the code as is: the\ncapabilities enabled for multi-link are required as part of the\nprogramming sequences, even when a stream uses a single link we still\nuse the syncArm/syncGo sequences.\nPlease don't change this.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12942872,
+          "patch_state": "rfc",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 651180,
+      "subject": "ASoC: SOF/soundwire: use resume_and_get on component probe",
+      "state": "accepted",
+      "date": "2022-06-16T21:08:24",
+      "patch_count": 2,
+      "patch_ids": [
+        12884856,
+        12884858
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24900643,
+          "date": "2022-06-17T18:54:32",
+          "word_count": 41,
+          "classification": "objection",
+          "text": "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrivers are missing something.",
+          "text_signoff_stripped": "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrivers are missing something.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12884858,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 24900646,
+          "date": "2022-06-17T19:05:42",
+          "word_count": 54,
+          "classification": "neutral",
+          "text": "please wait for merges, we're chasing two regressions with nonsensical\nmixer values\nnumid=5,iface=MIXER,name='PGA4.0 4 Master Capture Volume'\n; type=BOOLEAN,access=rw---R--,values=2\n: values=on,on\n| dBscale-min=-50.00dB,step=1.00dB,mute=1\nand a spurious log that we missed:\nsnd-soc-dummy snd-soc-dummy: Runtime PM usage count underflow!",
+          "text_signoff_stripped": "please wait for merges, we're chasing two regressions with nonsensical\nmixer values\nnumid=5,iface=MIXER,name='PGA4.0 4 Master Capture Volume'\n; type=BOOLEAN,access=rw---R--,values=2\n: values=on,on\n| dBscale-min=-50.00dB,step=1.00dB,mute=1\nand a spurious log that we missed:\nsnd-soc-dummy snd-soc-dummy: Runtime PM usage count underflow!",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12884858,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        },
+        {
+          "comment_id": 24900702,
+          "date": "2022-06-17T20:12:01",
+          "word_count": 57,
+          "classification": "objection",
+          "text": "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake on my side, the\npatch \"ASoC: soc-component: use pm_runtime_resume_and_get()\" is invalid\nand shall not be merged.\nNo other problem detected.",
+          "text_signoff_stripped": "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake on my side, the\npatch \"ASoC: soc-component: use pm_runtime_resume_and_get()\" is invalid\nand shall not be merged.\nNo other problem detected.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12884858,
+          "patch_state": "accepted",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 618060,
+      "subject": "[v2] soundwire: qcom: remove redundant wait for completion",
+      "state": "unknown",
+      "date": "2022-02-25T14:44:17",
+      "patch_count": 1,
+      "patch_ids": [
+        12760408
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24754615,
+          "date": "2022-02-25T15:43:47",
+          "word_count": 60,
+          "classification": "question",
+          "text": "I don't get the idea, sorry.\nIf you look at the code, these are the cases where this 'struct\ncompletion' is used\nstruct completion enumeration;\ncomplete(&ctrl->enumeration);\n/* Enable Auto enumeration */\ninit_completion(&ctrl->enumeration);\nwait_for_completion_timeout(&ctrl->enumeration,\nso if you remove the wait_for_completeion, then you might just as well\nremove the whole thing and revert 06dd96738d618\nwhat am I missing?",
+          "text_signoff_stripped": "I don't get the idea, sorry.\nIf you look at the code, these are the cases where this 'struct\ncompletion' is used\nstruct completion enumeration;\ncomplete(&ctrl->enumeration);\n/* Enable Auto enumeration */\ninit_completion(&ctrl->enumeration);\nwait_for_completion_timeout(&ctrl->enumeration,\nso if you remove the wait_for_completeion, then you might just as well\nremove the whole thing and revert 06dd96738d618\nwhat am I missing?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12760408,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    },
+    {
+      "series_id": 429919,
+      "subject": "[1/2] soundwire: intel: fix possible crash when no device is detected",
+      "state": "unknown",
+      "date": "2021-02-08T12:01:03",
+      "patch_count": 2,
+      "patch_ids": [
+        12075249,
+        12075251
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 23971879,
+          "date": "2021-02-10T23:15:17",
+          "word_count": 38,
+          "classification": "objection",
+          "text": "Adding Vinod, Takashi, Mark and Jaroslav in CC: to make sure this patch\ndoes not fall between the cracks.\nThis issue may impact all HDaudio platforms and this patch needs to\nreach Linus' tree and 5.10-stable. Thanks!",
+          "text_signoff_stripped": "Adding Vinod, Takashi, Mark and Jaroslav in CC: to make sure this patch\ndoes not fall between the cracks.\nThis issue may impact all HDaudio platforms and this patch needs to\nreach Linus' tree and 5.10-stable. Thanks!",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12075249,
+          "patch_state": "not-applicable",
+          "submitter_name": "Pierre-Louis Bossart",
+          "submitter_email": "pierre-louis.bossart@linux.intel.com"
+        }
+      ]
+    }
+  ],
+  "fetch_errors": [],
+  "api_rate_limit_hits": 0
+}

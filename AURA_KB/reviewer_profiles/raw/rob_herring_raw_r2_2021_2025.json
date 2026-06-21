@@ -1,0 +1,301 @@
+{
+  "reviewer": "Rob Herring",
+  "fetch_date": "2026-06-21T12:41:10Z",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "scope_queries_used": [
+    "dt-bindings:",
+    "dt-bindings: sound",
+    "dt-bindings: sound: qcom",
+    "ASoC: dt-bindings",
+    "dt-bindings: arm: qcom",
+    "arm64: dts: qcom"
+  ],
+  "series_fetched": 200,
+  "series_with_reviewer_comments": 9,
+  "comments_fetched": 374,
+  "comments_after_filter": 11,
+  "series": [
+    {
+      "series_id": 540661,
+      "subject": "[1/2] dt-bindings: opp: qcom-opp: Convert to DT schema",
+      "state": "unknown",
+      "date": "2021-09-01T15:55:58",
+      "patch_count": 2,
+      "patch_ids": [
+        12469689,
+        12469691
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24423827,
+          "date": "2021-09-02T19:19:39",
+          "word_count": 25,
+          "classification": "neutral",
+          "text": "This one of course came from default GPL2 source, but I'm sure the\nauthors are QCom/Linaro and they would be happy to dual license.",
+          "text_signoff_stripped": "This one of course came from default GPL2 source, but I'm sure the\nauthors are QCom/Linaro and they would be happy to dual license.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12469689,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 534035,
+      "subject": "[1/2] dt-bindings: panel: ili9341: correct indentation",
+      "state": "accepted",
+      "date": "2021-08-19T10:10:19",
+      "patch_count": 2,
+      "patch_ids": [
+        12446811,
+        12446813
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24393987,
+          "date": "2021-08-19T21:52:38",
+          "word_count": 22,
+          "classification": "acceptance",
+          "text": "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>",
+          "text_signoff_stripped": "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12446813,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring",
+          "submitter_email": "robh+dt@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 526335,
+      "subject": "[v2,1/6] dt-bindings: phy: qcom,qmp: Add IPQ6018 USB3 PHY",
+      "state": "unknown",
+      "date": "2021-08-04T14:05:07",
+      "patch_count": 6,
+      "patch_ids": [
+        12419017,
+        12419019,
+        12419015,
+        12419023,
+        12419021,
+        12419025
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24379753,
+          "date": "2021-08-13T17:22:34",
+          "word_count": 77,
+          "classification": "question",
+          "text": "Why is post-silicon relevant here? Everything upstream should be for\npost-silicon. I've seen and done the hacks to make pre-silicon testing\nwork and we don't need those upstream.\nIf you have units, then use property unit suffix in the name.\nAnd then you can drop the type.\nHowever, if the h/w block gets a ref clock why isn't it described in\n'clocks' and then you can just read why the frequency is and calculate\nthe period.",
+          "text_signoff_stripped": "Why is post-silicon relevant here? Everything upstream should be for\npost-silicon. I've seen and done the hacks to make pre-silicon testing\nwork and we don't need those upstream.\nIf you have units, then use property unit suffix in the name.\nAnd then you can drop the type.\nHowever, if the h/w block gets a ref clock why isn't it described in\n'clocks' and then you can just read why the frequency is and calculate\nthe period.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12419015,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 480119,
+      "subject": "dt-bindings: More removals of type references on common properties",
+      "state": "accepted",
+      "date": "2021-05-10T20:45:24",
+      "patch_count": 1,
+      "patch_ids": [
+        12250281
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24172763,
+          "date": "2021-05-11T13:44:25",
+          "word_count": 20,
+          "classification": "neutral",
+          "text": "It is in the schema already[1].\nThanks.\nRob\n[1] https://github.com/devicetree-org/dt-schema/blob/master/schemas/property-units.yaml",
+          "text_signoff_stripped": "It is in the schema already[1].\nThanks.\nRob\n[1] https://github.com/devicetree-org/dt-schema/blob/master/schemas/property-units.yaml",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12250281,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        },
+        {
+          "comment_id": 24172765,
+          "date": "2021-05-11T14:23:44",
+          "word_count": 23,
+          "classification": "neutral",
+          "text": "Yes, we should remove it. I just hadn't gotten around to it. Note\nthere is one reference to it in writing-bindings.rst.\nRob",
+          "text_signoff_stripped": "Yes, we should remove it. I just hadn't gotten around to it. Note\nthere is one reference to it in writing-bindings.rst.\nRob",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12250281,
+          "patch_state": "accepted",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 452741,
+      "subject": "[v2] dt-bindings: interrupt-controller: Convert bindings to yaml for qcom,pdc",
+      "state": "unknown",
+      "date": "2021-03-22T10:30:15",
+      "patch_count": 1,
+      "patch_ids": [
+        12154373
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24079883,
+          "date": "2021-03-30T14:46:15",
+          "word_count": 23,
+          "classification": "question",
+          "text": "That's every #interrupt-cells. No need to redefine it here.\n'description', not a comment.\nIndentation is wrong.\nIs there no maximum number of entries?",
+          "text_signoff_stripped": "That's every #interrupt-cells. No need to redefine it here.\n'description', not a comment.\nIndentation is wrong.\nIs there no maximum number of entries?",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12154373,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 451037,
+      "subject": "[v3,1/6] dt-bindings: phy: qcom,qmp-usb3-dp: Add support for SM8250",
+      "state": "unknown",
+      "date": "2021-03-18T19:59:25",
+      "patch_count": 6,
+      "patch_ids": [
+        12149137,
+        12149147,
+        12149141,
+        12149145,
+        12149143,
+        12149149
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24070765,
+          "date": "2021-03-26T01:20:17",
+          "word_count": 22,
+          "classification": "question",
+          "text": "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change.",
+          "text_signoff_stripped": "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change.",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12149137,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 449529,
+      "subject": "[RFC,1/3] dt-bindings: display: simple: Add the panel on sc7180-trogdor-pompom",
+      "state": "changes-requested",
+      "date": "2021-03-16T21:08:19",
+      "patch_count": 3,
+      "patch_ids": [
+        12144065,
+        12144067,
+        12144069
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24070597,
+          "date": "2021-03-26T00:09:07",
+          "word_count": 62,
+          "classification": "question",
+          "text": "Is this a 'standard' eDP connector? AFAICT, there does seem to be\nsuch a thing. I've said in the past I'd be okay with a edp-connector\nnode. If that needs just the \"HPD absent delay\" property, I think that\nwould be okay. It's just a never ending stream of new properties with\neach new panel that I don't want to see.\nRob",
+          "text_signoff_stripped": "Is this a 'standard' eDP connector? AFAICT, there does seem to be\nsuch a thing. I've said in the past I'd be okay with a edp-connector\nnode. If that needs just the \"HPD absent delay\" property, I think that\nwould be okay. It's just a never ending stream of new properties with\neach new panel that I don't want to see.\nRob",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12144065,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 433939,
+      "subject": "dt-bindings: cpufreq: cpufreq-qcom-hw: Document SM8350 CPUfreq compatible",
+      "state": "unknown",
+      "date": "2021-02-16T11:12:51",
+      "patch_count": 1,
+      "patch_ids": [
+        12089845
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 24018831,
+          "date": "2021-03-05T21:57:12",
+          "word_count": 35,
+          "classification": "question",
+          "text": "The h/w block is the same features and bugs in every single\nimplementation? If not sure, better be safe.\nI don't know that I'd go back and add SoC ones for everything though.\nRob",
+          "text_signoff_stripped": "The h/w block is the same features and bugs in every single\nimplementation? If not sure, better be safe.\nI don't know that I'd go back and add SoC ones for everything though.\nRob",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12089845,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring (Arm)",
+          "submitter_email": "robh@kernel.org"
+        }
+      ]
+    },
+    {
+      "series_id": 431691,
+      "subject": "dt-bindings: usb: Harmonize xHCI/EHCI/OHCI/DWC3 nodes name",
+      "state": "unknown",
+      "date": "2021-02-10T17:28:40",
+      "patch_count": 2,
+      "patch_ids": [
+        12081411,
+        12081413
+      ],
+      "reviewer_comments": [
+        {
+          "comment_id": 23970895,
+          "date": "2021-02-10T18:17:27",
+          "word_count": 27,
+          "classification": "question",
+          "text": "On Wed, Feb 10, 2021 at 11:29 AM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nIs there some reason using compatible instead wouldn't work here?\nRob",
+          "text_signoff_stripped": "On Wed, Feb 10, 2021 at 11:29 AM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nIs there some reason using compatible instead wouldn't work here?\nRob",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12081411,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring",
+          "submitter_email": "robh+dt@kernel.org"
+        },
+        {
+          "comment_id": 23971087,
+          "date": "2021-02-10T18:59:33",
+          "word_count": 47,
+          "classification": "question",
+          "text": "On Wed, Feb 10, 2021 at 12:40 PM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nI guess there's some 'synopsys,dwc3' too, but looking at 2 compatibles\nis better than looking at 2 node names. We try to not care what node\nnames are generally.\nRob",
+          "text_signoff_stripped": "On Wed, Feb 10, 2021 at 12:40 PM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nI guess there's some 'synopsys,dwc3' too, but looking at 2 compatibles\nis better than looking at 2 node names. We try to not care what node\nnames are generally.\nRob",
+          "signoff_lines_removed": [],
+          "is_acceptance_email": false,
+          "patch_id": 12081411,
+          "patch_state": "not-applicable",
+          "submitter_name": "Rob Herring",
+          "submitter_email": "robh+dt@kernel.org"
+        }
+      ]
+    }
+  ],
+  "fetch_errors": [],
+  "api_rate_limit_hits": 0
+}

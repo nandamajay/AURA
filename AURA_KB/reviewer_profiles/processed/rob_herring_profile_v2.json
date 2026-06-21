@@ -1,0 +1,306 @@
+{
+  "reviewer": "Rob Herring",
+  "profile_version": "v2",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "INSUFFICIENT_DATA",
+  "series_analyzed": 200,
+  "comment_threads_analyzed": 9,
+  "subsystems_covered": [
+    "dt_bindings_broad",
+    "qcom_platform"
+  ],
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "objection_patterns": [],
+  "acceptance_patterns": [
+    {
+      "pattern": "krzysztof kozlowski",
+      "frequency": 2,
+      "example_series_ids": [
+        534035
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-ACCEPTANCE_PATTERNS-001",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "\\backed-by\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        534035
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-ACCEPTANCE_PATTERNS-002",
+      "reviewer": "Rob Herring"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern": "\\?+",
+      "frequency": 6,
+      "example_series_ids": [
+        526335,
+        452741,
+        451037,
+        449529,
+        433939,
+        431691
+      ],
+      "example_comment_excerpts": [
+        "Why is post-silicon relevant here? Everything upstream should be for\npost-silicon. I've seen and done the hacks to make pre-silicon testing\nwork and we don't need those upstream.\nIf you have units, then use property unit",
+        "That's every #interrupt-cells. No need to redefine it here.\n'description', not a comment.\nIndentation is wrong.\nIs there no maximum number of entries?",
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change."
+      ],
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-001",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "\\bwhat\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        451037,
+        431691
+      ],
+      "example_comment_excerpts": [
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change.",
+        "On Wed, Feb 10, 2021 at 12:40 PM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nI guess there's some 'synopsys,dwc3' too, but looking at 2 compatibles\nis better than looking at 2 node names. We try to not care wh"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-002",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "\\bwhy\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        526335,
+        451037
+      ],
+      "example_comment_excerpts": [
+        "Why is post-silicon relevant here? Everything upstream should be for\npost-silicon. I've seen and done the hacks to make pre-silicon testing\nwork and we don't need those upstream.\nIf you have units, then use property unit",
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-003",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "baikalelectronics ru",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-004",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "on wed feb",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-005",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "ru wrote",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-006",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "semin baikalelectronics",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-007",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "semin sergey",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-008",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "semin sergey semin",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-009",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "serge semin",
+      "frequency": 2,
+      "example_series_ids": [
+        431691
+      ],
+      "example_comment_excerpts": [
+        "On Wed, Feb 10, 2021 at 11:29 AM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nIs there some reason using compatible instead wouldn't work here?\nRob",
+        "On Wed, Feb 10, 2021 at 12:40 PM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nI guess there's some 'synopsys,dwc3' too, but looking at 2 compatibles\nis better than looking at 2 node names. We try to not care wh"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-010",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "serge semin sergey",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-011",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "sergey semin",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-012",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "wed feb at",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-QUESTION_PATTERNS-013",
+      "reviewer": "Rob Herring"
+    }
+  ],
+  "nit_patterns": [],
+  "subsystem_specific_rules": [
+    {
+      "pattern": "\\bqcom\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        540661
+      ],
+      "example_comment_excerpts": [
+        "This one of course came from default GPL2 source, but I'm sure the\nauthors are QCom/Linaro and they would be happy to dual license."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-SUBSYSTEM_SPECIFIC_RULES-001",
+      "reviewer": "Rob Herring"
+    }
+  ],
+  "commit_message_rules": [],
+  "dt_rules": [
+    {
+      "pattern": "compatible",
+      "frequency": 3,
+      "example_series_ids": [
+        451037,
+        431691
+      ],
+      "example_comment_excerpts": [
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change.",
+        "On Wed, Feb 10, 2021 at 11:29 AM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nIs there some reason using compatible instead wouldn't work here?\nRob",
+        "On Wed, Feb 10, 2021 at 12:40 PM Serge Semin\n<Sergey.Semin@baikalelectronics.ru> wrote:\nI guess there's some 'synopsys,dwc3' too, but looking at 2 compatibles\nis better than looking at 2 node names. We try to not care wh"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-DT_RULES-001",
+      "reviewer": "Rob Herring"
+    },
+    {
+      "pattern": "\\byaml\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        480119
+      ],
+      "example_comment_excerpts": [
+        "It is in the schema already[1].\nThanks.\nRob\n[1] https://github.com/devicetree-org/dt-schema/blob/master/schemas/property-units.yaml"
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-DT_RULES-002",
+      "reviewer": "Rob Herring"
+    }
+  ],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [],
+  "vendor_code_rules": [
+    {
+      "pattern": "\\bqcom\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        540661
+      ],
+      "example_comment_excerpts": [
+        "This one of course came from default GPL2 source, but I'm sure the\nauthors are QCom/Linaro and they would be happy to dual license."
+      ],
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH",
+      "pattern_id": "ROB_HERRING-VENDOR_CODE_RULES-001",
+      "reviewer": "Rob Herring"
+    }
+  ],
+  "signoff_patterns": [],
+  "top_objection_topics": [],
+  "top_acceptance_signals": [
+    "krzysztof kozlowski",
+    "\\backed-by\\b"
+  ],
+  "typical_review_iterations": 2,
+  "rfc_tolerance": "HIGH",
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "vendor_code_tolerance": "HIGH",
+  "false_positive_risk_mitigations": [
+    "Acceptance email detector applied before objection classification.",
+    "Sign-off lines stripped (last up to 3 matching lines) before pattern extraction.",
+    "Sign-off phrases separated into signoff_patterns section.",
+    "Objection pattern extraction excludes acceptance-email comments."
+  ],
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads).",
+    "INSUFFICIENT_DATA threshold not met; use advisory-only."
+  ],
+  "profile_notes": "R2 profile from Patchwork comments with acceptance-email and sign-off false-positive mitigations.",
+  "comment_statistics": {
+    "total_comments_after_filter": 11,
+    "acceptance_email_count": 0,
+    "non_acceptance_comment_count": 11,
+    "signoff_lines_removed_count": 0
+  }
+}
