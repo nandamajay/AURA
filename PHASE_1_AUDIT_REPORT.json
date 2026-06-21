@@ -1,0 +1,56 @@
+{
+  "phase": "phase_1",
+  "phase_name": "Core Contracts & Execution Model",
+  "completed_at": "2026-06-21T12:43:01.576393+00:00",
+  "tasks_completed": 28,
+  "tasks_total": 28,
+  "concrete_prompt_task_ids_completed": 26,
+  "final_validation_tasks_added": [
+    "p1_final_t1",
+    "p1_final_t2"
+  ],
+  "week_3_summary": {
+    "state_machine_implemented": true,
+    "canonical_states": 8,
+    "allowed_transitions": 8,
+    "audit_events_added": true,
+    "new_tests_added": 6
+  },
+  "week_4_summary": {
+    "contracts_formalized": 4,
+    "contract_modules_created": 6,
+    "boundary_validation_added": true,
+    "version_negotiation_added": true,
+    "new_tests_added": 7
+  },
+  "week_5_summary": {
+    "execution_stages_defined": 8,
+    "stage_events_added": true,
+    "timing_metrics_added": true,
+    "replay_boundaries_marked": 3,
+    "new_tests_added": 5
+  },
+  "week_6_summary": {
+    "llm_response_paths_audited": 9,
+    "unvalidated_paths_fixed": 1,
+    "fail_closed_events_added": true,
+    "evidence_requirement_checks_added": true,
+    "new_tests_added": 6
+  },
+  "total_new_tests": 24,
+  "total_tests_passing": 39,
+  "baseline_regression": false,
+  "gaps_closed_from_phase_0": [
+    "IC-001 CLI request formalized",
+    "IC-002/IC-003 core task boundary validation added",
+    "IC-007 governance verdict validation added",
+    "Replay/audit state transition events added",
+    "Fail-closed events added for invalid agent/governance paths"
+  ],
+  "new_gaps_found": [
+    "Prompt declared 28 Phase 1 tasks, but only 26 concrete p1_w*_t* task IDs were specified; final validation/report tasks were tracked explicitly as p1_final_t1 and p1_final_t2.",
+    "Full fail-closed conversion of all quality-gate failures to FAILED status is intentionally deferred to avoid baseline regression of existing completed-with-no-approval behavior."
+  ],
+  "pm_verdict": "PHASE_1_COMPLETE_WITH_WARNINGS",
+  "recommendation": "Proceed to Phase 2 only after acknowledging compatibility warnings: legacy dashboard statuses remain lower-case, and patch-quality gate failures emit FAIL_CLOSED audit events while preserving completed run status for existing workflows."
+}

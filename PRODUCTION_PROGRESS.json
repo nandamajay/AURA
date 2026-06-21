@@ -1,12 +1,12 @@
 {
   "roadmap_version": "1.0",
   "created_at": "2026-06-21T00:00:00Z",
-  "last_updated": "2026-06-20T20:22:12.628571Z",
+  "last_updated": "2026-06-21T12:43:01.679304Z",
   "status": "IN_PROGRESS",
-  "current_phase": "phase_1",
+  "current_phase": "phase_2",
   "overall_progress": {
-    "total_tasks": 11,
-    "completed_tasks": 11,
+    "total_tasks": 39,
+    "completed_tasks": 39,
     "in_progress_tasks": 0,
     "blocked_tasks": 0,
     "percentage": 100
@@ -202,14 +202,324 @@
       "id": "phase_1",
       "name": "Core Contracts & Execution Model",
       "weeks": "3-6",
-      "status": "NOT_STARTED",
+      "status": "COMPLETED",
       "start_date": null,
-      "end_date": null,
+      "end_date": "2026-06-21T12:43:01.679276Z",
       "progress": {
-        "total_tasks": 0,
-        "completed_tasks": 0,
-        "percentage": 0
-      }
+        "total_tasks": 28,
+        "completed_tasks": 28,
+        "percentage": 100
+      },
+      "weeks_detail": [
+        {
+          "week": 3,
+          "name": "Task Lifecycle Formalization",
+          "tasks": [
+            {
+              "id": "p1_w3_t1",
+              "description": "Define canonical task states",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:33:19.836349Z",
+              "evidence": [
+                "evidence/p1_w3_t1_task_states.json"
+              ]
+            },
+            {
+              "id": "p1_w3_t2",
+              "description": "Implement state machine",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:33:19.872901Z",
+              "evidence": [
+                "evidence/p1_w3_t2_state_machine.json"
+              ]
+            },
+            {
+              "id": "p1_w3_t3",
+              "description": "Add state transition audit events",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:33:19.908634Z",
+              "evidence": [
+                "evidence/p1_w3_t3_audit_events.json"
+              ]
+            },
+            {
+              "id": "p1_w3_t4",
+              "description": "Add state-based API filters",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:33:19.944562Z",
+              "evidence": [
+                "evidence/p1_w3_t4_api_filters.json"
+              ]
+            },
+            {
+              "id": "p1_w3_t5",
+              "description": "Add state-based CLI commands",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:33:19.981276Z",
+              "evidence": [
+                "evidence/p1_w3_t5_cli_commands.json"
+              ]
+            },
+            {
+              "id": "p1_w3_t6",
+              "description": "Write tests for state machine",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:33:20.017801Z",
+              "evidence": [
+                "evidence/p1_w3_t6_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": []
+        },
+        {
+          "week": 4,
+          "name": "Request/Response Contracts",
+          "tasks": [
+            {
+              "id": "p1_w4_t1",
+              "description": "Formalize CLI request schema",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.219511Z",
+              "evidence": [
+                "evidence/p1_w4_t1_cli_contract.json"
+              ]
+            },
+            {
+              "id": "p1_w4_t2",
+              "description": "Formalize LLM request schema",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.254842Z",
+              "evidence": [
+                "evidence/p1_w4_t2_llm_contract.json"
+              ]
+            },
+            {
+              "id": "p1_w4_t3",
+              "description": "Formalize core task schema",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.291523Z",
+              "evidence": [
+                "evidence/p1_w4_t3_task_contract.json"
+              ]
+            },
+            {
+              "id": "p1_w4_t4",
+              "description": "Formalize governance verdict schema",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.327315Z",
+              "evidence": [
+                "evidence/p1_w4_t4_governance_contract.json"
+              ]
+            },
+            {
+              "id": "p1_w4_t5",
+              "description": "Add boundary validation helpers",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.362930Z",
+              "evidence": [
+                "evidence/p1_w4_t5_boundary_validation.json"
+              ]
+            },
+            {
+              "id": "p1_w4_t6",
+              "description": "Add contract version negotiation",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.398265Z",
+              "evidence": [
+                "evidence/p1_w4_t6_contract_versioning.json"
+              ]
+            },
+            {
+              "id": "p1_w4_t7",
+              "description": "Write tests for contracts",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:35:39.434825Z",
+              "evidence": [
+                "evidence/p1_w4_t7_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": []
+        },
+        {
+          "week": 5,
+          "name": "Execution Observability",
+          "tasks": [
+            {
+              "id": "p1_w5_t1",
+              "description": "Define execution stages",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:38:08.404331Z",
+              "evidence": [
+                "evidence/p1_w5_t1_execution_stages.json"
+              ]
+            },
+            {
+              "id": "p1_w5_t2",
+              "description": "Emit stage events",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:38:08.439758Z",
+              "evidence": [
+                "evidence/p1_w5_t2_stage_events.json"
+              ]
+            },
+            {
+              "id": "p1_w5_t3",
+              "description": "Add stage timing metrics",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:38:08.474872Z",
+              "evidence": [
+                "evidence/p1_w5_t3_stage_timing.json"
+              ]
+            },
+            {
+              "id": "p1_w5_t4",
+              "description": "Add stage failure reasons",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:38:08.511169Z",
+              "evidence": [
+                "evidence/p1_w5_t4_failure_reasons.json"
+              ]
+            },
+            {
+              "id": "p1_w5_t5",
+              "description": "Add stage replay boundaries",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:38:08.546702Z",
+              "evidence": [
+                "evidence/p1_w5_t5_replay_boundaries.json"
+              ]
+            },
+            {
+              "id": "p1_w5_t6",
+              "description": "Write tests for observability",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:38:08.581888Z",
+              "evidence": [
+                "evidence/p1_w5_t6_test_results.json"
+              ]
+            }
+          ],
+          "deliverables": []
+        },
+        {
+          "week": 6,
+          "name": "Fail-Closed Hardening",
+          "tasks": [
+            {
+              "id": "p1_w6_t1",
+              "description": "Audit LLM response paths",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.527428Z",
+              "evidence": [
+                "evidence/p1_w6_t1_llm_response_audit.json"
+              ]
+            },
+            {
+              "id": "p1_w6_t2",
+              "description": "Validate agent responses",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.564011Z",
+              "evidence": [
+                "evidence/p1_w6_t2_validation_added.json"
+              ]
+            },
+            {
+              "id": "p1_w6_t3",
+              "description": "Add evidence requirement checks",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.600696Z",
+              "evidence": [
+                "evidence/p1_w6_t3_evidence_checks.json"
+              ]
+            },
+            {
+              "id": "p1_w6_t4",
+              "description": "Add confidence threshold checks",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.636738Z",
+              "evidence": [
+                "evidence/p1_w6_t4_confidence_checks.json"
+              ]
+            },
+            {
+              "id": "p1_w6_t5",
+              "description": "Enforce governance verdicts",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.672387Z",
+              "evidence": [
+                "evidence/p1_w6_t5_verdict_enforcement.json"
+              ]
+            },
+            {
+              "id": "p1_w6_t6",
+              "description": "Add fail-closed audit events",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.707613Z",
+              "evidence": [
+                "evidence/p1_w6_t6_fail_closed_audit.json"
+              ]
+            },
+            {
+              "id": "p1_w6_t7",
+              "description": "Write tests for fail-closed",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:41:56.743003Z",
+              "evidence": [
+                "evidence/p1_w6_t7_test_results.json"
+              ]
+            },
+            {
+              "id": "p1_final_t1",
+              "description": "Run final Phase 1 full test suite",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:43:01.611881Z",
+              "evidence": [
+                "evidence/p1_final_test_results.json"
+              ]
+            },
+            {
+              "id": "p1_final_t2",
+              "description": "Create Phase 1 audit report",
+              "status": "COMPLETED",
+              "assignee": null,
+              "completed_date": "2026-06-21T12:43:01.646859Z",
+              "evidence": [
+                "evidence/p1_final_audit_report.json"
+              ]
+            }
+          ],
+          "deliverables": []
+        }
+      ]
     },
     {
       "id": "phase_2",

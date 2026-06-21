@@ -1,0 +1,95 @@
+{
+  "task_id": "p1_w3_t1",
+  "canonical_states": [
+    "PENDING",
+    "RUNNING",
+    "REVIEW",
+    "APPROVED",
+    "REJECTED",
+    "COMPLETED",
+    "FAILED",
+    "CANCELLED"
+  ],
+  "allowed_transitions": [
+    [
+      "PENDING",
+      "RUNNING"
+    ],
+    [
+      "RUNNING",
+      "REVIEW"
+    ],
+    [
+      "RUNNING",
+      "FAILED"
+    ],
+    [
+      "REVIEW",
+      "APPROVED"
+    ],
+    [
+      "REVIEW",
+      "REJECTED"
+    ],
+    [
+      "APPROVED",
+      "COMPLETED"
+    ],
+    [
+      "REJECTED",
+      "PENDING"
+    ],
+    [
+      "PENDING",
+      "CANCELLED"
+    ],
+    [
+      "RUNNING",
+      "CANCELLED"
+    ],
+    [
+      "REVIEW",
+      "CANCELLED"
+    ],
+    [
+      "APPROVED",
+      "CANCELLED"
+    ],
+    [
+      "REJECTED",
+      "CANCELLED"
+    ],
+    [
+      "COMPLETED",
+      "CANCELLED"
+    ],
+    [
+      "FAILED",
+      "CANCELLED"
+    ]
+  ],
+  "existing_status_mapping": {
+    "pending": "PENDING",
+    "running": "RUNNING",
+    "review": "REVIEW",
+    "review_submit": "REVIEW",
+    "escalated": "REVIEW",
+    "approved": "APPROVED",
+    "rejected": "REJECTED",
+    "completed": "COMPLETED",
+    "failed": "FAILED",
+    "blocked": "FAILED",
+    "cancelled": "CANCELLED",
+    "PENDING": "PENDING",
+    "RUNNING": "RUNNING",
+    "REVIEW": "REVIEW",
+    "APPROVED": "APPROVED",
+    "REJECTED": "REJECTED",
+    "COMPLETED": "COMPLETED",
+    "FAILED": "FAILED",
+    "CANCELLED": "CANCELLED"
+  },
+  "rationale": "Canonical states are enforced in Python while preserving legacy lower-case status strings in the SQLite status TEXT column for dashboard/test compatibility.",
+  "execution_timestamp": "2026-06-21T12:31:38.584697+00:00",
+  "status": "COMPLETED"
+}

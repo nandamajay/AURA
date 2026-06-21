@@ -1,0 +1,43 @@
+============================= test session starts ==============================
+platform linux -- Python 3.10.12, pytest-8.3.5, pluggy-1.6.0 -- /usr/bin/python
+cachedir: .pytest_cache
+rootdir: /local/mnt/workspace/AURA
+configfile: pyproject.toml
+plugins: anyio-4.13.0, mock-3.14.0, cov-5.0.0, flask-1.3.0
+collecting ... collected 33 items
+
+tests/test_contracts.py::test_validate_cli_request_valid PASSED          [  3%]
+tests/test_contracts.py::test_validate_cli_request_missing_required PASSED [  6%]
+tests/test_contracts.py::test_validate_cli_request_wrong_type PASSED     [  9%]
+tests/test_contracts.py::test_validate_core_task_valid_and_invalid PASSED [ 12%]
+tests/test_contracts.py::test_validate_governance_verdict_valid_and_invalid PASSED [ 15%]
+tests/test_contracts.py::test_validate_llm_request_and_response PASSED   [ 18%]
+tests/test_contracts.py::test_contract_version_mismatch_warns_without_exception PASSED [ 21%]
+tests/test_dashboard.py::DashboardTests::test_dashboard_routes PASSED    [ 24%]
+tests/test_dashboard_ctl.py::DashboardCtlTests::test_start_status_stop_background_dashboard PASSED [ 27%]
+tests/test_execution_stage.py::test_log_stage_start_end_write_events PASSED [ 30%]
+tests/test_execution_stage.py::test_get_stage_timings_returns_duration_data PASSED [ 33%]
+tests/test_execution_stage.py::test_get_run_summary_returns_complete_picture PASSED [ 36%]
+tests/test_execution_stage.py::test_get_failed_stages_returns_only_failures PASSED [ 39%]
+tests/test_execution_stage.py::test_replay_boundaries_are_marked_and_queryable PASSED [ 42%]
+tests/test_orchestrator.py::OrchestratorTests::test_dry_run_completes PASSED [ 45%]
+tests/test_orchestrator.py::OrchestratorTests::test_full_run_completes PASSED [ 48%]
+tests/test_orchestrator.py::OrchestratorTests::test_full_run_synthesizes_patch_and_creates_approval PASSED [ 51%]
+tests/test_orchestrator.py::OrchestratorTests::test_include_remediation_rewrites_and_drops_non_upstream PASSED [ 54%]
+tests/test_orchestrator.py::OrchestratorTests::test_missing_special_include_blocks_approval PASSED [ 57%]
+tests/test_pilot_worker.py::PilotWorkerTests::test_build_pilot_payload_for_anvil_rounds PASSED [ 60%]
+tests/test_pilot_worker.py::PilotWorkerTests::test_resolve_pilot_context_for_wcd937x PASSED [ 63%]
+tests/test_pilot_worker.py::PilotWorkerTests::test_wsa_profile_and_unknown_module PASSED [ 66%]
+tests/test_rule_engine.py::RuleEngineTests::test_rule_layer_is_valid PASSED [ 69%]
+tests/test_source_sync.py::SourceSyncTests::test_sync_local_git_mode PASSED [ 72%]
+tests/test_source_sync.py::SourceSyncTests::test_sync_local_snapshot_mode PASSED [ 75%]
+tests/test_state.py::StateTests::test_approval_lifecycle PASSED          [ 78%]
+tests/test_state.py::StateTests::test_invalid_approval_status_rejected PASSED [ 81%]
+tests/test_task_state.py::test_valid_transitions_succeed PASSED          [ 84%]
+tests/test_task_state.py::test_invalid_transitions_raise PASSED          [ 87%]
+tests/test_task_state.py::test_update_run_status_writes_audit_event PASSED [ 90%]
+tests/test_task_state.py::test_get_state_history_returns_ordered_events PASSED [ 93%]
+tests/test_task_state.py::test_list_runs_by_status_filters_legacy_values PASSED [ 96%]
+tests/test_task_state.py::test_backward_compatible_status_mapping PASSED [100%]
+
+============================== 33 passed in 6.22s ==============================

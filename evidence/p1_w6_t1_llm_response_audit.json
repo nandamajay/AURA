@@ -1,0 +1,96 @@
+{
+  "execution_timestamp": "2026-06-21T12:41:56.230429+00:00",
+  "status": "COMPLETED",
+  "task_id": "p1_w6_t1",
+  "parse_sites": [
+    {
+      "file": "aura/core/orchestrator.py",
+      "line": 141,
+      "text": "return proc.stdout",
+      "fields_accessed": [],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    },
+    {
+      "file": "aura/core/orchestrator.py",
+      "line": 521,
+      "text": "validation[\"git_apply_check_error\"] = (proc.stderr or proc.stdout or \"\").strip()",
+      "fields_accessed": [
+        "compile_target_ran",
+        "git_apply_check_error",
+        "git_apply_check_ok",
+        "target"
+      ],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    },
+    {
+      "file": "aura/core/orchestrator.py",
+      "line": 540,
+      "text": "raw = (proc.stderr or proc.stdout or \"\").strip()",
+      "fields_accessed": [
+        "compile_target_error",
+        "compile_target_ok",
+        "compile_target_status"
+      ],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    },
+    {
+      "file": "aura/core/orchestrator.py",
+      "line": 573,
+      "text": "out = \"\\n\".join([proc.stdout or \"\", proc.stderr or \"\"]).strip()",
+      "fields_accessed": [
+        "checkpatch_errors",
+        "checkpatch_status",
+        "checkpatch_warnings"
+      ],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    },
+    {
+      "file": "aura/core/orchestrator.py",
+      "line": 958,
+      "text": "{\"approval_id\": approval_id, \"queue\": \"patch\", \"item_ref\": json.loads(item_ref)},",
+      "fields_accessed": [
+        "round"
+      ],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    },
+    {
+      "file": "aura/core/worker_runner.py",
+      "line": 49,
+      "text": "out = proc.stdout.strip()",
+      "fields_accessed": [],
+      "validated_before_access": true,
+      "failure_mode_if_missing": "ContractViolationError"
+    },
+    {
+      "file": "aura/core/worker_runner.py",
+      "line": 52,
+      "text": "data = json.loads(out) if out else {}",
+      "fields_accessed": [],
+      "validated_before_access": true,
+      "failure_mode_if_missing": "ContractViolationError"
+    },
+    {
+      "file": "aura/core/worker_entry.py",
+      "line": 24,
+      "text": "stdout = (proc.stdout or \"\").strip()",
+      "fields_accessed": [],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    },
+    {
+      "file": "aura/core/worker_entry.py",
+      "line": 31,
+      "text": "payload = json.loads(stdout)",
+      "fields_accessed": [],
+      "validated_before_access": false,
+      "failure_mode_if_missing": "UNKNOWN"
+    }
+  ],
+  "unvalidated_sites": 7,
+  "note": "No direct LLM call path exists; agent stdout JSON is the production response boundary."
+}
