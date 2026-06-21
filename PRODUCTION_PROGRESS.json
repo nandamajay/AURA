@@ -1,1163 +1,1440 @@
 {
-  "roadmap_version": "1.0",
+  "blockers": [],
   "created_at": "2026-06-21T00:00:00Z",
-  "last_updated": "2026-06-21T18:06:04.828190Z",
-  "status": "IN_PROGRESS",
-  "current_phase": "phase_4",
+  "current_phase": "phase_5",
+  "decisions": [],
+  "last_updated": "2026-06-21T19:06:59.285139Z",
   "overall_progress": {
-    "total_tasks": 78,
-    "completed_tasks": 78,
-    "in_progress_tasks": 0,
     "blocked_tasks": 0,
-    "percentage": 100
+    "completed_tasks": 99,
+    "in_progress_tasks": 0,
+    "percentage": 100,
+    "total_tasks": 99
   },
   "phases": [
     {
+      "end_date": "2026-06-20T20:22:12.628546Z",
       "id": "phase_0",
       "name": "Foundation Audit & Baseline Lock",
-      "weeks": "1-2",
-      "status": "COMPLETED",
-      "start_date": "2026-06-20T19:55:19.710033Z",
-      "end_date": "2026-06-20T20:22:12.628546Z",
       "progress": {
-        "total_tasks": 11,
         "completed_tasks": 11,
-        "percentage": 100
+        "percentage": 100,
+        "total_tasks": 11
       },
+      "start_date": "2026-06-20T19:55:19.710033Z",
+      "status": "COMPLETED",
+      "weeks": "1-2",
       "weeks_detail": [
         {
-          "week": 1,
-          "name": "Discovery & Gap Analysis",
-          "tasks": [
-            {
-              "id": "p0_w1_t1",
-              "description": "Run full architecture enforcement suite",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:06:27.819337Z",
-              "evidence": [
-                "evidence/p0_w1_t1_architecture_enforcement_report.json"
-              ]
-            },
-            {
-              "id": "p0_w1_t2",
-              "description": "Run adversarial validation suite",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:18:09.253550Z",
-              "evidence": [
-                "evidence/p0_w1_t2_adversarial_validation_report.json"
-              ]
-            },
-            {
-              "id": "p0_w1_t3",
-              "description": "Audit all 15 routers for contract violations",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.422274Z",
-              "evidence": [
-                "evidence/p0_w1_t3_router_contract_audit.json"
-              ]
-            },
-            {
-              "id": "p0_w1_t4",
-              "description": "Audit all 45+ agents for replay hooks",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.458156Z",
-              "evidence": [
-                "evidence/p0_w1_t4_agent_replay_audit.json"
-              ]
-            },
-            {
-              "id": "p0_w1_t5",
-              "description": "Audit all 21 SQL migrations for integrity",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.492790Z",
-              "evidence": [
-                "evidence/p0_w1_t5_sql_migration_audit.json"
-              ]
-            },
-            {
-              "id": "p0_w1_t6",
-              "description": "Document every TODO/FIXME/HACK in codebase",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.526967Z",
-              "evidence": [
-                "evidence/p0_w1_t6_tech_debt_inventory.json"
-              ]
-            }
-          ],
           "deliverables": [
             {
               "name": "PRODUCTION_GAP_MATRIX.md",
-              "status": "COMPLETED",
-              "path": "PRODUCTION_GAP_MATRIX.md"
+              "path": "PRODUCTION_GAP_MATRIX.md",
+              "status": "COMPLETED"
             },
             {
               "name": "BASELINE_LOCK_v2.md",
-              "status": "COMPLETED",
-              "path": "BASELINE_LOCK_v2.md"
+              "path": "BASELINE_LOCK_v2.md",
+              "status": "COMPLETED"
             },
             {
               "name": "PHASE_0_AUDIT_REPORT.json",
-              "status": "COMPLETED",
-              "path": "PHASE_0_AUDIT_REPORT.json"
-            }
-          ]
-        },
-        {
-          "week": 2,
-          "name": "Contract Inventory & Prioritization",
-          "tasks": [
-            {
-              "id": "p0_w2_t1",
-              "description": "Extract all implicit contracts",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.561481Z",
-              "evidence": [
-                "evidence/p0_w2_t1_implicit_contracts.json"
-              ]
-            },
-            {
-              "id": "p0_w2_t2",
-              "description": "Version every contract with semver",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.596111Z",
-              "evidence": [
-                "evidence/p0_w2_t2_contract_versions.json"
-              ]
-            },
-            {
-              "id": "p0_w2_t3",
-              "description": "Map every contract to tests",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.630507Z",
-              "evidence": [
-                "evidence/p0_w2_t3_contract_test_map.json"
-              ]
-            },
-            {
-              "id": "p0_w2_t4",
-              "description": "Identify breaking changes vs safe additions",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.665203Z",
-              "evidence": [
-                "evidence/p0_w2_t4_breaking_change_analysis.json"
-              ]
-            },
-            {
-              "id": "p0_w2_t5",
-              "description": "Create contract registry",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-20T20:21:12.700428Z",
-              "evidence": [
-                "evidence/p0_w2_t5_contract_registry_report.json"
-              ]
+              "path": "PHASE_0_AUDIT_REPORT.json",
+              "status": "COMPLETED"
             }
           ],
+          "name": "Discovery & Gap Analysis",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:06:27.819337Z",
+              "description": "Run full architecture enforcement suite",
+              "evidence": [
+                "evidence/p0_w1_t1_architecture_enforcement_report.json"
+              ],
+              "id": "p0_w1_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:18:09.253550Z",
+              "description": "Run adversarial validation suite",
+              "evidence": [
+                "evidence/p0_w1_t2_adversarial_validation_report.json"
+              ],
+              "id": "p0_w1_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.422274Z",
+              "description": "Audit all 15 routers for contract violations",
+              "evidence": [
+                "evidence/p0_w1_t3_router_contract_audit.json"
+              ],
+              "id": "p0_w1_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.458156Z",
+              "description": "Audit all 45+ agents for replay hooks",
+              "evidence": [
+                "evidence/p0_w1_t4_agent_replay_audit.json"
+              ],
+              "id": "p0_w1_t4",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.492790Z",
+              "description": "Audit all 21 SQL migrations for integrity",
+              "evidence": [
+                "evidence/p0_w1_t5_sql_migration_audit.json"
+              ],
+              "id": "p0_w1_t5",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.526967Z",
+              "description": "Document every TODO/FIXME/HACK in codebase",
+              "evidence": [
+                "evidence/p0_w1_t6_tech_debt_inventory.json"
+              ],
+              "id": "p0_w1_t6",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 1
+        },
+        {
           "deliverables": [
             {
               "name": "contracts/registry.json",
-              "status": "COMPLETED",
-              "path": "contracts/registry.json"
+              "path": "contracts/registry.json",
+              "status": "COMPLETED"
             },
             {
               "name": "contracts/cli_v1.schema.json",
-              "status": "COMPLETED",
-              "path": "contracts/cli_v1.schema.json"
+              "path": "contracts/cli_v1.schema.json",
+              "status": "COMPLETED"
             },
             {
               "name": "contracts/core_task_v1.schema.json",
-              "status": "COMPLETED",
-              "path": "contracts/core_task_v1.schema.json"
+              "path": "contracts/core_task_v1.schema.json",
+              "status": "COMPLETED"
             },
             {
               "name": "contracts/llm_request_v1.schema.json",
-              "status": "COMPLETED",
-              "path": "contracts/llm_request_v1.schema.json"
+              "path": "contracts/llm_request_v1.schema.json",
+              "status": "COMPLETED"
             },
             {
               "name": "contracts/governance_verdict_v1.schema.json",
-              "status": "COMPLETED",
-              "path": "contracts/governance_verdict_v1.schema.json"
+              "path": "contracts/governance_verdict_v1.schema.json",
+              "status": "COMPLETED"
             },
             {
               "name": "contracts/runtime_evidence_v1.schema.json",
-              "status": "COMPLETED",
-              "path": "contracts/runtime_evidence_v1.schema.json"
+              "path": "contracts/runtime_evidence_v1.schema.json",
+              "status": "COMPLETED"
             }
-          ]
+          ],
+          "name": "Contract Inventory & Prioritization",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.561481Z",
+              "description": "Extract all implicit contracts",
+              "evidence": [
+                "evidence/p0_w2_t1_implicit_contracts.json"
+              ],
+              "id": "p0_w2_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.596111Z",
+              "description": "Version every contract with semver",
+              "evidence": [
+                "evidence/p0_w2_t2_contract_versions.json"
+              ],
+              "id": "p0_w2_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.630507Z",
+              "description": "Map every contract to tests",
+              "evidence": [
+                "evidence/p0_w2_t3_contract_test_map.json"
+              ],
+              "id": "p0_w2_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.665203Z",
+              "description": "Identify breaking changes vs safe additions",
+              "evidence": [
+                "evidence/p0_w2_t4_breaking_change_analysis.json"
+              ],
+              "id": "p0_w2_t4",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-20T20:21:12.700428Z",
+              "description": "Create contract registry",
+              "evidence": [
+                "evidence/p0_w2_t5_contract_registry_report.json"
+              ],
+              "id": "p0_w2_t5",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 2
         }
       ]
     },
     {
+      "end_date": "2026-06-21T12:43:01.679276Z",
       "id": "phase_1",
       "name": "Core Contracts & Execution Model",
-      "weeks": "3-6",
-      "status": "COMPLETED",
-      "start_date": null,
-      "end_date": "2026-06-21T12:43:01.679276Z",
       "progress": {
-        "total_tasks": 28,
         "completed_tasks": 28,
-        "percentage": 100
+        "percentage": 100,
+        "total_tasks": 28
       },
+      "start_date": null,
+      "status": "COMPLETED",
+      "weeks": "3-6",
       "weeks_detail": [
         {
-          "week": 3,
+          "deliverables": [],
           "name": "Task Lifecycle Formalization",
           "tasks": [
             {
-              "id": "p1_w3_t1",
-              "description": "Define canonical task states",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:33:19.836349Z",
+              "description": "Define canonical task states",
               "evidence": [
                 "evidence/p1_w3_t1_task_states.json"
-              ]
+              ],
+              "id": "p1_w3_t1",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w3_t2",
-              "description": "Implement state machine",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:33:19.872901Z",
+              "description": "Implement state machine",
               "evidence": [
                 "evidence/p1_w3_t2_state_machine.json"
-              ]
+              ],
+              "id": "p1_w3_t2",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w3_t3",
-              "description": "Add state transition audit events",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:33:19.908634Z",
+              "description": "Add state transition audit events",
               "evidence": [
                 "evidence/p1_w3_t3_audit_events.json"
-              ]
+              ],
+              "id": "p1_w3_t3",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w3_t4",
-              "description": "Add state-based API filters",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:33:19.944562Z",
+              "description": "Add state-based API filters",
               "evidence": [
                 "evidence/p1_w3_t4_api_filters.json"
-              ]
+              ],
+              "id": "p1_w3_t4",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w3_t5",
-              "description": "Add state-based CLI commands",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:33:19.981276Z",
+              "description": "Add state-based CLI commands",
               "evidence": [
                 "evidence/p1_w3_t5_cli_commands.json"
-              ]
+              ],
+              "id": "p1_w3_t5",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w3_t6",
-              "description": "Write tests for state machine",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:33:20.017801Z",
+              "description": "Write tests for state machine",
               "evidence": [
                 "evidence/p1_w3_t6_test_results.json"
-              ]
+              ],
+              "id": "p1_w3_t6",
+              "status": "COMPLETED"
             }
           ],
-          "deliverables": []
+          "week": 3
         },
         {
-          "week": 4,
+          "deliverables": [],
           "name": "Request/Response Contracts",
           "tasks": [
             {
-              "id": "p1_w4_t1",
-              "description": "Formalize CLI request schema",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.219511Z",
+              "description": "Formalize CLI request schema",
               "evidence": [
                 "evidence/p1_w4_t1_cli_contract.json"
-              ]
+              ],
+              "id": "p1_w4_t1",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w4_t2",
-              "description": "Formalize LLM request schema",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.254842Z",
+              "description": "Formalize LLM request schema",
               "evidence": [
                 "evidence/p1_w4_t2_llm_contract.json"
-              ]
+              ],
+              "id": "p1_w4_t2",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w4_t3",
-              "description": "Formalize core task schema",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.291523Z",
+              "description": "Formalize core task schema",
               "evidence": [
                 "evidence/p1_w4_t3_task_contract.json"
-              ]
+              ],
+              "id": "p1_w4_t3",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w4_t4",
-              "description": "Formalize governance verdict schema",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.327315Z",
+              "description": "Formalize governance verdict schema",
               "evidence": [
                 "evidence/p1_w4_t4_governance_contract.json"
-              ]
+              ],
+              "id": "p1_w4_t4",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w4_t5",
-              "description": "Add boundary validation helpers",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.362930Z",
+              "description": "Add boundary validation helpers",
               "evidence": [
                 "evidence/p1_w4_t5_boundary_validation.json"
-              ]
+              ],
+              "id": "p1_w4_t5",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w4_t6",
-              "description": "Add contract version negotiation",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.398265Z",
+              "description": "Add contract version negotiation",
               "evidence": [
                 "evidence/p1_w4_t6_contract_versioning.json"
-              ]
+              ],
+              "id": "p1_w4_t6",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w4_t7",
-              "description": "Write tests for contracts",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:35:39.434825Z",
+              "description": "Write tests for contracts",
               "evidence": [
                 "evidence/p1_w4_t7_test_results.json"
-              ]
+              ],
+              "id": "p1_w4_t7",
+              "status": "COMPLETED"
             }
           ],
-          "deliverables": []
+          "week": 4
         },
         {
-          "week": 5,
+          "deliverables": [],
           "name": "Execution Observability",
           "tasks": [
             {
-              "id": "p1_w5_t1",
-              "description": "Define execution stages",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:38:08.404331Z",
+              "description": "Define execution stages",
               "evidence": [
                 "evidence/p1_w5_t1_execution_stages.json"
-              ]
+              ],
+              "id": "p1_w5_t1",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w5_t2",
-              "description": "Emit stage events",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:38:08.439758Z",
+              "description": "Emit stage events",
               "evidence": [
                 "evidence/p1_w5_t2_stage_events.json"
-              ]
+              ],
+              "id": "p1_w5_t2",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w5_t3",
-              "description": "Add stage timing metrics",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:38:08.474872Z",
+              "description": "Add stage timing metrics",
               "evidence": [
                 "evidence/p1_w5_t3_stage_timing.json"
-              ]
+              ],
+              "id": "p1_w5_t3",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w5_t4",
-              "description": "Add stage failure reasons",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:38:08.511169Z",
+              "description": "Add stage failure reasons",
               "evidence": [
                 "evidence/p1_w5_t4_failure_reasons.json"
-              ]
+              ],
+              "id": "p1_w5_t4",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w5_t5",
-              "description": "Add stage replay boundaries",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:38:08.546702Z",
+              "description": "Add stage replay boundaries",
               "evidence": [
                 "evidence/p1_w5_t5_replay_boundaries.json"
-              ]
+              ],
+              "id": "p1_w5_t5",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w5_t6",
-              "description": "Write tests for observability",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:38:08.581888Z",
+              "description": "Write tests for observability",
               "evidence": [
                 "evidence/p1_w5_t6_test_results.json"
-              ]
+              ],
+              "id": "p1_w5_t6",
+              "status": "COMPLETED"
             }
           ],
-          "deliverables": []
+          "week": 5
         },
         {
-          "week": 6,
+          "deliverables": [],
           "name": "Fail-Closed Hardening",
           "tasks": [
             {
-              "id": "p1_w6_t1",
-              "description": "Audit LLM response paths",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.527428Z",
+              "description": "Audit LLM response paths",
               "evidence": [
                 "evidence/p1_w6_t1_llm_response_audit.json"
-              ]
+              ],
+              "id": "p1_w6_t1",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w6_t2",
-              "description": "Validate agent responses",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.564011Z",
+              "description": "Validate agent responses",
               "evidence": [
                 "evidence/p1_w6_t2_validation_added.json"
-              ]
+              ],
+              "id": "p1_w6_t2",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w6_t3",
-              "description": "Add evidence requirement checks",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.600696Z",
+              "description": "Add evidence requirement checks",
               "evidence": [
                 "evidence/p1_w6_t3_evidence_checks.json"
-              ]
+              ],
+              "id": "p1_w6_t3",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w6_t4",
-              "description": "Add confidence threshold checks",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.636738Z",
+              "description": "Add confidence threshold checks",
               "evidence": [
                 "evidence/p1_w6_t4_confidence_checks.json"
-              ]
+              ],
+              "id": "p1_w6_t4",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w6_t5",
-              "description": "Enforce governance verdicts",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.672387Z",
+              "description": "Enforce governance verdicts",
               "evidence": [
                 "evidence/p1_w6_t5_verdict_enforcement.json"
-              ]
+              ],
+              "id": "p1_w6_t5",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w6_t6",
-              "description": "Add fail-closed audit events",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.707613Z",
+              "description": "Add fail-closed audit events",
               "evidence": [
                 "evidence/p1_w6_t6_fail_closed_audit.json"
-              ]
+              ],
+              "id": "p1_w6_t6",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_w6_t7",
-              "description": "Write tests for fail-closed",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:41:56.743003Z",
+              "description": "Write tests for fail-closed",
               "evidence": [
                 "evidence/p1_w6_t7_test_results.json"
-              ]
+              ],
+              "id": "p1_w6_t7",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_final_t1",
-              "description": "Run final Phase 1 full test suite",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:43:01.611881Z",
+              "description": "Run final Phase 1 full test suite",
               "evidence": [
                 "evidence/p1_final_test_results.json"
-              ]
+              ],
+              "id": "p1_final_t1",
+              "status": "COMPLETED"
             },
             {
-              "id": "p1_final_t2",
-              "description": "Create Phase 1 audit report",
-              "status": "COMPLETED",
               "assignee": null,
               "completed_date": "2026-06-21T12:43:01.646859Z",
+              "description": "Create Phase 1 audit report",
               "evidence": [
                 "evidence/p1_final_audit_report.json"
-              ]
+              ],
+              "id": "p1_final_t2",
+              "status": "COMPLETED"
             }
           ],
-          "deliverables": []
+          "week": 6
         }
       ]
     },
     {
+      "end_date": "2026-06-21T17:21:51.233044Z",
       "id": "phase_2",
       "name": "LLM Gateway Hardening",
-      "weeks": "7-10",
-      "status": "COMPLETED",
-      "start_date": "2026-06-21T00:00:00Z",
-      "end_date": "2026-06-21T17:21:51.233044Z",
       "progress": {
-        "total_tasks": 20,
         "completed_tasks": 20,
-        "percentage": 100
+        "percentage": 100,
+        "total_tasks": 20
       },
+      "start_date": "2026-06-21T00:00:00Z",
+      "status": "COMPLETED",
+      "weeks": "7-10",
       "weeks_detail": [
         {
-          "week": 7,
-          "name": "Per-Agent Config + Provider Abstraction",
-          "tasks": [
-            {
-              "id": "p2_w7_t1",
-              "description": "Load per-agent config in worker_runner.py",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:12:54.387608Z",
-              "evidence": [
-                "evidence/p2_w7_t1_per_agent_config.json"
-              ]
-            },
-            {
-              "id": "p2_w7_t2",
-              "description": "Define provider interface",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:12:54.423869Z",
-              "evidence": [
-                "evidence/p2_w7_t2_provider_interface.json"
-              ]
-            },
-            {
-              "id": "p2_w7_t3",
-              "description": "Add provider health checks",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:12:54.461293Z",
-              "evidence": [
-                "evidence/p2_w7_t3_provider_health.json"
-              ]
-            },
-            {
-              "id": "p2_w7_t4",
-              "description": "Write tests for Week 7",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:12:54.497970Z",
-              "evidence": [
-                "evidence/p2_w7_t4_test_results.json"
-              ]
-            }
-          ],
           "deliverables": [
             {
               "name": "Week 7 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": 8,
-          "name": "Retry & Fallback Logic",
-          "tasks": [
-            {
-              "id": "p2_w8_t1",
-              "description": "Add exponential backoff retry",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:15:17.991300Z",
-              "evidence": [
-                "evidence/p2_w8_t1_retry_backoff.json"
-              ]
-            },
-            {
-              "id": "p2_w8_t2",
-              "description": "Add provider fallback chain",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:15:18.029457Z",
-              "evidence": [
-                "evidence/p2_w8_t2_fallback_chain.json"
-              ]
-            },
-            {
-              "id": "p2_w8_t3",
-              "description": "Add circuit breaker per provider",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:15:18.067357Z",
-              "evidence": [
-                "evidence/p2_w8_t3_circuit_breaker.json"
-              ]
-            },
-            {
-              "id": "p2_w8_t4",
-              "description": "Add rate limit and timeout handling",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:15:18.104141Z",
-              "evidence": [
-                "evidence/p2_w8_t4_rate_limit_timeout.json"
-              ]
-            },
-            {
-              "id": "p2_w8_t5",
-              "description": "Write tests for Week 8",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:15:18.140960Z",
-              "evidence": [
-                "evidence/p2_w8_t5_test_results.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Per-Agent Config + Provider Abstraction",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.387608Z",
+              "description": "Load per-agent config in worker_runner.py",
+              "evidence": [
+                "evidence/p2_w7_t1_per_agent_config.json"
+              ],
+              "id": "p2_w7_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.423869Z",
+              "description": "Define provider interface",
+              "evidence": [
+                "evidence/p2_w7_t2_provider_interface.json"
+              ],
+              "id": "p2_w7_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.461293Z",
+              "description": "Add provider health checks",
+              "evidence": [
+                "evidence/p2_w7_t3_provider_health.json"
+              ],
+              "id": "p2_w7_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:12:54.497970Z",
+              "description": "Write tests for Week 7",
+              "evidence": [
+                "evidence/p2_w7_t4_test_results.json"
+              ],
+              "id": "p2_w7_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 7
+        },
+        {
           "deliverables": [
             {
               "name": "Week 8 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": 9,
-          "name": "Budget & Cost Tracking",
-          "tasks": [
-            {
-              "id": "p2_w9_t1",
-              "description": "Add budget schema to SQLite",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:18:37.075610Z",
-              "evidence": [
-                "evidence/p2_w9_t1_budget_schema.json"
-              ]
-            },
-            {
-              "id": "p2_w9_t2",
-              "description": "Log budget after every agent call",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:18:37.111277Z",
-              "evidence": [
-                "evidence/p2_w9_t2_budget_logging.json"
-              ]
-            },
-            {
-              "id": "p2_w9_t3",
-              "description": "Add per-agent budget limits",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:18:37.147521Z",
-              "evidence": [
-                "evidence/p2_w9_t3_budget_limits.json"
-              ]
-            },
-            {
-              "id": "p2_w9_t4",
-              "description": "Add budget dashboard entry",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:18:37.183254Z",
-              "evidence": [
-                "evidence/p2_w9_t4_budget_dashboard.json"
-              ]
-            },
-            {
-              "id": "p2_w9_t5",
-              "description": "Write tests for Week 9",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:18:37.220208Z",
-              "evidence": [
-                "evidence/p2_w9_t5_test_results.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Retry & Fallback Logic",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:17.991300Z",
+              "description": "Add exponential backoff retry",
+              "evidence": [
+                "evidence/p2_w8_t1_retry_backoff.json"
+              ],
+              "id": "p2_w8_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.029457Z",
+              "description": "Add provider fallback chain",
+              "evidence": [
+                "evidence/p2_w8_t2_fallback_chain.json"
+              ],
+              "id": "p2_w8_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.067357Z",
+              "description": "Add circuit breaker per provider",
+              "evidence": [
+                "evidence/p2_w8_t3_circuit_breaker.json"
+              ],
+              "id": "p2_w8_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.104141Z",
+              "description": "Add rate limit and timeout handling",
+              "evidence": [
+                "evidence/p2_w8_t4_rate_limit_timeout.json"
+              ],
+              "id": "p2_w8_t4",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:15:18.140960Z",
+              "description": "Write tests for Week 8",
+              "evidence": [
+                "evidence/p2_w8_t5_test_results.json"
+              ],
+              "id": "p2_w8_t5",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 8
+        },
+        {
           "deliverables": [
             {
               "name": "Week 9 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": 10,
-          "name": "Response Caching & Deduplication",
-          "tasks": [
-            {
-              "id": "p2_w10_t1",
-              "description": "Add cache schema to SQLite",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:20:54.137244Z",
-              "evidence": [
-                "evidence/p2_w10_t1_cache_schema.json"
-              ]
-            },
-            {
-              "id": "p2_w10_t2",
-              "description": "Integrate cache into worker_runner.py",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:20:54.173687Z",
-              "evidence": [
-                "evidence/p2_w10_t2_cache_integration.json"
-              ]
-            },
-            {
-              "id": "p2_w10_t3",
-              "description": "Add cache invalidation rules",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:20:54.210840Z",
-              "evidence": [
-                "evidence/p2_w10_t3_cache_invalidation.json"
-              ]
-            },
-            {
-              "id": "p2_w10_t4",
-              "description": "Write tests for Week 10",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:20:54.247050Z",
-              "evidence": [
-                "evidence/p2_w10_t4_test_results.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Budget & Cost Tracking",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.075610Z",
+              "description": "Add budget schema to SQLite",
+              "evidence": [
+                "evidence/p2_w9_t1_budget_schema.json"
+              ],
+              "id": "p2_w9_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.111277Z",
+              "description": "Log budget after every agent call",
+              "evidence": [
+                "evidence/p2_w9_t2_budget_logging.json"
+              ],
+              "id": "p2_w9_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.147521Z",
+              "description": "Add per-agent budget limits",
+              "evidence": [
+                "evidence/p2_w9_t3_budget_limits.json"
+              ],
+              "id": "p2_w9_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.183254Z",
+              "description": "Add budget dashboard entry",
+              "evidence": [
+                "evidence/p2_w9_t4_budget_dashboard.json"
+              ],
+              "id": "p2_w9_t4",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:18:37.220208Z",
+              "description": "Write tests for Week 9",
+              "evidence": [
+                "evidence/p2_w9_t5_test_results.json"
+              ],
+              "id": "p2_w9_t5",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 9
+        },
+        {
           "deliverables": [
             {
               "name": "Week 10 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": "final",
-          "name": "Phase 2 Finalization",
-          "tasks": [
-            {
-              "id": "p2_final_t1",
-              "description": "Run final Phase 2 test suite",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:21:51.123222Z",
-              "evidence": [
-                "evidence/p2_final_test_results.json"
-              ]
-            },
-            {
-              "id": "p2_final_t2",
-              "description": "Create Phase 2 audit report",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:21:51.161915Z",
-              "evidence": [
-                "evidence/p2_final_audit_report.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Response Caching & Deduplication",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.137244Z",
+              "description": "Add cache schema to SQLite",
+              "evidence": [
+                "evidence/p2_w10_t1_cache_schema.json"
+              ],
+              "id": "p2_w10_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.173687Z",
+              "description": "Integrate cache into worker_runner.py",
+              "evidence": [
+                "evidence/p2_w10_t2_cache_integration.json"
+              ],
+              "id": "p2_w10_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.210840Z",
+              "description": "Add cache invalidation rules",
+              "evidence": [
+                "evidence/p2_w10_t3_cache_invalidation.json"
+              ],
+              "id": "p2_w10_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:20:54.247050Z",
+              "description": "Write tests for Week 10",
+              "evidence": [
+                "evidence/p2_w10_t4_test_results.json"
+              ],
+              "id": "p2_w10_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 10
+        },
+        {
           "deliverables": [
             {
               "name": "PHASE_2_AUDIT_REPORT.json",
-              "status": "COMPLETED",
-              "path": "PHASE_2_AUDIT_REPORT.json"
+              "path": "PHASE_2_AUDIT_REPORT.json",
+              "status": "COMPLETED"
             }
-          ]
+          ],
+          "name": "Phase 2 Finalization",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:21:51.123222Z",
+              "description": "Run final Phase 2 test suite",
+              "evidence": [
+                "evidence/p2_final_test_results.json"
+              ],
+              "id": "p2_final_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:21:51.161915Z",
+              "description": "Create Phase 2 audit report",
+              "evidence": [
+                "evidence/p2_final_audit_report.json"
+              ],
+              "id": "p2_final_t2",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": "final"
         }
       ]
     },
     {
+      "end_date": "2026-06-21T18:06:04.828217Z",
       "id": "phase_3",
       "name": "Governance & Safety Hardening",
-      "weeks": "11-14",
-      "status": "COMPLETED",
-      "start_date": "2026-06-21T17:53:00.390220Z",
-      "end_date": "2026-06-21T18:06:04.828217Z",
       "progress": {
-        "total_tasks": 19,
         "completed_tasks": 19,
-        "percentage": 100
+        "percentage": 100,
+        "total_tasks": 19
       },
+      "start_date": "2026-06-21T17:53:00.390220Z",
+      "status": "COMPLETED",
+      "weeks": "11-14",
       "weeks_detail": [
         {
-          "week": 11,
-          "name": "Approval Workflow Formalization",
-          "tasks": [
-            {
-              "id": "p3_w11_t1",
-              "description": "Define approval states and wire to task state machine",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:53:00.463893Z",
-              "evidence": [
-                "evidence/p3_w11_t1_approval_states.json"
-              ]
-            },
-            {
-              "id": "p3_w11_t2",
-              "description": "Add approval state machine",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:53:00.503110Z",
-              "evidence": [
-                "evidence/p3_w11_t2_approval_state_machine.json"
-              ]
-            },
-            {
-              "id": "p3_w11_t3",
-              "description": "Add approval delegation",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:53:00.540539Z",
-              "evidence": [
-                "evidence/p3_w11_t3_approval_delegation.json"
-              ]
-            },
-            {
-              "id": "p3_w11_t4",
-              "description": "Add approval audit trail",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:53:00.581771Z",
-              "evidence": [
-                "evidence/p3_w11_t4_approval_audit_trail.json"
-              ]
-            },
-            {
-              "id": "p3_w11_t5",
-              "description": "Write tests for Week 11",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:53:00.618694Z",
-              "evidence": [
-                "evidence/p3_w11_t5_test_results.json"
-              ]
-            }
-          ],
           "deliverables": [
             {
               "name": "Week 11 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": 12,
-          "name": "Charter Enforcement",
-          "tasks": [
-            {
-              "id": "p3_w12_t1",
-              "description": "Define charter schema",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:55:58.760564Z",
-              "evidence": [
-                "evidence/p3_w12_t1_charter_schema.json"
-              ]
-            },
-            {
-              "id": "p3_w12_t2",
-              "description": "Enforce charter at every decision point",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:55:58.797240Z",
-              "evidence": [
-                "evidence/p3_w12_t2_charter_enforcement.json"
-              ]
-            },
-            {
-              "id": "p3_w12_t3",
-              "description": "Add charter override with justification",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:55:58.833487Z",
-              "evidence": [
-                "evidence/p3_w12_t3_charter_override.json"
-              ]
-            },
-            {
-              "id": "p3_w12_t4",
-              "description": "Write tests for Week 12",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:55:58.870261Z",
-              "evidence": [
-                "evidence/p3_w12_t4_test_results.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Approval Workflow Formalization",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:53:00.463893Z",
+              "description": "Define approval states and wire to task state machine",
+              "evidence": [
+                "evidence/p3_w11_t1_approval_states.json"
+              ],
+              "id": "p3_w11_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:53:00.503110Z",
+              "description": "Add approval state machine",
+              "evidence": [
+                "evidence/p3_w11_t2_approval_state_machine.json"
+              ],
+              "id": "p3_w11_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:53:00.540539Z",
+              "description": "Add approval delegation",
+              "evidence": [
+                "evidence/p3_w11_t3_approval_delegation.json"
+              ],
+              "id": "p3_w11_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:53:00.581771Z",
+              "description": "Add approval audit trail",
+              "evidence": [
+                "evidence/p3_w11_t4_approval_audit_trail.json"
+              ],
+              "id": "p3_w11_t4",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:53:00.618694Z",
+              "description": "Write tests for Week 11",
+              "evidence": [
+                "evidence/p3_w11_t5_test_results.json"
+              ],
+              "id": "p3_w11_t5",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 11
+        },
+        {
           "deliverables": [
             {
               "name": "Week 12 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": 13,
-          "name": "Audit Ledger Hardening",
-          "tasks": [
-            {
-              "id": "p3_w13_t1",
-              "description": "Add event hash chain",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:58:43.456063Z",
-              "evidence": [
-                "evidence/p3_w13_t1_event_hash_chain.json"
-              ]
-            },
-            {
-              "id": "p3_w13_t2",
-              "description": "Add audit event schema validation",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:58:43.492900Z",
-              "evidence": [
-                "evidence/p3_w13_t2_audit_schema_validation.json"
-              ]
-            },
-            {
-              "id": "p3_w13_t3",
-              "description": "Add audit event export",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:58:43.529415Z",
-              "evidence": [
-                "evidence/p3_w13_t3_audit_export.json"
-              ]
-            },
-            {
-              "id": "p3_w13_t4",
-              "description": "Write tests for Week 13",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T17:58:43.566388Z",
-              "evidence": [
-                "evidence/p3_w13_t4_test_results.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Charter Enforcement",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:55:58.760564Z",
+              "description": "Define charter schema",
+              "evidence": [
+                "evidence/p3_w12_t1_charter_schema.json"
+              ],
+              "id": "p3_w12_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:55:58.797240Z",
+              "description": "Enforce charter at every decision point",
+              "evidence": [
+                "evidence/p3_w12_t2_charter_enforcement.json"
+              ],
+              "id": "p3_w12_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:55:58.833487Z",
+              "description": "Add charter override with justification",
+              "evidence": [
+                "evidence/p3_w12_t3_charter_override.json"
+              ],
+              "id": "p3_w12_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:55:58.870261Z",
+              "description": "Write tests for Week 12",
+              "evidence": [
+                "evidence/p3_w12_t4_test_results.json"
+              ],
+              "id": "p3_w12_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 12
+        },
+        {
           "deliverables": [
             {
               "name": "Week 13 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": 14,
-          "name": "Safety Boundaries",
-          "tasks": [
-            {
-              "id": "p3_w14_t1",
-              "description": "Add input sanitization",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T18:01:27.302760Z",
-              "evidence": [
-                "evidence/p3_w14_t1_input_sanitization.json"
-              ]
-            },
-            {
-              "id": "p3_w14_t2",
-              "description": "Add output sanitization",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T18:01:27.339135Z",
-              "evidence": [
-                "evidence/p3_w14_t2_output_sanitization.json"
-              ]
-            },
-            {
-              "id": "p3_w14_t3",
-              "description": "Add safety audit events",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T18:01:27.375349Z",
-              "evidence": [
-                "evidence/p3_w14_t3_safety_audit.json"
-              ]
-            },
-            {
-              "id": "p3_w14_t4",
-              "description": "Write tests for Week 14",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T18:01:27.411064Z",
-              "evidence": [
-                "evidence/p3_w14_t4_test_results.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Audit Ledger Hardening",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:58:43.456063Z",
+              "description": "Add event hash chain",
+              "evidence": [
+                "evidence/p3_w13_t1_event_hash_chain.json"
+              ],
+              "id": "p3_w13_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:58:43.492900Z",
+              "description": "Add audit event schema validation",
+              "evidence": [
+                "evidence/p3_w13_t2_audit_schema_validation.json"
+              ],
+              "id": "p3_w13_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:58:43.529415Z",
+              "description": "Add audit event export",
+              "evidence": [
+                "evidence/p3_w13_t3_audit_export.json"
+              ],
+              "id": "p3_w13_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T17:58:43.566388Z",
+              "description": "Write tests for Week 13",
+              "evidence": [
+                "evidence/p3_w13_t4_test_results.json"
+              ],
+              "id": "p3_w13_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 13
+        },
+        {
           "deliverables": [
             {
               "name": "Week 14 production commit",
-              "status": "NOT_STARTED",
-              "path": "/local/mnt/workspace/AURA"
-            }
-          ]
-        },
-        {
-          "week": "final",
-          "name": "Phase 3 Finalization",
-          "tasks": [
-            {
-              "id": "p3_final_t1",
-              "description": "Run final Phase 3 tests and live validation",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T18:03:39.023652Z",
-              "evidence": [
-                "evidence/p3_final_test_results.json"
-              ]
-            },
-            {
-              "id": "p3_final_t2",
-              "description": "Create Phase 3 audit report",
-              "status": "COMPLETED",
-              "assignee": null,
-              "completed_date": "2026-06-21T18:03:39.062533Z",
-              "evidence": [
-                "evidence/p3_final_audit_report.json"
-              ]
+              "path": "/local/mnt/workspace/AURA",
+              "status": "NOT_STARTED"
             }
           ],
+          "name": "Safety Boundaries",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T18:01:27.302760Z",
+              "description": "Add input sanitization",
+              "evidence": [
+                "evidence/p3_w14_t1_input_sanitization.json"
+              ],
+              "id": "p3_w14_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T18:01:27.339135Z",
+              "description": "Add output sanitization",
+              "evidence": [
+                "evidence/p3_w14_t2_output_sanitization.json"
+              ],
+              "id": "p3_w14_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T18:01:27.375349Z",
+              "description": "Add safety audit events",
+              "evidence": [
+                "evidence/p3_w14_t3_safety_audit.json"
+              ],
+              "id": "p3_w14_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T18:01:27.411064Z",
+              "description": "Write tests for Week 14",
+              "evidence": [
+                "evidence/p3_w14_t4_test_results.json"
+              ],
+              "id": "p3_w14_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 14
+        },
+        {
           "deliverables": [
             {
               "name": "PHASE_3_AUDIT_REPORT.json",
-              "status": "COMPLETED",
-              "path": "PHASE_3_AUDIT_REPORT.json"
+              "path": "PHASE_3_AUDIT_REPORT.json",
+              "status": "COMPLETED"
             }
-          ]
+          ],
+          "name": "Phase 3 Finalization",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T18:03:39.023652Z",
+              "description": "Run final Phase 3 tests and live validation",
+              "evidence": [
+                "evidence/p3_final_test_results.json"
+              ],
+              "id": "p3_final_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T18:03:39.062533Z",
+              "description": "Create Phase 3 audit report",
+              "evidence": [
+                "evidence/p3_final_audit_report.json"
+              ],
+              "id": "p3_final_t2",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": "final"
         }
       ]
     },
     {
+      "end_date": "2026-06-21T19:06:59.285139Z",
       "id": "phase_4",
       "name": "Replay & Determinism Hardening",
-      "weeks": "15-18",
-      "status": "NOT_STARTED",
-      "start_date": null,
-      "end_date": null,
       "progress": {
-        "total_tasks": 0,
-        "completed_tasks": 0,
-        "percentage": 0
-      }
+        "completed_tasks": 21,
+        "percentage": 100,
+        "total_tasks": 21
+      },
+      "start_date": "2026-06-21T19:06:59.285139Z",
+      "status": "COMPLETED",
+      "weeks": "15-18",
+      "weeks_detail": [
+        {
+          "deliverables": [
+            {
+              "name": "Week 15 snapshot isolation implementation",
+              "path": "/local/mnt/workspace/AURA",
+              "status": "COMPLETED"
+            }
+          ],
+          "name": "Replay Snapshot Isolation",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Snapshot Manager",
+              "evidence": [
+                "evidence/p4_w15_t1.json"
+              ],
+              "id": "p4_w15_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "DB Migration",
+              "evidence": [
+                "evidence/p4_w15_t2.json"
+              ],
+              "id": "p4_w15_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Snapshot Integration in Orchestrator",
+              "evidence": [
+                "evidence/p4_w15_t3.json"
+              ],
+              "id": "p4_w15_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Snapshot GC Policy",
+              "evidence": [
+                "evidence/p4_w15_t4.json"
+              ],
+              "id": "p4_w15_t4",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Snapshot tests",
+              "evidence": [
+                "evidence/p4_w15_t5.json"
+              ],
+              "id": "p4_w15_t5",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Snapshot module docstring and __all__",
+              "evidence": [
+                "evidence/p4_w15_t6.json"
+              ],
+              "id": "p4_w15_t6",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 15
+        },
+        {
+          "deliverables": [
+            {
+              "name": "Week 16 replay boundary implementation",
+              "path": "/local/mnt/workspace/AURA",
+              "status": "COMPLETED"
+            }
+          ],
+          "name": "Replay Boundary Enforcement",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Boundary Enforcer",
+              "evidence": [
+                "evidence/p4_w16_t1.json"
+              ],
+              "id": "p4_w16_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Boundary Recovery",
+              "evidence": [
+                "evidence/p4_w16_t2.json"
+              ],
+              "id": "p4_w16_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Boundary Audit Report",
+              "evidence": [
+                "evidence/p4_w16_t3.json"
+              ],
+              "id": "p4_w16_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Replay boundary tests",
+              "evidence": [
+                "evidence/p4_w16_t4.json"
+              ],
+              "id": "p4_w16_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 16
+        },
+        {
+          "deliverables": [
+            {
+              "name": "Week 17 determinism implementation",
+              "path": "/local/mnt/workspace/AURA",
+              "status": "COMPLETED"
+            }
+          ],
+          "name": "Determinism Validation",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Determinism Validator",
+              "evidence": [
+                "evidence/p4_w17_t1.json"
+              ],
+              "id": "p4_w17_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Determinism tests for core components",
+              "evidence": [
+                "evidence/p4_w17_t2.json"
+              ],
+              "id": "p4_w17_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Determinism Gate for Charter Checks",
+              "evidence": [
+                "evidence/p4_w17_t3.json"
+              ],
+              "id": "p4_w17_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Determinism Gate in CI Workflow",
+              "evidence": [
+                "evidence/p4_w17_t4.json"
+              ],
+              "id": "p4_w17_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 17
+        },
+        {
+          "deliverables": [
+            {
+              "name": "Week 18 crash recovery implementation",
+              "path": "/local/mnt/workspace/AURA",
+              "status": "COMPLETED"
+            }
+          ],
+          "name": "Crash Recovery",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Crash Detector",
+              "evidence": [
+                "evidence/p4_w18_t1.json"
+              ],
+              "id": "p4_w18_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Crash Replay",
+              "evidence": [
+                "evidence/p4_w18_t2.json"
+              ],
+              "id": "p4_w18_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Crash Recovery Integration with Charter",
+              "evidence": [
+                "evidence/p4_w18_t3.json"
+              ],
+              "id": "p4_w18_t3",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Crash recovery tests",
+              "evidence": [
+                "evidence/p4_w18_t4.json"
+              ],
+              "id": "p4_w18_t4",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": 18
+        },
+        {
+          "deliverables": [
+            {
+              "name": "PHASE_4_AUDIT_REPORT.json",
+              "path": "PHASE_4_AUDIT_REPORT.json",
+              "status": "COMPLETED"
+            }
+          ],
+          "name": "Phase 4 Audit and Progress Update",
+          "tasks": [
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Phase 4 Audit Report",
+              "evidence": [
+                "evidence/p4_final_t1.json"
+              ],
+              "id": "p4_final_t1",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Update PRODUCTION_PROGRESS.json",
+              "evidence": [
+                "evidence/p4_final_t2.json"
+              ],
+              "id": "p4_final_t2",
+              "status": "COMPLETED"
+            },
+            {
+              "assignee": null,
+              "completed_date": "2026-06-21T19:06:59.285139Z",
+              "description": "Update PRODUCTION_DASHBOARD.md",
+              "evidence": [
+                "evidence/p4_final_t3.json"
+              ],
+              "id": "p4_final_t3",
+              "status": "COMPLETED"
+            }
+          ],
+          "week": "final"
+        }
+      ]
     },
     {
+      "end_date": null,
       "id": "phase_5",
       "name": "Developer Experience & Productization",
-      "weeks": "19-22",
-      "status": "NOT_STARTED",
-      "start_date": null,
-      "end_date": null,
       "progress": {
-        "total_tasks": 0,
         "completed_tasks": 0,
-        "percentage": 0
-      }
+        "percentage": 0,
+        "total_tasks": 0
+      },
+      "start_date": null,
+      "status": "NOT_STARTED",
+      "weeks": "19-22"
     },
     {
+      "end_date": null,
       "id": "phase_6",
       "name": "Scale & Performance",
-      "weeks": "23-24",
-      "status": "NOT_STARTED",
-      "start_date": null,
-      "end_date": null,
       "progress": {
-        "total_tasks": 0,
         "completed_tasks": 0,
-        "percentage": 0
-      }
+        "percentage": 0,
+        "total_tasks": 0
+      },
+      "start_date": null,
+      "status": "NOT_STARTED",
+      "weeks": "23-24"
     }
   ],
+  "risks": [],
+  "roadmap_version": "1.0",
+  "status": "IN_PROGRESS",
   "success_metrics": {
-    "reliability": {
-      "uptime_target": "99.9%",
-      "current_uptime": null,
-      "data_loss_incidents": 0,
-      "replay_integrity_percentage": null,
-      "governance_bypass_incidents": 0
+    "developer_experience": {
+      "api_documentation_coverage_target": "100%",
+      "current_api_documentation_coverage": null,
+      "current_first_plugin_time_minutes": null,
+      "current_first_task_time_minutes": null,
+      "current_onboarding_time_minutes": null,
+      "first_plugin_time_target_minutes": 10,
+      "first_task_time_target_minutes": 1,
+      "onboarding_time_target_minutes": 5
     },
     "performance": {
-      "concurrent_agents_target": 1000,
-      "current_concurrent_agents": null,
-      "tasks_per_day_target": 10000,
-      "current_tasks_per_day": null,
       "api_latency_p95_target_ms": 100,
+      "concurrent_agents_target": 1000,
       "current_api_latency_p95_ms": null,
+      "current_concurrent_agents": null,
+      "current_llm_latency_p95_ms": null,
+      "current_tasks_per_day": null,
       "llm_latency_p95_target_ms": 5000,
-      "current_llm_latency_p95_ms": null
-    },
-    "safety": {
-      "charter_compliance_target": "100%",
-      "current_charter_compliance": null,
-      "audit_coverage_target": "100%",
-      "current_audit_coverage": null,
-      "pii_leak_incidents": 0,
-      "prompt_injection_incidents": 0
-    },
-    "developer_experience": {
-      "onboarding_time_target_minutes": 5,
-      "current_onboarding_time_minutes": null,
-      "first_task_time_target_minutes": 1,
-      "current_first_task_time_minutes": null,
-      "first_plugin_time_target_minutes": 10,
-      "current_first_plugin_time_minutes": null,
-      "api_documentation_coverage_target": "100%",
-      "current_api_documentation_coverage": null
+      "tasks_per_day_target": 10000
     },
     "production_readiness": {
-      "test_coverage_target": "100%",
-      "current_test_coverage": null,
       "contract_validation_coverage_target": "100%",
       "current_contract_validation_coverage": null,
-      "determinism_validation_coverage_target": "100%",
       "current_determinism_validation_coverage": null,
-      "security_vulnerabilities": 0
+      "current_test_coverage": null,
+      "determinism_validation_coverage_target": "100%",
+      "security_vulnerabilities": 0,
+      "test_coverage_target": "100%"
+    },
+    "reliability": {
+      "current_uptime": null,
+      "data_loss_incidents": 0,
+      "governance_bypass_incidents": 0,
+      "replay_integrity_percentage": null,
+      "uptime_target": "99.9%"
+    },
+    "safety": {
+      "audit_coverage_target": "100%",
+      "charter_compliance_target": "100%",
+      "current_audit_coverage": null,
+      "current_charter_compliance": null,
+      "pii_leak_incidents": 0,
+      "prompt_injection_incidents": 0
     }
-  },
-  "blockers": [],
-  "risks": [],
-  "decisions": []
+  }
 }

@@ -1,0 +1,59 @@
+{
+  "blockers": [],
+  "crash_recovery_integrated": true,
+  "determinism_gate_registered_components": [
+    "hash_output",
+    "stable_echo",
+    "charter_core_checks"
+  ],
+  "generated_at": "2026-06-21T19:06:59.285139Z",
+  "name": "Replay & Determinism Hardening",
+  "new_charter_rules": [
+    "CR-008"
+  ],
+  "new_modules": [
+    "aura/core/snapshot.py",
+    "aura/core/replay_boundary.py",
+    "aura/core/determinism.py",
+    "aura/core/determinism_gate.py",
+    "aura/core/crash_recovery.py"
+  ],
+  "new_tests": [
+    "tests/test_snapshot.py",
+    "tests/test_replay_boundary.py",
+    "tests/test_determinism.py",
+    "tests/test_crash_recovery.py"
+  ],
+  "phase": 4,
+  "phase5_unblocked": true,
+  "production_commit": "75e99ec",
+  "production_repo_remote": "LOCAL_ONLY_INTENTIONAL (pre-existing workspace constraint)",
+  "roadmap_prompt_claimed_tasks_total": 24,
+  "snapshot_gc_policy": "keep_latest_3",
+  "task_count_note": "The Phase 4 prompt says 24 tasks, but enumerates 21 concrete task IDs: 6+4+4+4 weekly tasks plus 3 final tasks. Implemented all enumerated task IDs without inventing extra tasks.",
+  "tasks_completed": 21,
+  "tasks_total": 21,
+  "test_results": {
+    "baseline": 103,
+    "baseline_regression": false,
+    "failed": 0,
+    "full_test_output": "/tmp/p4_full_tests.txt",
+    "import_check_output": "/tmp/p4_import_check.txt",
+    "passed": 129,
+    "phase_4_specific_passed": 26,
+    "phase_4_specific_total": 26,
+    "phase_4_test_output": "/tmp/p4_phase4_tests.txt",
+    "total": 129
+  },
+  "verdict": "PHASE_4_COMPLETE_WITH_WARNINGS",
+  "warnings": [
+    "Prompt task count mismatch: prompt requested 24 tasks but enumerated 21 task IDs; all enumerated tasks were completed.",
+    "Production repo remains local-only by workspace design; tracking artifacts are pushed to aura_upstream_learning."
+  ],
+  "weeks_completed": [
+    "week_15",
+    "week_16",
+    "week_17",
+    "week_18"
+  ]
+}
