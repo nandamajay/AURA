@@ -1,0 +1,12 @@
+{
+  "check": "production_remote_status",
+  "production_repo": "/local/mnt/workspace/AURA",
+  "remote_configured": false,
+  "remote_added": false,
+  "remote_url": null,
+  "decision": "LOCAL_ONLY_INTENTIONAL",
+  "rationale": "This workspace keeps /local/mnt/workspace/AURA as the bounded production working tree with Phase 1-2 commits local; tracking artifacts are pushed from /local/mnt/workspace/AURA_V1_upstream. No authoritative production remote is configured in this environment, so adding an arbitrary remote would risk pushing production code to the wrong repository.",
+  "commits_at_risk": 8,
+  "mitigation": "Local-only status is explicitly accepted for this workspace; mitigation is to preserve local git commits and create periodic backups before destructive work. Tracking evidence and roadmap state are pushed to origin/aura_upstream_learning.",
+  "status": "PASS"
+}

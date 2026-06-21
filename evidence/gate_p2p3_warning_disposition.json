@@ -1,0 +1,31 @@
+{
+  "check": "carry_forward_warning_disposition",
+  "warnings": [
+    {
+      "id": "W1",
+      "description": "Legacy dashboard statuses remain lowercase",
+      "source": "PHASE_1_AUDIT_REPORT",
+      "disposition": "ACCEPTED_AS_IS",
+      "phase_3_impact": "Phase 3 will introduce canonical governance transitions for new decisions while preserving legacy lowercase rows for existing dashboard compatibility.",
+      "action_required": "Do not rewrite historical status values; use compatibility mapping."
+    },
+    {
+      "id": "W2",
+      "description": "Patch-quality gate failures emit FAIL_CLOSED but preserve completed status",
+      "source": "PHASE_1_AUDIT_REPORT",
+      "disposition": "MUST_FIX_IN_PHASE_3",
+      "phase_3_impact": "Week 11 approval workflow directly changes failed gate decisions to REJECTED instead of completed.",
+      "action_required": "Implement p3_w11_t1 before relying on Phase 3 approval decisions."
+    },
+    {
+      "id": "W3",
+      "description": "Production repo has no remote",
+      "source": "PHASE_2_AUDIT_REPORT",
+      "disposition": "RESOLVED",
+      "phase_3_impact": "Remote decision is documented by the gate.",
+      "action_required": "See gate_p2p3_remote_status.json"
+    }
+  ],
+  "any_must_fix_before_phase_3": false,
+  "status": "PASS"
+}
