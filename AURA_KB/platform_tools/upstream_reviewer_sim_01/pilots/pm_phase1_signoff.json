@@ -1,0 +1,75 @@
+{
+  "artifact": "pm_phase1_signoff",
+  "signoff_date": "2026-06-21T19:00:00Z",
+  "signed_off_by": "AURA PM / Principal Engineer",
+  "phase": 1,
+  "phase_name": "Simulation Engine Prototype",
+  "prior_verdict": "PHASE_1_COMPLETE_WITH_WARNINGS",
+  "signoff_verdict": "PHASE_1_ACCEPTED_WITH_CONDITIONS",
+  "phase_2_unblocked": true,
+
+  "evidence_reviewed": [
+    "pilots/wcd9378_a1_review/upstream_review_report.json",
+    "pilots/wcd9378_a1_review/pm_review_verdict.md",
+    "pilots/wsa884x_variant_b_review/upstream_review_report.json",
+    "pilots/wsa884x_variant_b_review/pm_review_verdict.md",
+    "pilots/pm_phase1_evaluation.json"
+  ],
+
+  "findings_assessment": {
+    "wcd9378_a1": {
+      "verdict": "NEEDS_WORK",
+      "blocking": 0,
+      "warnings": 6,
+      "pm_assessment": "ACCEPTABLE — engine correctly surfaces runtime fail-closed posture, missing DT binding, and process gaps. No false positives. Warnings are actionable.",
+      "engine_behavior": "CORRECT"
+    },
+    "wsa884x_variant_b": {
+      "verdict": "BLOCKED",
+      "blocking": 1,
+      "warnings": 3,
+      "pm_assessment": "ACCEPTABLE — BLOCKED is correct. Missing Signed-off-by is a real upstream process requirement. Engine correctly identifies it as blocking per DCO. This is not a false positive.",
+      "engine_behavior": "CORRECT",
+      "note": "WSA884x Variant B patches are experimental/RFC. SOB absence is expected at this stage. Engine behavior is correct — it should flag this."
+    }
+  },
+
+  "engine_quality_assessment": {
+    "fail_closed_preserved": true,
+    "no_runtime_readiness_claimed": true,
+    "advisory_note_present": true,
+    "lenses_functional": ["patch-structure", "dt-binding", "rule-pack", "build"],
+    "lenses_fail_closed": ["upstream-philosophy"],
+    "false_positive_rate": "LOW",
+    "false_negative_risk": "MEDIUM — subsystem-specific rules not yet tuned per reviewer profile",
+    "overall_quality": "PROTOTYPE_QUALITY_ACCEPTABLE_FOR_PHASE_2"
+  },
+
+  "phase_2_conditions": [
+    "Reviewer profiles (v4) must be used as input to subsystem lens tuning",
+    "upstream-philosophy lens must remain FAIL_CLOSED until import dependencies resolved",
+    "All simulation output must carry advisory disclaimer",
+    "Phase 2 must not claim simulation output is equivalent to real upstream review",
+    "Phase 2 must not modify WCD9378 generated source",
+    "Phase 2 must not modify kernel source"
+  ],
+
+  "phase_2_scope": {
+    "allowed": [
+      "Subsystem-specific lens tuning using reviewer v4 profiles",
+      "Audio subsystem (ASoC) simulation integration",
+      "Pinctrl subsystem simulation integration",
+      "Expanded pilot runs on WCD939x, WSA884x Variant C",
+      "Reviewer profile weighting per subsystem",
+      "Fix-plan quality improvement"
+    ],
+    "not_allowed": [
+      "Claiming simulation replaces real upstream review",
+      "Modifying WCD9378 A.1 patches based on simulation alone",
+      "Modifying kernel source",
+      "Asserting runtime readiness from simulation output"
+    ]
+  },
+
+  "advisory_note": "Simulation is advisory only. Not a replacement for real upstream review. Phase 2 proceeds under these conditions."
+}
