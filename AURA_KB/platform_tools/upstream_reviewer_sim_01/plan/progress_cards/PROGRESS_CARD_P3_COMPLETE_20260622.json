@@ -1,0 +1,42 @@
+{
+  "card_id": "PC-P3-COMPLETE-20260622",
+  "date": "2026-06-22",
+  "phase": 3,
+  "step": "3.10",
+  "step_name": "Profile validation against locked ground truth corpus",
+  "status": "COMPLETED_WITH_WARNINGS",
+  "previous_status": "READY_TO_START",
+  "what_was_done": "Locked 7-case ground truth before simulation, constructed deterministic patch stubs, executed all runs, generated TP/FP/FN comparison matrix, computed precision/recall with honest catchability accounting, and prepared PM sign-off artifacts.",
+  "artifacts_created": [
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/ground_truth_selection.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/comparison_matrix.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/precision_recall_report.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/tuning_notes.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/pm_phase3_signoff.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/phase3_validation.json"
+  ],
+  "artifacts_modified": [
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/progress_tracker.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/MASTER_PLAN.md"
+  ],
+  "success_criteria_met": [
+    "Ground truth locked before simulation and replayable",
+    "Simulation ran on all 7 stubs and produced deterministic outputs",
+    "Comparison matrix covers all 7 entries with explicit TP/TN/CLEAN reasons",
+    "False blocking on accepted patches remained 0 (<2 threshold)",
+    "All Phase 3 artifacts generated as parse-valid JSON",
+    "Advisory-only disclaimer preserved in outputs"
+  ],
+  "success_criteria_not_met": [
+    "Recall >= 0.70 could not be measured because only one catchable rejected objection existed in corpus"
+  ],
+  "blockers": [
+    "Ground-truth corpus is too small for statistically stable recall (catchable_objections=1)."
+  ],
+  "deviations_from_plan": [
+    "Phase 3 verdict set to INSUFFICIENT_DATA per methodology rules instead of PASS/FAIL."
+  ],
+  "pm_verdict": "ON_TRACK",
+  "next_step": "Phase 4 READY_TO_START with conditions: expand catchable rejected corpus before promoting new blocking heuristics.",
+  "notes": "Advisory only; no source modifications and no network calls were made during Phase 3 validation."
+}

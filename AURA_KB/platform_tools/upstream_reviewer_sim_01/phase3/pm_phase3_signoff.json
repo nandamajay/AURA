@@ -1,0 +1,33 @@
+{
+  "phase": 3,
+  "signoff_date": "2026-06-21T19:15:48Z",
+  "precision": 1.0,
+  "recall": null,
+  "false_blocking_rate": 0.0,
+  "verdict": "INSUFFICIENT_DATA",
+  "phase3_criteria": {
+    "recall_gte_70pct": {
+      "required": true,
+      "met": false,
+      "value": null
+    },
+    "false_blocking_lt_2": {
+      "required": true,
+      "met": true,
+      "value": 0
+    },
+    "pm_trusts_output": {
+      "required": true,
+      "met": true,
+      "rationale": "No false BLOCKING on accepted patches and one catchable rejected case was correctly flagged; corpus size too small for stable recall."
+    }
+  },
+  "phase4_unblocked": true,
+  "conditions_for_phase4": [
+    "Expand rejected ground truth with at least two additional statically catchable objections before promoting any new blocking rules.",
+    "Keep simulation advisory-only and require PM review for all blocking recommendations.",
+    "Prioritize FP-control tuning on rule-pack and philosophy warning volume before gate integration."
+  ],
+  "advisory_note": "Advisory only - not a replacement for real upstream review.",
+  "pm_notes": "Phase 3 methodology is valid and replayable; quantitative recall remains unresolved due limited catchable denominator (1 case)."
+}

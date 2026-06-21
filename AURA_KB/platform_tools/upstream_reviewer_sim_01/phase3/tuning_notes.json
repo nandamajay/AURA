@@ -1,0 +1,97 @@
+{
+  "artifact": "phase3_tuning_notes",
+  "generated_at_utc": "2026-06-21T19:15:48Z",
+  "lens_performance": [
+    {
+      "lens": "patch-structure",
+      "tp_count": 1,
+      "fp_count": 0,
+      "fn_count": 0,
+      "recommendation": "Keep as primary blocking signal for commit trailer and patch hygiene checks; highest validated TP signal in this corpus."
+    },
+    {
+      "lens": "asoc-subsystem",
+      "tp_count": 0,
+      "fp_count": 0,
+      "fn_count": 0,
+      "recommendation": "Retain in WARN-first mode for profile-grounded guidance; promote to blocking only after larger corpus validation shows precision stability."
+    },
+    {
+      "lens": "dt-binding",
+      "tp_count": 0,
+      "fp_count": 0,
+      "fn_count": 0,
+      "recommendation": "Expand accepted/rejected DT-focused validation set; current Phase 3 corpus had limited catchable DT objections."
+    },
+    {
+      "lens": "build",
+      "tp_count": 0,
+      "fp_count": 0,
+      "fn_count": 0,
+      "recommendation": "Keep non-compilation checks advisory; gate blocking on explicit compile_result failures only."
+    },
+    {
+      "lens": "rule-pack",
+      "tp_count": 0,
+      "fp_count": 0,
+      "fn_count": 0,
+      "recommendation": "Reduce warning verbosity by consolidating repetitive rule outputs into grouped findings to improve reviewer signal-to-noise."
+    },
+    {
+      "lens": "upstream-philosophy",
+      "tp_count": 0,
+      "fp_count": 0,
+      "fn_count": 0,
+      "recommendation": "Maintain advisory-only weighting; require richer real-patch context before using philosophy findings as blocking evidence."
+    }
+  ],
+  "reviewer_signal_quality": [
+    {
+      "reviewer": "Vinod Koul",
+      "findings_contributed": 8,
+      "tp_rate": 0.125,
+      "notes": "Contributed the decisive Signed-off-by blocking signal in the single catchable rejected case."
+    },
+    {
+      "reviewer": "Mark Brown",
+      "findings_contributed": 18,
+      "tp_rate": 0.056,
+      "notes": "High coverage and useful warnings; needs more rejected-catchable samples to confirm blocking precision."
+    },
+    {
+      "reviewer": "Pierre-Louis Bossart",
+      "findings_contributed": 7,
+      "tp_rate": 0.0,
+      "notes": "Advisory signal present but not decisive in this corpus."
+    },
+    {
+      "reviewer": "Krzysztof Kozlowski",
+      "findings_contributed": 3,
+      "tp_rate": 0.0,
+      "notes": "Limited contribution due corpus composition; DT-heavy validation samples needed in Phase 4."
+    }
+  ],
+  "heuristic_improvements": [
+    {
+      "improvement": "Add explicit stale-series/process-state detector to patch-structure lens using metadata flags.",
+      "rationale": "One rejected case was uncatchable because static code checks cannot infer stale follow-up process issues.",
+      "priority": "P0"
+    },
+    {
+      "improvement": "Gate philosophy lens warnings by confidence and file-type relevance to reduce warning inflation on clean accepted stubs.",
+      "rationale": "Accepted patches remained non-blocking, but warning volume remained high and can dilute actionable signal.",
+      "priority": "P1"
+    },
+    {
+      "improvement": "Introduce per-lens warning caps/grouping in aggregator for repeated rule-pack findings.",
+      "rationale": "Rule-pack generated the majority of warnings, reducing PM readability without improving TP detection.",
+      "priority": "P1"
+    },
+    {
+      "improvement": "Expand Phase 4 validation corpus with at least 6 additional rejected cases that are statically catchable.",
+      "rationale": "Phase 3 recall is statistically unresolvable with only one catchable rejected sample.",
+      "priority": "P0"
+    }
+  ],
+  "phase4_integration_readiness": "READY_WITH_CONDITIONS"
+}

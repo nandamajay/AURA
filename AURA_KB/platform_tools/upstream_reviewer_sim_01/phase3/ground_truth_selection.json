@@ -1,0 +1,137 @@
+{
+  "artifact": "phase3_ground_truth_selection",
+  "generated_at_utc": "2026-06-21T19:09:14Z",
+  "selection_locked": true,
+  "selection_lock_rule": "Ground truth list is fixed before any phase3 simulation run and must not be altered after run outputs are created.",
+  "ground_truth_entries": [
+    {
+      "id": "GT-REJ-001",
+      "series_id": 760884,
+      "reviewer": "Mark Brown",
+      "subject": "ASoC: qcom: get tplg firmware-name from device tree",
+      "state": "changes-requested",
+      "patch_ids": [
+        13295527,
+        13295526,
+        13295528
+      ],
+      "real_objection_class": "design_concern",
+      "real_objection_summary": "Reviewer objects to hardcoded firmware-name ABI and recommends generated naming based on card/system identity for scalability.",
+      "real_objection_text": "Why not try a series of firmware names/locations generated using the identifying information for the card/system? That way we don't have to put a filename in the ABI which has fun scaling issues.",
+      "catchable_by_sim": false,
+      "catchable_lens": "none",
+      "why_catchable_or_not": "Design-level ABI strategy concern; current static lenses cannot infer long-term ABI scaling tradeoffs from code shape alone.",
+      "source_raw_file": "mark_brown_raw_2023_2025.json"
+    },
+    {
+      "id": "GT-REJ-002",
+      "series_id": 719155,
+      "reviewer": "Bjorn Andersson",
+      "subject": "arm64: dts: qcom: sm8350: enable GPU on the HDK board",
+      "state": "changes-requested",
+      "patch_ids": [
+        13130038,
+        13130039,
+        13130040,
+        13130042,
+        13130041,
+        13130043,
+        13130044,
+        13130045
+      ],
+      "real_objection_class": "commit_message_quality",
+      "real_objection_summary": "Reviewer requests clearer commit-message rationale and explicit ordering definition.",
+      "real_objection_text": "I think \"according to agreed order\" means \"sorted by address\", but it would be nice to have that expressed in the message. If nothing else for others to know what such agreed order might be. Unfortunately this doesn't apply to my tree, and it's not clear where it failed. Could you please rebase this? Thanks, Bjorn",
+      "catchable_by_sim": true,
+      "catchable_lens": "patch-structure",
+      "why_catchable_or_not": "Commit message structure and trailer quality are directly checked by patch-structure lens.",
+      "source_raw_file": "bjorn_andersson_raw_2023_2025.json"
+    },
+    {
+      "id": "GT-REJ-003",
+      "series_id": 708746,
+      "reviewer": "Bjorn Andersson",
+      "subject": "[v3] arm64: dts: qcom: sm6115: Add EUD dt node and dwc3 connector",
+      "state": "changes-requested",
+      "patch_ids": [
+        13088446
+      ],
+      "real_objection_class": "stale_series_no_followup",
+      "real_objection_summary": "Reviewer asks submitter to respin/resend because prior discussion stalled and follow-up was missing.",
+      "real_objection_text": "I was under the impression that you where working on some updates to EUD and was going to resend this, but I don't find a new version, and I don't see an on-list reply from me. So just to make sure this isn't lost any longer... Can you please respin this to correct the dtc warnings? Thanks, Bjorn",
+      "catchable_by_sim": false,
+      "catchable_lens": "none",
+      "why_catchable_or_not": "Series staleness and submitter responsiveness are process timeline signals unavailable to static code lenses.",
+      "source_raw_file": "bjorn_andersson_raw_2023_2025.json"
+    },
+    {
+      "id": "GT-REJ-004",
+      "series_id": 713131,
+      "reviewer": "Bjorn Andersson",
+      "subject": "[RFC] arm64: dts: qcom: add device tree for DB845c working in dual DSI mode",
+      "state": "changes-requested",
+      "patch_ids": [
+        13105912
+      ],
+      "real_objection_class": "design_concern",
+      "real_objection_summary": "Reviewer challenges runtime capability assumptions for resolution switching and default DSI configuration strategy.",
+      "real_objection_text": "Sorry, I missed your reply earlier. If we can run the lower resolutions off two bonded DSI I think we should make that the default configuration - it's just that when I tried it a few years ago I had problems getting a working output... But much has changed since then. There is a dip switch to allow one of the DSI links to be passed onto one of the HS-connectors, but for anyone to use that they would need a mezzaine dts anyways, so they can unbond the DSIs there. Regards, Bjorn",
+      "catchable_by_sim": false,
+      "catchable_lens": "none",
+      "why_catchable_or_not": "Runtime behavior and product configuration policy are design concerns beyond current static lint-style lens scope.",
+      "source_raw_file": "bjorn_andersson_raw_2023_2025.json"
+    },
+    {
+      "id": "GT-ACC-001",
+      "series_id": 873172,
+      "reviewer": "Krzysztof Kozlowski",
+      "subject": "ASoC: dt-bindings: qcom,apq8016-sbc-sndcard: move to separate binding",
+      "state": "accepted",
+      "patch_ids": [
+        13739706
+      ],
+      "real_objection_class": "accepted_with_nit",
+      "real_objection_summary": "Accepted after non-blocking review questions about binding reasonableness and aux-dev usage.",
+      "real_objection_text": "This was added to the common driver code but it does not mean it is reasonable binding. I don't understand why for example we even accept here aux-devs, instead of putting them into one of DAI links. The pin-switches and widgets could be used, but are they? The only valid argument to keep them is that you added them to common driver code. Best regards, Krzysztof",
+      "catchable_by_sim": false,
+      "catchable_lens": "not_applicable",
+      "why_catchable_or_not": "Accepted baseline entry; used to measure false blocking on clean patches.",
+      "source_raw_file": "krzysztof_kozlowski_raw_2023_2025.json"
+    },
+    {
+      "id": "GT-ACC-002",
+      "series_id": 853882,
+      "reviewer": "Krzysztof Kozlowski",
+      "subject": "[v4] ASoC: dt-bindings: ak4104: convert to dt schema",
+      "state": "accepted",
+      "patch_ids": [
+        13666643
+      ],
+      "real_objection_class": "accepted",
+      "real_objection_summary": "Schema conversion accepted with Reviewed-by and no blocking objection.",
+      "real_objection_text": "Reviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org> --- This is an automated instruction, just in case, because many review tags are being ignored. If you know the process, you can skip it (please do not feel offended by me posting it here - no bad intentions intended). If you do not know the process, here is a short explanation: Please add Acked-by/Reviewed-by/Tested-by tags when posting new versions, under or above your Signed-off-by tag. Tag is \"received\", when provided in a message replied to you on the mailing list. Tools like b4 can help here. However, there's no need to repost patches *only* to add the tags. The upstream maintainer will do that for tags received on the version they apply. https://elixir.bootlin.com/linux/v6.5-rc3/source/Documentation/process/submitting-patches.rst#L577 Best regards, Krzysztof",
+      "catchable_by_sim": false,
+      "catchable_lens": "not_applicable",
+      "why_catchable_or_not": "Accepted baseline entry; used to measure false blocking on clean patches.",
+      "source_raw_file": "krzysztof_kozlowski_raw_2023_2025.json"
+    },
+    {
+      "id": "GT-ACC-003",
+      "series_id": 723384,
+      "reviewer": "Bjorn Andersson",
+      "subject": "[1/2] arm64: dts: qcom: sc7280-idp: drop incorrect dai-cells from WCD938x SDW",
+      "state": "accepted",
+      "patch_ids": [
+        13146209,
+        13146210
+      ],
+      "real_objection_class": "accepted",
+      "real_objection_summary": "DT fix accepted with maintainer apply note.",
+      "real_objection_text": "Applied, thanks! [1/2] arm64: dts: qcom: sc7280-idp: drop incorrect dai-cells from WCD938x SDW commit: ca8fc6814844d8787e7fec61b2544a871ea8b675 [2/2] arm64: dts: qcom: sc7280-qcard: drop incorrect dai-cells from WCD938x SDW commit: 16bd455d0897d1b8b7a9aee2ed51d75b14a34563 Best regards,",
+      "catchable_by_sim": false,
+      "catchable_lens": "not_applicable",
+      "why_catchable_or_not": "Accepted baseline entry; used to measure false blocking on clean patches.",
+      "source_raw_file": "bjorn_andersson_raw_2023_2025.json"
+    }
+  ]
+}
