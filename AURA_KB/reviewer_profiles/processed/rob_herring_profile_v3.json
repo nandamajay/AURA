@@ -1,0 +1,263 @@
+{
+  "reviewer": "Rob Herring",
+  "profile_version": "v3",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "INSUFFICIENT_DATA",
+  "series_analyzed": 200,
+  "comment_threads_analyzed": 9,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bdon't\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        433939,
+        449529,
+        526335
+      ],
+      "example_comment_excerpts": [
+        "The h/w block is the same features and bugs in every single\nimplementation? If not sure, better be safe.\nI don't know that I'd go back and add SoC ones for everything though.\nRob",
+        "Is this a 'standard' eDP connector? AFAICT, there does seem to be\nsuch a thing. I've said in the past I'd be okay with a edp-connector\nnode. If that needs just the \"HPD absent delay\" property, I think that\nwould be okay.",
+        "Why is post-silicon relevant here? Everything upstream should be for\npost-silicon. I've seen and done the hacks to make pre-silicon testing\nwork and we don't need those upstream.\nIf you have units, then use property unit"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        452741
+      ],
+      "example_comment_excerpts": [
+        "That's every #interrupt-cells. No need to redefine it here.\n'description', not a comment.\nIndentation is wrong.\nIs there no maximum number of entries?"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-003",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        526335
+      ],
+      "example_comment_excerpts": [
+        "Why is post-silicon relevant here? Everything upstream should be for\npost-silicon. I've seen and done the hacks to make pre-silicon testing\nwork and we don't need those upstream.\nIf you have units, then use property unit"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-004",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bwrong\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        452741
+      ],
+      "example_comment_excerpts": [
+        "That's every #interrupt-cells. No need to redefine it here.\n'description', not a comment.\nIndentation is wrong.\nIs there no maximum number of entries?"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 2,
+      "example_series_ids": [
+        534035
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\backed-by\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        534035
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\?+",
+      "frequency": 1,
+      "example_series_ids": [
+        451037
+      ],
+      "example_comment_excerpts": [
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bwhat\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        451037
+      ],
+      "example_comment_excerpts": [
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-003",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bwhy\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        451037
+      ],
+      "example_comment_excerpts": [
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [],
+  "dt_rules": [],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [],
+  "commit_message_rules": [],
+  "subsystem_context": [
+    {
+      "pattern_id": "ROB_HERRING-CTX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bcompatible\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        451037
+      ],
+      "example_comment_excerpts": [
+        "Why is this being moved? Not sure what the differences between the 2\nbindings, but doesn't seem like a backwards compatible change."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bqcom\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        540661
+      ],
+      "example_comment_excerpts": [
+        "This one of course came from default GPL2 source, but I'm sure the\nauthors are QCom/Linaro and they would be happy to dual license."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "\\bdon't\\b",
+    "\\bneeds?\\s+to\\b",
+    "\\bshould\\s+be\\b",
+    "\\bwrong\\b"
+  ],
+  "top_acceptance_signals": [
+    "krzysztof kozlowski",
+    "\\backed-by\\b"
+  ],
+  "typical_review_iterations": 2,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads).",
+    "INSUFFICIENT_DATA threshold not met; advisory-only usage."
+  ],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 9,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 4,
+    "question_classified_count": 1,
+    "signoff_lines_removed_count": 0
+  }
+}

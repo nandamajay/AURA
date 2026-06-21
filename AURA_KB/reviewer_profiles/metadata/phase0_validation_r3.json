@@ -1,0 +1,53 @@
+{
+  "artifact": "phase0_validation_r3",
+  "generated_date": "2026-06-21T14:18:19Z",
+  "r1_verdict": "PHASE_0_FAILED_RETRY_REQUIRED",
+  "r2_verdict": "PHASE_0_FAILED_RETRY_REQUIRED",
+  "r3_profile_confidence_levels": {
+    "Mark Brown": "HIGH",
+    "Pierre-Louis Bossart": "INSUFFICIENT_DATA",
+    "Krzysztof Kozlowski": "HIGH",
+    "Vinod Koul": "INSUFFICIENT_DATA",
+    "Liam Girdwood": "INSUFFICIENT_DATA",
+    "Bjorn Andersson": "LOW_CONFIDENCE",
+    "Linus Walleij": "LOW_CONFIDENCE",
+    "Rob Herring": "INSUFFICIENT_DATA",
+    "Konrad Dybcio": "REVIEWER_INACTIVE_IN_SCOPE"
+  },
+  "success_criteria": {
+    "p0_high_profiles_required": 3,
+    "p0_high_profiles_achieved": 2,
+    "p0_high_met": false,
+    "p1_low_or_high_required": 3,
+    "p1_low_or_high_achieved": 2,
+    "p1_low_or_high_met": false,
+    "rejected_validation_cases_required": 3,
+    "rejected_validation_cases_achieved": 5,
+    "rejected_validation_met": true,
+    "objection_precision_required": 0.6,
+    "objection_precision_achieved": 0.625,
+    "objection_precision_met": true,
+    "objection_recall_required": 0.6,
+    "objection_recall_achieved": 1.0,
+    "objection_recall_met": true
+  },
+  "r3_verdict": "PHASE_0_FAILED_RETRY_REQUIRED",
+  "phase1_unblocked": false,
+  "root_causes_fixed": [
+    "subsystem_context_zero_weight",
+    "weighted_threshold_scoring_added",
+    "question_as_objection_detector_added",
+    "koul_specific_requirement_patterns_added",
+    "fixed_validation_set_reused_without_gaming",
+    "threshold_calibration_added"
+  ],
+  "remaining_gaps": [
+    "P0 HIGH profiles shortfall: 2/3 required",
+    "P1 LOW/HIGH profiles shortfall: 2/3 required"
+  ],
+  "best_precision_observed_in_calibration": 0.75,
+  "kernel_source_modified": "no",
+  "wcd9378_modified": "no",
+  "patches_generated": "no",
+  "phase1_simulation_engine_started": "no"
+}

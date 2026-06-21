@@ -1,0 +1,415 @@
+{
+  "reviewer": "Bjorn Andersson",
+  "profile_version": "v3",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "LOW_CONFIDENCE",
+  "series_analyzed": 192,
+  "comment_threads_analyzed": 30,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-NGRAM-001",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "arm64 dts",
+      "frequency": 28,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-NGRAM-004",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "applied thanks",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-NGRAM-005",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "applied thanks arm64",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-RGX-001",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bfix\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        717021,
+        723382,
+        726610,
+        727857,
+        729238
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sa8540p-ride: Fix some i2c pinctrl settings\ncommit: f187e989305a2d57dc0f750ebb63959151b66924\n[2/2] arm64: dts: qcom: sa8540p-ride: Document i2c busses\ncommit: f1d6f9d227a0fe887d6a",
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: msm8996: move WCD9335 audio codec to boards\ncommit: 5a1816cc2d8caa054aa8b254efea9739aa8a68c6\n[2/2] arm64: dts: qcom: apq8096-db820c: fix indentation\ncommit: aec576821e6fd233ae895f",
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sm8250-xiaomi-elish: fix USB maximum speed property\ncommit: 613f14a3a9d7e12a832ff822f85a33ad0ebee952\n[2/2] arm64: dts: qcom: sm8350-microsoft-surface: fix USB dual-role mode prope"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-RGX-002",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bdon't\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        708746,
+        712395,
+        713131
+      ],
+      "example_comment_excerpts": [
+        "I was under the impression that you where working on some updates to EUD\nand was going to resend this, but I don't find a new version, and I\ndon't see an on-list reply from me.\nSo just to make sure this isn't lost any lo",
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sdm630-nile: Don't use underscores in node names\ncommit: 305db81657b47cbf041a45aa4c0845ed600e3157\n[2/2] arm64: dts: qcom: sdm630-nile: Reserve simplefb memory\ncommit: 2f20f276dd4f",
+        "Does this imply that switching resolution in runtime is not possible for\nany of these DSI->HDMI/DP/eDP bridges?\nThe immediate worry is that we need 4k and non-4k variants of every\nmezzanine (unless we start doing overlay"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-NGRAM-009",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "drop spi",
+      "frequency": 3,
+      "example_series_ids": [
+        727857
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[02/11] arm64: dts: qcom: sm8250: drop incorrect Coresight funnel properties\ncommit: d24539a6a98c19c81deb4004ec5023b3ee6e7bb8\n[03/11] arm64: dts: qcom: qdu1000: drop incorrect serial properties\ncommit: 9"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-NGRAM-010",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "node name",
+      "frequency": 3,
+      "example_series_ids": [
+        712395,
+        727857,
+        729238
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sdm630-nile: Don't use underscores in node names\ncommit: 305db81657b47cbf041a45aa4c0845ed600e3157\n[2/2] arm64: dts: qcom: sdm630-nile: Reserve simplefb memory\ncommit: 2f20f276dd4f",
+        "Applied, thanks!\n[02/11] arm64: dts: qcom: sm8250: drop incorrect Coresight funnel properties\ncommit: d24539a6a98c19c81deb4004ec5023b3ee6e7bb8\n[03/11] arm64: dts: qcom: qdu1000: drop incorrect serial properties\ncommit: 9",
+        "Applied, thanks!\n[1/8] arm64: dts: qcom: sda660-inforce: correct key node name\ncommit: 0d8d77228aa1efec69f92ef92e1cd9270c1151c4\n[2/8] arm64: dts: qcom: sc7280-herobrine-villager: correct trackpad supply\ncommit: de88b1759"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-NGRAM-008",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "properties commit",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-RGX-003",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bbreaks?\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        726788
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sdm845-db845c: drop empty node override\ncommit: e225d56042e3a02aa3ee60c96da687ac3c690a37\n[2/2] arm64: dts: qcom: drop redundant line breaks\ncommit: e18b829549793f706c6c8a39f24ba93"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-RGX-004",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        727857
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[02/11] arm64: dts: qcom: sm8250: drop incorrect Coresight funnel properties\ncommit: d24539a6a98c19c81deb4004ec5023b3ee6e7bb8\n[03/11] arm64: dts: qcom: qdu1000: drop incorrect serial properties\ncommit: 9"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-OBJ-RGX-005",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        713131
+      ],
+      "example_comment_excerpts": [
+        "Does this imply that switching resolution in runtime is not possible for\nany of these DSI->HDMI/DP/eDP bridges?\nThe immediate worry is that we need 4k and non-4k variants of every\nmezzanine (unless we start doing overlay"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [],
+  "question_patterns": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-Q-RGX-001",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\?+",
+      "frequency": 2,
+      "example_series_ids": [
+        719155,
+        728433
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it\nwould be nice to have that expressed in the message. If nothing else for\nothers to know what such agreed order might be.\nUnfortunately this doesn't ap",
+        "@Rob, @Krzysztof, it seems useful to be able to use the upstream\ngenerated DTBs with overlays.\nDo you suggest that we enable this on a per-board basis when it's being\nrequested, across all devices, or tell the users that"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-Q-NGRAM-001",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "agreed order",
+      "frequency": 2,
+      "example_series_ids": [
+        719155
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it\nwould be nice to have that expressed in the message. If nothing else for\nothers to know what such agreed order might be.\nUnfortunately this doesn't ap"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-Q-RGX-002",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bcould\\s+you\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        719155
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it\nwould be nice to have that expressed in the message. If nothing else for\nothers to know what such agreed order might be.\nUnfortunately this doesn't ap"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-Q-RGX-003",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bwhat\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        719155
+      ],
+      "example_comment_excerpts": [
+        "I think \"according to agreed order\" means \"sorted by address\", but it\nwould be nice to have that expressed in the message. If nothing else for\nothers to know what such agreed order might be.\nUnfortunately this doesn't ap"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [],
+  "dt_rules": [],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [],
+  "commit_message_rules": [],
+  "subsystem_context": [
+    {
+      "pattern_id": "BJORN_ANDERSSON-CTX-001",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bqcom\\b",
+      "frequency": 22,
+      "example_series_ids": [
+        712391,
+        712395,
+        713187,
+        713600,
+        713641,
+        714615,
+        715035,
+        717021
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sm8550: Add UFS host controller and phy nodes\ncommit: 35cf1aaab169e0fd9c0ba5e0c0a5436ecb8081f0\n[2/2] arm64: dts: qcom: sm8550-mtp: Add UFS host controller and PHY node\ncommit: 6fa",
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: sdm630-nile: Don't use underscores in node names\ncommit: 305db81657b47cbf041a45aa4c0845ed600e3157\n[2/2] arm64: dts: qcom: sdm630-nile: Reserve simplefb memory\ncommit: 2f20f276dd4f",
+        "Applied, thanks!\n[1/3] arm64: dts: qcom: sm8250: drop unused clock-frequency from rx-macro\ncommit: 30186f8573af259ff9928512c3256bf7f66e48e6\n[2/3] arm64: dts: qcom: sc8280xp: drop bogus clock-controller property\ncommit: c"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-CTX-002",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bcodec\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        714615,
+        723382
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/6] arm64: dts: qcom: sdm845-db845c: add generic sound compatible\ncommit: 077d29e81963b415e49216878563e933d346efa2\n[2/6] arm64: dts: qcom: sdm845-xiaomi-beryllium: add generic sound compatible\ncommit: ",
+        "Applied, thanks!\n[1/2] arm64: dts: qcom: msm8996: move WCD9335 audio codec to boards\ncommit: 5a1816cc2d8caa054aa8b254efea9739aa8a68c6\n[2/2] arm64: dts: qcom: apq8096-db820c: fix indentation\ncommit: aec576821e6fd233ae895f"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-CTX-003",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "\\bcompatible\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        714615
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[1/6] arm64: dts: qcom: sdm845-db845c: add generic sound compatible\ncommit: 077d29e81963b415e49216878563e933d346efa2\n[2/6] arm64: dts: qcom: sdm845-xiaomi-beryllium: add generic sound compatible\ncommit: "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-CTX-004",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "dt-binding",
+      "frequency": 1,
+      "example_series_ids": [
+        719886
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[6/7] dt-bindings: remoteproc: qcom,glink-rpm-edge: convert to DT schema\ncommit: fdafdddf7b2f5cab8d233ef97f1fad8ec7d2e7a0\n[7/7] dt-bindings: remoteproc: qcom,glink-edge: correct label description\ncommit:"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "BJORN_ANDERSSON-CTX-005",
+      "reviewer": "Bjorn Andersson",
+      "pattern": "dt-bindings",
+      "frequency": 1,
+      "example_series_ids": [
+        719886
+      ],
+      "example_comment_excerpts": [
+        "Applied, thanks!\n[6/7] dt-bindings: remoteproc: qcom,glink-rpm-edge: convert to DT schema\ncommit: fdafdddf7b2f5cab8d233ef97f1fad8ec7d2e7a0\n[7/7] dt-bindings: remoteproc: qcom,glink-edge: correct label description\ncommit:"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "arm64 dts",
+    "applied thanks",
+    "applied thanks arm64",
+    "\\bfix\\b",
+    "\\bdon't\\b",
+    "drop spi",
+    "node name",
+    "properties commit",
+    "\\bbreaks?\\b",
+    "\\bdo\\s+not\\b"
+  ],
+  "top_acceptance_signals": [],
+  "typical_review_iterations": 2,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads)."
+  ],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 30,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 10,
+    "question_classified_count": 2,
+    "signoff_lines_removed_count": 0
+  }
+}

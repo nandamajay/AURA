@@ -1,0 +1,489 @@
+{
+  "reviewer": "Mark Brown",
+  "profile_version": "v3",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 140,
+  "comment_threads_analyzed": 65,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "MARK_BROWN-OBJ-RGX-001",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bfix\\b",
+      "frequency": 64,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-RGX-002",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 64,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-004",
+      "reviewer": "Mark Brown",
+      "pattern": "applied to",
+      "frequency": 64,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-005",
+      "reviewer": "Mark Brown",
+      "pattern": "broonie sound",
+      "frequency": 64,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-008",
+      "reviewer": "Mark Brown",
+      "pattern": "for-next thanks",
+      "frequency": 64,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-007",
+      "reviewer": "Mark Brown",
+      "pattern": "git for-next",
+      "frequency": 64,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-010",
+      "reviewer": "Mark Brown",
+      "pattern": "means be",
+      "frequency": 64,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-006",
+      "reviewer": "Mark Brown",
+      "pattern": "sound git",
+      "frequency": 64,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-NGRAM-009",
+      "reviewer": "Mark Brown",
+      "pattern": "well means",
+      "frequency": 64,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-RGX-003",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bdon't\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        760884,
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Why not try a series of firmware names/locations generated using the\nidentifying information for the card/system? That way we don't have to\nput a filename in the ABI which has fun scaling issues.",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a\nCODEC that can do mixing and they're connected to an analog output) or\nmay in rare cases not fit with one at all (there's use cases where you\nhave a s",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a\nCODEC that can do mixing and they're connected to an analog output) or\nmay in rare cases not fit with one at all (there's use cases where you\nhave a s"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-OBJ-RGX-004",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        762690
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: qcom: q6apm: do not close GPR port before closing graph\ncommit: c1be62923d4d86e7c06b1224626e27eb8d9ab32e\nAll being"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [],
+  "question_patterns": [
+    {
+      "pattern_id": "MARK_BROWN-Q-RGX-001",
+      "reviewer": "Mark Brown",
+      "pattern": "\\?+",
+      "frequency": 1,
+      "example_series_ids": [
+        858471
+      ],
+      "example_comment_excerpts": [
+        "Is anyone getting any value from these MODULE_DESCRIPTION()s? This all\njust seems like a huge amount of noise and I'm having trouble thinking\nof a use case."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-Q-RGX-002",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bhow\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        858471
+      ],
+      "example_comment_excerpts": [
+        "Yeah, adding the warning seems premature without having first added the\ndescriptions and I'm not clear in what situation anyone would actually\ncare given how rare it is for someone to manually interact with module\nloadin"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "MARK_BROWN-Q-RGX-003",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bwhat\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        858471
+      ],
+      "example_comment_excerpts": [
+        "Yeah, adding the warning seems premature without having first added the\ndescriptions and I'm not clear in what situation anyone would actually\ncare given how rare it is for someone to manually interact with module\nloadin"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [],
+  "dt_rules": [],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [
+    {
+      "pattern_id": "MARK_BROWN-SERIES-001",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        760884
+      ],
+      "example_comment_excerpts": [
+        "Why not try a series of firmware names/locations generated using the\nidentifying information for the card/system? That way we don't have to\nput a filename in the ABI which has fun scaling issues."
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "commit_message_rules": [],
+  "subsystem_context": [
+    {
+      "pattern_id": "MARK_BROWN-CTX-001",
+      "reviewer": "Mark Brown",
+      "pattern": "\\basoc\\b",
+      "frequency": 64,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "MARK_BROWN-CTX-002",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bqcom\\b",
+      "frequency": 63,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "MARK_BROWN-CTX-003",
+      "reviewer": "Mark Brown",
+      "pattern": "dt-binding",
+      "frequency": 37,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "MARK_BROWN-CTX-004",
+      "reviewer": "Mark Brown",
+      "pattern": "dt-bindings",
+      "frequency": 37,
+      "example_series_ids": [
+        713180,
+        713211,
+        719162,
+        719163,
+        719222,
+        719223,
+        723385,
+        723386
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nbroonie/sound.git for-next\nThanks!\n[1/2] ASoC: dt-bindings: qcom,sm8250: use fallback for SDM845 sound cards\ncommit: b4090b7cda255daafe816a00f2848f4f8e761786\n[2/2] ASoC: qcom: sdm845: add remark about unneeded",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,q6apm-dai: adjust iommus for SM8550 ADSP\ncommit: b2c0c45d9255b4444df65c5f69b4939835fee019\nAll be"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "MARK_BROWN-CTX-005",
+      "reviewer": "Mark Brown",
+      "pattern": "soundwire",
+      "frequency": 8,
+      "example_series_ids": [
+        804934,
+        804936,
+        897379,
+        897381,
+        898414,
+        898510,
+        898415,
+        898511
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/2] ASoC: qcom: Add helper for allocating Soundwire stream runtime\ncommit: d32bac9cb09cce4dc3131ec5d0b6ba3c277502ac\n[2/2] AS",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/2] ASoC: qcom: Add helper for allocating Soundwire stream runtime\ncommit: d32bac9cb09cce4dc3131ec5d0b6ba3c277502ac\n[2/2] AS",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: qcom: sdm845: add missing soundwire runtime stream alloc\ncommit: d0e806b0cc6260b59c65e606034a63145169c04c\nAll bein"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "MARK_BROWN-CTX-006",
+      "reviewer": "Mark Brown",
+      "pattern": "\\bcodec\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        825328,
+        825330,
+        873172,
+        873175
+      ],
+      "example_comment_excerpts": [
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,sm8250: Allow up to 8 codec DAIs\ncommit: d4a00d16f8367e09e8b8fb03028f22333fc368a5\nAll being well",
+        "Applied to\nhttps://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next\nThanks!\n[1/1] ASoC: dt-bindings: qcom,sm8250: Allow up to 8 codec DAIs\ncommit: d4a00d16f8367e09e8b8fb03028f22333fc368a5\nAll being well",
+        "Right, aux devices may cover more than one DAI link (eg, if there's a\nCODEC that can do mixing and they're connected to an analog output) or\nmay in rare cases not fit with one at all (there's use cases where you\nhave a s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "\\bfix\\b",
+    "\\bshould\\s+be\\b",
+    "applied to",
+    "broonie sound",
+    "for-next thanks",
+    "git for-next",
+    "means be",
+    "sound git",
+    "well means",
+    "\\bdon't\\b"
+  ],
+  "top_acceptance_signals": [],
+  "typical_review_iterations": 3,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 71,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 67,
+    "question_classified_count": 2,
+    "signoff_lines_removed_count": 0
+  }
+}

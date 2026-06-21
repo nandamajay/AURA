@@ -1,0 +1,639 @@
+{
+  "reviewer": "Pierre-Louis Bossart",
+  "profile_version": "v3",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "INSUFFICIENT_DATA",
+  "series_analyzed": 300,
+  "comment_threads_analyzed": 8,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bdon't\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        618060,
+        667410,
+        741664,
+        796487
+      ],
+      "example_comment_excerpts": [
+        "I don't get the idea, sorry.\nIf you look at the code, these are the cases where this 'struct\ncompletion' is used\nstruct completion enumeration;\ncomplete(&ctrl->enumeration);\n/* Enable Auto enumeration */\ninit_completion(",
+        "The suggestion is to remove the TODO and leave the code as is: the\ncapabilities enabled for multi-link are required as part of the\nprogramming sequences, even when a stream uses a single link we still\nuse the syncArm/syn",
+        "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replac"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "ctrl- enumeration",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bissue\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        429919,
+        651180
+      ],
+      "example_comment_excerpts": [
+        "Adding Vinod, Takashi, Mark and Jaroslav in CC: to make sure this patch\ndoes not fall between the cracks.\nThis issue may impact all HDaudio platforms and this patch needs to\nreach Linus' tree and 5.10-stable. Thanks!",
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        429919,
+        741664
+      ],
+      "example_comment_excerpts": [
+        "Adding Vinod, Takashi, Mark and Jaroslav in CC: to make sure this patch\ndoes not fall between the cracks.\nThis issue may impact all HDaudio platforms and this patch needs to\nreach Linus' tree and 5.10-stable. Thanks!",
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bproblem\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        651180,
+        741664
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o",
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "devid registers",
+      "frequency": 2,
+      "example_series_ids": [
+        741664
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "in devid",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "in devid registers",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "struct completion",
+      "frequency": 2,
+      "example_series_ids": [
+        618060
+      ],
+      "example_comment_excerpts": [
+        "I don't get the idea, sorry.\nIf you look at the code, these are the cases where this 'struct\ncompletion' is used\nstruct completion enumeration;\ncomplete(&ctrl->enumeration);\n/* Enable Auto enumeration */\ninit_completion("
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bfix\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bwrong\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        741664
+      ],
+      "example_comment_excerpts": [
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart",
+      "frequency": 4,
+      "example_series_ids": [
+        748558,
+        757497
+      ],
+      "example_comment_excerpts": [
+        "Yes, this resume_and_get() added more problems indeed. One of those\nwell-intended changes that went sideways.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+        "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing re"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        748558,
+        757497
+      ],
+      "example_comment_excerpts": [
+        "Yes, this resume_and_get() added more problems indeed. One of those\nwell-intended changes that went sideways.\nReviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+        "Makes sense to me. The other way to look at this is that the notion of\n'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master'\nis called from each DAI of a dailink, hence in a fixed order. But\nnothing re"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart linux",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-009",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart pierre-louis bossart",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "intel com",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "linux intel",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-010",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart linux",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-008",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "reviewed-by pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "reviewed-by pierre-louis bossart",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\?+",
+      "frequency": 1,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a co"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bhow\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "Is this a case where the SoundWire manager is part of a codec?\nIn that case, how are the SoundWire peripheral modeled?\nThe .set_stream callback was really meant to be used when you have a CPU\nDAI for the manager and a co"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "codec dais",
+      "frequency": 2,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\btypo\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "dt_rules": [],
+  "runtime_pm_rules": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bresume\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        651180,
+        741664
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive",
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pm_runtime",
+      "frequency": 2,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive",
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "runtime\\s*pm",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "series_structure_rules": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\border\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        741664
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "commit_message_rules": [],
+  "subsystem_context": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bcodec\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        651180,
+        741664,
+        796487
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive",
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t",
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "soundwire",
+      "frequency": 4,
+      "example_series_ids": [
+        741664,
+        796487
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached.",
+        "The Soundwire 1.2.1 spec moved away from master/slave and uses\nmanager/peripheral. It's the same concepts, just different terms. At\nsome point we'll update the code, it's just been too busy in 2022/2023\nto do this replac",
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\basoc\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        651180,
+        741664
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o",
+        "I thought you were talking about ASoC \"struct snd_soc_component\" but no,\nthat's \"struct component_ops\" in wcd938x-sdw.c\nNow I think I get the scope of the problem, I didn't click on the fact\nthat it's a platform driver t"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "\\bdon't\\b",
+    "ctrl- enumeration",
+    "\\bissue\\b",
+    "\\bneeds?\\s+to\\b",
+    "\\bproblem\\b",
+    "devid registers",
+    "in devid",
+    "in devid registers",
+    "struct completion",
+    "\\bdo\\s+not\\b"
+  ],
+  "top_acceptance_signals": [
+    "pierre-louis bossart",
+    "\\breviewed-by\\b",
+    "bossart linux",
+    "bossart pierre-louis",
+    "bossart pierre-louis bossart",
+    "intel com",
+    "linux intel",
+    "pierre-louis bossart linux",
+    "pierre-louis bossart pierre-louis",
+    "reviewed-by pierre-louis"
+  ],
+  "typical_review_iterations": 2,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads).",
+    "INSUFFICIENT_DATA threshold not met; advisory-only usage."
+  ],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 15,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 9,
+    "question_classified_count": 1,
+    "signoff_lines_removed_count": 0
+  }
+}

@@ -1,0 +1,71 @@
+{
+  "reviewer": "Liam Girdwood",
+  "profile_version": "v3",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "INSUFFICIENT_DATA",
+  "series_analyzed": 150,
+  "comment_threads_analyzed": 0,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [],
+  "acceptance_patterns": [],
+  "question_patterns": [],
+  "nit_patterns": [],
+  "dt_rules": [],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [],
+  "commit_message_rules": [],
+  "subsystem_context": [],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [],
+  "top_acceptance_signals": [],
+  "typical_review_iterations": 1,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [
+    "Coverage below HIGH confidence threshold (>=50 threads).",
+    "INSUFFICIENT_DATA threshold not met; advisory-only usage."
+  ],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 0,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 0,
+    "question_classified_count": 0,
+    "signoff_lines_removed_count": 0
+  }
+}

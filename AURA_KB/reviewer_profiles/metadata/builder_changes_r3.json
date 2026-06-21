@@ -1,0 +1,59 @@
+{
+  "artifact": "builder_changes_r3",
+  "generated_date": "2026-06-21T14:18:19Z",
+  "terminology": {
+    "LA": "downstream / Linux Android",
+    "LE": "upstream / Linux Embedded"
+  },
+  "changes": [
+    {
+      "change_id": "R3-FIX-A",
+      "old_behavior": "vendor_code_rules and subsystem tokens (e.g., qcom/msm/dt-binding) could contribute to blocking decisions.",
+      "new_behavior": "All subsystem/vendor indicators are moved to subsystem_context section with weight 0.0 and severity INFO only.",
+      "why": "Eliminates subject-line/subsystem contamination false positives.",
+      "root_cause_fixed": "subject_line_contamination"
+    },
+    {
+      "change_id": "R3-FIX-B",
+      "old_behavior": "Binary OR: any one blocking pattern caused case-level blocking.",
+      "new_behavior": "Weighted threshold scoring with explicit pattern weights and calibrated threshold.",
+      "why": "Reduces over-triggering from generic pattern hits.",
+      "root_cause_fixed": "binary_or_model_amplification"
+    },
+    {
+      "change_id": "R3-FIX-C",
+      "old_behavior": "Question-style requirement comments remained question class and were excluded from objection extraction.",
+      "new_behavior": "classify_comment_with_context promotes requirement-style questions to objection in rejected/changes-requested series; Vinod Koul specific patterns added.",
+      "why": "Recovers false negatives for conversational objection style.",
+      "root_cause_fixed": "koul_question_style_missed"
+    },
+    {
+      "change_id": "R3-REFINE-C1",
+      "old_behavior": "Generic acceptance regex (e.g., \"applied\") could misclassify objection text such as \"could be applied\".",
+      "new_behavior": "Acceptance regex now avoids broad applied/queued tokens and relies on explicit acceptance-email markers plus Ack/Review tags.",
+      "why": "Prevents false-negative objection classification in changes-requested threads.",
+      "root_cause_fixed": "acceptance_regex_overreach"
+    },
+    {
+      "change_id": "R3-REFINE-C2",
+      "old_behavior": "Requirement phrases like \"I would need s-o-b\" were not guaranteed to classify as objection.",
+      "new_behavior": "REQUIREMENT_OBJECTION_REGEX added before acceptance/question checks.",
+      "why": "Captures process/testing objections with conversational wording.",
+      "root_cause_fixed": "requirement_phrase_missed"
+    },
+    {
+      "change_id": "R3-REFINE-B1",
+      "old_behavior": "Accepted/mainlined cases with explicit reviewer acceptance could still block from earlier comments.",
+      "new_behavior": "Case scoring resolves accepted/mainlined cases to non-blocking when reviewer has acceptance-classified comment in-thread.",
+      "why": "Aligns case-level scoring with final reviewer acceptance signal and reduces false positives.",
+      "root_cause_fixed": "accepted_series_resolution_missing"
+    },
+    {
+      "change_id": "R3-DATA-MODE",
+      "old_behavior": "R1/R2 performed active fetch flows.",
+      "new_behavior": "R3 reuses existing raw artifacts only; no new Patchwork fetches.",
+      "why": "R3 scope is scoring-model correction, not corpus expansion.",
+      "root_cause_fixed": "data_volume_not_primary_issue"
+    }
+  ]
+}
