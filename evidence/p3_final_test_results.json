@@ -1,0 +1,38 @@
+{
+  "task_id": "p3_final_t1",
+  "test_command": "python3 -m pytest tests/ -v --tb=short",
+  "test_output": "/tmp/p3_final_tests.txt",
+  "total_tests_run": 103,
+  "passed": 103,
+  "failed": 0,
+  "baseline_regression": false,
+  "live_run": {
+    "command": "python3 -m aura.cli start --module wcd937x",
+    "output": "/tmp/p3_live_run.txt",
+    "run_id": 62,
+    "status": "rejected",
+    "reason": "patch_quality_gate_failed",
+    "interpretation": "Expected Phase 3 behavior: failed patch-quality gate no longer completes the run."
+  },
+  "live_commands": {
+    "charter_check": {
+      "returncode": 1,
+      "output": "/tmp/p3_live_charter_62.json",
+      "passed": false,
+      "blocking_violations": 2
+    },
+    "verify_chain": {
+      "returncode": 0,
+      "output": "/tmp/p3_live_verify_62.json",
+      "ok": true
+    },
+    "safety_check": {
+      "returncode": 0,
+      "output": "/tmp/p3_live_safety_62.json",
+      "events": 0
+    }
+  },
+  "production_git_sha": "58d33398987b83599173a88775e5b38041604269",
+  "execution_timestamp": "2026-06-21T18:03:38.865721+00:00",
+  "status": "COMPLETED_WITH_WARNINGS"
+}

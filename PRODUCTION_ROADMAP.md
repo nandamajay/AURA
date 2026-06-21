@@ -4,7 +4,7 @@
 **Status:** `IN_PROGRESS`  
 **Start Date:** 2026-06-21  
 **Target Completion:** 2026-12-21 (24 weeks)  
-**Current Phase:** Phase 3 - Governance & Safety Hardening
+**Current Phase:** Phase 4 - Replay & Determinism Hardening
 
 ---
 
@@ -26,12 +26,12 @@ Transform AURA from a governed prototype into a production-grade AI OS kernel th
 Phase 0: Foundation Audit          [██████████] 100% (11/11 tasks)
 Phase 1: Core Contracts            [██████████] 100% (28/28 tasks)
 Phase 2: LLM Gateway Hardening     [██████████] 100% (20/20 tasks)
-Phase 3: Governance & Safety       [░░░░░░░░░░] 0%   (Week 11-14)
+Phase 3: Governance & Safety       [██████████] 100% (19/19 tasks)
 Phase 4: Replay & Determinism      [░░░░░░░░░░] 0%   (Week 15-18)
 Phase 5: Developer Experience      [░░░░░░░░░░] 0%   (Week 19-22)
 Phase 6: Scale & Performance       [░░░░░░░░░░] 0%   (Week 23-24)
 
-Overall Progress: [███░░░░░░░] 59/168 tasks completed (35%)
+Overall Progress: [████░░░░░░] 78/168 tasks completed (46%)
 ```
 
 ---
@@ -174,8 +174,8 @@ Overall Progress: [███░░░░░░░] 59/168 tasks completed (35%)
 ### Phase 3: Governance & Safety Hardening (Week 11-14)
 **Goal:** Make governance production-grade with deterministic approval, audit, and safety.
 
-**Status:** `IN_PROGRESS`  
-**Progress:** 0/28 tasks
+**Status:** `COMPLETED`  
+**Progress:** 19/19 tasks
 
 #### Week 11: Approval Workflow Formalization
 - [ ] Define approval states
