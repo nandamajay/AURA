@@ -1,0 +1,1250 @@
+{
+  "reviewer": "Rob Herring",
+  "profile_version": "v4",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 372,
+  "comment_threads_analyzed": 148,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "boot dts",
+      "frequency": 431,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-002",
+      "reviewer": "Rob Herring",
+      "pattern": "arch arm64",
+      "frequency": 400,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-004",
+      "reviewer": "Rob Herring",
+      "pattern": "arch arm64 boot",
+      "frequency": 400,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-003",
+      "reviewer": "Rob Herring",
+      "pattern": "arm64 boot",
+      "frequency": 400,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-005",
+      "reviewer": "Rob Herring",
+      "pattern": "arm64 boot dts",
+      "frequency": 400,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-008",
+      "reviewer": "Rob Herring",
+      "pattern": "dtb arch",
+      "frequency": 271,
+      "example_series_ids": [
+        900000149,
+        900000153,
+        900000156,
+        900000167,
+        900000181,
+        900000229
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-009",
+      "reviewer": "Rob Herring",
+      "pattern": "dtb arch arm64",
+      "frequency": 254,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-NGRAM-010",
+      "reviewer": "Rob Herring",
+      "pattern": "yaml arch",
+      "frequency": 81,
+      "example_series_ids": [
+        900000068,
+        900000070,
+        900000077,
+        900000089
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bdon't\\b",
+      "frequency": 41,
+      "example_series_ids": [
+        900000003,
+        900000004,
+        900000005,
+        900000016,
+        900000022,
+        900000047,
+        900000049,
+        900000055
+      ],
+      "example_comment_excerpts": [
+        "rpmsg is a protocol. What's the h/w block? What are these 2 used for? 0-2^32 are valid values? Don't show status in examples.",
+        "I don't understand why there are 2 nodes for this other than you happen to want to split this into 2 Linux drivers. It's 1 h/w thing.",
+        "This all looks like duplication of what the clock binding can provide. We don't need 2 ways to describe clocks in DT. Rob"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 27,
+      "example_series_ids": [
+        900000016,
+        900000031,
+        900000049,
+        900000050,
+        900000054,
+        900000055,
+        900000071,
+        900000073
+      ],
+      "example_comment_excerpts": [
+        "This can be in any parent node, so generally not required. IOW, you don't need to document it. Otherwise, Acked-by: Rob Herring <robh@kernel.org> (Really, this should be converted to schema, but given it's on v8 already ",
+        "You can drop '^.*'. cells? How is this optional? This needs to be false and fix whatever is missing. This doesn't match what you have in the schema at all.",
+        "extra spaces. nvidia,sound-name-prefix You need to define the port numbers for the input and each output. Per above, this will need to be split at least into input and output ports. Same issues in the other schemas. Don'"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-003",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 15,
+      "example_series_ids": [
+        900000006,
+        900000016,
+        900000017,
+        900000022,
+        900000023,
+        900000032,
+        900000042,
+        900000055
+      ],
+      "example_comment_excerpts": [
+        "This sounds like 1 h/w block (the interface to the cortex-M), your DT should be 1 node. If you need 2 drivers to satisfy the needs of the OS, then instantiate one device from the other device's driver. Rob",
+        "This can be in any parent node, so generally not required. IOW, you don't need to document it. Otherwise, Acked-by: Rob Herring <robh@kernel.org> (Really, this should be converted to schema, but given it's on v8 already ",
+        "Looks like the existing fsl-asoc-card.txt? You should convert to schema and use that. Otherwise, my comments are based on this all being 'new'. I continue to not understand why audio bindings need the codec(s) in the com"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-004",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bdtbs_check\\b",
+      "frequency": 11,
+      "example_series_ids": [
+        900000068,
+        900000070,
+        900000077,
+        900000089,
+        900000130,
+        900000149,
+        900000153,
+        900000156
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-005",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bfix\\b",
+      "frequency": 10,
+      "example_series_ids": [
+        900000031,
+        900000131,
+        900000151,
+        900000152,
+        900000168,
+        900000169,
+        900000210,
+        900000290
+      ],
+      "example_comment_excerpts": [
+        "You can drop '^.*'. cells? How is this optional? This needs to be false and fix whatever is missing. This doesn't match what you have in the schema at all.",
+        "DT patches must go to DT list. Now that this is in linux-next, it's breaking 'make dt_binding_check': ./Documentation/devicetree/bindings/sound/tas27xx.yaml:24:7: [error] syntax error: could not find expected ':' (syntax",
+        "I see this is already in linux-next, and it has a warning: Documentation/devicetree/bindings/sound/tas2780.example.dtb: codec@38: 'shutdown-gpios' does not match any of the regexes: 'pinctrl-[0-9]+' From schema: /builds/"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-006",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bwrong\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000108,
+        900000152,
+        900000215,
+        900000327
+      ],
+      "example_comment_excerpts": [
+        "mediatek,mt8195-dsp.yaml blank line typos 'a mailbox is ised for ' part can be dropped. 'A phandle to a reserved memory region is used for' part can be dropped. Drop unused labels. Wrong indentation.",
+        "Again, fix your subject. Run 'git log --oneline Documentation/devicetree/bindings/sound/' for inspiration of the format of the subject. However, there's a bigger issue here. We already have a binding for this device. It'",
+        "Yes, but that's not really true in if/then schemas. If that's your reason, then the changes are wrong. Actually, no it doesn't. This was probably correct before if the base 'reg' entry says more than 3 entries are allowe"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-007",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000068,
+        900000167,
+        900000181
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-008",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bissue\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000117,
+        900000152,
+        900000228
+      ],
+      "example_comment_excerpts": [
+        "Thinking about this and the issue you raised some more, we should make sure there's a common definition for sound-dai. And then here, it should just be the number of entries ('maxItems: 1'). Rob",
+        "Again, fix your subject. Run 'git log --oneline Documentation/devicetree/bindings/sound/' for inspiration of the format of the subject. However, there's a bigger issue here. We already have a binding for this device. It'",
+        "Here's the answer: https://lore.kernel.org/alsa-devel/6f003598-4cae-a521-233f-2c19eb439359@perex.cz/ Something about DMARC and your domain. But some reason git-send-email doesn't have the issue sending. Rob"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-009",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bmust\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000075,
+        900000131,
+        900000181
+      ],
+      "example_comment_excerpts": [
+        "Patches must have an author name, commit message, and a Signed-off-by. Please use checkpatch.pl which will point out some of this.",
+        "DT patches must go to DT list. Now that this is in linux-next, it's breaking 'make dt_binding_check': ./Documentation/devicetree/bindings/sound/tas27xx.yaml:24:7: [error] syntax error: could not find expected ':' (syntax",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-010",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bplease\\s+use\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000002,
+        900000075,
+        900000151
+      ],
+      "example_comment_excerpts": [
+        "Please use get_maintainers.pl so patches go to the right lists. This binding has errors in linux-next: ./Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml: while parsing a block mapping in &#34;<unicode stri",
+        "Patches must have an author name, commit message, and a Signed-off-by. Please use checkpatch.pl which will point out some of this.",
+        "I see this is already in linux-next, and it has a warning: Documentation/devicetree/bindings/sound/tas2780.example.dtb: codec@38: 'shutdown-gpios' does not match any of the regexes: 'pinctrl-[0-9]+' From schema: /builds/"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-011",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bproblem\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000002,
+        900000202,
+        900000260
+      ],
+      "example_comment_excerpts": [
+        "Please use get_maintainers.pl so patches go to the right lists. This binding has errors in linux-next: ./Documentation/devicetree/bindings/sound/intel,keembay-i2s.yaml: while parsing a block mapping in &#34;<unicode stri",
+        "An odd line wrap length... Don't need '|' if no formatting. Wrap at 80. additionalProperties: false 'mode' is a bit vague. It's already used as well which can be a problem if there are differing types. (There's not in th",
+        "Obviously. Why do you need these? What problem does it solve? I don't think these belong in simple-card. What's next? What if you need delays between each step? This is the problem with 'simple' or 'generic' bindings. It"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-012",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bunevaluatedproperties\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000290,
+        900000356
+      ],
+      "example_comment_excerpts": [
+        "I have this same fix in my tree, but you missed something. Please add additionalProperties or unevaluatedProperties to the child node schema so that this error is flagged.",
+        "Unit-addresses are normally hex. And according to reg below, the max value is 8. More than 1 reg entry valid? Either way, you need maxItems. Or you can just drop 'items' 'items' is for arrays, but... not an array. ditto "
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "ROB_HERRING-OBJ-RGX-013",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bbreaks?\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000307
+      ],
+      "example_comment_excerpts": [
+        "This is not reviewable. Change the indentation and any non-functional change in one patch and then actual changes in another. This is also an ABI break. Though I'm not sure it's avoidable. All the devices below the ETZPC"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-002",
+      "reviewer": "Rob Herring",
+      "pattern": "herring robh",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-006",
+      "reviewer": "Rob Herring",
+      "pattern": "herring robh kernel",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-004",
+      "reviewer": "Rob Herring",
+      "pattern": "kernel org",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 2,
+      "example_series_ids": [
+        534035
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "rob herring",
+      "frequency": 2,
+      "example_series_ids": [
+        900000285,
+        900000288
+      ],
+      "example_comment_excerpts": [
+        "This is the second v1 I've gotten. Is there some change? Please version your patches. I acked the last one which you should add when sending a new version. Acked-by: Rob Herring <robh@kernel.org> Rob",
+        "Is there anything new here? Just a different compatible doesn't justify another example. With that dropped, Reviewed-by: Rob Herring <robh@kernel.org>"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-005",
+      "reviewer": "Rob Herring",
+      "pattern": "rob herring robh",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-003",
+      "reviewer": "Rob Herring",
+      "pattern": "robh kernel",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-NGRAM-007",
+      "reviewer": "Rob Herring",
+      "pattern": "robh kernel org",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\backed-by\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        534035
+      ],
+      "example_comment_excerpts": [
+        "On Thu, Aug 19, 2021 at 5:12 AM Krzysztof Kozlowski\n<krzysztof.kozlowski@canonical.com> wrote:\nAcked-by: Rob Herring <robh@kernel.org>"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-ACC-RGX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000288
+      ],
+      "example_comment_excerpts": [
+        "Is there anything new here? Just a different compatible doesn't justify another example. With that dropped, Reviewed-by: Rob Herring <robh@kernel.org>"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\?+",
+      "frequency": 16,
+      "example_series_ids": [
+        900000014,
+        900000015,
+        900000044,
+        900000127,
+        900000142,
+        900000145,
+        900000184,
+        900000209
+      ],
+      "example_comment_excerpts": [
+        "This is a single device, right? We shouldn't need 3 nodes to describe it. I think this should all be a single node like this: codec@0,3 { reg = <0 3>, <0 4>; compatible = &#34;sdw20217010d00&#34;; reset-gpios = <&#38;tlm",
+        "Was thinking these were some established bus properties... This would just be implied by the 'reg' property index. You could define 'reg-names' too I guess. qcom,rx-port-mapping and qcom,tx-port-mapping? Or keep a single",
+        "If 'rx' is always present, then make it first: minItems: 1 items: - const: rx - const: tx A single uint32 or An array of 4 uint32s? This property doesn't exist. Why is the example disabled?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bwhat\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        900000083,
+        900000104,
+        900000142,
+        900000289,
+        900000303,
+        900000352,
+        900000372
+      ],
+      "example_comment_excerpts": [
+        "This does not match what the binding originally said. And generally this combined with the one below should never be valid.",
+        "The 'git mv' is not what matters. You need the -M option for git-format-patch/send-email. There's a config option you can enable that by default. Rob",
+        "Why not a phandle to the the other bus? That would be the DT way to do it. But I'm not sure I really understand who is sharing what here."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-003",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bwhy\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        900000044,
+        900000127,
+        900000142,
+        900000232,
+        900000286,
+        900000315
+      ],
+      "example_comment_excerpts": [
+        "If 'rx' is always present, then make it first: minItems: 1 items: - const: rx - const: tx A single uint32 or An array of 4 uint32s? This property doesn't exist. Why is the example disabled?",
+        "You have nodes for each of these components, why do we need new compatible string for each combination. You can figure out the combination by looking at each of those nodes. Second, why does each combination need a new s",
+        "Why not a phandle to the the other bus? That would be the DT way to do it. But I'm not sure I really understand who is sharing what here."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-RGX-004",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bhow\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000015,
+        900000289
+      ],
+      "example_comment_excerpts": [
+        "Was thinking these were some established bus properties... This would just be implied by the 'reg' property index. You could define 'reg-names' too I guess. qcom,rx-port-mapping and qcom,tx-port-mapping? Or keep a single",
+        "The subject is still pretty generic. Ideally, we'd never have the same subject twice. I'd do something like this: ASoC: dt-bindings: awinic,aw88395: Add properties for multiple PA support Complete in what way? multiple P"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-002",
+      "reviewer": "Rob Herring",
+      "pattern": "an array",
+      "frequency": 2,
+      "example_series_ids": [
+        900000015,
+        900000044
+      ],
+      "example_comment_excerpts": [
+        "Was thinking these were some established bus properties... This would just be implied by the 'reg' property index. You could define 'reg-names' too I guess. qcom,rx-port-mapping and qcom,tx-port-mapping? Or keep a single",
+        "If 'rx' is always present, then make it first: minItems: 1 items: - const: rx - const: tx A single uint32 or An array of 4 uint32s? This property doesn't exist. Why is the example disabled?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-004",
+      "reviewer": "Rob Herring",
+      "pattern": "an array of",
+      "frequency": 2,
+      "example_series_ids": [
+        900000015,
+        900000044
+      ],
+      "example_comment_excerpts": [
+        "Was thinking these were some established bus properties... This would just be implied by the 'reg' property index. You could define 'reg-names' too I guess. qcom,rx-port-mapping and qcom,tx-port-mapping? Or keep a single",
+        "If 'rx' is always present, then make it first: minItems: 1 items: - const: rx - const: tx A single uint32 or An array of 4 uint32s? This property doesn't exist. Why is the example disabled?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-003",
+      "reviewer": "Rob Herring",
+      "pattern": "array of",
+      "frequency": 2,
+      "example_series_ids": [
+        900000015,
+        900000044
+      ],
+      "example_comment_excerpts": [
+        "Was thinking these were some established bus properties... This would just be implied by the 'reg' property index. You could define 'reg-names' too I guess. qcom,rx-port-mapping and qcom,tx-port-mapping? Or keep a single",
+        "If 'rx' is always present, then make it first: minItems: 1 items: - const: rx - const: tx A single uint32 or An array of 4 uint32s? This property doesn't exist. Why is the example disabled?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-006",
+      "reviewer": "Rob Herring",
+      "pattern": "each combination",
+      "frequency": 2,
+      "example_series_ids": [
+        900000127
+      ],
+      "example_comment_excerpts": [
+        "You have nodes for each of these components, why do we need new compatible string for each combination. You can figure out the combination by looking at each of those nodes. Second, why does each combination need a new s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "figure out",
+      "frequency": 2,
+      "example_series_ids": [
+        900000014,
+        900000127
+      ],
+      "example_comment_excerpts": [
+        "This is a single device, right? We shouldn't need 3 nodes to describe it. I think this should all be a single node like this: codec@0,3 { reg = <0 3>, <0 4>; compatible = &#34;sdw20217010d00&#34;; reset-gpios = <&#38;tlm",
+        "You have nodes for each of these components, why do we need new compatible string for each combination. You can figure out the combination by looking at each of those nodes. Second, why does each combination need a new s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-009",
+      "reviewer": "Rob Herring",
+      "pattern": "multiple pas",
+      "frequency": 2,
+      "example_series_ids": [
+        900000289
+      ],
+      "example_comment_excerpts": [
+        "The subject is still pretty generic. Ideally, we'd never have the same subject twice. I'd do something like this: ASoC: dt-bindings: awinic,aw88395: Add properties for multiple PA support Complete in what way? multiple P"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-005",
+      "reviewer": "Rob Herring",
+      "pattern": "need new",
+      "frequency": 2,
+      "example_series_ids": [
+        900000127
+      ],
+      "example_comment_excerpts": [
+        "You have nodes for each of these components, why do we need new compatible string for each combination. You can figure out the combination by looking at each of those nodes. Second, why does each combination need a new s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-010",
+      "reviewer": "Rob Herring",
+      "pattern": "standard unit",
+      "frequency": 2,
+      "example_series_ids": [
+        900000331
+      ],
+      "example_comment_excerpts": [
+        "Please test your bindings before sending. Use standard unit suffixes. Use standard unit suffixes. in Volts? Volts/Volts So 2 different units?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-008",
+      "reviewer": "Rob Herring",
+      "pattern": "test bindings",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-Q-NGRAM-007",
+      "reviewer": "Rob Herring",
+      "pattern": "why do we",
+      "frequency": 2,
+      "example_series_ids": [
+        900000127,
+        900000315
+      ],
+      "example_comment_excerpts": [
+        "You have nodes for each of these components, why do we need new compatible string for each combination. You can figure out the combination by looking at each of those nodes. Second, why does each combination need a new s",
+        "Why do we have a dtsi file hidden away here? We have examples and actual users. Do we really need a 3rd way? Rob"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern_id": "ROB_HERRING-NIT-NGRAM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "vendor prefix",
+      "frequency": 3,
+      "example_series_ids": [
+        900000034
+      ],
+      "example_comment_excerpts": [
+        "Needs a vendor prefix. Needs a vendor prefix. And all these need a vendor prefix. Hz? If so, '-hz' unit suffix and drop the type ref. typo: alwasys Hz? Can be boolean? Constraints on values? Constraints?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-NIT-NGRAM-002",
+      "reviewer": "Rob Herring",
+      "pattern": "needs vendor",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-NIT-NGRAM-003",
+      "reviewer": "Rob Herring",
+      "pattern": "needs vendor prefix",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-NIT-RGX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bnaming\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000253
+      ],
+      "example_comment_excerpts": [
+        "The above already allows this (not -names, but the number of entries). Now I'm curious. What's an example that's not a firewall? (Note I'm still not happy with the naming of 'feature' as anything is a feature, but that's"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "ROB_HERRING-NIT-RGX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\btypo\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000034
+      ],
+      "example_comment_excerpts": [
+        "Needs a vendor prefix. Needs a vendor prefix. And all these need a vendor prefix. Hz? If so, '-hz' unit suffix and drop the type ref. typo: alwasys Hz? Can be boolean? Constraints on values? Constraints?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "dt_rules": [
+    {
+      "pattern_id": "ROB_HERRING-DT-001",
+      "reviewer": "Rob Herring",
+      "pattern": "dtbs_check",
+      "frequency": 11,
+      "example_series_ids": [
+        900000068,
+        900000070,
+        900000077,
+        900000089,
+        900000130,
+        900000149,
+        900000153,
+        900000156
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-DT-002",
+      "reviewer": "Rob Herring",
+      "pattern": "additionalproperties:\\s*false",
+      "frequency": 4,
+      "example_series_ids": [
+        900000138,
+        900000147,
+        900000179,
+        900000202
+      ],
+      "example_comment_excerpts": [
+        "s/_/-/ additionalProperties: false sound-dai already has a type, so drop and define how many entries. additionalProperties: false If more than 1 entry, then you need to define what each one is and the order. Just like re",
+        "Don't need '|' if there's no formatting to preserve. blank line additionalProperties: false blank line before properties. blank line blank line blank line I prefer this to be above 'properties' in the indented cases.",
+        "The simple-card or graph-card bindings don't work for you? Never apply this schema. Why? maximum: 8 All the above have types defined. You should not be redefining the types. additionalProperties: false These are common p"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-DT-003",
+      "reviewer": "Rob Herring",
+      "pattern": "unevaluatedproperties",
+      "frequency": 2,
+      "example_series_ids": [
+        900000290,
+        900000356
+      ],
+      "example_comment_excerpts": [
+        "I have this same fix in my tree, but you missed something. Please add additionalProperties or unevaluatedProperties to the child node schema so that this error is flagged.",
+        "Unit-addresses are normally hex. And according to reg below, the max value is 8. More than 1 reg entry valid? Either way, you need maxItems. Or you can just drop 'items' 'items' is for arrays, but... not an array. ditto "
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [
+    {
+      "pattern_id": "ROB_HERRING-SERIES-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\border\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000138,
+        900000157
+      ],
+      "example_comment_excerpts": [
+        "s/_/-/ additionalProperties: false sound-dai already has a type, so drop and define how many entries. additionalProperties: false If more than 1 entry, then you need to define what each one is and the order. Just like re",
+        "You need to define the order and combinations which are valid. No need for generic descriptions. We really need to support either order? Again, need to define the order. Common property, already has a type and descriptio"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "ROB_HERRING-SERIES-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bsplit\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000004,
+        900000049
+      ],
+      "example_comment_excerpts": [
+        "I don't understand why there are 2 nodes for this other than you happen to want to split this into 2 Linux drivers. It's 1 h/w thing.",
+        "extra spaces. nvidia,sound-name-prefix You need to define the port numbers for the input and each output. Per above, this will need to be split at least into input and output ports. Same issues in the other schemas. Don'"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "ROB_HERRING-SERIES-003",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000364
+      ],
+      "example_comment_excerpts": [
+        "I don't see the rest of the series (I fetch from lore). That means your threading is broken. v3, but where is the revision history? &#34;%YAML 1.2&#34; goes on the 2nd line. Wrap lines at 80 char. Is this difference visi"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "commit_message_rules": [
+    {
+      "pattern_id": "ROB_HERRING-CM-001",
+      "reviewer": "Rob Herring",
+      "pattern": "commit\\s+message",
+      "frequency": 4,
+      "example_series_ids": [
+        900000075,
+        900000158,
+        900000191,
+        900000317
+      ],
+      "example_comment_excerpts": [
+        "Patches must have an author name, commit message, and a Signed-off-by. Please use checkpatch.pl which will point out some of this.",
+        "Your commit message needs to answer 'why'? Write complete sentences. Though as this was just added, you should do 'git revert' and send that patch. And this is not v7. However, Mark took the original patch with the same ",
+        "Deleting? Why? That's not what the commit message says. These will all fail binding checks. You need to update the $id values. Rob"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "subsystem_context": [
+    {
+      "pattern_id": "ROB_HERRING-CTX-001",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bcodec\\b",
+      "frequency": 15,
+      "example_series_ids": [
+        900000014,
+        900000017,
+        900000022,
+        900000070,
+        900000077,
+        900000103,
+        900000130,
+        900000151
+      ],
+      "example_comment_excerpts": [
+        "This is a single device, right? We shouldn't need 3 nodes to describe it. I think this should all be a single node like this: codec@0,3 { reg = <0 3>, <0 4>; compatible = &#34;sdw20217010d00&#34;; reset-gpios = <&#38;tlm",
+        "Looks like the existing fsl-asoc-card.txt? You should convert to schema and use that. Otherwise, my comments are based on this all being 'new'. I continue to not understand why audio bindings need the codec(s) in the com",
+        "Nice, I never understood why each codec needed it's own machine driver (and typically in turn compatible string). [...] I think this list should be added to the main match table below with data having a flag for active l"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-002",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bcompatible\\b",
+      "frequency": 8,
+      "example_series_ids": [
+        900000014,
+        900000017,
+        900000022,
+        900000042,
+        900000127,
+        900000284,
+        900000287,
+        900000288
+      ],
+      "example_comment_excerpts": [
+        "This is a single device, right? We shouldn't need 3 nodes to describe it. I think this should all be a single node like this: codec@0,3 { reg = <0 3>, <0 4>; compatible = &#34;sdw20217010d00&#34;; reset-gpios = <&#38;tlm",
+        "Looks like the existing fsl-asoc-card.txt? You should convert to schema and use that. Otherwise, my comments are based on this all being 'new'. I continue to not understand why audio bindings need the codec(s) in the com",
+        "Nice, I never understood why each codec needed it's own machine driver (and typically in turn compatible string). [...] I think this list should be added to the main match table below with data having a flag for active l"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-003",
+      "reviewer": "Rob Herring",
+      "pattern": "\\bqcom\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        900000014,
+        900000015,
+        900000068,
+        900000070,
+        900000181
+      ],
+      "example_comment_excerpts": [
+        "This is a single device, right? We shouldn't need 3 nodes to describe it. I think this should all be a single node like this: codec@0,3 { reg = <0 3>, <0 4>; compatible = &#34;sdw20217010d00&#34;; reset-gpios = <&#38;tlm",
+        "Was thinking these were some established bus properties... This would just be implied by the 'reg' property index. You could define 'reg-names' too I guess. qcom,rx-port-mapping and qcom,tx-port-mapping? Or keep a single",
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-004",
+      "reviewer": "Rob Herring",
+      "pattern": "\\basoc\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000017,
+        900000154,
+        900000172,
+        900000289
+      ],
+      "example_comment_excerpts": [
+        "Looks like the existing fsl-asoc-card.txt? You should convert to schema and use that. Otherwise, my comments are based on this all being 'new'. I continue to not understand why audio bindings need the codec(s) in the com",
+        "For the subject, don't repeat 'bindings' and 'documentation' is redundant: ASoC: dt-bindings: Add Everest ES8326 audio CODEC With that, Reviewed-by: Rob Herring <robh@kernel.org>",
+        "Thanks. Blame MAINTAINERS: STM32 AUDIO (ASoC) DRIVERS M: Olivier Moysan <olivier.moysan@foss.st.com> M: Arnaud Pouliquen <arnaud.pouliquen@foss.st.com> L: alsa-devel@alsa-project.org (moderated for non-subscribers) S: Ma"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-005",
+      "reviewer": "Rob Herring",
+      "pattern": "dt-binding",
+      "frequency": 2,
+      "example_series_ids": [
+        900000154,
+        900000289
+      ],
+      "example_comment_excerpts": [
+        "For the subject, don't repeat 'bindings' and 'documentation' is redundant: ASoC: dt-bindings: Add Everest ES8326 audio CODEC With that, Reviewed-by: Rob Herring <robh@kernel.org>",
+        "The subject is still pretty generic. Ideally, we'd never have the same subject twice. I'd do something like this: ASoC: dt-bindings: awinic,aw88395: Add properties for multiple PA support Complete in what way? multiple P"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-006",
+      "reviewer": "Rob Herring",
+      "pattern": "dt-bindings",
+      "frequency": 2,
+      "example_series_ids": [
+        900000154,
+        900000289
+      ],
+      "example_comment_excerpts": [
+        "For the subject, don't repeat 'bindings' and 'documentation' is redundant: ASoC: dt-bindings: Add Everest ES8326 audio CODEC With that, Reviewed-by: Rob Herring <robh@kernel.org>",
+        "The subject is still pretty generic. Ideally, we'd never have the same subject twice. I'd do something like this: ASoC: dt-bindings: awinic,aw88395: Add properties for multiple PA support Complete in what way? multiple P"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "ROB_HERRING-CTX-007",
+      "reviewer": "Rob Herring",
+      "pattern": "soundwire",
+      "frequency": 1,
+      "example_series_ids": [
+        900000181
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the following warnings. Consider if they are expected or the schema is incorrect. These may not be new warnings. Note that it is not yet a requirement to have"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "boot dts",
+    "arch arm64",
+    "arch arm64 boot",
+    "arm64 boot",
+    "arm64 boot dts",
+    "dtb arch",
+    "dtb arch arm64",
+    "yaml arch",
+    "\\bdon't\\b",
+    "\\bneeds?\\s+to\\b"
+  ],
+  "top_acceptance_signals": [
+    "herring robh",
+    "herring robh kernel",
+    "kernel org",
+    "krzysztof kozlowski",
+    "rob herring",
+    "rob herring robh",
+    "robh kernel",
+    "robh kernel org",
+    "\\backed-by\\b",
+    "\\breviewed-by\\b"
+  ],
+  "typical_review_iterations": 1,
+  "dt_strictness": "MEDIUM",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 148,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 95,
+    "question_classified_count": 21,
+    "signoff_lines_removed_count": 0
+  },
+  "data_source": "lore.kernel.org",
+  "patchwork_threads": 9,
+  "lore_threads": 148,
+  "total_qualifying_threads": 148,
+  "lore_lists_queried": [
+    "alsa-devel",
+    "devicetree"
+  ]
+}

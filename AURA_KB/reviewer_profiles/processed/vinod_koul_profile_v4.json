@@ -1,0 +1,1390 @@
+{
+  "reviewer": "Vinod Koul",
+  "profile_version": "v4",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 386,
+  "comment_threads_analyzed": 210,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 26,
+      "example_series_ids": [
+        900000011,
+        900000020,
+        900000025,
+        900000031,
+        900000041,
+        900000054,
+        900000065,
+        900000075
+      ],
+      "example_comment_excerpts": [
+        "Sure, I would like to series built as, first defining the quirk along/followed by bus changes. Then the last patch should be intel controller changes and setting the quirks (like above) in the last patch. Let me know if ",
+        "Do we need another abstractions for resources here, why not aux dev creation set the resources required and we skip this step... so auxdev has id and still we pass id as argument :( Not sure if folks can fix this now No ",
+        "ENOMEM ? that should be EIO, we expected data but didnt get it in read fifo maybe the comment should say, check for space in write fifo? EIO or better error code here too -- ~Vinod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bfix\\b",
+      "frequency": 17,
+      "example_series_ids": [
+        900000014,
+        900000020,
+        900000051,
+        900000070,
+        900000076,
+        900000083,
+        900000089,
+        900000090
+      ],
+      "example_comment_excerpts": [
+        "Key is &#34;The sysfs for properties&#34; is for property files. I am not sure how this implies for a number above. I was thinking of using ID for N here and add a link_id file below which represents the link-id property",
+        "Do we need another abstractions for resources here, why not aux dev creation set the resources required and we skip this step... so auxdev has id and still we pass id as argument :( Not sure if folks can fix this now No ",
+        "When we started this, I recall that Mark wanted the use of tdm_slot for stream tag... Even if you fix the problem by making stream generic, we might still have the same issue with tdm_slot where wrong slot is passed.. Wo"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 13,
+      "example_series_ids": [
+        900000015,
+        900000020,
+        900000021,
+        900000079,
+        900000082,
+        900000094,
+        900000138,
+        900000159
+      ],
+      "example_comment_excerpts": [
+        "Hi Pierre, While I agree with the approach, I do not like the implementation. The quirks in firmware should not reside in core code. Drivers are the right place, of course we need to add callbacks into driver for this. S",
+        "Do we need another abstractions for resources here, why not aux dev creation set the resources required and we skip this step... so auxdev has id and still we pass id as argument :( Not sure if folks can fix this now No ",
+        "Maybe add a comment :-) The reason here is that before calling device_register() we need to be ready and completely initialized. device_register is absolutely the last step in the flow, always. The probe of the device ca"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-NGRAM-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "sdw_bus bus",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-NGRAM-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "struct sdw_bus",
+      "frequency": 8,
+      "example_series_ids": [
+        900000015
+      ],
+      "example_comment_excerpts": [
+        "Hi Pierre, While I agree with the approach, I do not like the implementation. The quirks in firmware should not reside in core code. Drivers are the right place, of course we need to add callbacks into driver for this. S"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-NGRAM-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "struct sdw_bus bus",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-NGRAM-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "include linux",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-NGRAM-006",
+      "reviewer": "Vinod Koul",
+      "pattern": "we need to",
+      "frequency": 6,
+      "example_series_ids": [
+        900000015,
+        900000020,
+        900000021,
+        900000082,
+        900000287
+      ],
+      "example_comment_excerpts": [
+        "Hi Pierre, While I agree with the approach, I do not like the implementation. The quirks in firmware should not reside in core code. Drivers are the right place, of course we need to add callbacks into driver for this. S",
+        "Do we need another abstractions for resources here, why not aux dev creation set the resources required and we skip this step... so auxdev has id and still we pass id as argument :( Not sure if folks can fix this now No ",
+        "Maybe add a comment :-) The reason here is that before calling device_register() we need to be ready and completely initialized. device_register is absolutely the last step in the flow, always. The probe of the device ca"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bbreaks?\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000055,
+        900000160,
+        900000171,
+        900000275
+      ],
+      "example_comment_excerpts": [
+        "we break if read returns non zero value... Do you know what is the value expected? Okay this contains garbage.. and we are waiting for it read a garbage value! -- ~Vinod",
+        "why not: case SDW_SLAVE_ATTACHED: case SDW_SLAVE_UNATTACHED: case SDW_SLAVE_ALERT: amd_manager->status[index] = status; break; goto are mostly used for error handling, i dont thing case here deserves a goto, can you plea",
+        "Coz the patch was big to review. This is usual Linux approach to break a change into smaller chunks for review! -- ~Vinod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bproblem\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000051,
+        900000060,
+        900000081,
+        900000370
+      ],
+      "example_comment_excerpts": [
+        "When we started this, I recall that Mark wanted the use of tdm_slot for stream tag... Even if you fix the problem by making stream generic, we might still have the same issue with tdm_slot where wrong slot is passed.. Wo",
+        "yeah it seems to be there.. As well os arm-msm and dri-devel on k.org pw....Problem with QC delivery...? -- ~Vinod",
+        "Problem is that we need spmi driver and binding merged before we can merge this. I have not sent the patch for that reason :( -- ~Vinod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-006",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000015,
+        900000080,
+        900000368
+      ],
+      "example_comment_excerpts": [
+        "Hi Pierre, While I agree with the approach, I do not like the implementation. The quirks in firmware should not reside in core code. Drivers are the right place, of course we need to add callbacks into driver for this. S",
+        "Yes, I did run W=1 check for the patches, with gcc I do not see this warning :( I have fixed and will send updated revision shortly -- ~Vinod",
+        "Why does this flag imply for the hardware. I do not like the interface designed here. This is overloading. Can we look at doing something better here. -- ~Vinod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-007",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bwrong\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000051,
+        900000180,
+        900000227
+      ],
+      "example_comment_excerpts": [
+        "When we started this, I recall that Mark wanted the use of tdm_slot for stream tag... Even if you fix the problem by making stream generic, we might still have the same issue with tdm_slot where wrong slot is passed.. Wo",
+        "wrong alignment drop ret, and return 0 here? I prefer using 12 * GIGA etc to define these FIELD_{PREP|GET} please superfluous init for ret -- ~Vinod",
+        "something wrong with your editor to have this formatting, you can use upto 80 chars here! updatel() local macro? so the code is copied from a GPL declared file to now and GPL + BSD one! Have you had lawyers look into thi"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-008",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bplease\\s+use\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000159,
+        900000327
+      ],
+      "example_comment_excerpts": [
+        "*cmd = msg->flags + 2; that should work too I would have coded this differently. we already know where we detect timeout or nack, so why not return the error from these places (it is exactly once). With that no_ack becom",
+        "That sounds good but I dont like the idea that we add a custom interface for this. Please use DMA_PREP_INTERRUPT instead. Adding this flag should trigger N interrupts, absence of this should lead to Block events only -- "
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-009",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bdon't\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000044
+      ],
+      "example_comment_excerpts": [
+        "I would feel this is still not use for the peripheral_config, but lets keep it to get rid of slave_id. Also, I would be better if this was moved to DT as the next cell, don't recall why that was not done/feasible. -- ~Vi"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-010",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bissue\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000051
+      ],
+      "example_comment_excerpts": [
+        "When we started this, I recall that Mark wanted the use of tdm_slot for stream tag... Even if you fix the problem by making stream generic, we might still have the same issue with tdm_slot where wrong slot is passed.. Wo"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-011",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bnack\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000159
+      ],
+      "example_comment_excerpts": [
+        "*cmd = msg->flags + 2; that should work too I would have coded this differently. we already know where we detect timeout or nack, so why not return the error from these places (it is exactly once). With that no_ack becom"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-012",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bplease\\s+split\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000147
+      ],
+      "example_comment_excerpts": [
+        "The change lgtm, but needs ACK from Mark. Please split the ASoC bit to separate patch and copy Mark (that can be first patch here) -- ~Vinod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-OBJ-RGX-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\brework\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        471445
+      ],
+      "example_comment_excerpts": [
+        "What do you mean by rework, what changes.. Please details out changes\ndone and the reasons behind them, so that we can review accordingly\nAnd One change per patch please"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "kernel org",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "koul vkoul",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-006",
+      "reviewer": "Vinod Koul",
+      "pattern": "koul vkoul kernel",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "vinod koul",
+      "frequency": 8,
+      "example_series_ids": [
+        900000048,
+        900000056,
+        900000091,
+        900000108,
+        900000130,
+        900000354
+      ],
+      "example_comment_excerpts": [
+        "Ideally this should not be part of this series! If Mark wants to pick: Acked-By: Vinod Koul <vkoul@kernel.org> -- ~Vinod",
+        "Reviewed-by: Vinod Koul <vkoul@kernel.org> Steve, Can this be picked up please. I will rebase my v7 update based on this... -- ~Vinod",
+        "Reviewed-by: Vinod Koul <vkoul@kernel.org> I tested this on my pixel3 and had to change how panel driver handles this, with that it worked just fine Tested-by: Vinod Koul <vkoul@kernel.org> -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "vinod koul vkoul",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "vkoul kernel",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-007",
+      "reviewer": "Vinod Koul",
+      "pattern": "vkoul kernel org",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-RGX-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\blgtm\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000023,
+        900000153,
+        900000248,
+        900000288
+      ],
+      "example_comment_excerpts": [
+        "Mark, are you okay for 4, 5 to go thru sdw tree with your ack? The patches lgtm -- ~Vinod",
+        "The series lgtm. This fails for me to apply though due to other patches I have picked up. Can you please rebase the phy patches and send those -- ~Vinod",
+        "The series lgtm, having the core handle these would be good. I will wait couple of days for people to test this and give a t-b and apply. I hope it is okay if patch1 goes thru sdw tree? BR -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-RGX-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000056,
+        900000091,
+        900000130,
+        900000218
+      ],
+      "example_comment_excerpts": [
+        "Reviewed-by: Vinod Koul <vkoul@kernel.org> Steve, Can this be picked up please. I will rebase my v7 update based on this... -- ~Vinod",
+        "Reviewed-by: Vinod Koul <vkoul@kernel.org> I tested this on my pixel3 and had to change how panel driver handles this, with that it worked just fine Tested-by: Vinod Koul <vkoul@kernel.org> -- ~Vinod",
+        "Tested this on DM8450-HDK with HDMI and it works for me. For whole series: Tested-by: Vinod Koul <vkoul@kernel.org> Reviewed-by: Vinod Koul <vkoul@kernel.org> -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-009",
+      "reviewer": "Vinod Koul",
+      "pattern": "kernel org vinod",
+      "frequency": 4,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-008",
+      "reviewer": "Vinod Koul",
+      "pattern": "org vinod",
+      "frequency": 4,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-RGX-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\backed-by\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000048,
+        900000108,
+        900000354
+      ],
+      "example_comment_excerpts": [
+        "Ideally this should not be part of this series! If Mark wants to pick: Acked-By: Vinod Koul <vkoul@kernel.org> -- ~Vinod",
+        "Aha, I checked the symbol exists and my test build passed! Yes indeed, so can you give a tag for that and or would you like to taje this thru ACPI tree, in that case Acked-By: Vinod Koul <vkoul@kernel.org> BR -- ~Vinod",
+        "Yes I am nota helpers like this, but I dont think it is big deal so: Acked-by: Vinod Koul <vkoul@kernel.org> -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-NGRAM-010",
+      "reviewer": "Vinod Koul",
+      "pattern": "acked-by vinod",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-ACC-RGX-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\blooks\\s+good\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000117
+      ],
+      "example_comment_excerpts": [
+        "No they are not. It is a logical channel to send data to the device. The device can have one or many data ports... So the device logic or usb-endpoint style maynot look good here... The change looks good though, dp0 mayb"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "VINOD_KOUL-Q-RGX-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\?+",
+      "frequency": 48,
+      "example_series_ids": [
+        900000001,
+        900000005,
+        900000006,
+        900000007,
+        900000008,
+        900000026,
+        900000027,
+        900000034
+      ],
+      "example_comment_excerpts": [
+        "should the else case be to continue, is the DSP not critical for the driver to work..? Seems unrelated change -- ~Vinod",
+        "Also, is the sdw_master_prop right place for a 'quirk' property. I think we can use sdw_master_device or sdw_bus as this seems like a bus quirk..? -- ~Vinod",
+        "move this to intel patch please.. Why not add this quirk in patch 1..? Also add comments about each quirk, hopefully it wont be a big table -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-RGX-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bwhy\\b",
+      "frequency": 24,
+      "example_series_ids": [
+        900000006,
+        900000007,
+        900000008,
+        900000026,
+        900000027,
+        900000036,
+        900000037,
+        900000043
+      ],
+      "example_comment_excerpts": [
+        "move this to intel patch please.. Why not add this quirk in patch 1..? Also add comments about each quirk, hopefully it wont be a big table -- ~Vinod",
+        "Okay but then why use a mutex ? do while{} ? why not do this at the end if retry fails, that will make code look neater Do you want to log retry as err..? -- ~Vinod",
+        "define at top of the function pls, also maybe better name status? why * 2 ? Maybe add a comment for this logic maybe move this into a fn and avoid a goto for non err path? -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-RGX-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bwhat\\b",
+      "frequency": 14,
+      "example_series_ids": [
+        900000037,
+        900000047,
+        900000077,
+        900000084,
+        900000099,
+        900000111,
+        900000134,
+        900000146
+      ],
+      "example_comment_excerpts": [
+        "I am not sure of this patch yet, maybe I am comprehending it.. 1. In above you are calling resume of child devices first and then intel device, which sounds reverse, should you not resume intel device first and then chil",
+        "I didnt have this series :( and on checking found that gmail tagged these and bunch of other alsa patches as spam, even my linaro email seems to have been unsubscribed due to bounces... Not sure what is going on, will ch",
+        "it is dmaengine: xxx Also is this patch dependent on rest of the series, if not consider sending separately Not more platform data :( Can you explain this structure and why this is required? What do these fields refer to"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-RGX-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bcan\\s+you\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        900000077,
+        900000113,
+        900000146,
+        900000215,
+        900000228,
+        900000294,
+        900000349
+      ],
+      "example_comment_excerpts": [
+        "it is dmaengine: xxx Also is this patch dependent on rest of the series, if not consider sending separately Not more platform data :( Can you explain this structure and why this is required? What do these fields refer to",
+        "This fails for me on patch 2, can you please rebase on my next later today and resend. I would like to merge this for current cycle.. -- ~Vinod",
+        "Ok, can you please explain what is meant by 'regular' cmd and 'immediate', lets see what is required here -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-RGX-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bhow\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        900000034,
+        900000088,
+        900000118,
+        900000157,
+        900000224,
+        900000371,
+        900000378
+      ],
+      "example_comment_excerpts": [
+        "More detailed log please, who are others... Otherwise the changes look fine to me, how do you wnat this to be picked? I guess asoc parts are dependent on this -- ~Vinod",
+        "That is quite right. So we wont know how many channels are made available.. So is min 1 acceptable or do you have an alternate ? -- ~Vinod",
+        "Sounds good to me.. Yes the dynamic ones are the one that need attention. How do you propose to handle these? -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "here vinod",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "to handle",
+      "frequency": 4,
+      "example_series_ids": [
+        900000050,
+        900000118,
+        900000299,
+        900000310
+      ],
+      "example_comment_excerpts": [
+        "That does not answer my question. Do the DMICs not use PDM? There are ways to handle that... -- ~Vinod",
+        "Sounds good to me.. Yes the dynamic ones are the one that need attention. How do you propose to handle these? -- ~Vinod",
+        "It is in Linus's tree now. Greg would you like to drop commit 6fa78e9c41471fe43052cd6feba6eae1b0277ae3 or carry it and the revert...? What is the usual process for you to handle reverts? -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "dependent on",
+      "frequency": 3,
+      "example_series_ids": [
+        900000034,
+        900000077,
+        900000111
+      ],
+      "example_comment_excerpts": [
+        "More detailed log please, who are others... Otherwise the changes look fine to me, how do you wnat this to be picked? I guess asoc parts are dependent on this -- ~Vinod",
+        "it is dmaengine: xxx Also is this patch dependent on rest of the series, if not consider sending separately Not more platform data :( Can you explain this structure and why this is required? What do these fields refer to",
+        "Sorry am bit confused now, this is what I have in sdw-next static int sdw_drv_remove(struct device *dev) { struct sdw_slave *slave = dev_to_sdw_dev(dev); struct sdw_driver *drv = drv_to_sdw_driver(dev->driver); int ret ="
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-006",
+      "reviewer": "Vinod Koul",
+      "pattern": "is required",
+      "frequency": 3,
+      "example_series_ids": [
+        900000077,
+        900000146,
+        900000165
+      ],
+      "example_comment_excerpts": [
+        "it is dmaengine: xxx Also is this patch dependent on rest of the series, if not consider sending separately Not more platform data :( Can you explain this structure and why this is required? What do these fields refer to",
+        "Ok, can you please explain what is meant by 'regular' cmd and 'immediate', lets see what is required here -- ~Vinod",
+        "ok ack here and everwhere else yep I think that is a good question. I would prefer disabling and enabling in places it is required, we might have a headless system or a dev board where we dont have display..? Isnt this b"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "looks like",
+      "frequency": 3,
+      "example_series_ids": [
+        900000052,
+        900000134,
+        900000311
+      ],
+      "example_comment_excerpts": [
+        "pls align to preceding open brace (here and other places) should this be false for these states? looks like dp_mode is true always. And only for DP state A C E, usb_mode is false... empty line here pls -- ~Vinod",
+        "I dont know what I can do now to get this patch in... looks like 6.1 is missed too! -- ~Vinod",
+        "Looks like you misunderstood, the question is why do you need three variables to convey this info..? Use a single variable please -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "preceding open",
+      "frequency": 3,
+      "example_series_ids": [
+        900000052,
+        900000150,
+        900000156
+      ],
+      "example_comment_excerpts": [
+        "pls align to preceding open brace (here and other places) should this be false for these states? looks like dp_mode is true always. And only for DP state A C E, usb_mode is false... empty line here pls -- ~Vinod",
+        "do you really need all of these? that_is_a_very_long_name, maybe eusb2_vreg_names ? local structs needs not have qcom_snps_eusb2_foo eusb2_foo may suffice align with preceding open please empty line here -- ~Vinod",
+        "Why use shifts, use FIELD_{PREP|GET} instead this comments is not very useful! either drop or add a meaningful comment superfluous init pls align to preceding open brace (hint checkpatch --strict would warn you for this)"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "be dropped",
+      "frequency": 2,
+      "example_series_ids": [
+        486089
+      ],
+      "example_comment_excerpts": [
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-009",
+      "reviewer": "Vinod Koul",
+      "pattern": "child devices",
+      "frequency": 2,
+      "example_series_ids": [
+        900000037
+      ],
+      "example_comment_excerpts": [
+        "I am not sure of this patch yet, maybe I am comprehending it.. 1. In above you are calling resume of child devices first and then intel device, which sounds reverse, should you not resume intel device first and then chil"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "driver is",
+      "frequency": 2,
+      "example_series_ids": [
+        486089
+      ],
+      "example_comment_excerpts": [
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not ",
+        "the underlaying firmware would ensure this driver is probed if you have\nsuch a device, so why have this restriction?\nOkay so how is the platform device created?"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-010",
+      "reviewer": "Vinod Koul",
+      "pattern": "intel device",
+      "frequency": 2,
+      "example_series_ids": [
+        900000037
+      ],
+      "example_comment_excerpts": [
+        "I am not sure of this patch yet, maybe I am comprehending it.. 1. In above you are calling resume of child devices first and then intel device, which sounds reverse, should you not resume intel device first and then chil"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-007",
+      "reviewer": "Vinod Koul",
+      "pattern": "reason why",
+      "frequency": 2,
+      "example_series_ids": [
+        900000027,
+        900000251
+      ],
+      "example_comment_excerpts": [
+        "The soundwire module from Intel and core soundwire core was always dual licensed, so it kind of followed that.. This module, I would say NO. Unless someone from Intel disagree.. Pierre/Bard..? If all agree I dont see a r",
+        "That would be sane thing to do if we can get protocol status. Most of the times DMA txn would tell you success or fail, here we have firmware which tells us this and I see no reason why this can't be propagated. -- ~Vino"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-008",
+      "reviewer": "Vinod Koul",
+      "pattern": "reason why be",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-Q-NGRAM-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "single line",
+      "frequency": 2,
+      "example_series_ids": [
+        486089
+      ],
+      "example_comment_excerpts": [
+        "Why does it have to do that? The dma driver is generic..\nThis can be dropped, allocators will warn you for the allocation\nfailures\nsingle line now :)\nthis can be dropped too..\nwill this be ever executed?\nshould this not "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern_id": "VINOD_KOUL-NIT-RGX-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bstyle\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000169
+      ],
+      "example_comment_excerpts": [
+        "There was already an empty line, this didnt make sense. Please run checkpatch to avoid missing these style issues I have fixed it up and applied -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "dt_rules": [],
+  "runtime_pm_rules": [
+    {
+      "pattern_id": "VINOD_KOUL-RPM-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bresume\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000054,
+        900000070,
+        900000136
+      ],
+      "example_comment_excerpts": [
+        "Hi Daniel, cplay does have have handler for it, patches would be welcome :) Are you sure, I checked with aplay, it seems to me work for me on Fedora $ aplay test.wav Playing WAVE 'test.wav' : Signed 16 bit Little Endian,",
+        "A patch title should reflect the change and not the cause. So i have taken liberty to fix it as: soundwire: qcom: use __maybe_unused for swrm_runtime_resume() swrm_runtime_resume() would not be defined when CONFIG_PM=n T",
+        "There has been discussion in the past for this and as Pierre commented above it is really hard to resume a compressed stream. There is a big DSP dependency here.. Agree, based on DSP support a driver can opt in. Userspac"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-RPM-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "pm_runtime",
+      "frequency": 1,
+      "example_series_ids": [
+        900000101
+      ],
+      "example_comment_excerpts": [
+        "should we really do a wrapper to fix this ;-) I would think dropping the get wrapper and calling pm_runtime_get() unconditionally would be better..? -- ~Vinod"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "series_structure_rules": [
+    {
+      "pattern_id": "VINOD_KOUL-SERIES-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bsplit\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000147,
+        900000164,
+        900000242,
+        900000275
+      ],
+      "example_comment_excerpts": [
+        "The change lgtm, but needs ACK from Mark. Please split the ASoC bit to separate patch and copy Mark (that can be first patch here) -- ~Vinod",
+        "You mean this or something else? Sure Maybe :-) but we would like to land the dts now rather than wait more :) Will fix Are you referring to adding -0 for this? This is reserved for hyp, I think we should add it here so ",
+        "why change this? so which bit is for PWR control, it is still bit 0 right? why change timeout? this should be explained in log, even better a individual patch explaining why this was changed this will clear the bit, i th"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SERIES-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bbisect",
+      "frequency": 1,
+      "example_series_ids": [
+        900000275
+      ],
+      "example_comment_excerpts": [
+        "There was merge window, I dont look up during that. Then I had some family stuff and travel to take care... Things happen. When in doubt pls ask, a gentle reminder goes long way! That is best. Very rarely we have a situa"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SERIES-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\border\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000051
+      ],
+      "example_comment_excerpts": [
+        "When we started this, I recall that Mark wanted the use of tdm_slot for stream tag... Even if you fix the problem by making stream generic, we might still have the same issue with tdm_slot where wrong slot is passed.. Wo"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SERIES-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000011
+      ],
+      "example_comment_excerpts": [
+        "Sure, I would like to series built as, first defining the quirk along/followed by bus changes. Then the last patch should be intel controller changes and setting the quirks (like above) in the last patch. Let me know if "
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "commit_message_rules": [],
+  "subsystem_context": [
+    {
+      "pattern_id": "VINOD_KOUL-CTX-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "soundwire",
+      "frequency": 8,
+      "example_series_ids": [
+        900000015,
+        900000027,
+        900000041,
+        900000070,
+        900000116,
+        900000235,
+        900000271,
+        900000300
+      ],
+      "example_comment_excerpts": [
+        "Hi Pierre, While I agree with the approach, I do not like the implementation. The quirks in firmware should not reside in core code. Drivers are the right place, of course we need to add callbacks into driver for this. S",
+        "The soundwire module from Intel and core soundwire core was always dual licensed, so it kind of followed that.. This module, I would say NO. Unless someone from Intel disagree.. Pierre/Bard..? If all agree I dont see a r",
+        "are no_pcm &#38; nonatomic supposed to be not used together? So if FE is nonatomic would BE trigger be atomic or nonatomic? Sorry looks like we diverged, orignal question was can we do heavy tasks in trigger, the answer "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bqcom\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        900000070,
+        900000074,
+        900000076,
+        900000175,
+        900000224,
+        900000271,
+        900000320
+      ],
+      "example_comment_excerpts": [
+        "A patch title should reflect the change and not the cause. So i have taken liberty to fix it as: soundwire: qcom: use __maybe_unused for swrm_runtime_resume() swrm_runtime_resume() would not be defined when CONFIG_PM=n T",
+        "Hi Rob, It does, I reran this and comparing before and after logs and looking at the diff, few other warnings seems to disappear as well: For example these are not shown now after applying the patch and they seem legit t",
+        "Well in this case I think we might need a fix: Here is the example quoted in the binding. We have ports{} and then the two port@0 and port@1 underneath. So it should be okay to drop #address-cells/#size-cells from dsi no"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\basoc\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000034,
+        900000038,
+        900000116,
+        900000147
+      ],
+      "example_comment_excerpts": [
+        "More detailed log please, who are others... Otherwise the changes look fine to me, how do you wnat this to be picked? I guess asoc parts are dependent on this -- ~Vinod",
+        "I have acked the sdw parts, pls pick them thru ASoC tree. If we have conflicts, I can merge the immutable tag from your tree. -- ~Vinod",
+        "Hey Mark, It is bit late for sdw tree (we are closed for this cycle now), if you are okay, pls feel free to take thru ASoC tree: You may use: git://git.kernel.org/pub/scm/linux/kernel/git/vkoul/soundwire.git tags/soundwi"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-004",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bcompatible\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000010,
+        900000076,
+        900000106,
+        900000133
+      ],
+      "example_comment_excerpts": [
+        "Right, but the point is that the properties were mostly derived from DiSco, so am bit skeptical about it adding it there.. Or they could be set by driver as well based on device id, compatible and so on.. It maybe fw pro",
+        "Well in this case I think we might need a fix: Here is the example quoted in the binding. We have ports{} and then the two port@0 and port@1 underneath. So it should be okay to drop #address-cells/#size-cells from dsi no",
+        "Generic kryo and not kryoxxx? I dont see patch documenting this compatible, was it added earlier, if not pls add.. s/interconncet/interconnect Hmmm I thought it was required that node name should be interconnect@x why ad"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bcodec\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000037,
+        900000075
+      ],
+      "example_comment_excerpts": [
+        "I am not sure of this patch yet, maybe I am comprehending it.. 1. In above you are calling resume of child devices first and then intel device, which sounds reverse, should you not resume intel device first and then chil",
+        "yeah it might make sense to be under sound. I think this is a slimbus codec (right Srini..?) and this should be under slim node.. -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-006",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bmsm\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000060,
+        900000283
+      ],
+      "example_comment_excerpts": [
+        "yeah it seems to be there.. As well os arm-msm and dri-devel on k.org pw....Problem with QC delivery...? -- ~Vinod",
+        "Why is the patch titled display/msm, this is phy patch and it should be tagged as such.. Pls update -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-007",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bqualcomm\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000326
+      ],
+      "example_comment_excerpts": [
+        "Have you aligned internally b/w team at Qualcomm to have this as single approach for LOCK implementation. I would like to see ack from Mukesh/Bjorn before proceeding ahead with this -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-008",
+      "reviewer": "Vinod Koul",
+      "pattern": "dt-binding",
+      "frequency": 1,
+      "example_series_ids": [
+        900000320
+      ],
+      "example_comment_excerpts": [
+        "I see to have missed one! This one is documented see: d146d384222e dt-bindings: phy: qcom,qusb2: Add bindings for QCS615 but, the third patch is sadly not... I am dropping the third patch -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-CTX-009",
+      "reviewer": "Vinod Koul",
+      "pattern": "dt-bindings",
+      "frequency": 1,
+      "example_series_ids": [
+        900000320
+      ],
+      "example_comment_excerpts": [
+        "I see to have missed one! This one is documented see: d146d384222e dt-bindings: phy: qcom,qusb2: Add bindings for QCS615 but, the third patch is sadly not... I am dropping the third patch -- ~Vinod"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [
+    {
+      "pattern_id": "VINOD_KOUL-SPEC-006",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bwhy\\b",
+      "frequency": 41,
+      "example_series_ids": [
+        900000006,
+        900000007,
+        900000008,
+        900000020,
+        900000026,
+        900000027,
+        900000036,
+        900000037
+      ],
+      "example_comment_excerpts": [
+        "move this to intel patch please.. Why not add this quirk in patch 1..? Also add comments about each quirk, hopefully it wont be a big table -- ~Vinod",
+        "Okay but then why use a mutex ? do while{} ? why not do this at the end if retry fails, that will make code look neater Do you want to log retry as err..? -- ~Vinod",
+        "define at top of the function pls, also maybe better name status? why * 2 ? Maybe add a comment for this logic maybe move this into a fn and avoid a goto for non err path? -- ~Vinod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "category": "design_question"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SPEC-005",
+      "reviewer": "Vinod Koul",
+      "pattern": "why\\s+not\\b",
+      "frequency": 11,
+      "example_series_ids": [
+        900000006,
+        900000007,
+        900000020,
+        900000026,
+        900000043,
+        900000079,
+        900000102,
+        900000159
+      ],
+      "example_comment_excerpts": [
+        "move this to intel patch please.. Why not add this quirk in patch 1..? Also add comments about each quirk, hopefully it wont be a big table -- ~Vinod",
+        "Okay but then why use a mutex ? do while{} ? why not do this at the end if retry fails, that will make code look neater Do you want to log retry as err..? -- ~Vinod",
+        "Do we need another abstractions for resources here, why not aux dev creation set the resources required and we skip this step... so auxdev has id and still we pass id as argument :( Not sure if folks can fix this now No "
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM",
+      "category": "design_question"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SPEC-001",
+      "reviewer": "Vinod Koul",
+      "pattern": "\\bs[\\-\\s]?o[\\-\\s]?b\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        504081
+      ],
+      "example_comment_excerpts": [
+        "Patch was sent by angkery <angkery@163.com> and signed off by Junlin\nYang <yangjunlin@yulong.com>. I would need s-o-b by sender as well...\nThanks"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW",
+      "category": "process_objection"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SPEC-003",
+      "reviewer": "Vinod Koul",
+      "pattern": "have\\s+you\\s+tested",
+      "frequency": 1,
+      "example_series_ids": [
+        507031
+      ],
+      "example_comment_excerpts": [
+        "You are also changing the init call here, there is a reason why\ndmaengine drivers are subsys_initcall.. have you tested this?"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW",
+      "category": "testing_objection"
+    },
+    {
+      "pattern_id": "VINOD_KOUL-SPEC-002",
+      "reviewer": "Vinod Koul",
+      "pattern": "signed[\\-\\s]off",
+      "frequency": 1,
+      "example_series_ids": [
+        504081
+      ],
+      "example_comment_excerpts": [
+        "Patch was sent by angkery <angkery@163.com> and signed off by Junlin\nYang <yangjunlin@yulong.com>. I would need s-o-b by sender as well...\nThanks"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW",
+      "category": "process_objection"
+    }
+  ],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "\\bshould\\s+be\\b",
+    "\\bfix\\b",
+    "\\bneeds?\\s+to\\b",
+    "sdw_bus bus",
+    "struct sdw_bus",
+    "struct sdw_bus bus",
+    "include linux",
+    "we need to",
+    "\\bbreaks?\\b",
+    "\\bproblem\\b"
+  ],
+  "top_acceptance_signals": [
+    "kernel org",
+    "koul vkoul",
+    "koul vkoul kernel",
+    "vinod koul",
+    "vinod koul vkoul",
+    "vkoul kernel",
+    "vkoul kernel org",
+    "\\blgtm\\b",
+    "\\breviewed-by\\b",
+    "kernel org vinod"
+  ],
+  "typical_review_iterations": 1,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 210,
+    "acceptance_email_count": 1,
+    "objection_classified_count": 66,
+    "question_classified_count": 63,
+    "signoff_lines_removed_count": 0
+  },
+  "data_source": "lore.kernel.org",
+  "patchwork_threads": 6,
+  "lore_threads": 210,
+  "total_qualifying_threads": 210,
+  "lore_lists_queried": [
+    "alsa-devel",
+    "linux-arm-msm"
+  ]
+}

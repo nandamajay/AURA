@@ -1,0 +1,1537 @@
+{
+  "reviewer": "Pierre-Louis Bossart",
+  "profile_version": "v4",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2021-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 400,
+  "comment_threads_analyzed": 242,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bdon't\\b",
+      "frequency": 57,
+      "example_series_ids": [
+        900000002,
+        900000005,
+        900000008,
+        900000015,
+        900000016,
+        900000038,
+        900000052,
+        900000058
+      ],
+      "example_comment_excerpts": [
+        "please don't top-post... I don't think it's correct to declare 4-channel support at the individual codec DAI level when in practice each device will be provided with a TDM mask that selects two slots. This is confusing d",
+        "I don't get the idea, sorry. If you look at the code, these are the cases where this 'struct completion' is used struct completion enumeration; complete(&#38;ctrl->enumeration); /* Enable Auto enumeration */ init_complet",
+        "Still not clear, sorry, see my comment below. can this really happen? Device0 cannot be in alert status, can it? The only this it can do is assert PREQ and set the Device0 status to 1 (ATTACHED). I don't get how a device"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 32,
+      "example_series_ids": [
+        900000028,
+        900000036,
+        900000048,
+        900000056,
+        900000073,
+        900000102,
+        900000130,
+        900000134
+      ],
+      "example_comment_excerpts": [
+        "We definitively need a control to indicate that a PCM offload device is available or not. There's still a very large open with the notion of having separate cards for the same audio device. Not only would it duplicate th",
+        "That last sentence isn't aligned with the way enumeration works in general for SoundWire. The Manager starts the clock, usually after a bus reset, and waits for Peripherals to signal their presence with Device0 Attached.",
+        "Can you remind me why you need the pm_runtime_allow()? I can't recall where the _forbid() is done. Also is there not a pm_runtime_set_active() missing? Isn't this set of configurations something that needs to be done alr"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bissue\\b",
+      "frequency": 16,
+      "example_series_ids": [
+        900000007,
+        900000053,
+        900000054,
+        900000056,
+        900000060,
+        900000082,
+        900000090,
+        900000092
+      ],
+      "example_comment_excerpts": [
+        "The change looks fine, but the description of the issue is surprising. Whether autoenumeration is enabled or not is irrelevant, by spec the device0 cannot be in ALERT status and throw in-band interrupts to the host with ",
+        "I can try, unfortunately that device is not directly testable with a simple PR test so it'll take time. I was just hoping that someone smarter than me had an explanation on the locking issue. We only use interrupt thread",
+        "Sorry, I missed that you were asking me... My only contribution is a two-character change in a header file to make cppcheck happy. -int cs35l45_apply_patch(struct cs35l45_private *cs43l45); +int cs35l45_apply_patch(struc"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 13,
+      "example_series_ids": [
+        900000027,
+        900000058,
+        900000134,
+        900000135,
+        900000197,
+        900000249,
+        900000252,
+        900000264
+      ],
+      "example_comment_excerpts": [
+        "You're missing the point. When a card is exposed but the PCM devices may or may not be usable (consuming data with no sound rendered or returning an error), it's much better to provide a clear connection status to usersp",
+        "Errm, what? There is no way to know which bus failed in multi-master mode, and the 'stream' can span multiple buses so the use of pr_err was intentional. There's just no other way to report issues, and I don't see why on",
+        "The code doesn't look too bad but needs a bit more work. There are quite a few error handling issues, pm_runtime needs to be revisited and ACPI/EFI as well. tas2781_calib_data? [1] need to take care of a resource leak he"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "needs to",
+      "frequency": 13,
+      "example_series_ids": [
+        900000048,
+        900000134,
+        900000145,
+        900000205,
+        900000258,
+        900000304,
+        900000329,
+        900000331
+      ],
+      "example_comment_excerpts": [
+        "Can you remind me why you need the pm_runtime_allow()? I can't recall where the _forbid() is done. Also is there not a pm_runtime_set_active() missing? Isn't this set of configurations something that needs to be done alr",
+        "The code doesn't look too bad but needs a bit more work. There are quite a few error handling issues, pm_runtime needs to be revisited and ACPI/EFI as well. tas2781_calib_data? [1] need to take care of a resource leak he",
+        "Maybe we should just remove any references to workqueues, and have probe_start (cannot run in a wq) probe (may run in a wq) remove (cannot run in a wq, needs to call cancel_work_sync() if the probe runs in a wq) remove_l"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "HIGH",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bproblem\\b",
+      "frequency": 12,
+      "example_series_ids": [
+        900000041,
+        900000052,
+        900000086,
+        900000126,
+        900000162,
+        900000201,
+        900000240,
+        900000244
+      ],
+      "example_comment_excerpts": [
+        "I thought you were talking about ASoC &#34;struct snd_soc_component&#34; but no, that's &#34;struct component_ops&#34; in wcd938x-sdw.c Now I think I get the scope of the problem, I didn't click on the fact that it's a p",
+        "Wondering if this is the root cause of the regression we're seeing in [1] on a Chromebook with rt5682 in SoundWire mode? I don't see any other changes to this codec driver and the first problem detected seemed to happen ",
+        "The problem is that 'D3' can be used for two separate scenarios - S0/D3: that's pm_runtime suspend - Sx/D4: that's system suspend It's very unclear what the benefit of clock stop mode would be for the latter case."
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart",
+      "frequency": 12,
+      "example_series_ids": [
+        900000054,
+        900000092,
+        900000121,
+        900000197,
+        900000384
+      ],
+      "example_comment_excerpts": [
+        "Sorry, I missed that you were asking me... My only contribution is a two-character change in a header file to make cppcheck happy. -int cs35l45_apply_patch(struct cs35l45_private *cs43l45); +int cs35l45_apply_patch(struc",
+        "Makes sense. The default on Intel platforms is to reset the bus in all resume cases, that forces the attachment so we never saw the issue. For this patch: Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.int",
+        "git log tells me it's been in your tree since April? This was part of the series &#34;ASoC: SOF: Intel: hda-mlink: HDaudio multi-link&#34;, commit merge a1d68507c1cd3192785d0b9a1a476590c63e9a3c git log 87a6ddc0cf1c commi"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "intel com",
+      "frequency": 11,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "don think",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "linux intel",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "linux intel com",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "needs to be",
+      "frequency": 10,
+      "example_series_ids": [
+        900000048,
+        900000134,
+        900000205,
+        900000258,
+        900000304,
+        900000329,
+        900000346,
+        900000369
+      ],
+      "example_comment_excerpts": [
+        "Can you remind me why you need the pm_runtime_allow()? I can't recall where the _forbid() is done. Also is there not a pm_runtime_set_active() missing? Isn't this set of configurations something that needs to be done alr",
+        "The code doesn't look too bad but needs a bit more work. There are quite a few error handling issues, pm_runtime needs to be revisited and ACPI/EFI as well. tas2781_calib_data? [1] need to take care of a resource leak he",
+        "Yes we have similar issues with control names in topology, the limit is hit very quickly. I think you missed my point though that the ALSA prefix is only set when the card is created, which can be sometime after the firm"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bmust\\b",
+      "frequency": 9,
+      "example_series_ids": [
+        900000109,
+        900000126,
+        900000127,
+        900000144,
+        900000169,
+        900000250,
+        900000284,
+        900000362
+      ],
+      "example_comment_excerpts": [
+        "I must be missing something on how the default is handled. bool video_firmware_drivers_only(void) { return video_nomodeset; } EXPORT_SYMBOL(video_firmware_drivers_only); static int __init disable_modeset(char *str) { vid",
+        "Can you remind me what the issue is in selecting the maximum resolution? Isn't it a good thing to select the maximum resolution when possible so as to provide more headroom and prevent clipping? Usually we try to make su",
+        "that would be wise indeed, I must admit not recalling why this isn't the case. Curtis? Humm, that doesn't seem like a supported configuration, IIRC all the PX skews are for embedded Linux stuff. same here, I don't think "
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-008",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pcm device",
+      "frequency": 9,
+      "example_series_ids": [
+        900000027,
+        900000028,
+        900000117,
+        900000284,
+        900000330,
+        900000331,
+        900000334
+      ],
+      "example_comment_excerpts": [
+        "You're missing the point. When a card is exposed but the PCM devices may or may not be usable (consuming data with no sound rendered or returning an error), it's much better to provide a clear connection status to usersp",
+        "We definitively need a control to indicate that a PCM offload device is available or not. There's still a very large open with the notion of having separate cards for the same audio device. Not only would it duplicate th",
+        "Maybe, but it's a questionable flow if pipewire tries to open stuff without the mixer values set-up. Is there something done about this? The reason why I am pushing back is that we had a similar issue with HDaudio where "
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bwrong\\b",
+      "frequency": 8,
+      "example_series_ids": [
+        900000041,
+        900000056,
+        900000075,
+        900000104,
+        900000210,
+        900000252,
+        900000304,
+        900000374
+      ],
+      "example_comment_excerpts": [
+        "I thought you were talking about ASoC &#34;struct snd_soc_component&#34; but no, that's &#34;struct component_ops&#34; in wcd938x-sdw.c Now I think I get the scope of the problem, I didn't click on the fact that it's a p",
+        "Hi Mark, Looks like patch1 was not applied: [PATCH 1/3] ASoC: SOF: Intel: mtl: setup primary core info on MeteorLake platform was there anything wrong with it or is this a b4/script issue? Please let us know if we need t",
+        "= nit-pick: the count is not enough, you should also check that only bits 0 and 1 are set in mipi-sdw-manager-list... ... otherwise this will be wrong."
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-009",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bus- defer_msg",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-010",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "is really",
+      "frequency": 7,
+      "example_series_ids": [
+        900000008,
+        900000016,
+        900000027,
+        900000060,
+        900000199,
+        900000236,
+        900000252,
+        900000287
+      ],
+      "example_comment_excerpts": [
+        "Still not clear, sorry, see my comment below. can this really happen? Device0 cannot be in alert status, can it? The only this it can do is assert PREQ and set the Device0 status to 1 (ATTACHED). I don't get how a device",
+        "I don't have a turn-key solution either :-) We'd need userspace to make one device as 'preferred' or 'optimized' and give it a priority somehow. It can't be a PCM IOCTL, it has to be at the device level. It's really a se",
+        "You're missing the point. When a card is exposed but the PCM devices may or may not be usable (consuming data with no sound rendered or returning an error), it's much better to provide a clear connection status to usersp"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-008",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bbreaks?\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        900000082,
+        900000110,
+        900000151,
+        900000384
+      ],
+      "example_comment_excerpts": [
+        "I can see that the interrupts are disabled in rt5682_dev_system_suspend(), which is NOT a mode where the clock stop is used... I don't think this commit message is correct. The IMPL_DEF interrupt which is used for jack d",
+        "if you remove the codec conf, doesn't this impact the Kcontrols names? Does this break existing UCM files? It's rather hard to review with just the diff.",
+        "I am pretty sure this will break Intel platforms by changing the device names. sof_sdw.c: else if (is_unique_device(adr_link, sdw_version, mfg_id, part_id, sof_sdw.c: &#34;sdw:%01x:%04x:%04x:%02x&#34;, link_id, sof_sdw.c"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-009",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bfix\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000059,
+        900000248,
+        900000329
+      ],
+      "example_comment_excerpts": [
+        "it's probably ok but far from simple to review with the inverted states for variables. I don't have the time and energy to revisit this... I would err on the side of if it ain't broke don't fix it here.",
+        "This HDAudio machine driver is shared with the SOF-based solutions and I see no reason to change the route checking... I don't agree with this change. Why can't you fix the broken topologies instead, if indeed they 'carr",
+        "I may have misunderstood Brent's patch but this isn't a fix really, more a cleanup to use ACPI when possible, with a fallback to the existing hard-coded setup if ACPI properties are not found. I don't think it's a real '"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "ctrl- enumeration",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-010",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bplease\\s+use\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000236,
+        900000252
+      ],
+      "example_comment_excerpts": [
+        "a longer description wouldn't hurt... [1] so here you select CRC8 ... ... but here you use crc32 ? what does 'invert of resistance' mean? Maybe use the SDCA macros instead of hard-coded address? see e.g. what was used fo",
+        "this is horrible to read, at the very least move initializations to a different line. I personally stick to one variable per line. You may want to explain what v1 and v2 versions of the calibration do, and why you need t"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "devid registers",
+      "frequency": 2,
+      "example_series_ids": [
+        741664
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in\ngeneral for SoundWire.\nThe Manager starts the clock, usually after a bus reset, and waits for\nPeripherals to signal their presence with Device0 Attached."
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "in devid",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "in devid registers",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "struct completion",
+      "frequency": 2,
+      "example_series_ids": [
+        618060
+      ],
+      "example_comment_excerpts": [
+        "I don't get the idea, sorry.\nIf you look at the code, these are the cases where this 'struct\ncompletion' is used\nstruct completion enumeration;\ncomplete(&ctrl->enumeration);\n/* Enable Auto enumeration */\ninit_completion("
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-OBJ-RGX-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "You got it right. There are additional patches that were sent to use\npm_runtime_resume_and_get() on set_jack, and other clear cases that were\nmissed, but this is more of a blanket \"do not harm\" resume in case codec\ndrive"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart",
+      "frequency": 24,
+      "example_series_ids": [
+        900000057,
+        900000062,
+        900000077,
+        900000113,
+        900000119,
+        900000157,
+        900000181,
+        900000213
+      ],
+      "example_comment_excerpts": [
+        "Very nice cleanup, thank you Morimoto-san for splitting the steps in different patches to make the changes simple to identify. Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com> FWIW test results ca",
+        "Indeed, the resulting code is much nicer to look at. I ignored the diffs and just looked at the result to make up my mind. Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+        "Makes sense to me. The other way to look at this is that the notion of 'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master' is called from each DAI of a dailink, hence in a fixed order. But nothing re"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart linux",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-009",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart linux intel",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart pierre-louis",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "bossart pierre-louis bossart",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "intel com",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "linux intel",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-010",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "linux intel com",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-008",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart linux",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pierre-louis bossart pierre-louis",
+      "frequency": 12,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 11,
+      "example_series_ids": [
+        900000057,
+        900000062,
+        900000077,
+        900000113,
+        900000119,
+        900000157,
+        900000181,
+        900000321
+      ],
+      "example_comment_excerpts": [
+        "Very nice cleanup, thank you Morimoto-san for splitting the steps in different patches to make the changes simple to identify. Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com> FWIW test results ca",
+        "Indeed, the resulting code is much nicer to look at. I ignored the diffs and just looked at the result to make up my mind. Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>",
+        "Makes sense to me. The other way to look at this is that the notion of 'stream' and dailink are virtually synonyms, and 'sdw_stream_add_master' is called from each DAI of a dailink, hence in a fixed order. But nothing re"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "reviewed-by pierre-louis",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-NGRAM-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "reviewed-by pierre-louis bossart",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-ACC-RGX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\backed-by\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000213
+      ],
+      "example_comment_excerpts": [
+        "Acked-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com> We should probably do the same thing for sof_sdw_rt_map.c, there's no good reason to encode rt1316-2 SPOL and rt1318-2 SPOR"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\?+",
+      "frequency": 63,
+      "example_series_ids": [
+        900000011,
+        900000012,
+        900000019,
+        900000025,
+        900000034,
+        900000044,
+        900000051,
+        900000063
+      ],
+      "example_comment_excerpts": [
+        "Are you suggesting that the entire feedback loop be handled in the DSP? It's not clear what &#34;Offloading these data transfers&#34; refers to, the data part or the feedback path? Comments are almost inexistent in this ",
+        "that answers to my earlier question on how to deal with multiple devices, but is this a desirable policy? This could lead to a lot of confusion. If there are restrictions to a single device, then it might be more interes",
+        "Can you clarify how? because ... ... here I see a single DAI, so presumably ONE endpoint can be supported? I didn't see in the rest of the code how a card with multiple endpoint would be rejected, nor how the capabilitie"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bwhat\\b",
+      "frequency": 34,
+      "example_series_ids": [
+        900000011,
+        900000043,
+        900000044,
+        900000051,
+        900000078,
+        900000083,
+        900000088,
+        900000091
+      ],
+      "example_comment_excerpts": [
+        "Are you suggesting that the entire feedback loop be handled in the DSP? It's not clear what &#34;Offloading these data transfers&#34; refers to, the data part or the feedback path? Comments are almost inexistent in this ",
+        "It depends on what you mean by 'access the hardware'. If the only interface is regmap and regmap is in cache-only, then the child drivers could &#34;access the hardware&#34; without anything happening until after regmap ",
+        "What happens if this property is not found or doesn't exist? acp_sdw_power_mode is zero, so.... ... here this branch is taken. Is this intentional? useless init and useless init as well... sdw_amd_scan_controller() can r"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bhow\\b",
+      "frequency": 21,
+      "example_series_ids": [
+        900000012,
+        900000019,
+        900000044,
+        900000051,
+        900000088,
+        900000100,
+        900000111,
+        900000166
+      ],
+      "example_comment_excerpts": [
+        "that answers to my earlier question on how to deal with multiple devices, but is this a desirable policy? This could lead to a lot of confusion. If there are restrictions to a single device, then it might be more interes",
+        "Can you clarify how? because ... ... here I see a single DAI, so presumably ONE endpoint can be supported? I didn't see in the rest of the code how a card with multiple endpoint would be rejected, nor how the capabilitie",
+        "What happens if this property is not found or doesn't exist? acp_sdw_power_mode is zero, so.... ... here this branch is taken. Is this intentional? useless init and useless init as well... sdw_amd_scan_controller() can r"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bwhy\\b",
+      "frequency": 15,
+      "example_series_ids": [
+        900000047,
+        900000051,
+        900000083,
+        900000093,
+        900000098,
+        900000103,
+        900000164,
+        900000204
+      ],
+      "example_comment_excerpts": [
+        "It would help to explain why a work queue is needed is the first place, as opposed to handling periods in the interrupt thread. I am not clear on the benefits of the workqueue which only tests a flag that's set ... .. he",
+        "If the goal is a global lock, then the platform data should contain a pointer to the lock. We used this for Intel, see .e.g. the shim_mask in drivers/soundwire/intel_init.c, where the same pointer is used by all children",
+        "No it does not. The clock stop is ONLY used for pm_runtime, never for system suspend. We cannot go to system suspend with the link in clock-stop mode, that will create lots of issues, that's why we perform a full pm_runt"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "clock stop",
+      "frequency": 9,
+      "example_series_ids": [
+        900000083,
+        900000088,
+        900000200
+      ],
+      "example_comment_excerpts": [
+        "No it does not. The clock stop is ONLY used for pm_runtime, never for system suspend. We cannot go to system suspend with the link in clock-stop mode, that will create lots of issues, that's why we perform a full pm_runt",
+        "This is completely different to the definition of 'clock stop mode'. What you want is to make sure the status is reported correctly when the system resume, not to resume the system using the clock stop exit mechanism at ",
+        "clock stop is for suspend and clock stop exit for resume. Different problems. that's right, in the Intel SoundWire drivers we never prevent the pm_runtime suspend from happening, and discard any errors. In the resume ste"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "looks like",
+      "frequency": 9,
+      "example_series_ids": [
+        900000103,
+        900000112,
+        900000166,
+        900000272,
+        900000309,
+        900000310,
+        900000318,
+        900000344
+      ],
+      "example_comment_excerpts": [
+        "it's a bit odd to see a .shutdown without a .startup? Is this intentional and should a comment be added? audio audio. please run a spell-checker. why do you override the return value? not necessary, this is a jump to the",
+        "It would help if you described what those different 'channels' are supposed to transmit. Usually channels mean a group of data that is rendered at the same time. It looks like you plan on transmitting independent streams",
+        "how would one know which ones are capture and which ones are playback? This really looks like a playback-only assumption, despite earlier mentions of capture supported. there you go..."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "calibrated data",
+      "frequency": 8,
+      "example_series_ids": [
+        900000253
+      ],
+      "example_comment_excerpts": [
+        "I was referreing to the existing CRC at the end... * V1: * Calibrated Data of Dev 0(unique_id offset 0) (20 bytes) * Calibrated Data of Dev 1(unique_id offset 1) (20 bytes) * Calibrated Data of Dev 2(unique_id offset 2) "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-007",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "calibrated data of",
+      "frequency": 8,
+      "example_series_ids": [
+        900000253
+      ],
+      "example_comment_excerpts": [
+        "I was referreing to the existing CRC at the end... * V1: * Calibrated Data of Dev 0(unique_id offset 0) (20 bytes) * Calibrated Data of Dev 1(unique_id offset 1) (20 bytes) * Calibrated Data of Dev 2(unique_id offset 2) "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-008",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "data of dev",
+      "frequency": 8,
+      "example_series_ids": [
+        900000253
+      ],
+      "example_comment_excerpts": [
+        "I was referreing to the existing CRC at the end... * V1: * Calibrated Data of Dev 0(unique_id offset 0) (20 bytes) * Calibrated Data of Dev 1(unique_id offset 1) (20 bytes) * Calibrated Data of Dev 2(unique_id offset 2) "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "dev unique_id",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-010",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "dev unique_id offset",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-009",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "of dev unique_id",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "offset bytes",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-NGRAM-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "unique_id offset",
+      "frequency": 8,
+      "example_series_ids": [
+        900000253
+      ],
+      "example_comment_excerpts": [
+        "I was referreing to the existing CRC at the end... * V1: * Calibrated Data of Dev 0(unique_id offset 0) (20 bytes) * Calibrated Data of Dev 1(unique_id offset 1) (20 bytes) * Calibrated Data of Dev 2(unique_id offset 2) "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bcan\\s+you\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000019,
+        900000288,
+        900000296
+      ],
+      "example_comment_excerpts": [
+        "Can you clarify how? because ... ... here I see a single DAI, so presumably ONE endpoint can be supported? I didn't see in the rest of the code how a card with multiple endpoint would be rejected, nor how the capabilitie",
+        "You already gave the following examples in patch 29: &#34; USB offloading idle: tinymix -D 0 get 'USB Offload Playback Route Status' -->-1, -1 (range -1->32) USB offloading active(USB card#1 pcm#0): tinymix -D 0 get 'USB",
+        "Doesn't apply for me, can you rebase and resend? CONFLICT (content): Merge conflict in sound/soc/intel/boards/sof_maxim_common.h Auto-merging sound/soc/intel/boards/sof_maxim_common.c CONFLICT (content): Merge conflict i"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-Q-RGX-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bcould\\s+you\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000307
+      ],
+      "example_comment_excerpts": [
+        "Could you move this sort of renaming/editing to a first patch? And then add functional changes in a second patch? It'd be simpler to review really..."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-RGX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\btypo\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        900000158,
+        900000189
+      ],
+      "example_comment_excerpts": [
+        "how would we know what the convention is? Is this based on the largest number of dais, so here num_codecs > num_cpus so we use a codec-centric convention? That would be worth explaining in clear text connected_node is a ",
+        "This last sentence is confusing at best. A controller can have one or more managers, each of whom can have one or more peripherals. only peripherals should expose codec DAIs, managers should expose CPU DAIs. Put differen"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-NGRAM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "codec dais",
+      "frequency": 2,
+      "example_series_ids": [
+        796487
+      ],
+      "example_comment_excerpts": [
+        "This last sentence is confusing at best.\nA controller can have one or more managers, each of whom can have one or\nmore peripherals.\nonly peripherals should expose codec DAIs, managers should expose CPU DAIs.\nPut differen"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-NGRAM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "is really",
+      "frequency": 2,
+      "example_series_ids": [
+        900000378
+      ],
+      "example_comment_excerpts": [
+        "nit-pick: entities is rather vague and an overloaded term in USB audio. Maybe &#34;allow the subsystems to exchange configuration information&#34; nit-pick: not sure about the reference to an 'external DSP'. &#34;externa"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-NGRAM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "root hub",
+      "frequency": 2,
+      "example_series_ids": [
+        900000378
+      ],
+      "example_comment_excerpts": [
+        "nit-pick: entities is rather vague and an overloaded term in USB audio. Maybe &#34;allow the subsystems to exchange configuration information&#34; nit-pick: not sure about the reference to an 'external DSP'. &#34;externa"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-NIT-RGX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bnit\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000378
+      ],
+      "example_comment_excerpts": [
+        "nit-pick: entities is rather vague and an overloaded term in USB audio. Maybe &#34;allow the subsystems to exchange configuration information&#34; nit-pick: not sure about the reference to an 'external DSP'. &#34;externa"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "dt_rules": [],
+  "runtime_pm_rules": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "pm_runtime",
+      "frequency": 8,
+      "example_series_ids": [
+        900000048,
+        900000070,
+        900000086,
+        900000134,
+        900000137,
+        900000224,
+        900000236,
+        900000266
+      ],
+      "example_comment_excerpts": [
+        "Can you remind me why you need the pm_runtime_allow()? I can't recall where the _forbid() is done. Also is there not a pm_runtime_set_active() missing? Isn't this set of configurations something that needs to be done alr",
+        "Humm, that's not really true. Each SoundWire link and the CPU DAI they expose are handled by different auxiliary devices with their own pm_runtime handling. This is questionable when the CPUs are connected to different l",
+        "The problem is that 'D3' can be used for two separate scenarios - S0/D3: that's pm_runtime suspend - Sx/D4: that's system suspend It's very unclear what the benefit of clock stop mode would be for the latter case."
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bsuspend\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        900000082,
+        900000086,
+        900000134,
+        900000137,
+        900000149,
+        900000224
+      ],
+      "example_comment_excerpts": [
+        "I can see that the interrupts are disabled in rt5682_dev_system_suspend(), which is NOT a mode where the clock stop is used... I don't think this commit message is correct. The IMPL_DEF interrupt which is used for jack d",
+        "The problem is that 'D3' can be used for two separate scenarios - S0/D3: that's pm_runtime suspend - Sx/D4: that's system suspend It's very unclear what the benefit of clock stop mode would be for the latter case.",
+        "The code doesn't look too bad but needs a bit more work. There are quite a few error handling issues, pm_runtime needs to be revisited and ACPI/EFI as well. tas2781_calib_data? [1] need to take care of a resource leak he"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bresume\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        900000036,
+        900000082,
+        900000092,
+        900000137,
+        900000226
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in general for SoundWire. The Manager starts the clock, usually after a bus reset, and waits for Peripherals to signal their presence with Device0 Attached.",
+        "I can see that the interrupts are disabled in rt5682_dev_system_suspend(), which is NOT a mode where the clock stop is used... I don't think this commit message is correct. The IMPL_DEF interrupt which is used for jack d",
+        "Makes sense. The default on Intel platforms is to reset the bus in all resume cases, that forces the attachment so we never saw the issue. For this patch: Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.int"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "autosuspend",
+      "frequency": 1,
+      "example_series_ids": [
+        900000134
+      ],
+      "example_comment_excerpts": [
+        "The code doesn't look too bad but needs a bit more work. There are quite a few error handling issues, pm_runtime needs to be revisited and ACPI/EFI as well. tas2781_calib_data? [1] need to take care of a resource leak he"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-RPM-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "runtime\\s*pm",
+      "frequency": 1,
+      "example_series_ids": [
+        651180
+      ],
+      "example_comment_excerpts": [
+        "The two regressions are not caused by this series.\nThe mixer issue already exists and is fixed with Sameer Pujar's \"ASoC:\nops: Fix multiple value control type\" patch.\nThe \"Runtime PM usage count underflow\" is a mistake o"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "series_structure_rules": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\border\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        900000036,
+        900000162,
+        900000210,
+        900000287,
+        900000332
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in general for SoundWire. The Manager starts the clock, usually after a bus reset, and waits for Peripherals to signal their presence with Device0 Attached.",
+        "alphabetical order? Prefix? e.g. Q6_USB_SID_MASK? index of what? This is a bit confusing. In patch 9/34 you have a static struct snd_soc_dai_driver q6dsp_audio_fe_dais[] = { but this was not described anywhere in your co",
+        "dynamically preprocessing are tas2562 and tas2563 (from commit subject) the same? nit-pick: alphabetical order? is this the length of the header, or the duration of the delay? Someone will get it wrong with this naming.."
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bseries\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000121,
+        900000135,
+        900000384
+      ],
+      "example_comment_excerpts": [
+        "git log tells me it's been in your tree since April? This was part of the series &#34;ASoC: SOF: Intel: hda-mlink: HDaudio multi-link&#34;, commit merge a1d68507c1cd3192785d0b9a1a476590c63e9a3c git log 87a6ddc0cf1c commi",
+        "The first patch in this series has the same commit title as the second one, can this be updated with a more meaningful description of the two patches? you are changing things in patch_realtek.c that are completely unrela",
+        "Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com> I would also move this patch earlier in the series since it has no dependency on USB offload really, and if somehow it breaks USB audio regular pat"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bsplit\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000165,
+        900000224,
+        900000360
+      ],
+      "example_comment_excerpts": [
+        "this also feels like a patch split issue, removing this snd_soc_usb_disconnect() has nothing to do with the &#34;populate PCM and USB chip information&#34; ?",
+        "Yes, we can split the Cadence parts out. System suspend (which can also mean S0i1). I don't think we can have a case where a peripheral driver waits on something without having done a pm_runtime_get_sync() to prevent run",
+        "I thought this was supported already? I remember there was a request to enable more than one compressed stream for enhanced cross-fade support with different formats? That isn't supported with the single-device + PARTIAL"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bbisect",
+      "frequency": 2,
+      "example_series_ids": [
+        900000374,
+        900000384
+      ],
+      "example_comment_excerpts": [
+        "&#160; Nice to see those cards still being used. I was employee #37 back in 1997 :-) These kernels are rather old and usually contain lots of backports, it'll be difficult to figure out what change caused a regression. I",
+        "Reviewed-by: Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com> I would also move this patch earlier in the series since it has no dependency on USB offload really, and if somehow it breaks USB audio regular pat"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-SERIES-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bpatch\\s+\\d+/",
+      "frequency": 2,
+      "example_series_ids": [
+        900000056,
+        900000162
+      ],
+      "example_comment_excerpts": [
+        "Hi Mark, Looks like patch1 was not applied: [PATCH 1/3] ASoC: SOF: Intel: mtl: setup primary core info on MeteorLake platform was there anything wrong with it or is this a b4/script issue? Please let us know if we need t",
+        "alphabetical order? Prefix? e.g. Q6_USB_SID_MASK? index of what? This is a bit confusing. In patch 9/34 you have a static struct snd_soc_dai_driver q6dsp_audio_fe_dais[] = { but this was not described anywhere in your co"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "commit_message_rules": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CM-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "commit\\s+message",
+      "frequency": 1,
+      "example_series_ids": [
+        900000082
+      ],
+      "example_comment_excerpts": [
+        "I can see that the interrupts are disabled in rt5682_dev_system_suspend(), which is NOT a mode where the clock stop is used... I don't think this commit message is correct. The IMPL_DEF interrupt which is used for jack d"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CM-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "link:",
+      "frequency": 1,
+      "example_series_ids": [
+        900000121
+      ],
+      "example_comment_excerpts": [
+        "git log tells me it's been in your tree since April? This was part of the series &#34;ASoC: SOF: Intel: hda-mlink: HDaudio multi-link&#34;, commit merge a1d68507c1cd3192785d0b9a1a476590c63e9a3c git log 87a6ddc0cf1c commi"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "subsystem_context": [
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-001",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bcodec\\b",
+      "frequency": 25,
+      "example_series_ids": [
+        900000002,
+        900000041,
+        900000052,
+        900000061,
+        900000082,
+        900000091,
+        900000093,
+        900000110
+      ],
+      "example_comment_excerpts": [
+        "please don't top-post... I don't think it's correct to declare 4-channel support at the individual codec DAI level when in practice each device will be provided with a TDM mask that selects two slots. This is confusing d",
+        "I thought you were talking about ASoC &#34;struct snd_soc_component&#34; but no, that's &#34;struct component_ops&#34; in wcd938x-sdw.c Now I think I get the scope of the problem, I didn't click on the fact that it's a p",
+        "Wondering if this is the root cause of the regression we're seeing in [1] on a Chromebook with rt5682 in SoundWire mode? I don't see any other changes to this codec driver and the first problem detected seemed to happen "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-002",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\basoc\\b",
+      "frequency": 23,
+      "example_series_ids": [
+        900000016,
+        900000041,
+        900000056,
+        900000063,
+        900000090,
+        900000102,
+        900000118,
+        900000121
+      ],
+      "example_comment_excerpts": [
+        "I don't have a turn-key solution either :-) We'd need userspace to make one device as 'preferred' or 'optimized' and give it a priority somehow. It can't be a PCM IOCTL, it has to be at the device level. It's really a se",
+        "I thought you were talking about ASoC &#34;struct snd_soc_component&#34; but no, that's &#34;struct component_ops&#34; in wcd938x-sdw.c Now I think I get the scope of the problem, I didn't click on the fact that it's a p",
+        "Hi Mark, Looks like patch1 was not applied: [PATCH 1/3] ASoC: SOF: Intel: mtl: setup primary core info on MeteorLake platform was there anything wrong with it or is this a b4/script issue? Please let us know if we need t"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-003",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "soundwire",
+      "frequency": 21,
+      "example_series_ids": [
+        900000036,
+        900000038,
+        900000041,
+        900000049,
+        900000051,
+        900000052,
+        900000070,
+        900000121
+      ],
+      "example_comment_excerpts": [
+        "That last sentence isn't aligned with the way enumeration works in general for SoundWire. The Manager starts the clock, usually after a bus reset, and waits for Peripherals to signal their presence with Device0 Attached.",
+        "The Soundwire 1.2.1 spec moved away from master/slave and uses manager/peripheral. It's the same concepts, just different terms. At some point we'll update the code, it's just been too busy in 2022/2023 to do this replac",
+        "I thought you were talking about ASoC &#34;struct snd_soc_component&#34; but no, that's &#34;struct component_ops&#34; in wcd938x-sdw.c Now I think I get the scope of the problem, I didn't click on the fact that it's a p"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-004",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bcompatible\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        900000150,
+        900000247,
+        900000364
+      ],
+      "example_comment_excerpts": [
+        "Hi Morimoto-san, I knew this code looked familiar and sure enough we've been there before in 2020. This code was introduced by 4f8721542f7b ASoC: core: use less strict tests for dailink capabilities the initial stricter ",
+        "PC OEMs don't usually have a Linux team capable of handling this sort of low-level plumbing, so the burden of this &#34;secondary development&#34; will come back at you... Leaving multi-link aside has to be seen as as te",
+        "Can the output format/rate change at run-time? If no, then these parameters should be moved somewhere else - e.g. hw_params or something. I am still not very clear on the expanding the SET_METADATA ioctl to deal with the"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-005",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bqcom\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000312
+      ],
+      "example_comment_excerpts": [
+        "It's only redundant in the QCOM case... This would remove all error logs for other codecs, e.g. see rt711_sdca_sdw_probe cs35l56_sdw_probe wcd9390_probe Looks like the wsa884x-codec is the chatty driver, others are just "
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "PIERRE_LOUIS_BOSSART-CTX-006",
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern": "\\bqualcomm\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        900000372
+      ],
+      "example_comment_excerpts": [
+        "I would remove reference to Qualcomm for this Kconfig, all the code seems generic to me? Probably a left-over from the previous version."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "\\bdon't\\b",
+    "\\bneeds?\\s+to\\b",
+    "\\bissue\\b",
+    "\\bshould\\s+be\\b",
+    "needs to",
+    "\\bproblem\\b",
+    "pierre-louis bossart",
+    "intel com",
+    "don think",
+    "linux intel"
+  ],
+  "top_acceptance_signals": [
+    "pierre-louis bossart",
+    "bossart linux",
+    "bossart linux intel",
+    "bossart pierre-louis",
+    "bossart pierre-louis bossart",
+    "intel com",
+    "linux intel",
+    "linux intel com",
+    "pierre-louis bossart linux",
+    "pierre-louis bossart pierre-louis"
+  ],
+  "typical_review_iterations": 1,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "MEDIUM",
+  "known_limitations": [],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch).",
+  "comment_statistics": {
+    "total_comments_after_filter": 242,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 117,
+    "question_classified_count": 80,
+    "signoff_lines_removed_count": 0
+  },
+  "data_source": "lore.kernel.org",
+  "patchwork_threads": 8,
+  "lore_threads": 242,
+  "total_qualifying_threads": 242,
+  "lore_lists_queried": [
+    "alsa-devel",
+    "linux-arm-msm"
+  ]
+}

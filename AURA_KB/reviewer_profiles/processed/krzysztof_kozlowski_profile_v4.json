@@ -1,0 +1,1175 @@
+{
+  "reviewer": "Krzysztof Kozlowski",
+  "profile_version": "v4",
+  "generated_date": "2026-06-21",
+  "time_window": {
+    "start": "2023-01-01",
+    "end": "2025-12-31"
+  },
+  "confidence_level": "HIGH",
+  "series_analyzed": 400,
+  "comment_threads_analyzed": 53,
+  "acceptance_emails_excluded": true,
+  "signoff_stripped": true,
+  "scoring_model": "weighted_threshold",
+  "blocking_threshold": 2.0,
+  "pattern_weights": {
+    "HIGH": 3.0,
+    "MEDIUM": 1.5,
+    "LOW": 0.5,
+    "ZERO": 0.0
+  },
+  "threshold_calibration": {
+    "calibration_set_size": 10,
+    "threshold_tested": [
+      2.0,
+      2.5,
+      3.0,
+      3.5,
+      4.0
+    ],
+    "chosen_threshold": 2.0,
+    "precision_at_chosen": 0.625,
+    "recall_at_chosen": 1.0,
+    "f1_at_chosen": 0.7692
+  },
+  "objection_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 17,
+      "example_series_ids": [
+        721140,
+        738847,
+        741006,
+        746711,
+        747431,
+        747854,
+        763326
+      ],
+      "example_comment_excerpts": [
+        "No, you did not do it in v2. The top-level property is a must, we talk\nnow about constraints.\nYes, with else my concern will never happen. However you have there\nmultiple ifs, thus finding the one related to clocks is no",
+        "This is a friendly reminder during the review process.\nIt looks like you received a tag and forgot to add it.\nIf you do not know the process, here is a short explanation:\nPlease add Acked-by/Reviewed-by/Tested-by tags wh",
+        "Linus,\nCould you take it for current fixes? The code was wrong and dtschema is\nwarning now about this.\nFixes: f9a06b810951 (\"dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom\npmic mpp bindings to YAML\")\nReviewed-by: Krzy"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "linaro org",
+      "frequency": 11,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bdo\\s+not\\b",
+      "frequency": 10,
+      "example_series_ids": [
+        716373,
+        719425,
+        737643,
+        738847,
+        740080,
+        746711,
+        747431,
+        751628
+      ],
+      "example_comment_excerpts": [
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately",
+        "The driver change was submitted some time ago:\nhttps://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/\nThere is already DTS user of it and we expect driver to be resubmitted\nat some point.\nWhat I ",
+        "Please squash all your three WM bindings (wm8711, wm8580 and wm8523)\ninto one binding, if they are the same. Probably other WM from your\nprevious submissions as well. We really do not need binding per each of\nthis simple"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski linaro",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-005",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski linaro org",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "krzysztof kozlowski linaro",
+      "frequency": 10,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bneeds?\\s+to\\b",
+      "frequency": 9,
+      "example_series_ids": [
+        718105,
+        719425,
+        721140,
+        737643,
+        738847,
+        746711,
+        747431,
+        759772
+      ],
+      "example_comment_excerpts": [
+        "No need to ping during merge window. It's a merge window, so patches\ncannot be applied... Ping or resend after it.\nBest regards,\nKrzysztof",
+        "The driver change was submitted some time ago:\nhttps://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/\nThere is already DTS user of it and we expect driver to be resubmitted\nat some point.\nWhat I ",
+        "What did you change here? I still need to read 4 different\ndiscussions/links to have understanding why?\nWhat details are here? There is a patch with gen4 but I don't understand\nhow does it answer anything here.\nThis is p"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bfix\\b",
+      "frequency": 7,
+      "example_series_ids": [
+        713662,
+        713958,
+        717205,
+        740507,
+        759772,
+        760849
+      ],
+      "example_comment_excerpts": [
+        "It says we can have maximum one item in \"required-opps\" in \"opp\" node\nand you are right that we could have here more. I'll fix it.\nBest regards,\nKrzysztof",
+        "Let's align it with other Qualcomm pinctrl bindings, so:\n\"-pins$\":\nI can also fix the DTS to match it.\nBest regards,\nKrzysztof",
+        "I would actually prefer to revert... patch was never reviewed (never\nCC'ed to all maintainers as requested by get_maintainer.pl) and will\nneed more fixes after that fix. Eh, more patches to come.\nBest regards,\nKrzysztof"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-006",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski krzysztof",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-008",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski krzysztof kozlowski",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-007",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "krzysztof kozlowski krzysztof",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bshould\\s+be\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        722903,
+        741006,
+        747854,
+        759772,
+        763326,
+        765066
+      ],
+      "example_comment_excerpts": [
+        "OK, then there was no intention to deprecate qcom,mdss-dsi-ctrl and it\nshould be left as allowed compatible.\nBest regards,\nKrzysztof",
+        "Current Linux implementation uses it as a generic pinconf param\npinconf_generic_params which is parsed by:\npinconf_generic_parse_dt_config() -> parse_dt_cfg() ->\nof_property_read_u32()\nThe pinctrl-spmi-mpp.c driver, usin",
+        "The only thing driver is doing is to toggle this pin. If it is missing\nthe entire driver is noop, thus above comment is a bit funny. It\nprobably should be mandatory pin. But I see it was there since beginning\nso ok.\nRevi"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-009",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kernel org",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-NGRAM-010",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "reviewed-by krzysztof",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-005",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bdon't\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        709744,
+        719425,
+        721140
+      ],
+      "example_comment_excerpts": [
+        "I don't think it is maintainable to keep sm6375 once here and once in\nsm6350 file. If it does not fit one family, then probably it deserves\nits own file.\nBest regards,\nKrzysztof",
+        "The driver change was submitted some time ago:\nhttps://lore.kernel.org/all/20210505213731.538612-10-bhupesh.sharma@linaro.org/\nThere is already DTS user of it and we expect driver to be resubmitted\nat some point.\nWhat I ",
+        "What did you change here? I still need to read 4 different\ndiscussions/links to have understanding why?\nWhat details are here? There is a patch with gen4 but I don't understand\nhow does it answer anything here.\nThis is p"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-006",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bplease\\s+use\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        739801,
+        748748,
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Please use scripts/get_maintainers.pl to get a list of necessary people\nand lists to CC. It might happen, that command when run on an older\nkernel, gives you outdated entries. Therefore please be sure you base\nyour patch",
+        "Please use scripts/get_maintainers.pl to get a list of necessary people\nand lists to CC. It might happen, that command when run on an older\nkernel, gives you outdated entries. Therefore please be sure you base\nyour patch",
+        "Please use subject prefixes matching the subsystem. You can get them for\nexample with `git log --oneline -- DIRECTORY_OR_FILE` on the directory\nyour patch is touching.\nBest regards,\nKrzysztof"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-007",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bagainst\\s+bindings\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        716373,
+        751628
+      ],
+      "example_comment_excerpts": [
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-008",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bdtbs_check\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the\nfollowing warnings. Consider if they are expected or the schema is\nincorrect. These may not be new warnings.\nNote that it is not yet a requirement to have",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-009",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bissue\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        740507
+      ],
+      "example_comment_excerpts": [
+        "Your change makes the code easier to read (more obvious), so I am okay\nwith the change, but I am not okay with commit msg and Fixes tag. Issue\nis described inaccurately. There is nothing to fix here, because\noriginal cod"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-010",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bmust\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        721140
+      ],
+      "example_comment_excerpts": [
+        "No, you did not do it in v2. The top-level property is a must, we talk\nnow about constraints.\nYes, with else my concern will never happen. However you have there\nmultiple ifs, thus finding the one related to clocks is no"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-011",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bplease\\s+split\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        757519
+      ],
+      "example_comment_excerpts": [
+        "Please split patches per subsystem, so this could be applied. Or send it\nthrough soc tree, but you chosen the middle way - neither per subsystem\nnor via soc tree - so it went nowhere :(\nBest regards,\nKrzysztof"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-012",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bproblem\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        740080
+      ],
+      "example_comment_excerpts": [
+        "(Trimmed cc list)\nThanks for letting me know, I wonder what's the problem. I am sending\nwith send-email exactly the same way every day, but somehow this series\nhave such header in Patchwork:\nhttps://patchwork.kernel.org/"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-OBJ-RGX-013",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bwrong\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        741006
+      ],
+      "example_comment_excerpts": [
+        "Linus,\nCould you take it for current fixes? The code was wrong and dtschema is\nwarning now about this.\nFixes: f9a06b810951 (\"dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom\npmic mpp bindings to YAML\")\nReviewed-by: Krzy"
+      ],
+      "weight": 0.5,
+      "severity": "QUESTION",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "acceptance_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "krzysztof kozlowski",
+      "frequency": 14,
+      "example_series_ids": [
+        709170,
+        713643,
+        716373,
+        719715,
+        721414,
+        740072,
+        747852
+      ],
+      "example_comment_excerpts": [
+        "Assuming that Linux implementation does not care about the order of\nthese (and takes by name):\nReviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nAlthough other users might not be happy about change of ord",
+        "Subject: drop second/last, redundant \"binding for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nWith above:\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "If you send bindings separately from DTS (which is fine), please provide\nthe link to the user - either DTS or driver for this compatible. Driver\ndoes not use it, thus to the DTS.\nAcked-by: Krzysztof Kozlowski <krzysztof."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "linaro org",
+      "frequency": 8,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski krzysztof",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-006",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski krzysztof kozlowski",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski linaro",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-008",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "kozlowski linaro org",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-005",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "krzysztof kozlowski krzysztof",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-007",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "krzysztof kozlowski linaro",
+      "frequency": 7,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-010",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "linaro org best",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-NGRAM-009",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "org best",
+      "frequency": 6,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-RGX-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\breviewed-by\\b",
+      "frequency": 5,
+      "example_series_ids": [
+        709170,
+        719715,
+        721414,
+        740072,
+        747852
+      ],
+      "example_comment_excerpts": [
+        "Assuming that Linux implementation does not care about the order of\nthese (and takes by name):\nReviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nAlthough other users might not be happy about change of ord",
+        "All your commits still have this blank line before.\nDrop the sentence, you should instead explain what is here to correct.\nReviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "Caleb was working on this but he never came back with a v3:\nhttps://lore.kernel.org/all/20221017185105.2279129-1-caleb.connolly@linaro.org/\nthus:\nReviewed-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest reg"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-ACC-RGX-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\backed-by\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        713643,
+        716373
+      ],
+      "example_comment_excerpts": [
+        "Subject: drop second/last, redundant \"binding for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nWith above:\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "If you send bindings separately from DTS (which is fine), please provide\nthe link to the user - either DTS or driver for this compatible. Driver\ndoes not use it, thus to the DTS.\nAcked-by: Krzysztof Kozlowski <krzysztof."
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "question_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-RGX-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\?+",
+      "frequency": 9,
+      "example_series_ids": [
+        711716,
+        711813,
+        711906,
+        735753,
+        740072,
+        769228
+      ],
+      "example_comment_excerpts": [
+        "The patchset was acked and reviewed, so are there any other comments?\nGuenter/Will - are you planning to pick it up?\nBest regards,\nKrzysztof",
+        "On its own, internal table. While of course driver could be converted to\noperating-points-v2, no one did it within last 5 years, so why it should\nhappen now?\nBest regards,\nKrzysztof",
+        "So you would make use of operating-points-v2 property? Then probably we\nalso miss opp-table, but anyway this patch can be dropped then.\nBest regards,\nKrzysztof"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-RGX-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bwhat\\b",
+      "frequency": 4,
+      "example_series_ids": [
+        711906,
+        740072,
+        764862,
+        769228
+      ],
+      "example_comment_excerpts": [
+        "That's not relevant and not answering to my question. Address/size cells\naffect children, so not geniqup. address-cells 2 means you have\neverywhere 64 bit addresses, so which devices cannot work with such DTS?\nIf you cla",
+        "In general it is fine. I wonder if we can change the goal of GSoC? I am\nsurprised that such goal was chosen in the first place. Converting old,\nunused bindings to DT schema is okay, but it would be much better to do\nthis",
+        "Please keep consistent versioning, so this is new patch in v4.\nYour description says nothing new. It's entirely redundant/obvious.\nInstead please describe what reserved memory is expected to be here.\nBest regards,\nKrzysz"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "address size",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "address size cells",
+      "frequency": 3,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "size cells",
+      "frequency": 3,
+      "example_series_ids": [
+        711906
+      ],
+      "example_comment_excerpts": [
+        "Hm, which device of that SoC cannot be used with address/size cells 2?\nHow USB device - so entirely different device, not MMIO! - is related here?\nBest regards,\nKrzysztof",
+        "That's not relevant and not answering to my question. Address/size cells\naffect children, so not geniqup. address-cells 2 means you have\neverywhere 64 bit addresses, so which devices cannot work with such DTS?\nIf you cla"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-RGX-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bhow\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        711906,
+        769228
+      ],
+      "example_comment_excerpts": [
+        "Hm, which device of that SoC cannot be used with address/size cells 2?\nHow USB device - so entirely different device, not MMIO! - is related here?\nBest regards,\nKrzysztof",
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-RGX-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bwhy\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        711813,
+        769228
+      ],
+      "example_comment_excerpts": [
+        "On its own, internal table. While of course driver could be converted to\noperating-points-v2, no one did it within last 5 years, so why it should\nhappen now?\nBest regards,\nKrzysztof",
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-005",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "dt schema",
+      "frequency": 2,
+      "example_series_ids": [
+        740072
+      ],
+      "example_comment_excerpts": [
+        "In general it is fine. I wonder if we can change the goal of GSoC? I am\nsurprised that such goal was chosen in the first place. Converting old,\nunused bindings to DT schema is okay, but it would be much better to do\nthis"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "here best",
+      "frequency": 2,
+      "example_series_ids": [],
+      "example_comment_excerpts": [],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-006",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "is supposed",
+      "frequency": 2,
+      "example_series_ids": [
+        769228
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-008",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "is supposed to",
+      "frequency": 2,
+      "example_series_ids": [
+        769228
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-Q-NGRAM-007",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "supposed to",
+      "frequency": 2,
+      "example_series_ids": [
+        769228
+      ],
+      "example_comment_excerpts": [
+        "What do you mean? The old code (one I am fixing) is in current next...\nIf this was fixed, why next gets some outdated branches of drm next?\nEach maintainers next tree is supposed to be fed into the next, without\ndelays.\n",
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "nit_patterns": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-NIT-RGX-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\btypo\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        710579
+      ],
+      "example_comment_excerpts": [
+        "Subject: drop second/last, redundant \"bindings for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nSubject: typo - Document\nSubject: shorten it, use some shorter user descriptive model name\nReal ha"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "HIGH"
+    }
+  ],
+  "dt_rules": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "against\\s+bindings",
+      "frequency": 2,
+      "example_series_ids": [
+        716373,
+        751628
+      ],
+      "example_comment_excerpts": [
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "dtbs_check",
+      "frequency": 2,
+      "example_series_ids": [
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the\nfollowing warnings. Consider if they are expected or the schema is\nincorrect. These may not be new warnings.\nNote that it is not yet a requirement to have",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-DT-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "dts\\s+against\\s+bindings",
+      "frequency": 2,
+      "example_series_ids": [
+        716373,
+        751628
+      ],
+      "example_comment_excerpts": [
+        "I expect lore link to the patchset you sent using this binding, so we\ncan verify whether you used it correctly or not. If people were testing\ntheir DTS against bindings they write, this would not be needed.\nUnfortunately",
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "weight": 3.0,
+      "severity": "BLOCKING",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "runtime_pm_rules": [],
+  "series_structure_rules": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SERIES-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bsplit\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        737643,
+        757519
+      ],
+      "example_comment_excerpts": [
+        "Please squash all your three WM bindings (wm8711, wm8580 and wm8523)\ninto one binding, if they are the same. Probably other WM from your\nprevious submissions as well. We really do not need binding per each of\nthis simple",
+        "Please split patches per subsystem, so this could be applied. Or send it\nthrough soc tree, but you chosen the middle way - neither per subsystem\nnor via soc tree - so it went nowhere :(\nBest regards,\nKrzysztof"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-SERIES-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bseries\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        740080
+      ],
+      "example_comment_excerpts": [
+        "(Trimmed cc list)\nThanks for letting me know, I wonder what's the problem. I am sending\nwith send-email exactly the same way every day, but somehow this series\nhave such header in Patchwork:\nhttps://patchwork.kernel.org/"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "commit_message_rules": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CM-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "changelog",
+      "frequency": 1,
+      "example_series_ids": [
+        760849
+      ],
+      "example_comment_excerpts": [
+        "This is not v1. Please write proper changelog and version your patches.\nYou did not respond to my comment and you did not fully implement it.\nWith lack of changelog it looks like it was ignored\nPlease fix everything I as"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CM-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "fixes:",
+      "frequency": 1,
+      "example_series_ids": [
+        741006
+      ],
+      "example_comment_excerpts": [
+        "Linus,\nCould you take it for current fixes? The code was wrong and dtschema is\nwarning now about this.\nFixes: f9a06b810951 (\"dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom\npmic mpp bindings to YAML\")\nReviewed-by: Krzy"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CM-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "imperative\\s+mood",
+      "frequency": 1,
+      "example_series_ids": [
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Thank you for your patch. There is something to discuss/improve.\nPlease do not use \"This commit/patch\", but imperative mood. See longer\nexplanation here:\nhttps://elixir.bootlin.com/linux/v5.17.1/source/Documentation/proc"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CM-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "subject\\s+prefixes",
+      "frequency": 1,
+      "example_series_ids": [
+        751628
+      ],
+      "example_comment_excerpts": [
+        "Please use subject prefixes matching the subsystem. You can get them for\nexample with `git log --oneline -- DIRECTORY_OR_FILE` on the directory\nyour patch is touching.\nBest regards,\nKrzysztof"
+      ],
+      "weight": 1.5,
+      "severity": "SHOULD_FIX",
+      "confidence": "LOW",
+      "false_positive_risk": "MEDIUM"
+    }
+  ],
+  "subsystem_context": [
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-001",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "dt-binding",
+      "frequency": 11,
+      "example_series_ids": [
+        710579,
+        713643,
+        714205,
+        718651,
+        741006,
+        759772,
+        763326,
+        767533
+      ],
+      "example_comment_excerpts": [
+        "Subject: drop second/last, redundant \"bindings for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nSubject: typo - Document\nSubject: shorten it, use some shorter user descriptive model name\nReal ha",
+        "Subject: drop second/last, redundant \"binding for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nWith above:\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "Or instead of review let me grab it for Linus:\nApplied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-mpp: Rename \"mpp\" child node names to \"-pins$\"\nhttps://git.kernel.org/krzk/linux-dt/c/5682f23bd3daf8d66f0a4c0fa0e5645b"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-002",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bqcom\\b",
+      "frequency": 10,
+      "example_series_ids": [
+        714205,
+        718651,
+        722903,
+        741006,
+        751628,
+        767533,
+        767718
+      ],
+      "example_comment_excerpts": [
+        "Or instead of review let me grab it for Linus:\nApplied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-mpp: Rename \"mpp\" child node names to \"-pins$\"\nhttps://git.kernel.org/krzk/linux-dt/c/5682f23bd3daf8d66f0a4c0fa0e5645b",
+        "Applied, thanks!\n[1/5] dt-bindings: pinctrl: qcom,sc7280-lpass-lpi: correct GPIO name pattern\nhttps://git.kernel.org/krzk/linux-dt/c/315dffb843f75cec4458714f4d151d5775e797de\n(all patches squashed into one)",
+        "Applied, thanks!\n[2/5] dt-bindings: pinctrl: qcom,sm8250-lpass-lpi: correct GPIO name pattern\nhttps://git.kernel.org/krzk/linux-dt/c/315dffb843f75cec4458714f4d151d5775e797de"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-003",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "dt-bindings",
+      "frequency": 10,
+      "example_series_ids": [
+        710579,
+        713643,
+        714205,
+        718651,
+        741006,
+        763326,
+        767533,
+        767718
+      ],
+      "example_comment_excerpts": [
+        "Subject: drop second/last, redundant \"bindings for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nSubject: typo - Document\nSubject: shorten it, use some shorter user descriptive model name\nReal ha",
+        "Subject: drop second/last, redundant \"binding for\". The \"dt-bindings\"\nprefix is already stating that these are bindings.\nWith above:\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof",
+        "Or instead of review let me grab it for Linus:\nApplied, thanks!\n[1/1] dt-bindings: pinctrl: qcom,pmic-mpp: Rename \"mpp\" child node names to \"-pins$\"\nhttps://git.kernel.org/krzk/linux-dt/c/5682f23bd3daf8d66f0a4c0fa0e5645b"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "HIGH",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-004",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bcompatible\\b",
+      "frequency": 6,
+      "example_series_ids": [
+        716373,
+        721140,
+        722517,
+        722903,
+        747852
+      ],
+      "example_comment_excerpts": [
+        "If you send bindings separately from DTS (which is fine), please provide\nthe link to the user - either DTS or driver for this compatible. Driver\ndoes not use it, thus to the DTS.\nAcked-by: Krzysztof Kozlowski <krzysztof.",
+        "If you leave the top-level definition without any constraints and you\nforget to include all your compatibles in allOf:if:then, then you end up\nwithout constraints. Consider:\n-----\nproperties:\ncompatible:\nenum:\n- foo\n- ba",
+        "No, you did not do it in v2. The top-level property is a must, we talk\nnow about constraints.\nYes, with else my concern will never happen. However you have there\nmultiple ifs, thus finding the one related to clocks is no"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "MEDIUM",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-005",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bmsm\\b",
+      "frequency": 3,
+      "example_series_ids": [
+        751628,
+        765064,
+        769228
+      ],
+      "example_comment_excerpts": [
+        "Running 'make dtbs_check' with the schema in this patch gives the\nfollowing warnings. Consider if they are expected or the schema is\nincorrect. These may not be new warnings.\nNote that it is not yet a requirement to have",
+        "I also now resent (again) my previous, old set:\nhttps://lore.kernel.org/linux-arm-msm/20230713072242.11268-1-krzysztof.kozlowski@linaro.org/T/#t\nBest regards,\nKrzysztof",
+        "Ah, I think I understood - some work in progress was applied to\nwork-in-progress branch of drm/msm and this somehow got pushed to\nlinux-next? How anyone is supposed to work on next branches if they are\noutdated or have s"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-006",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\bqualcomm\\b",
+      "frequency": 2,
+      "example_series_ids": [
+        713958,
+        726155
+      ],
+      "example_comment_excerpts": [
+        "Let's align it with other Qualcomm pinctrl bindings, so:\n\"-pins$\":\nI can also fix the DTS to match it.\nBest regards,\nKrzysztof",
+        "Please grab it. I think I cleaned up Qualcomm pinctrl bindings from\ntechnical debt, thus no more work for me!\nBest regards,\nKrzysztof"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    },
+    {
+      "pattern_id": "KRZYSZTOF_KOZLOWSKI-CTX-007",
+      "reviewer": "Krzysztof Kozlowski",
+      "pattern": "\\basoc\\b",
+      "frequency": 1,
+      "example_series_ids": [
+        763326
+      ],
+      "example_comment_excerpts": [
+        "The subject prefix should be different for ASoC:\nASoC: dt-bindings: Update....\nAcked-by: Krzysztof Kozlowski <krzysztof.kozlowski@linaro.org>\nBest regards,\nKrzysztof"
+      ],
+      "weight": 0.0,
+      "severity": "INFO",
+      "confidence": "LOW",
+      "false_positive_risk": "LOW"
+    }
+  ],
+  "reviewer_specific_patterns": [],
+  "signoff_patterns": [],
+  "top_objection_topics": [
+    "krzysztof kozlowski",
+    "linaro org",
+    "\\bdo\\s+not\\b",
+    "kozlowski linaro",
+    "kozlowski linaro org",
+    "krzysztof kozlowski linaro",
+    "\\bneeds?\\s+to\\b",
+    "\\bfix\\b",
+    "kozlowski krzysztof",
+    "kozlowski krzysztof kozlowski"
+  ],
+  "top_acceptance_signals": [
+    "krzysztof kozlowski",
+    "linaro org",
+    "kozlowski krzysztof",
+    "kozlowski krzysztof kozlowski",
+    "kozlowski linaro",
+    "kozlowski linaro org",
+    "krzysztof kozlowski krzysztof",
+    "krzysztof kozlowski linaro",
+    "linaro org best",
+    "org best"
+  ],
+  "typical_review_iterations": 2,
+  "dt_strictness": "LOW",
+  "runtime_pm_strictness": "LOW",
+  "known_limitations": [],
+  "false_positive_risk_mitigations": [
+    "Subsystem/vendor tokens moved to subsystem_context with zero score contribution.",
+    "Weighted threshold scoring replaces binary OR model.",
+    "Acceptance emails excluded from objection scoring.",
+    "Sign-off stripping prevents courtesy closings from firing objection logic.",
+    "Question-as-objection context enabled for rejected/changes-requested series."
+  ],
+  "profile_notes": "R3 weighted-threshold profile rebuilt from existing raw artifacts (no new API fetch). | R4 wrapper: no lore supplement used for this reviewer.",
+  "comment_statistics": {
+    "total_comments_after_filter": 76,
+    "acceptance_email_count": 0,
+    "objection_classified_count": 33,
+    "question_classified_count": 10,
+    "signoff_lines_removed_count": 0
+  },
+  "data_source": "patchwork+lore",
+  "patchwork_threads": 53,
+  "lore_threads": 0,
+  "total_qualifying_threads": 53,
+  "lore_lists_queried": []
+}
