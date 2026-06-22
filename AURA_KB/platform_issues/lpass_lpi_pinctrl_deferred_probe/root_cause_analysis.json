@@ -1,0 +1,88 @@
+{
+  "issue_id": "LPASS-LPI-001",
+  "title": "LPASS LPI pinctrl deferred probe: Failed to get clk 'core'",
+  "platforms_affected": ["Eliza EVK", "Generic Milos/SM8750-family"],
+  "error_message": "qcom-milos-lpass-lpi-pinctrl: Failed to get clk 'core'",
+  "kernel_version": "7.1.0-rc4-next-20260521",
+  "log_evidence": [
+    "[17.253826] platform 7760000.pinctrl: deferred probe pending: qcom-milos-lpass-lpi-pinctrl: Failed to get clk 'core'",
+    "[17.161761] platform 6b00000.codec: deferred probe pending: platform: supplier 7660000.codec not ready",
+    "[17.171434] platform 6ae0000.codec: deferred probe pending: platform: supplier 7660000.codec not ready",
+    "[17.181076] platform 6ad0000.soundwire: deferred probe pending: wait for supplier /soc@0/pinctrl@7760000/wsa-swr-active-state/rx-swr-active-state",
+    "[17.195415] platform 7630000.soundwire: deferred probe pending: wait for supplier /soc@0/pinctrl@7760000/wsa-swr-active-state/tx-swr-active-state",
+    "[17.209748] platform 6b10000.soundwire: deferred probe pending: wait for supplier /soc@0/pinctrl@7760000/wsa-swr-active-state",
+    "[17.222287] platform sound: deferred probe pending: snd-sc8280xp: VA Capture: error getting cpu dai name",
+    "[17.232062] platform 7660000.codec: deferred probe pending: wait for supplier /soc@0/pinctrl@7760000/dmic67-default-state",
+    "[17.244233] platform 6ac0000.codec: deferred probe pending: platform: supplier 7660000.codec not ready"
+  ],
+  "root_cause": {
+    "summary": "The lpass_tlmm pinctrl node at 0x7760000 is missing the 'clocks' and 'clock-names' properties in the Eliza EVK DTS. The driver pinctrl-lpass-lpi.c calls of_pm_clk_add_clks(dev) at probe time which reads the 'clocks' property from DTS. When the property is absent, of_clk_get() fails with -ENOENT, which propagates as probe failure.",
+    "driver_file": "drivers/pinctrl/qcom/pinctrl-lpass-lpi.c",
+    "driver_probe_line": 538,
+    "driver_call": "of_pm_clk_add_clks(dev)",
+    "failure_path": "of_pm_clk_add_clks -> of_clk_get_parent_count returns 0 -> returns -ENODEV -> probe returns error -> deferred probe",
+    "clock_provider": "q6prmcc (qcom,q6prm-lpass-clocks node inside q6prm service)",
+    "required_clocks": [
+      {"name": "core",  "phandle": "q6prmcc", "id": "LPASS_HW_MACRO_VOTE",  "attr": "LPASS_CLK_ATTRIBUTE_COUPLE_NO"},
+      {"name": "audio", "phandle": "q6prmcc", "id": "LPASS_HW_DCODEC_VOTE", "attr": "LPASS_CLK_ATTRIBUTE_COUPLE_NO"}
+    ]
+  },
+  "dependency_chain": {
+    "root_blocker": "7760000.pinctrl (lpass_tlmm) — FAILS: cannot get clk 'core'",
+    "blocked_by_pinctrl": [
+      "7660000.codec (VA macro) — blocked on dmic67-default-state pinctrl state",
+      "6ad0000.soundwire (RX SWR swr1) — blocked on rx-swr-active-state",
+      "7630000.soundwire (TX SWR swr2) — blocked on tx-swr-active-state",
+      "6b10000.soundwire (WSA SWR) — blocked on wsa-swr-active-state"
+    ],
+    "blocked_by_va_macro": [
+      "6b00000.codec (WSA macro)",
+      "6ae0000.codec (TX macro)",
+      "6ac0000.codec (RX macro)"
+    ],
+    "blocked_by_all": [
+      "sound card — VA Capture: error getting cpu dai name"
+    ]
+  },
+  "fix_type": "DTS_ONLY",
+  "fix_location": "eliza.dtsi or eliza-evk.dtsi — lpass_tlmm node at 0x7760000",
+  "fix_description": "Add 'clocks' and 'clock-names' properties to the lpass_tlmm pinctrl node referencing q6prmcc LPASS_HW_MACRO_VOTE and LPASS_HW_DCODEC_VOTE",
+  "reference_upstream_nodes": [
+    {
+      "file": "arch/arm64/boot/dts/qcom/sm8750.dtsi",
+      "node": "lpass_tlmm: pinctrl@7760000",
+      "clocks_line": "clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>, <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>",
+      "clock_names_line": "clock-names = \"core\", \"audio\""
+    },
+    {
+      "file": "arch/arm64/boot/dts/qcom/milos.dtsi",
+      "node": "lpass_tlmm: pinctrl@3440000",
+      "clocks_line": "clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>, <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>",
+      "clock_names_line": "clock-names = \"core\", \"audio\""
+    },
+    {
+      "file": "arch/arm64/boot/dts/qcom/sm8650.dtsi",
+      "node": "lpass_tlmm: pinctrl@6e80000",
+      "clocks_line": "clocks = <&q6prmcc LPASS_HW_MACRO_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>, <&q6prmcc LPASS_HW_DCODEC_VOTE LPASS_CLK_ATTRIBUTE_COUPLE_NO>",
+      "clock_names_line": "clock-names = \"core\", \"audio\""
+    }
+  ],
+  "eliza_specific_notes": {
+    "eliza_dtsi_has_lpass_tlmm": false,
+    "eliza_dtsi_has_q6prmcc": false,
+    "note": "eliza.dtsi does not yet have a lpass_tlmm node or q6prmcc node. Both need to be added. The q6prmcc node lives inside the q6prm service node inside the ADSP/LPASS remoteproc hierarchy. The lpass_tlmm node is a standalone platform device at 0x7760000.",
+    "compatible_to_use": "qcom,sm8750-lpass-lpi-pinctrl or a new qcom,eliza-lpass-lpi-pinctrl (TBD based on whether Eliza reuses SM8750 pingroup layout)",
+    "reg_address": "0x7760000 (same as SM8750 based on log address)",
+    "reg_size": "0x20000 (same as SM8750)"
+  },
+  "unrelated_issue": {
+    "message": "[17.264668] gcc-eliza 100000.clock-controller: sync_state() pending due to 1d88000.crypto",
+    "note": "This is a separate unrelated issue — GCC sync_state is blocked by crypto driver, not related to audio deferred probe chain."
+  },
+  "governance": {
+    "fix_scope": "DTS only — no driver changes needed",
+    "upstream_safe": true,
+    "requires_runtime_validation": true,
+    "validation_command": "Boot Eliza EVK with DTS fix and check dmesg for lpass_tlmm probe success and audio chain probe completion"
+  }
+}
