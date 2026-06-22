@@ -1,0 +1,33 @@
+{
+  "artifact": "base_wsa_va_dmic_impact_analysis",
+  "input_patch": "AURA_KB/platform_issues/lpass_lpi_pinctrl_deferred_probe/base_wsa_va_dmic.patch",
+  "finding_summary": "The base WSA/VA/DMIC patch already adds the LPASS TLMM node and board-level WSA/DMIC pinctrl states, but it does not add the GPR/Q6APM/Q6PRM/Q6PRMCC hierarchy required by LPASS clock consumers.",
+  "base_patch_observations": {
+    "targets_eliza_evk_dtsi": true,
+    "targets_eliza_mtp_dts": true,
+    "targets_eliza_dtsi": true,
+    "contains_lpass_tlmm_node": true,
+    "lpass_tlmm_compatible_in_base_patch": "qcom,milos-lpass-lpi-pinctrl",
+    "contains_lpass_tlmm_core_audio_clocks": true,
+    "contains_lpass_tlmm_gpio_range_23": true,
+    "contains_gpr_node": false,
+    "contains_q6apm_node": false,
+    "contains_q6prm_node": false,
+    "contains_q6prmcc_clock_controller": false,
+    "contains_wsa_swr_active": true,
+    "contains_dmic01_default": true,
+    "contains_dmic23_default": true,
+    "contains_dmic45_default": true,
+    "contains_dmic67_default": true,
+    "contains_tx_swr_active": false,
+    "contains_rx_swr_active": false
+  },
+  "impact_on_previous_generated_patch": {
+    "original_patch_still_valid_against_upstream_eliza_dtsi": true,
+    "original_patch_conflicts_if_base_wsa_va_dmic_patch_is_already_applied": true,
+    "conflict_reason": "Both patches add lpass_tlmm: pinctrl@7760000 to eliza.dtsi.",
+    "recommended_patch_when_base_wsa_va_dmic_is_already_applied": "eliza_gpr_q6prmcc_addendum_for_base_wsa_va_dmic.patch"
+  },
+  "updated_root_cause_when_base_patch_is_present": "With base_wsa_va_dmic.patch applied, LPASS TLMM is present, so the remaining structural blocker is the missing GPR/Q6PRM/Q6PRMCC clock-provider hierarchy under remoteproc_adsp glink-edge.",
+  "runtime_claims": "No runtime audio success is claimed; board retest is still required."
+}
