@@ -188,6 +188,10 @@ def test_gate_reviewer_sim_flag_adds_summary_field(tmp_path: Path):
     assert result["reviewer_sim_summary"] is not None
     assert result["reviewer_sim_summary"]["gate_impact"] == "NONE"
     assert result["reviewer_sim_summary"]["advisory_note"]
+    assert result["reviewer_sim_summary"]["profiles_used"] == sorted(path.name for path in profiles_dir.glob("*.json"))
+    for finding in result["reviewer_sim_summary"]["top_findings"]:
+        for key in ("severity", "text", "lens_name", "reviewer", "suggested_action"):
+            assert key in finding
     assert result["verdict"] == baseline["verdict"]
 
 

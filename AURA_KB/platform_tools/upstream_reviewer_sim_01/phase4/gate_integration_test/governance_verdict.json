@@ -1,7 +1,7 @@
 {
   "gate_engine": "aura_conversion_gate_v1",
   "gate_version": "1.0.0",
-  "generated_at_utc": "2026-06-22T04:02:23Z",
+  "generated_at_utc": "2026-06-22T04:07:42Z",
   "verdict": "FAIL",
   "reasons": [
     "verifier_failed",
@@ -38,52 +38,90 @@
     "top_findings": [
       {
         "finding_id": "F-001",
-        "reviewer": "Krzysztof Kozlowski",
-        "pattern_id": "DT-001",
         "severity": "WARN",
         "text": "No DT binding YAML found - required for upstream submission",
+        "lens_name": "dt-binding",
+        "reviewer": "Krzysztof Kozlowski",
+        "suggested_action": "Add DT schema YAML for compatible strings used by this driver.",
+        "pattern_id": "DT-001",
         "file": ""
       },
       {
         "finding_id": "F-002",
-        "reviewer": "Mark Brown",
-        "pattern_id": "ASOC-MARK-008",
         "severity": "WARN",
         "text": "No snd_soc_dapm_widget array found.",
+        "lens_name": "asoc-subsystem",
+        "reviewer": "Mark Brown",
+        "suggested_action": "Define snd_soc_dapm_widget entries for power graph visibility.",
+        "pattern_id": "ASOC-MARK-008",
         "file": ""
       },
       {
         "finding_id": "F-003",
-        "reviewer": "Mark Brown",
-        "pattern_id": "ASOC-MARK-009",
         "severity": "WARN",
         "text": "No snd_soc_dapm_route array found.",
+        "lens_name": "asoc-subsystem",
+        "reviewer": "Mark Brown",
+        "suggested_action": "Define snd_soc_dapm_route entries to connect audio paths explicitly.",
+        "pattern_id": "ASOC-MARK-009",
         "file": ""
       },
       {
         "finding_id": "F-004",
-        "reviewer": "Mark Brown",
-        "pattern_id": "ASOC-MARK-003",
         "severity": "WARN",
         "text": "MODULE_AUTHOR() is missing from module source.",
+        "lens_name": "asoc-subsystem",
+        "reviewer": "Mark Brown",
+        "suggested_action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+        "pattern_id": "ASOC-MARK-003",
         "file": "wcd9378-sdw.c"
       },
       {
         "finding_id": "F-005",
-        "reviewer": "Mark Brown",
-        "pattern_id": "ASOC-MARK-003",
         "severity": "WARN",
         "text": "MODULE_AUTHOR() is missing from module source.",
+        "lens_name": "asoc-subsystem",
+        "reviewer": "Mark Brown",
+        "suggested_action": "Add MODULE_AUTHOR() to preserve attribution metadata.",
+        "pattern_id": "ASOC-MARK-003",
         "file": "wcd9378.c"
       }
     ],
     "profiles_used": [
-      "krzysztof_kozlowski_profile_v4",
-      "mark_brown_profile_v4",
-      "pierre_louis_bossart_profile_v4"
+      "bjorn_andersson_profile_v1.json",
+      "bjorn_andersson_profile_v2.json",
+      "bjorn_andersson_profile_v3.json",
+      "bjorn_andersson_profile_v4.json",
+      "konrad_dybcio_profile_v2.json",
+      "konrad_dybcio_profile_v3.json",
+      "konrad_dybcio_profile_v4.json",
+      "krzysztof_kozlowski_profile_v1.json",
+      "krzysztof_kozlowski_profile_v2.json",
+      "krzysztof_kozlowski_profile_v3.json",
+      "krzysztof_kozlowski_profile_v4.json",
+      "liam_girdwood_profile_v2.json",
+      "liam_girdwood_profile_v3.json",
+      "liam_girdwood_profile_v4.json",
+      "linus_walleij_profile_v1.json",
+      "linus_walleij_profile_v2.json",
+      "linus_walleij_profile_v3.json",
+      "linus_walleij_profile_v4.json",
+      "mark_brown_profile_v1.json",
+      "mark_brown_profile_v2.json",
+      "mark_brown_profile_v3.json",
+      "mark_brown_profile_v4.json",
+      "pierre_louis_bossart_profile_v2.json",
+      "pierre_louis_bossart_profile_v3.json",
+      "pierre_louis_bossart_profile_v4.json",
+      "rob_herring_profile_v2.json",
+      "rob_herring_profile_v3.json",
+      "rob_herring_profile_v4.json",
+      "vinod_koul_profile_v2.json",
+      "vinod_koul_profile_v3.json",
+      "vinod_koul_profile_v4.json"
     ],
     "subsystem": "soundwire-codec",
     "sim_run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted",
-    "generated_at_utc": "2026-06-22T04:02:23Z"
+    "generated_at_utc": "2026-06-22T04:07:42Z"
   }
 }

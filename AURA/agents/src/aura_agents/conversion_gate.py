@@ -96,6 +96,14 @@ def _stage_target_files(run_dir: Path, target_paths: list[str]) -> Path | None:
     return target_dir if staged else None
 
 
+def _find_repo_root_for_reviewer_sim() -> Path:
+    """Find the repo root by walking upward until AURA_KB is visible."""
+    for candidate in Path(__file__).resolve().parents:
+        if (candidate / "AURA_KB").is_dir():
+            return candidate
+    return Path(__file__).resolve().parents[4]
+
+
 def _run_reviewer_sim(
     converted_dir: str,
     run_dir: Path,
@@ -113,7 +121,7 @@ def _run_reviewer_sim(
         # Lazy import keeps gate importable even if simulation module is broken.
         from aura_agents import upstream_reviewer_sim
 
-        repo_root = Path(__file__).resolve().parents[4]
+        repo_root = _find_repo_root_for_reviewer_sim()
         converted_path = Path(converted_dir).resolve()
         resolved_profiles_dir = (
             profiles_dir.resolve()
@@ -152,23 +160,20 @@ def _run_reviewer_sim(
 
         top_findings: list[dict[str, Any]] = []
         for finding in aggregated[:5]:
+            lenses = finding.get("lenses") if isinstance(finding.get("lenses"), list) else []
             top_findings.append(
                 {
                     "finding_id": finding.get("finding_id"),
-                    "reviewer": finding.get("reviewer"),
-                    "pattern_id": finding.get("pattern_id"),
                     "severity": finding.get("severity"),
                     "text": finding.get("text"),
+                    "lens_name": finding.get("lens_name") or (lenses[0] if lenses else ""),
+                    "reviewer": finding.get("reviewer"),
+                    "suggested_action": finding.get("suggested_action") or f"Address {finding.get('pattern_id', 'reviewer-sim')} finding.",
+                    "pattern_id": finding.get("pattern_id"),
                     "file": finding.get("file"),
                 }
             )
-        profiles_used = sorted(
-            {
-                str(finding.get("profile_source", "")).strip()
-                for finding in aggregated
-                if str(finding.get("profile_source", "")).strip()
-            }
-        )
+        profiles_used = sorted(path.name for path in resolved_profiles_dir.glob("*.json") if path.is_file())
 
         return {
             "advisory_note": REVIEWER_SIM_ADVISORY_NOTE,
@@ -193,7 +198,7 @@ def _run_reviewer_sim(
             "warn_count": 0,
             "info_count": 0,
             "gate_impact": "NONE",
-            "gate_impact_reason": "Sim findings are advisory. Core verdict is unchanged.",
+            "gate_impact_reason": "Sim error — core verdict unchanged.",
             "top_findings": [],
             "profiles_used": [],
             "subsystem": str(subsystem),
