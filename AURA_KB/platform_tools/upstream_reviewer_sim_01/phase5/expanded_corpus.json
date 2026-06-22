@@ -1,0 +1,169 @@
+{
+  "artifact": "phase5_expanded_corpus",
+  "generated_at_utc": "2026-06-22T04:20:39Z",
+  "selection_locked_before_sim": true,
+  "selection_lock_rule": "Expanded corpus selection is fixed before any phase5 simulation runs.",
+  "sources_scanned": [
+    "pierre_louis_bossart_lore_r4_2021_2025.json",
+    "rob_herring_lore_r4_2021_2025.json",
+    "vinod_koul_lore_r4_2021_2025.json"
+  ],
+  "catchable_classes_allowed": [
+    "missing_signed_off_by",
+    "missing_module_macro",
+    "dt_schema_error",
+    "banned_symbol",
+    "pm_runtime_imbalance",
+    "missing_of_device_id",
+    "dt_compatible_format_error"
+  ],
+  "rejected_signal_entries": [
+    {
+      "id": "EXP-001",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "YXhZJiXmT%2FduNu%2FM@robh.at.kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/YXhZJiXmT%2FduNu%2FM@robh.at.kernel.org/",
+      "date": "2021-10-26T19:39:20Z",
+      "subject_snippet": "Re: [PATCH 1/2] ALSA SoC MAX98520 dt-bindings : Added device tree binding for max98520 Signed-off-by: George Song <george.song@maximintegrated.com>",
+      "objection_text": "Patches must have an author name, commit message, and a Signed-off-by. Please use checkpatch.pl which will point out some of this.",
+      "objection_class": "missing_signed_off_by",
+      "catchable_by_lens": "patch-structure",
+      "catchable_rule_id": "PATCH_STRUCT-004",
+      "state": "rejected_signal",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "EXP-002",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "20230912185405.GA1165807-robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/20230912185405.GA1165807-robh@kernel.org/",
+      "date": "2023-09-14T15:07:40Z",
+      "subject_snippet": "Re: [PATCH v5 25/31] dt-bindings: net: Add the Lantiq PEF2256 E1/T1/J1 framer",
+      "objection_text": "Whomever sends the patch should have the last Sob. Yeah, I think that makes sense. I've added it now. Rob",
+      "objection_class": "missing_signed_off_by",
+      "catchable_by_lens": "patch-structure",
+      "catchable_rule_id": "PATCH_STRUCT-004",
+      "state": "rejected_signal",
+      "confidence": "MEDIUM"
+    },
+    {
+      "id": "EXP-003",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "171801887810.1852058.9889760011059594602.robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/171801887810.1852058.9889760011059594602.robh@kernel.org/",
+      "date": "2024-06-10T11:29:50Z",
+      "subject_snippet": "Re: [PATCH] ASoC: fsl: Add i2s and pcm drivers for LPC32xx CPUs",
+      "objection_text": "My bot found errors running 'make dt_binding_check' on your patch: yamllint warnings/errors: dtschema/dtc warnings/errors: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/nxp,lpc3220-i2s.yaml: 'maintainers' is a required property hint: Metaschema for devicetree binding documentation from schema $id: http://devicetree.org/meta-schemas/base.yaml# doc reference errors (make refcheckdocs): S",
+      "objection_class": "dt_schema_error",
+      "catchable_by_lens": "dt-binding",
+      "catchable_rule_id": "DT-005",
+      "state": "rejected_signal",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "EXP-004",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "20230912175832.GA995540-robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/20230912175832.GA995540-robh@kernel.org/",
+      "date": "2023-09-12T18:00:13Z",
+      "subject_snippet": "Re: [PATCH v5 06/31] dt-bindings: soc: fsl: cpm_qe: cpm1-scc-qmc: Fix example property name",
+      "objection_text": "I have this same fix in my tree, but you missed something. Please add additionalProperties or unevaluatedProperties to the child node schema so that this error is flagged.",
+      "objection_class": "dt_schema_error",
+      "catchable_by_lens": "dt-binding",
+      "catchable_rule_id": "DT-002",
+      "state": "rejected_signal",
+      "confidence": "HIGH"
+    },
+    {
+      "id": "EXP-005",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "167571334291.1212116.1869881432057405431.robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/167571334291.1212116.1869881432057405431.robh@kernel.org/",
+      "date": "2023-02-06T20:00:26Z",
+      "subject_snippet": "Re: [PATCH v2 2/7] ASoC: dt-bindings: meson: convert axg tdm formatters to schema",
+      "objection_text": "My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check' on your patch (DT_CHECKER_FLAGS is new in v5.13): yamllint warnings/errors: dtschema/dtc warnings/errors: ./Documentation/devicetree/bindings/sound/amlogic,axg-tdm-formatters.yaml: Unable to find schema file matching $id: http://devicetree.org/schemas/sound/component-common.yaml /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindi",
+      "objection_class": "dt_schema_error",
+      "catchable_by_lens": "dt-binding",
+      "catchable_rule_id": "DT-BLOCKING-SCORE",
+      "state": "rejected_signal",
+      "confidence": "MEDIUM"
+    },
+    {
+      "id": "EXP-006",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "169229266724.1614955.5685157579196442265.robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/169229266724.1614955.5685157579196442265.robh@kernel.org/",
+      "date": "2023-08-17T17:19:26Z",
+      "subject_snippet": "Re: [PATCH v4 5/6] ASoC: dt-bindings: mediatek,mt7986-wm8960: add mt7986-wm8960 document",
+      "objection_text": "My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check' on your patch (DT_CHECKER_FLAGS is new in v5.13): yamllint warnings/errors: dtschema/dtc warnings/errors: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/mediatek,mt7986-wm8960.yaml: Error in referenced schema matching $id: http://devicetree.org/schemas/sound/sound-card-common.yaml /builds/robherring/dt-review-ci/lin",
+      "objection_class": "dt_schema_error",
+      "catchable_by_lens": "dt-binding",
+      "catchable_rule_id": "DT-BLOCKING-SCORE",
+      "state": "rejected_signal",
+      "confidence": "MEDIUM"
+    },
+    {
+      "id": "EXP-007",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "169255610407.4142958.2451683336970751205.robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/169255610407.4142958.2451683336970751205.robh@kernel.org/",
+      "date": "2023-08-20T18:29:44Z",
+      "subject_snippet": "Re: [PATCH 1/3] ASoC: dt-bindings: fsl_easrc: Add support for imx8mp-easrc",
+      "objection_text": "My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check' on your patch (DT_CHECKER_FLAGS is new in v5.13): yamllint warnings/errors: dtschema/dtc warnings/errors: /builds/robherring/dt-review-ci/linux/Documentation/devicetree/bindings/sound/fsl,easrc.example.dtb: easrc@300c0000: compatible: 'oneOf' conditional failed, one must be fixed: ['fsl,imx8mn-easrc'] is too short 'fsl,imx8mn-easrc' is not one of",
+      "objection_class": "dt_schema_error",
+      "catchable_by_lens": "dt-binding",
+      "catchable_rule_id": "DT-BLOCKING-SCORE",
+      "state": "rejected_signal",
+      "confidence": "MEDIUM"
+    },
+    {
+      "id": "EXP-008",
+      "source_file": "rob_herring_lore_r4_2021_2025.json",
+      "message_id": "171404149555.2167007.16345461403970586923.robh@kernel.org",
+      "link": "https://lore.kernel.org/alsa-devel/171404149555.2167007.16345461403970586923.robh@kernel.org/",
+      "date": "2024-04-25T10:39:16Z",
+      "subject_snippet": "Re: [PATCH v3 1/7] ASoC: dt-bindings: document wcd937x Audio Codec",
+      "objection_text": "My bot found errors running 'make dt_binding_check' on your patch: yamllint warnings/errors: ./Documentation/devicetree/bindings/sound/qcom,wcd937x.yaml:30:11: [warning] wrong indentation: expected 4 but found 10 (indentation) ./Documentation/devicetree/bindings/sound/qcom,wcd937x-sdw.yaml:34:13: [warning] wrong indentation: expected 6 but found 12 (indentation) ./Documentation/devicetree/bindings/sound/qcom,wcd937x-",
+      "objection_class": "dt_schema_error",
+      "catchable_by_lens": "dt-binding",
+      "catchable_rule_id": "DT-BLOCKING-SCORE",
+      "state": "rejected_signal",
+      "confidence": "MEDIUM"
+    }
+  ],
+  "accepted_corpus_entries": [
+    {
+      "id": "ACC-EXP-001",
+      "source": "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_b_relative_skeleton/",
+      "state": "accepted_aura_generated",
+      "gate_verdict": "PASS",
+      "expected_sim_behavior": "no_false_blocking"
+    },
+    {
+      "id": "ACC-EXP-002",
+      "source": "AURA_KB/drivers/wsa884x_three_variant_experiment/variant_c_learning_informed/",
+      "state": "accepted_aura_generated",
+      "gate_verdict": "PASS",
+      "expected_sim_behavior": "no_false_blocking"
+    },
+    {
+      "id": "ACC-EXP-003",
+      "source": "AURA_KB/drivers/wcd_codec_family/wcd939x_transfer_validation/variant_1_learning_informed/",
+      "state": "accepted_aura_generated",
+      "gate_verdict": "PASS",
+      "expected_sim_behavior": "no_false_blocking"
+    },
+    {
+      "id": "ACC-EXP-004",
+      "source": "AURA_KB/drivers/wcd937x/variant_c/",
+      "state": "accepted_aura_generated",
+      "gate_verdict": "PASS",
+      "expected_sim_behavior": "no_false_blocking"
+    }
+  ],
+  "target_catchable_rejected": 6,
+  "actual_catchable_rejected": 8,
+  "corpus_status": "SUFFICIENT",
+  "signed_off_by_catchable_count": 2,
+  "notes": "Rob Herring lore corpus provided the only high-confidence, explicitly catchable objections among the scanned sources; Pierre-Louis Bossart and Vinod Koul scans were performed but did not yield additional high-confidence entries for the listed catchable classes."
+}

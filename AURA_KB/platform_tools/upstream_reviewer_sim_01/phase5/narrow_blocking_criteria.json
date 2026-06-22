@@ -1,0 +1,58 @@
+{
+  "artifact": "narrow_blocking_criteria",
+  "generated_at_utc": "2026-06-22T04:20:39Z",
+  "promotion_gate_threshold": {
+    "min_precision": 0.8,
+    "max_false_positive_rate": 0.1,
+    "min_catchable_corpus_size": 6,
+    "max_severity_allowed": "WARN",
+    "blocking_promotion_allowed": false
+  },
+  "candidate_checks": [
+    {
+      "check_id": "WARN-001",
+      "lens": "patch-structure",
+      "rule_id": "PATCH_STRUCT-004",
+      "description": "Missing Signed-off-by trailer in patch file",
+      "phase3_precision": 1.0,
+      "phase3_corpus_size": 1,
+      "promotion_decision": "INSUFFICIENT_DATA",
+      "rationale": "Precision and false-positive metrics are acceptable, but catchable rejected corpus size (2) is below minimum required (6) for promotion.",
+      "measured_precision": 1.0,
+      "measured_false_positive_rate": 0.0,
+      "measured_corpus_size_rejected": 2,
+      "measured_corpus_size_accepted": 4
+    },
+    {
+      "check_id": "WARN-002",
+      "lens": "asoc-subsystem",
+      "rule_id": "ASOC-MARK-010",
+      "description": "Missing Signed-off-by trailer (ASoC subsystem lens)",
+      "phase3_precision": null,
+      "phase3_corpus_size": 1,
+      "promotion_decision": "INSUFFICIENT_DATA",
+      "rationale": "Precision and false-positive metrics are acceptable, but catchable rejected corpus size (2) is below minimum required (6) for promotion.",
+      "measured_precision": 1.0,
+      "measured_false_positive_rate": 0.0,
+      "measured_corpus_size_rejected": 2,
+      "measured_corpus_size_accepted": 4
+    },
+    {
+      "check_id": "WARN-003",
+      "lens": "dt-binding",
+      "rule_id": "DT-001",
+      "description": "No DT binding YAML found",
+      "phase3_precision": null,
+      "phase3_corpus_size": 0,
+      "promotion_decision": "ADVISORY_ONLY",
+      "rationale": "No catchable corpus evidence yet - keep advisory"
+    }
+  ],
+  "checks_promoted_this_phase": [],
+  "checks_remaining_advisory": [
+    "WARN-001",
+    "WARN-002",
+    "WARN-003"
+  ],
+  "final_decision": "NO_CHECKS_PROMOTED"
+}

@@ -1,0 +1,74 @@
+{
+  "phase": 5,
+  "signoff_date": "2026-06-22T04:22:56Z",
+  "corpus_expansion": {
+    "target_catchable_rejected": 6,
+    "actual_catchable_rejected": 8,
+    "corpus_sufficient": true,
+    "verdict": "SUFFICIENT"
+  },
+  "checks_evaluated": [
+    {
+      "candidate_check": "WARN-001",
+      "rule_id": "PATCH_STRUCT-004",
+      "corpus_size_rejected": 2,
+      "corpus_size_accepted": 4,
+      "true_positives": 2,
+      "false_positives_on_accepted": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "false_positive_rate": 0.0,
+      "precision_threshold_met": true,
+      "fp_rate_threshold_met": true,
+      "min_catchable_corpus_threshold_met": false,
+      "promotion_decision": "INSUFFICIENT_DATA",
+      "promotion_rationale": "Precision and false-positive metrics are acceptable, but catchable rejected corpus size (2) is below minimum required (6) for promotion."
+    },
+    {
+      "candidate_check": "WARN-002",
+      "rule_id": "ASOC-MARK-010",
+      "corpus_size_rejected": 2,
+      "corpus_size_accepted": 4,
+      "true_positives": 2,
+      "false_positives_on_accepted": 0,
+      "false_negatives": 0,
+      "precision": 1.0,
+      "false_positive_rate": 0.0,
+      "precision_threshold_met": true,
+      "fp_rate_threshold_met": true,
+      "min_catchable_corpus_threshold_met": false,
+      "promotion_decision": "INSUFFICIENT_DATA",
+      "promotion_rationale": "Precision and false-positive metrics are acceptable, but catchable rejected corpus size (2) is below minimum required (6) for promotion."
+    }
+  ],
+  "checks_promoted_to_warn": [],
+  "checks_remaining_advisory": [
+    "WARN-001",
+    "WARN-002",
+    "WARN-003"
+  ],
+  "no_checks_promoted": true,
+  "gate_tests_total": 13,
+  "gate_tests_pass": 13,
+  "warn_escalation_verified": false,
+  "fail_escalation_verified_absent": true,
+  "runtime_evidence_required_never_blocking": true,
+  "phase5_verdict": "WARN",
+  "simulation_track_complete": true,
+  "advisory_note": "Advisory only - not a replacement for real upstream review.",
+  "pm_notes": "Corpus expansion succeeded at track level (8 catchable rejected signals), but candidate warn-mode promotion remained statistically insufficient for Signed-off-by checks (2 relevant rejected cases). No checks were promoted; gate behavior remains unchanged and safe.",
+  "final_sim_track_summary": {
+    "phases_completed": 6,
+    "total_steps": 44,
+    "reviewer_profiles_built": 9,
+    "lenses_implemented": 6,
+    "gate_integration": "advisory_opt_in",
+    "warn_mode_checks_promoted": 0,
+    "production_ready": false,
+    "production_ready_conditions": [
+      "Expand corpus to >= 20 catchable rejected cases for statistical confidence",
+      "Run on real upstream patch submissions (not stubs) before promoting to blocking",
+      "Integrate with Patchwork live data for continuous profile refresh"
+    ]
+  }
+}

@@ -36,7 +36,7 @@ Advisory only — not a replacement for real upstream review.
 | 2 | Subsystem Simulation Integration | COMPLETED_WITH_WARNINGS | After Phase 1 |
 | 3 | Profile Validation | COMPLETED_WITH_WARNINGS | After Phase 2 |
 | 4 | Advisory Gate Integration | COMPLETED | After Phase 3 |
-| 5 | Warn Mode And Narrow Blocking | READY_TO_START | After Phase 4 |
+| 5 | Warn Mode And Narrow Blocking | COMPLETED_WITH_WARNINGS | After Phase 4 |
 
 ---
 
@@ -272,24 +272,26 @@ Phase 4 verdict: `PASS` (advisory integration complete, core gate verdict invari
 ### Purpose
 Promote narrow, high-confidence simulation findings to gate warnings or blockers.
 
-### Status: READY_TO_START
+### Status: COMPLETED_WITH_WARNINGS
 
 ### Steps
 
 | Step | Description | Status | Notes |
 |---|---|---|---|
-| 5.1 | Define narrow blocking criteria | NOT_STARTED | |
-| 5.2 | Implement warn mode for high-confidence checks | NOT_STARTED | |
-| 5.3 | Regression tests for all promoted checks | NOT_STARTED | |
-| 5.4 | False positive rate measurement | NOT_STARTED | |
-| 5.5 | PM sign-off | NOT_STARTED | |
+| 5.1 | Define narrow blocking criteria | COMPLETED | `phase5/narrow_blocking_criteria.json` locked before simulation runs |
+| 5.2 | Implement warn mode for high-confidence checks | COMPLETED | No checks promoted (`NO_CHECKS_PROMOTED`) due candidate-specific corpus insufficiency |
+| 5.3 | Regression tests for all promoted checks | COMPLETED | `AURA/agents/tests/test_conversion_gate.py` total tests now 13 (all pass) |
+| 5.4 | False positive rate measurement | COMPLETED | `phase5/expanded_precision_report.json` generated from deterministic stubs |
+| 5.5 | PM sign-off | COMPLETED | `phase5/pm_phase5_signoff.json` verdict `WARN` |
 
 ### Success Criteria
 
 - [ ] False positive rate < 10% for promoted checks.
-- [ ] Regression tests pass.
-- [ ] No good patches are blocked.
-- [ ] RUNTIME_EVIDENCE_REQUIRED never becomes blocking.
+- [x] Regression tests pass.
+- [x] No good patches are blocked.
+- [x] RUNTIME_EVIDENCE_REQUIRED never becomes blocking.
+
+Phase 5 verdict: `WARN` (`NO_CHECKS_PROMOTED`; candidate Signed-off-by promotion remained `INSUFFICIENT_DATA` for minimum-corpus threshold).
 
 ---
 
@@ -316,6 +318,7 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 | 2026-06-22 | 2 | 2.1-2.6 | subsystem simulation integration, dual pilots, PM evaluation | PHASE_2_COMPLETED_WITH_WARNINGS |
 | 2026-06-22 | 3 | 3.1-3.10 | profile validation corpus, simulation comparison matrix, PM sign-off | PHASE_3_COMPLETED_WITH_WARNINGS |
 | 2026-06-22 | 4 | 4.1-4.9 | advisory gate integration, invariant verification, gate regression tests | PHASE_4_COMPLETED |
+| 2026-06-22 | 5 | 5.1-5.9 | corpus expansion, precision measurement, warn-mode evaluation, final sign-off | PHASE_5_COMPLETED_WITH_WARNINGS |
 
 ---
 
@@ -367,3 +370,26 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 - Tests: `AURA/agents/tests/test_conversion_gate.py` includes 4 new reviewer-sim tests (all pass)
 - Artifacts: `AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/`
 - Progress card: `PC-P4-COMPLETE-20260622`
+
+### Phase 5 Update (2026-06-22)
+- Verdict: `WARN` (methodology complete, no warn promotions due candidate-specific corpus threshold not met)
+- Corpus expansion: `8` catchable rejected signals identified from offline raw data; `4` accepted AURA-generated entries added
+- Promotion outcome: `NO_CHECKS_PROMOTED` (`WARN-001`, `WARN-002` remained advisory)
+- Tests: `AURA/agents/tests/test_conversion_gate.py` total `13` tests, all passing
+- Artifacts: `AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/`
+- Progress card: `PC-P5-COMPLETE-20260622`
+
+---
+
+## Final Summary - Upstream Reviewer Simulation Track
+
+| Phase | Status | Key Outcome |
+|---|---|---|
+| 0 | COMPLETED | 9 reviewer profiles built from lore.kernel.org |
+| 1 | COMPLETED_WITH_WARNINGS | Simulation engine with 6 lenses |
+| 2 | COMPLETED_WITH_WARNINGS | ASoC subsystem lens, StrEnum fix, 2 pilots |
+| 3 | COMPLETED_WITH_WARNINGS | Precision=1.0, recall=INSUFFICIENT_DATA, FP=0 |
+| 4 | COMPLETED | Advisory gate integration, gate_impact=NONE |
+| 5 | COMPLETED_WITH_WARNINGS | Warn mode - no checks promoted |
+
+Advisory note: Simulation output is advisory only. Not a replacement for real upstream review.

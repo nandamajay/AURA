@@ -237,3 +237,109 @@ def test_gate_reviewer_sim_error_does_not_fail_gate(tmp_path: Path):
     assert result["verdict"] in {"PASS", "WARN", "FAIL"}
     assert result["reviewer_sim_summary"] is not None
     assert result["reviewer_sim_summary"]["sim_verdict"] == "ERROR"
+
+
+def test_gate_warn_mode_escalates_pass_to_warn(tmp_path: Path):
+    converted_source = """
+#include <linux/module.h>
+static int alpha_probe(void) { return 0; }
+MODULE_LICENSE("GPL");
+MODULE_DESCRIPTION("phase5 warn mode test");
+MODULE_AUTHOR("AURA");
+"""
+    upstream_source = """
+#include <linux/module.h>
+static int alpha_probe(void) { return 0; }
+"""
+    _write(tmp_path / "converted" / "driver.c", converted_source)
+    _write(tmp_path / "upstream" / "driver.c", upstream_source)
+    _write(
+        tmp_path / "converted" / "patches" / "0001-missing-signoff.patch",
+        (
+            "From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001\n"
+            "From: Warn Mode <warn@example.com>\n"
+            "Subject: [PATCH] warn-mode missing signoff\n\n"
+            "Patch intentionally omits Signed-off-by for warn-mode evaluation.\n"
+        ),
+    )
+    lineage = _write(tmp_path / "lineage.json", json.dumps({"functions": ["alpha_probe"]}))
+    profiles_dir = _minimal_profiles_dir(tmp_path)
+
+    baseline = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_baseline"),
+            upstream_dir=str(tmp_path / "upstream"),
+            lineage=str(lineage),
+            reviewer_sim=False,
+        )
+    )
+    result = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_with_sim"),
+            upstream_dir=str(tmp_path / "upstream"),
+            lineage=str(lineage),
+            reviewer_sim=True,
+            reviewer_sim_profiles_dir=str(profiles_dir),
+            reviewer_sim_subsystem="asoc",
+        )
+    )
+
+    has_reviewer_warn_reason = any(str(reason).startswith("reviewer_sim_warn:") for reason in result["reasons"])
+    if has_reviewer_warn_reason:
+        assert result["verdict"] == "WARN"
+        assert result["reviewer_sim_summary"]["gate_impact"] == "WARN_ESCALATION"
+    else:
+        assert result["verdict"] == baseline["verdict"]
+        assert result["reviewer_sim_summary"]["gate_impact"] == "NONE"
+
+
+def test_gate_warn_mode_never_causes_fail(tmp_path: Path):
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
+    _write(
+        tmp_path / "converted" / "patches" / "0001-missing-signoff.patch",
+        (
+            "From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001\n"
+            "From: Warn Mode <warn@example.com>\n"
+            "Subject: [PATCH] warn-mode missing signoff\n\n"
+            "Patch intentionally omits Signed-off-by for warn-mode evaluation.\n"
+        ),
+    )
+    profiles_dir = _minimal_profiles_dir(tmp_path)
+
+    result = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_warn_mode"),
+            reviewer_sim=True,
+            reviewer_sim_profiles_dir=str(profiles_dir),
+            reviewer_sim_subsystem="asoc",
+        )
+    )
+
+    assert result["verdict"] == "WARN"
+    assert result["verdict"] != "FAIL"
+
+
+def test_gate_warn_mode_does_not_fire_without_flag(tmp_path: Path):
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
+    _write(
+        tmp_path / "converted" / "patches" / "0001-missing-signoff.patch",
+        (
+            "From 0000000000000000000000000000000000000000 Mon Sep 17 00:00:00 2001\n"
+            "From: Warn Mode <warn@example.com>\n"
+            "Subject: [PATCH] warn-mode missing signoff\n\n"
+            "Patch intentionally omits Signed-off-by for warn-mode evaluation.\n"
+        ),
+    )
+
+    result = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_no_reviewer_sim"),
+            reviewer_sim=False,
+        )
+    )
+
+    assert all(not str(reason).startswith("reviewer_sim_warn:") for reason in result["reasons"])

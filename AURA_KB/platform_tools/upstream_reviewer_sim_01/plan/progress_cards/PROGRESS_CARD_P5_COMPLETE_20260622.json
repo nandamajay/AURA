@@ -1,0 +1,40 @@
+{
+  "card_id": "PC-P5-COMPLETE-20260622",
+  "date": "2026-06-22",
+  "phase": 5,
+  "step": "5.9",
+  "step_name": "Warn mode criteria validation and final simulation-track closure",
+  "status": "COMPLETED_WITH_WARNINGS",
+  "previous_status": "READY_TO_START",
+  "what_was_done": "Defined narrow promotion criteria, expanded corpus from offline raw reviewer data, measured candidate precision/false-positive rates on deterministic stubs, added 3 warn-mode gate tests, and finalized PM sign-off for simulation-track completion.",
+  "artifacts_created": [
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/narrow_blocking_criteria.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/expanded_corpus.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/expanded_precision_report.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/pm_phase5_signoff.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/phase5_validation.json"
+  ],
+  "artifacts_modified": [
+    "AURA/agents/tests/test_conversion_gate.py",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/progress_tracker.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/MASTER_PLAN.md"
+  ],
+  "success_criteria_met": [
+    "Narrow criteria recorded before any code changes",
+    "Corpus expansion performed from offline raw reviewer data without network calls",
+    "Precision measured deterministically for WARN-001 and WARN-002",
+    "No check promoted below precision threshold (none promoted)",
+    "13/13 conversion gate tests passed",
+    "No FAIL escalation path introduced"
+  ],
+  "success_criteria_not_met": [
+    "Candidate check promotion blocked by insufficient signed-off-by rejected corpus size (<6)"
+  ],
+  "blockers": [],
+  "deviations_from_plan": [
+    "NO_CHECKS_PROMOTED path taken because promotion corpus threshold was not met for candidate checks."
+  ],
+  "pm_verdict": "ON_TRACK",
+  "next_step": "Simulation track complete. Future work requires larger real-patch corpus before any warn/block promotion expansion.",
+  "notes": "Advisory only; gate without --reviewer-sim remains unchanged."
+}

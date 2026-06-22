@@ -1,0 +1,476 @@
+{
+  "run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/platform_tools/upstream_reviewer_sim_01/phase5/corpus_stubs/EXP-001",
+  "subsystem": "asoc",
+  "lenses_run": [
+    "patch-structure",
+    "dt-binding",
+    "upstream-philosophy",
+    "rule-pack",
+    "build",
+    "asoc-subsystem"
+  ],
+  "lenses_failed": [],
+  "findings": [
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "ASOC-MARK-010",
+      "severity": "BLOCKING",
+      "text": "Patch is missing Signed-off-by trailer.",
+      "evidence": "patches/0001-missing-signoff.patch",
+      "file": "patches/0001-missing-signoff.patch",
+      "lens_name": "asoc-subsystem",
+      "suggested_action": "Add Signed-off-by trailer to comply with submission process requirements.",
+      "profile_source": "mark_brown_profile_v4",
+      "occurrences": 1,
+      "lenses": [
+        "asoc-subsystem"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-001"
+    },
+    {
+      "reviewer": "Vinod Koul",
+      "pattern_id": "PATCH_STRUCT-004",
+      "severity": "BLOCKING",
+      "text": "Missing Signed-off-by trailer.",
+      "evidence": "EXP-001/patches/0001-missing-signoff.patch has no Signed-off-by",
+      "file": "EXP-001/patches/0001-missing-signoff.patch",
+      "lens_name": "patch-structure",
+      "suggested_action": "Add a valid Signed-off-by trailer as required by DCO.",
+      "occurrences": 1,
+      "lenses": [
+        "patch-structure"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-002"
+    },
+    {
+      "reviewer": "upstream_philosophy",
+      "pattern_id": "UPSTREAM-PHILOSOPHY-clear_rationale",
+      "severity": "BLOCKING",
+      "text": "Clear rationale: Proposal should explain why the change is required.",
+      "evidence": "score=33",
+      "file": "",
+      "lens_name": "upstream-philosophy",
+      "suggested_action": "Address principle gap: Clear rationale.",
+      "occurrences": 1,
+      "lenses": [
+        "upstream-philosophy"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-003"
+    },
+    {
+      "reviewer": "upstream_philosophy",
+      "pattern_id": "UPSTREAM-PHILOSOPHY-dt_binding_hygiene",
+      "severity": "BLOCKING",
+      "text": "Device-tree binding hygiene: DT bindings should map to documented YAML schema expectations.",
+      "evidence": "score=33",
+      "file": "",
+      "lens_name": "upstream-philosophy",
+      "suggested_action": "Address principle gap: Device-tree binding hygiene.",
+      "occurrences": 1,
+      "lenses": [
+        "upstream-philosophy"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-004"
+    },
+    {
+      "reviewer": "upstream_philosophy",
+      "pattern_id": "UPSTREAM-PHILOSOPHY-minimal_scope",
+      "severity": "BLOCKING",
+      "text": "Minimal and reviewable scope: Change set should be small, targeted, and split logically.",
+      "evidence": "score=33",
+      "file": "",
+      "lens_name": "upstream-philosophy",
+      "suggested_action": "Address principle gap: Minimal and reviewable scope.",
+      "occurrences": 1,
+      "lenses": [
+        "upstream-philosophy"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-005"
+    },
+    {
+      "reviewer": "upstream_philosophy",
+      "pattern_id": "UPSTREAM-PHILOSOPHY-test_evidence",
+      "severity": "BLOCKING",
+      "text": "Test evidence present: Validation evidence should be included (build/runtime/checks).",
+      "evidence": "score=33",
+      "file": "",
+      "lens_name": "upstream-philosophy",
+      "suggested_action": "Address principle gap: Test evidence present.",
+      "occurrences": 1,
+      "lenses": [
+        "upstream-philosophy"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-006"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "ASOC-MARK-007",
+      "severity": "WARN",
+      "text": "snd_soc_component_driver definition not detected.",
+      "evidence": "No snd_soc_component_driver symbol in scanned C files.",
+      "file": "",
+      "lens_name": "asoc-subsystem",
+      "suggested_action": "Use snd_soc_component_driver for modern ASoC codec integration.",
+      "profile_source": "mark_brown_profile_v4",
+      "occurrences": 1,
+      "lenses": [
+        "asoc-subsystem"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-007"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "ASOC-MARK-008",
+      "severity": "WARN",
+      "text": "No snd_soc_dapm_widget array found.",
+      "evidence": "DAPM widgets were not detected in scanned codec sources.",
+      "file": "",
+      "lens_name": "asoc-subsystem",
+      "suggested_action": "Define snd_soc_dapm_widget entries for power graph visibility.",
+      "profile_source": "mark_brown_profile_v4",
+      "occurrences": 1,
+      "lenses": [
+        "asoc-subsystem"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-008"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "ASOC-MARK-009",
+      "severity": "WARN",
+      "text": "No snd_soc_dapm_route array found.",
+      "evidence": "DAPM routes were not detected in scanned codec sources.",
+      "file": "",
+      "lens_name": "asoc-subsystem",
+      "suggested_action": "Define snd_soc_dapm_route entries to connect audio paths explicitly.",
+      "profile_source": "mark_brown_profile_v4",
+      "occurrences": 1,
+      "lenses": [
+        "asoc-subsystem"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-009"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "BUILD-007",
+      "severity": "WARN",
+      "text": "compile_result.json not found.",
+      "evidence": "Checked run_dir and parents for compile_result.json.",
+      "file": "",
+      "lens_name": "build",
+      "suggested_action": "Attach compile_result.json artifact from validation run.",
+      "occurrences": 1,
+      "lenses": [
+        "build"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-010"
+    },
+    {
+      "reviewer": "Mark Brown",
+      "pattern_id": "PATCH_STRUCT-001",
+      "severity": "WARN",
+      "text": "No patch lineage found - cannot verify change rationale",
+      "evidence": "Checked run_dir and parent for patch_lineage.json.",
+      "file": "",
+      "lens_name": "patch-structure",
+      "suggested_action": "Provide patch_lineage.json generated from conversion lineage mapping.",
+      "occurrences": 1,
+      "lenses": [
+        "patch-structure"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-011"
+    },
+    {
+      "reviewer": "Pierre-Louis Bossart",
+      "pattern_id": "ASOC-BOSSART-005",
+      "severity": "WARN",
+      "text": "No sdw_register_slave()/devm_sdw_register_slave() call detected.",
+      "evidence": "SoundWire slave registration helper was not observed in C sources.",
+      "file": "",
+      "lens_name": "asoc-subsystem",
+      "suggested_action": "Ensure SoundWire slave registration helper is used during probe.",
+      "profile_source": "pierre_louis_bossart_profile_v4",
+      "occurrences": 1,
+      "lenses": [
+        "asoc-subsystem"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-012"
+    },
+    {
+      "reviewer": "Vinod Koul",
+      "pattern_id": "ASOC-VINOD-003",
+      "severity": "WARN",
+      "text": "No devm_* managed resource APIs detected.",
+      "evidence": "devm_ prefix calls were not observed in scanned C files.",
+      "file": "",
+      "lens_name": "asoc-subsystem",
+      "suggested_action": "Prefer devm_* managed APIs for resource lifecycle cleanup.",
+      "profile_source": "vinod_koul_profile_v4",
+      "occurrences": 1,
+      "lenses": [
+        "asoc-subsystem"
+      ],
+      "reviewer_confidence": "HIGH",
+      "finding_id": "F-013"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_BUILD_GATE_STATUS_SUMMARY",
+      "severity": "WARN",
+      "text": "Build/gate/scoring status summary (UNKNOWN)",
+      "evidence": "{\"compile_status\": null, \"full_build_status\": null, \"gate_source\": null, \"gate_verdict\": null, \"scoring_summary\": null}",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "No gate/build/scoring artifacts detected.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-014"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_HIDDEN_TARGET_AUDIT",
+      "severity": "WARN",
+      "text": "Hidden target access audit (UNKNOWN)",
+      "evidence": "allowed_sources.json is missing; cannot evaluate hidden-target discipline.",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "Provide allowed_sources.json with forbidden_until_scoring definitions for transfer experiments.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-015"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_LA_LE_TERMINOLOGY",
+      "severity": "WARN",
+      "text": "LA/LE terminology presence (WARN)",
+      "evidence": "patch_metadata.json",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "Add explicit LA/LE terminology definitions in planning/governance artifacts.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-016"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_LINEAGE_COVERAGE",
+      "severity": "WARN",
+      "text": "Lineage coverage inference (MISSING)",
+      "evidence": "No patch_lineage artifact found at root or patches/.",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "Provide patch_lineage.json (or patches/patch_lineage.json).",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-017"
+    },
+    {
+      "reviewer": "wcd_rule_pack",
+      "pattern_id": "CHECK_RUN_ARTIFACT_PRESENCE",
+      "severity": "WARN",
+      "text": "Run directory artifact presence (WARN)",
+      "evidence": "{\"missing\": [\"patch_lineage\", \"full_series_validation\", \"static_gate_governance\", \"governance_gate_governance\", \"full_build_result\", \"allowed_sources\", \"fail_closed_items\", \"runtime_fail_closed_items\", \"scoring_result\"], \"present\": {}}",
+      "file": "",
+      "lens_name": "rule-pack",
+      "suggested_action": "Add missing governance and source-allowlist artifacts for stronger compliance coverage.",
+      "occurrences": 1,
+      "lenses": [
+        "rule-pack"
+      ],
+      "reviewer_confidence": "N/A",
+      "finding_id": "F-018"
+    }
+  ],
+  "reviewer_verdicts": {
+    "Mark Brown": {
+      "verdict": "BLOCKED",
+      "blocking_count": 1,
+      "warning_count": 5,
+      "info_count": 0,
+      "focus_role": "primary"
+    },
+    "Vinod Koul": {
+      "verdict": "BLOCKED",
+      "blocking_count": 1,
+      "warning_count": 1,
+      "info_count": 0,
+      "focus_role": "primary"
+    },
+    "upstream_philosophy": {
+      "verdict": "BLOCKED",
+      "blocking_count": 4,
+      "warning_count": 0,
+      "info_count": 0,
+      "focus_role": "secondary"
+    },
+    "Pierre-Louis Bossart": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 1,
+      "info_count": 0,
+      "focus_role": "primary"
+    },
+    "wcd_rule_pack": {
+      "verdict": "NEEDS_WORK",
+      "blocking_count": 0,
+      "warning_count": 5,
+      "info_count": 0,
+      "focus_role": "secondary"
+    }
+  },
+  "overall_verdict": "BLOCKED",
+  "fix_plan": [
+    {
+      "priority": "P0",
+      "finding_id": "F-001",
+      "action": "Add Signed-off-by trailer to comply with submission process requirements.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P0",
+      "finding_id": "F-002",
+      "action": "Add a valid Signed-off-by trailer as required by DCO.",
+      "owner": "driver_author",
+      "reviewer_signal": "Vinod Koul (HIGH)"
+    },
+    {
+      "priority": "P0",
+      "finding_id": "F-003",
+      "action": "Address principle gap: Clear rationale.",
+      "owner": "driver_author",
+      "reviewer_signal": "upstream_philosophy (N/A)"
+    },
+    {
+      "priority": "P0",
+      "finding_id": "F-004",
+      "action": "Address principle gap: Device-tree binding hygiene.",
+      "owner": "driver_author",
+      "reviewer_signal": "upstream_philosophy (N/A)"
+    },
+    {
+      "priority": "P0",
+      "finding_id": "F-005",
+      "action": "Address principle gap: Minimal and reviewable scope.",
+      "owner": "driver_author",
+      "reviewer_signal": "upstream_philosophy (N/A)"
+    },
+    {
+      "priority": "P0",
+      "finding_id": "F-006",
+      "action": "Address principle gap: Test evidence present.",
+      "owner": "driver_author",
+      "reviewer_signal": "upstream_philosophy (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-007",
+      "action": "Use snd_soc_component_driver for modern ASoC codec integration.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-008",
+      "action": "Define snd_soc_dapm_widget entries for power graph visibility.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-009",
+      "action": "Define snd_soc_dapm_route entries to connect audio paths explicitly.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-010",
+      "action": "Attach compile_result.json artifact from validation run.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-011",
+      "action": "Provide patch_lineage.json generated from conversion lineage mapping.",
+      "owner": "driver_author",
+      "reviewer_signal": "Mark Brown (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-012",
+      "action": "Ensure SoundWire slave registration helper is used during probe.",
+      "owner": "driver_author",
+      "reviewer_signal": "Pierre-Louis Bossart (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-013",
+      "action": "Prefer devm_* managed APIs for resource lifecycle cleanup.",
+      "owner": "driver_author",
+      "reviewer_signal": "Vinod Koul (HIGH)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-014",
+      "action": "No gate/build/scoring artifacts detected.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-015",
+      "action": "Provide allowed_sources.json with forbidden_until_scoring definitions for transfer experiments.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-016",
+      "action": "Add explicit LA/LE terminology definitions in planning/governance artifacts.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-017",
+      "action": "Provide patch_lineage.json (or patches/patch_lineage.json).",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    },
+    {
+      "priority": "P1",
+      "finding_id": "F-018",
+      "action": "Add missing governance and source-allowlist artifacts for stronger compliance coverage.",
+      "owner": "driver_author",
+      "reviewer_signal": "wcd_rule_pack (N/A)"
+    }
+  ],
+  "advisory_note": "Advisory only - not a replacement for real upstream review."
+}
