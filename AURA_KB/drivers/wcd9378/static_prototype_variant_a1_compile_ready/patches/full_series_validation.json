@@ -1,6 +1,6 @@
 {
   "artifact": "wcd9378_static_prototype_a1_full_series_validation",
-  "generated_at_utc": "2026-06-20T00:00:00Z",
+  "generated_at_utc": "2026-06-22T00:00:00Z",
   "series_apply": {
     "status": "PASS",
     "validation_repo": "/tmp/wcd9378_a1_compile_linux_next",
@@ -18,6 +18,23 @@
     "commands": [
       "git -C track_b_corpora/linux-next worktree add /tmp/wcd9378_a1_compile_linux_next ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
       "git -C /tmp/wcd9378_a1_compile_linux_next am AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patches/*.patch"
+    ]
+  },
+  "patch_regeneration": {
+    "status": "PASS",
+    "regenerated_at_utc": "2026-06-22T00:00:00Z",
+    "style": "git format-patch",
+    "base_commit": "ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
+    "updated_patches": [
+      "0001-ASoC-codecs-add-WCD9378-shared-header-RFC-static-pro.patch",
+      "0002-ASoC-codecs-add-WCD9378-SoundWire-scaffold-RFC-stati.patch",
+      "0003-ASoC-codecs-add-WCD9378-codec-scaffold-RFC-static-pr.patch",
+      "0004-ASoC-codecs-wire-WCD9378-Kconfig-Makefile-entries-RF.patch"
+    ],
+    "why": "Regenerated patch artifacts after hardware-evidence-driven updates (confirmed SDW identity and TX UNATTACHED probe sequencing fix).",
+    "regeneration_commands": [
+      "git -C track_b_corpora/linux-next worktree add /tmp/wcd9378_hw_regen_linux_next ec039126b7fac4e3af35ebccaa7c6f9b6875ba81",
+      "git -C /tmp/wcd9378_hw_regen_linux_next format-patch -4 HEAD --subject-prefix='RFC PATCH' -o /tmp/wcd9378_hw_regen_patches"
     ]
   },
   "touched_files": [

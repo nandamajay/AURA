@@ -1,0 +1,36 @@
+{
+  "symptom": "TX slave sdw:3:0:0217:0110:00:3 status=UNATTACHED at codec probe time",
+  "error": "-110 ETIMEDOUT from wait_for_completion_timeout(&tx_sdw_dev->initialization_complete, 5000ms)",
+  "mechanism": "initialization_complete is signaled by sdw_handle_slave_status() in bus.c:2038 only when slave reaches SDW_SLAVE_ATTACHED. TX slave never reaches ATTACHED so completion never fires.",
+  "candidate_causes": [
+    {
+      "id": "RCA-001",
+      "cause": "dout-ports mismatch on TX master (7630000.soundwire)",
+      "evidence": "Log line 12.360325: dout-ports(0) mismatch with controller(1)",
+      "assessment": "WARNING only — does not prevent slave enumeration. TX slave still bound at 12.536s after this warning.",
+      "action": "INVESTIGATE_DTS — verify swr2 port config in DTS matches what qcom_swrm expects"
+    },
+    {
+      "id": "RCA-002",
+      "cause": "TX slave enumerates then detaches before initialization_complete fires",
+      "evidence": "Slave bound at 12.536s but UNATTACHED at probe time (17.6s). 5-second gap.",
+      "assessment": "MOST_LIKELY — slave attached briefly then lost enumeration",
+      "action": "CHECK_LPASS_TXMACRO_CLOCK — if TX SWR clock drops during probe, slave detaches"
+    },
+    {
+      "id": "RCA-003",
+      "cause": "wcd9378_reset() in probe toggles GPIO while TX slave is enumerating",
+      "evidence": "wcd9378_reset() called in wcd9378_probe() before component_master_add. Reset clears chip state including TX SWR enumeration.",
+      "assessment": "LIKELY_CONTRIBUTOR — same pattern as friend's bringup notes section 6C",
+      "action": "VERIFY_RESET_TIMING — wcd938x calls reset before component_master_add_with_match, same as A1"
+    },
+    {
+      "id": "RCA-004",
+      "cause": "PM runtime suspend of lpass_txmacro drops TX SWR clock",
+      "evidence": "No pm_runtime_get on txdev before waiting for initialization_complete in A1 wcd9378_soc_codec_probe",
+      "assessment": "LIKELY — wcd938x does pm_runtime_resume_and_get(dev) in codec probe; A1 does the same but txdev may still suspend",
+      "action": "COMPARE_WITH_WCD938X_PROBE — wcd938x line 3034 does pm_runtime_resume_and_get before regmap init"
+    }
+  ],
+  "primary_fix_direction": "RCA-002 + RCA-004: ensure TX SWR clock is held and TX slave stays attached until initialization_complete fires"
+}

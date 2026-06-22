@@ -158,16 +158,31 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	if (!tx_sdw_dev)
 		return -EINVAL;
 
-	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
-						msecs_to_jiffies(5000));
-	if (!time_left)
-		return -ETIMEDOUT;
-
-	snd_soc_component_init_regmap(component, wcd9378->regmap);
-
+	/* Keep TX SoundWire path active while waiting for slave readiness. */
 	ret = pm_runtime_resume_and_get(dev);
 	if (ret < 0)
 		return ret;
+
+	/* Wait for TX slave to re-attach before initialization completion. */
+	time_left = wait_for_completion_timeout(&tx_sdw_dev->enumeration_complete,
+						msecs_to_jiffies(5000));
+	if (!time_left) {
+		dev_err(dev, "TX SoundWire slave enumeration timed out\n");
+		pm_runtime_put(dev);
+		return -ETIMEDOUT;
+	}
+
+	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
+						msecs_to_jiffies(5000));
+	if (!time_left) {
+		dev_err(dev,
+			"TX SoundWire slave initialization timed out, status: %d\n",
+			tx_sdw_dev->status);
+		pm_runtime_put(dev);
+		return -ETIMEDOUT;
+	}
+
+	snd_soc_component_init_regmap(component, wcd9378->regmap);
 
 	wcd9378->clsh_info = wcd_clsh_ctrl_alloc(component, WCD937X);
 	if (IS_ERR(wcd9378->clsh_info)) {

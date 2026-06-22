@@ -353,7 +353,7 @@ static int wcd9378_sdw_runtime_resume(struct device *dev)
 }
 
 static const struct sdw_device_id wcd9378_sdw_id[] = {
-	SDW_SLAVE_ENTRY(0x0217, WCD9378_CANDIDATE_SDW_PART_ID, 0),
+	SDW_SLAVE_ENTRY(0x0217, WCD9378_SDW_PART_ID, 0),
 	{},
 };
 MODULE_DEVICE_TABLE(sdw, wcd9378_sdw_id);

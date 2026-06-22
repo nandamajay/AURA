@@ -1,24 +1,31 @@
 {
   "artifact": "wcd9378_runtime_fail_closed_register_variant_a1_compile_ready",
-  "generated_on": "2026-06-20",
+  "generated_on": "2026-06-22",
   "items": [
     {
       "item": "SDW numeric identity final confirmation",
-      "status": "NEEDS_RUNTIME_CONFIRMATION",
-      "why_not_final": "No runtime enumeration logs were available to prove final Linux SoundWire mfg/part tuple for WCD9378.",
-      "what_static_prototype_does": "Keeps candidate tuple in static codec/SDW scaffold for compile integration only.",
-      "evidence_needed_monday": "Boot dmesg + sysfs/modalias enumeration for WCD9378 RX/TX endpoints."
+      "status": "RESOLVED",
+      "why_not_final": "Resolved by hardware evidence showing sdw:2:0:0217:0110:00:4 and sdw:3:0:0217:0110:00:3 on ELIZA EVK.",
+      "what_static_prototype_does": "Uses confirmed SDW tuple with WCD9378_SDW_PART_ID=0x110 in static codec/SDW scaffold.",
+      "evidence_needed_monday": "No additional identity evidence required for tuple confirmation."
     },
     {
       "item": "sdw20217011000 compatible final confirmation",
-      "status": "FAIL_CLOSED",
-      "why_not_final": "Binding and datasheet evidence do not directly prove this SDW compatible string for WCD9378.",
-      "what_static_prototype_does": "Carries candidate compatible constant for RFC planning only, not as final validated identity.",
-      "evidence_needed_monday": "Deterministic mapping from enumerated SDW IDs to DT compatible naming convention."
+      "status": "RESOLVED",
+      "why_not_final": "Resolved by sysfs-compatible naming confirmation aligned with observed SoundWire identity.",
+      "what_static_prototype_does": "Uses confirmed WCD9378_SDW_COMPATIBLE=sdw20217011000 constant.",
+      "evidence_needed_monday": "No additional compatible-string evidence required for this identity mapping."
+    },
+    {
+      "item": "TX slave UNATTACHED fix",
+      "status": "IN_PROGRESS",
+      "why_not_final": "Fix applied in probe path (pm_runtime hold + enumeration/initialization waits) but board runtime re-test is pending.",
+      "what_static_prototype_does": "Adds enumeration_complete wait before initialization_complete and holds runtime PM during waits.",
+      "evidence_needed_monday": "Fresh ELIZA EVK boot/runtime logs proving TX slave reaches ATTACHED and card instantiation succeeds."
     },
     {
       "item": "Paging runtime validation",
-      "status": "NEEDS_RUNTIME_CONFIRMATION",
+      "status": "FAIL_CLOSED",
       "why_not_final": "Static evidence supports paging intent but not runtime correctness in upstream qcom SoundWire controller path.",
       "what_static_prototype_does": "Enables slave paging_support in SDW scaffold and defers controller changes.",
       "evidence_needed_monday": "Read/write traces above 0xffff showing correct page handling end-to-end."
@@ -46,15 +53,15 @@
     },
     {
       "item": "Playback/capture validation",
-      "status": "NEEDS_RUNTIME_CONFIRMATION",
-      "why_not_final": "No headset playback + AMIC capture validation logs were provided in this run.",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "No headset playback + AMIC capture validation logs were provided after the TX UNATTACHED fix in this run.",
       "what_static_prototype_does": "Makes no runtime success claims; compile-only RFC scope.",
       "evidence_needed_monday": "aplay/arecord + amixer + dmesg logs with before/after register snapshots."
     },
     {
       "item": "Board DTS finalization",
-      "status": "NEEDS_RUNTIME_CONFIRMATION",
-      "why_not_final": "Board DTS/DTSI patch set (reset/supplies/rx/tx/port mapping/DAI links) was not validated here.",
+      "status": "FAIL_CLOSED",
+      "why_not_final": "Board DTS/DTSI patch set (reset/supplies/rx/tx/port mapping/DAI links) is still not runtime-validated in this run.",
       "what_static_prototype_does": "Keeps only generic upstream-oriented DT property usage in static prototype code.",
       "evidence_needed_monday": "Exact board DTS patch plus runtime-verified DT wiring."
     }

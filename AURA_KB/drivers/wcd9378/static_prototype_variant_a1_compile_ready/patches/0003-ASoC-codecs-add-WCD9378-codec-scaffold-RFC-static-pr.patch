@@ -1,28 +1,31 @@
-From 6d075ed8244d16a6fdc1f4e3f296d75a717930a4 Mon Sep 17 00:00:00 2001
+From 3a19917037f13e34b0c950dc4ff185236384d323 Mon Sep 17 00:00:00 2001
 From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Date: Sat, 20 Jun 2026 02:43:13 +0530
+Date: Mon, 22 Jun 2026 15:39:13 +0530
 Subject: [RFC PATCH 3/4] ASoC: codecs: add WCD9378 codec scaffold (RFC static
  prototype)
 
 Add the platform codec-side static scaffold for WCD9378 including
+
 component bind/unbind, DAI ops, regulator/reset integration, and
+
 MBHC/Class-H API integration points using upstream conventions.
 
 This patch intentionally avoids runtime workaround logic and runtime
+
 claims.
 
 Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 ---
- sound/soc/codecs/wcd9378.c | 445 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 445 insertions(+)
+ sound/soc/codecs/wcd9378.c | 460 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 460 insertions(+)
  create mode 100644 sound/soc/codecs/wcd9378.c
 
 diff --git a/sound/soc/codecs/wcd9378.c b/sound/soc/codecs/wcd9378.c
 new file mode 100644
-index 000000000..be8873d84
+index 000000000..18ff614b4
 --- /dev/null
 +++ b/sound/soc/codecs/wcd9378.c
-@@ -0,0 +1,445 @@
+@@ -0,0 +1,460 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Qualcomm WCD9378 codec static RFC prototype.
@@ -183,16 +186,31 @@ index 000000000..be8873d84
 +	if (!tx_sdw_dev)
 +		return -EINVAL;
 +
-+	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
-+						msecs_to_jiffies(5000));
-+	if (!time_left)
-+		return -ETIMEDOUT;
-+
-+	snd_soc_component_init_regmap(component, wcd9378->regmap);
-+
++	/* Keep TX SoundWire path active while waiting for slave readiness. */
 +	ret = pm_runtime_resume_and_get(dev);
 +	if (ret < 0)
 +		return ret;
++
++	/* Wait for TX slave to re-attach before initialization completion. */
++	time_left = wait_for_completion_timeout(&tx_sdw_dev->enumeration_complete,
++						msecs_to_jiffies(5000));
++	if (!time_left) {
++		dev_err(dev, "TX SoundWire slave enumeration timed out\n");
++		pm_runtime_put(dev);
++		return -ETIMEDOUT;
++	}
++
++	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
++						msecs_to_jiffies(5000));
++	if (!time_left) {
++		dev_err(dev,
++			"TX SoundWire slave initialization timed out, status: %d\n",
++			tx_sdw_dev->status);
++		pm_runtime_put(dev);
++		return -ETIMEDOUT;
++	}
++
++	snd_soc_component_init_regmap(component, wcd9378->regmap);
 +
 +	wcd9378->clsh_info = wcd_clsh_ctrl_alloc(component, WCD937X);
 +	if (IS_ERR(wcd9378->clsh_info)) {

@@ -1,11 +1,13 @@
-From 792ea00ffbe0919086badfd9239787eb52b2bf6a Mon Sep 17 00:00:00 2001
+From c122c2f2a058dd320b5c0c548132f39e7db1d888 Mon Sep 17 00:00:00 2001
 From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Date: Sat, 20 Jun 2026 02:43:13 +0530
+Date: Mon, 22 Jun 2026 15:39:12 +0530
 Subject: [RFC PATCH 2/4] ASoC: codecs: add WCD9378 SoundWire scaffold (RFC
  static prototype)
 
 Add a SoundWire slave-side static scaffold for WCD9378 with channel
+
 mapping, regmap configuration, component hooks, and runtime PM shape
+
 aligned with nearby upstream WCD drivers.
 
 Runtime-sensitive identity and paging behavior remains RFC-only.
@@ -18,7 +20,7 @@ Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 
 diff --git a/sound/soc/codecs/wcd9378-sdw.c b/sound/soc/codecs/wcd9378-sdw.c
 new file mode 100644
-index 000000000..a62d300cc
+index 000000000..757a12ea9
 --- /dev/null
 +++ b/sound/soc/codecs/wcd9378-sdw.c
 @@ -0,0 +1,380 @@
@@ -377,7 +379,7 @@ index 000000000..a62d300cc
 +}
 +
 +static const struct sdw_device_id wcd9378_sdw_id[] = {
-+	SDW_SLAVE_ENTRY(0x0217, WCD9378_CANDIDATE_SDW_PART_ID, 0),
++	SDW_SLAVE_ENTRY(0x0217, WCD9378_SDW_PART_ID, 0),
 +	{},
 +};
 +MODULE_DEVICE_TABLE(sdw, wcd9378_sdw_id);

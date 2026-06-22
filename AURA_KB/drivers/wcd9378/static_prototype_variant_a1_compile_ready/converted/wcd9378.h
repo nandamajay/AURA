@@ -59,9 +59,9 @@
 #define WCD9378_DIGITAL_EFUSE_REG_31            0x34cf
 #define WCD9378_MAX_REGISTER                    WCD9378_DIGITAL_EFUSE_REG_31
 
-/* Candidate identifiers pending runtime confirmation. */
-#define WCD9378_CANDIDATE_SDW_PART_ID           0x110
-#define WCD9378_CANDIDATE_SDW_COMPATIBLE        "sdw20217011000"
+/* Hardware-confirmed SoundWire identity from ELIZA EVK evidence logs. */
+#define WCD9378_SDW_PART_ID                     0x110
+#define WCD9378_SDW_COMPATIBLE                  "sdw20217011000"
 
 #define WCD9378_MAX_MICBIAS                     3
 #define WCD9378_MAX_TX_CHANNELS                 13

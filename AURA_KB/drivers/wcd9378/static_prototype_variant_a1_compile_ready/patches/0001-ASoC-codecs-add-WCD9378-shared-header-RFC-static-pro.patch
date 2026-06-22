@@ -1,14 +1,17 @@
-From 46a600db8b3f7875d1d20b68757376c39d96bbf1 Mon Sep 17 00:00:00 2001
+From daed11977299c3f373f130a99f92a7d1ed16a2a7 Mon Sep 17 00:00:00 2001
 From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Date: Sat, 20 Jun 2026 02:43:13 +0530
+Date: Mon, 22 Jun 2026 15:39:12 +0530
 Subject: [RFC PATCH 1/4] ASoC: codecs: add WCD9378 shared header (RFC static
  prototype)
 
 Add a compile-oriented WCD9378 shared header with register defines,
+
 SoundWire topology enums, and common private structures derived from
+
 downstream layout and upstream WCD coding patterns.
 
 This is RFC static scaffolding only and does not claim runtime
+
 validation.
 
 Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
@@ -19,7 +22,7 @@ Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 
 diff --git a/sound/soc/codecs/wcd9378.h b/sound/soc/codecs/wcd9378.h
 new file mode 100644
-index 000000000..6fce3da15
+index 000000000..afd89c5b4
 --- /dev/null
 +++ b/sound/soc/codecs/wcd9378.h
 @@ -0,0 +1,235 @@
@@ -84,9 +87,9 @@ index 000000000..6fce3da15
 +#define WCD9378_DIGITAL_EFUSE_REG_31            0x34cf
 +#define WCD9378_MAX_REGISTER                    WCD9378_DIGITAL_EFUSE_REG_31
 +
-+/* Candidate identifiers pending runtime confirmation. */
-+#define WCD9378_CANDIDATE_SDW_PART_ID           0x110
-+#define WCD9378_CANDIDATE_SDW_COMPATIBLE        "sdw20217011000"
++/* Hardware-confirmed SoundWire identity from ELIZA EVK evidence logs. */
++#define WCD9378_SDW_PART_ID                     0x110
++#define WCD9378_SDW_COMPATIBLE                  "sdw20217011000"
 +
 +#define WCD9378_MAX_MICBIAS                     3
 +#define WCD9378_MAX_TX_CHANNELS                 13
