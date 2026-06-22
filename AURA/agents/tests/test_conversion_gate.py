@@ -29,12 +29,43 @@ def _args(tmp_path: Path, **overrides):
         "lineage": None,
         "banned_symbols": None,
         "dt_binding": None,
+        "reviewer_sim": False,
+        "reviewer_sim_profiles_dir": None,
+        "reviewer_sim_subsystem": "asoc",
         "derived_threshold": 85.0,
         "copy_threshold": 95.0,
         "lineage_threshold": 80.0,
     }
     defaults.update(overrides)
     return argparse.Namespace(**defaults)
+
+
+def _minimal_profiles_dir(tmp_path: Path) -> Path:
+    profiles_dir = tmp_path / "profiles"
+    _write(
+        profiles_dir / "krzysztof_kozlowski_profile_v4.json",
+        json.dumps(
+            {
+                "reviewer": "Krzysztof Kozlowski",
+                "confidence_level": "HIGH",
+                "blocking_threshold": 3.0,
+                "dt_rules": [],
+            }
+        ),
+    )
+    _write(
+        profiles_dir / "mark_brown_profile_v4.json",
+        json.dumps({"reviewer": "Mark Brown", "confidence_level": "HIGH"}),
+    )
+    _write(
+        profiles_dir / "vinod_koul_profile_v4.json",
+        json.dumps({"reviewer": "Vinod Koul", "confidence_level": "HIGH"}),
+    )
+    _write(
+        profiles_dir / "pierre_louis_bossart_profile_v4.json",
+        json.dumps({"reviewer": "Pierre-Louis Bossart", "confidence_level": "HIGH"}),
+    )
+    return profiles_dir
 
 
 def test_gate_fails_on_reference_copy(tmp_path: Path):
@@ -137,3 +168,68 @@ def test_cli_writes_fail_closed_verdict_on_setup_error(tmp_path: Path):
     assert rc == 1
     assert verdict["verdict"] == "FAIL"
     assert "gate_error" in verdict["reasons"]
+
+
+def test_gate_reviewer_sim_flag_adds_summary_field(tmp_path: Path):
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
+    profiles_dir = _minimal_profiles_dir(tmp_path)
+
+    baseline = run_gate(_args(tmp_path, run_dir=str(tmp_path / "run_base")))
+    result = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_with_sim"),
+            reviewer_sim=True,
+            reviewer_sim_profiles_dir=str(profiles_dir),
+            reviewer_sim_subsystem="asoc",
+        )
+    )
+
+    assert result["reviewer_sim_summary"] is not None
+    assert result["reviewer_sim_summary"]["gate_impact"] == "NONE"
+    assert result["reviewer_sim_summary"]["advisory_note"]
+    assert result["verdict"] == baseline["verdict"]
+
+
+def test_gate_without_reviewer_sim_has_null_summary(tmp_path: Path):
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
+
+    result = run_gate(_args(tmp_path, run_dir=str(tmp_path / "run_no_sim"), reviewer_sim=False))
+
+    assert result["reviewer_sim_summary"] is None
+
+
+def test_gate_reviewer_sim_never_changes_verdict(tmp_path: Path):
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
+    profiles_dir = _minimal_profiles_dir(tmp_path)
+
+    without_sim = run_gate(_args(tmp_path, run_dir=str(tmp_path / "run_without_sim"), reviewer_sim=False))
+    with_sim = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_with_sim"),
+            reviewer_sim=True,
+            reviewer_sim_profiles_dir=str(profiles_dir),
+            reviewer_sim_subsystem="asoc",
+        )
+    )
+
+    assert without_sim["verdict"] == with_sim["verdict"]
+
+
+def test_gate_reviewer_sim_error_does_not_fail_gate(tmp_path: Path):
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
+
+    result = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_bad_sim"),
+            reviewer_sim=True,
+            reviewer_sim_profiles_dir=str(tmp_path / "missing_profiles"),
+            reviewer_sim_subsystem="asoc",
+        )
+    )
+
+    assert result["verdict"] in {"PASS", "WARN", "FAIL"}
+    assert result["reviewer_sim_summary"] is not None
+    assert result["reviewer_sim_summary"]["sim_verdict"] == "ERROR"

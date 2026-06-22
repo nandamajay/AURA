@@ -1,0 +1,90 @@
+{
+  "verifier_engine": "aura_conversion_verifier_v1",
+  "verifier_version": "1.0.0",
+  "verdict": "FAIL",
+  "thresholds": {
+    "derived_threshold": 85.0,
+    "copy_threshold": 95.0,
+    "lineage_threshold": 80.0
+  },
+  "inputs": {
+    "converted_paths": [
+      "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted"
+    ],
+    "reference_paths": [],
+    "target_paths": [],
+    "downstream_paths": [],
+    "lineage_file": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patch_lineage.json"
+  },
+  "collected_files": {
+    "converted": [
+      "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378-sdw.c",
+      "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.c",
+      "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted/wcd9378.h"
+    ],
+    "references": [],
+    "targets": [],
+    "downstream": []
+  },
+  "derivation_check": {
+    "references": {
+      "candidate_file_count": 0,
+      "best_matches": [],
+      "findings": []
+    },
+    "targets": {
+      "candidate_file_count": 0,
+      "best_matches": [],
+      "findings": []
+    },
+    "downstream": {
+      "candidate_file_count": 0,
+      "best_matches": [],
+      "findings": []
+    }
+  },
+  "lineage_check": {
+    "status": "MISSING",
+    "reason": "lineage file not found: /local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/patch_lineage.json",
+    "converted_function_count": 26,
+    "covered_function_count": 0,
+    "coverage": 0.0,
+    "uncovered_functions": [
+      "wcd9378_add_slave_components",
+      "wcd9378_bind",
+      "wcd9378_codec_free",
+      "wcd9378_codec_hw_params",
+      "wcd9378_codec_set_jack",
+      "wcd9378_codec_set_sdw_stream",
+      "wcd9378_get_channel_map",
+      "wcd9378_interrupt_callback",
+      "wcd9378_parse_channel_mapping",
+      "wcd9378_probe",
+      "wcd9378_rdwr_register",
+      "wcd9378_readable_register",
+      "wcd9378_remove",
+      "wcd9378_reset",
+      "wcd9378_sdw_free",
+      "wcd9378_sdw_hw_params",
+      "wcd9378_sdw_probe",
+      "wcd9378_sdw_remove",
+      "wcd9378_sdw_runtime_resume",
+      "wcd9378_sdw_runtime_suspend",
+      "wcd9378_sdw_set_sdw_stream",
+      "wcd9378_soc_codec_probe",
+      "wcd9378_soc_codec_remove",
+      "wcd9378_unbind",
+      "wcd9378_volatile_register",
+      "wcd9378_writeable_register"
+    ]
+  },
+  "findings": {
+    "blocking": [],
+    "warnings": [],
+    "all_derivation_findings": []
+  },
+  "metadata": {
+    "deterministic": true,
+    "verifier_logic_sha256": "c9afad9a2f936529a62d93594b4f2da749f5cefcb4c798f5d26dcc5244097ce0"
+  }
+}

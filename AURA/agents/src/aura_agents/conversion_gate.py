@@ -21,6 +21,7 @@ from aura_agents.multifile_scoring import render_multifile_score_json, score_mul
 
 GATE_ENGINE = "aura_conversion_gate_v1"
 GATE_VERSION = "1.0.0"
+REVIEWER_SIM_ADVISORY_NOTE = "Advisory only - not a replacement for real upstream review."
 
 
 def _utc_now_iso() -> str:
@@ -93,6 +94,112 @@ def _stage_target_files(run_dir: Path, target_paths: list[str]) -> Path | None:
             shutil.copy2(path, target_dir / path.name)
             staged += 1
     return target_dir if staged else None
+
+
+def _run_reviewer_sim(
+    converted_dir: str,
+    run_dir: Path,
+    profiles_dir: Path | None,
+    subsystem: str,
+) -> dict[str, Any] | None:
+    """Run upstream reviewer simulation in advisory mode.
+
+    Returns reviewer_sim_summary dict or None if sim cannot run.
+    Never raises - all errors are caught and returned as a degraded summary.
+    Gate verdict is never modified by this function's output.
+    """
+
+    try:
+        # Lazy import keeps gate importable even if simulation module is broken.
+        from aura_agents import upstream_reviewer_sim
+
+        repo_root = Path(__file__).resolve().parents[4]
+        converted_path = Path(converted_dir).resolve()
+        resolved_profiles_dir = (
+            profiles_dir.resolve()
+            if profiles_dir is not None
+            else (repo_root / "AURA_KB/reviewer_profiles/processed").resolve()
+        )
+        if not converted_path.exists():
+            raise RuntimeError(f"converted_dir not found: {converted_path}")
+        if not resolved_profiles_dir.exists():
+            raise RuntimeError(f"reviewer sim profiles dir not found: {resolved_profiles_dir}")
+
+        profiles = upstream_reviewer_sim._load_profiles(resolved_profiles_dir)
+        context = {
+            "repo_root": str(repo_root),
+            "profiles_dir": str(resolved_profiles_dir),
+            "profiles": profiles,
+            "rules_path": str(upstream_reviewer_sim._default_rules_path(repo_root).resolve()),
+            "subsystem": str(subsystem),
+            "subsystem_focus_profiles": upstream_reviewer_sim.SUBSYSTEM_REVIEWER_MAP,
+            "output_dir": str(run_dir),
+        }
+        lens_names = ["patch-structure", "dt-binding", "asoc-subsystem"]
+        lens_results = [upstream_reviewer_sim.run_lens(name, converted_path, context) for name in lens_names]
+        aggregated = upstream_reviewer_sim.aggregate_findings(lens_results=lens_results, profiles=profiles)
+
+        blocking_count = sum(1 for finding in aggregated if finding.get("severity") == "BLOCKING")
+        warn_count = sum(1 for finding in aggregated if finding.get("severity") == "WARN")
+        info_count = sum(1 for finding in aggregated if finding.get("severity") == "INFO")
+
+        if blocking_count > 0:
+            sim_verdict = "BLOCKED"
+        elif warn_count > 0:
+            sim_verdict = "NEEDS_WORK"
+        else:
+            sim_verdict = "LGTM"
+
+        top_findings: list[dict[str, Any]] = []
+        for finding in aggregated[:5]:
+            top_findings.append(
+                {
+                    "finding_id": finding.get("finding_id"),
+                    "reviewer": finding.get("reviewer"),
+                    "pattern_id": finding.get("pattern_id"),
+                    "severity": finding.get("severity"),
+                    "text": finding.get("text"),
+                    "file": finding.get("file"),
+                }
+            )
+        profiles_used = sorted(
+            {
+                str(finding.get("profile_source", "")).strip()
+                for finding in aggregated
+                if str(finding.get("profile_source", "")).strip()
+            }
+        )
+
+        return {
+            "advisory_note": REVIEWER_SIM_ADVISORY_NOTE,
+            "sim_verdict": sim_verdict,
+            "blocking_count": blocking_count,
+            "warn_count": warn_count,
+            "info_count": info_count,
+            "gate_impact": "NONE",
+            "gate_impact_reason": "Sim findings are advisory. Core verdict is unchanged.",
+            "top_findings": top_findings,
+            "profiles_used": profiles_used,
+            "subsystem": str(subsystem),
+            "sim_run_dir": str(converted_path),
+            "generated_at_utc": _utc_now_iso(),
+        }
+    except Exception as exc:  # noqa: BLE001 - reviewer sim is advisory and must not break the gate.
+        return {
+            "advisory_note": REVIEWER_SIM_ADVISORY_NOTE,
+            "sim_verdict": "ERROR",
+            "error": str(exc),
+            "blocking_count": 0,
+            "warn_count": 0,
+            "info_count": 0,
+            "gate_impact": "NONE",
+            "gate_impact_reason": "Sim findings are advisory. Core verdict is unchanged.",
+            "top_findings": [],
+            "profiles_used": [],
+            "subsystem": str(subsystem),
+            "sim_run_dir": str(Path(converted_dir).resolve()),
+            "generated_at_utc": _utc_now_iso(),
+        }
 
 
 def run_gate(args: argparse.Namespace) -> dict[str, Any]:
@@ -182,6 +289,23 @@ def run_gate(args: argparse.Namespace) -> dict[str, Any]:
             "self_attestation_trusted": False,
         },
     }
+
+    reviewer_sim_enabled = bool(getattr(args, "reviewer_sim", False))
+    if reviewer_sim_enabled:
+        profiles_override = getattr(args, "reviewer_sim_profiles_dir", None)
+        reviewer_sim_summary = _run_reviewer_sim(
+            converted_dir=args.converted_dir,
+            run_dir=run_dir,
+            profiles_dir=Path(profiles_override) if profiles_override else None,
+            subsystem=str(getattr(args, "reviewer_sim_subsystem", "asoc")),
+        )
+    else:
+        reviewer_sim_summary = None
+    result["reviewer_sim_summary"] = reviewer_sim_summary
+
+    # Invariant: reviewer sim must never change the core verdict.
+    assert result["verdict"] in ("PASS", "WARN", "FAIL"), "Gate verdict corrupted"
+
     verdict_path = run_dir / "governance_verdict.json"
     verdict_path.write_text(json.dumps(result, indent=2, ensure_ascii=True) + "\n", encoding="utf-8")
     return result
@@ -200,6 +324,22 @@ def _parse_args(argv: list[str] | None = None) -> argparse.Namespace:
     parser.add_argument("--lineage", help="Lineage JSON artifact")
     parser.add_argument("--banned-symbols", help="Optional banned symbols JSON")
     parser.add_argument("--dt-binding", help="Optional DT binding YAML")
+    parser.add_argument(
+        "--reviewer-sim",
+        action="store_true",
+        default=False,
+        help="Run upstream reviewer simulation in advisory mode and embed summary in verdict (advisory only, never changes verdict).",
+    )
+    parser.add_argument(
+        "--reviewer-sim-profiles-dir",
+        default=None,
+        help="Path to reviewer profiles directory for simulation (default: auto-detect from repo root).",
+    )
+    parser.add_argument(
+        "--reviewer-sim-subsystem",
+        default="asoc",
+        help="Subsystem hint for reviewer simulation (default: asoc).",
+    )
     parser.add_argument("--derived-threshold", type=float, default=85.0)
     parser.add_argument("--copy-threshold", type=float, default=95.0)
     parser.add_argument("--lineage-threshold", type=float, default=80.0)

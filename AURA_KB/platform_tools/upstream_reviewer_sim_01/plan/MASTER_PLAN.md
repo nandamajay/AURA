@@ -35,8 +35,8 @@ Advisory only — not a replacement for real upstream review.
 | 1 | Simulation Engine Prototype | COMPLETED_WITH_WARNINGS | After Phase 0 |
 | 2 | Subsystem Simulation Integration | COMPLETED_WITH_WARNINGS | After Phase 1 |
 | 3 | Profile Validation | COMPLETED_WITH_WARNINGS | After Phase 2 |
-| 4 | Advisory Gate Integration | READY_TO_START | After Phase 3 |
-| 5 | Warn Mode And Narrow Blocking | NOT_STARTED | After Phase 4 |
+| 4 | Advisory Gate Integration | COMPLETED | After Phase 3 |
+| 5 | Warn Mode And Narrow Blocking | READY_TO_START | After Phase 4 |
 
 ---
 
@@ -243,25 +243,27 @@ Phase 3 verdict: `INSUFFICIENT_DATA` (catchable rejected objections = 1; methodo
 ### Purpose
 Embed simulation output into canonical gate in advisory mode.
 
-### Status: READY_TO_START
+### Status: COMPLETED
 
 ### Steps
 
 | Step | Description | Status | Notes |
 |---|---|---|---|
-| 4.1 | Design gate integration schema extension | NOT_STARTED | |
-| 4.2 | Implement --reviewer-sim gate flag | NOT_STARTED | |
-| 4.3 | Embed reviewer_sim_summary in governance_verdict.json | NOT_STARTED | |
-| 4.4 | Verify gate verdict unchanged in advisory mode | NOT_STARTED | |
-| 4.5 | Regression tests | NOT_STARTED | |
-| 4.6 | PM sign-off | NOT_STARTED | |
+| 4.1 | Design gate integration schema extension | COMPLETED | `phase4/gate_schema_extension.json` |
+| 4.2 | Implement --reviewer-sim gate flag | COMPLETED | CLI + lazy-imported `_run_reviewer_sim()` added to gate |
+| 4.3 | Embed reviewer_sim_summary in governance_verdict.json | COMPLETED | Summary present with flag, advisory-only |
+| 4.4 | Verify gate verdict unchanged in advisory mode | COMPLETED | `phase4/verdict_comparison.json` invariant confirmed |
+| 4.5 | Regression tests | COMPLETED | `test_conversion_gate.py` now includes 4 reviewer-sim tests |
+| 4.6 | PM sign-off | COMPLETED | `phase4/pm_phase4_signoff.json` verdict `PASS` |
 
 ### Success Criteria
 
-- [ ] Gate runs cleanly with and without --reviewer-sim.
-- [ ] Simulation findings appear in gate verdict artifact.
-- [ ] No false gate failures introduced.
-- [ ] Regression tests pass.
+- [x] Gate runs cleanly with and without --reviewer-sim.
+- [x] Simulation findings appear in gate verdict artifact.
+- [x] No false gate failures introduced.
+- [x] Regression tests pass.
+
+Phase 4 verdict: `PASS` (advisory integration complete, core gate verdict invariant held).
 
 ---
 
@@ -270,7 +272,7 @@ Embed simulation output into canonical gate in advisory mode.
 ### Purpose
 Promote narrow, high-confidence simulation findings to gate warnings or blockers.
 
-### Status: NOT_STARTED (blocked on Phase 4)
+### Status: READY_TO_START
 
 ### Steps
 
@@ -313,6 +315,7 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 | 2026-06-21 | 1 | 1.1-1.10 | simulation prototype implemented + two pilot runs completed | PHASE_1_COMPLETE_WITH_WARNINGS |
 | 2026-06-22 | 2 | 2.1-2.6 | subsystem simulation integration, dual pilots, PM evaluation | PHASE_2_COMPLETED_WITH_WARNINGS |
 | 2026-06-22 | 3 | 3.1-3.10 | profile validation corpus, simulation comparison matrix, PM sign-off | PHASE_3_COMPLETED_WITH_WARNINGS |
+| 2026-06-22 | 4 | 4.1-4.9 | advisory gate integration, invariant verification, gate regression tests | PHASE_4_COMPLETED |
 
 ---
 
@@ -356,3 +359,11 @@ Promote narrow, high-confidence simulation findings to gate warnings or blockers
 - Precision: `1.0`; false blocking on accepted patches: `0`; recall: `INSUFFICIENT_DATA` (catchable denominator too small)
 - Artifacts: `AURA_KB/platform_tools/upstream_reviewer_sim_01/phase3/`
 - Progress card: `PC-P3-COMPLETE-20260622`
+
+### Phase 4 Update (2026-06-22)
+- Verdict: `PASS`
+- Implemented: advisory `--reviewer-sim` gate integration with lazy import and exception-safe degradation
+- Invariant: core gate verdict unchanged with vs without reviewer simulation (`verdicts_match=true`)
+- Tests: `AURA/agents/tests/test_conversion_gate.py` includes 4 new reviewer-sim tests (all pass)
+- Artifacts: `AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/`
+- Progress card: `PC-P4-COMPLETE-20260622`

@@ -1,0 +1,39 @@
+{
+  "card_id": "PC-P4-COMPLETE-20260622",
+  "date": "2026-06-22",
+  "phase": 4,
+  "step": "4.9",
+  "step_name": "Advisory gate integration and verification",
+  "status": "COMPLETED",
+  "previous_status": "READY_TO_START",
+  "what_was_done": "Added opt-in reviewer simulation integration to conversion gate, embedded advisory reviewer_sim_summary in governance_verdict.json, proved invariant that core verdict is unchanged, and added four gate regression tests for the new behavior.",
+  "artifacts_created": [
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/gate_schema_extension.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/gate_integration_test/governance_verdict.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/gate_baseline_test/governance_verdict.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/verdict_comparison.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/pm_phase4_signoff.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/phase4_validation.json"
+  ],
+  "artifacts_modified": [
+    "AURA/agents/src/aura_agents/conversion_gate.py",
+    "AURA/agents/tests/test_conversion_gate.py",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/progress_tracker.json",
+    "AURA_KB/platform_tools/upstream_reviewer_sim_01/plan/MASTER_PLAN.md"
+  ],
+  "success_criteria_met": [
+    "--reviewer-sim flag and related options added to gate CLI",
+    "reviewer_sim_summary present with flag and null without flag",
+    "Core verdict invariant held across with/without reviewer-sim runs",
+    "gate_impact remains NONE and advisory note is present",
+    "Four new gate tests added and all conversion_gate tests pass"
+  ],
+  "success_criteria_not_met": [],
+  "blockers": [],
+  "deviations_from_plan": [
+    "Integration/baseline runs produced FAIL verdict due verifier lineage status for selected input, but invariant check passed and verdicts matched as required."
+  ],
+  "pm_verdict": "ON_TRACK",
+  "next_step": "Phase 5 READY_TO_START (warn mode and narrow blocking) - do not promote blockers without expanded validation corpus.",
+  "notes": "Advisory only; reviewer sim is exception-safe and never blocks gate execution."
+}

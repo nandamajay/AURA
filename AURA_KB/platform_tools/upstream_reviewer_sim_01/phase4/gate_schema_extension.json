@@ -1,0 +1,30 @@
+{
+  "artifact": "gate_schema_extension_design",
+  "generated_at_utc": "2026-06-22T04:00:43Z",
+  "new_field": "reviewer_sim_summary",
+  "location_in_verdict": "top-level optional field",
+  "present_when": "--reviewer-sim flag is passed to gate CLI",
+  "absent_when": "--reviewer-sim flag is not passed (default)",
+  "schema": {
+    "reviewer_sim_summary": {
+      "advisory_note": "Advisory only - not a replacement for real upstream review.",
+      "sim_verdict": "BLOCKED|NEEDS_WORK|LGTM",
+      "blocking_count": 0,
+      "warn_count": 0,
+      "info_count": 0,
+      "gate_impact": "NONE",
+      "gate_impact_reason": "Sim findings are advisory. Core verdict is unchanged.",
+      "top_findings": [],
+      "profiles_used": [],
+      "subsystem": "",
+      "sim_run_dir": "",
+      "generated_at_utc": ""
+    }
+  },
+  "invariants": [
+    "verdict field is never modified by reviewer_sim_summary",
+    "reviewer_sim_summary is always null when --reviewer-sim is not passed",
+    "gate_impact is always NONE in Phase 4",
+    "advisory_note is always present when reviewer_sim_summary is present"
+  ]
+}

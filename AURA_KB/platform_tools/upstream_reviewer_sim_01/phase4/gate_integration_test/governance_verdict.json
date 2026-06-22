@@ -1,0 +1,89 @@
+{
+  "gate_engine": "aura_conversion_gate_v1",
+  "gate_version": "1.0.0",
+  "generated_at_utc": "2026-06-22T04:02:23Z",
+  "verdict": "FAIL",
+  "reasons": [
+    "verifier_failed",
+    "scoring_skipped_no_upstream_dir"
+  ],
+  "run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/gate_integration_test",
+  "inputs_manifest": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/gate_integration_test/gate_input_manifest.json",
+  "artifacts": {
+    "scoring_result": null,
+    "verifier_result": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/platform_tools/upstream_reviewer_sim_01/phase4/gate_integration_test/verifier_result.json",
+    "staged_upstream_dir": null
+  },
+  "score_summary": null,
+  "verifier_summary": {
+    "verdict": "FAIL",
+    "blocking_count": 0,
+    "warning_count": 0,
+    "lineage_status": "MISSING",
+    "lineage_coverage": 0.0
+  },
+  "policy": {
+    "fail_if_verifier_fails": true,
+    "require_allowed_sources_file": true,
+    "self_attestation_trusted": false
+  },
+  "reviewer_sim_summary": {
+    "advisory_note": "Advisory only - not a replacement for real upstream review.",
+    "sim_verdict": "NEEDS_WORK",
+    "blocking_count": 0,
+    "warn_count": 7,
+    "info_count": 0,
+    "gate_impact": "NONE",
+    "gate_impact_reason": "Sim findings are advisory. Core verdict is unchanged.",
+    "top_findings": [
+      {
+        "finding_id": "F-001",
+        "reviewer": "Krzysztof Kozlowski",
+        "pattern_id": "DT-001",
+        "severity": "WARN",
+        "text": "No DT binding YAML found - required for upstream submission",
+        "file": ""
+      },
+      {
+        "finding_id": "F-002",
+        "reviewer": "Mark Brown",
+        "pattern_id": "ASOC-MARK-008",
+        "severity": "WARN",
+        "text": "No snd_soc_dapm_widget array found.",
+        "file": ""
+      },
+      {
+        "finding_id": "F-003",
+        "reviewer": "Mark Brown",
+        "pattern_id": "ASOC-MARK-009",
+        "severity": "WARN",
+        "text": "No snd_soc_dapm_route array found.",
+        "file": ""
+      },
+      {
+        "finding_id": "F-004",
+        "reviewer": "Mark Brown",
+        "pattern_id": "ASOC-MARK-003",
+        "severity": "WARN",
+        "text": "MODULE_AUTHOR() is missing from module source.",
+        "file": "wcd9378-sdw.c"
+      },
+      {
+        "finding_id": "F-005",
+        "reviewer": "Mark Brown",
+        "pattern_id": "ASOC-MARK-003",
+        "severity": "WARN",
+        "text": "MODULE_AUTHOR() is missing from module source.",
+        "file": "wcd9378.c"
+      }
+    ],
+    "profiles_used": [
+      "krzysztof_kozlowski_profile_v4",
+      "mark_brown_profile_v4",
+      "pierre_louis_bossart_profile_v4"
+    ],
+    "subsystem": "soundwire-codec",
+    "sim_run_dir": "/local/mnt/workspace/AURA_V1_upstream/AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready/converted",
+    "generated_at_utc": "2026-06-22T04:02:23Z"
+  }
+}
