@@ -163,7 +163,24 @@
   ],
   "target_catchable_rejected": 6,
   "actual_catchable_rejected": 8,
-  "corpus_status": "SUFFICIENT",
+  "corpus_status": "SUFFICIENT_AGGREGATE_INSUFFICIENT_PER_CHECK",
   "signed_off_by_catchable_count": 2,
-  "notes": "Rob Herring lore corpus provided the only high-confidence, explicitly catchable objections among the scanned sources; Pierre-Louis Bossart and Vinod Koul scans were performed but did not yield additional high-confidence entries for the listed catchable classes."
+  "notes": "Rob Herring lore corpus provided the only high-confidence, explicitly catchable objections among the scanned sources; Pierre-Louis Bossart and Vinod Koul scans were performed but did not yield additional high-confidence entries for the listed catchable classes.",
+  "per_check_corpus_status": {
+    "WARN-001_PATCH_STRUCT-004": {
+      "catchable_rejected_count": 2,
+      "required_for_promotion": 6,
+      "status": "INSUFFICIENT_FOR_PROMOTION"
+    },
+    "WARN-002_ASOC-MARK-010": {
+      "catchable_rejected_count": 2,
+      "required_for_promotion": 6,
+      "status": "INSUFFICIENT_FOR_PROMOTION"
+    },
+    "WARN-003_DT-001": {
+      "catchable_rejected_count": 6,
+      "required_for_promotion": 6,
+      "status": "NOT_EVALUATED_IN_PRECISION_REPORT"
+    }
+  }
 }

@@ -1,0 +1,46 @@
+{
+  "artifact": "lens_promotion_blacklist",
+  "generated_at_utc": "2026-06-22T04:43:57Z",
+  "purpose": "Records lenses that must never be promoted to gate WARN or BLOCKING based on measured false positive rates.",
+  "blacklisted_lenses": [
+    {
+      "lens": "upstream-philosophy",
+      "reason": "NEVER_PROMOTE",
+      "measured_fp_rate": 1.0,
+      "fp_evidence": "16 BLOCKING findings across 4 accepted corpus patches (4 per patch average) in Phase 5 corpus validation",
+      "accepted_corpus_size": 4,
+      "false_positives_on_accepted": 16,
+      "verdict": "This lens fires on 100% of accepted patches. It must remain advisory INFO only indefinitely.",
+      "allowed_use": "advisory_info_only",
+      "promotion_allowed": false
+    },
+    {
+      "lens": "build",
+      "reason": "ADVISORY_ONLY",
+      "measured_fp_rate": null,
+      "fp_evidence": "Not measured - build lens checks compile artifacts that are environment-dependent",
+      "verdict": "Build lens findings are environment-dependent. Gate blocking on explicit compile_result failures only.",
+      "allowed_use": "advisory_info_only",
+      "promotion_allowed": false
+    }
+  ],
+  "promotion_candidates": [
+    {
+      "lens": "patch-structure",
+      "rule_id": "PATCH_STRUCT-004",
+      "current_status": "ADVISORY",
+      "promotion_condition": "Expand signed-off-by catchable corpus to >= 6 cases, maintain precision >= 0.80",
+      "current_catchable_corpus": 2,
+      "required_catchable_corpus": 6
+    },
+    {
+      "lens": "dt-binding",
+      "rule_id": "DT-001",
+      "current_status": "ADVISORY",
+      "promotion_condition": "Evaluate 6 DT schema error cases already in corpus against DT-001 rule specifically",
+      "current_catchable_corpus": 6,
+      "required_catchable_corpus": 6,
+      "note": "6 dt_schema_error entries exist in expanded corpus but were not evaluated for DT-001 precision - this is the next evaluation target"
+    }
+  ]
+}

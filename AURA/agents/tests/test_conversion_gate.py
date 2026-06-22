@@ -240,19 +240,15 @@ def test_gate_reviewer_sim_error_does_not_fail_gate(tmp_path: Path):
 
 
 def test_gate_warn_mode_escalates_pass_to_warn(tmp_path: Path):
-    converted_source = """
-#include <linux/module.h>
-static int alpha_probe(void) { return 0; }
-MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("phase5 warn mode test");
-MODULE_AUTHOR("AURA");
-"""
-    upstream_source = """
-#include <linux/module.h>
-static int alpha_probe(void) { return 0; }
-"""
-    _write(tmp_path / "converted" / "driver.c", converted_source)
-    _write(tmp_path / "upstream" / "driver.c", upstream_source)
+    """Phase 5: No checks promoted yet (NO_CHECKS_PROMOTED).
+
+    When --reviewer-sim is used and no warn-mode checks are promoted,
+    the gate verdict must equal the baseline verdict and gate_impact must be NONE.
+    This test documents the NO_CHECKS_PROMOTED path explicitly.
+    When checks are eventually promoted, this test must be updated to assert
+    PASS->WARN escalation and gate_impact == WARN_ESCALATION.
+    """
+    _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
     _write(
         tmp_path / "converted" / "patches" / "0001-missing-signoff.patch",
         (
@@ -269,7 +265,6 @@ static int alpha_probe(void) { return 0; }
         _args(
             tmp_path,
             run_dir=str(tmp_path / "run_baseline"),
-            upstream_dir=str(tmp_path / "upstream"),
             lineage=str(lineage),
             reviewer_sim=False,
         )
@@ -278,7 +273,6 @@ static int alpha_probe(void) { return 0; }
         _args(
             tmp_path,
             run_dir=str(tmp_path / "run_with_sim"),
-            upstream_dir=str(tmp_path / "upstream"),
             lineage=str(lineage),
             reviewer_sim=True,
             reviewer_sim_profiles_dir=str(profiles_dir),
@@ -286,16 +280,30 @@ static int alpha_probe(void) { return 0; }
         )
     )
 
-    has_reviewer_warn_reason = any(str(reason).startswith("reviewer_sim_warn:") for reason in result["reasons"])
-    if has_reviewer_warn_reason:
-        assert result["verdict"] == "WARN"
-        assert result["reviewer_sim_summary"]["gate_impact"] == "WARN_ESCALATION"
-    else:
-        assert result["verdict"] == baseline["verdict"]
-        assert result["reviewer_sim_summary"]["gate_impact"] == "NONE"
+    # NO_CHECKS_PROMOTED: no warn-mode checks are active yet.
+    # Verdict must be identical to baseline - sim must not change it.
+    assert result["verdict"] == baseline["verdict"], (
+        f"Sim changed verdict from {baseline['verdict']} to {result['verdict']} "
+        "despite NO_CHECKS_PROMOTED"
+    )
+    # gate_impact must be NONE - no escalation until checks are promoted.
+    assert result["reviewer_sim_summary"]["gate_impact"] == "NONE"
+    # No reviewer_sim_warn: reasons must be present.
+    assert not any(
+        str(reason).startswith("reviewer_sim_warn:") for reason in result["reasons"]
+    ), "reviewer_sim_warn: reason present despite NO_CHECKS_PROMOTED"
+    # Sim summary must still be present and advisory.
+    assert result["reviewer_sim_summary"] is not None
+    assert "advisory_note" in result["reviewer_sim_summary"]
 
 
 def test_gate_warn_mode_never_causes_fail(tmp_path: Path):
+    """Reviewer sim must never cause gate verdict to become FAIL.
+
+    Regardless of sim findings, the sim is advisory only.
+    gate_impact must be NONE (NO_CHECKS_PROMOTED) or WARN_ESCALATION at most.
+    FAIL escalation must never occur.
+    """
     _write(tmp_path / "converted" / "driver.c", "static int alpha_probe(void) { return 0; }\n")
     _write(
         tmp_path / "converted" / "patches" / "0001-missing-signoff.patch",
@@ -307,6 +315,15 @@ def test_gate_warn_mode_never_causes_fail(tmp_path: Path):
         ),
     )
     profiles_dir = _minimal_profiles_dir(tmp_path)
+    # Run without sim to get baseline verdict.
+    baseline = run_gate(
+        _args(
+            tmp_path,
+            run_dir=str(tmp_path / "run_baseline"),
+            reviewer_sim=False,
+        )
+    )
+    # Run with sim.
 
     result = run_gate(
         _args(
@@ -318,8 +335,22 @@ def test_gate_warn_mode_never_causes_fail(tmp_path: Path):
         )
     )
 
-    assert result["verdict"] == "WARN"
-    assert result["verdict"] != "FAIL"
+    # Sim must never introduce FAIL.
+    assert result["verdict"] != "FAIL" or baseline["verdict"] == "FAIL", (
+        "Reviewer sim escalated verdict to FAIL - this must never happen"
+    )
+    # gate_impact must only be NONE or WARN_ESCALATION - never FAIL or BLOCK.
+    assert result["reviewer_sim_summary"]["gate_impact"] in ("NONE", "WARN_ESCALATION"), (
+        f"Unexpected gate_impact: {result['reviewer_sim_summary']['gate_impact']}"
+    )
+    # Verdict can only move PASS->WARN via sim, never WARN->FAIL or PASS->FAIL.
+    allowed_transitions = {
+        ("PASS", "PASS"), ("PASS", "WARN"),
+        ("WARN", "WARN"), ("FAIL", "FAIL"),
+    }
+    assert (baseline["verdict"], result["verdict"]) in allowed_transitions, (
+        f"Illegal verdict transition: {baseline['verdict']} -> {result['verdict']}"
+    )
 
 
 def test_gate_warn_mode_does_not_fire_without_flag(tmp_path: Path):
