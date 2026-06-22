@@ -1,6 +1,6 @@
-From 3a19917037f13e34b0c950dc4ff185236384d323 Mon Sep 17 00:00:00 2001
+From 83d00a1941b9f216fd82d6351887ca67c5c9f3db Mon Sep 17 00:00:00 2001
 From: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
-Date: Mon, 22 Jun 2026 15:39:13 +0530
+Date: Mon, 22 Jun 2026 15:56:44 +0530
 Subject: [RFC PATCH 3/4] ASoC: codecs: add WCD9378 codec scaffold (RFC static
  prototype)
 
@@ -16,16 +16,16 @@ claims.
 
 Signed-off-by: Ajay Kumar Nandam <ajay.nandam@oss.qualcomm.com>
 ---
- sound/soc/codecs/wcd9378.c | 460 +++++++++++++++++++++++++++++++++++++
- 1 file changed, 460 insertions(+)
+ sound/soc/codecs/wcd9378.c | 483 +++++++++++++++++++++++++++++++++++++
+ 1 file changed, 483 insertions(+)
  create mode 100644 sound/soc/codecs/wcd9378.c
 
 diff --git a/sound/soc/codecs/wcd9378.c b/sound/soc/codecs/wcd9378.c
 new file mode 100644
-index 000000000..18ff614b4
+index 000000000..2f17b122d
 --- /dev/null
 +++ b/sound/soc/codecs/wcd9378.c
-@@ -0,0 +1,460 @@
+@@ -0,0 +1,483 @@
 +// SPDX-License-Identifier: GPL-2.0-only
 +/*
 + * Qualcomm WCD9378 codec static RFC prototype.
@@ -180,24 +180,39 @@ index 000000000..18ff614b4
 +	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 +	struct sdw_slave *tx_sdw_dev = wcd9378->tx_sdw_dev;
 +	struct device *dev = component->dev;
++	struct device *tx_swr_dev;
 +	unsigned long time_left;
 +	int ret;
 +
 +	if (!tx_sdw_dev)
 +		return -EINVAL;
 +
-+	/* Keep TX SoundWire path active while waiting for slave readiness. */
++	tx_swr_dev = tx_sdw_dev->bus->dev;
++	if (!tx_swr_dev)
++		return -EINVAL;
++
++	/*
++	 * Keep codec and TX SoundWire master runtime-active while waiting for
++	 * TX slave attach/initialization completions.
++	 */
 +	ret = pm_runtime_resume_and_get(dev);
 +	if (ret < 0)
 +		return ret;
++
++	ret = pm_runtime_resume_and_get(tx_swr_dev);
++	if (ret < 0)
++		goto err_put_codec_pm;
 +
 +	/* Wait for TX slave to re-attach before initialization completion. */
 +	time_left = wait_for_completion_timeout(&tx_sdw_dev->enumeration_complete,
 +						msecs_to_jiffies(5000));
 +	if (!time_left) {
-+		dev_err(dev, "TX SoundWire slave enumeration timed out\n");
-+		pm_runtime_put(dev);
-+		return -ETIMEDOUT;
++		dev_err(dev, "TX SoundWire slave enumeration timed out, status: %d\n",
++			tx_sdw_dev->status);
++		ret = -ETIMEDOUT;
++		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED)
++			ret = -EPROBE_DEFER;
++		goto err_put_tx_swr_pm;
 +	}
 +
 +	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
@@ -206,8 +221,10 @@ index 000000000..18ff614b4
 +		dev_err(dev,
 +			"TX SoundWire slave initialization timed out, status: %d\n",
 +			tx_sdw_dev->status);
-+		pm_runtime_put(dev);
-+		return -ETIMEDOUT;
++		ret = -ETIMEDOUT;
++		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED)
++			ret = -EPROBE_DEFER;
++		goto err_put_tx_swr_pm;
 +	}
 +
 +	snd_soc_component_init_regmap(component, wcd9378->regmap);
@@ -216,13 +233,19 @@ index 000000000..18ff614b4
 +	if (IS_ERR(wcd9378->clsh_info)) {
 +		ret = PTR_ERR(wcd9378->clsh_info);
 +		wcd9378->clsh_info = NULL;
-+		pm_runtime_put(dev);
-+		return ret;
++		goto err_put_tx_swr_pm;
 +	}
 +
++	pm_runtime_put(tx_swr_dev);
 +	pm_runtime_put(dev);
 +
 +	return 0;
++
++err_put_tx_swr_pm:
++	pm_runtime_put(tx_swr_dev);
++err_put_codec_pm:
++	pm_runtime_put(dev);
++	return ret;
 +}
 +
 +static void wcd9378_soc_codec_remove(struct snd_soc_component *component)

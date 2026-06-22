@@ -1,0 +1,153 @@
+{
+  "artifact": "wcd9378_issue_solution_map",
+  "generated_at_utc": "2026-06-22T00:00:00Z",
+  "scope": "AURA_KB/drivers/wcd9378/static_prototype_variant_a1_compile_ready",
+  "advisory_note": "Learning artifact for issue-to-solution traceability. Runtime behavior still requires board validation.",
+  "issues": [
+    {
+      "issue_id": "WCD9378-ISS-001",
+      "title": "TX SoundWire slave remains UNATTACHED at codec probe time",
+      "symptom_signature": [
+        "wcd9378-codec: TX SoundWire slave enumeration timed out",
+        "ASoC error (-110) at snd_soc_component_probe",
+        "sdw:3:0:0217:0110:00:3 status=UNATTACHED while RX is Attached"
+      ],
+      "root_cause_hypothesis": "TX attach/initialization race with SoundWire master runtime power/clock state during probe window.",
+      "evidence": [
+        {
+          "source": "AURA_KB/drivers/wcd9378/hardware_evidence_01/evidence_log.json",
+          "key_points": [
+            "bind_result=both slaves bound",
+            "probe_error=-110 ETIMEDOUT",
+            "rx_status=Attached",
+            "tx_status=UNATTACHED"
+          ]
+        },
+        {
+          "source": "runtime log 2026-06-22 (user provided)",
+          "key_points": [
+            "[17.121276] TX SoundWire slave enumeration timed out",
+            "[17.128985] ASoC error (-110)",
+            "sysfs tx status UNATTACHED"
+          ]
+        }
+      ],
+      "applied_solutions": [
+        {
+          "iteration_id": "ITER-2026-06-22-A1-HW-EVIDENCE",
+          "solution": "Add enumeration_complete wait and move codec pm_runtime_resume_and_get before waits",
+          "effect": "Failure moved from initialization timeout to enumeration timeout; issue persists",
+          "status": "PARTIAL"
+        },
+        {
+          "iteration_id": "ITER-2026-06-22-A1-TX-UNATTACHED-RETRY",
+          "solution": "Hold tx_sdw_dev->bus->dev runtime PM during waits and return -EPROBE_DEFER when TX is still UNATTACHED",
+          "effect": "Avoids hard terminal -110 path when TX attach is late; enables retry semantics",
+          "status": "IN_PROGRESS"
+        }
+      ],
+      "latest_status": "IN_PROGRESS",
+      "next_actions": [
+        "Board re-test and confirm whether deferred retry allows successful card instantiation",
+        "If still UNATTACHED, collect TX clock/runtime PM evidence during probe window",
+        "Validate TX master DTS port configuration against controller expectations"
+      ]
+    },
+    {
+      "issue_id": "WCD9378-ISS-002",
+      "title": "SoundWire identity placeholders were unresolved",
+      "symptom_signature": [
+        "WCD9378_CANDIDATE_SDW_PART_ID placeholder in source",
+        "WCD9378_CANDIDATE_SDW_COMPATIBLE placeholder in source"
+      ],
+      "root_cause_hypothesis": "Identity constants were intentionally fail-closed pending hardware evidence.",
+      "evidence": [
+        {
+          "source": "AURA_KB/drivers/wcd9378/hardware_evidence_01/evidence_log.json",
+          "key_points": [
+            "confirmed_identity.manufacturer_id=0x0217",
+            "confirmed_identity.part_id=0x0110",
+            "compatible_rx=sdw20217011000",
+            "compatible_tx=sdw20217011000"
+          ]
+        }
+      ],
+      "applied_solutions": [
+        {
+          "iteration_id": "ITER-2026-06-22-A1-HW-EVIDENCE",
+          "solution": "Replace candidate macros with WCD9378_SDW_PART_ID and WCD9378_SDW_COMPATIBLE and update references",
+          "effect": "Identity constants now hardware-confirmed and deterministic",
+          "status": "RESOLVED"
+        }
+      ],
+      "latest_status": "RESOLVED",
+      "next_actions": [
+        "Keep identity constants locked unless new hardware evidence contradicts current tuple"
+      ]
+    },
+    {
+      "issue_id": "WCD9378-ISS-003",
+      "title": "TX controller warning: dout-ports mismatch with controller",
+      "symptom_signature": [
+        "qcom-soundwire 7630000.soundwire: dout-ports (0) mismatch with controller (1)"
+      ],
+      "root_cause_hypothesis": "Potential TX SoundWire DTS/controller configuration mismatch; warning appears before bind and may contribute to attach instability.",
+      "evidence": [
+        {
+          "source": "runtime log 2026-06-22 (user provided)",
+          "key_points": [
+            "warning appears before codec bind logs",
+            "TX slave later observed UNATTACHED"
+          ]
+        }
+      ],
+      "applied_solutions": [],
+      "latest_status": "FAIL_CLOSED",
+      "next_actions": [
+        "Collect DTS and controller config evidence for TX link",
+        "Map expected dout-ports count vs actual controller configuration"
+      ]
+    },
+    {
+      "issue_id": "WCD9378-ISS-004",
+      "title": "Per-iteration learning capture was manual and inconsistent",
+      "symptom_signature": [
+        "Iteration records required manual JSONL editing",
+        "No automated validation against required schema fields"
+      ],
+      "root_cause_hypothesis": "Missing tooling for deterministic append+validation flow.",
+      "evidence": [
+        {
+          "source": "learning_issue_solution_01 state before tooling update",
+          "key_points": [
+            "Only static schema/map files existed",
+            "No append helper for iteration_change_log.jsonl"
+          ]
+        }
+      ],
+      "applied_solutions": [
+        {
+          "iteration_id": "ITER-2026-06-22-LEARNING-TOOLING",
+          "solution": "Add append_iteration_record.py with required-field validation, plus template and README workflow",
+          "effect": "Iteration capture now append-only, validated, and repeatable",
+          "status": "RESOLVED"
+        }
+      ],
+      "latest_status": "RESOLVED",
+      "next_actions": [
+        "Use append tool for every future WCD9378 iteration",
+        "Review issue map/status updates alongside each iteration record append"
+      ]
+    }
+  ],
+  "recording_policy": {
+    "append_only_iteration_log": "learning_issue_solution_01/iteration_change_log.jsonl",
+    "aggregate_map": "learning_issue_solution_01/issue_solution_map.json",
+    "append_tool": "learning_issue_solution_01/tools/append_iteration_record.py",
+    "update_rules": [
+      "Each code or artifact change must add/append one iteration record",
+      "Every issue status change must include at least one deterministic evidence reference",
+      "Do not mark RESOLVED without runtime evidence for runtime-class issues"
+    ]
+  }
+}

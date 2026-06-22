@@ -152,24 +152,39 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 	struct sdw_slave *tx_sdw_dev = wcd9378->tx_sdw_dev;
 	struct device *dev = component->dev;
+	struct device *tx_swr_dev;
 	unsigned long time_left;
 	int ret;
 
 	if (!tx_sdw_dev)
 		return -EINVAL;
 
-	/* Keep TX SoundWire path active while waiting for slave readiness. */
+	tx_swr_dev = tx_sdw_dev->bus->dev;
+	if (!tx_swr_dev)
+		return -EINVAL;
+
+	/*
+	 * Keep codec and TX SoundWire master runtime-active while waiting for
+	 * TX slave attach/initialization completions.
+	 */
 	ret = pm_runtime_resume_and_get(dev);
 	if (ret < 0)
 		return ret;
+
+	ret = pm_runtime_resume_and_get(tx_swr_dev);
+	if (ret < 0)
+		goto err_put_codec_pm;
 
 	/* Wait for TX slave to re-attach before initialization completion. */
 	time_left = wait_for_completion_timeout(&tx_sdw_dev->enumeration_complete,
 						msecs_to_jiffies(5000));
 	if (!time_left) {
-		dev_err(dev, "TX SoundWire slave enumeration timed out\n");
-		pm_runtime_put(dev);
-		return -ETIMEDOUT;
+		dev_err(dev, "TX SoundWire slave enumeration timed out, status: %d\n",
+			tx_sdw_dev->status);
+		ret = -ETIMEDOUT;
+		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED)
+			ret = -EPROBE_DEFER;
+		goto err_put_tx_swr_pm;
 	}
 
 	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
@@ -178,8 +193,10 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 		dev_err(dev,
 			"TX SoundWire slave initialization timed out, status: %d\n",
 			tx_sdw_dev->status);
-		pm_runtime_put(dev);
-		return -ETIMEDOUT;
+		ret = -ETIMEDOUT;
+		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED)
+			ret = -EPROBE_DEFER;
+		goto err_put_tx_swr_pm;
 	}
 
 	snd_soc_component_init_regmap(component, wcd9378->regmap);
@@ -188,13 +205,19 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	if (IS_ERR(wcd9378->clsh_info)) {
 		ret = PTR_ERR(wcd9378->clsh_info);
 		wcd9378->clsh_info = NULL;
-		pm_runtime_put(dev);
-		return ret;
+		goto err_put_tx_swr_pm;
 	}
 
+	pm_runtime_put(tx_swr_dev);
 	pm_runtime_put(dev);
 
 	return 0;
+
+err_put_tx_swr_pm:
+	pm_runtime_put(tx_swr_dev);
+err_put_codec_pm:
+	pm_runtime_put(dev);
+	return ret;
 }
 
 static void wcd9378_soc_codec_remove(struct snd_soc_component *component)

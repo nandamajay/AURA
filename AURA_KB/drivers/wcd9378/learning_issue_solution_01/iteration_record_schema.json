@@ -1,0 +1,29 @@
+{
+  "artifact": "wcd9378_iteration_record_schema",
+  "version": "1.0",
+  "description": "Deterministic schema for per-iteration issue/solution recording.",
+  "required_fields": [
+    "iteration_id",
+    "date_utc",
+    "branch",
+    "scope",
+    "issue_ids",
+    "evidence_refs",
+    "changes",
+    "validation",
+    "outcome",
+    "next_actions"
+  ],
+  "field_spec": {
+    "iteration_id": "Stable ID, e.g. ITER-YYYY-MM-DD-<short-tag>",
+    "date_utc": "ISO date string",
+    "branch": "Git branch used for iteration",
+    "scope": "Subsystem/path scope",
+    "issue_ids": "Array of issue IDs from issue_solution_map.json",
+    "evidence_refs": "Array of deterministic source references (log lines, files, command outputs)",
+    "changes": "Array of changed files with concise what/why",
+    "validation": "Array of commands/checks and pass/fail status",
+    "outcome": "One of RESOLVED|PARTIAL|IN_PROGRESS|FAIL_CLOSED",
+    "next_actions": "Array of next validation or fix steps"
+  }
+}
