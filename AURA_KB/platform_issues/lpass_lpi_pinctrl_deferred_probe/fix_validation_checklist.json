@@ -1,0 +1,93 @@
+[
+  {
+    "id": "LPI-FIX-CHK-001",
+    "check": "lpass_tlmm node address 0x7760000 matches boot log '7760000.pinctrl'",
+    "rationale": "Address in DTS must match what the kernel reports in deferred probe log",
+    "status": "PASS",
+    "evidence": "Root cause boot log: '7760000.pinctrl: Failed to get clk core'; sm8750.dtsi:2588 reg=0x07760000"
+  },
+  {
+    "id": "LPI-FIX-CHK-002",
+    "check": "clock-names = 'core', 'audio' matches pinctrl-lpass-lpi.c binding",
+    "rationale": "Driver calls of_pm_clk_add_clks() which reads clock-names; 'core' is the first required name",
+    "status": "PASS",
+    "evidence": "pinctrl-lpass-lpi.c:534-540 calls devm_pm_clk_create() and of_pm_clk_add_clks(); sm8750.dtsi reference has clock-names = 'core', 'audio'"
+  },
+  {
+    "id": "LPI-FIX-CHK-003",
+    "check": "q6prmcc is defined inside gpr/q6prm before lpass_tlmm in DTS parse order",
+    "rationale": "lpass_tlmm clocks = <&q6prmcc ...> requires q6prmcc phandle to be resolved",
+    "status": "PASS",
+    "evidence": "Patch hunk 1 adds q6prmcc inside remoteproc_adsp glink-edge before patch hunk 2 adds lpass_tlmm after lpass_lpicx_noc"
+  },
+  {
+    "id": "LPI-FIX-CHK-004",
+    "check": "gpio-ranges = <&lpass_tlmm 0 0 23> — 23 pins matches SM8750 and milos",
+    "rationale": "Pin count must match the SoC's LPASS LPI GPIO bank size",
+    "status": "PASS",
+    "evidence": "sm8750.dtsi:2588-2704 reference node uses gpio-ranges = <&lpass_tlmm 0 0 23>"
+  },
+  {
+    "id": "LPI-FIX-CHK-005",
+    "check": "tx_swr_active pins gpio0/gpio1/gpio2/gpio14 match Eliza EVK bring-up pinctrl notes",
+    "rationale": "TX SWR CLK=gpio0, DATA0=gpio1, DATA1=gpio2, DATA2=gpio14 per bring-up notes",
+    "status": "PASS",
+    "evidence": "Root cause summary confirms TX SWR pinctrl dependency; generated patch copies sm8750.dtsi tx_swr_active state from lpass_tlmm reference node"
+  },
+  {
+    "id": "LPI-FIX-CHK-006",
+    "check": "rx_swr_active pins gpio3/gpio4/gpio5 match Eliza EVK bring-up pinctrl notes",
+    "rationale": "RX SWR CLK=gpio3, DATA0=gpio4, DATA1=gpio5 per bring-up notes",
+    "status": "PASS",
+    "evidence": "Root cause summary confirms RX SWR pinctrl dependency; generated patch copies sm8750.dtsi rx_swr_active state from lpass_tlmm reference node"
+  },
+  {
+    "id": "LPI-FIX-CHK-007",
+    "check": "compatible 'qcom,sm8750-lpass-lpi-pinctrl' is expected by the LPASS LPI pinctrl driver path",
+    "rationale": "Driver must match the compatible string or probe will fail with -ENODEV",
+    "status": "PASS",
+    "evidence": "Patch uses the sm8750.dtsi compatible string from the allowed reference node; dedicated qcom,eliza-lpass-lpi-pinctrl remains PENDING_DRIVER_DECISION if upstream requires an Eliza-specific compatible"
+  },
+  {
+    "id": "LPI-FIX-CHK-008",
+    "check": "iommus for q6apmdai confirmed against Eliza SMMU mapping",
+    "rationale": "SMMU stream IDs are SoC-specific; values copied from sm8750 need board confirmation",
+    "status": "PENDING_BOARD",
+    "evidence": "Used sm8750.dtsi values 0x1001/0x80 and 0x1041/0x20 as starting point"
+  },
+  {
+    "id": "LPI-FIX-CHK-009",
+    "check": "swr1/swr2/swr3 pinctrl-0 references documented in swr_pinctrl_note.md",
+    "rationale": "SWR nodes not yet in upstream eliza.dtsi; pinctrl-0 must be added when nodes are upstreamed",
+    "status": "PASS",
+    "evidence": "swr_pinctrl_note.md created with per-node instructions and sm8750.dtsi reference lines 2434, 2387, and 2498"
+  },
+  {
+    "id": "LPI-FIX-CHK-010",
+    "check": "After fix: 7760000.pinctrl probe succeeds with no 'Failed to get clk core'",
+    "rationale": "Primary fix target — pinctrl node must probe cleanly",
+    "status": "PENDING_BOARD",
+    "evidence": "Requires board retest on Eliza EVK"
+  },
+  {
+    "id": "LPI-FIX-CHK-011",
+    "check": "After fix: 7660000.codec VA macro probe succeeds",
+    "rationale": "VA macro is the first downstream dependent of lpass_tlmm",
+    "status": "PENDING_BOARD",
+    "evidence": "Requires board retest on Eliza EVK"
+  },
+  {
+    "id": "LPI-FIX-CHK-012",
+    "check": "After fix: sound card instantiates without 'VA Capture: error getting cpu dai name'",
+    "rationale": "Sound card failure is the end symptom of the full deferred probe chain",
+    "status": "PENDING_BOARD",
+    "evidence": "Requires board retest on Eliza EVK"
+  },
+  {
+    "id": "LPI-FIX-CHK-013",
+    "check": "gcc-eliza sync_state pending due to crypto is NOT addressed by this fix",
+    "rationale": "Crypto sync_state is an unrelated GCC clock controller issue",
+    "status": "PASS",
+    "evidence": "Patch contains no changes to GCC or crypto nodes"
+  }
+]

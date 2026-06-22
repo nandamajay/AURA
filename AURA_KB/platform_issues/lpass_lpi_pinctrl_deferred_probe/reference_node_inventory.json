@@ -1,0 +1,68 @@
+[
+  {
+    "node_label": "remoteproc_adsp/glink-edge/gpr/q6apm/q6prm",
+    "source_file": "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/sm8750.dtsi",
+    "source_line_start": 2251,
+    "source_line_end": 2360,
+    "address": "0x3000000 parent remoteproc; glink child has no unit address",
+    "compatible": "qcom,gpr; qcom,q6apm; qcom,q6prm; qcom,q6prm-lpass-clocks",
+    "present_in_eliza_dtsi": false,
+    "action_required": "EXTEND",
+    "notes": "Reference hierarchy supplies q6prmcc clock-controller required by lpass_tlmm clocks; fastrpc children intentionally not copied for this minimal audio clock fix."
+  },
+  {
+    "node_label": "lpass_tlmm: pinctrl@7760000",
+    "source_file": "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/sm8750.dtsi",
+    "source_line_start": 2588,
+    "source_line_end": 2704,
+    "address": "0x07760000",
+    "compatible": "qcom,sm8750-lpass-lpi-pinctrl; qcom,sm8650-lpass-lpi-pinctrl",
+    "present_in_eliza_dtsi": false,
+    "action_required": "ADD",
+    "notes": "Full LPASS LPI pinctrl node copied as DTS-only addition; address and 23-pin gpio range match boot log/root cause."
+  },
+  {
+    "node_label": "remoteproc_adsp: remoteproc@3000000 glink-edge stub",
+    "source_file": "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/eliza.dtsi",
+    "source_line_start": 2008,
+    "source_line_end": 2017,
+    "address": "0x3000000 parent remoteproc; glink child has no unit address",
+    "compatible": "",
+    "present_in_eliza_dtsi": true,
+    "action_required": "EXTEND",
+    "notes": "Existing glink-edge has interrupts, mailbox, label, remote pid but lacks gpr/q6apm/q6prm/q6prmcc children."
+  },
+  {
+    "node_label": "lpass_lpicx_noc: interconnect@7420000",
+    "source_file": "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/eliza.dtsi",
+    "source_line_start": 2027,
+    "source_line_end": 2032,
+    "address": "0x07420000",
+    "compatible": "qcom,eliza-lpass-lpicx-noc",
+    "present_in_eliza_dtsi": true,
+    "action_required": "VERIFY",
+    "notes": "Insertion point: lpass_tlmm patch hunk is placed after this node and before sdhc_2."
+  },
+  {
+    "node_label": "pinctrl-lpass-lpi probe clock acquisition",
+    "source_file": "track_b_corpora/linux-next/drivers/pinctrl/qcom/pinctrl-lpass-lpi.c",
+    "source_line_start": 534,
+    "source_line_end": 540,
+    "address": "",
+    "compatible": "",
+    "present_in_eliza_dtsi": false,
+    "action_required": "VERIFY",
+    "notes": "Driver calls devm_pm_clk_create() and of_pm_clk_add_clks(); DTS must provide clocks/clock-names for core/audio. This allowed file does not contain the SoC of_match table."
+  },
+  {
+    "node_label": "SoundWire pinctrl reference nodes",
+    "source_file": "track_b_corpora/linux-next/arch/arm64/boot/dts/qcom/sm8750.dtsi",
+    "source_line_start": 2387,
+    "source_line_end": 2499,
+    "address": "0x06ad0000; 0x07630000 bring-up node absent upstream; 0x06b10000",
+    "compatible": "qcom,soundwire-v2.1.0; qcom,soundwire-v2.0.0",
+    "present_in_eliza_dtsi": false,
+    "action_required": "NONE",
+    "notes": "SWR nodes are absent in upstream eliza.dtsi; pinctrl-0 requirements are documented in swr_pinctrl_note.md rather than patched."
+  }
+]
