@@ -1,0 +1,61 @@
+{
+  "all_phases_complete": true,
+  "blockers": [],
+  "generated_at": "2026-06-22T05:01:02.909589Z",
+  "indexes_created": [
+    "idx_runs_status",
+    "idx_runs_updated",
+    "idx_events_run_id",
+    "idx_events_ts"
+  ],
+  "name": "Scale & Performance",
+  "new_cli_commands": [
+    "queue status",
+    "queue drain",
+    "db stats",
+    "db optimize",
+    "db analyze"
+  ],
+  "new_modules": [
+    "aura/core/priority_queue.py",
+    "aura/core/backpressure.py",
+    "aura/core/rate_limiter.py",
+    "aura/core/load_shedder.py",
+    "aura/core/db_pool.py",
+    "aura/core/query_optimizer.py"
+  ],
+  "new_tests": [
+    "tests/test_plugin.py::test_load_plugin_accepts_bare_array_format",
+    "tests/test_priority_queue.py",
+    "tests/test_backpressure.py",
+    "tests/test_rate_limiter.py",
+    "tests/test_db_pool.py",
+    "tests/test_query_optimizer.py"
+  ],
+  "phase": 6,
+  "phase5_fix_included": true,
+  "plugin_load_bug_fixed": true,
+  "production_commit": "1f2f3f0",
+  "test_results": {
+    "baseline": 154,
+    "baseline_regression": false,
+    "failed": 0,
+    "full_test_output": "/tmp/p6_full_tests.txt",
+    "import_check_output": "/tmp/p6_import_check.txt",
+    "index_check_output": "/tmp/p6_index_check.txt",
+    "passed": 179,
+    "phase6_specific_passed": 24,
+    "phase6_specific_total": 24,
+    "phase6_test_output": "/tmp/p6_phase6_tests.txt",
+    "plugin_fix_test_passed": true,
+    "total": 179,
+    "wal_check_output": "/tmp/p6_wal_check.txt"
+  },
+  "verdict": "PHASE_6_COMPLETE",
+  "wal_mode_enabled": true,
+  "warnings": [],
+  "weeks_completed": [
+    "week_23",
+    "week_24"
+  ]
+}
