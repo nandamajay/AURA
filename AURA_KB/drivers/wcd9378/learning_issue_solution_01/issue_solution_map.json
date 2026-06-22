@@ -44,13 +44,20 @@
           "solution": "Hold tx_sdw_dev->bus->dev runtime PM during waits and return -EPROBE_DEFER when TX is still UNATTACHED",
           "effect": "Avoids hard terminal -110 path when TX attach is late; enables retry semantics",
           "status": "IN_PROGRESS"
+        },
+        {
+          "iteration_id": "ITER-2026-06-22-A1-DEFER-LOG-CLARITY",
+          "solution": "Add explicit defer log lines for UNATTACHED status after enumeration/initialization waits",
+          "effect": "Makes deferred-probe state observable in dmesg when no terminal -110 is emitted",
+          "status": "IN_PROGRESS"
         }
       ],
       "latest_status": "IN_PROGRESS",
       "next_actions": [
         "Board re-test and confirm whether deferred retry allows successful card instantiation",
         "If still UNATTACHED, collect TX clock/runtime PM evidence during probe window",
-        "Validate TX master DTS port configuration against controller expectations"
+        "Validate TX master DTS port configuration against controller expectations",
+        "Check /sys/kernel/debug/devices_deferred for repeated snd-sc8280xp/wcd9378 deferrals"
       ]
     },
     {

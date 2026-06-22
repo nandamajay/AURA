@@ -182,8 +182,11 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 		dev_err(dev, "TX SoundWire slave enumeration timed out, status: %d\n",
 			tx_sdw_dev->status);
 		ret = -ETIMEDOUT;
-		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED)
+		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED) {
+			dev_warn(dev,
+				 "Deferring probe: TX SoundWire slave still UNATTACHED after enumeration wait\n");
 			ret = -EPROBE_DEFER;
+		}
 		goto err_put_tx_swr_pm;
 	}
 
@@ -194,8 +197,11 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 			"TX SoundWire slave initialization timed out, status: %d\n",
 			tx_sdw_dev->status);
 		ret = -ETIMEDOUT;
-		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED)
+		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED) {
+			dev_warn(dev,
+				 "Deferring probe: TX SoundWire slave still UNATTACHED after initialization wait\n");
 			ret = -EPROBE_DEFER;
+		}
 		goto err_put_tx_swr_pm;
 	}
 
