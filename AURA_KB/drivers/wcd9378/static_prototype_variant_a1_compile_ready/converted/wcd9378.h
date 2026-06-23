@@ -59,6 +59,29 @@
 #define WCD9378_DIGITAL_EFUSE_REG_31            0x34cf
 #define WCD9378_MAX_REGISTER                    WCD9378_DIGITAL_EFUSE_REG_31
 
+/*
+ * HPH path debug aliases for static prototype instrumentation.
+ * Keep addresses within the currently modelled register window.
+ */
+#define WCD9378_ANA_HPH                         WCD9378_EAR_STATUS_REG_1
+#define WCD9378_CDC_HPH_GAIN_CTL                WCD9378_HPH_L_STATUS
+#define WCD9378_HPH_RDAC_CLK_CTL1               WCD9378_HPH_R_STATUS
+#define WCD9378_CDC_COMP_CTL_0                  WCD9378_HPH_SURGE_HPHLR_SURGE_STATUS
+
+/* Logical masks/shifts for prototype control bookkeeping. */
+#define WCD9378_CDC_HPH_GAIN_CTL_HPHL_RX_EN_MASK        BIT(2)
+#define WCD9378_CDC_HPH_GAIN_CTL_HPHR_RX_EN_MASK        BIT(3)
+#define WCD9378_CDC_COMP_CTL_0_HPHL_COMP_EN_MASK        BIT(1)
+#define WCD9378_CDC_COMP_CTL_0_HPHR_COMP_EN_MASK        BIT(0)
+#define WCD9378_HPH_RDAC_CLK_CTL1_OPAMP_CHOP_CLK_EN_MASK BIT(0)
+#define WCD9378_ANA_HPH_HPHL_PA_EN_MASK                 BIT(7)
+#define WCD9378_ANA_HPH_HPHR_PA_EN_MASK                 BIT(6)
+
+#define WCD9378_HPHL_GAIN_SHIFT                 0
+#define WCD9378_HPHR_GAIN_SHIFT                 0
+#define WCD9378_HPH_GAIN_MAX                    20
+#define WCD9378_SDW_INIT_TIMEOUT_MS             5000
+
 /* Hardware-confirmed SoundWire identity from ELIZA EVK evidence logs. */
 #define WCD9378_SDW_PART_ID                     0x110
 #define WCD9378_SDW_COMPATIBLE                  "sdw20217011000"
@@ -192,7 +215,13 @@ struct wcd9378_priv {
 	struct wcd_mbhc_config mbhc_cfg;
 	struct wcd_mbhc *wcd_mbhc;
 	struct wcd_clsh_ctrl *clsh_info;
-	bool tx_sdw_attached;
+	bool tx_slave_ready;
+	bool comp1_enable;
+	bool comp2_enable;
+	bool clsh_pa_enabled;
+	unsigned int hph_mode;
+	unsigned int hphl_gain;
+	unsigned int hphr_gain;
 };
 
 #if IS_ENABLED(CONFIG_SND_SOC_WCD9378_SDW)

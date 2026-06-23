@@ -15,6 +15,7 @@
 #include <linux/regmap.h>
 #include <linux/regulator/consumer.h>
 #include <linux/slab.h>
+#include <linux/string.h>
 #include <linux/soundwire/sdw.h>
 #include <sound/soc-dapm.h>
 #include <sound/soc.h>
@@ -39,7 +40,7 @@ static int wcd9378_check_tx_capture_ready(struct wcd9378_priv *wcd9378,
 	if (dai->id != AIF1_CAP)
 		return 0;
 
-	if (wcd9378->tx_sdw_attached)
+	if (wcd9378->tx_slave_ready)
 		return 0;
 
 	dev_warn(dai->dev,
@@ -47,6 +48,209 @@ static int wcd9378_check_tx_capture_ready(struct wcd9378_priv *wcd9378,
 		 op);
 
 	return -ENODEV;
+}
+
+static const char * const wcd9378_rx_hph_mode_text[] = {
+	"CLS_H_INVALID", "CLS_H_HIFI", "CLS_H_LP", "CLS_AB", "CLS_H_LOHIFI",
+	"CLS_H_ULP", "CLS_AB_HIFI", "CLS_AB_LP", "CLS_AB_LOHIFI",
+};
+
+static const struct soc_enum wcd9378_hph_mode_enum =
+	SOC_ENUM_SINGLE_EXT(ARRAY_SIZE(wcd9378_rx_hph_mode_text),
+			    wcd9378_rx_hph_mode_text);
+
+static void wcd9378_dump_hph_state(struct snd_soc_component *component)
+{
+	unsigned int val;
+
+	val = snd_soc_component_read(component, WCD9378_ANA_HPH);
+	dev_info(component->dev, "HPH_STATE: ANA_HPH=0x%02x\n", val & 0xff);
+
+	val = snd_soc_component_read(component, WCD9378_CDC_HPH_GAIN_CTL);
+	dev_info(component->dev, "HPH_STATE: CDC_HPH_GAIN_CTL=0x%02x\n",
+		 val & 0xff);
+
+	val = snd_soc_component_read(component, WCD9378_HPH_RDAC_CLK_CTL1);
+	dev_info(component->dev, "HPH_STATE: HPH_RDAC_CLK_CTL1=0x%02x\n",
+		 val & 0xff);
+
+	val = snd_soc_component_read(component, WCD9378_CDC_COMP_CTL_0);
+	dev_info(component->dev, "HPH_STATE: CDC_COMP_CTL_0=0x%02x\n",
+		 val & 0xff);
+}
+
+static int wcd9378_get_compander(struct snd_kcontrol *kcontrol,
+				 struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	if (strstr(kcontrol->id.name, "HPHL"))
+		ucontrol->value.integer.value[0] = wcd9378->comp1_enable;
+	else
+		ucontrol->value.integer.value[0] = wcd9378->comp2_enable;
+
+	return 0;
+}
+
+static int wcd9378_set_compander(struct snd_kcontrol *kcontrol,
+				 struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+	bool enable = !!ucontrol->value.integer.value[0];
+
+	if (strstr(kcontrol->id.name, "HPHL"))
+		wcd9378->comp1_enable = enable;
+	else
+		wcd9378->comp2_enable = enable;
+
+	return 0;
+}
+
+static int wcd9378_rx_hph_mode_get(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	ucontrol->value.enumerated.item[0] = wcd9378->hph_mode;
+	return 0;
+}
+
+static int wcd9378_rx_hph_mode_put(struct snd_kcontrol *kcontrol,
+				   struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+	unsigned int mode = ucontrol->value.enumerated.item[0];
+
+	if (mode >= ARRAY_SIZE(wcd9378_rx_hph_mode_text))
+		return -EINVAL;
+
+	wcd9378->hph_mode = mode;
+	return 0;
+}
+
+static int wcd9378_hph_gain_get(struct snd_kcontrol *kcontrol,
+				struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	if (strstr(kcontrol->id.name, "HPHL"))
+		ucontrol->value.integer.value[0] = wcd9378->hphl_gain;
+	else
+		ucontrol->value.integer.value[0] = wcd9378->hphr_gain;
+
+	return 0;
+}
+
+static int wcd9378_hph_gain_put(struct snd_kcontrol *kcontrol,
+				struct snd_ctl_elem_value *ucontrol)
+{
+	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+	unsigned int gain = ucontrol->value.integer.value[0];
+
+	if (gain > WCD9378_HPH_GAIN_MAX)
+		return -EINVAL;
+
+	if (strstr(kcontrol->id.name, "HPHL"))
+		wcd9378->hphl_gain = gain;
+	else
+		wcd9378->hphr_gain = gain;
+
+	return 0;
+}
+
+static int wcd9378_hphl_pga_event(struct snd_soc_dapm_widget *w,
+				  struct snd_kcontrol *kcontrol,
+				  int event)
+{
+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+
+	dev_info(component->dev, "HPHL PGA: event=%d\n", event);
+	return 0;
+}
+
+static int wcd9378_hphr_pga_event(struct snd_soc_dapm_widget *w,
+				  struct snd_kcontrol *kcontrol,
+				  int event)
+{
+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+
+	dev_info(component->dev, "HPHR PGA: event=%d\n", event);
+	return 0;
+}
+
+static int wcd9378_hphl_pa_event(struct snd_soc_dapm_widget *w,
+				 struct snd_kcontrol *kcontrol,
+				 int event)
+{
+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	switch (event) {
+	case SND_SOC_DAPM_PRE_PMU:
+		dev_info(component->dev, "HPHL PA: PRE_PMU hph_mode=%d\n",
+			 wcd9378->hph_mode);
+		wcd9378_dump_hph_state(component);
+		break;
+	case SND_SOC_DAPM_POST_PMU:
+		dev_info(component->dev, "HPHL PA: POST_PMU enabled\n");
+		break;
+	case SND_SOC_DAPM_POST_PMD:
+		dev_info(component->dev, "HPHL PA: POST_PMD disabled\n");
+		break;
+	}
+
+	return 0;
+}
+
+static int wcd9378_hphr_pa_event(struct snd_soc_dapm_widget *w,
+				 struct snd_kcontrol *kcontrol,
+				 int event)
+{
+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	switch (event) {
+	case SND_SOC_DAPM_PRE_PMU:
+		dev_info(component->dev, "HPHR PA: PRE_PMU hph_mode=%d\n",
+			 wcd9378->hph_mode);
+		break;
+	case SND_SOC_DAPM_POST_PMU:
+		dev_info(component->dev, "HPHR PA: POST_PMU enabled\n");
+		break;
+	case SND_SOC_DAPM_POST_PMD:
+		dev_info(component->dev, "HPHR PA: POST_PMD disabled\n");
+		break;
+	}
+
+	return 0;
+}
+
+static int wcd9378_clsh_pa_event(struct snd_soc_dapm_widget *w,
+				 struct snd_kcontrol *kcontrol,
+				 int event)
+{
+	struct snd_soc_component *component = snd_soc_dapm_to_component(w->dapm);
+	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
+
+	dev_info(component->dev, "CLSH PA: event=%d hph_mode=%d\n",
+		 event, wcd9378->hph_mode);
+
+	switch (event) {
+	case SND_SOC_DAPM_PRE_PMU:
+		wcd9378->clsh_pa_enabled = true;
+		break;
+	case SND_SOC_DAPM_POST_PMD:
+		wcd9378->clsh_pa_enabled = false;
+		break;
+	}
+
+	return 0;
 }
 
 static int wcd9378_codec_hw_params(struct snd_pcm_substream *substream,
@@ -222,7 +426,7 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	 * Mark TX unavailable until SoundWire attach+init has been observed in
 	 * this probe instance.
 	 */
-	wcd9378->tx_sdw_attached = false;
+	wcd9378->tx_slave_ready = false;
 
 	/*
 	 * Keep codec and TX SoundWire master runtime-active while waiting for
@@ -238,7 +442,7 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 
 	/* Wait for TX slave to re-attach before initialization completion. */
 	time_left = wait_for_completion_timeout(&tx_sdw_dev->enumeration_complete,
-						msecs_to_jiffies(5000));
+						msecs_to_jiffies(WCD9378_SDW_INIT_TIMEOUT_MS));
 	if (!time_left) {
 		dev_err(dev, "TX SoundWire slave enumeration timed out, status: %d\n",
 			tx_sdw_dev->status);
@@ -257,7 +461,7 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 
 	if (tx_attached) {
 		time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
-							msecs_to_jiffies(5000));
+							msecs_to_jiffies(WCD9378_SDW_INIT_TIMEOUT_MS));
 		if (!time_left) {
 			dev_err(dev,
 				"TX SoundWire slave initialization timed out, status: %d\n",
@@ -275,7 +479,12 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 		}
 	}
 
-	wcd9378->tx_sdw_attached = tx_attached;
+	wcd9378->tx_slave_ready = tx_attached;
+	dev_info(component->dev, "probe: tx_slave_ready=%d\n",
+		 wcd9378->tx_slave_ready);
+	dev_info(component->dev, "probe: registering %d DAPM widgets, %d kcontrols\n",
+		 component->driver->num_dapm_widgets,
+		 component->driver->num_controls);
 
 	snd_soc_component_init_regmap(component, wcd9378->regmap);
 
@@ -285,6 +494,8 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 		wcd9378->clsh_info = NULL;
 		goto err_put_tx_swr_pm;
 	}
+
+	wcd9378_dump_hph_state(component);
 
 	pm_runtime_put(tx_swr_dev);
 	pm_runtime_put(dev);
@@ -328,9 +539,42 @@ static int wcd9378_codec_set_jack(struct snd_soc_component *comp,
 	return 0;
 }
 
+static const struct snd_kcontrol_new wcd9378_kcontrols[] = {
+	SOC_SINGLE_EXT("HPHL_COMP Switch", SND_SOC_NOPM, 0, 1, 0,
+		       wcd9378_get_compander, wcd9378_set_compander),
+	SOC_SINGLE_EXT("HPHR_COMP Switch", SND_SOC_NOPM, 1, 1, 0,
+		       wcd9378_get_compander, wcd9378_set_compander),
+	SOC_ENUM_EXT("RX HPH Mode", wcd9378_hph_mode_enum,
+		     wcd9378_rx_hph_mode_get, wcd9378_rx_hph_mode_put),
+	SOC_SINGLE_EXT("HPHL Volume", SND_SOC_NOPM, 0, WCD9378_HPH_GAIN_MAX, 0,
+		       wcd9378_hph_gain_get, wcd9378_hph_gain_put),
+	SOC_SINGLE_EXT("HPHR Volume", SND_SOC_NOPM, 1, WCD9378_HPH_GAIN_MAX, 0,
+		       wcd9378_hph_gain_get, wcd9378_hph_gain_put),
+};
+
+static const struct snd_kcontrol_new hphl_rdac_switch[] = {
+	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+};
+
+static const struct snd_kcontrol_new hphr_rdac_switch[] = {
+	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+};
+
+static const struct snd_kcontrol_new hphl_switch[] = {
+	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+};
+
+static const struct snd_kcontrol_new hphr_switch[] = {
+	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+};
+
+static const struct snd_kcontrol_new clsh_pa_switch[] = {
+	SOC_DAPM_SINGLE("Switch", SND_SOC_NOPM, 0, 1, 0)
+};
+
 /*
- * Minimal DAPM endpoint set for static prototype card integration.
- * These names intentionally match machine audio-routing endpoints.
+ * HPH-enabled DAPM set for static prototype card integration.
+ * Includes endpoints used by machine audio-routing plus HPH controls/widgets.
  */
 static const struct snd_soc_dapm_widget wcd9378_stub_dapm_widgets[] = {
 	SND_SOC_DAPM_INPUT("IN1_HPHL"),
@@ -354,6 +598,31 @@ static const struct snd_soc_dapm_widget wcd9378_stub_dapm_widgets[] = {
 	SND_SOC_DAPM_SUPPLY("MIC BIAS2", SND_SOC_NOPM, 0, 0, NULL, 0),
 	SND_SOC_DAPM_SUPPLY("MIC BIAS3", SND_SOC_NOPM, 0, 0, NULL, 0),
 
+	SND_SOC_DAPM_MIXER("HPHL_RDAC", SND_SOC_NOPM, 0, 0,
+			   hphl_rdac_switch, ARRAY_SIZE(hphl_rdac_switch)),
+	SND_SOC_DAPM_MIXER("HPHR_RDAC", SND_SOC_NOPM, 0, 0,
+			   hphr_rdac_switch, ARRAY_SIZE(hphr_rdac_switch)),
+	SND_SOC_DAPM_PGA_E("HPHL PGA", SND_SOC_NOPM, 0, 0, NULL, 0,
+			   wcd9378_hphl_pga_event,
+			   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMD),
+	SND_SOC_DAPM_PGA_E("HPHR PGA", SND_SOC_NOPM, 0, 0, NULL, 0,
+			   wcd9378_hphr_pga_event,
+			   SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMD),
+	SND_SOC_DAPM_MIXER_E("CLSH PA", SND_SOC_NOPM, 0, 0,
+			     clsh_pa_switch, ARRAY_SIZE(clsh_pa_switch),
+			     wcd9378_clsh_pa_event,
+			     SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMD),
+	SND_SOC_DAPM_OUT_DRV_E("HPHL", SND_SOC_NOPM, 0, 0,
+			       hphl_switch, ARRAY_SIZE(hphl_switch),
+			       wcd9378_hphl_pa_event,
+			       SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+			       SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD),
+	SND_SOC_DAPM_OUT_DRV_E("HPHR", SND_SOC_NOPM, 0, 0,
+			       hphr_switch, ARRAY_SIZE(hphr_switch),
+			       wcd9378_hphr_pa_event,
+			       SND_SOC_DAPM_PRE_PMU | SND_SOC_DAPM_POST_PMU |
+			       SND_SOC_DAPM_PRE_PMD | SND_SOC_DAPM_POST_PMD),
+
 	SND_SOC_DAPM_OUTPUT("HPHL_OUT"),
 	SND_SOC_DAPM_OUTPUT("HPHR_OUT"),
 	SND_SOC_DAPM_OUTPUT("AUX_OUT"),
@@ -369,12 +638,48 @@ static const struct snd_soc_dapm_widget wcd9378_stub_dapm_widgets[] = {
 	SND_SOC_DAPM_OUTPUT("DMIC7_OUTPUT"),
 };
 
+static const struct snd_soc_dapm_route wcd9378_stub_audio_map[] = {
+	/* HPH playback routes */
+	{ "HPHL_RDAC", "Switch", "IN1_HPHL" },
+	{ "HPHL PGA", NULL, "HPHL_RDAC" },
+	{ "HPHL", "Switch", "HPHL PGA" },
+	{ "HPHL", NULL, "CLSH PA" },
+	{ "HPHL_OUT", NULL, "HPHL" },
+
+	{ "HPHR_RDAC", "Switch", "IN2_HPHR" },
+	{ "HPHR PGA", NULL, "HPHR_RDAC" },
+	{ "HPHR", "Switch", "HPHR PGA" },
+	{ "HPHR", NULL, "CLSH PA" },
+	{ "HPHR_OUT", NULL, "HPHR" },
+
+	{ "AUX_OUT", NULL, "IN3_AUX" },
+
+	/* TX/capture endpoint relations used by machine audio-routing */
+	{ "ADC1_OUTPUT", NULL, "TX SWR_INPUT0" },
+	{ "ADC2_OUTPUT", NULL, "TX SWR_INPUT1" },
+	{ "ADC3_OUTPUT", NULL, "TX SWR_INPUT2" },
+	{ "DMIC1_OUTPUT", NULL, "TX SWR_INPUT4" },
+	{ "DMIC2_OUTPUT", NULL, "TX SWR_INPUT5" },
+	{ "DMIC3_OUTPUT", NULL, "TX SWR_INPUT6" },
+	{ "DMIC4_OUTPUT", NULL, "TX SWR_INPUT7" },
+	{ "DMIC5_OUTPUT", NULL, "TX SWR_INPUT8" },
+	{ "DMIC6_OUTPUT", NULL, "TX SWR_INPUT9" },
+	{ "DMIC7_OUTPUT", NULL, "TX SWR_INPUT10" },
+	{ "AMIC1", NULL, "MIC BIAS1" },
+	{ "AMIC2", NULL, "MIC BIAS2" },
+	{ "AMIC3", NULL, "MIC BIAS3" },
+};
+
 static const struct snd_soc_component_driver soc_codec_dev_wcd9378 = {
 	.name = "wcd9378_codec",
 	.probe = wcd9378_soc_codec_probe,
 	.remove = wcd9378_soc_codec_remove,
+	.controls = wcd9378_kcontrols,
+	.num_controls = ARRAY_SIZE(wcd9378_kcontrols),
 	.dapm_widgets = wcd9378_stub_dapm_widgets,
 	.num_dapm_widgets = ARRAY_SIZE(wcd9378_stub_dapm_widgets),
+	.dapm_routes = wcd9378_stub_audio_map,
+	.num_dapm_routes = ARRAY_SIZE(wcd9378_stub_audio_map),
 	.set_jack = wcd9378_codec_set_jack,
 	.endianness = 1,
 };

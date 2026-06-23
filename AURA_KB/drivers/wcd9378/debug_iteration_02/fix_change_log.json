@@ -1,0 +1,35 @@
+[
+  {
+    "fix_id": "FIX-1",
+    "signature": "TX_SLAVE_UNATTACHED",
+    "file": "wcd9378.c",
+    "change_summary": "Renamed runtime gate to tx_slave_ready, kept non-fatal TX init timeout path for UNATTACHED, added probe-level tx_slave_ready observability, and gated TX capture ops on tx_slave_ready.",
+    "reference": "wcd938x.c:3016-3029 (probe completion wait pattern), tx_unattached_rca.json RCA-002/RCA-004",
+    "upstream_acceptable": true,
+    "fail_closed_items": [
+      "TX attach root cause remains board/runtime dependent; no forced re-enumeration workaround added"
+    ]
+  },
+  {
+    "fix_id": "FIX-2",
+    "signature": "MISSING_HPH_CONTROLS_AND_DAPM_PATH",
+    "file": "wcd9378.c",
+    "change_summary": "Added HPH mixer controls (HPHL/HPHR compander, RX HPH mode, HPHL/HPHR volume), added HPH DAPM widgets (HPHL_RDAC, HPHR_RDAC, HPHL/HPHR PGA, HPHL/HPHR out drv, CLSH PA) and explicit HPH routes, plus HPH state dump and PA/CLSH event logs.",
+    "reference": "downstream wcd9378.c:3371-3431 (controls), 3581-3786 (widgets), 3788-3860 (routes), 1545-1790 (HPH events)",
+    "upstream_acceptable": true,
+    "fail_closed_items": [
+      "Prototype does not claim full analog-feature parity with downstream"
+    ]
+  },
+  {
+    "fix_id": "FIX-3",
+    "signature": "SDW_CH_COUNT_ANOMALY",
+    "file": "wcd9378-sdw.c",
+    "change_summary": "Changed channel count computation from start-at-1 loop increment to hweight_long(ch_mask), added explicit hw_params stream/port diagnostics, and fail-closed check for zero active ports.",
+    "reference": "downstream wcd9378.c:~119 (LA hw_params lineage), qcom.c:57-59 and 793-800 (CMD_ERROR interrupt context)",
+    "upstream_acceptable": true,
+    "fail_closed_items": [
+      "If active_ports is zero, hw_params now returns -EINVAL instead of issuing SWR command"
+    ]
+  }
+]

@@ -114,22 +114,32 @@ int wcd9378_sdw_hw_params(struct wcd9378_sdw_priv *wcd,
 			  struct snd_soc_dai *dai)
 {
 	struct sdw_port_config port_config[WCD9378_MAX_SWR_PORTS];
+	const char *stream_name;
+	unsigned int ch_count;
 	unsigned long ch_mask;
 	int ret;
-	int i, j;
+	int i;
 
-	wcd->sconfig.ch_count = 1;
+	wcd->sconfig.ch_count = 0;
 	wcd->active_ports = 0;
+	stream_name = substream->stream == SNDRV_PCM_STREAM_PLAYBACK ?
+		      "playback" : "capture";
+
 	for (i = 0; i < WCD9378_MAX_SWR_PORTS; i++) {
 		ch_mask = wcd->port_config[i].ch_mask;
 		if (!ch_mask)
 			continue;
 
-		for_each_set_bit(j, &ch_mask, 4)
-			wcd->sconfig.ch_count++;
+		ch_count = hweight_long(ch_mask);
+		wcd->sconfig.ch_count += ch_count;
 
 		port_config[wcd->active_ports] = wcd->port_config[i];
 		wcd->active_ports++;
+
+		dev_info(&wcd->sdev->dev,
+			 "hw_params: is_tx=%d stream=%s rate=%u ch_mask=0x%lx ch_count=%u\n",
+			 wcd->is_tx, stream_name, params_rate(params),
+			 ch_mask, ch_count);
 	}
 
 	wcd->sconfig.bps = 1;
@@ -138,13 +148,20 @@ int wcd9378_sdw_hw_params(struct wcd9378_sdw_priv *wcd,
 	wcd->sconfig.type = SDW_STREAM_PCM;
 
 	dev_info(&wcd->sdev->dev,
-		 "sdw_hw_params: is_tx=%d active_ports=%d ch_count=%d rate=%u\n",
-		 wcd->is_tx, wcd->active_ports, wcd->sconfig.ch_count,
-		 wcd->sconfig.frame_rate);
+		 "sdw_hw_params: is_tx=%d stream=%s active_ports=%d total_ch_count=%d rate=%u\n",
+		 wcd->is_tx, stream_name, wcd->active_ports,
+		 wcd->sconfig.ch_count, wcd->sconfig.frame_rate);
 	for (i = 0; i < wcd->active_ports; i++)
 		dev_info(&wcd->sdev->dev,
-			 "sdw_hw_params: port[%d] num=%u ch_mask=0x%lx\n",
+			 "hw_params: port[%d] num=%u ch_mask=0x%lx\n",
 			 i, port_config[i].num, port_config[i].ch_mask);
+
+	if (!wcd->active_ports) {
+		dev_err(&wcd->sdev->dev,
+			"sdw_hw_params: no active ports configured (is_tx=%d)\n",
+			wcd->is_tx);
+		return -EINVAL;
+	}
 
 	ret = sdw_stream_add_slave(wcd->sdev, &wcd->sconfig,
 				   &port_config[0], wcd->active_ports,

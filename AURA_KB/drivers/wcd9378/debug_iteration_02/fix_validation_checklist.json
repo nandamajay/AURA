@@ -1,0 +1,62 @@
+[
+  {
+    "id": "DBG2-CHK-001",
+    "check": "HPHL_RDAC Switch present in amixer after fix",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "amixer -c 0 contents | grep HPHL"
+  },
+  {
+    "id": "DBG2-CHK-002",
+    "check": "HPHR_RDAC Switch present in amixer after fix",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "amixer -c 0 contents | grep HPHR"
+  },
+  {
+    "id": "DBG2-CHK-003",
+    "check": "HPHL Switch, HPHR Switch, CLSH PA Switch present in amixer",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "amixer -c 0 contents | grep -E 'HPHL Switch|HPHR Switch|CLSH'"
+  },
+  {
+    "id": "DBG2-CHK-004",
+    "check": "RX HPH Mode present in amixer",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "amixer -c 0 contents | grep 'RX HPH Mode'"
+  },
+  {
+    "id": "DBG2-CHK-005",
+    "check": "ch_count=2 (not 3) in sdw_hw_params log for stereo playback",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep sdw_hw_params \u2014 expect ch_count=2 ch_mask=0x3"
+  },
+  {
+    "id": "DBG2-CHK-006",
+    "check": "No SWR CMD error during aplay after HPH path is properly enabled",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep 'SWR CMD error' \u2014 should be absent"
+  },
+  {
+    "id": "DBG2-CHK-007",
+    "check": "TX slave UNATTACHED does not prevent card probe (degraded mode)",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep 'TX slave init timeout' \u2014 card should still instantiate"
+  },
+  {
+    "id": "DBG2-CHK-008",
+    "check": "HPH_STATE register dump visible in dmesg at probe time",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep HPH_STATE"
+  },
+  {
+    "id": "DBG2-CHK-009",
+    "check": "HPHL PA PRE_PMU log visible during aplay",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep 'HPHL PA: PRE_PMU'"
+  },
+  {
+    "id": "DBG2-CHK-010",
+    "check": "No kernel source files modified",
+    "status": "PASS",
+    "how_to_verify": "git diff --name-only \u2014 only AURA_KB/ files"
+  }
+]
