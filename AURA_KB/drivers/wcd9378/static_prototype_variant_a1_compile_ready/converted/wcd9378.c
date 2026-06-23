@@ -82,7 +82,7 @@ static void wcd9378_dump_hph_state(struct snd_soc_component *component)
 static int wcd9378_get_compander(struct snd_kcontrol *kcontrol,
 				 struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 
 	if (strstr(kcontrol->id.name, "HPHL"))
@@ -96,7 +96,7 @@ static int wcd9378_get_compander(struct snd_kcontrol *kcontrol,
 static int wcd9378_set_compander(struct snd_kcontrol *kcontrol,
 				 struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 	bool enable = !!ucontrol->value.integer.value[0];
 
@@ -111,7 +111,7 @@ static int wcd9378_set_compander(struct snd_kcontrol *kcontrol,
 static int wcd9378_rx_hph_mode_get(struct snd_kcontrol *kcontrol,
 				   struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 
 	ucontrol->value.enumerated.item[0] = wcd9378->hph_mode;
@@ -121,7 +121,7 @@ static int wcd9378_rx_hph_mode_get(struct snd_kcontrol *kcontrol,
 static int wcd9378_rx_hph_mode_put(struct snd_kcontrol *kcontrol,
 				   struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 	unsigned int mode = ucontrol->value.enumerated.item[0];
 
@@ -135,7 +135,7 @@ static int wcd9378_rx_hph_mode_put(struct snd_kcontrol *kcontrol,
 static int wcd9378_hph_gain_get(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 
 	if (strstr(kcontrol->id.name, "HPHL"))
@@ -149,7 +149,7 @@ static int wcd9378_hph_gain_get(struct snd_kcontrol *kcontrol,
 static int wcd9378_hph_gain_put(struct snd_kcontrol *kcontrol,
 				struct snd_ctl_elem_value *ucontrol)
 {
-	struct snd_soc_component *component = snd_soc_kcontrol_component(kcontrol);
+	struct snd_soc_component *component = snd_kcontrol_chip(kcontrol);
 	struct wcd9378_priv *wcd9378 = snd_soc_component_get_drvdata(component);
 	unsigned int gain = ucontrol->value.integer.value[0];
 
