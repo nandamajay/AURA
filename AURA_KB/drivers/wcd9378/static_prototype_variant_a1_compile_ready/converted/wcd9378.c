@@ -16,6 +16,7 @@
 #include <linux/regulator/consumer.h>
 #include <linux/slab.h>
 #include <linux/soundwire/sdw.h>
+#include <sound/soc-dapm.h>
 #include <sound/soc.h>
 #include "wcd-clsh-v2.h"
 #include "wcd-common.h"
@@ -31,15 +32,37 @@ static const char * const wcd9378_supplies[] = {
 	"vdd-mic-bias",
 };
 
+static int wcd9378_check_tx_capture_ready(struct wcd9378_priv *wcd9378,
+					  struct snd_soc_dai *dai,
+					  const char *op)
+{
+	if (dai->id != AIF1_CAP)
+		return 0;
+
+	if (wcd9378->tx_sdw_attached)
+		return 0;
+
+	dev_warn(dai->dev,
+		 "Rejecting TX capture %s: TX SoundWire slave is UNATTACHED\n",
+		 op);
+
+	return -ENODEV;
+}
+
 static int wcd9378_codec_hw_params(struct snd_pcm_substream *substream,
 				   struct snd_pcm_hw_params *params,
 				   struct snd_soc_dai *dai)
 {
 	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dai->dev);
 	struct wcd9378_sdw_priv *wcd = wcd9378->sdw_priv[dai->id];
+	int ret;
 
 	if (!wcd)
 		return -EINVAL;
+
+	ret = wcd9378_check_tx_capture_ready(wcd9378, dai, "hw_params");
+	if (ret)
+		return ret;
 
 	return wcd9378_sdw_hw_params(wcd, substream, params, dai);
 }
@@ -61,11 +84,36 @@ static int wcd9378_codec_set_sdw_stream(struct snd_soc_dai *dai,
 {
 	struct wcd9378_priv *wcd9378 = dev_get_drvdata(dai->dev);
 	struct wcd9378_sdw_priv *wcd = wcd9378->sdw_priv[dai->id];
+	int ret;
 
 	if (!wcd)
 		return -EINVAL;
 
+	ret = wcd9378_check_tx_capture_ready(wcd9378, dai, "set_stream");
+	if (ret)
+		return ret;
+
 	return wcd9378_sdw_set_sdw_stream(wcd, dai, stream, direction);
+}
+
+static void wcd9378_init_default_sdw_port_config(struct wcd9378_priv *wcd9378)
+{
+	struct wcd9378_sdw_priv *rx = wcd9378->sdw_priv[AIF1_PB];
+	struct wcd9378_sdw_priv *tx = wcd9378->sdw_priv[AIF1_CAP];
+
+	/* Default playback: route stereo stream via RX HPH slave port 1. */
+	if (rx) {
+		rx->port_config[WCD9378_HPH_PORT - 1].num = WCD9378_HPH_PORT;
+		rx->port_config[WCD9378_HPH_PORT - 1].ch_mask = BIT(0) | BIT(1);
+		rx->master_channel_map[WCD9378_HPH_PORT - 1] = BIT(0) | BIT(1);
+	}
+
+	/* Default capture placeholder: ADC1 on TX port 1 (blocked if TX unattached). */
+	if (tx) {
+		tx->port_config[WCD9378_ADC_1_PORT - 1].num = WCD9378_ADC_1_PORT;
+		tx->port_config[WCD9378_ADC_1_PORT - 1].ch_mask = BIT(0);
+		tx->master_channel_map[WCD9378_ADC_1_PORT - 1] = BIT(0);
+	}
 }
 
 static int wcd9378_get_channel_map(const struct snd_soc_dai *dai,
@@ -141,10 +189,16 @@ static struct snd_soc_dai_driver wcd9378_dais[] = {
 
 static void wcd9378_reset(struct wcd9378_priv *wcd9378)
 {
+	if (wcd9378->common.dev)
+		dev_info(wcd9378->common.dev, "Applying WCD9378 reset toggle\n");
+
 	gpiod_set_value(wcd9378->reset_gpio, 1);
 	usleep_range(20, 30);
 	gpiod_set_value(wcd9378->reset_gpio, 0);
 	usleep_range(20, 30);
+
+	if (wcd9378->common.dev)
+		dev_info(wcd9378->common.dev, "WCD9378 reset toggle complete\n");
 }
 
 static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
@@ -153,6 +207,7 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	struct sdw_slave *tx_sdw_dev = wcd9378->tx_sdw_dev;
 	struct device *dev = component->dev;
 	struct device *tx_swr_dev;
+	bool tx_attached = true;
 	unsigned long time_left;
 	int ret;
 
@@ -162,6 +217,12 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	tx_swr_dev = tx_sdw_dev->bus->dev;
 	if (!tx_swr_dev)
 		return -EINVAL;
+
+	/*
+	 * Mark TX unavailable until SoundWire attach+init has been observed in
+	 * this probe instance.
+	 */
+	wcd9378->tx_sdw_attached = false;
 
 	/*
 	 * Keep codec and TX SoundWire master runtime-active while waiting for
@@ -181,29 +242,40 @@ static int wcd9378_soc_codec_probe(struct snd_soc_component *component)
 	if (!time_left) {
 		dev_err(dev, "TX SoundWire slave enumeration timed out, status: %d\n",
 			tx_sdw_dev->status);
-		ret = -ETIMEDOUT;
+
 		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED) {
+			tx_attached = false;
 			dev_warn(dev,
-				 "Deferring probe: TX SoundWire slave still UNATTACHED after enumeration wait\n");
-			ret = -EPROBE_DEFER;
+				 "TX SoundWire slave still UNATTACHED after enumeration wait\n");
+			dev_warn(dev,
+				 "Continuing probe in degraded mode; capture remains unavailable until TX SoundWire attach issue is fixed\n");
+		} else {
+			ret = -ETIMEDOUT;
+			goto err_put_tx_swr_pm;
 		}
-		goto err_put_tx_swr_pm;
 	}
 
-	time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
-						msecs_to_jiffies(5000));
-	if (!time_left) {
-		dev_err(dev,
-			"TX SoundWire slave initialization timed out, status: %d\n",
-			tx_sdw_dev->status);
-		ret = -ETIMEDOUT;
-		if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED) {
-			dev_warn(dev,
-				 "Deferring probe: TX SoundWire slave still UNATTACHED after initialization wait\n");
-			ret = -EPROBE_DEFER;
+	if (tx_attached) {
+		time_left = wait_for_completion_timeout(&tx_sdw_dev->initialization_complete,
+							msecs_to_jiffies(5000));
+		if (!time_left) {
+			dev_err(dev,
+				"TX SoundWire slave initialization timed out, status: %d\n",
+				tx_sdw_dev->status);
+			if (tx_sdw_dev->status == SDW_SLAVE_UNATTACHED) {
+				dev_warn(dev,
+					 "TX SoundWire slave still UNATTACHED after initialization wait\n");
+				dev_warn(dev,
+					 "Continuing probe in degraded mode; capture remains unavailable until TX SoundWire attach issue is fixed\n");
+				tx_attached = false;
+			} else {
+				ret = -ETIMEDOUT;
+				goto err_put_tx_swr_pm;
+			}
 		}
-		goto err_put_tx_swr_pm;
 	}
+
+	wcd9378->tx_sdw_attached = tx_attached;
 
 	snd_soc_component_init_regmap(component, wcd9378->regmap);
 
@@ -243,8 +315,11 @@ static int wcd9378_codec_set_jack(struct snd_soc_component *comp,
 {
 	struct wcd9378_priv *wcd9378 = dev_get_drvdata(comp->dev);
 
-	if (!wcd9378->wcd_mbhc)
-		return -EOPNOTSUPP;
+	if (!wcd9378->wcd_mbhc) {
+		dev_warn(comp->dev,
+			 "MBHC not initialized; skipping jack setup in degraded prototype mode\n");
+		return 0;
+	}
 
 	if (jack)
 		return wcd_mbhc_start(wcd9378->wcd_mbhc, &wcd9378->mbhc_cfg, jack);
@@ -253,10 +328,53 @@ static int wcd9378_codec_set_jack(struct snd_soc_component *comp,
 	return 0;
 }
 
+/*
+ * Minimal DAPM endpoint set for static prototype card integration.
+ * These names intentionally match machine audio-routing endpoints.
+ */
+static const struct snd_soc_dapm_widget wcd9378_stub_dapm_widgets[] = {
+	SND_SOC_DAPM_INPUT("IN1_HPHL"),
+	SND_SOC_DAPM_INPUT("IN2_HPHR"),
+	SND_SOC_DAPM_INPUT("IN3_AUX"),
+	SND_SOC_DAPM_INPUT("AMIC1"),
+	SND_SOC_DAPM_INPUT("AMIC2"),
+	SND_SOC_DAPM_INPUT("AMIC3"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT0"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT1"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT2"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT4"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT5"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT6"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT7"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT8"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT9"),
+	SND_SOC_DAPM_INPUT("TX SWR_INPUT10"),
+
+	SND_SOC_DAPM_SUPPLY("MIC BIAS1", SND_SOC_NOPM, 0, 0, NULL, 0),
+	SND_SOC_DAPM_SUPPLY("MIC BIAS2", SND_SOC_NOPM, 0, 0, NULL, 0),
+	SND_SOC_DAPM_SUPPLY("MIC BIAS3", SND_SOC_NOPM, 0, 0, NULL, 0),
+
+	SND_SOC_DAPM_OUTPUT("HPHL_OUT"),
+	SND_SOC_DAPM_OUTPUT("HPHR_OUT"),
+	SND_SOC_DAPM_OUTPUT("AUX_OUT"),
+	SND_SOC_DAPM_OUTPUT("ADC1_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("ADC2_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("ADC3_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC1_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC2_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC3_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC4_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC5_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC6_OUTPUT"),
+	SND_SOC_DAPM_OUTPUT("DMIC7_OUTPUT"),
+};
+
 static const struct snd_soc_component_driver soc_codec_dev_wcd9378 = {
 	.name = "wcd9378_codec",
 	.probe = wcd9378_soc_codec_probe,
 	.remove = wcd9378_soc_codec_remove,
+	.dapm_widgets = wcd9378_stub_dapm_widgets,
+	.num_dapm_widgets = ARRAY_SIZE(wcd9378_stub_dapm_widgets),
 	.set_jack = wcd9378_codec_set_jack,
 	.endianness = 1,
 };
@@ -286,6 +404,10 @@ static int wcd9378_bind(struct device *dev)
 
 	wcd9378->sdw_priv[AIF1_PB]->wcd9378 = wcd9378;
 	wcd9378->rx_sdw_dev = dev_to_sdw_dev(wcd9378->rxdev);
+	dev_info(dev, "RX SoundWire slave: %s dev_num=%d status=%d\n",
+		 dev_name(&wcd9378->rx_sdw_dev->dev),
+		 wcd9378->rx_sdw_dev->dev_num,
+		 wcd9378->rx_sdw_dev->status);
 
 	wcd9378->txdev = of_sdw_find_device_by_node(wcd9378->txnode);
 	if (!wcd9378->txdev) {
@@ -301,6 +423,13 @@ static int wcd9378_bind(struct device *dev)
 
 	wcd9378->sdw_priv[AIF1_CAP]->wcd9378 = wcd9378;
 	wcd9378->tx_sdw_dev = dev_to_sdw_dev(wcd9378->txdev);
+	dev_info(dev, "TX SoundWire slave: %s dev_num=%d status=%d\n",
+		 dev_name(&wcd9378->tx_sdw_dev->dev),
+		 wcd9378->tx_sdw_dev->dev_num,
+		 wcd9378->tx_sdw_dev->status);
+
+	wcd9378_init_default_sdw_port_config(wcd9378);
+	dev_info(dev, "Initialized default WCD9378 SDW RX/TX port configuration\n");
 
 	if (!device_link_add(wcd9378->rxdev, wcd9378->txdev,
 			     DL_FLAG_STATELESS | DL_FLAG_PM_RUNTIME)) {

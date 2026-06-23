@@ -115,6 +115,7 @@ int wcd9378_sdw_hw_params(struct wcd9378_sdw_priv *wcd,
 {
 	struct sdw_port_config port_config[WCD9378_MAX_SWR_PORTS];
 	unsigned long ch_mask;
+	int ret;
 	int i, j;
 
 	wcd->sconfig.ch_count = 1;
@@ -136,9 +137,24 @@ int wcd9378_sdw_hw_params(struct wcd9378_sdw_priv *wcd,
 	wcd->sconfig.direction = wcd->is_tx ? SDW_DATA_DIR_TX : SDW_DATA_DIR_RX;
 	wcd->sconfig.type = SDW_STREAM_PCM;
 
-	return sdw_stream_add_slave(wcd->sdev, &wcd->sconfig,
-				    &port_config[0], wcd->active_ports,
-				    wcd->sruntime);
+	dev_info(&wcd->sdev->dev,
+		 "sdw_hw_params: is_tx=%d active_ports=%d ch_count=%d rate=%u\n",
+		 wcd->is_tx, wcd->active_ports, wcd->sconfig.ch_count,
+		 wcd->sconfig.frame_rate);
+	for (i = 0; i < wcd->active_ports; i++)
+		dev_info(&wcd->sdev->dev,
+			 "sdw_hw_params: port[%d] num=%u ch_mask=0x%lx\n",
+			 i, port_config[i].num, port_config[i].ch_mask);
+
+	ret = sdw_stream_add_slave(wcd->sdev, &wcd->sconfig,
+				   &port_config[0], wcd->active_ports,
+				   wcd->sruntime);
+	if (ret)
+		dev_err(&wcd->sdev->dev,
+			"sdw_stream_add_slave failed: %d (is_tx=%d active_ports=%d)\n",
+			ret, wcd->is_tx, wcd->active_ports);
+
+	return ret;
 }
 EXPORT_SYMBOL_GPL(wcd9378_sdw_hw_params);
 

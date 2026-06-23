@@ -192,6 +192,7 @@ struct wcd9378_priv {
 	struct wcd_mbhc_config mbhc_cfg;
 	struct wcd_mbhc *wcd_mbhc;
 	struct wcd_clsh_ctrl *clsh_info;
+	bool tx_sdw_attached;
 };
 
 #if IS_ENABLED(CONFIG_SND_SOC_WCD9378_SDW)
