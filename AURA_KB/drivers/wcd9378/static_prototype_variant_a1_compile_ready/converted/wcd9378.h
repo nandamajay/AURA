@@ -31,7 +31,8 @@
 
 /* Digital register subset required by static lifecycle scaffold. */
 #define WCD9378_BASE_ADDRESS                    0x3000
-#define WCD9378_ANA_BIAS                        0x3001
+#define WCD9378_ANA_BIAS                        0x1001
+#define WCD9378_ANA_RX_SUPPLIES                0x1008
 #define WCD9378_ANA_MBHC_RESULT_1               0x3017
 #define WCD9378_ANA_MBHC_RESULT_2               0x3018
 #define WCD9378_ANA_MBHC_RESULT_3               0x3019
@@ -60,13 +61,14 @@
 #define WCD9378_MAX_REGISTER                    WCD9378_DIGITAL_EFUSE_REG_31
 
 /*
- * HPH path debug aliases for static prototype instrumentation.
- * Keep addresses within the currently modelled register window.
+ * HPH control register addresses derived from downstream
+ * track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h
+ * via WCD9378_REG().
  */
-#define WCD9378_ANA_HPH                         WCD9378_EAR_STATUS_REG_1
-#define WCD9378_CDC_HPH_GAIN_CTL                WCD9378_HPH_L_STATUS
-#define WCD9378_HPH_RDAC_CLK_CTL1               WCD9378_HPH_R_STATUS
-#define WCD9378_CDC_COMP_CTL_0                  WCD9378_HPH_SURGE_HPHLR_SURGE_STATUS
+#define WCD9378_ANA_HPH                         0x1009
+#define WCD9378_HPH_RDAC_CLK_CTL1               0x10d9
+#define WCD9378_CDC_COMP_CTL_0                  0x1414
+#define WCD9378_CDC_HPH_GAIN_CTL                0x144e
 
 /* Logical masks/shifts for prototype control bookkeeping. */
 #define WCD9378_CDC_HPH_GAIN_CTL_HPHL_RX_EN_MASK        BIT(2)

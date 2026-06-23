@@ -1,0 +1,27 @@
+[
+  {
+    "bug_id": "BUG-03-01",
+    "file": "wcd9378.h",
+    "lines_changed": "34-35, 68-71",
+    "error_in_log": "ASoC error (-16) at soc_component_read_no_lock for registers 0x30ef/0x30c9/0x30ca/0x30e4",
+    "root_cause": "Register aliases pointed to read-only status registers instead of control registers",
+    "fix": "Replaced aliases with correct regmap addresses 0x1009/0x10d9/0x1414/0x144e; corrected WCD9378_ANA_BIAS to 0x1001; added WCD9378_ANA_RX_SUPPLIES as 0x1008",
+    "reference": "track_b_corpora/audio-kernel-ar/asoc/codecs/wcd9378/wcd9378-registers.h lines 18, 33, 34, 35, 154, 281, 300, 356",
+    "verified_against_downstream": true,
+    "task2_scan_findings": {
+      "WCD9378_ANA_BIAS": "fixed to 0x1001 from A_BASE + 0x01",
+      "WCD9378_ANA_RX_SUPPLIES": "added as 0x1008 from A_BASE + 0x08",
+      "WCD9378_ANA_or_WCD9378_HPH_macros_used_in_wcd9378.c": "WCD9378_ANA_HPH/WCD9378_HPH_RDAC_CLK_CTL1/WCD9378_CDC_COMP_CTL_0/WCD9378_CDC_HPH_GAIN_CTL now use direct control-register addresses; no remaining status-register aliasing"
+    }
+  },
+  {
+    "bug_id": "BUG-03-02",
+    "file": "wcd9378.c",
+    "lines_changed": "645, 651",
+    "error_in_log": "Control not supported for path HPHL PGA -> [Switch] -> HPHL; ASoC failed to add route; card -22",
+    "root_cause": "SND_SOC_DAPM_OUT_DRV_E widget has no mixer control; route with non-NULL control name is invalid",
+    "fix": "Changed route control name from 'Switch' to NULL for HPHL and HPHR sink routes",
+    "reference": "ASoC DAPM widget type rules; wcd938x.c HPHL/HPHR route pattern",
+    "verified_against_downstream": true
+  }
+]

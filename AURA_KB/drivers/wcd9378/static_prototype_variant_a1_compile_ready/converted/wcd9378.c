@@ -642,13 +642,13 @@ static const struct snd_soc_dapm_route wcd9378_stub_audio_map[] = {
 	/* HPH playback routes */
 	{ "HPHL_RDAC", "Switch", "IN1_HPHL" },
 	{ "HPHL PGA", NULL, "HPHL_RDAC" },
-	{ "HPHL", "Switch", "HPHL PGA" },
+	{ "HPHL", NULL, "HPHL PGA" },
 	{ "HPHL", NULL, "CLSH PA" },
 	{ "HPHL_OUT", NULL, "HPHL" },
 
 	{ "HPHR_RDAC", "Switch", "IN2_HPHR" },
 	{ "HPHR PGA", NULL, "HPHR_RDAC" },
-	{ "HPHR", "Switch", "HPHR PGA" },
+	{ "HPHR", NULL, "HPHR PGA" },
 	{ "HPHR", NULL, "CLSH PA" },
 	{ "HPHR_OUT", NULL, "HPHR" },
 

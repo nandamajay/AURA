@@ -1,0 +1,74 @@
+[
+  {
+    "id": "DBG3-CHK-001",
+    "check": "WCD9378_ANA_HPH = 0x1009 in wcd9378.h",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep WCD9378_ANA_HPH wcd9378.h"
+  },
+  {
+    "id": "DBG3-CHK-002",
+    "check": "WCD9378_HPH_RDAC_CLK_CTL1 = 0x10d9 in wcd9378.h",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep WCD9378_HPH_RDAC_CLK_CTL1 wcd9378.h"
+  },
+  {
+    "id": "DBG3-CHK-003",
+    "check": "WCD9378_CDC_COMP_CTL_0 = 0x1414 in wcd9378.h",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep WCD9378_CDC_COMP_CTL_0 wcd9378.h"
+  },
+  {
+    "id": "DBG3-CHK-004",
+    "check": "WCD9378_CDC_HPH_GAIN_CTL = 0x144e in wcd9378.h",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep WCD9378_CDC_HPH_GAIN_CTL wcd9378.h"
+  },
+  {
+    "id": "DBG3-CHK-005",
+    "check": "No alias to WCD9378_EAR_STATUS_REG_1/HPH_L_STATUS/HPH_R_STATUS/HPH_SURGE_STATUS remains for control registers",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep -E 'EAR_STATUS|HPH_L_STATUS|HPH_R_STATUS|HPH_SURGE' wcd9378.h - should only appear as their own definitions, not as aliases"
+  },
+  {
+    "id": "DBG3-CHK-006",
+    "check": "Route { HPHL, NULL, HPHL PGA } in wcd9378.c",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep 'HPHL.*NULL.*HPHL PGA' wcd9378.c"
+  },
+  {
+    "id": "DBG3-CHK-007",
+    "check": "Route { HPHR, NULL, HPHR PGA } in wcd9378.c",
+    "status": "PASS_STATIC",
+    "how_to_verify": "grep 'HPHR.*NULL.*HPHR PGA' wcd9378.c"
+  },
+  {
+    "id": "DBG3-CHK-008",
+    "check": "No 'ASoC error (-16)' for HPH registers in dmesg after fix",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep 'ASoC error' - should be absent for 0x1009/0x10d9/0x1414/0x144e"
+  },
+  {
+    "id": "DBG3-CHK-009",
+    "check": "No 'Control not supported for path HPHL/HPHR' in dmesg after fix",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep 'Control not supported' - should be absent"
+  },
+  {
+    "id": "DBG3-CHK-010",
+    "check": "Sound card instantiates (no 'failed to instantiate card -22')",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep 'failed to instantiate' - should be absent; cat /proc/asound/cards should show card"
+  },
+  {
+    "id": "DBG3-CHK-011",
+    "check": "HPH_STATE register dump shows real values (not 0xf0) after fix",
+    "status": "PENDING_BOARD",
+    "how_to_verify": "dmesg | grep HPH_STATE - values should not be 0xf0"
+  },
+  {
+    "id": "DBG3-CHK-012",
+    "check": "No kernel source files modified",
+    "status": "PASS_STATIC",
+    "how_to_verify": "git diff --name-only - only AURA_KB/ files"
+  }
+]
